@@ -1,2 +1,2 @@
-# Deploy3DGameFramework
+# 3DGameFramework
 就職作品のための3dゲーム開発フレームワーク
