@@ -1,2 +1,2 @@
-# DirectXFramework
+# Deploy3DGameFramework
 就職作品のための3dゲーム開発フレームワーク
