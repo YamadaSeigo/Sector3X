@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src">
+      <UniqueIdentifier>{49a19b8f-4671-4515-8585-30ffbaaeddde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Core">
+      <UniqueIdentifier>{1a047d09-d2e2-4504-addf-82844ca44e8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics">
+      <UniqueIdentifier>{123bcca3-3b58-44b9-bbff-780a8edfa372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{63eaeae7-984e-43e7-aa91-86e64b3fa931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Utility">
+      <UniqueIdentifier>{edce9144-9292-4af6-b64f-a05315645543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Physics">
+      <UniqueIdentifier>{a2ad3f1d-4675-4eb1-81cd-5dd37eb2b61f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Core">
+      <UniqueIdentifier>{e4a75f62-afdf-4a87-9b2b-813c1d27beda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Math">
+      <UniqueIdentifier>{26ffb2c9-85be-442c-8272-8a4973460492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Graphics">
+      <UniqueIdentifier>{905ac235-584f-4370-a4b1-bd25abc2a8e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Physics">
+      <UniqueIdentifier>{19cc5f93-862d-436a-b285-6361d625bedd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Util">
+      <UniqueIdentifier>{a5fd2c8d-1cd0-4628-bebf-4046a69c83db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Header">
+      <UniqueIdentifier>{c1428071-2f0a-43d6-8129-73fd3cbe6006}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Utility\doxygen_sample.h">
+      <Filter>Src\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility\pch.h">
+      <Filter>Src\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\FpsControl.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\NonCopyable.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GameEngine.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\IGraphicsDevice.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\sector11fw.h">
+      <Filter>Inc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\DX11Graphics.h">
+      <Filter>Inc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\WindowHandler.h">
+      <Filter>Inc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility\message.h">
+      <Filter>Src\Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Utility\doxygen_sample.cpp">
+      <Filter>Src\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\WindowHandler.cpp">
+      <Filter>Src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility\pch.cpp">
+      <Filter>Src\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GameEngine.cpp">
+      <Filter>Src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11Graphics.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="docs\NamingConventions.md" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: FPS クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_f_p_s.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pri-attribs">非公開変数類</a> &#124;
+<a href="class_f_p_s-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">FPS クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>FPS制御クラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_fps_control_8h_source.html">FpsControl.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a21f8ac656b45990ae6ad7620862ead83" id="r_a21f8ac656b45990ae6ad7620862ead83"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21f8ac656b45990ae6ad7620862ead83">FPS</a> ()=delete</td></tr>
+<tr class="memdesc:a21f8ac656b45990ae6ad7620862ead83"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ削除  <br /></td></tr>
+<tr class="separator:a21f8ac656b45990ae6ad7620862ead83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bb8533de85f6cd1166ab4e4cb09e1ba" id="r_a6bb8533de85f6cd1166ab4e4cb09e1ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6bb8533de85f6cd1166ab4e4cb09e1ba">FPS</a> (uint64_t fps)</td></tr>
+<tr class="memdesc:a6bb8533de85f6cd1166ab4e4cb09e1ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ(暗黙的変換防止)  <br /></td></tr>
+<tr class="separator:a6bb8533de85f6cd1166ab4e4cb09e1ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af02372c3e55e98c6521f7dfd6cf1dd34" id="r_af02372c3e55e98c6521f7dfd6cf1dd34"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af02372c3e55e98c6521f7dfd6cf1dd34">CalcDelta</a> ()</td></tr>
+<tr class="memdesc:af02372c3e55e98c6521f7dfd6cf1dd34"><td class="mdescLeft">&#160;</td><td class="mdescRight">デルタタイムの計算  <br /></td></tr>
+<tr class="separator:af02372c3e55e98c6521f7dfd6cf1dd34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4cafa33c5a1dc69aef26854193051e4" id="r_aa4cafa33c5a1dc69aef26854193051e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4cafa33c5a1dc69aef26854193051e4">Wait</a> () const</td></tr>
+<tr class="memdesc:aa4cafa33c5a1dc69aef26854193051e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">FPS制御のための待機  <br /></td></tr>
+<tr class="separator:aa4cafa33c5a1dc69aef26854193051e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+非公開変数類</h2></td></tr>
+<tr class="memitem:a1c4e617da1494680ef8643bb45b211ce" id="r_a1c4e617da1494680ef8643bb45b211ce"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c4e617da1494680ef8643bb45b211ce">m_MicrosecondsPerFrame</a> = 0</td></tr>
+<tr class="separator:a1c4e617da1494680ef8643bb45b211ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ad4989d5297ca9ae3d483add73e6436" id="r_a9ad4989d5297ca9ae3d483add73e6436"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ad4989d5297ca9ae3d483add73e6436">m_delta_time</a> = 0</td></tr>
+<tr class="separator:a9ad4989d5297ca9ae3d483add73e6436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef5a1ea927bbfff45d9ab1973cc599fe" id="r_aef5a1ea927bbfff45d9ab1973cc599fe"><td class="memItemLeft" align="right" valign="top">std::chrono::steady_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef5a1ea927bbfff45d9ab1973cc599fe">m_last_time</a></td></tr>
+<tr class="separator:aef5a1ea927bbfff45d9ab1973cc599fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>FPS制御クラス </p>
+<dl class="section note"><dt>覚え書き</dt><dd>フレームレートを制御するためのクラスです。 FPSを指定して、デルタタイムを計算し、必要に応じてスリープします。 </dd></dl>
+
+<p class="definition"> <a class="el" href="_fps_control_8h_source.html">FpsControl.h</a> の <a class="el" href="_fps_control_8h_source.html#l00020">20</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="a21f8ac656b45990ae6ad7620862ead83" name="a21f8ac656b45990ae6ad7620862ead83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21f8ac656b45990ae6ad7620862ead83">&#9670;&#160;</a></span>FPS() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">FPS::FPS </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ削除 </p>
+
+</div>
+</div>
+<a id="a6bb8533de85f6cd1166ab4e4cb09e1ba" name="a6bb8533de85f6cd1166ab4e4cb09e1ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bb8533de85f6cd1166ab4e4cb09e1ba">&#9670;&#160;</a></span>FPS() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">FPS::FPS </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>fps</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ(暗黙的変換防止) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fps</td><td>フレームレート </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_fps_control_8h_source.html">FpsControl.h</a> の <a class="el" href="_fps_control_8h_source.html#l00031">31</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   32</span>        : <a class="code hl_variable" href="#a1c4e617da1494680ef8643bb45b211ce">m_MicrosecondsPerFrame</a>(1000000 / fps),</div>
+<div class="line"><span class="lineno">   33</span>        <a class="code hl_variable" href="#aef5a1ea927bbfff45d9ab1973cc599fe">m_last_time</a>(std::chrono::steady_clock::now())</div>
+<div class="line"><span class="lineno">   34</span>    {</div>
+<div class="line"><span class="lineno">   35</span>    }</div>
+<div class="ttc" id="aclass_f_p_s_html_a1c4e617da1494680ef8643bb45b211ce"><div class="ttname"><a href="#a1c4e617da1494680ef8643bb45b211ce">FPS::m_MicrosecondsPerFrame</a></div><div class="ttdeci">uint64_t m_MicrosecondsPerFrame</div><div class="ttdef"><b>Definition</b> <a href="_fps_control_8h_source.html#l00062">FpsControl.h:62</a></div></div>
+<div class="ttc" id="aclass_f_p_s_html_aef5a1ea927bbfff45d9ab1973cc599fe"><div class="ttname"><a href="#aef5a1ea927bbfff45d9ab1973cc599fe">FPS::m_last_time</a></div><div class="ttdeci">std::chrono::steady_clock::time_point m_last_time</div><div class="ttdef"><b>Definition</b> <a href="_fps_control_8h_source.html#l00066">FpsControl.h:66</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="af02372c3e55e98c6521f7dfd6cf1dd34" name="af02372c3e55e98c6521f7dfd6cf1dd34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af02372c3e55e98c6521f7dfd6cf1dd34">&#9670;&#160;</a></span>CalcDelta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t FPS::CalcDelta </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>デルタタイムの計算 </p>
+<dl class="section return"><dt>戻り値</dt><dd>　デルタタイム(マイクロ秒) </dd></dl>
+
+<p class="definition"> <a class="el" href="_fps_control_8h_source.html">FpsControl.h</a> の <a class="el" href="_fps_control_8h_source.html#l00041">41</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>                         {</div>
+<div class="line"><span class="lineno">   42</span>        <span class="keyword">auto</span> now = std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">   43</span>        <span class="keyword">auto</span> delta_us = std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(now - <a class="code hl_variable" href="#aef5a1ea927bbfff45d9ab1973cc599fe">m_last_time</a>).count();</div>
+<div class="line"><span class="lineno">   44</span>        <a class="code hl_variable" href="#aef5a1ea927bbfff45d9ab1973cc599fe">m_last_time</a> = now;</div>
+<div class="line"><span class="lineno">   45</span>        <a class="code hl_variable" href="#a9ad4989d5297ca9ae3d483add73e6436">m_delta_time</a> = delta_us;</div>
+<div class="line"><span class="lineno">   46</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="#a9ad4989d5297ca9ae3d483add73e6436">m_delta_time</a>;</div>
+<div class="line"><span class="lineno">   47</span>    }</div>
+<div class="ttc" id="aclass_f_p_s_html_a9ad4989d5297ca9ae3d483add73e6436"><div class="ttname"><a href="#a9ad4989d5297ca9ae3d483add73e6436">FPS::m_delta_time</a></div><div class="ttdeci">uint64_t m_delta_time</div><div class="ttdef"><b>Definition</b> <a href="_fps_control_8h_source.html#l00064">FpsControl.h:64</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+
+</div>
+</div>
+<a id="aa4cafa33c5a1dc69aef26854193051e4" name="aa4cafa33c5a1dc69aef26854193051e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4cafa33c5a1dc69aef26854193051e4">&#9670;&#160;</a></span>Wait()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FPS::Wait </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>FPS制御のための待機 </p>
+<dl class="section note"><dt>覚え書き</dt><dd>フレームレートを維持するために、必要な時間だけスリープします。 </dd></dl>
+
+<p class="definition"> <a class="el" href="_fps_control_8h_source.html">FpsControl.h</a> の <a class="el" href="_fps_control_8h_source.html#l00053">53</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>                      {</div>
+<div class="line"><span class="lineno">   54</span>        int64_t sleep_us = <span class="keyword">static_cast&lt;</span>int64_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="#a1c4e617da1494680ef8643bb45b211ce">m_MicrosecondsPerFrame</a>) - <span class="keyword">static_cast&lt;</span>int64_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="#a9ad4989d5297ca9ae3d483add73e6436">m_delta_time</a>);</div>
+<div class="line"><span class="lineno">   55</span>        <span class="keywordflow">if</span> (sleep_us &gt; 0) {</div>
+<div class="line"><span class="lineno">   56</span>            std::this_thread::sleep_for(std::chrono::microseconds(sleep_us));</div>
+<div class="line"><span class="lineno">   57</span>        }</div>
+<div class="line"><span class="lineno">   58</span>    }</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a9ad4989d5297ca9ae3d483add73e6436" name="a9ad4989d5297ca9ae3d483add73e6436"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ad4989d5297ca9ae3d483add73e6436">&#9670;&#160;</a></span>m_delta_time</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t FPS::m_delta_time = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_fps_control_8h_source.html">FpsControl.h</a> の <a class="el" href="_fps_control_8h_source.html#l00064">64</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aef5a1ea927bbfff45d9ab1973cc599fe" name="aef5a1ea927bbfff45d9ab1973cc599fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef5a1ea927bbfff45d9ab1973cc599fe">&#9670;&#160;</a></span>m_last_time</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::steady_clock::time_point FPS::m_last_time</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_fps_control_8h_source.html">FpsControl.h</a> の <a class="el" href="_fps_control_8h_source.html#l00066">66</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1c4e617da1494680ef8643bb45b211ce" name="a1c4e617da1494680ef8643bb45b211ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c4e617da1494680ef8643bb45b211ce">&#9670;&#160;</a></span>m_MicrosecondsPerFrame</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t FPS::m_MicrosecondsPerFrame = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_fps_control_8h_source.html">FpsControl.h</a> の <a class="el" href="_fps_control_8h_source.html#l00062">62</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/Sector11FW/Sector11FW/inc/Util/<a class="el" href="_fps_control_8h_source.html">FpsControl.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_f_p_s.html">FPS</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

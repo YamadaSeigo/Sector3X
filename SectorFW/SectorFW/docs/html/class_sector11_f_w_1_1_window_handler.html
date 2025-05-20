@@ -1,0 +1,729 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: Sector11FW::WindowHandler クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_sector11_f_w_1_1_window_handler.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pub-static-methods">静的公開メンバ関数</a> &#124;
+<a href="#pri-static-methods">静的非公開メンバ関数</a> &#124;
+<a href="#pri-static-attribs">静的非公開変数類</a> &#124;
+<a href="class_sector11_f_w_1_1_window_handler-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">Sector11FW::WindowHandler クラス<span class="mlabels"><span class="mlabel final">final</span></span></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>ウィンドウハンドラ  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_window_handler_8h_source.html">WindowHandler.h</a>&gt;</code></p>
+<div class="dynheader">
+Sector11FW::WindowHandler の継承関係図</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">凡例</a>]</span></center></div>
+<div class="dynheader">
+Sector11FW::WindowHandler 連携図</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a501db9928f4508b8b92eec36639cc388" id="r_a501db9928f4508b8b92eec36639cc388"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a501db9928f4508b8b92eec36639cc388">WindowHandler</a> ()=delete</td></tr>
+<tr class="memdesc:a501db9928f4508b8b92eec36639cc388"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="separator:a501db9928f4508b8b92eec36639cc388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac542e4ae914bdec2f41a033752c22bc7" id="r_ac542e4ae914bdec2f41a033752c22bc7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac542e4ae914bdec2f41a033752c22bc7">~WindowHandler</a> ()=default</td></tr>
+<tr class="memdesc:ac542e4ae914bdec2f41a033752c22bc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="separator:ac542e4ae914bdec2f41a033752c22bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:af4d8a7121132aa624d45a63514ba0f56" id="r_af4d8a7121132aa624d45a63514ba0f56"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4d8a7121132aa624d45a63514ba0f56">Create</a> (HINSTANCE hInstance, int nCmdShow, const char *windowTitle, uint32_t width, uint32_t height)</td></tr>
+<tr class="memdesc:af4d8a7121132aa624d45a63514ba0f56"><td class="mdescLeft">&#160;</td><td class="mdescRight">ウィンドウの作成(ウィンドウアプリケーション)  <br /></td></tr>
+<tr class="separator:af4d8a7121132aa624d45a63514ba0f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a611bff2199e2d29782a3795fbacdcf12" id="r_a611bff2199e2d29782a3795fbacdcf12"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a611bff2199e2d29782a3795fbacdcf12">Run</a> (void(*pLoop)())</td></tr>
+<tr class="memdesc:a611bff2199e2d29782a3795fbacdcf12"><td class="mdescLeft">&#160;</td><td class="mdescRight">ウィンドウのメッセージループ  <br /></td></tr>
+<tr class="separator:a611bff2199e2d29782a3795fbacdcf12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08f1e20c0c334d2e289d5fe50a240a6" id="r_ac08f1e20c0c334d2e289d5fe50a240a6"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac08f1e20c0c334d2e289d5fe50a240a6">Destroy</a> ()</td></tr>
+<tr class="memdesc:ac08f1e20c0c334d2e289d5fe50a240a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">ウィンドウの破棄  <br /></td></tr>
+<tr class="separator:ac08f1e20c0c334d2e289d5fe50a240a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+静的非公開メンバ関数</h2></td></tr>
+<tr class="memitem:a26e2bf63026c684e58095ee7d341788d" id="r_a26e2bf63026c684e58095ee7d341788d"><td class="memItemLeft" align="right" valign="top">static LRESULT CALLBACK&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a26e2bf63026c684e58095ee7d341788d">WindowProc</a> (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)</td></tr>
+<tr class="memdesc:a26e2bf63026c684e58095ee7d341788d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ウィンドウプロシージャ  <br /></td></tr>
+<tr class="separator:a26e2bf63026c684e58095ee7d341788d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3afa8fbbc9e1b18a55bb47aadcf30545" id="r_a3afa8fbbc9e1b18a55bb47aadcf30545"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3afa8fbbc9e1b18a55bb47aadcf30545">CreateConsoleWindow</a> ()</td></tr>
+<tr class="memdesc:a3afa8fbbc9e1b18a55bb47aadcf30545"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンソールウィンドウの作成  <br /></td></tr>
+<tr class="separator:a3afa8fbbc9e1b18a55bb47aadcf30545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+静的非公開変数類</h2></td></tr>
+<tr class="memitem:ae6a93bd33dd5a8a32097819edcbeb5c2" id="r_ae6a93bd33dd5a8a32097819edcbeb5c2"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6a93bd33dd5a8a32097819edcbeb5c2">m_isCreated</a> = false</td></tr>
+<tr class="separator:ae6a93bd33dd5a8a32097819edcbeb5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2554d3a9f49a8f0268ed31e433f5a2ce" id="r_a2554d3a9f49a8f0268ed31e433f5a2ce"><td class="memItemLeft" align="right" valign="top">static HWND&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2554d3a9f49a8f0268ed31e433f5a2ce">m_hWnd</a></td></tr>
+<tr class="separator:a2554d3a9f49a8f0268ed31e433f5a2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7521c7b65d455c5bf9320925658a48e" id="r_aa7521c7b65d455c5bf9320925658a48e"><td class="memItemLeft" align="right" valign="top">static HINSTANCE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7521c7b65d455c5bf9320925658a48e">m_hInstance</a></td></tr>
+<tr class="separator:aa7521c7b65d455c5bf9320925658a48e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47c7390b37bf35fa7fbb4080b4a7919d" id="r_a47c7390b37bf35fa7fbb4080b4a7919d"><td class="memItemLeft" align="right" valign="top">static MSG&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47c7390b37bf35fa7fbb4080b4a7919d">m_msg</a></td></tr>
+<tr class="separator:a47c7390b37bf35fa7fbb4080b4a7919d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+その他の継承メンバ</h2></td></tr>
+<tr class="inherit_header pub_methods_class_non_copyable"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_non_copyable')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="class_non_copyable.html">NonCopyable</a> に属する継承非公開メンバ関数</td></tr>
+<tr class="memitem:a809b6e4ade7ae32f6d248f2a3b783d45 inherit pub_methods_class_non_copyable" id="r_a809b6e4ade7ae32f6d248f2a3b783d45"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_non_copyable.html#a809b6e4ade7ae32f6d248f2a3b783d45">NonCopyable</a> ()=default</td></tr>
+<tr class="memdesc:a809b6e4ade7ae32f6d248f2a3b783d45 inherit pub_methods_class_non_copyable"><td class="mdescLeft">&#160;</td><td class="mdescRight">デフォルトコンストラクタ。  <br /></td></tr>
+<tr class="separator:a809b6e4ade7ae32f6d248f2a3b783d45 inherit pub_methods_class_non_copyable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a501d34ffcc34b30de6d541887a901057 inherit pub_methods_class_non_copyable" id="r_a501d34ffcc34b30de6d541887a901057"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_non_copyable.html#a501d34ffcc34b30de6d541887a901057">NonCopyable</a> (const <a class="el" href="class_non_copyable.html">NonCopyable</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a501d34ffcc34b30de6d541887a901057 inherit pub_methods_class_non_copyable"><td class="mdescLeft">&#160;</td><td class="mdescRight">コピーコンストラクタを削除。  <br /></td></tr>
+<tr class="separator:a501d34ffcc34b30de6d541887a901057 inherit pub_methods_class_non_copyable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a222df5be7ad1cf1aef9f17fe2b157a1a inherit pub_methods_class_non_copyable" id="r_a222df5be7ad1cf1aef9f17fe2b157a1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_non_copyable.html">NonCopyable</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_non_copyable.html#a222df5be7ad1cf1aef9f17fe2b157a1a">operator=</a> (const <a class="el" href="class_non_copyable.html">NonCopyable</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a222df5be7ad1cf1aef9f17fe2b157a1a inherit pub_methods_class_non_copyable"><td class="mdescLeft">&#160;</td><td class="mdescRight">コピー代入演算子を削除。  <br /></td></tr>
+<tr class="separator:a222df5be7ad1cf1aef9f17fe2b157a1a inherit pub_methods_class_non_copyable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>ウィンドウハンドラ </p>
+<p>ウィンドウ管理クラス(マルチウィンドウ非対応) </p>
+
+<p class="definition"> <a class="el" href="_window_handler_8h_source.html">WindowHandler.h</a> の <a class="el" href="_window_handler_8h_source.html#l00019">19</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="a501db9928f4508b8b92eec36639cc388" name="a501db9928f4508b8b92eec36639cc388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a501db9928f4508b8b92eec36639cc388">&#9670;&#160;</a></span>WindowHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Sector11FW::WindowHandler::WindowHandler </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<p>ウィンドウの作成も同時に行う </p>
+
+</div>
+</div>
+<a id="ac542e4ae914bdec2f41a033752c22bc7" name="ac542e4ae914bdec2f41a033752c22bc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac542e4ae914bdec2f41a033752c22bc7">&#9670;&#160;</a></span>~WindowHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Sector11FW::WindowHandler::~WindowHandler </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>デストラクタ </p>
+<p>ウィンドウの破棄 </p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="af4d8a7121132aa624d45a63514ba0f56" name="af4d8a7121132aa624d45a63514ba0f56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4d8a7121132aa624d45a63514ba0f56">&#9670;&#160;</a></span>Create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void Sector11FW::WindowHandler::Create </td>
+          <td>(</td>
+          <td class="paramtype">HINSTANCE</td>          <td class="paramname"><span class="paramname"><em>hInstance</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>nCmdShow</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>windowTitle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>height</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ウィンドウの作成(ウィンドウアプリケーション) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hInstance</td><td>インスタンスハンドル </td></tr>
+    <tr><td class="paramname">nCmdShow</td><td>表示状態 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_window_handler_8h_source.html">WindowHandler.h</a> の <a class="el" href="_window_handler_8h_source.html#l00097">97</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>        {</div>
+<div class="line"><span class="lineno">  100</span>            <span class="comment">// ウィンドウが作成されていたら、何もしない</span></div>
+<div class="line"><span class="lineno">  101</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="#ae6a93bd33dd5a8a32097819edcbeb5c2">m_isCreated</a>) <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  102</span> </div>
+<div class="line"><span class="lineno">  103</span>            <span class="comment">// ウィンドウが作成されたフラグを立てる</span></div>
+<div class="line"><span class="lineno">  104</span>            <a class="code hl_variable" href="#ae6a93bd33dd5a8a32097819edcbeb5c2">m_isCreated</a> = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  105</span> </div>
+<div class="line"><span class="lineno">  106</span><span class="preprocessor">#ifdef _DEBUG</span></div>
+<div class="line"><span class="lineno">  107</span>            <span class="comment">//コンソール画面起動</span></div>
+<div class="line"><span class="lineno">  108</span>            <a class="code hl_function" href="#a3afa8fbbc9e1b18a55bb47aadcf30545">CreateConsoleWindow</a>();</div>
+<div class="line"><span class="lineno">  109</span> </div>
+<div class="line"><span class="lineno">  110</span>            <span class="comment">//メモリリーク検知</span></div>
+<div class="line"><span class="lineno">  111</span>            _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);</div>
+<div class="line"><span class="lineno">  112</span><span class="preprocessor">#endif </span><span class="comment">// _DEBUG</span></div>
+<div class="line"><span class="lineno">  113</span> </div>
+<div class="line"><span class="lineno">  114</span>            <span class="comment">// ウィンドウクラス情報をまとめる</span></div>
+<div class="line"><span class="lineno">  115</span>            WNDCLASSEX wc;</div>
+<div class="line"><span class="lineno">  116</span>            wc.cbSize = <span class="keyword">sizeof</span>(WNDCLASSEX);</div>
+<div class="line"><span class="lineno">  117</span>            wc.style = CS_CLASSDC;</div>
+<div class="line"><span class="lineno">  118</span>            wc.lpfnWndProc = <a class="code hl_function" href="#a26e2bf63026c684e58095ee7d341788d">WindowProc</a>;</div>
+<div class="line"><span class="lineno">  119</span>            wc.cbClsExtra = 0;</div>
+<div class="line"><span class="lineno">  120</span>            wc.cbWndExtra = 0;</div>
+<div class="line"><span class="lineno">  121</span>            wc.hInstance = hInstance;</div>
+<div class="line"><span class="lineno">  122</span>            wc.hIcon = NULL;</div>
+<div class="line"><span class="lineno">  123</span>            wc.hCursor = LoadCursor(NULL, IDC_ARROW);</div>
+<div class="line"><span class="lineno">  124</span>            wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);</div>
+<div class="line"><span class="lineno">  125</span>            wc.lpszMenuName = NULL;</div>
+<div class="line"><span class="lineno">  126</span>            wc.lpszClassName = _T(<span class="stringliteral">&quot;MAIN_WINDOW&quot;</span>);</div>
+<div class="line"><span class="lineno">  127</span>            wc.hIconSm = NULL;</div>
+<div class="line"><span class="lineno">  128</span> </div>
+<div class="line"><span class="lineno">  129</span>            RegisterClassEx(&amp;wc);</div>
+<div class="line"><span class="lineno">  130</span> </div>
+<div class="line"><span class="lineno">  131</span>            <a class="code hl_variable" href="#aa7521c7b65d455c5bf9320925658a48e">m_hInstance</a> = hInstance; <span class="comment">// インスタンスハンドルを保存</span></div>
+<div class="line"><span class="lineno">  132</span> </div>
+<div class="line"><span class="lineno">  133</span>            <span class="comment">// ウィンドウの情報をまとめる</span></div>
+<div class="line"><span class="lineno">  134</span>            <a class="code hl_variable" href="#a2554d3a9f49a8f0268ed31e433f5a2ce">m_hWnd</a> = CreateWindowEx(</div>
+<div class="line"><span class="lineno">  135</span>                0, <span class="comment">// Extended styles,// 拡張ウィンドウスタイル</span></div>
+<div class="line"><span class="lineno">  136</span>                _T(<span class="stringliteral">&quot;MAIN_WINDOW&quot;</span>),                          <span class="comment">// ウィンドウクラスの名前</span></div>
+<div class="line"><span class="lineno">  137</span>                windowTitle,                            <span class="comment">// ウィンドウの名前</span></div>
+<div class="line"><span class="lineno">  138</span>                WS_OVERLAPPEDWINDOW,                    <span class="comment">// ウィンドウスタイル</span></div>
+<div class="line"><span class="lineno">  139</span>                CW_USEDEFAULT,                          <span class="comment">// ウィンドウの左上Ｘ座標</span></div>
+<div class="line"><span class="lineno">  140</span>                CW_USEDEFAULT,                          <span class="comment">// ウィンドウの左上Ｙ座標</span></div>
+<div class="line"><span class="lineno">  141</span>                width,                                  <span class="comment">// ウィンドウの幅</span></div>
+<div class="line"><span class="lineno">  142</span>                height,                                 <span class="comment">// ウィンドウの高さ</span></div>
+<div class="line"><span class="lineno">  143</span>                NULL,                                   <span class="comment">// 親ウィンドウのハンドル</span></div>
+<div class="line"><span class="lineno">  144</span>                NULL,                                   <span class="comment">// メニューハンドルまたは子ウィンドウID</span></div>
+<div class="line"><span class="lineno">  145</span>                hInstance,                              <span class="comment">// インスタンスハンドル</span></div>
+<div class="line"><span class="lineno">  146</span>                NULL);                                  <span class="comment">// ウィンドウ作成データ</span></div>
+<div class="line"><span class="lineno">  147</span> </div>
+<div class="line"><span class="lineno">  148</span>            <span class="comment">//ウィンドウのサイズを修正</span></div>
+<div class="line"><span class="lineno">  149</span>            RECT rc1, rc2;</div>
+<div class="line"><span class="lineno">  150</span>            GetWindowRect(<a class="code hl_variable" href="#a2554d3a9f49a8f0268ed31e433f5a2ce">m_hWnd</a>, &amp;rc1);</div>
+<div class="line"><span class="lineno">  151</span>            GetClientRect(<a class="code hl_variable" href="#a2554d3a9f49a8f0268ed31e433f5a2ce">m_hWnd</a>, &amp;rc2);</div>
+<div class="line"><span class="lineno">  152</span>            <span class="keywordtype">int</span> sx = width;</div>
+<div class="line"><span class="lineno">  153</span>            <span class="keywordtype">int</span> sy = height;</div>
+<div class="line"><span class="lineno">  154</span>            sx += ((rc1.right - rc1.left) - (rc2.right - rc2.left));</div>
+<div class="line"><span class="lineno">  155</span>            sy += ((rc1.bottom - rc1.top) - (rc2.bottom - rc2.top));</div>
+<div class="line"><span class="lineno">  156</span>            SetWindowPos(<a class="code hl_variable" href="#a2554d3a9f49a8f0268ed31e433f5a2ce">m_hWnd</a>, NULL, 0, 0, sx, sy, (SWP_NOZORDER |</div>
+<div class="line"><span class="lineno">  157</span>                SWP_NOOWNERZORDER | SWP_NOMOVE));</div>
+<div class="line"><span class="lineno">  158</span> </div>
+<div class="line"><span class="lineno">  159</span>            <span class="comment">// 指定されたウィンドウの表示状態を設定(ウィンドウを表示)</span></div>
+<div class="line"><span class="lineno">  160</span>            ShowWindow(<a class="code hl_variable" href="#a2554d3a9f49a8f0268ed31e433f5a2ce">m_hWnd</a>, nCmdShow);</div>
+<div class="line"><span class="lineno">  161</span>            <span class="comment">// ウィンドウの状態を直ちに反映(ウィンドウのクライアント領域を更新)</span></div>
+<div class="line"><span class="lineno">  162</span>            UpdateWindow(<a class="code hl_variable" href="#a2554d3a9f49a8f0268ed31e433f5a2ce">m_hWnd</a>);</div>
+<div class="line"><span class="lineno">  163</span> </div>
+<div class="line"><span class="lineno">  164</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  165</span>        }</div>
+<div class="ttc" id="aclass_sector11_f_w_1_1_window_handler_html_a2554d3a9f49a8f0268ed31e433f5a2ce"><div class="ttname"><a href="#a2554d3a9f49a8f0268ed31e433f5a2ce">Sector11FW::WindowHandler::m_hWnd</a></div><div class="ttdeci">static HWND m_hWnd</div><div class="ttdef"><b>Definition</b> <a href="_window_handler_8h_source.html#l00217">WindowHandler.h:217</a></div></div>
+<div class="ttc" id="aclass_sector11_f_w_1_1_window_handler_html_a26e2bf63026c684e58095ee7d341788d"><div class="ttname"><a href="#a26e2bf63026c684e58095ee7d341788d">Sector11FW::WindowHandler::WindowProc</a></div><div class="ttdeci">static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)</div><div class="ttdoc">ウィンドウプロシージャ</div><div class="ttdef"><b>Definition</b> <a href="_window_handler_8cpp_source.html#l00038">WindowHandler.cpp:38</a></div></div>
+<div class="ttc" id="aclass_sector11_f_w_1_1_window_handler_html_a3afa8fbbc9e1b18a55bb47aadcf30545"><div class="ttname"><a href="#a3afa8fbbc9e1b18a55bb47aadcf30545">Sector11FW::WindowHandler::CreateConsoleWindow</a></div><div class="ttdeci">static void CreateConsoleWindow()</div><div class="ttdoc">コンソールウィンドウの作成</div><div class="ttdef"><b>Definition</b> <a href="_window_handler_8cpp_source.html#l00061">WindowHandler.cpp:61</a></div></div>
+<div class="ttc" id="aclass_sector11_f_w_1_1_window_handler_html_aa7521c7b65d455c5bf9320925658a48e"><div class="ttname"><a href="#aa7521c7b65d455c5bf9320925658a48e">Sector11FW::WindowHandler::m_hInstance</a></div><div class="ttdeci">static HINSTANCE m_hInstance</div><div class="ttdef"><b>Definition</b> <a href="_window_handler_8h_source.html#l00219">WindowHandler.h:219</a></div></div>
+<div class="ttc" id="aclass_sector11_f_w_1_1_window_handler_html_ae6a93bd33dd5a8a32097819edcbeb5c2"><div class="ttname"><a href="#ae6a93bd33dd5a8a32097819edcbeb5c2">Sector11FW::WindowHandler::m_isCreated</a></div><div class="ttdeci">static bool m_isCreated</div><div class="ttdef"><b>Definition</b> <a href="_window_handler_8h_source.html#l00215">WindowHandler.h:215</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 3 --></div>
+</div>
+
+</div>
+</div>
+<a id="a3afa8fbbc9e1b18a55bb47aadcf30545" name="a3afa8fbbc9e1b18a55bb47aadcf30545"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3afa8fbbc9e1b18a55bb47aadcf30545">&#9670;&#160;</a></span>CreateConsoleWindow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Sector11FW::WindowHandler::CreateConsoleWindow </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンソールウィンドウの作成 </p>
+<p>コンソールウィンドウを作成する </p>
+
+<p class="definition"> <a class="el" href="_window_handler_8cpp_source.html">WindowHandler.cpp</a> の <a class="el" href="_window_handler_8cpp_source.html#l00061">61</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   62</span>{</div>
+<div class="line"><span class="lineno">   63</span>    <span class="comment">// Allocates a new console for the calling process</span></div>
+<div class="line"><span class="lineno">   64</span>    AllocConsole();</div>
+<div class="line"><span class="lineno">   65</span> </div>
+<div class="line"><span class="lineno">   66</span>    <span class="comment">// Redirect standard input, output, and error to the console window</span></div>
+<div class="line"><span class="lineno">   67</span>    freopen_s((FILE**)stdin, <span class="stringliteral">&quot;CONIN$&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>, stdin);</div>
+<div class="line"><span class="lineno">   68</span>    freopen_s((FILE**)stdout, <span class="stringliteral">&quot;CONOUT$&quot;</span>, <span class="stringliteral">&quot;w&quot;</span>, stdout);</div>
+<div class="line"><span class="lineno">   69</span>    freopen_s((FILE**)stderr, <span class="stringliteral">&quot;CONOUT$&quot;</span>, <span class="stringliteral">&quot;w&quot;</span>, stderr);</div>
+<div class="line"><span class="lineno">   70</span> </div>
+<div class="line"><span class="lineno">   71</span>    <span class="comment">// Optional: Set console title</span></div>
+<div class="line"><span class="lineno">   72</span>    SetConsoleTitle(<span class="stringliteral">&quot;Debug Console&quot;</span>);</div>
+<div class="line"><span class="lineno">   73</span> </div>
+<div class="line"><span class="lineno">   74</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Debugging Console Initialized!&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">   75</span>}</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 4 --></div>
+</div>
+
+</div>
+</div>
+<a id="ac08f1e20c0c334d2e289d5fe50a240a6" name="ac08f1e20c0c334d2e289d5fe50a240a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac08f1e20c0c334d2e289d5fe50a240a6">&#9670;&#160;</a></span>Destroy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int Sector11FW::WindowHandler::Destroy </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ウィンドウの破棄 </p>
+<p>ウィンドウの破棄 </p>
+<p>CONSOLE_TRUE</p>
+
+<p class="definition"> <a class="el" href="_window_handler_8h_source.html">WindowHandler.h</a> の <a class="el" href="_window_handler_8h_source.html#l00179">179</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  180</span>        {</div>
+<div class="line"><span class="lineno">  181</span>            <span class="comment">// ウィンドウが作成されていなければ、何もしない</span></div>
+<div class="line"><span class="lineno">  182</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#ae6a93bd33dd5a8a32097819edcbeb5c2">m_isCreated</a>) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span><span class="preprocessor">#ifndef CONSOLE_TRUE</span></div>
+<div class="line"><span class="lineno">  185</span><span class="preprocessor">#ifdef _DEBUG</span></div>
+<div class="line"><span class="lineno">  186</span>            <span class="comment">//コンソール画面閉じる</span></div>
+<div class="line"><span class="lineno">  187</span>            FreeConsole();</div>
+<div class="line"><span class="lineno">  188</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  189</span> </div>
+<div class="line"><span class="lineno">  190</span><span class="preprocessor">#endif </span></div>
+<div class="line"><span class="lineno">  191</span> </div>
+<div class="line"><span class="lineno">  192</span>            UnregisterClass(_T(<span class="stringliteral">&quot;MAIN_WINDOW&quot;</span>), <a class="code hl_variable" href="#aa7521c7b65d455c5bf9320925658a48e">m_hInstance</a>);</div>
+<div class="line"><span class="lineno">  193</span> </div>
+<div class="line"><span class="lineno">  194</span>            <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)<a class="code hl_variable" href="#a47c7390b37bf35fa7fbb4080b4a7919d">m_msg</a>.wParam;</div>
+<div class="line"><span class="lineno">  195</span>        }</div>
+<div class="ttc" id="aclass_sector11_f_w_1_1_window_handler_html_a47c7390b37bf35fa7fbb4080b4a7919d"><div class="ttname"><a href="#a47c7390b37bf35fa7fbb4080b4a7919d">Sector11FW::WindowHandler::m_msg</a></div><div class="ttdeci">static MSG m_msg</div><div class="ttdef"><b>Definition</b> <a href="_window_handler_8h_source.html#l00221">WindowHandler.h:221</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a611bff2199e2d29782a3795fbacdcf12" name="a611bff2199e2d29782a3795fbacdcf12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a611bff2199e2d29782a3795fbacdcf12">&#9670;&#160;</a></span>Run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Sector11FW::WindowHandler::Run </td>
+          <td>(</td>
+          <td class="paramtype">void(*</td>          <td class="paramname"><span class="paramname"><em>pLoop&#160;</em></span>)()</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ウィンドウのメッセージループ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pLoop</td><td>ループ処理関数ポインタ</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>メッセージが無ければ、ループ処理を実行 </p>
+
+<p class="definition"> <a class="el" href="_window_handler_8cpp_source.html">WindowHandler.cpp</a> の <a class="el" href="_window_handler_8cpp_source.html#l00013">13</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   14</span>{</div>
+<div class="line"><span class="lineno">   15</span>    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
+<div class="line"><span class="lineno">   16</span>    {</div>
+<div class="line"><span class="lineno">   17</span>        <span class="comment">// 新たにメッセージがあれば</span></div>
+<div class="line"><span class="lineno">   18</span>        <span class="keywordflow">if</span> (PeekMessage(&amp;<a class="code hl_variable" href="#a47c7390b37bf35fa7fbb4080b4a7919d">m_msg</a>, NULL, 0, 0, PM_REMOVE))</div>
+<div class="line"><span class="lineno">   19</span>        {</div>
+<div class="line"><span class="lineno">   20</span>            TranslateMessage(&amp;<a class="code hl_variable" href="#a47c7390b37bf35fa7fbb4080b4a7919d">m_msg</a>);</div>
+<div class="line"><span class="lineno">   21</span>            DispatchMessage(&amp;<a class="code hl_variable" href="#a47c7390b37bf35fa7fbb4080b4a7919d">m_msg</a>);</div>
+<div class="line"><span class="lineno">   22</span> </div>
+<div class="line"><span class="lineno">   23</span>            <span class="comment">// 「WM_QUIT」メッセージを受け取ったらループを抜ける</span></div>
+<div class="line"><span class="lineno">   24</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a47c7390b37bf35fa7fbb4080b4a7919d">m_msg</a>.message == WM_QUIT) {</div>
+<div class="line"><span class="lineno">   25</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">   26</span>            }</div>
+<div class="line"><span class="lineno">   27</span> </div>
+<div class="line"><span class="lineno">   28</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">   29</span>        }</div>
+<div class="line"><span class="lineno">   30</span> </div>
+<div class="line"><span class="lineno">   31</span>        <span class="comment">// メッセージが無ければ、ループ処理を実行</span></div>
+<div class="line"><span class="lineno">   32</span>        pLoop();</div>
+<div class="line"><span class="lineno">   33</span>    }</div>
+<div class="line"><span class="lineno">   34</span> </div>
+<div class="line"><span class="lineno">   35</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a26e2bf63026c684e58095ee7d341788d" name="a26e2bf63026c684e58095ee7d341788d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26e2bf63026c684e58095ee7d341788d">&#9670;&#160;</a></span>WindowProc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">LRESULT Sector11FW::WindowHandler::WindowProc </td>
+          <td>(</td>
+          <td class="paramtype">HWND</td>          <td class="paramname"><span class="paramname"><em>hwnd</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UINT</td>          <td class="paramname"><span class="paramname"><em>uMsg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">WPARAM</td>          <td class="paramname"><span class="paramname"><em>wParam</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPARAM</td>          <td class="paramname"><span class="paramname"><em>lParam</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ウィンドウプロシージャ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hwnd</td><td>ウィンドウハンドル </td></tr>
+    <tr><td class="paramname">uMsg</td><td>メッセージID </td></tr>
+    <tr><td class="paramname">wParam</td><td>WPARAM </td></tr>
+    <tr><td class="paramname">lParam</td><td>LPARAM </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>LRESULT メッセージの結果 </dd></dl>
+
+<p class="definition"> <a class="el" href="_window_handler_8cpp_source.html">WindowHandler.cpp</a> の <a class="el" href="_window_handler_8cpp_source.html#l00038">38</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   39</span>{</div>
+<div class="line"><span class="lineno">   40</span>    <span class="keywordflow">switch</span> (uMsg) {</div>
+<div class="line"><span class="lineno">   41</span>    <span class="keywordflow">case</span> WM_DESTROY:</div>
+<div class="line"><span class="lineno">   42</span>        PostQuitMessage(0);</div>
+<div class="line"><span class="lineno">   43</span>        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">   44</span> </div>
+<div class="line"><span class="lineno">   45</span>    <span class="keywordflow">case</span> WM_CLOSE:  <span class="comment">// 「x」ボタンが押されたら</span></div>
+<div class="line"><span class="lineno">   46</span>    {</div>
+<div class="line"><span class="lineno">   47</span>        <span class="keywordtype">int</span> res = MessageBoxA(NULL, <span class="stringliteral">&quot;終了しますか？&quot;</span>, <span class="stringliteral">&quot;確認&quot;</span>, MB_OKCANCEL);</div>
+<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">if</span> (res == IDOK)</div>
+<div class="line"><span class="lineno">   49</span>        {</div>
+<div class="line"><span class="lineno">   50</span>            DestroyWindow(<a class="code hl_variable" href="#a2554d3a9f49a8f0268ed31e433f5a2ce">m_hWnd</a>);  <span class="comment">// 「WM_DESTROY」メッセージを送る</span></div>
+<div class="line"><span class="lineno">   51</span>        }</div>
+<div class="line"><span class="lineno">   52</span>    }</div>
+<div class="line"><span class="lineno">   53</span>    <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">   54</span>    <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">   55</span>        <span class="keywordflow">return</span> DefWindowProc(hwnd, uMsg, wParam, lParam);</div>
+<div class="line"><span class="lineno">   56</span>    }</div>
+<div class="line"><span class="lineno">   57</span> </div>
+<div class="line"><span class="lineno">   58</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">   59</span>}</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 5 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="aa7521c7b65d455c5bf9320925658a48e" name="aa7521c7b65d455c5bf9320925658a48e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7521c7b65d455c5bf9320925658a48e">&#9670;&#160;</a></span>m_hInstance</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">HINSTANCE Sector11FW::WindowHandler::m_hInstance</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_window_handler_8h_source.html">WindowHandler.h</a> の <a class="el" href="_window_handler_8h_source.html#l00219">219</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2554d3a9f49a8f0268ed31e433f5a2ce" name="a2554d3a9f49a8f0268ed31e433f5a2ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2554d3a9f49a8f0268ed31e433f5a2ce">&#9670;&#160;</a></span>m_hWnd</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">HWND Sector11FW::WindowHandler::m_hWnd</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_window_handler_8h_source.html">WindowHandler.h</a> の <a class="el" href="_window_handler_8h_source.html#l00217">217</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae6a93bd33dd5a8a32097819edcbeb5c2" name="ae6a93bd33dd5a8a32097819edcbeb5c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6a93bd33dd5a8a32097819edcbeb5c2">&#9670;&#160;</a></span>m_isCreated</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Sector11FW::WindowHandler::m_isCreated = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_window_handler_8h_source.html">WindowHandler.h</a> の <a class="el" href="_window_handler_8h_source.html#l00215">215</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a47c7390b37bf35fa7fbb4080b4a7919d" name="a47c7390b37bf35fa7fbb4080b4a7919d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47c7390b37bf35fa7fbb4080b4a7919d">&#9670;&#160;</a></span>m_msg</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">MSG Sector11FW::WindowHandler::m_msg</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_window_handler_8h_source.html">WindowHandler.h</a> の <a class="el" href="_window_handler_8h_source.html#l00221">221</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/Sector11FW/Sector11FW/inc/Core/<a class="el" href="_window_handler_8h_source.html">WindowHandler.h</a></li>
+<li>C:/work/GitHub/Sector3X/Sector11FW/Sector11FW/src/Core/<a class="el" href="_window_handler_8cpp_source.html">WindowHandler.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector11_f_w.html">Sector11FW</a></li><li class="navelem"><a class="el" href="class_sector11_f_w_1_1_window_handler.html">WindowHandler</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>
