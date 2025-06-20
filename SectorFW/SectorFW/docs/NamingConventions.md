@@ -11,6 +11,7 @@
 | ヘッダー         | クラス名と同じ    | `PlayerCharacter.h`   |
 | ソース           | クラス名と同じ    | `PlayerCharacter.cpp` |
 | インターフェース | `I` + クラス名    | `IInteractable.h`     |
+| データ定義       | すべて小文字      | `component.h`         |
 
 ---
 
@@ -19,14 +20,13 @@
 - 単語の区切りを大文字で始める（PascalCase）
 - 接頭辞を使用（A, U, F, I など）
 
-| 型 | 接頭辞 |  例  |
-|----|--------|------|
-| Actorクラス        | `A` | `AEnemyBoss`        |
-| UObject派生        | `U` | `UGameInstanceBase` |
-| 構造体（Struct）   | `F` | `FPlayerStats`      |
-| インターフェース   | `I` | `IUsableObject`     |
-| Enum               | `E` | `ECharacterState`   |
-| テンプレートクラス | `T` | `TArray`            |
+|          型          |  接頭辞  |         例          |
+|----------------------|----------|---------------------|
+| コンポーネント構造体 |   `C`    | `CEnemyBoss`        |
+| システムクラス       |   `S`    | `SPlayerStats`      |
+| インターフェース     |   `I`    | `IUsableObject`     |
+| Enum                 |   `E`    | `ECharacterState`   |
+| テンプレートクラス   |   `T`    | `TArray`            |
 
 ---
 

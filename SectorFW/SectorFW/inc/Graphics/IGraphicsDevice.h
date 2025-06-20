@@ -8,6 +8,9 @@
 #pragma once
 
 #include <wrl/client.h>
+#include <variant>
+#include <string>
+#include <memory>
 
 using namespace Microsoft::WRL;
 
@@ -44,40 +47,14 @@ public:
  * @brief グラフィックコマンドリストインターフェース
  * @class IGraphicsCommandList
  */
+template<typename Impl>
 class IGraphicsCommandList {
 public:
 	/**
 	 * @brief テクスチャのセット
 	 * @param texture テクスチャ
 	 */
-	virtual void SetTexture(ITexture* texture) = 0;
-	/**
-	 * @brief バッファのセット
-	 * @param vb バッファ
-	 * @param offset オフセット
-	 */
-	virtual void SetVertexBuffer(IVertexBuffer* vb, UINT offset) = 0;
-	/**
-	 * @brief 描画
-	 * @param vertexCount 頂点数
-	 * @param startVertexLocation 頂点開始地点
-	 */
-	virtual void Draw(UINT vertexCount, UINT startVertexLocation = 0) = 0;
-	virtual ~IGraphicsCommandList() = default;
-};
-
-/**
- * @brief グラフィックコマンドリストのCRTPクラス
- * @tparam Impl 実装クラス
- */
-template <typename Impl>
-class GraphicsCommandListCRTP : public IGraphicsCommandList {
-public:
-	/**
-	 * @brief テクスチャのセット
-	 * @param texture テクスチャ
-	 */
-	void SetTexture(ITexture* texture) override {
+	void SetTexture(ITexture* texture) {
 		static_cast<Impl*>(this)->SetTextureImpl(texture);
 	}
 	/**
@@ -85,7 +62,7 @@ public:
 	 * @param vb バッファ
 	 * @param offset オフセット
 	 */
-	void SetVertexBuffer(IVertexBuffer* vb, UINT offset = 0) override {
+	void SetVertexBuffer(IVertexBuffer* vb, UINT offset = 0) {
 		static_cast<Impl*>(this)->SetVertexBufferImpl(vb, offset);
 	}
 	/**
@@ -93,15 +70,19 @@ public:
 	 * @param vertexCount 頂点数
 	 * @param startVertexLocation 開始地点
 	 */
-	void Draw(UINT vertexCount, UINT startVertexLocation = 0) override {
+	void Draw(UINT vertexCount, UINT startVertexLocation = 0) {
 		static_cast<Impl*>(this)->DrawImpl(vertexCount);
 	}
 };
+
+template<typename Impl>
+concept GraphicsCommandType = std::derived_from<Impl, IGraphicsCommandList<Impl>>;
 
 /**
  * @brief グラフィックデバイスのインターフェース
  * @class IGraphicsDevice
  */
+template<typename Impl, GraphicsCommandType GraphicsCommand>
 class IGraphicsDevice {
 protected:
 	/**
@@ -110,7 +91,9 @@ protected:
 	 * @param width ウィンドウ幅
 	 * @param height ウィンドウ高さ
 	 */
-	virtual bool Initialize(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height) = 0;
+	bool Initialize(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height) {
+		return static_cast<Impl*>(this)->InitializeImpl(nativeWindowHandle, width, height);
+	}
 public:
 	/**
 	 * @brief コンストラクタ
@@ -130,34 +113,44 @@ public:
 	 * @brief 画面をクリア
 	 * @param clearColor
 	 */
-	virtual void Clear(const float clearColor[4]) = 0;
+	void Clear(const float clearColor[4])	{
+		static_cast<Impl*>(this)->ClearImpl(clearColor);
+	}
 	/**
 	 * @brief 描画
 	 */
-	virtual void Present() = 0;
+	void Present() {
+		static_cast<Impl*>(this)->PresentImpl();
+	}
 	/**
 	 * @brief 初期化
 	 * @param hwnd ウィンドウハンドル
 	 * @param width ウィンドウ幅
 	 * @param height ウィンドウ高さ
 	 */
-	virtual std::shared_ptr<IGraphicsCommandList> CreateCommandList() = 0;
+	std::shared_ptr<GraphicsCommand> CreateCommandList() {
+		return static_cast<Impl*>(this)->CreateCommandListImpl();
+	}
 	/**
 	 * @brief テクスチャの作成
 	 * @param path テクスチャのパス
 	 */
-	virtual std::shared_ptr<ITexture> CreateTexture(const std::string& path) = 0;
+	std::shared_ptr<ITexture> CreateTexture(const std::string& path) {
+		return static_cast<Impl*>(this)->CreateTextureImpl(path);
+	}
 	/**
 	 * @brief バーテックスバッファの作成
 	 * @param data データ
 	 * @param size サイズ
 	 * @param stride ストライド
 	 */
-	virtual std::shared_ptr<IVertexBuffer> CreateVertexBuffer(const void* data, size_t size, UINT stride) = 0;
+	std::shared_ptr<IVertexBuffer> CreateVertexBuffer(const void* data, size_t size, UINT stride) {
+		return static_cast<Impl*>(this)->CreateVertexBufferImpl(data, size, stride);
+	}
 	/**
 	 * @brief デストラクタ
 	 */
-	virtual ~IGraphicsDevice() = default;
+	~IGraphicsDevice() = default;
 	/**
 	 * @brief 初期化フラグの取得
 	 * @return 初期化フラグ

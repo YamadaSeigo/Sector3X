@@ -37,6 +37,12 @@
     <Filter Include="Inc\Header">
       <UniqueIdentifier>{c1428071-2f0a-43d6-8129-73fd3cbe6006}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\Core\ECS">
+      <UniqueIdentifier>{551c94e0-2537-4dc6-a640-fc01d40dc461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Core\ECS\System">
+      <UniqueIdentifier>{60a0066c-3e02-457e-83c2-8f1aa97a246e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utility\doxygen_sample.h">
@@ -45,7 +51,7 @@
     <ClInclude Include="src\Utility\pch.h">
       <Filter>Src\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\FpsControl.h">
+    <ClInclude Include="inc\Util\FrameTimer.h">
       <Filter>Inc\Util</Filter>
     </ClInclude>
     <ClInclude Include="inc\Util\NonCopyable.h">
@@ -69,6 +75,108 @@
     <ClInclude Include="src\Utility\message.h">
       <Filter>Src\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Util\alignment.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\AccessWrapper.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\DX12Graphics.h">
+      <Filter>Inc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Math\Vector.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Math\AABB.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Level.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\World.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\AccessInfo.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\Accessor.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\Archetype.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\ArchetypeChunk.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\ArchetypeManager.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\component.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\ComponentTypeRegistry.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\entity.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\EntityManager.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\ISystem.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\Query.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\ServiceContext.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\SparseComponentStore.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\SystemScheduler.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\ITypeSystem.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\AssetStorage.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\AssetManager.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\TypeCheck.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\CommonTypes.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\EntityIDAllocator.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Math\Quaternion.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\Transform.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Partition.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\SpatialChunk.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Grid2DPartition.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\logger.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\extract_type.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">
@@ -80,11 +188,29 @@
     <ClCompile Include="src\Utility\pch.cpp">
       <Filter>Src\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\GameEngine.cpp">
-      <Filter>Src\Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\DX11Graphics.cpp">
       <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\EntityManager.cpp">
+      <Filter>Src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ArchetypeManager.cpp">
+      <Filter>Src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Chunk.cpp">
+      <Filter>Src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility\message.cpp">
+      <Filter>Src\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ComponentTypeRegistry.cpp">
+      <Filter>Src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX12Graphics.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GameEngine.cpp">
+      <Filter>Src\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

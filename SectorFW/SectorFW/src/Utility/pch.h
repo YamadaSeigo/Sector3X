@@ -7,9 +7,24 @@
 
 #pragma once
 
-#include <tchar.h>
-#include <iostream>
-#include <cassert>
-#include <variant>
+ //#include <iostream>
+ //#include <cassert>
+ //#include <variant>
+ //#include <functional>
+ //#include <bitset>
+ //#include <unordered_map>
+ //#include <vector>
+ //#include <memory>
+ //#include <optional>
+ //#include <fstream>
+ //#include <execution>
+ //#include <algorithm>
+ //#include <cstring>
+ //#include <thread>
+ //#include <mutex>
+ //#include <typeindex>
+ //#include <bit>
+ //#include <future>
+ //#include <unordered_set>
 
 #include "Graphics/IGraphicsDevice.h"

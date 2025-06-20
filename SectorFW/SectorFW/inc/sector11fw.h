@@ -10,12 +10,10 @@
 #ifndef A_SECTOR11FW_H_
 #define A_SECTOR11FW_H_
 
-#include <tchar.h>
-#include <iostream>
-#include <cassert>
-#include <variant>
-
 #include "Graphics/IGraphicsDevice.h"
 #include "Core/GameEngine.h"
+#include "Core/ECS/Query.h"
+
+#include "Core/Grid2DPartition.h"
 
 #endif // A_SECTOR11FW_H_

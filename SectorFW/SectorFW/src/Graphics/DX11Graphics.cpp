@@ -2,7 +2,7 @@
 
 namespace SectorFW
 {
-	bool DX11GraphicsDevice::Initialize(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height)
+	bool DX11GraphicsDevice::InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height)
 	{
 		if (!std::holds_alternative<HWND>(nativeWindowHandle)) return false;
 		HWND hWnd = std::get<HWND>(nativeWindowHandle);
@@ -64,27 +64,27 @@ namespace SectorFW
 		return true;
 	}
 
-	void DX11GraphicsDevice::Clear(const FLOAT clearColor[4])
+	void DX11GraphicsDevice::ClearImpl(const FLOAT clearColor[4])
 	{
 		m_context->ClearRenderTargetView(m_renderTargetView.Get(), clearColor);
 	}
 
-	void DX11GraphicsDevice::Present()
+	void DX11GraphicsDevice::PresentImpl()
 	{
 		m_swapChain->Present(1, 0);
 	}
 
-	std::shared_ptr<IGraphicsCommandList> DX11GraphicsDevice::CreateCommandList()
+	std::shared_ptr<DX11CommandListImpl> DX11GraphicsDevice::CreateCommandListImpl()
 	{
 		return std::shared_ptr<DX11CommandListImpl>();
 	}
 
-	std::shared_ptr<ITexture> DX11GraphicsDevice::CreateTexture(const std::string& path)
+	std::shared_ptr<ITexture> DX11GraphicsDevice::CreateTextureImpl(const std::string& path)
 	{
 		return std::shared_ptr<DX11Texture>();
 	}
 
-	std::shared_ptr<IVertexBuffer> DX11GraphicsDevice::CreateVertexBuffer(const void* data, size_t size, UINT stride)
+	std::shared_ptr<IVertexBuffer> DX11GraphicsDevice::CreateVertexBufferImpl(const void* data, size_t size, UINT stride)
 	{
 		return std::shared_ptr<DX11VertexBuffer>();
 	}

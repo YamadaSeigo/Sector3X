@@ -19,21 +19,61 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Core\AssetManager.h" />
+    <ClInclude Include="inc\Core\AssetStorage.h" />
+    <ClInclude Include="inc\Core\ECS\AccessInfo.h" />
+    <ClInclude Include="inc\Core\ECS\Accessor.h" />
+    <ClInclude Include="inc\Core\ECS\Archetype.h" />
+    <ClInclude Include="inc\Core\ECS\ArchetypeChunk.h" />
+    <ClInclude Include="inc\Core\ECS\ArchetypeManager.h" />
+    <ClInclude Include="inc\Core\ECS\component.h" />
+    <ClInclude Include="inc\Core\ECS\ComponentTypeRegistry.h" />
+    <ClInclude Include="inc\Core\ECS\entity.h" />
+    <ClInclude Include="inc\Core\ECS\EntityIDAllocator.h" />
+    <ClInclude Include="inc\Core\ECS\EntityManager.h" />
+    <ClInclude Include="inc\Core\ECS\ISystem.h" />
+    <ClInclude Include="inc\Core\ECS\ITypeSystem.h" />
+    <ClInclude Include="inc\Core\ECS\Query.h" />
+    <ClInclude Include="inc\Core\ECS\ServiceContext.h" />
+    <ClInclude Include="inc\Core\ECS\SparseComponentStore.h" />
+    <ClInclude Include="inc\Core\ECS\SystemScheduler.h" />
     <ClInclude Include="inc\Core\GameEngine.h" />
+    <ClInclude Include="inc\Core\Grid2DPartition.h" />
+    <ClInclude Include="inc\Core\Partition.h" />
+    <ClInclude Include="inc\Core\Level.h" />
+    <ClInclude Include="inc\Core\SpatialChunk.h" />
+    <ClInclude Include="inc\Core\World.h" />
     <ClInclude Include="inc\DX11Graphics.h" />
+    <ClInclude Include="inc\DX12Graphics.h" />
     <ClInclude Include="inc\Graphics\IGraphicsDevice.h" />
+    <ClInclude Include="inc\Math\AABB.hpp" />
+    <ClInclude Include="inc\Math\Quaternion.hpp" />
+    <ClInclude Include="inc\Math\Vector.hpp" />
     <ClInclude Include="inc\sector11fw.h" />
-    <ClInclude Include="inc\Util\FpsControl.h" />
+    <ClInclude Include="inc\Util\AccessWrapper.h" />
+    <ClInclude Include="inc\Util\alignment.h" />
+    <ClInclude Include="inc\Util\CommonTypes.h" />
+    <ClInclude Include="inc\Util\extract_type.h" />
+    <ClInclude Include="inc\Util\FrameTimer.h" />
+    <ClInclude Include="inc\Util\logger.hpp" />
     <ClInclude Include="inc\Util\NonCopyable.h" />
+    <ClInclude Include="inc\Util\Transform.h" />
+    <ClInclude Include="inc\Util\TypeCheck.h" />
     <ClInclude Include="inc\WindowHandler.h" />
     <ClInclude Include="src\Utility\doxygen_sample.h" />
     <ClInclude Include="src\Utility\message.h" />
     <ClInclude Include="src\Utility\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\ArchetypeManager.cpp" />
+    <ClCompile Include="src\Core\Chunk.cpp" />
+    <ClCompile Include="src\Core\ComponentTypeRegistry.cpp" />
+    <ClCompile Include="src\Core\EntityManager.cpp" />
     <ClCompile Include="src\Core\GameEngine.cpp" />
     <ClCompile Include="src\Core\WindowHandler.cpp" />
     <ClCompile Include="src\Graphics\DX11Graphics.cpp" />
+    <ClCompile Include="src\Graphics\DX12Graphics.cpp" />
+    <ClCompile Include="src\Utility\message.cpp" />
     <ClCompile Include="src\Utility\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

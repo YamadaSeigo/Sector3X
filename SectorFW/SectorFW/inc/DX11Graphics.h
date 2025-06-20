@@ -60,7 +60,7 @@ namespace SectorFW
 	 * @brief DX11用コマンドリストクラス
 	 * @class DX11CommandListImpl
 	 */
-	class DX11CommandListImpl : public GraphicsCommandListCRTP<DX11CommandListImpl> {
+	class DX11CommandListImpl : public IGraphicsCommandList<DX11CommandListImpl> {
 	public:
 		/**
 		 * @brief コンストラクタ
@@ -106,8 +106,10 @@ namespace SectorFW
 	 * @brief DX11用グラフィックスデバイスクラス
 	 * @class DX11GraphicsDevice
 	 */
-	class DX11GraphicsDevice : public IGraphicsDevice
+	class DX11GraphicsDevice : public IGraphicsDevice<DX11GraphicsDevice, DX11CommandListImpl>
 	{
+		using CommandList = DX11CommandListImpl;
+
 	public:
 		/**
 		 * @brief コンストラクタ
@@ -118,24 +120,24 @@ namespace SectorFW
 		 */
 		~DX11GraphicsDevice() = default;
 
-		bool Initialize(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height) override;
-		void Clear(const FLOAT clearColor[4]) override;
-		void Present() override;
+		bool InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height);
+		void ClearImpl(const FLOAT clearColor[4]);
+		void PresentImpl();
 		/**
 		 * @brief コマンドリストを取得
 		 * @return コマンドリスト
 		 */
-		virtual std::shared_ptr<IGraphicsCommandList> CreateCommandList() override;
+		std::shared_ptr<DX11CommandListImpl> CreateCommandListImpl();
 		/**
 		 * @brief テクスチャを生成
 		 * @return テクスチャインターフェース
 		 */
-		virtual std::shared_ptr<ITexture> CreateTexture(const std::string& path) override;
+		std::shared_ptr<ITexture> CreateTextureImpl(const std::string& path);
 		/**
 		 * @brief バーテックスバッファーを生成
 		 * @return バーテックスバッファーインターフェース
 		 */
-		virtual std::shared_ptr<IVertexBuffer> CreateVertexBuffer(const void* data, size_t size, UINT stride) override;
+		std::shared_ptr<IVertexBuffer> CreateVertexBufferImpl(const void* data, size_t size, UINT stride);
 
 	private:
 		// デバイス

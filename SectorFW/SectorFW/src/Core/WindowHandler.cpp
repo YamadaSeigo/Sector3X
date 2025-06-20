@@ -1,5 +1,7 @@
 #ifdef _WIN32
 
+#include <iostream>
+
 #include "WindowHandler.h"
 
 namespace SectorFW
