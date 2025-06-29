@@ -1,0 +1,517 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::Math::Quat&lt; T &gt; 構造体テンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('struct_sector_f_w_1_1_math_1_1_quat.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pub-static-methods">静的公開メンバ関数</a> &#124;
+<a href="#pub-attribs">公開変数類</a> &#124;
+<a href="struct_sector_f_w_1_1_math_1_1_quat-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::Math::Quat&lt; T &gt; 構造体テンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a61c4959e10d6c67481ada23af43b102d" id="r_a61c4959e10d6c67481ada23af43b102d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61c4959e10d6c67481ada23af43b102d">Normalize</a> ()</td></tr>
+<tr class="separator:a61c4959e10d6c67481ada23af43b102d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a311d048b5dba0f9912a095c05b057439" id="r_a311d048b5dba0f9912a095c05b057439"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sector_f_w_1_1_math.html#a87f1e98587eb36036629f704e9ec428c">Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a311d048b5dba0f9912a095c05b057439">RotateVector</a> (const <a class="el" href="namespace_sector_f_w_1_1_math.html#a87f1e98587eb36036629f704e9ec428c">Vec3f</a> &amp;v) const</td></tr>
+<tr class="separator:a311d048b5dba0f9912a095c05b057439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad80679fed33f46cfe58ed9d8b71f7f46" id="r_ad80679fed33f46cfe58ed9d8b71f7f46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad80679fed33f46cfe58ed9d8b71f7f46">Inverse</a> () const</td></tr>
+<tr class="separator:ad80679fed33f46cfe58ed9d8b71f7f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1fd110ce3952c7861feaca1abf020e8" id="r_aa1fd110ce3952c7861feaca1abf020e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1fd110ce3952c7861feaca1abf020e8">operator*</a> (const <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> &amp;q) const</td></tr>
+<tr class="separator:aa1fd110ce3952c7861feaca1abf020e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a2d3786b11a02908d80e75542e16c6a8c" id="r_a2d3786b11a02908d80e75542e16c6a8c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d3786b11a02908d80e75542e16c6a8c">FromEuler</a> (T pitch, T yaw, T roll)</td></tr>
+<tr class="separator:a2d3786b11a02908d80e75542e16c6a8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f1f952935839bb2b716565985633e65" id="r_a1f1f952935839bb2b716565985633e65"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f1f952935839bb2b716565985633e65">Slerp</a> (const <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> &amp;<a class="el" href="doxygen__sample_8cpp.html#aa4c2a5552e9bc49b1816ff532f558c74">a</a>, const <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> &amp;b, T t)</td></tr>
+<tr class="separator:a1f1f952935839bb2b716565985633e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:a0eb447e01cf8ed086dd63ac85c1f9101" id="r_a0eb447e01cf8ed086dd63ac85c1f9101"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a></td></tr>
+<tr class="separator:a0eb447e01cf8ed086dd63ac85c1f9101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11c9b8de5f9a6a21fb8d5f72c021280a" id="r_a11c9b8de5f9a6a21fb8d5f72c021280a"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a></td></tr>
+<tr class="separator:a11c9b8de5f9a6a21fb8d5f72c021280a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee56dccc5ee715285ebe645697f81208" id="r_aee56dccc5ee715285ebe645697f81208"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee56dccc5ee715285ebe645697f81208">z</a></td></tr>
+<tr class="separator:aee56dccc5ee715285ebe645697f81208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f705aef1f21dddb124abcbdb49f1c95" id="r_a2f705aef1f21dddb124abcbdb49f1c95"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a></td></tr>
+<tr class="separator:a2f705aef1f21dddb124abcbdb49f1c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+struct SectorFW::Math::Quat&lt; T &gt;</div>
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00011">11</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">関数詳解</h2>
+<a id="a2d3786b11a02908d80e75542e16c6a8c" name="a2d3786b11a02908d80e75542e16c6a8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d3786b11a02908d80e75542e16c6a8c">&#9670;&#160;</a></span>FromEuler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::FromEuler </td>
+          <td>(</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>pitch</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>yaw</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>roll</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00023">23</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   23</span>                                                          {</div>
+<div class="line"><span class="lineno">   24</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cy</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cos</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">yaw</a> * 0.5f);</div>
+<div class="line"><span class="lineno">   25</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sy</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">yaw</a> * 0.5f);</div>
+<div class="line"><span class="lineno">   26</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cp</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cos</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">pitch</a> * 0.5f);</div>
+<div class="line"><span class="lineno">   27</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sp</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">pitch</a> * 0.5f);</div>
+<div class="line"><span class="lineno">   28</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cr</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cos</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">roll</a> * 0.5f);</div>
+<div class="line"><span class="lineno">   29</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sr</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">roll</a> * 0.5f);</div>
+<div class="line"><span class="lineno">   30</span> </div>
+<div class="line"><span class="lineno">   31</span>                <span class="keywordflow">return</span> {</div>
+<div class="line"><span class="lineno">   32</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sr</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cp</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cy</a> - <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cr</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sp</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sy</a>,</div>
+<div class="line"><span class="lineno">   33</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cr</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sp</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cy</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sr</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cp</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sy</a>,</div>
+<div class="line"><span class="lineno">   34</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cr</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cp</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sy</a> - <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sr</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sp</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cy</a>,</div>
+<div class="line"><span class="lineno">   35</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cr</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cp</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cy</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sr</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sp</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sy</a></div>
+<div class="line"><span class="lineno">   36</span>                };</div>
+<div class="line"><span class="lineno">   37</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_quat_html"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a></div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00011">Quaternion.hpp:11</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad80679fed33f46cfe58ed9d8b71f7f46" name="ad80679fed33f46cfe58ed9d8b71f7f46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad80679fed33f46cfe58ed9d8b71f7f46">&#9670;&#160;</a></span>Inverse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::Inverse </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00049">49</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   49</span>                                 {</div>
+<div class="line"><span class="lineno">   50</span>                <span class="keywordflow">return</span> { -<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a>, -<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a>, -<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a>, <a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> }; <span class="comment">// 単位クォータニオン前提</span></div>
+<div class="line"><span class="lineno">   51</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_quat_html_a0eb447e01cf8ed086dd63ac85c1f9101"><div class="ttname"><a href="#a0eb447e01cf8ed086dd63ac85c1f9101">SectorFW::Math::Quat::x</a></div><div class="ttdeci">T x</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00012">Quaternion.hpp:12</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_quat_html_a11c9b8de5f9a6a21fb8d5f72c021280a"><div class="ttname"><a href="#a11c9b8de5f9a6a21fb8d5f72c021280a">SectorFW::Math::Quat::y</a></div><div class="ttdeci">T y</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00012">Quaternion.hpp:12</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_quat_html_a2f705aef1f21dddb124abcbdb49f1c95"><div class="ttname"><a href="#a2f705aef1f21dddb124abcbdb49f1c95">SectorFW::Math::Quat::w</a></div><div class="ttdeci">T w</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00012">Quaternion.hpp:12</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_quat_html_aee56dccc5ee715285ebe645697f81208"><div class="ttname"><a href="#aee56dccc5ee715285ebe645697f81208">SectorFW::Math::Quat::z</a></div><div class="ttdeci">T z</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00012">Quaternion.hpp:12</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+
+</div>
+</div>
+<a id="a61c4959e10d6c67481ada23af43b102d" name="a61c4959e10d6c67481ada23af43b102d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61c4959e10d6c67481ada23af43b102d">&#9670;&#160;</a></span>Normalize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::Normalize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00015">15</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   15</span>                             {</div>
+<div class="line"><span class="lineno">   16</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">len</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">std::sqrt</a>(<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> * <a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> + <a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> * <a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> + <a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> * <a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> + <a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> * <a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a>);</div>
+<div class="line"><span class="lineno">   17</span>                <span class="keywordflow">if</span> (<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">len</a> &gt; 0.0f) {</div>
+<div class="line"><span class="lineno">   18</span>                    <a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> /= <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">len</a>; <a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> /= <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">len</a>; <a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> /= <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">len</a>; <a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> /= <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">len</a>;</div>
+<div class="line"><span class="lineno">   19</span>                }</div>
+<div class="line"><span class="lineno">   20</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<a id="aa1fd110ce3952c7861feaca1abf020e8" name="aa1fd110ce3952c7861feaca1abf020e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1fd110ce3952c7861feaca1abf020e8">&#9670;&#160;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::operator* </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>q</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00089">89</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>                                                {</div>
+<div class="line"><span class="lineno">   90</span>                <span class="keywordflow">return</span> {</div>
+<div class="line"><span class="lineno">   91</span>                    <a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> + <a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> + <a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> - <a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a>,</div>
+<div class="line"><span class="lineno">   92</span>                    <a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> - <a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> + <a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> + <a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a>,</div>
+<div class="line"><span class="lineno">   93</span>                    <a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> + <a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> - <a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> + <a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a>,</div>
+<div class="line"><span class="lineno">   94</span>                    <a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> - <a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> - <a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> - <a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">q</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a></div>
+<div class="line"><span class="lineno">   95</span>                };</div>
+<div class="line"><span class="lineno">   96</span>            }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a311d048b5dba0f9912a095c05b057439" name="a311d048b5dba0f9912a095c05b057439"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a311d048b5dba0f9912a095c05b057439">&#9670;&#160;</a></span>RotateVector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sector_f_w_1_1_math.html#a87f1e98587eb36036629f704e9ec428c">Vec3f</a> <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::RotateVector </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_sector_f_w_1_1_math.html#a87f1e98587eb36036629f704e9ec428c">Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00040">40</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span>                                                     {</div>
+<div class="line"><span class="lineno">   41</span>                <span class="comment">// q * v * q^-1</span></div>
+<div class="line"><span class="lineno">   42</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">vq</a>{ <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">v</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a>, <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">v</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a>, <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">v</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a>, 0 };</div>
+<div class="line"><span class="lineno">   43</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">inv</a> = this-&gt;<a class="code hl_function" href="#ad80679fed33f46cfe58ed9d8b71f7f46">Inverse</a>();</div>
+<div class="line"><span class="lineno">   44</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">result</a> = (*this) * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">vq</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">inv</a>;</div>
+<div class="line"><span class="lineno">   45</span>                <span class="keywordflow">return</span> { <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">result</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a>, <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">result</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a>, <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">result</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> };</div>
+<div class="line"><span class="lineno">   46</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_quat_html_ad80679fed33f46cfe58ed9d8b71f7f46"><div class="ttname"><a href="#ad80679fed33f46cfe58ed9d8b71f7f46">SectorFW::Math::Quat::Inverse</a></div><div class="ttdeci">Quat Inverse() const</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00049">Quaternion.hpp:49</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1f1f952935839bb2b716565985633e65" name="a1f1f952935839bb2b716565985633e65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f1f952935839bb2b716565985633e65">&#9670;&#160;</a></span>Slerp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::Slerp </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>b</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>t</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00054">54</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   54</span>                                                                 {</div>
+<div class="line"><span class="lineno">   55</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">dot</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a>;</div>
+<div class="line"><span class="lineno">   56</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b</a>;</div>
+<div class="line"><span class="lineno">   57</span> </div>
+<div class="line"><span class="lineno">   58</span>                <span class="keywordflow">if</span> (<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">dot</a> &lt; 0.0f) { <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">dot</a> = -<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">dot</a>; <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a> = { -<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a>, -<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a>, -<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a>, -<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> }; }</div>
+<div class="line"><span class="lineno">   59</span> </div>
+<div class="line"><span class="lineno">   60</span>                <span class="keywordflow">if</span> (<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">dot</a> &gt; 0.9995f) {</div>
+<div class="line"><span class="lineno">   61</span>                    <span class="comment">// 線形補間で近似</span></div>
+<div class="line"><span class="lineno">   62</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">result</a> = {</div>
+<div class="line"><span class="lineno">   63</span>                        <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">t</a> * (<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> - <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a>),</div>
+<div class="line"><span class="lineno">   64</span>                        <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">t</a> * (<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> - <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a>),</div>
+<div class="line"><span class="lineno">   65</span>                        <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">t</a> * (<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> - <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a>),</div>
+<div class="line"><span class="lineno">   66</span>                        <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">t</a> * (<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> - <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a>)</div>
+<div class="line"><span class="lineno">   67</span>                    };</div>
+<div class="line"><span class="lineno">   68</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">result</a>.<a class="code hl_function" href="#a61c4959e10d6c67481ada23af43b102d">Normalize</a>();</div>
+<div class="line"><span class="lineno">   69</span>                    <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">result</a>;</div>
+<div class="line"><span class="lineno">   70</span>                }</div>
+<div class="line"><span class="lineno">   71</span> </div>
+<div class="line"><span class="lineno">   72</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">theta0</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">acos</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">dot</a>);</div>
+<div class="line"><span class="lineno">   73</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">theta</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">theta0</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">t</a>;</div>
+<div class="line"><span class="lineno">   74</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin_theta</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">theta</a>);</div>
+<div class="line"><span class="lineno">   75</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin_theta0</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">theta0</a>);</div>
+<div class="line"><span class="lineno">   76</span> </div>
+<div class="line"><span class="lineno">   77</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s0</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">cos</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">theta</a>) - <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">dot</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin_theta</a> / <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin_theta0</a>;</div>
+<div class="line"><span class="lineno">   78</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s1</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin_theta</a> / <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">sin_theta0</a>;</div>
+<div class="line"><span class="lineno">   79</span> </div>
+<div class="line"><span class="lineno">   80</span>                <span class="keywordflow">return</span> {</div>
+<div class="line"><span class="lineno">   81</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s0</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s1</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a>.<a class="code hl_variable" href="#a0eb447e01cf8ed086dd63ac85c1f9101">x</a>,</div>
+<div class="line"><span class="lineno">   82</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s0</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s1</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a>.<a class="code hl_variable" href="#a11c9b8de5f9a6a21fb8d5f72c021280a">y</a>,</div>
+<div class="line"><span class="lineno">   83</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s0</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s1</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a>.<a class="code hl_variable" href="#aee56dccc5ee715285ebe645697f81208">z</a>,</div>
+<div class="line"><span class="lineno">   84</span>                    <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s0</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">a</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">s1</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_quat.html">b2</a>.<a class="code hl_variable" href="#a2f705aef1f21dddb124abcbdb49f1c95">w</a></div>
+<div class="line"><span class="lineno">   85</span>                };</div>
+<div class="line"><span class="lineno">   86</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_quat_html_a61c4959e10d6c67481ada23af43b102d"><div class="ttname"><a href="#a61c4959e10d6c67481ada23af43b102d">SectorFW::Math::Quat::Normalize</a></div><div class="ttdeci">void Normalize()</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00015">Quaternion.hpp:15</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a2f705aef1f21dddb124abcbdb49f1c95" name="a2f705aef1f21dddb124abcbdb49f1c95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f705aef1f21dddb124abcbdb49f1c95">&#9670;&#160;</a></span>w</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::w</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00012">12</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0eb447e01cf8ed086dd63ac85c1f9101" name="a0eb447e01cf8ed086dd63ac85c1f9101"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0eb447e01cf8ed086dd63ac85c1f9101">&#9670;&#160;</a></span>x</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::x</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00012">12</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a11c9b8de5f9a6a21fb8d5f72c021280a" name="a11c9b8de5f9a6a21fb8d5f72c021280a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11c9b8de5f9a6a21fb8d5f72c021280a">&#9670;&#160;</a></span>y</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::y</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00012">12</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aee56dccc5ee715285ebe645697f81208" name="aee56dccc5ee715285ebe645697f81208"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee56dccc5ee715285ebe645697f81208">&#9670;&#160;</a></span>z</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">SectorFW::Math::Quat</a>&lt; T &gt;::z</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a> の <a class="el" href="_quaternion_8hpp_source.html#l00012">12</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Math/<a class="el" href="_quaternion_8hpp_source.html">Quaternion.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_math.html">Math</a></li><li class="navelem"><a class="el" href="struct_sector_f_w_1_1_math_1_1_quat.html">Quat</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

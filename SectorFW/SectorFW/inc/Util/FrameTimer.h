@@ -1,13 +1,26 @@
+/*****************************************************************//**
+ * @file   FrameTimer.h
+ * @brief フレームタイマーを定義するクラス
+ * @author seigo_t03b63m
+ * @date   June 2025
+ *********************************************************************/
+
 #pragma once
 #include <chrono>
 #include <thread>
 
+/**
+ * @brief フレームタイマーを定義するクラス
+ */
 class FrameTimer {
 public:
 	using clock = std::chrono::steady_clock;
 	using time_point = std::chrono::time_point<clock>;
-
-	FrameTimer()
+	/**
+	 * @brief コンストラクタ
+	 * @detail タイマーを初期化し、開始時間を設定します。
+	 */
+	FrameTimer() noexcept
 		: startTime(clock::now()),
 		lastTime(clock::now()),
 		deltaTime(0.0),
@@ -16,8 +29,10 @@ public:
 		timeSinceLastFPSUpdate(0.0),
 		maxFrameRate(0.0) {
 	}
-
-	void Reset() {
+	/**
+	 * @brief タイマーをリセットします。
+	 */
+	void Reset() noexcept {
 		startTime = clock::now();
 		lastTime = startTime;
 		deltaTime = 0.0;
@@ -25,7 +40,9 @@ public:
 		fps = 0.0;
 		timeSinceLastFPSUpdate = 0.0;
 	}
-
+	/**
+	 * @brief フレームタイマーを更新します。
+	 */
 	void Tick() {
 		auto now = clock::now();
 		std::chrono::duration<double> frameDuration = now - lastTime;
@@ -61,22 +78,55 @@ public:
 			timeSinceLastFPSUpdate = 0.0;
 		}
 	}
-
-	double GetDeltaTime() const { return deltaTime; }
-	double GetTotalTime() const {
+	/**
+	 * @brief デルタタイムを取得します。
+	 * @return デルタタイム（秒単位）
+	 */
+	double GetDeltaTime() const noexcept { return deltaTime; }
+	/**
+	 * @brief 開始時間からの経過時間を取得します。
+	 * @return 経過時間（秒単位）
+	 */
+	double GetTotalTime() const noexcept {
 		return std::chrono::duration<double>(clock::now() - startTime).count();
 	}
-
-	double GetFPS() const { return fps; }
-	void SetMaxFrameRate(double fpsLimit) { maxFrameRate = fpsLimit; }
-
+	/**
+	 * @brief 現在のFPSを取得します。
+	 * @return 現在のFPS
+	 */
+	double GetFPS() const noexcept { return fps; }
+	/**
+	 * @brief 最大フレームレートを設定します。
+	 * @param fpsLimit 最大フレームレート（FPS）
+	 */
+	void SetMaxFrameRate(double fpsLimit) noexcept { maxFrameRate = fpsLimit; }
 private:
+	/**
+	 * @brief 初めの開始時間
+	 */
 	time_point startTime;
+	/**
+	 * @brief 最後の更新時間
+	 */
 	time_point lastTime;
+	/**
+	 * @brief デルタタイム（前フレームからの経過時間）
+	 */
 	double deltaTime;
-
+	/**
+	 * @brief フレームカウント（1秒あたりのフレーム数）
+	 */
 	int frameCount;
+	/**
+	 * @brief 最後のFPS更新からの経過時間
+	 */
 	double timeSinceLastFPSUpdate;
+	/**
+	 * @brief 現在のFPS
+	 */
 	double fps;
+	/**
+	 * @brief 最大フレームレート（FPS制限）
+	 */
 	double maxFrameRate;
 };

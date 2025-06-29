@@ -1,0 +1,1556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::ECS::EntityManager クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">クラス</a> &#124;
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pub-static-methods">静的公開メンバ関数</a> &#124;
+<a href="#pri-methods">非公開メンバ関数</a> &#124;
+<a href="#pri-attribs">非公開変数類</a> &#124;
+<a href="#pri-static-attribs">静的非公開変数類</a> &#124;
+<a href="class_sector_f_w_1_1_e_c_s_1_1_entity_manager-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::ECS::EntityManager クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>エンティティマネージャーを表すクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a>&gt;</code></p>
+<div class="dynheader">
+SectorFW::ECS::EntityManager 連携図</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_i_sparse_wrapper.html">ISparseWrapper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントストアを取得するためのインターフェース  <a href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_i_sparse_wrapper.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper.html">SparseWrapper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントストアのラッパークラス  <a href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a30766d99be488c12aaada61fd5091f43" id="r_a30766d99be488c12aaada61fd5091f43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30766d99be488c12aaada61fd5091f43">EntityManager</a> ()=default</td></tr>
+<tr class="memdesc:a30766d99be488c12aaada61fd5091f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="separator:a30766d99be488c12aaada61fd5091f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3814288117eb2df25cadf9511504545c" id="r_a3814288117eb2df25cadf9511504545c"><td class="memTemplParams" colspan="2">template&lt;typename... Components&gt; </td></tr>
+<tr class="memitem:a3814288117eb2df25cadf9511504545c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3814288117eb2df25cadf9511504545c">AddEntity</a> (const Components &amp;... components)</td></tr>
+<tr class="memdesc:a3814288117eb2df25cadf9511504545c"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの追加  <br /></td></tr>
+<tr class="separator:a3814288117eb2df25cadf9511504545c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad451213b64187278aa98895a907afd8a" id="r_ad451213b64187278aa98895a907afd8a"><td class="memTemplParams" colspan="2">template&lt;typename... Components&gt; </td></tr>
+<tr class="memitem:ad451213b64187278aa98895a907afd8a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad451213b64187278aa98895a907afd8a">AddEntity</a> (<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> mask, const Components &amp;... components)</td></tr>
+<tr class="memdesc:ad451213b64187278aa98895a907afd8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの追加(コンポーネントマスクを指定)  <br /></td></tr>
+<tr class="separator:ad451213b64187278aa98895a907afd8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b586dc4a59c7547124ec368927aa12c" id="r_a7b586dc4a59c7547124ec368927aa12c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b586dc4a59c7547124ec368927aa12c">DestroyEntity</a> (<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id)</td></tr>
+<tr class="memdesc:a7b586dc4a59c7547124ec368927aa12c"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの削除  <br /></td></tr>
+<tr class="separator:a7b586dc4a59c7547124ec368927aa12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0491a4c148d0e30bcb588719b826ff02" id="r_a0491a4c148d0e30bcb588719b826ff02"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a0491a4c148d0e30bcb588719b826ff02"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a0491a4c148d0e30bcb588719b826ff02">HasComponent</a> (<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id) const noexcept</td></tr>
+<tr class="memdesc:a0491a4c148d0e30bcb588719b826ff02"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティにコンポ―ネントがあるかどうかを確認する関数  <br /></td></tr>
+<tr class="separator:a0491a4c148d0e30bcb588719b826ff02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb5b1f3c6cc05672de80dde6566a026b" id="r_afb5b1f3c6cc05672de80dde6566a026b"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:afb5b1f3c6cc05672de80dde6566a026b"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#afb5b1f3c6cc05672de80dde6566a026b">GetComponent</a> (<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id) noexcept</td></tr>
+<tr class="memdesc:afb5b1f3c6cc05672de80dde6566a026b"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティからコンポーネントを取得する関数  <br /></td></tr>
+<tr class="separator:afb5b1f3c6cc05672de80dde6566a026b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf8db4c10c141336b1699a7253eb52c0" id="r_aaf8db4c10c141336b1699a7253eb52c0"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:aaf8db4c10c141336b1699a7253eb52c0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aaf8db4c10c141336b1699a7253eb52c0">AddComponent</a> (<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id, const T &amp;value)</td></tr>
+<tr class="memdesc:aaf8db4c10c141336b1699a7253eb52c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティにコンポーネントを追加する関数  <br /></td></tr>
+<tr class="separator:aaf8db4c10c141336b1699a7253eb52c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46a3ea3c9ec6bf7cd7df6e2cb66785b8" id="r_a46a3ea3c9ec6bf7cd7df6e2cb66785b8"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a46a3ea3c9ec6bf7cd7df6e2cb66785b8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a46a3ea3c9ec6bf7cd7df6e2cb66785b8">RemoveComponent</a> (<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id)</td></tr>
+<tr class="memdesc:a46a3ea3c9ec6bf7cd7df6e2cb66785b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティからコンポーネントを削除する関数 @detail Archetypeを移動する処理があるので高負荷  <br /></td></tr>
+<tr class="separator:a46a3ea3c9ec6bf7cd7df6e2cb66785b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ff4c4483026c83ae68b990d27d56d34" id="r_a1ff4c4483026c83ae68b990d27d56d34"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; <br />
+requires SparseComponent&lt;T&gt;</td></tr>
+<tr class="memitem:a1ff4c4483026c83ae68b990d27d56d34"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; std::unordered_map&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>, T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a1ff4c4483026c83ae68b990d27d56d34">GetSparseComponents</a> ()</td></tr>
+<tr class="memdesc:a1ff4c4483026c83ae68b990d27d56d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントを取得する関数  <br /></td></tr>
+<tr class="separator:a1ff4c4483026c83ae68b990d27d56d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a855b9b45271879dd3135c08a57a210e5" id="r_a855b9b45271879dd3135c08a57a210e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a855b9b45271879dd3135c08a57a210e5">GetMask</a> (<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id) const noexcept</td></tr>
+<tr class="memdesc:a855b9b45271879dd3135c08a57a210e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティのコンポーネントマスクを取得する関数  <br /></td></tr>
+<tr class="separator:a855b9b45271879dd3135c08a57a210e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22e80d95568203859ebb0366941fbd3d" id="r_a22e80d95568203859ebb0366941fbd3d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22e80d95568203859ebb0366941fbd3d">GetArchetypeManager</a> () const noexcept</td></tr>
+<tr class="memdesc:a22e80d95568203859ebb0366941fbd3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">アーキタイプマネージャーを取得する関数  <br /></td></tr>
+<tr class="separator:a22e80d95568203859ebb0366941fbd3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a7bee44d574d0caf97efcf4eb9c5a2802" id="r_a7bee44d574d0caf97efcf4eb9c5a2802"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7bee44d574d0caf97efcf4eb9c5a2802">GetEntityAllocator</a> () noexcept</td></tr>
+<tr class="memdesc:a7bee44d574d0caf97efcf4eb9c5a2802"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティIDアロケータを取得する関数  <br /></td></tr>
+<tr class="separator:a7bee44d574d0caf97efcf4eb9c5a2802"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+非公開メンバ関数</h2></td></tr>
+<tr class="memitem:a66bbdc4844ec716ce0df19de7a858ed3" id="r_a66bbdc4844ec716ce0df19de7a858ed3"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; <br />
+requires (!requires { typename T::soa_type; })</td></tr>
+<tr class="memitem:a66bbdc4844ec716ce0df19de7a858ed3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a66bbdc4844ec716ce0df19de7a858ed3">MemorySetChunk</a> (<a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *chunk, size_t index, const T &amp;value) noexcept</td></tr>
+<tr class="memdesc:a66bbdc4844ec716ce0df19de7a858ed3"><td class="mdescLeft">&#160;</td><td class="mdescRight">メモリ上のチャンクに値を設定する関数(SoAコンポーネントではない場合)  <br /></td></tr>
+<tr class="separator:a66bbdc4844ec716ce0df19de7a858ed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55148377c74e6ffe28be866599069a41" id="r_a55148377c74e6ffe28be866599069a41"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; <br />
+requires IsSoAComponent&lt;T&gt;</td></tr>
+<tr class="memitem:a55148377c74e6ffe28be866599069a41"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a55148377c74e6ffe28be866599069a41">MemorySetChunk</a> (<a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *chunk, size_t index, const T &amp;value)</td></tr>
+<tr class="memdesc:a55148377c74e6ffe28be866599069a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">メモリ上のチャンクに値を設定する関数(SoAコンポーネントの場合)  <br /></td></tr>
+<tr class="separator:a55148377c74e6ffe28be866599069a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade8a63395db56b6083a5fef862041ebf" id="r_ade8a63395db56b6083a5fef862041ebf"><td class="memTemplParams" colspan="2">template&lt;typename Variant, typename U, size_t Index&gt; </td></tr>
+<tr class="memitem:ade8a63395db56b6083a5fef862041ebf"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ade8a63395db56b6083a5fef862041ebf">ExpansionMemberImpl</a> (std::vector&lt; Variant &gt; &amp;vec, U &amp;value)</td></tr>
+<tr class="memdesc:ade8a63395db56b6083a5fef862041ebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメンバーを展開して値を取得する関数  <br /></td></tr>
+<tr class="separator:ade8a63395db56b6083a5fef862041ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a606e3e3e31758aa7a6ca44158c89c2cd" id="r_a606e3e3e31758aa7a6ca44158c89c2cd"><td class="memTemplParams" colspan="2">template&lt;typename Variant, typename U, size_t... Is&gt; </td></tr>
+<tr class="memitem:a606e3e3e31758aa7a6ca44158c89c2cd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a606e3e3e31758aa7a6ca44158c89c2cd">ExpansionMember</a> (std::vector&lt; Variant &gt; &amp;vec, U &amp;value, std::index_sequence&lt; Is... &gt;)</td></tr>
+<tr class="memdesc:a606e3e3e31758aa7a6ca44158c89c2cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメンバーを展開して値を取得する関数(インデックスシーケンスを使用)  <br /></td></tr>
+<tr class="separator:a606e3e3e31758aa7a6ca44158c89c2cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b49e94e8e7d992ab4d304a6c9fea81e" id="r_a9b49e94e8e7d992ab4d304a6c9fea81e"><td class="memTemplParams" colspan="2">template&lt;IsSoAComponent T&gt; </td></tr>
+<tr class="memitem:a9b49e94e8e7d992ab4d304a6c9fea81e"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a9b49e94e8e7d992ab4d304a6c9fea81e">GetMember</a> (T &amp;t) -&gt; std::vector&lt; typename T::variant_type &gt;</td></tr>
+<tr class="memdesc:a9b49e94e8e7d992ab4d304a6c9fea81e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメンバーを展開して値を取得する関数  <br /></td></tr>
+<tr class="separator:a9b49e94e8e7d992ab4d304a6c9fea81e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a580b21bfb37020049acfb3ef295ce1a2" id="r_a580b21bfb37020049acfb3ef295ce1a2"><td class="memTemplParams" colspan="2">template&lt;typename T, typename SoATuple, std::size_t... Is&gt; </td></tr>
+<tr class="memitem:a580b21bfb37020049acfb3ef295ce1a2"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a580b21bfb37020049acfb3ef295ce1a2">MemorySetChunkSoA</a> (T *base, size_t index, const T &amp;value, size_t capacity, std::index_sequence&lt; Is... &gt;)</td></tr>
+<tr class="memdesc:a580b21bfb37020049acfb3ef295ce1a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメモリ上のチャンクに値を設定する関数  <br /></td></tr>
+<tr class="separator:a580b21bfb37020049acfb3ef295ce1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa50cfbab2a767940133a8960eb168ae8" id="r_aa50cfbab2a767940133a8960eb168ae8"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:aa50cfbab2a767940133a8960eb168ae8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa50cfbab2a767940133a8960eb168ae8">StoreComponent</a> (<a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *chunk, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id, size_t index, const T &amp;value)</td></tr>
+<tr class="memdesc:aa50cfbab2a767940133a8960eb168ae8"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントをチャンクに格納する関数  <br /></td></tr>
+<tr class="separator:aa50cfbab2a767940133a8960eb168ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a842d67c54e460bd3aca73e5426075005" id="r_a842d67c54e460bd3aca73e5426075005"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a842d67c54e460bd3aca73e5426075005"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_sparse_component_store.html">SparseComponentStore</a>&lt; T &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a842d67c54e460bd3aca73e5426075005">GetSparseStore</a> () noexcept</td></tr>
+<tr class="memdesc:a842d67c54e460bd3aca73e5426075005"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントストアを取得する関数  <br /></td></tr>
+<tr class="separator:a842d67c54e460bd3aca73e5426075005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+非公開変数類</h2></td></tr>
+<tr class="memitem:a7a97cfbc6c5edfeb367adc28f86b1fad" id="r_a7a97cfbc6c5edfeb367adc28f86b1fad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a97cfbc6c5edfeb367adc28f86b1fad">archetypeManager</a></td></tr>
+<tr class="memdesc:a7a97cfbc6c5edfeb367adc28f86b1fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">アーキタイプマネージャー  <br /></td></tr>
+<tr class="separator:a7a97cfbc6c5edfeb367adc28f86b1fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa265c1ee11500f18ecc2023b5ee5c1a6" id="r_aa265c1ee11500f18ecc2023b5ee5c1a6"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_location.html">EntityLocation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a></td></tr>
+<tr class="memdesc:aa265c1ee11500f18ecc2023b5ee5c1a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの位置を管理するマップ @detail EntityIDをキーに、EntityLocationを値とするマップ  <br /></td></tr>
+<tr class="separator:aa265c1ee11500f18ecc2023b5ee5c1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10b330f95638020878c4a09a574c0e15" id="r_a10b330f95638020878c4a09a574c0e15"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a>, std::shared_ptr&lt; struct <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_i_sparse_wrapper.html">ISparseWrapper</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10b330f95638020878c4a09a574c0e15">sparseStores</a></td></tr>
+<tr class="memdesc:a10b330f95638020878c4a09a574c0e15"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントストアを格納するマップ  <br /></td></tr>
+<tr class="separator:a10b330f95638020878c4a09a574c0e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+静的非公開変数類</h2></td></tr>
+<tr class="memitem:af8fad2553209b0c46edd48700d0989f4" id="r_af8fad2553209b0c46edd48700d0989f4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8fad2553209b0c46edd48700d0989f4">entityAllocator</a> = <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a>(MAX_ENTITY_NUM)</td></tr>
+<tr class="memdesc:af8fad2553209b0c46edd48700d0989f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティIDアロケータ  <br /></td></tr>
+<tr class="separator:af8fad2553209b0c46edd48700d0989f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>エンティティマネージャーを表すクラス </p>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00028">28</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="a30766d99be488c12aaada61fd5091f43" name="a30766d99be488c12aaada61fd5091f43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30766d99be488c12aaada61fd5091f43">&#9670;&#160;</a></span>EntityManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SectorFW::ECS::EntityManager::EntityManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="aaf8db4c10c141336b1699a7253eb52c0" name="aaf8db4c10c141336b1699a7253eb52c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf8db4c10c141336b1699a7253eb52c0">&#9670;&#160;</a></span>AddComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityManager::AddComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティにコンポーネントを追加する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID @detail archetypeの移動があるため高負荷 </td></tr>
+    <tr><td class="paramname">value</td><td>追加するコンポーネントの値 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00124">124</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  124</span>                                                           {</div>
+<div class="line"><span class="lineno">  125</span>                <span class="keywordflow">if</span> (<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a3399f597ac754ab21dda7db066911f1c">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><span class="lineno">  126</span>                    <a class="code hl_function" href="#a842d67c54e460bd3aca73e5426075005">GetSparseStore&lt;T&gt;</a>().Add(<span class="keywordtype">id</span>, value);</div>
+<div class="line"><span class="lineno">  127</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  128</span>                }</div>
+<div class="line"><span class="lineno">  129</span> </div>
+<div class="line"><span class="lineno">  130</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> typeID = <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><span class="lineno">  131</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> currentMask = <a class="code hl_function" href="#a855b9b45271879dd3135c08a57a210e5">GetMask</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  132</span>                currentMask.set(typeID);</div>
+<div class="line"><span class="lineno">  133</span> </div>
+<div class="line"><span class="lineno">  134</span>                Archetype* newArch = <a class="code hl_variable" href="#a7a97cfbc6c5edfeb367adc28f86b1fad">archetypeManager</a>.GetOrCreate(currentMask);</div>
+<div class="line"><span class="lineno">  135</span>                ArchetypeChunk* newChunk = newArch-&gt;GetOrCreateChunk();</div>
+<div class="line"><span class="lineno">  136</span> </div>
+<div class="line"><span class="lineno">  137</span>                EntityLocation oldLoc = <a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>.at(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  138</span>                ArchetypeChunk* oldChunk = oldLoc.chunk;</div>
+<div class="line"><span class="lineno">  139</span>                <span class="keywordtype">size_t</span> oldIndex = oldLoc.index;</div>
+<div class="line"><span class="lineno">  140</span> </div>
+<div class="line"><span class="lineno">  141</span>                <span class="keywordtype">size_t</span> newIndex = newChunk-&gt;AddEntity(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  142</span> </div>
+<div class="line"><span class="lineno">  143</span>                <span class="comment">// 必要なデータのみ移動</span></div>
+<div class="line"><span class="lineno">  144</span>                <span class="keyword">auto</span>&amp; oldChunkLayout = <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a236447942618c4c64fe919b0225f0240">ArchetypeChunk::Accessor::GetLayoutInfo</a>(oldChunk);</div>
+<div class="line"><span class="lineno">  145</span>                <span class="keyword">auto</span>&amp; newChunkLayout = <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a236447942618c4c64fe919b0225f0240">ArchetypeChunk::Accessor::GetLayoutInfo</a>(newChunk);</div>
+<div class="line"><span class="lineno">  146</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [comp, info] : oldChunkLayout) {</div>
+<div class="line"><span class="lineno">  147</span>                    <span class="keywordtype">size_t</span> index = 0;</div>
+<div class="line"><span class="lineno">  148</span>                    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; i : info)</div>
+<div class="line"><span class="lineno">  149</span>                    {</div>
+<div class="line"><span class="lineno">  150</span>                        <span class="keyword">auto</span> src = <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a2364dc240a173460e5edb1abfb0849a0">ArchetypeChunk::Accessor::GetBuffer</a>(oldChunk) + i.offset;</div>
+<div class="line"><span class="lineno">  151</span>                        <span class="keyword">auto</span> dst = <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a2364dc240a173460e5edb1abfb0849a0">ArchetypeChunk::Accessor::GetBuffer</a>(newChunk) + newChunkLayout.at(comp).get(index).offset;</div>
+<div class="line"><span class="lineno">  152</span>                        std::memcpy(<span class="keyword">static_cast&lt;</span>uint8_t*<span class="keyword">&gt;</span>(dst) + newIndex * i.stride,</div>
+<div class="line"><span class="lineno">  153</span>                            <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>uint8_t*<span class="keyword">&gt;</span>(src) + oldIndex * i.stride,</div>
+<div class="line"><span class="lineno">  154</span>                            i.stride);</div>
+<div class="line"><span class="lineno">  155</span> </div>
+<div class="line"><span class="lineno">  156</span>                        index++;</div>
+<div class="line"><span class="lineno">  157</span>                    }</div>
+<div class="line"><span class="lineno">  158</span>                }</div>
+<div class="line"><span class="lineno">  159</span> </div>
+<div class="line"><span class="lineno">  160</span>                newChunk-&gt;GetColumn&lt;T&gt;()[newIndex] = value;</div>
+<div class="line"><span class="lineno">  161</span> </div>
+<div class="line"><span class="lineno">  162</span>                oldChunk-&gt;RemoveEntitySwapPop(oldIndex);</div>
+<div class="line"><span class="lineno">  163</span>                <a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>[id] = { newChunk, newIndex };</div>
+<div class="line"><span class="lineno">  164</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_a1e71189d4403cea677e5b60429879b11"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">SectorFW::ECS::ComponentTypeRegistry::GetID</a></div><div class="ttdeci">static ComponentTypeID GetID() noexcept</div><div class="ttdoc">コンポーネントの型IDを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00050">ComponentTypeRegistry.h:50</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_a3399f597ac754ab21dda7db066911f1c"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a3399f597ac754ab21dda7db066911f1c">SectorFW::ECS::ComponentTypeRegistry::IsSparse</a></div><div class="ttdeci">static constexpr bool IsSparse() noexcept</div><div class="ttdoc">コンポーネントがまばらなコンポーネントかどうかを判定します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00096">ComponentTypeRegistry.h:96</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_a7a97cfbc6c5edfeb367adc28f86b1fad"><div class="ttname"><a href="#a7a97cfbc6c5edfeb367adc28f86b1fad">SectorFW::ECS::EntityManager::archetypeManager</a></div><div class="ttdeci">ArchetypeManager archetypeManager</div><div class="ttdoc">アーキタイプマネージャー</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00366">EntityManager.h:366</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_a842d67c54e460bd3aca73e5426075005"><div class="ttname"><a href="#a842d67c54e460bd3aca73e5426075005">SectorFW::ECS::EntityManager::GetSparseStore</a></div><div class="ttdeci">SparseComponentStore&lt; T &gt; &amp; GetSparseStore() noexcept</div><div class="ttdoc">まばらなコンポーネントストアを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00396">EntityManager.h:396</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_a855b9b45271879dd3135c08a57a210e5"><div class="ttname"><a href="#a855b9b45271879dd3135c08a57a210e5">SectorFW::ECS::EntityManager::GetMask</a></div><div class="ttdeci">ComponentMask GetMask(EntityID id) const noexcept</div><div class="ttdoc">エンティティのコンポーネントマスクを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8cpp_source.html#l00022">EntityManager.cpp:22</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_aa265c1ee11500f18ecc2023b5ee5c1a6"><div class="ttname"><a href="#aa265c1ee11500f18ecc2023b5ee5c1a6">SectorFW::ECS::EntityManager::locations</a></div><div class="ttdeci">std::unordered_map&lt; EntityID, EntityLocation &gt; locations</div><div class="ttdoc">エンティティの位置を管理するマップ @detail EntityIDをキーに、EntityLocationを値とするマップ</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00371">EntityManager.h:371</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_a2accadf823770a8124d2a1ed1ba0ad30"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">SectorFW::ECS::ComponentTypeID</a></div><div class="ttdeci">uint32_t ComponentTypeID</div><div class="ttdoc">コンポーネントの型IDを定義する型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00031">component.hpp:31</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_ace5c222981b965468c3868a48028a512"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">SectorFW::ECS::ComponentMask</a></div><div class="ttdeci">std::bitset&lt; MaxComponents &gt; ComponentMask</div><div class="ttdoc">コンポーネントマスクを定義するビットセット型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00035">component.hpp:35</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor_html_a236447942618c4c64fe919b0225f0240"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a236447942618c4c64fe919b0225f0240">SectorFW::ECS::ArchetypeChunk::Accessor::GetLayoutInfo</a></div><div class="ttdeci">static const decltype(ComponentLayout::info) &amp; GetLayoutInfo(ArchetypeChunk *chunk) noexcept</div><div class="ttdoc">コンポーネントレイアウト情報を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00138">ArchetypeChunk.h:138</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor_html_a2364dc240a173460e5edb1abfb0849a0"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a2364dc240a173460e5edb1abfb0849a0">SectorFW::ECS::ArchetypeChunk::Accessor::GetBuffer</a></div><div class="ttdeci">static auto GetBuffer(ArchetypeChunk *chunk) noexcept</div><div class="ttdoc">アーキタイプチャンクバッファへのポインタ</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00126">ArchetypeChunk.h:126</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<a id="ad451213b64187278aa98895a907afd8a" name="ad451213b64187278aa98895a907afd8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad451213b64187278aa98895a907afd8a">&#9670;&#160;</a></span>AddEntity() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> SectorFW::ECS::EntityManager::AddEntity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a></td>          <td class="paramname"><span class="paramname"><em>mask</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Components &amp;...</td>          <td class="paramname"><span class="paramname"><em>components</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティの追加(コンポーネントマスクを指定) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mask</td><td>コンポーネントマスク </td></tr>
+    <tr><td class="paramname">...components</td><td>追加するコンポーネントの可変引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> 新しく追加されたエンティティのID </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00063">63</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   63</span>                                                                                    {</div>
+<div class="line"><span class="lineno">   64</span>                EntityID <span class="keywordtype">id</span> = <a class="code hl_variable" href="#af8fad2553209b0c46edd48700d0989f4">entityAllocator</a>.Create();</div>
+<div class="line"><span class="lineno">   65</span> </div>
+<div class="line"><span class="lineno">   66</span>                <span class="keywordflow">if</span> (!<span class="keywordtype">id</span>.IsValid()) <span class="keywordflow">return</span> id;</div>
+<div class="line"><span class="lineno">   67</span> </div>
+<div class="line"><span class="lineno">   68</span>                Archetype* arch = <a class="code hl_variable" href="#a7a97cfbc6c5edfeb367adc28f86b1fad">archetypeManager</a>.GetOrCreate(mask);</div>
+<div class="line"><span class="lineno">   69</span>                ArchetypeChunk* chunk = arch-&gt;GetOrCreateChunk();</div>
+<div class="line"><span class="lineno">   70</span> </div>
+<div class="line"><span class="lineno">   71</span>                <span class="keywordtype">size_t</span> index = chunk-&gt;AddEntity(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   72</span> </div>
+<div class="line"><span class="lineno">   73</span>                (..., <a class="code hl_function" href="#aa50cfbab2a767940133a8960eb168ae8">StoreComponent</a>(chunk, <span class="keywordtype">id</span>, index, components));</div>
+<div class="line"><span class="lineno">   74</span>                <span class="keywordflow">return</span> id;</div>
+<div class="line"><span class="lineno">   75</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_aa50cfbab2a767940133a8960eb168ae8"><div class="ttname"><a href="#aa50cfbab2a767940133a8960eb168ae8">SectorFW::ECS::EntityManager::StoreComponent</a></div><div class="ttdeci">void StoreComponent(ArchetypeChunk *chunk, EntityID id, size_t index, const T &amp;value)</div><div class="ttdoc">コンポーネントをチャンクに格納する関数</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00351">EntityManager.h:351</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_af8fad2553209b0c46edd48700d0989f4"><div class="ttname"><a href="#af8fad2553209b0c46edd48700d0989f4">SectorFW::ECS::EntityManager::entityAllocator</a></div><div class="ttdeci">static EntityIDAllocator entityAllocator</div><div class="ttdoc">エンティティIDアロケータ</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00362">EntityManager.h:362</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
+
+</div>
+</div>
+<a id="a3814288117eb2df25cadf9511504545c" name="a3814288117eb2df25cadf9511504545c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3814288117eb2df25cadf9511504545c">&#9670;&#160;</a></span>AddEntity() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> SectorFW::ECS::EntityManager::AddEntity </td>
+          <td>(</td>
+          <td class="paramtype">const Components &amp;...</td>          <td class="paramname"><span class="paramname"><em>components</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティの追加 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">...components</td><td>追加するコンポーネントの可変引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> 新しく追加されたエンティティのID </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00040">40</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span>                                                                {</div>
+<div class="line"><span class="lineno">   41</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> mask;</div>
+<div class="line"><span class="lineno">   42</span>                (<a class="code hl_function" href="namespace_sector_f_w_1_1_e_c_s.html#ae4b653bf5b9231ce6de8bd6577c626dd">SetMask&lt;Components&gt;</a>(mask), ...);</div>
+<div class="line"><span class="lineno">   43</span> </div>
+<div class="line"><span class="lineno">   44</span>                EntityID <span class="keywordtype">id</span> = <a class="code hl_variable" href="#af8fad2553209b0c46edd48700d0989f4">entityAllocator</a>.Create();</div>
+<div class="line"><span class="lineno">   45</span> </div>
+<div class="line"><span class="lineno">   46</span>                <span class="keywordflow">if</span> (!<span class="keywordtype">id</span>.IsValid()) <span class="keywordflow">return</span> id;</div>
+<div class="line"><span class="lineno">   47</span> </div>
+<div class="line"><span class="lineno">   48</span>                Archetype* arch = <a class="code hl_variable" href="#a7a97cfbc6c5edfeb367adc28f86b1fad">archetypeManager</a>.GetOrCreate(mask);</div>
+<div class="line"><span class="lineno">   49</span>                ArchetypeChunk* chunk = arch-&gt;GetOrCreateChunk();</div>
+<div class="line"><span class="lineno">   50</span> </div>
+<div class="line"><span class="lineno">   51</span>                <span class="keywordtype">size_t</span> index = chunk-&gt;AddEntity(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   52</span> </div>
+<div class="line"><span class="lineno">   53</span>                (..., <a class="code hl_function" href="#aa50cfbab2a767940133a8960eb168ae8">StoreComponent</a>(chunk, <span class="keywordtype">id</span>, index, components));</div>
+<div class="line"><span class="lineno">   54</span>                <span class="keywordflow">return</span> id;</div>
+<div class="line"><span class="lineno">   55</span>            }</div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_ae4b653bf5b9231ce6de8bd6577c626dd"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#ae4b653bf5b9231ce6de8bd6577c626dd">SectorFW::ECS::SetMask</a></div><div class="ttdeci">void SetMask(ComponentMask &amp;mask) noexcept</div><div class="ttdoc">コンポーネントマスクに指定されたコンポーネントをセットします。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00120">ComponentTypeRegistry.h:120</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 3 --></div>
+</div>
+
+</div>
+</div>
+<a id="a7b586dc4a59c7547124ec368927aa12c" name="a7b586dc4a59c7547124ec368927aa12c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b586dc4a59c7547124ec368927aa12c">&#9670;&#160;</a></span>DestroyEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityManager::DestroyEntity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>エンティティの削除 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>削除するエンティティのID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8cpp_source.html">EntityManager.cpp</a> の <a class="el" href="_entity_manager_8cpp_source.html#l00008">8</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">    9</span>        {</div>
+<div class="line"><span class="lineno">   10</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>.contains(<span class="keywordtype">id</span>)) {</div>
+<div class="line"><span class="lineno">   11</span>                EntityLocation loc = <a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>[id];</div>
+<div class="line"><span class="lineno">   12</span>                loc.chunk-&gt;RemoveEntitySwapPop(loc.index);</div>
+<div class="line"><span class="lineno">   13</span>                <a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>.erase(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   14</span>            }</div>
+<div class="line"><span class="lineno">   15</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; [_, store] : <a class="code hl_variable" href="#a10b330f95638020878c4a09a574c0e15">sparseStores</a>) {</div>
+<div class="line"><span class="lineno">   16</span>                store-&gt;Remove(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   17</span>            }</div>
+<div class="line"><span class="lineno">   18</span> </div>
+<div class="line"><span class="lineno">   19</span>            <a class="code hl_variable" href="#af8fad2553209b0c46edd48700d0989f4">entityAllocator</a>.Destroy(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   20</span>        }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_a10b330f95638020878c4a09a574c0e15"><div class="ttname"><a href="#a10b330f95638020878c4a09a574c0e15">SectorFW::ECS::EntityManager::sparseStores</a></div><div class="ttdeci">std::unordered_map&lt; ComponentTypeID, std::shared_ptr&lt; struct ISparseWrapper &gt; &gt; sparseStores</div><div class="ttdoc">まばらなコンポーネントストアを格納するマップ</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00382">EntityManager.h:382</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 4 --></div>
+</div>
+
+</div>
+</div>
+<a id="a606e3e3e31758aa7a6ca44158c89c2cd" name="a606e3e3e31758aa7a6ca44158c89c2cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a606e3e3e31758aa7a6ca44158c89c2cd">&#9670;&#160;</a></span>ExpansionMember()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Variant, typename U, size_t... Is&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityManager::ExpansionMember </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; Variant &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>vec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">U &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::index_sequence&lt; Is... &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメンバーを展開して値を取得する関数(インデックスシーケンスを使用) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vec</td><td>値を格納するベクター </td></tr>
+    <tr><td class="paramname">value</td><td>SoAコンポーネントの値 </td></tr>
+    <tr><td class="paramname">Is</td><td>インデックスシーケンス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00306">306</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  306</span>                                                                                              {</div>
+<div class="line"><span class="lineno">  307</span>                (<a class="code hl_function" href="#ade8a63395db56b6083a5fef862041ebf">ExpansionMemberImpl&lt;Variant, U, Is&gt;</a>(vec, value), ...);</div>
+<div class="line"><span class="lineno">  308</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_ade8a63395db56b6083a5fef862041ebf"><div class="ttname"><a href="#ade8a63395db56b6083a5fef862041ebf">SectorFW::ECS::EntityManager::ExpansionMemberImpl</a></div><div class="ttdeci">void ExpansionMemberImpl(std::vector&lt; Variant &gt; &amp;vec, U &amp;value)</div><div class="ttdoc">SoAコンポーネントのメンバーを展開して値を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00282">EntityManager.h:282</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 5 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 6 --></div>
+</div>
+
+</div>
+</div>
+<a id="ade8a63395db56b6083a5fef862041ebf" name="ade8a63395db56b6083a5fef862041ebf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade8a63395db56b6083a5fef862041ebf">&#9670;&#160;</a></span>ExpansionMemberImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Variant, typename U, size_t Index&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityManager::ExpansionMemberImpl </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; Variant &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>vec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">U &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメンバーを展開して値を取得する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vec</td><td>値を格納するベクター </td></tr>
+    <tr><td class="paramname">value</td><td>SoAコンポーネントの値 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00282">282</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  282</span>                                                                        {</div>
+<div class="line"><span class="lineno">  283</span>                <span class="keyword">auto</span> ptr = std::get&lt;Index&gt;(U::member_ptr_tuple);</div>
+<div class="line"><span class="lineno">  284</span>                <span class="keyword">static_assert</span>(std::is_member_object_pointer_v&lt;<span class="keyword">decltype</span>(ptr)&gt;);</div>
+<div class="line"><span class="lineno">  285</span>                <span class="keyword">auto</span>&amp; member = value.*ptr;</div>
+<div class="line"><span class="lineno">  286</span> </div>
+<div class="line"><span class="lineno">  287</span>                <span class="keyword">using </span>MemberT = std::remove_cvref_t&lt;<span class="keyword">decltype</span>(member)&gt;;</div>
+<div class="line"><span class="lineno">  288</span> </div>
+<div class="line"><span class="lineno">  289</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (IsSoAComponent&lt;MemberT&gt;) {</div>
+<div class="line"><span class="lineno">  290</span>                    <a class="code hl_function" href="#a606e3e3e31758aa7a6ca44158c89c2cd">ExpansionMember&lt;Variant&gt;</a>(vec, member, std::make_index_sequence&lt;std::tuple_size_v&lt;typename MemberT::tuple_type&gt;&gt;{});</div>
+<div class="line"><span class="lineno">  291</span>                }</div>
+<div class="line"><span class="lineno">  292</span>                <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (IsPrimitive&lt;MemberT&gt;) {</div>
+<div class="line"><span class="lineno">  293</span>                    vec.push_back(member);</div>
+<div class="line"><span class="lineno">  294</span>                }</div>
+<div class="line"><span class="lineno">  295</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  296</span>                    <span class="keyword">static_assert</span>(std::is_same_v&lt;MemberT, void&gt;, <span class="stringliteral">&quot;Unsupported member type: must be primitive or reflectable (HasMemberPtr)&quot;</span>);</div>
+<div class="line"><span class="lineno">  297</span>                }</div>
+<div class="line"><span class="lineno">  298</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_a606e3e3e31758aa7a6ca44158c89c2cd"><div class="ttname"><a href="#a606e3e3e31758aa7a6ca44158c89c2cd">SectorFW::ECS::EntityManager::ExpansionMember</a></div><div class="ttdeci">void ExpansionMember(std::vector&lt; Variant &gt; &amp;vec, U &amp;value, std::index_sequence&lt; Is... &gt;)</div><div class="ttdoc">SoAコンポーネントのメンバーを展開して値を取得する関数(インデックスシーケンスを使用)</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00306">EntityManager.h:306</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 7 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 8 --></div>
+</div>
+
+</div>
+</div>
+<a id="a22e80d95568203859ebb0366941fbd3d" name="a22e80d95568203859ebb0366941fbd3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22e80d95568203859ebb0366941fbd3d">&#9670;&#160;</a></span>GetArchetypeManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a> &amp; SectorFW::ECS::EntityManager::GetArchetypeManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>アーキタイプマネージャーを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>const <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_manager.html" title="アーキタイプマネージャーを表すクラス">ArchetypeManager</a>&amp; アーキタイプマネージャーへの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00235">235</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  235</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a7a97cfbc6c5edfeb367adc28f86b1fad">archetypeManager</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afb5b1f3c6cc05672de80dde6566a026b" name="afb5b1f3c6cc05672de80dde6566a026b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb5b1f3c6cc05672de80dde6566a026b">&#9670;&#160;</a></span>GetComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * SectorFW::ECS::EntityManager::GetComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティからコンポーネントを取得する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID @detail コンポーネントが見つからない場合nullptrを返す </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>T* コンポーネントのポインタ </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00106">106</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  106</span>                                                 {</div>
+<div class="line"><span class="lineno">  107</span>                <span class="keywordflow">if</span> (<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a3399f597ac754ab21dda7db066911f1c">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><span class="lineno">  108</span>                    <span class="keywordflow">return</span> <a class="code hl_function" href="#a842d67c54e460bd3aca73e5426075005">GetSparseStore&lt;T&gt;</a>().Get(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  109</span>                }</div>
+<div class="line"><span class="lineno">  110</span> </div>
+<div class="line"><span class="lineno">  111</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> typeID = <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><span class="lineno">  112</span> </div>
+<div class="line"><span class="lineno">  113</span>                <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>.contains(<span class="keywordtype">id</span>)) <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno">  114</span>                <span class="keyword">auto</span>&amp; loc = <a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>.at(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  115</span>                <span class="keywordflow">return</span> &amp;loc.chunk-&gt;GetColumn&lt;T&gt;()[loc.index];</div>
+<div class="line"><span class="lineno">  116</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 9 --></div>
+</div>
+
+</div>
+</div>
+<a id="a7bee44d574d0caf97efcf4eb9c5a2802" name="a7bee44d574d0caf97efcf4eb9c5a2802"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bee44d574d0caf97efcf4eb9c5a2802">&#9670;&#160;</a></span>GetEntityAllocator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a> &amp; SectorFW::ECS::EntityManager::GetEntityAllocator </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティIDアロケータを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>const <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html" title="エンティティIDを管理するクラス(スレッドセーフ)">EntityIDAllocator</a>&amp; エンティティIDアロケータへの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00240">240</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  240</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#af8fad2553209b0c46edd48700d0989f4">entityAllocator</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a855b9b45271879dd3135c08a57a210e5" name="a855b9b45271879dd3135c08a57a210e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a855b9b45271879dd3135c08a57a210e5">&#9670;&#160;</a></span>GetMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> SectorFW::ECS::EntityManager::GetMask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティのコンポーネントマスクを取得する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512" title="コンポーネントマスクを定義するビットセット型">ComponentMask</a> エンティティのコンポーネントマスク </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8cpp_source.html">EntityManager.cpp</a> の <a class="el" href="_entity_manager_8cpp_source.html#l00022">22</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   23</span>        {</div>
+<div class="line"><span class="lineno">   24</span>            <span class="comment">//idのチャンクが存在する場合はそのマスクを返す</span></div>
+<div class="line"><span class="lineno">   25</span>            <span class="keyword">auto</span> iter = <a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   26</span>            <span class="keywordflow">if</span> (iter != <a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>.end())</div>
+<div class="line"><span class="lineno">   27</span>            {</div>
+<div class="line"><span class="lineno">   28</span>                <span class="keywordflow">return</span> iter-&gt;second.chunk-&gt;GetComponentMask();</div>
+<div class="line"><span class="lineno">   29</span>            }</div>
+<div class="line"><span class="lineno">   30</span> </div>
+<div class="line"><span class="lineno">   31</span>            <span class="comment">//idのチャンクが存在しない場合は、全アーキタイプを検索してマスクを取得する</span></div>
+<div class="line"><span class="lineno">   32</span>            <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> componentMask;</div>
+<div class="line"><span class="lineno">   33</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; [mask, arch] : <a class="code hl_variable" href="#a7a97cfbc6c5edfeb367adc28f86b1fad">archetypeManager</a>.GetAll()) {</div>
+<div class="line"><span class="lineno">   34</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; chunk : arch-&gt;GetChunks()) {</div>
+<div class="line"><span class="lineno">   35</span>                    <span class="keyword">auto</span> entityCount = chunk-&gt;GetEntityCount();</div>
+<div class="line"><span class="lineno">   36</span>                    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; entities = <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a504b34555c6e9b0208e5dd7ca1bb14c3">ArchetypeChunk::Accessor::GetEntities</a>(chunk.get());</div>
+<div class="line"><span class="lineno">   37</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; entityCount; ++i) {</div>
+<div class="line"><span class="lineno">   38</span>                        <span class="keywordflow">if</span> (entities[i] == <span class="keywordtype">id</span>)</div>
+<div class="line"><span class="lineno">   39</span>                            componentMask = mask;</div>
+<div class="line"><span class="lineno">   40</span>                    }</div>
+<div class="line"><span class="lineno">   41</span>                }</div>
+<div class="line"><span class="lineno">   42</span>            }</div>
+<div class="line"><span class="lineno">   43</span> </div>
+<div class="line"><span class="lineno">   44</span>            <span class="keywordflow">return</span> componentMask;</div>
+<div class="line"><span class="lineno">   45</span>        }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor_html_a504b34555c6e9b0208e5dd7ca1bb14c3"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a504b34555c6e9b0208e5dd7ca1bb14c3">SectorFW::ECS::ArchetypeChunk::Accessor::GetEntities</a></div><div class="ttdeci">static const std::vector&lt; EntityID &gt; &amp; GetEntities(ArchetypeChunk *chunk) noexcept</div><div class="ttdoc">エンティティの配列を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00132">ArchetypeChunk.h:132</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 10 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 11 --></div>
+</div>
+
+</div>
+</div>
+<a id="a9b49e94e8e7d992ab4d304a6c9fea81e" name="a9b49e94e8e7d992ab4d304a6c9fea81e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b49e94e8e7d992ab4d304a6c9fea81e">&#9670;&#160;</a></span>GetMember()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;IsSoAComponent T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto SectorFW::ECS::EntityManager::GetMember </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td> -&gt; std::vector&lt;typename T::variant_type&gt; </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメンバーを展開して値を取得する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>SoAコンポーネントの値 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::vector&lt;typename T::variant_type&gt; SoAコンポーネントのメンバーの値を格納したベクター </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00315">315</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  315</span>                                                                      {</div>
+<div class="line"><span class="lineno">  316</span>                std::vector&lt;typename T::variant_type&gt; member_values;</div>
+<div class="line"><span class="lineno">  317</span>                <a class="code hl_function" href="#a606e3e3e31758aa7a6ca44158c89c2cd">ExpansionMember&lt;typename T::variant_type&gt;</a>(member_values, t, std::make_index_sequence&lt;std::tuple_size_v&lt;typename T::tuple_type&gt;&gt;{});</div>
+<div class="line"><span class="lineno">  318</span>                <span class="keywordflow">return</span> member_values;</div>
+<div class="line"><span class="lineno">  319</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 12 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 13 --></div>
+</div>
+
+</div>
+</div>
+<a id="a1ff4c4483026c83ae68b990d27d56d34" name="a1ff4c4483026c83ae68b990d27d56d34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ff4c4483026c83ae68b990d27d56d34">&#9670;&#160;</a></span>GetSparseComponents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; <br />
+requires SparseComponent&lt;T&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; std::unordered_map&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>, T &gt; &gt; SectorFW::ECS::EntityManager::GetSparseComponents </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>まばらなコンポーネントを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_read_write_view.html" title="コンテナの読み書きビューを提供するクラス">ReadWriteView&lt;std::unordered_map&lt;EntityID, T&gt;&gt;</a> まばらなコンポーネントのビュー </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00221">221</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  221</span>                                                                               {</div>
+<div class="line"><span class="lineno">  222</span>                ReadWriteView&lt;std::unordered_map&lt;EntityID, T&gt;&gt; components(<a class="code hl_function" href="#a842d67c54e460bd3aca73e5426075005">GetSparseStore&lt;T&gt;</a>().GetComponents());</div>
+<div class="line"><span class="lineno">  223</span>                <span class="keywordflow">return</span> components;</div>
+<div class="line"><span class="lineno">  224</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 14 --></div>
+</div>
+
+</div>
+</div>
+<a id="a842d67c54e460bd3aca73e5426075005" name="a842d67c54e460bd3aca73e5426075005"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a842d67c54e460bd3aca73e5426075005">&#9670;&#160;</a></span>GetSparseStore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_sparse_component_store.html">SparseComponentStore</a>&lt; T &gt; &amp; SectorFW::ECS::EntityManager::GetSparseStore </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>まばらなコンポーネントストアを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_sparse_component_store.html" title="まばらなコンポーネントを管理するクラス">SparseComponentStore&lt;T&gt;</a>&amp; まばらなコンポーネントストアへの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00396">396</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  396</span>                                                              {</div>
+<div class="line"><span class="lineno">  397</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> <span class="keywordtype">id</span> = <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><span class="lineno">  398</span>                <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a10b330f95638020878c4a09a574c0e15">sparseStores</a>.contains(<span class="keywordtype">id</span>)) {</div>
+<div class="line"><span class="lineno">  399</span>                    <span class="keyword">auto</span> wrapper = std::make_shared&lt;SparseWrapper&lt;T&gt;&gt;();</div>
+<div class="line"><span class="lineno">  400</span>                    <a class="code hl_variable" href="#a10b330f95638020878c4a09a574c0e15">sparseStores</a>[id] = wrapper;</div>
+<div class="line"><span class="lineno">  401</span>                }</div>
+<div class="line"><span class="lineno">  402</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper.html">SparseWrapper&lt;T&gt;</a>*<span class="keyword">&gt;</span>(<a class="code hl_variable" href="#a10b330f95638020878c4a09a574c0e15">sparseStores</a>[id].get())-&gt;<a class="code hl_variable" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper.html#ad603e287ba13e469cbf53a3d3713f490">store</a>;</div>
+<div class="line"><span class="lineno">  403</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper_html"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper.html">SectorFW::ECS::EntityManager::SparseWrapper</a></div><div class="ttdoc">まばらなコンポーネントストアのラッパークラス</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00387">EntityManager.h:387</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper_html_ad603e287ba13e469cbf53a3d3713f490"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper.html#ad603e287ba13e469cbf53a3d3713f490">SectorFW::ECS::EntityManager::SparseWrapper::store</a></div><div class="ttdeci">SparseComponentStore&lt; T &gt; store</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00388">EntityManager.h:388</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 15 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 16 --></div>
+</div>
+
+</div>
+</div>
+<a id="a0491a4c148d0e30bcb588719b826ff02" name="a0491a4c148d0e30bcb588719b826ff02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0491a4c148d0e30bcb588719b826ff02">&#9670;&#160;</a></span>HasComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SectorFW::ECS::EntityManager::HasComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティにコンポ―ネントがあるかどうかを確認する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>bool コンポーネントがある場合はtrue、ない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00087">87</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   87</span>                                                         {</div>
+<div class="line"><span class="lineno">   88</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> typeID = <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><span class="lineno">   89</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>.contains(<span class="keywordtype">id</span>)) {</div>
+<div class="line"><span class="lineno">   90</span>                    <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&amp; mask = <a class="code hl_function" href="#a855b9b45271879dd3135c08a57a210e5">GetMask</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   91</span>                    <span class="keywordflow">return</span> mask.test(typeID);</div>
+<div class="line"><span class="lineno">   92</span>                }</div>
+<div class="line"><span class="lineno">   93</span>                <span class="keywordflow">if</span> (<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a3399f597ac754ab21dda7db066911f1c">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><span class="lineno">   94</span>                    <span class="keywordflow">return</span> <a class="code hl_function" href="#a842d67c54e460bd3aca73e5426075005">GetSparseStore&lt;T&gt;</a>().Has(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   95</span>                }</div>
+<div class="line"><span class="lineno">   96</span> </div>
+<div class="line"><span class="lineno">   97</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   98</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 17 --></div>
+</div>
+
+</div>
+</div>
+<a id="a55148377c74e6ffe28be866599069a41" name="a55148377c74e6ffe28be866599069a41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55148377c74e6ffe28be866599069a41">&#9670;&#160;</a></span>MemorySetChunk() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; <br />
+requires IsSoAComponent&lt;T&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityManager::MemorySetChunk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *</td>          <td class="paramname"><span class="paramname"><em>chunk</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>メモリ上のチャンクに値を設定する関数(SoAコンポーネントの場合) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chunk</td><td>アーキタイプチャンクへのポインタ </td></tr>
+    <tr><td class="paramname">index</td><td>チャンク内のインデックス </td></tr>
+    <tr><td class="paramname">value</td><td>設定する値 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00264">264</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  264</span>                                                                                     {</div>
+<div class="line"><span class="lineno">  265</span>                <span class="keyword">auto</span> column = chunk-&gt;GetColumn&lt;T&gt;();</div>
+<div class="line"><span class="lineno">  266</span>                <span class="keywordflow">if</span> (!column) {</div>
+<div class="line"><span class="lineno">  267</span>                    <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;Column for component type %d not found in chunk&quot;</span>, <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;T&gt;</a>());</div>
+<div class="line"><span class="lineno">  268</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  269</span>                }</div>
+<div class="line"><span class="lineno">  270</span>                <span class="keywordtype">size_t</span> capacity = chunk-&gt;GetCapacity();</div>
+<div class="line"><span class="lineno">  271</span>                <a class="code hl_function" href="#a580b21bfb37020049acfb3ef295ce1a2">MemorySetChunkSoA&lt;T, typename T::soa_type&gt;</a>(</div>
+<div class="line"><span class="lineno">  272</span>                    column.value(), index, value, capacity,</div>
+<div class="line"><span class="lineno">  273</span>                    std::make_index_sequence&lt;std::tuple_size_v&lt;typename T::soa_type&gt;&gt;{}</div>
+<div class="line"><span class="lineno">  274</span>                );</div>
+<div class="line"><span class="lineno">  275</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_a580b21bfb37020049acfb3ef295ce1a2"><div class="ttname"><a href="#a580b21bfb37020049acfb3ef295ce1a2">SectorFW::ECS::EntityManager::MemorySetChunkSoA</a></div><div class="ttdeci">void MemorySetChunkSoA(T *base, size_t index, const T &amp;value, size_t capacity, std::index_sequence&lt; Is... &gt;)</div><div class="ttdoc">SoAコンポーネントのメモリ上のチャンクに値を設定する関数</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00329">EntityManager.h:329</a></div></div>
+<div class="ttc" id="alogger_8h_html_ae6fc70e87e424e7083c63696b8fb9e78"><div class="ttname"><a href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a></div><div class="ttdeci">#define LOG_ERROR(fmt,...)</div><div class="ttdef"><b>Definition</b> <a href="logger_8h_source.html#l00166">logger.h:166</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 18 --></div>
+</div>
+
+</div>
+</div>
+<a id="a66bbdc4844ec716ce0df19de7a858ed3" name="a66bbdc4844ec716ce0df19de7a858ed3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66bbdc4844ec716ce0df19de7a858ed3">&#9670;&#160;</a></span>MemorySetChunk() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; <br />
+requires (!requires { typename T::soa_type; })</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityManager::MemorySetChunk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *</td>          <td class="paramname"><span class="paramname"><em>chunk</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>メモリ上のチャンクに値を設定する関数(SoAコンポーネントではない場合) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chunk</td><td>アーキタイプチャンクへのポインタ </td></tr>
+    <tr><td class="paramname">index</td><td>チャンク内のインデックス </td></tr>
+    <tr><td class="paramname">value</td><td>設定する値 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00250">250</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  250</span>                                                                                             {</div>
+<div class="line"><span class="lineno">  251</span>                <span class="keyword">auto</span> column = chunk-&gt;GetColumn&lt;T&gt;();</div>
+<div class="line"><span class="lineno">  252</span>                <span class="keywordflow">if</span> (!column) <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  253</span> </div>
+<div class="line"><span class="lineno">  254</span>                std::memcpy(&amp;column.value()[index], &amp;value, <span class="keyword">sizeof</span>(T));</div>
+<div class="line"><span class="lineno">  255</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 19 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 20 --></div>
+</div>
+
+</div>
+</div>
+<a id="a580b21bfb37020049acfb3ef295ce1a2" name="a580b21bfb37020049acfb3ef295ce1a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a580b21bfb37020049acfb3ef295ce1a2">&#9670;&#160;</a></span>MemorySetChunkSoA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename SoATuple, std::size_t... Is&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityManager::MemorySetChunkSoA </td>
+          <td>(</td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::index_sequence&lt; Is... &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメモリ上のチャンクに値を設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SoAコンポーネントのベースポインタ </td></tr>
+    <tr><td class="paramname">index</td><td>チャンク内のインデックス </td></tr>
+    <tr><td class="paramname">value</td><td>設定する値 </td></tr>
+    <tr><td class="paramname">capacity</td><td>チャンクの容量 </td></tr>
+    <tr><td class="paramname">Is</td><td>インデックスシーケンス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00329">329</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  329</span>                                                                                                                     {</div>
+<div class="line"><span class="lineno">  330</span>                <span class="keyword">auto</span> charBase = <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#abc859415efffd8eaec6d46312f330451">BufferType</a>*<span class="keyword">&gt;</span>(base);</div>
+<div class="line"><span class="lineno">  331</span>                <span class="keywordtype">size_t</span> offset = 0;</div>
+<div class="line"><span class="lineno">  332</span>                <span class="keyword">auto</span> members = <a class="code hl_function" href="#a9b49e94e8e7d992ab4d304a6c9fea81e">GetMember</a>(value);</div>
+<div class="line"><span class="lineno">  333</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v : members) {</div>
+<div class="line"><span class="lineno">  334</span>                    std::visit([&amp;](<span class="keyword">auto</span>&amp;&amp; val) {</div>
+<div class="line"><span class="lineno">  335</span>                        <span class="keyword">using </span>ValType = std::remove_cvref_t&lt;<span class="keyword">decltype</span>(val)&gt;;</div>
+<div class="line"><span class="lineno">  336</span>                        offset = <a class="code hl_function" href="alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328">AlignTo</a>(offset, <span class="keyword">alignof</span>(ValType));</div>
+<div class="line"><span class="lineno">  337</span>                        *(<span class="keyword">reinterpret_cast&lt;</span>ValType*<span class="keyword">&gt;</span>(charBase + offset) + index) = val;</div>
+<div class="line"><span class="lineno">  338</span>                        offset += <span class="keyword">sizeof</span>(ValType) * capacity;</div>
+<div class="line"><span class="lineno">  339</span>                        }, v);</div>
+<div class="line"><span class="lineno">  340</span>                }</div>
+<div class="line"><span class="lineno">  341</span>            }</div>
+<div class="ttc" id="aalignment_8h_html_a80ec2ed7b06ff0ff25ebc3065be4f328"><div class="ttname"><a href="alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328">AlignTo</a></div><div class="ttdeci">size_t AlignTo(size_t offset, size_t alignment)</div><div class="ttdoc">指定したオフセットをアライメントに合わせて調整する関数</div><div class="ttdef"><b>Definition</b> <a href="alignment_8h_source.html#l00016">alignment.h:16</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_a9b49e94e8e7d992ab4d304a6c9fea81e"><div class="ttname"><a href="#a9b49e94e8e7d992ab4d304a6c9fea81e">SectorFW::ECS::EntityManager::GetMember</a></div><div class="ttdeci">auto GetMember(T &amp;t) -&gt; std::vector&lt; typename T::variant_type &gt;</div><div class="ttdoc">SoAコンポーネントのメンバーを展開して値を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00315">EntityManager.h:315</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_abc859415efffd8eaec6d46312f330451"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#abc859415efffd8eaec6d46312f330451">SectorFW::ECS::BufferType</a></div><div class="ttdeci">uint8_t BufferType</div><div class="ttdoc">アーキタイプチャンクのバッファ型</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00036">ArchetypeChunk.h:36</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 21 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 22 --></div>
+</div>
+
+</div>
+</div>
+<a id="a46a3ea3c9ec6bf7cd7df6e2cb66785b8" name="a46a3ea3c9ec6bf7cd7df6e2cb66785b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46a3ea3c9ec6bf7cd7df6e2cb66785b8">&#9670;&#160;</a></span>RemoveComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityManager::RemoveComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティからコンポーネントを削除する関数 @detail Archetypeを移動する処理があるので高負荷 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00172">172</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  172</span>                                              {</div>
+<div class="line"><span class="lineno">  173</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> typeID = <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><span class="lineno">  174</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> oldMask = <a class="code hl_function" href="#a855b9b45271879dd3135c08a57a210e5">GetMask</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  175</span>                <span class="keywordflow">if</span> (!oldMask.test(typeID)) <span class="keywordflow">return</span>; <span class="comment">// 持ってないなら何もしない</span></div>
+<div class="line"><span class="lineno">  176</span> </div>
+<div class="line"><span class="lineno">  177</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> newMask = oldMask;</div>
+<div class="line"><span class="lineno">  178</span>                newMask.reset(typeID);</div>
+<div class="line"><span class="lineno">  179</span> </div>
+<div class="line"><span class="lineno">  180</span>                <span class="keywordflow">if</span> (ComponentTypeRegistry::IsSparseMask(<a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>().set(typeID))) {</div>
+<div class="line"><span class="lineno">  181</span>                    <a class="code hl_function" href="#a842d67c54e460bd3aca73e5426075005">GetSparseStore&lt;T&gt;</a>().Remove(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  182</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  183</span>                }</div>
+<div class="line"><span class="lineno">  184</span> </div>
+<div class="line"><span class="lineno">  185</span>                EntityLocation oldLoc = <a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>.at(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  186</span>                ArchetypeChunk* oldChunk = oldLoc.chunk;</div>
+<div class="line"><span class="lineno">  187</span>                <span class="keywordtype">size_t</span> oldIndex = oldLoc.index;</div>
+<div class="line"><span class="lineno">  188</span> </div>
+<div class="line"><span class="lineno">  189</span>                Archetype* newArch = <a class="code hl_variable" href="#a7a97cfbc6c5edfeb367adc28f86b1fad">archetypeManager</a>.GetOrCreate(newMask);</div>
+<div class="line"><span class="lineno">  190</span>                ArchetypeChunk* newChunk = newArch-&gt;GetOrCreateChunk();</div>
+<div class="line"><span class="lineno">  191</span>                <span class="keywordtype">size_t</span> newIndex = newChunk-&gt;AddEntity(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  192</span> </div>
+<div class="line"><span class="lineno">  193</span>                <span class="comment">// 必要なデータのみ移動</span></div>
+<div class="line"><span class="lineno">  194</span>                <span class="keyword">const</span> <span class="keyword">auto</span>&amp; oldChunkLayout = <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a236447942618c4c64fe919b0225f0240">ArchetypeChunk::Accessor::GetLayoutInfo</a>(oldChunk);</div>
+<div class="line"><span class="lineno">  195</span>                <span class="keyword">const</span> <span class="keyword">auto</span>&amp; newChunkLayout = <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a236447942618c4c64fe919b0225f0240">ArchetypeChunk::Accessor::GetLayoutInfo</a>(newChunk);</div>
+<div class="line"><span class="lineno">  196</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [comp, info] : oldChunkLayout) {</div>
+<div class="line"><span class="lineno">  197</span>                    <span class="keywordflow">if</span> (comp == typeID) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  198</span> </div>
+<div class="line"><span class="lineno">  199</span>                    <span class="keywordtype">size_t</span> index = 0;</div>
+<div class="line"><span class="lineno">  200</span>                    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; i : info)</div>
+<div class="line"><span class="lineno">  201</span>                    {</div>
+<div class="line"><span class="lineno">  202</span>                        <span class="keyword">auto</span> src = <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a2364dc240a173460e5edb1abfb0849a0">ArchetypeChunk::Accessor::GetBuffer</a>(oldChunk) + i.offset;</div>
+<div class="line"><span class="lineno">  203</span>                        <span class="keyword">auto</span> dst = <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a2364dc240a173460e5edb1abfb0849a0">ArchetypeChunk::Accessor::GetBuffer</a>(newChunk) + newChunkLayout.at(comp).get(index).offset;</div>
+<div class="line"><span class="lineno">  204</span>                        std::memcpy(<span class="keyword">static_cast&lt;</span>uint8_t*<span class="keyword">&gt;</span>(dst) + newIndex * i.stride,</div>
+<div class="line"><span class="lineno">  205</span>                            <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>uint8_t*<span class="keyword">&gt;</span>(src) + oldIndex * i.stride,</div>
+<div class="line"><span class="lineno">  206</span>                            i.stride);</div>
+<div class="line"><span class="lineno">  207</span> </div>
+<div class="line"><span class="lineno">  208</span>                        index++;</div>
+<div class="line"><span class="lineno">  209</span>                    }</div>
+<div class="line"><span class="lineno">  210</span>                }</div>
+<div class="line"><span class="lineno">  211</span> </div>
+<div class="line"><span class="lineno">  212</span>                oldChunk-&gt;RemoveEntitySwapPop(oldIndex);</div>
+<div class="line"><span class="lineno">  213</span>                <a class="code hl_variable" href="#aa265c1ee11500f18ecc2023b5ee5c1a6">locations</a>[id] = { newChunk, newIndex };</div>
+<div class="line"><span class="lineno">  214</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 23 --></div>
+</div>
+
+</div>
+</div>
+<a id="aa50cfbab2a767940133a8960eb168ae8" name="aa50cfbab2a767940133a8960eb168ae8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa50cfbab2a767940133a8960eb168ae8">&#9670;&#160;</a></span>StoreComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityManager::StoreComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *</td>          <td class="paramname"><span class="paramname"><em>chunk</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントをチャンクに格納する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chunk</td><td>アーキタイプチャンクへのポインタ </td></tr>
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+    <tr><td class="paramname">index</td><td>チャンク内のインデックス </td></tr>
+    <tr><td class="paramname">value</td><td>格納するコンポーネントの値 @detail まばらなコンポーネントかどうかで処理を分ける </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00351">351</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  351</span>                                                                                                  {</div>
+<div class="line"><span class="lineno">  352</span>                <span class="keywordflow">if</span> (<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a3399f597ac754ab21dda7db066911f1c">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><span class="lineno">  353</span>                    <a class="code hl_function" href="#a842d67c54e460bd3aca73e5426075005">GetSparseStore&lt;T&gt;</a>().Add(<span class="keywordtype">id</span>, value);</div>
+<div class="line"><span class="lineno">  354</span>                }</div>
+<div class="line"><span class="lineno">  355</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  356</span>                    <a class="code hl_function" href="#a66bbdc4844ec716ce0df19de7a858ed3">MemorySetChunk&lt;T&gt;</a>(chunk, index, value);</div>
+<div class="line"><span class="lineno">  357</span>                }</div>
+<div class="line"><span class="lineno">  358</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html_a66bbdc4844ec716ce0df19de7a858ed3"><div class="ttname"><a href="#a66bbdc4844ec716ce0df19de7a858ed3">SectorFW::ECS::EntityManager::MemorySetChunk</a></div><div class="ttdeci">void MemorySetChunk(ArchetypeChunk *chunk, size_t index, const T &amp;value) noexcept</div><div class="ttdoc">メモリ上のチャンクに値を設定する関数(SoAコンポーネントではない場合)</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00250">EntityManager.h:250</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 24 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 25 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a7a97cfbc6c5edfeb367adc28f86b1fad" name="a7a97cfbc6c5edfeb367adc28f86b1fad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a97cfbc6c5edfeb367adc28f86b1fad">&#9670;&#160;</a></span>archetypeManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a> SectorFW::ECS::EntityManager::archetypeManager</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>アーキタイプマネージャー </p>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00366">366</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af8fad2553209b0c46edd48700d0989f4" name="af8fad2553209b0c46edd48700d0989f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8fad2553209b0c46edd48700d0989f4">&#9670;&#160;</a></span>entityAllocator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a> SectorFW::ECS::EntityManager::entityAllocator = <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a>(MAX_ENTITY_NUM)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティIDアロケータ </p>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00362">362</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa265c1ee11500f18ecc2023b5ee5c1a6" name="aa265c1ee11500f18ecc2023b5ee5c1a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa265c1ee11500f18ecc2023b5ee5c1a6">&#9670;&#160;</a></span>locations</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_location.html">EntityLocation</a>&gt; SectorFW::ECS::EntityManager::locations</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティの位置を管理するマップ @detail EntityIDをキーに、EntityLocationを値とするマップ </p>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00371">371</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a10b330f95638020878c4a09a574c0e15" name="a10b330f95638020878c4a09a574c0e15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10b330f95638020878c4a09a574c0e15">&#9670;&#160;</a></span>sparseStores</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a>, std::shared_ptr&lt;struct <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_i_sparse_wrapper.html">ISparseWrapper</a>&gt; &gt; SectorFW::ECS::EntityManager::sparseStores</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>まばらなコンポーネントストアを格納するマップ </p>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00382">382</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a></li>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/src/Core/<a class="el" href="_entity_manager_8cpp_source.html">EntityManager.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

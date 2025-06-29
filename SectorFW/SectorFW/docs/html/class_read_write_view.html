@@ -1,0 +1,476 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: ReadWriteView&lt; Container &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_read_write_view.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">公開型</a> &#124;
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pri-attribs">非公開変数類</a> &#124;
+<a href="class_read_write_view-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">ReadWriteView&lt; Container &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>コンテナの読み書きビューを提供するクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:a8465fbc771b974b627c61d3a0a5ab4a8" id="r_a8465fbc771b974b627c61d3a0a5ab4a8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8465fbc771b974b627c61d3a0a5ab4a8">iterator</a> = typename Container::iterator</td></tr>
+<tr class="separator:a8465fbc771b974b627c61d3a0a5ab4a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79591d326634966262209c9cfc457f8c" id="r_a79591d326634966262209c9cfc457f8c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79591d326634966262209c9cfc457f8c">const_iterator</a> = typename Container::const_iterator</td></tr>
+<tr class="separator:a79591d326634966262209c9cfc457f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4efda4586a79d39e38c1d0da993adbfb" id="r_a4efda4586a79d39e38c1d0da993adbfb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4efda4586a79d39e38c1d0da993adbfb">value_type</a> = typename Container::value_type</td></tr>
+<tr class="separator:a4efda4586a79d39e38c1d0da993adbfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:ae66d653e81f1fefa2aa5b4341b7cbb6d" id="r_ae66d653e81f1fefa2aa5b4341b7cbb6d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae66d653e81f1fefa2aa5b4341b7cbb6d">ReadWriteView</a> (Container &amp;container) noexcept</td></tr>
+<tr class="memdesc:ae66d653e81f1fefa2aa5b4341b7cbb6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="separator:ae66d653e81f1fefa2aa5b4341b7cbb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bb972d01bd0e77d06da709f91dd7c42" id="r_a1bb972d01bd0e77d06da709f91dd7c42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8465fbc771b974b627c61d3a0a5ab4a8">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1bb972d01bd0e77d06da709f91dd7c42">begin</a> () noexcept</td></tr>
+<tr class="memdesc:a1bb972d01bd0e77d06da709f91dd7c42"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンテナの先頭要素へのイテレータを取得  <br /></td></tr>
+<tr class="separator:a1bb972d01bd0e77d06da709f91dd7c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac18f4456cc7f8456fdfb899f553681e5" id="r_ac18f4456cc7f8456fdfb899f553681e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8465fbc771b974b627c61d3a0a5ab4a8">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac18f4456cc7f8456fdfb899f553681e5">end</a> () noexcept</td></tr>
+<tr class="memdesc:ac18f4456cc7f8456fdfb899f553681e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンテナの末尾要素の次を指すイテレータを取得  <br /></td></tr>
+<tr class="separator:ac18f4456cc7f8456fdfb899f553681e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3159d0747a95223e7844085216a77e30" id="r_a3159d0747a95223e7844085216a77e30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a79591d326634966262209c9cfc457f8c">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3159d0747a95223e7844085216a77e30">begin</a> () const noexcept</td></tr>
+<tr class="memdesc:a3159d0747a95223e7844085216a77e30"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンテナの先頭要素へのイテレータを取得（const）  <br /></td></tr>
+<tr class="separator:a3159d0747a95223e7844085216a77e30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6c3f401f221d84ae597805c53933496" id="r_ae6c3f401f221d84ae597805c53933496"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a79591d326634966262209c9cfc457f8c">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6c3f401f221d84ae597805c53933496">end</a> () const noexcept</td></tr>
+<tr class="memdesc:ae6c3f401f221d84ae597805c53933496"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンテナの末尾要素の次を指すイテレータを取得（const）  <br /></td></tr>
+<tr class="separator:ae6c3f401f221d84ae597805c53933496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2af8676cdcbe726c7833ef1dffcfd717" id="r_a2af8676cdcbe726c7833ef1dffcfd717"><td class="memTemplParams" colspan="2">template&lt;typename Key&gt; </td></tr>
+<tr class="memitem:a2af8676cdcbe726c7833ef1dffcfd717"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a2af8676cdcbe726c7833ef1dffcfd717">at</a> (const Key &amp;key)</td></tr>
+<tr class="memdesc:a2af8676cdcbe726c7833ef1dffcfd717"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定したキーの要素を取得（at を持っているコンテナのみ有効）  <br /></td></tr>
+<tr class="separator:a2af8676cdcbe726c7833ef1dffcfd717"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+非公開変数類</h2></td></tr>
+<tr class="memitem:a4a075c325c48e21cb53fac37e2eb7c53" id="r_a4a075c325c48e21cb53fac37e2eb7c53"><td class="memItemLeft" align="right" valign="top">Container &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a075c325c48e21cb53fac37e2eb7c53">container_</a></td></tr>
+<tr class="memdesc:a4a075c325c48e21cb53fac37e2eb7c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンテナの参照  <br /></td></tr>
+<tr class="separator:a4a075c325c48e21cb53fac37e2eb7c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Container&gt;<br />
+class ReadWriteView&lt; Container &gt;</div><p>コンテナの読み書きビューを提供するクラス </p>
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00014">14</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">型定義メンバ詳解</h2>
+<a id="a79591d326634966262209c9cfc457f8c" name="a79591d326634966262209c9cfc457f8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79591d326634966262209c9cfc457f8c">&#9670;&#160;</a></span>const_iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;::const_iterator = typename Container::const_iterator</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00017">17</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8465fbc771b974b627c61d3a0a5ab4a8" name="a8465fbc771b974b627c61d3a0a5ab4a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8465fbc771b974b627c61d3a0a5ab4a8">&#9670;&#160;</a></span>iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;::iterator = typename Container::iterator</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00016">16</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4efda4586a79d39e38c1d0da993adbfb" name="a4efda4586a79d39e38c1d0da993adbfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4efda4586a79d39e38c1d0da993adbfb">&#9670;&#160;</a></span>value_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;::value_type = typename Container::value_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00018">18</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<h2 class="groupheader">構築子と解体子</h2>
+<a id="ae66d653e81f1fefa2aa5b4341b7cbb6d" name="ae66d653e81f1fefa2aa5b4341b7cbb6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66d653e81f1fefa2aa5b4341b7cbb6d">&#9670;&#160;</a></span>ReadWriteView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;<a class="el" href="class_read_write_view.html">::ReadWriteView</a> </td>
+          <td>(</td>
+          <td class="paramtype">Container &amp;</td>          <td class="paramname"><span class="paramname"><em>container</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">container</td><td>コンテナの参照 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_read_write_view.html" title="コンテナの読み書きビューを提供するクラス">ReadWriteView</a> コンテナの読み書きビュー </dd></dl>
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00024">24</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   24</span>: <a class="code hl_variable" href="#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>(<a class="code hl_class" href="class_read_write_view.html">container</a>) {}</div>
+<div class="ttc" id="aclass_read_write_view_html"><div class="ttname"><a href="class_read_write_view.html">ReadWriteView</a></div><div class="ttdoc">コンテナの読み書きビューを提供するクラス</div><div class="ttdef"><b>Definition</b> <a href="_access_wrapper_8hpp_source.html#l00014">AccessWrapper.hpp:14</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_a4a075c325c48e21cb53fac37e2eb7c53"><div class="ttname"><a href="#a4a075c325c48e21cb53fac37e2eb7c53">ReadWriteView::container_</a></div><div class="ttdeci">Container &amp; container_</div><div class="ttdoc">コンテナの参照</div><div class="ttdef"><b>Definition</b> <a href="_access_wrapper_8hpp_source.html#l00061">AccessWrapper.hpp:61</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="a2af8676cdcbe726c7833ef1dffcfd717" name="a2af8676cdcbe726c7833ef1dffcfd717"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2af8676cdcbe726c7833ef1dffcfd717">&#9670;&#160;</a></span>at()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+<div class="memtemplate">
+template&lt;typename Key&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto &amp; <a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;::at </td>
+          <td>(</td>
+          <td class="paramtype">const Key &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>指定したキーの要素を取得（at を持っているコンテナのみ有効） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>キー </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>要素への参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00051">51</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   51</span>                             {</div>
+<div class="line"><span class="lineno">   52</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.at(<a class="code hl_class" href="class_read_write_view.html">key</a>);</div>
+<div class="line"><span class="lineno">   53</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3159d0747a95223e7844085216a77e30" name="a3159d0747a95223e7844085216a77e30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3159d0747a95223e7844085216a77e30">&#9670;&#160;</a></span>begin() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a79591d326634966262209c9cfc457f8c">const_iterator</a> <a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンテナの先頭要素へのイテレータを取得（const） </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="#a79591d326634966262209c9cfc457f8c">const_iterator</a> コンテナの先頭要素へのイテレータ（const） </dd></dl>
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00039">39</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   39</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.begin(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1bb972d01bd0e77d06da709f91dd7c42" name="a1bb972d01bd0e77d06da709f91dd7c42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bb972d01bd0e77d06da709f91dd7c42">&#9670;&#160;</a></span>begin() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8465fbc771b974b627c61d3a0a5ab4a8">iterator</a> <a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンテナの先頭要素へのイテレータを取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>iterator コンテナの先頭要素へのイテレータ </dd></dl>
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00029">29</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   29</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.begin(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae6c3f401f221d84ae597805c53933496" name="ae6c3f401f221d84ae597805c53933496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6c3f401f221d84ae597805c53933496">&#9670;&#160;</a></span>end() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a79591d326634966262209c9cfc457f8c">const_iterator</a> <a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンテナの末尾要素の次を指すイテレータを取得（const） </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="#a79591d326634966262209c9cfc457f8c">const_iterator</a> コンテナの末尾要素の次を指すイテレータ（const） </dd></dl>
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00044">44</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   44</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.end(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac18f4456cc7f8456fdfb899f553681e5" name="ac18f4456cc7f8456fdfb899f553681e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac18f4456cc7f8456fdfb899f553681e5">&#9670;&#160;</a></span>end() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8465fbc771b974b627c61d3a0a5ab4a8">iterator</a> <a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンテナの末尾要素の次を指すイテレータを取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>iterator コンテナの末尾要素の次を指すイテレータ </dd></dl>
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00034">34</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   34</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.end(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a4a075c325c48e21cb53fac37e2eb7c53" name="a4a075c325c48e21cb53fac37e2eb7c53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a075c325c48e21cb53fac37e2eb7c53">&#9670;&#160;</a></span>container_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Container&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Container&amp; <a class="el" href="class_read_write_view.html">ReadWriteView</a>&lt; Container &gt;::container_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンテナの参照 </p>
+
+<p class="definition"> <a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a> の <a class="el" href="_access_wrapper_8hpp_source.html#l00061">61</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Util/<a class="el" href="_access_wrapper_8hpp_source.html">AccessWrapper.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_read_write_view.html">ReadWriteView</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

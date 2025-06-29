@@ -10,7 +10,7 @@
 #ifndef A_SECTOR11FW_H_
 #define A_SECTOR11FW_H_
 
-#include "Graphics/IGraphicsDevice.h"
+#include "Graphics/IGraphicsDevice.hpp"
 #include "Core/GameEngine.h"
 #include "Core/ECS/Query.h"
 

@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::ECS::EntityID 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pub-static-methods">静的公開メンバ関数</a> &#124;
+<a href="#pub-attribs">公開変数類</a> &#124;
+<a href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::ECS::EntityID 構造体</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="entity_8h_source.html">entity.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a1899ad07acc32500c58da7385f129cd6" id="r_a1899ad07acc32500c58da7385f129cd6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1899ad07acc32500c58da7385f129cd6">operator==</a> (const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a1899ad07acc32500c58da7385f129cd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="separator:a1899ad07acc32500c58da7385f129cd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2240f5385b275e49355f648a442296ec" id="r_a2240f5385b275e49355f648a442296ec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2240f5385b275e49355f648a442296ec">IsValid</a> () const noexcept</td></tr>
+<tr class="memdesc:a2240f5385b275e49355f648a442296ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">EntityIDが有効かどうかを確認する  <br /></td></tr>
+<tr class="separator:a2240f5385b275e49355f648a442296ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a06ebd3a276a9d81fc1e74a6fbfbf697f" id="r_a06ebd3a276a9d81fc1e74a6fbfbf697f"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06ebd3a276a9d81fc1e74a6fbfbf697f">Invalid</a> () noexcept</td></tr>
+<tr class="memdesc:a06ebd3a276a9d81fc1e74a6fbfbf697f"><td class="mdescLeft">&#160;</td><td class="mdescRight">無効なEntityIDを取得する  <br /></td></tr>
+<tr class="separator:a06ebd3a276a9d81fc1e74a6fbfbf697f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:aa5aea41f9ae21c9dd2e1ba5ad2544eca" id="r_aa5aea41f9ae21c9dd2e1ba5ad2544eca"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5aea41f9ae21c9dd2e1ba5ad2544eca">index</a> = 0</td></tr>
+<tr class="separator:aa5aea41f9ae21c9dd2e1ba5ad2544eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4528747e37435cc8be2a0d545ca513ee" id="r_a4528747e37435cc8be2a0d545ca513ee"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4528747e37435cc8be2a0d545ca513ee">generation</a> = 0</td></tr>
+<tr class="separator:a4528747e37435cc8be2a0d545ca513ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock">
+<p class="definition"> <a class="el" href="entity_8h_source.html">entity.h</a> の <a class="el" href="entity_8h_source.html#l00021">21</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">関数詳解</h2>
+<a id="a06ebd3a276a9d81fc1e74a6fbfbf697f" name="a06ebd3a276a9d81fc1e74a6fbfbf697f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06ebd3a276a9d81fc1e74a6fbfbf697f">&#9670;&#160;</a></span>Invalid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> SectorFW::ECS::EntityID::Invalid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>無効なEntityIDを取得する </p>
+<dl class="section return"><dt>戻り値</dt><dd>無効なEntityID </dd></dl>
+
+<p class="definition"> <a class="el" href="entity_8h_source.html">entity.h</a> の <a class="el" href="entity_8h_source.html#l00044">44</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   44</span>                                                        {</div>
+<div class="line"><span class="lineno">   45</span>                <span class="keywordflow">return</span> EntityID{ UINT32_MAX, 0 };</div>
+<div class="line"><span class="lineno">   46</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+
+</div>
+</div>
+<a id="a2240f5385b275e49355f648a442296ec" name="a2240f5385b275e49355f648a442296ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2240f5385b275e49355f648a442296ec">&#9670;&#160;</a></span>IsValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SectorFW::ECS::EntityID::IsValid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>EntityIDが有効かどうかを確認する </p>
+<dl class="section return"><dt>戻り値</dt><dd>有効な場合はtrue、無効な場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="entity_8h_source.html">entity.h</a> の <a class="el" href="entity_8h_source.html#l00037">37</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>                                          {</div>
+<div class="line"><span class="lineno">   38</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="#aa5aea41f9ae21c9dd2e1ba5ad2544eca">index</a> != UINT32_MAX;</div>
+<div class="line"><span class="lineno">   39</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_entity_i_d_html_aa5aea41f9ae21c9dd2e1ba5ad2544eca"><div class="ttname"><a href="#aa5aea41f9ae21c9dd2e1ba5ad2544eca">SectorFW::ECS::EntityID::index</a></div><div class="ttdeci">uint32_t index</div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00022">entity.h:22</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1899ad07acc32500c58da7385f129cd6" name="a1899ad07acc32500c58da7385f129cd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1899ad07acc32500c58da7385f129cd6">&#9670;&#160;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SectorFW::ECS::EntityID::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>EntityIDをコピーする </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> </dd></dl>
+
+<p class="definition"> <a class="el" href="entity_8h_source.html">entity.h</a> の <a class="el" href="entity_8h_source.html#l00030">30</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   30</span>                                                                  {</div>
+<div class="line"><span class="lineno">   31</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="#aa5aea41f9ae21c9dd2e1ba5ad2544eca">index</a> == other.index &amp;&amp; <a class="code hl_variable" href="#a4528747e37435cc8be2a0d545ca513ee">generation</a> == other.generation;</div>
+<div class="line"><span class="lineno">   32</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_entity_i_d_html_a4528747e37435cc8be2a0d545ca513ee"><div class="ttname"><a href="#a4528747e37435cc8be2a0d545ca513ee">SectorFW::ECS::EntityID::generation</a></div><div class="ttdeci">uint32_t generation</div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00023">entity.h:23</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a4528747e37435cc8be2a0d545ca513ee" name="a4528747e37435cc8be2a0d545ca513ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4528747e37435cc8be2a0d545ca513ee">&#9670;&#160;</a></span>generation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SectorFW::ECS::EntityID::generation = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="entity_8h_source.html">entity.h</a> の <a class="el" href="entity_8h_source.html#l00023">23</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa5aea41f9ae21c9dd2e1ba5ad2544eca" name="aa5aea41f9ae21c9dd2e1ba5ad2544eca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5aea41f9ae21c9dd2e1ba5ad2544eca">&#9670;&#160;</a></span>index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SectorFW::ECS::EntityID::index = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="entity_8h_source.html">entity.h</a> の <a class="el" href="entity_8h_source.html#l00022">22</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="entity_8h_source.html">entity.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

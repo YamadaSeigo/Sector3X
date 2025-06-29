@@ -1,0 +1,620 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: IGraphicsDevice&lt; Impl, GraphicsCommand &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_i_graphics_device.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pro-methods">限定公開メンバ関数</a> &#124;
+<a href="#pri-attribs">非公開変数類</a> &#124;
+<a href="class_i_graphics_device-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">IGraphicsDevice&lt; Impl, GraphicsCommand &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>グラフィックデバイスのインターフェース  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a35103a9422a77b15e003e5eec8bf0c31" id="r_a35103a9422a77b15e003e5eec8bf0c31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35103a9422a77b15e003e5eec8bf0c31">IGraphicsDevice</a> ()=default</td></tr>
+<tr class="memdesc:a35103a9422a77b15e003e5eec8bf0c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="separator:a35103a9422a77b15e003e5eec8bf0c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ebac811f75a797773102c3a831a50b9" id="r_a3ebac811f75a797773102c3a831a50b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ebac811f75a797773102c3a831a50b9">Configure</a> (const <a class="el" href="_i_graphics_device_8hpp.html#a25d30b54e20b3f52c119a30df3bae760">NativeWindowHandle</a> &amp;nativeWindowHandle, uint32_t width, uint32_t height)</td></tr>
+<tr class="memdesc:a3ebac811f75a797773102c3a831a50b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化  <br /></td></tr>
+<tr class="separator:a3ebac811f75a797773102c3a831a50b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0a518211928009059ade0c4900a2a75" id="r_ad0a518211928009059ade0c4900a2a75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0a518211928009059ade0c4900a2a75">Clear</a> (const float clearColor[4])</td></tr>
+<tr class="memdesc:ad0a518211928009059ade0c4900a2a75"><td class="mdescLeft">&#160;</td><td class="mdescRight">画面をクリア  <br /></td></tr>
+<tr class="separator:ad0a518211928009059ade0c4900a2a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adddb7e1219fbba63a022668c48c54116" id="r_adddb7e1219fbba63a022668c48c54116"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adddb7e1219fbba63a022668c48c54116">Present</a> ()</td></tr>
+<tr class="memdesc:adddb7e1219fbba63a022668c48c54116"><td class="mdescLeft">&#160;</td><td class="mdescRight">描画  <br /></td></tr>
+<tr class="separator:adddb7e1219fbba63a022668c48c54116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afacd61865ccfda5bb3b90defc3e60f99" id="r_afacd61865ccfda5bb3b90defc3e60f99"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; GraphicsCommand &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afacd61865ccfda5bb3b90defc3e60f99">CreateCommandList</a> ()</td></tr>
+<tr class="memdesc:afacd61865ccfda5bb3b90defc3e60f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化  <br /></td></tr>
+<tr class="separator:afacd61865ccfda5bb3b90defc3e60f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a398da6f8da2c2c0605e68c0a5d92f0e4" id="r_a398da6f8da2c2c0605e68c0a5d92f0e4"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_i_texture.html">ITexture</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a398da6f8da2c2c0605e68c0a5d92f0e4">CreateTexture</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a398da6f8da2c2c0605e68c0a5d92f0e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャの作成  <br /></td></tr>
+<tr class="separator:a398da6f8da2c2c0605e68c0a5d92f0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96e4d69c038145fc9ccfaa5ffe7c9046" id="r_a96e4d69c038145fc9ccfaa5ffe7c9046"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_i_vertex_buffer.html">IVertexBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96e4d69c038145fc9ccfaa5ffe7c9046">CreateVertexBuffer</a> (const void *data, size_t size, UINT stride)</td></tr>
+<tr class="memdesc:a96e4d69c038145fc9ccfaa5ffe7c9046"><td class="mdescLeft">&#160;</td><td class="mdescRight">バーテックスバッファの作成  <br /></td></tr>
+<tr class="separator:a96e4d69c038145fc9ccfaa5ffe7c9046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f801fea56ed901909e71fbd9784a1b4" id="r_a4f801fea56ed901909e71fbd9784a1b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f801fea56ed901909e71fbd9784a1b4">~IGraphicsDevice</a> ()=default</td></tr>
+<tr class="memdesc:a4f801fea56ed901909e71fbd9784a1b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="separator:a4f801fea56ed901909e71fbd9784a1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54381d09b1f5a83bccab6052f1d3016f" id="r_a54381d09b1f5a83bccab6052f1d3016f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54381d09b1f5a83bccab6052f1d3016f">IsInitialized</a> () const</td></tr>
+<tr class="memdesc:a54381d09b1f5a83bccab6052f1d3016f"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化フラグの取得  <br /></td></tr>
+<tr class="separator:a54381d09b1f5a83bccab6052f1d3016f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:abcff09996c8c47092a07d0612505e9df" id="r_abcff09996c8c47092a07d0612505e9df"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcff09996c8c47092a07d0612505e9df">Initialize</a> (const <a class="el" href="_i_graphics_device_8hpp.html#a25d30b54e20b3f52c119a30df3bae760">NativeWindowHandle</a> &amp;nativeWindowHandle, uint32_t width, uint32_t height)</td></tr>
+<tr class="memdesc:abcff09996c8c47092a07d0612505e9df"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化  <br /></td></tr>
+<tr class="separator:abcff09996c8c47092a07d0612505e9df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+非公開変数類</h2></td></tr>
+<tr class="memitem:a42ad59b44693f01479044baeb091f33f" id="r_a42ad59b44693f01479044baeb091f33f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42ad59b44693f01479044baeb091f33f">m_isInitialized</a> = false</td></tr>
+<tr class="separator:a42ad59b44693f01479044baeb091f33f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt;<br />
+class IGraphicsDevice&lt; Impl, GraphicsCommand &gt;</div><p>グラフィックデバイスのインターフェース </p>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00086">86</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="a35103a9422a77b15e003e5eec8bf0c31" name="a35103a9422a77b15e003e5eec8bf0c31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35103a9422a77b15e003e5eec8bf0c31">&#9670;&#160;</a></span>IGraphicsDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;<a class="el" href="class_i_graphics_device.html">::IGraphicsDevice</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+
+</div>
+</div>
+<a id="a4f801fea56ed901909e71fbd9784a1b4" name="a4f801fea56ed901909e71fbd9784a1b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f801fea56ed901909e71fbd9784a1b4">&#9670;&#160;</a></span>~IGraphicsDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::~<a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>デストラクタ </p>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="ad0a518211928009059ade0c4900a2a75" name="ad0a518211928009059ade0c4900a2a75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0a518211928009059ade0c4900a2a75">&#9670;&#160;</a></span>Clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::Clear </td>
+          <td>(</td>
+          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>clearColor</em></span>[4]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>画面をクリア </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clearColor</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00116">116</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  116</span>                                            {</div>
+<div class="line"><span class="lineno">  117</span>        <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="class_i_graphics_device.html">Impl</a>*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_class" href="class_i_graphics_device.html">ClearImpl</a>(<a class="code hl_class" href="class_i_graphics_device.html">clearColor</a>);</div>
+<div class="line"><span class="lineno">  118</span>    }</div>
+<div class="ttc" id="aclass_i_graphics_device_html"><div class="ttname"><a href="class_i_graphics_device.html">IGraphicsDevice</a></div><div class="ttdoc">グラフィックデバイスのインターフェース</div><div class="ttdef"><b>Definition</b> <a href="_i_graphics_device_8hpp_source.html#l00086">IGraphicsDevice.hpp:86</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3ebac811f75a797773102c3a831a50b9" name="a3ebac811f75a797773102c3a831a50b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ebac811f75a797773102c3a831a50b9">&#9670;&#160;</a></span>Configure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::Configure </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="_i_graphics_device_8hpp.html#a25d30b54e20b3f52c119a30df3bae760">NativeWindowHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>nativeWindowHandle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>height</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>初期化 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nativeWindowHandle</td><td>ウィンドウハンドル </td></tr>
+    <tr><td class="paramname">width</td><td>ウィンドウ幅 </td></tr>
+    <tr><td class="paramname">height</td><td>ウィンドウ高さ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00108">108</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span>    {</div>
+<div class="line"><span class="lineno">  110</span>        <a class="code hl_variable" href="#a42ad59b44693f01479044baeb091f33f">m_isInitialized</a> = <a class="code hl_function" href="#abcff09996c8c47092a07d0612505e9df">Initialize</a>(<a class="code hl_class" href="class_i_graphics_device.html">nativeWindowHandle</a>, <a class="code hl_class" href="class_i_graphics_device.html">width</a>, <a class="code hl_class" href="class_i_graphics_device.html">height</a>);</div>
+<div class="line"><span class="lineno">  111</span>    }</div>
+<div class="ttc" id="aclass_i_graphics_device_html_a42ad59b44693f01479044baeb091f33f"><div class="ttname"><a href="#a42ad59b44693f01479044baeb091f33f">IGraphicsDevice::m_isInitialized</a></div><div class="ttdeci">bool m_isInitialized</div><div class="ttdef"><b>Definition</b> <a href="_i_graphics_device_8hpp_source.html#l00161">IGraphicsDevice.hpp:161</a></div></div>
+<div class="ttc" id="aclass_i_graphics_device_html_abcff09996c8c47092a07d0612505e9df"><div class="ttname"><a href="#abcff09996c8c47092a07d0612505e9df">IGraphicsDevice::Initialize</a></div><div class="ttdeci">bool Initialize(const NativeWindowHandle &amp;nativeWindowHandle, uint32_t width, uint32_t height)</div><div class="ttdoc">初期化</div><div class="ttdef"><b>Definition</b> <a href="_i_graphics_device_8hpp_source.html#l00094">IGraphicsDevice.hpp:94</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+
+</div>
+</div>
+<a id="afacd61865ccfda5bb3b90defc3e60f99" name="afacd61865ccfda5bb3b90defc3e60f99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afacd61865ccfda5bb3b90defc3e60f99">&#9670;&#160;</a></span>CreateCommandList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; GraphicsCommand &gt; <a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::CreateCommandList </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>初期化 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hwnd</td><td>ウィンドウハンドル </td></tr>
+    <tr><td class="paramname">width</td><td>ウィンドウ幅 </td></tr>
+    <tr><td class="paramname">height</td><td>ウィンドウ高さ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00131">131</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  131</span>                                                       {</div>
+<div class="line"><span class="lineno">  132</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="class_i_graphics_device.html">Impl</a>*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_class" href="class_i_graphics_device.html">CreateCommandListImpl</a>();</div>
+<div class="line"><span class="lineno">  133</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a398da6f8da2c2c0605e68c0a5d92f0e4" name="a398da6f8da2c2c0605e68c0a5d92f0e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a398da6f8da2c2c0605e68c0a5d92f0e4">&#9670;&#160;</a></span>CreateTexture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_i_texture.html">ITexture</a> &gt; <a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::CreateTexture </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>テクスチャの作成 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>テクスチャのパス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00138">138</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  138</span>                                                                 {</div>
+<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="class_i_graphics_device.html">Impl</a>*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_class" href="class_i_graphics_device.html">CreateTextureImpl</a>(<a class="code hl_class" href="class_i_graphics_device.html">path</a>);</div>
+<div class="line"><span class="lineno">  140</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a96e4d69c038145fc9ccfaa5ffe7c9046" name="a96e4d69c038145fc9ccfaa5ffe7c9046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96e4d69c038145fc9ccfaa5ffe7c9046">&#9670;&#160;</a></span>CreateVertexBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_i_vertex_buffer.html">IVertexBuffer</a> &gt; <a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::CreateVertexBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const void *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UINT</td>          <td class="paramname"><span class="paramname"><em>stride</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バーテックスバッファの作成 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>データ </td></tr>
+    <tr><td class="paramname">size</td><td>サイズ </td></tr>
+    <tr><td class="paramname">stride</td><td>ストライド </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00147">147</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  147</span>                                                                                                {</div>
+<div class="line"><span class="lineno">  148</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="class_i_graphics_device.html">Impl</a>*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_class" href="class_i_graphics_device.html">CreateVertexBufferImpl</a>(<a class="code hl_class" href="class_i_graphics_device.html">data</a>, <a class="code hl_class" href="class_i_graphics_device.html">size</a>, <a class="code hl_class" href="class_i_graphics_device.html">stride</a>);</div>
+<div class="line"><span class="lineno">  149</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abcff09996c8c47092a07d0612505e9df" name="abcff09996c8c47092a07d0612505e9df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcff09996c8c47092a07d0612505e9df">&#9670;&#160;</a></span>Initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::Initialize </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="_i_graphics_device_8hpp.html#a25d30b54e20b3f52c119a30df3bae760">NativeWindowHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>nativeWindowHandle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>height</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>初期化 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nativeWindowHandle</td><td>ウィンドウハンドル </td></tr>
+    <tr><td class="paramname">width</td><td>ウィンドウ幅 </td></tr>
+    <tr><td class="paramname">height</td><td>ウィンドウ高さ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00094">94</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>                                                                                                   {</div>
+<div class="line"><span class="lineno">   95</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="class_i_graphics_device.html">Impl</a>*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_class" href="class_i_graphics_device.html">InitializeImpl</a>(<a class="code hl_class" href="class_i_graphics_device.html">nativeWindowHandle</a>, <a class="code hl_class" href="class_i_graphics_device.html">width</a>, <a class="code hl_class" href="class_i_graphics_device.html">height</a>);</div>
+<div class="line"><span class="lineno">   96</span>    }</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<a id="a54381d09b1f5a83bccab6052f1d3016f" name="a54381d09b1f5a83bccab6052f1d3016f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54381d09b1f5a83bccab6052f1d3016f">&#9670;&#160;</a></span>IsInitialized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::IsInitialized </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>初期化フラグの取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>初期化フラグ </dd></dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00158">158</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  158</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a42ad59b44693f01479044baeb091f33f">m_isInitialized</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="adddb7e1219fbba63a022668c48c54116" name="adddb7e1219fbba63a022668c48c54116"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adddb7e1219fbba63a022668c48c54116">&#9670;&#160;</a></span>Present()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::Present </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>描画 </p>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00122">122</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  122</span>                   {</div>
+<div class="line"><span class="lineno">  123</span>        <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="class_i_graphics_device.html">Impl</a>*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_class" href="class_i_graphics_device.html">PresentImpl</a>();</div>
+<div class="line"><span class="lineno">  124</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a42ad59b44693f01479044baeb091f33f" name="a42ad59b44693f01479044baeb091f33f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42ad59b44693f01479044baeb091f33f">&#9670;&#160;</a></span>m_isInitialized</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl, <a class="el" href="concept_graphics_command_type.html">GraphicsCommandType</a> GraphicsCommand&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a>&lt; Impl, GraphicsCommand &gt;::m_isInitialized = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00161">161</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Graphics/<a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_i_graphics_device.html">IGraphicsDevice</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

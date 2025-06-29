@@ -1,0 +1,19 @@
+digraph "moodycamel::ConcurrentQueue::ProducerBase::ProducerBase"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="moodycamel::ConcurrentQueue\l::ProducerBase::ProducerBase",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="moodycamel::ConcurrentQueue\l::ConcurrentQueue",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodycamel_1_1_concurrent_queue.html#a8dd7a33cf3174548a2b5f758331c5e48",tooltip=" "];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="moodycamel::ConcurrentQueue\l::populate_initial_block_list",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodycamel_1_1_concurrent_queue.html#a76fcd9cecc4d9e4400b714fed362964c",tooltip=" "];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="moodycamel::ConcurrentQueue\l::create_array",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodycamel_1_1_concurrent_queue.html#a7272e6551e66f29924b8ee9076bd0042",tooltip=" "];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="moodycamel::ConcurrentQueue\l::aligned_malloc",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodycamel_1_1_concurrent_queue.html#a075026e9a5873393bce75ab47d30d28c",tooltip=" "];
+  Node2 -> Node6 [id="edge5_Node000002_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="moodycamel::ConcurrentQueue\l::populate_initial_implicit\l_producer_hash",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodycamel_1_1_concurrent_queue.html#a18214a0fe743effb7a8fb8aa4b7e38d1",tooltip=" "];
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Util/unique_variant.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('unique__variant_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">unique_variant.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="unique__variant_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;variant&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;tuple&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Ts&gt;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="namespace_sector_f_w.html#a8778f24359ab4bfad4e7850cbfb4647b">   20</a></span>    <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespace_sector_f_w.html#a8778f24359ab4bfad4e7850cbfb4647b">is_in_v</a> = (std::is_same_v&lt;T, Ts&gt; || ...);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Ts&gt;</div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__types.html">   25</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1unique__types.html">unique_types</a> {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Us&gt;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__types_1_1impl.html">   31</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1unique__types_1_1impl.html">impl</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keyword">template</span> &lt;&gt;</div>
+<div class="foldopen" id="foldopen00036" data-start="{" data-end="};">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__types_1_1impl_3_4.html">   36</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1unique__types_1_1impl.html">impl</a>&lt;&gt; {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__types_1_1impl_3_4.html#a35b0ba4ea721c7ce993915370cd8aa91">   37</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1unique__types_1_1impl_3_4.html#a35b0ba4ea721c7ce993915370cd8aa91">type</a> = std::tuple&lt;&gt;;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        };</div>
+</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Us&gt;</div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="};">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html">   43</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1unique__types_1_1impl.html">impl</a>&lt;T, Us...&gt; {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html#aeae0540ea83981242d5dd59ec878b940">   44</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html#aeae0540ea83981242d5dd59ec878b940">tail</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1unique__types_1_1impl.html">impl</a>&lt;Us...&gt;<a class="code hl_typedef" href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html#adddaf21aa5b7442748056449916555dc">::type</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html#adddaf21aa5b7442748056449916555dc">   45</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html#adddaf21aa5b7442748056449916555dc">type</a> = std::conditional_t&lt;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                <a class="code hl_variable" href="namespace_sector_f_w.html#a8778f24359ab4bfad4e7850cbfb4647b">is_in_v</a>&lt;T, Us...&gt;,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                <a class="code hl_typedef" href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html#aeae0540ea83981242d5dd59ec878b940">tail</a>,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="keyword">decltype</span>(std::tuple_cat(std::declval&lt;std::tuple&lt;T&gt;&gt;(), std::declval&lt;tail&gt;()))</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            &gt;;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        };</div>
+</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__types.html#af222c09cbb604b0711be0d326824f741">   55</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1unique__types.html#af222c09cbb604b0711be0d326824f741">type</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1unique__types_1_1impl.html">impl</a>&lt;Ts...&gt;<a class="code hl_typedef" href="struct_sector_f_w_1_1unique__types.html#af222c09cbb604b0711be0d326824f741">::type</a>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    };</div>
+</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Tuple&gt;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1tuple__to__variant.html">   61</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1tuple__to__variant.html">tuple_to_variant</a>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Ts&gt;</div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="};">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1tuple__to__variant_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html">   66</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1tuple__to__variant.html">tuple_to_variant</a>&lt;<a class="code hl_namespace" href="namespacestd.html">std</a>::tuple&lt;Ts...&gt;&gt; {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1tuple__to__variant_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ab6f7d18e8454be8e3e65f4c1f1484908">   67</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1tuple__to__variant_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ab6f7d18e8454be8e3e65f4c1f1484908">type</a> = std::variant&lt;Ts...&gt;;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    };</div>
+</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__variant__impl.html">   73</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1unique__variant__impl.html">unique_variant_impl</a>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Ts&gt;</div>
+<div class="foldopen" id="foldopen00078" data-start="{" data-end="};">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html">   78</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1unique__variant__impl.html">unique_variant_impl</a>&lt;<a class="code hl_namespace" href="namespacestd.html">std</a>::tuple&lt;Ts...&gt;&gt; {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ac5a24b6bdb61b733f2bfbcb2b27abc82">   79</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ac5a24b6bdb61b733f2bfbcb2b27abc82">type</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1tuple__to__variant.html">tuple_to_variant</a>&lt;<span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1unique__types.html">unique_types</a>&lt;Ts...&gt;<a class="code hl_typedef" href="struct_sector_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ac5a24b6bdb61b733f2bfbcb2b27abc82">::type</a>&gt;<a class="code hl_typedef" href="struct_sector_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ac5a24b6bdb61b733f2bfbcb2b27abc82">::type</a>;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    };</div>
+</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Ts&gt;</div>
+<div class="foldopen" id="foldopen00085" data-start="{" data-end="};">
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__variant__impl__alt.html">   85</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1unique__variant__impl__alt.html">unique_variant_impl_alt</a> {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1unique__variant__impl__alt.html#a8471303fc0b098dfeb30fd22fc032da4">   86</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1unique__variant__impl__alt.html#a8471303fc0b098dfeb30fd22fc032da4">type</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1tuple__to__variant.html">tuple_to_variant</a>&lt;<span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1unique__types.html">unique_types</a>&lt;Ts...&gt;<a class="code hl_typedef" href="struct_sector_f_w_1_1unique__variant__impl__alt.html#a8471303fc0b098dfeb30fd22fc032da4">::type</a>&gt;<a class="code hl_typedef" href="struct_sector_f_w_1_1unique__variant__impl__alt.html#a8471303fc0b098dfeb30fd22fc032da4">::type</a>;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    };</div>
+</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="namespace_sector_f_w.html#a6b03e733e0e5b718f65593f9b7f0a49a">   92</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_sector_f_w.html#a6b03e733e0e5b718f65593f9b7f0a49a">unique_variant_from_tuple</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1unique__variant__impl.html">unique_variant_impl&lt;T&gt;::type</a>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Ts&gt;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="namespace_sector_f_w.html#ae8e7962bbece335a780baaf3d4806e41">   97</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_sector_f_w.html#ae8e7962bbece335a780baaf3d4806e41">unique_variant_from_args</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1unique__variant__impl__alt.html">unique_variant_impl_alt</a>&lt;Ts...&gt;::type;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html_a6b03e733e0e5b718f65593f9b7f0a49a"><div class="ttname"><a href="namespace_sector_f_w.html#a6b03e733e0e5b718f65593f9b7f0a49a">SectorFW::unique_variant_from_tuple</a></div><div class="ttdeci">typename unique_variant_impl&lt; T &gt;::type unique_variant_from_tuple</div><div class="ttdoc">ユニークな型のvariantを生成するためのエイリアス(tuple版)</div><div class="ttdef"><b>Definition</b> <a href="#l00092">unique_variant.hpp:92</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html_a8778f24359ab4bfad4e7850cbfb4647b"><div class="ttname"><a href="namespace_sector_f_w.html#a8778f24359ab4bfad4e7850cbfb4647b">SectorFW::is_in_v</a></div><div class="ttdeci">constexpr bool is_in_v</div><div class="ttdoc">指定された型Tが、可変長引数の型リストTs...のいずれかと同じかどうかを判定する</div><div class="ttdef"><b>Definition</b> <a href="#l00020">unique_variant.hpp:20</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html_ae8e7962bbece335a780baaf3d4806e41"><div class="ttname"><a href="namespace_sector_f_w.html#ae8e7962bbece335a780baaf3d4806e41">SectorFW::unique_variant_from_args</a></div><div class="ttdeci">typename unique_variant_impl_alt&lt; Ts... &gt;::type unique_variant_from_args</div><div class="ttdoc">ユニークな型のvariantを生成するためのエイリアス（可変長引数テンプレート版）</div><div class="ttdef"><b>Definition</b> <a href="#l00097">unique_variant.hpp:97</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00053">entity.h:53</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1tuple__to__variant_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_html_ab6f7d18e8454be8e3e65f4c1f1484908"><div class="ttname"><a href="struct_sector_f_w_1_1tuple__to__variant_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ab6f7d18e8454be8e3e65f4c1f1484908">SectorFW::tuple_to_variant&lt; std::tuple&lt; Ts... &gt; &gt;::type</a></div><div class="ttdeci">std::variant&lt; Ts... &gt; type</div><div class="ttdef"><b>Definition</b> <a href="#l00067">unique_variant.hpp:67</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1tuple__to__variant_html"><div class="ttname"><a href="struct_sector_f_w_1_1tuple__to__variant.html">SectorFW::tuple_to_variant</a></div><div class="ttdoc">tuple → variant に変換</div><div class="ttdef"><b>Definition</b> <a href="#l00061">unique_variant.hpp:61</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4_html_adddaf21aa5b7442748056449916555dc"><div class="ttname"><a href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html#adddaf21aa5b7442748056449916555dc">SectorFW::unique_types::impl&lt; T, Us... &gt;::type</a></div><div class="ttdeci">std::conditional_t&lt; is_in_v&lt; T, Us... &gt;, tail, decltype(std::tuple_cat(std::declval&lt; std::tuple&lt; T &gt; &gt;(), std::declval&lt; tail &gt;())) &gt; type</div><div class="ttdef"><b>Definition</b> <a href="#l00045">unique_variant.hpp:45</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4_html_aeae0540ea83981242d5dd59ec878b940"><div class="ttname"><a href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html#aeae0540ea83981242d5dd59ec878b940">SectorFW::unique_types::impl&lt; T, Us... &gt;::tail</a></div><div class="ttdeci">typename impl&lt; Us... &gt;::type tail</div><div class="ttdef"><b>Definition</b> <a href="#l00044">unique_variant.hpp:44</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__types_1_1impl_3_4_html_a35b0ba4ea721c7ce993915370cd8aa91"><div class="ttname"><a href="struct_sector_f_w_1_1unique__types_1_1impl_3_4.html#a35b0ba4ea721c7ce993915370cd8aa91">SectorFW::unique_types::impl&lt;&gt;::type</a></div><div class="ttdeci">std::tuple&lt;&gt; type</div><div class="ttdef"><b>Definition</b> <a href="#l00037">unique_variant.hpp:37</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__types_1_1impl_html"><div class="ttname"><a href="struct_sector_f_w_1_1unique__types_1_1impl.html">SectorFW::unique_types::impl</a></div><div class="ttdoc">再帰的にユニークな型を抽出するための内部実装</div><div class="ttdef"><b>Definition</b> <a href="#l00031">unique_variant.hpp:31</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__types_html"><div class="ttname"><a href="struct_sector_f_w_1_1unique__types.html">SectorFW::unique_types</a></div><div class="ttdoc">ユニークな型のリストを生成するためのヘルパー構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00025">unique_variant.hpp:25</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__types_html_af222c09cbb604b0711be0d326824f741"><div class="ttname"><a href="struct_sector_f_w_1_1unique__types.html#af222c09cbb604b0711be0d326824f741">SectorFW::unique_types::type</a></div><div class="ttdeci">typename impl&lt; Ts... &gt;::type type</div><div class="ttdoc">ユニークな型のタプルを生成する</div><div class="ttdef"><b>Definition</b> <a href="#l00055">unique_variant.hpp:55</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_html_ac5a24b6bdb61b733f2bfbcb2b27abc82"><div class="ttname"><a href="struct_sector_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ac5a24b6bdb61b733f2bfbcb2b27abc82">SectorFW::unique_variant_impl&lt; std::tuple&lt; Ts... &gt; &gt;::type</a></div><div class="ttdeci">typename tuple_to_variant&lt; typename unique_types&lt; Ts... &gt;::type &gt;::type type</div><div class="ttdef"><b>Definition</b> <a href="#l00079">unique_variant.hpp:79</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__variant__impl__alt_html"><div class="ttname"><a href="struct_sector_f_w_1_1unique__variant__impl__alt.html">SectorFW::unique_variant_impl_alt</a></div><div class="ttdoc">unique_variant_impl_alt：可変長引数テンプレートを使用してユニークな型のvariantを生成する</div><div class="ttdef"><b>Definition</b> <a href="#l00085">unique_variant.hpp:85</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__variant__impl__alt_html_a8471303fc0b098dfeb30fd22fc032da4"><div class="ttname"><a href="struct_sector_f_w_1_1unique__variant__impl__alt.html#a8471303fc0b098dfeb30fd22fc032da4">SectorFW::unique_variant_impl_alt::type</a></div><div class="ttdeci">typename tuple_to_variant&lt; typename unique_types&lt; Ts... &gt;::type &gt;::type type</div><div class="ttdef"><b>Definition</b> <a href="#l00086">unique_variant.hpp:86</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1unique__variant__impl_html"><div class="ttname"><a href="struct_sector_f_w_1_1unique__variant__impl.html">SectorFW::unique_variant_impl</a></div><div class="ttdoc">unique_variant：Ts... でも tuple&lt;&gt; でもOKなオーバーロード</div><div class="ttdef"><b>Definition</b> <a href="#l00073">unique_variant.hpp:73</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_ee6da17cfec8137cf237c714c1844f74.html">Util</a></li><li class="navelem"><a class="el" href="unique__variant_8hpp.html">unique_variant.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -5,7 +5,7 @@ namespace SectorFW
 {
 	namespace ECS
 	{
-		ComponentMeta ComponentTypeRegistry::GetMeta(ComponentTypeID id) noexcept
+		const ComponentMeta& ComponentTypeRegistry::GetMeta(ComponentTypeID id) noexcept
 		{
 			auto iter = meta.find(id);
 

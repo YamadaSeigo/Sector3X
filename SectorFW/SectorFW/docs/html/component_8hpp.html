@@ -1,0 +1,450 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/component.hpp ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('component_8hpp.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">クラス</a> &#124;
+<a href="#namespaces">名前空間</a> &#124;
+<a href="#concepts">Concepts</a> &#124;
+<a href="#define-members">マクロ定義</a> &#124;
+<a href="#typedef-members">型定義</a> &#124;
+<a href="#var-members">変数</a>  </div>
+  <div class="headertitle"><div class="title">component.hpp ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>コンポーネントの定義と関連するユーティリティを提供するヘッダーファイル  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &lt;functional&gt;</code><br />
+<code>#include &lt;bitset&gt;</code><br />
+<code>#include &lt;type_traits&gt;</code><br />
+<code>#include &quot;<a class="el" href="_flatten_8hpp_source.html">Util/Flatten.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="for__each__macro_8hpp_source.html">Util/for_each_macro.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="unique__variant_8hpp_source.html">Util/unique_variant.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_type_checker_8hpp_source.html">Util/TypeChecker.hpp</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+component.hpp の依存先関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+被依存関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+</div>
+<p><a href="component_8hpp_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_info.html">SectorFW::ECS::ComponentInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントのレイアウトを定義する構造体  <a href="struct_sector_f_w_1_1_e_c_s_1_1_component_info.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_sparse_component_tag.html">SectorFW::ECS::SparseComponentTag</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントを識別するタグ  <a href="struct_sector_f_w_1_1_e_c_s_1_1_sparse_component_tag.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1is__sparse__component.html">SectorFW::ECS::is_sparse_component&lt; typename, typename &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントを識別するためのトレイト  <a href="struct_sector_f_w_1_1_e_c_s_1_1is__sparse__component.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1is__sparse__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1sparse__tag_01_4_01_4.html">SectorFW::ECS::is_sparse_component&lt; T, std::void_t&lt; typename T::sparse_tag &gt; &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">　まばらなコンポーネントを識別するためのトレイトの特殊化  <a href="struct_sector_f_w_1_1_e_c_s_1_1is__sparse__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1sparse__tag_01_4_01_4.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1is__soa__component.html">SectorFW::ECS::is_soa_component&lt; T, typename &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントを識別するためのトレイト  <a href="struct_sector_f_w_1_1_e_c_s_1_1is__soa__component.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1is__soa__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1soa__type_01_4_01_4.html">SectorFW::ECS::is_soa_component&lt; T, std::void_t&lt; typename T::soa_type &gt; &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントを識別するためのトレイトの特殊化  <a href="struct_sector_f_w_1_1_e_c_s_1_1is__soa__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1soa__type_01_4_01_4.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_so_a_ptr.html">SectorFW::ECS::SoAPtr&lt; T, typename &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのポインタ型を定義するテンプレート  <a href="struct_sector_f_w_1_1_e_c_s_1_1_so_a_ptr.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_so_a_ptr_3_01_t_01_4.html">SectorFW::ECS::SoAPtr&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのポインタ型を定義するテンプレートの特殊化  <a href="struct_sector_f_w_1_1_e_c_s_1_1_so_a_ptr_3_01_t_01_4.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+名前空間</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">SectorFW::ECS</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_sector_f_w_1_1_e_c_s_1_1_sparse_component.html">SectorFW::ECS::SparseComponent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントを識別するためのコンセプト <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_sector_f_w_1_1_e_c_s_1_1_is_so_a_component.html">SectorFW::ECS::IsSoAComponent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントを識別するためのコンセプト <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+マクロ定義</h2></td></tr>
+<tr class="memitem:ace35318955d470537b85ea2092fad252" id="r_ace35318955d470537b85ea2092fad252"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace35318955d470537b85ea2092fad252">SPARSE_TAG</a>&#160;&#160;&#160;using sparse_tag = SparseComponentTag;</td></tr>
+<tr class="separator:ace35318955d470537b85ea2092fad252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea32930e71b31f9653dffc4a7e4e0dc7" id="r_aea32930e71b31f9653dffc4a7e4e0dc7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea32930e71b31f9653dffc4a7e4e0dc7">WRAP_MEMBER</a>(var,  name)</td></tr>
+<tr class="separator:aea32930e71b31f9653dffc4a7e4e0dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c6e4b717bd2937fcd1939dc1a3ffebe" id="r_a7c6e4b717bd2937fcd1939dc1a3ffebe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c6e4b717bd2937fcd1939dc1a3ffebe">WRAP_MEMBER_PTR</a>(var,  name)</td></tr>
+<tr class="separator:a7c6e4b717bd2937fcd1939dc1a3ffebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62061c18f225be846d805a5ff72f57a8" id="r_a62061c18f225be846d805a5ff72f57a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62061c18f225be846d805a5ff72f57a8">WRAP_MEMBER_FOREACH</a>(className,  macro, ...)</td></tr>
+<tr class="separator:a62061c18f225be846d805a5ff72f57a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79224b3cb8887c83fbc9359fa0cfb335" id="r_a79224b3cb8887c83fbc9359fa0cfb335"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79224b3cb8887c83fbc9359fa0cfb335">WRAP_DECLTYPE</a>(x)</td></tr>
+<tr class="separator:a79224b3cb8887c83fbc9359fa0cfb335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97a5ca4bfe40b766eba9de8d70d2fa4c" id="r_a97a5ca4bfe40b766eba9de8d70d2fa4c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97a5ca4bfe40b766eba9de8d70d2fa4c">WRAP_DECLTYPE_PTR</a>(x)</td></tr>
+<tr class="separator:a97a5ca4bfe40b766eba9de8d70d2fa4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2934d89e1ee40ddf9f6186ca340cd5c" id="r_ad2934d89e1ee40ddf9f6186ca340cd5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2934d89e1ee40ddf9f6186ca340cd5c">DEFINE_GET_FUNCTION</a>(x)</td></tr>
+<tr class="separator:ad2934d89e1ee40ddf9f6186ca340cd5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba0e6788f946281ef0b2a4984179fb0" id="r_a0ba0e6788f946281ef0b2a4984179fb0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ba0e6788f946281ef0b2a4984179fb0">DEFINE_SOA</a>(className, ...)</td></tr>
+<tr class="separator:a0ba0e6788f946281ef0b2a4984179fb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+型定義</h2></td></tr>
+<tr class="memitem:a2accadf823770a8124d2a1ed1ba0ad30" id="r_a2accadf823770a8124d2a1ed1ba0ad30"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">SectorFW::ECS::ComponentTypeID</a> = uint32_t</td></tr>
+<tr class="memdesc:a2accadf823770a8124d2a1ed1ba0ad30"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントの型IDを定義する型  <br /></td></tr>
+<tr class="separator:a2accadf823770a8124d2a1ed1ba0ad30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace5c222981b965468c3868a48028a512" id="r_ace5c222981b965468c3868a48028a512"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">SectorFW::ECS::ComponentMask</a> = std::bitset&lt;<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#afec795ea9ba33d3aac78cc2787eca242">MaxComponents</a>&gt;</td></tr>
+<tr class="memdesc:ace5c222981b965468c3868a48028a512"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントマスクを定義するビットセット型  <br /></td></tr>
+<tr class="separator:ace5c222981b965468c3868a48028a512"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae914a1c08020f08ea9248a0743e5ef25" id="r_ae914a1c08020f08ea9248a0743e5ef25"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:ae914a1c08020f08ea9248a0743e5ef25"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ae914a1c08020f08ea9248a0743e5ef25">SectorFW::ECS::ConstReturnType</a></td></tr>
+<tr class="memdesc:ae914a1c08020f08ea9248a0743e5ef25"><td class="mdescLeft">&#160;</td><td class="mdescRight">T がポインタなら const T::element_type*、そうでなければ const T  <br /></td></tr>
+<tr class="separator:ae914a1c08020f08ea9248a0743e5ef25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+変数</h2></td></tr>
+<tr class="memitem:afec795ea9ba33d3aac78cc2787eca242" id="r_afec795ea9ba33d3aac78cc2787eca242"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#afec795ea9ba33d3aac78cc2787eca242">SectorFW::ECS::MaxComponents</a> = 64</td></tr>
+<tr class="memdesc:afec795ea9ba33d3aac78cc2787eca242"><td class="mdescLeft">&#160;</td><td class="mdescRight">最大コンポーネント数を定義する定数  <br /></td></tr>
+<tr class="separator:afec795ea9ba33d3aac78cc2787eca242"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a394a4d8b0dd7a1c40cfdf5d86e82a381" id="r_a394a4d8b0dd7a1c40cfdf5d86e82a381"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a394a4d8b0dd7a1c40cfdf5d86e82a381"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a394a4d8b0dd7a1c40cfdf5d86e82a381">SectorFW::ECS::is_sparse_component_v</a> = <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1is__sparse__component.html">is_sparse_component</a>&lt;T&gt;::value</td></tr>
+<tr class="memdesc:a394a4d8b0dd7a1c40cfdf5d86e82a381"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントを識別するためのトレイトの値  <br /></td></tr>
+<tr class="separator:a394a4d8b0dd7a1c40cfdf5d86e82a381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d695e9f399437bcc42a9fec0b80286e" id="r_a4d695e9f399437bcc42a9fec0b80286e"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a4d695e9f399437bcc42a9fec0b80286e"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a4d695e9f399437bcc42a9fec0b80286e">SectorFW::ECS::is_soa_component_v</a> = <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1is__soa__component.html">is_soa_component</a>&lt;T&gt;::value</td></tr>
+<tr class="memdesc:a4d695e9f399437bcc42a9fec0b80286e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントを識別するためのトレイトの値  <br /></td></tr>
+<tr class="separator:a4d695e9f399437bcc42a9fec0b80286e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>コンポーネントの定義と関連するユーティリティを提供するヘッダーファイル </p>
+<dl class="section author"><dt>著者</dt><dd>seigo_t03b63m </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>June 2025 </dd></dl>
+
+<p class="definition"> <a class="el" href="component_8hpp_source.html">component.hpp</a> に定義があります。</p>
+</div><h2 class="groupheader">マクロ定義詳解</h2>
+<a id="ad2934d89e1ee40ddf9f6186ca340cd5c" name="ad2934d89e1ee40ddf9f6186ca340cd5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2934d89e1ee40ddf9f6186ca340cd5c">&#9670;&#160;</a></span>DEFINE_GET_FUNCTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEFINE_GET_FUNCTION</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>値:</b><div class="fragment"><div class="line"><span class="keyword">decltype</span>(p_##x) x##() <span class="keyword">noexcept</span> {<span class="keywordflow">return</span> p_##x;} ConstReturnType&lt;<span class="keyword">decltype</span>(p_##x)&gt; x##() const noexcept {<span class="keywordflow">return</span> p_##x;}</div>
+</div><!-- fragment -->
+<p class="definition"> <a class="el" href="component_8hpp_source.html">component.hpp</a> の <a class="el" href="component_8hpp_source.html#l00131">131</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0ba0e6788f946281ef0b2a4984179fb0" name="a0ba0e6788f946281ef0b2a4984179fb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ba0e6788f946281ef0b2a4984179fb0">&#9670;&#160;</a></span>DEFINE_SOA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEFINE_SOA</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>className</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>値:</b><div class="fragment"><div class="line">        <span class="keyword">using </span>tuple_type = std::tuple&lt;<a class="code hl_define" href="for__each__macro_8hpp.html#a45e42f27b04536f144ee790875c8d85a">FOR_EACH</a>(<a class="code hl_define" href="#a79224b3cb8887c83fbc9359fa0cfb335">WRAP_DECLTYPE</a>,<a class="code hl_define" href="for__each__macro_8hpp.html#a10670d3a0ed65c10b19174bd6ed7581d">COMMA</a>,__VA_ARGS__)&gt;;\</div>
+<div class="line">        <span class="keyword">using </span>soa_type = FlattenT&lt;tuple_type&gt;;\</div>
+<div class="line">        <span class="keyword">using </span>variant_type = unique_variant_from_tuple&lt;soa_type&gt;;\</div>
+<div class="line">        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> member_ptr_tuple = std::make_tuple(<a class="code hl_define" href="#a62061c18f225be846d805a5ff72f57a8">WRAP_MEMBER_FOREACH</a>(className,<a class="code hl_define" href="#aea32930e71b31f9653dffc4a7e4e0dc7">WRAP_MEMBER</a>,__VA_ARGS__));\</div>
+<div class="line">        <span class="keyword">struct </span>ToPtr{ <span class="keyword">private</span>:\</div>
+<div class="line">            FOR_EACH(<a class="code hl_define" href="#a97a5ca4bfe40b766eba9de8d70d2fa4c">WRAP_DECLTYPE_PTR</a>,<a class="code hl_define" href="for__each__macro_8hpp.html#a30f44b997ccc74809bb557ed9d250341">SEMICOLON</a>,__VA_ARGS__);\</div>
+<div class="line">            <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> ptr_tuple = std::make_tuple(<a class="code hl_define" href="#a62061c18f225be846d805a5ff72f57a8">WRAP_MEMBER_FOREACH</a>(ToPtr,<a class="code hl_define" href="#a7c6e4b717bd2937fcd1939dc1a3ffebe">WRAP_MEMBER_PTR</a>,__VA_ARGS__)); <span class="keyword">public</span>:\</div>
+<div class="line">            FOR_EACH(<a class="code hl_define" href="#ad2934d89e1ee40ddf9f6186ca340cd5c">DEFINE_GET_FUNCTION</a>,<a class="code hl_define" href="for__each__macro_8hpp.html#ae9f16318b1eb06b9db7bacd8170dc0f8">SPACE</a>,__VA_ARGS__)\</div>
+<div class="line">            <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... AccessTypes&gt; <span class="keyword">friend</span> <span class="keyword">class </span>ComponentAccessor;};</div>
+<div class="ttc" id="acomponent_8hpp_html_a62061c18f225be846d805a5ff72f57a8"><div class="ttname"><a href="#a62061c18f225be846d805a5ff72f57a8">WRAP_MEMBER_FOREACH</a></div><div class="ttdeci">#define WRAP_MEMBER_FOREACH(className, macro,...)</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00125">component.hpp:125</a></div></div>
+<div class="ttc" id="acomponent_8hpp_html_a79224b3cb8887c83fbc9359fa0cfb335"><div class="ttname"><a href="#a79224b3cb8887c83fbc9359fa0cfb335">WRAP_DECLTYPE</a></div><div class="ttdeci">#define WRAP_DECLTYPE(x)</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00127">component.hpp:127</a></div></div>
+<div class="ttc" id="acomponent_8hpp_html_a7c6e4b717bd2937fcd1939dc1a3ffebe"><div class="ttname"><a href="#a7c6e4b717bd2937fcd1939dc1a3ffebe">WRAP_MEMBER_PTR</a></div><div class="ttdeci">#define WRAP_MEMBER_PTR(var, name)</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00123">component.hpp:123</a></div></div>
+<div class="ttc" id="acomponent_8hpp_html_a97a5ca4bfe40b766eba9de8d70d2fa4c"><div class="ttname"><a href="#a97a5ca4bfe40b766eba9de8d70d2fa4c">WRAP_DECLTYPE_PTR</a></div><div class="ttdeci">#define WRAP_DECLTYPE_PTR(x)</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00129">component.hpp:129</a></div></div>
+<div class="ttc" id="acomponent_8hpp_html_ad2934d89e1ee40ddf9f6186ca340cd5c"><div class="ttname"><a href="#ad2934d89e1ee40ddf9f6186ca340cd5c">DEFINE_GET_FUNCTION</a></div><div class="ttdeci">#define DEFINE_GET_FUNCTION(x)</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00131">component.hpp:131</a></div></div>
+<div class="ttc" id="acomponent_8hpp_html_aea32930e71b31f9653dffc4a7e4e0dc7"><div class="ttname"><a href="#aea32930e71b31f9653dffc4a7e4e0dc7">WRAP_MEMBER</a></div><div class="ttdeci">#define WRAP_MEMBER(var, name)</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00121">component.hpp:121</a></div></div>
+<div class="ttc" id="afor__each__macro_8hpp_html_a10670d3a0ed65c10b19174bd6ed7581d"><div class="ttname"><a href="for__each__macro_8hpp.html#a10670d3a0ed65c10b19174bd6ed7581d">COMMA</a></div><div class="ttdeci">#define COMMA()</div><div class="ttdef"><b>Definition</b> <a href="for__each__macro_8hpp_source.html#l00109">for_each_macro.hpp:109</a></div></div>
+<div class="ttc" id="afor__each__macro_8hpp_html_a30f44b997ccc74809bb557ed9d250341"><div class="ttname"><a href="for__each__macro_8hpp.html#a30f44b997ccc74809bb557ed9d250341">SEMICOLON</a></div><div class="ttdeci">#define SEMICOLON()</div><div class="ttdef"><b>Definition</b> <a href="for__each__macro_8hpp_source.html#l00110">for_each_macro.hpp:110</a></div></div>
+<div class="ttc" id="afor__each__macro_8hpp_html_a45e42f27b04536f144ee790875c8d85a"><div class="ttname"><a href="for__each__macro_8hpp.html#a45e42f27b04536f144ee790875c8d85a">FOR_EACH</a></div><div class="ttdeci">#define FOR_EACH(macro, sep,...)</div><div class="ttdef"><b>Definition</b> <a href="for__each__macro_8hpp_source.html#l00090">for_each_macro.hpp:90</a></div></div>
+<div class="ttc" id="afor__each__macro_8hpp_html_ae9f16318b1eb06b9db7bacd8170dc0f8"><div class="ttname"><a href="for__each__macro_8hpp.html#ae9f16318b1eb06b9db7bacd8170dc0f8">SPACE</a></div><div class="ttdeci">#define SPACE()</div><div class="ttdef"><b>Definition</b> <a href="for__each__macro_8hpp_source.html#l00111">for_each_macro.hpp:111</a></div></div>
+</div><!-- fragment -->
+<p class="definition"> <a class="el" href="component_8hpp_source.html">component.hpp</a> の <a class="el" href="component_8hpp_source.html#l00133">133</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  133</span><span class="preprocessor">#define DEFINE_SOA(className, ...)\</span></div>
+<div class="line"><span class="lineno">  134</span><span class="preprocessor">        using tuple_type = std::tuple&lt;FOR_EACH(WRAP_DECLTYPE,COMMA,__VA_ARGS__)&gt;;\</span></div>
+<div class="line"><span class="lineno">  135</span><span class="preprocessor">        using soa_type = FlattenT&lt;tuple_type&gt;;\</span></div>
+<div class="line"><span class="lineno">  136</span><span class="preprocessor">        using variant_type = unique_variant_from_tuple&lt;soa_type&gt;;\</span></div>
+<div class="line"><span class="lineno">  137</span><span class="preprocessor">        static constexpr auto member_ptr_tuple = std::make_tuple(WRAP_MEMBER_FOREACH(className,WRAP_MEMBER,__VA_ARGS__));\</span></div>
+<div class="line"><span class="lineno">  138</span><span class="preprocessor">        struct ToPtr{ private:\</span></div>
+<div class="line"><span class="lineno">  139</span><span class="preprocessor">            FOR_EACH(WRAP_DECLTYPE_PTR,SEMICOLON,__VA_ARGS__);\</span></div>
+<div class="line"><span class="lineno">  140</span><span class="preprocessor">            static constexpr auto ptr_tuple = std::make_tuple(WRAP_MEMBER_FOREACH(ToPtr,WRAP_MEMBER_PTR,__VA_ARGS__)); public:\</span></div>
+<div class="line"><span class="lineno">  141</span><span class="preprocessor">            FOR_EACH(DEFINE_GET_FUNCTION,SPACE,__VA_ARGS__)\</span></div>
+<div class="line"><span class="lineno">  142</span><span class="preprocessor">            template&lt;typename... AccessTypes&gt; friend class ComponentAccessor;};</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ace35318955d470537b85ea2092fad252" name="ace35318955d470537b85ea2092fad252"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace35318955d470537b85ea2092fad252">&#9670;&#160;</a></span>SPARSE_TAG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPARSE_TAG&#160;&#160;&#160;using sparse_tag = SparseComponentTag;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="component_8hpp_source.html">component.hpp</a> の <a class="el" href="component_8hpp_source.html#l00119">119</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a79224b3cb8887c83fbc9359fa0cfb335" name="a79224b3cb8887c83fbc9359fa0cfb335"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79224b3cb8887c83fbc9359fa0cfb335">&#9670;&#160;</a></span>WRAP_DECLTYPE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WRAP_DECLTYPE</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>値:</b><div class="fragment"><div class="line"><span class="keyword">decltype</span>(x)</div>
+</div><!-- fragment -->
+<p class="definition"> <a class="el" href="component_8hpp_source.html">component.hpp</a> の <a class="el" href="component_8hpp_source.html#l00127">127</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a97a5ca4bfe40b766eba9de8d70d2fa4c" name="a97a5ca4bfe40b766eba9de8d70d2fa4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97a5ca4bfe40b766eba9de8d70d2fa4c">&#9670;&#160;</a></span>WRAP_DECLTYPE_PTR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WRAP_DECLTYPE_PTR</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>値:</b><div class="fragment"><div class="line">SoAPtr&lt;<span class="keyword">decltype</span>(x)&gt;::type p_##x</div>
+</div><!-- fragment -->
+<p class="definition"> <a class="el" href="component_8hpp_source.html">component.hpp</a> の <a class="el" href="component_8hpp_source.html#l00129">129</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aea32930e71b31f9653dffc4a7e4e0dc7" name="aea32930e71b31f9653dffc4a7e4e0dc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea32930e71b31f9653dffc4a7e4e0dc7">&#9670;&#160;</a></span>WRAP_MEMBER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WRAP_MEMBER</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>var</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>値:</b><div class="fragment"><div class="line">&amp;name::var</div>
+</div><!-- fragment -->
+<p class="definition"> <a class="el" href="component_8hpp_source.html">component.hpp</a> の <a class="el" href="component_8hpp_source.html#l00121">121</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a62061c18f225be846d805a5ff72f57a8" name="a62061c18f225be846d805a5ff72f57a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62061c18f225be846d805a5ff72f57a8">&#9670;&#160;</a></span>WRAP_MEMBER_FOREACH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WRAP_MEMBER_FOREACH</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>className</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>macro</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>値:</b><div class="fragment"><div class="line"><a class="code hl_define" href="for__each__macro_8hpp.html#aae6b4b23c990d4e90df0600346cae6ae">FOR_EACH_ARG</a>(macro, className,<a class="code hl_define" href="for__each__macro_8hpp.html#a10670d3a0ed65c10b19174bd6ed7581d">COMMA</a>,__VA_ARGS__)</div>
+<div class="ttc" id="afor__each__macro_8hpp_html_aae6b4b23c990d4e90df0600346cae6ae"><div class="ttname"><a href="for__each__macro_8hpp.html#aae6b4b23c990d4e90df0600346cae6ae">FOR_EACH_ARG</a></div><div class="ttdeci">#define FOR_EACH_ARG(macro, arg, sep,...)</div><div class="ttdef"><b>Definition</b> <a href="for__each__macro_8hpp_source.html#l00179">for_each_macro.hpp:179</a></div></div>
+</div><!-- fragment -->
+<p class="definition"> <a class="el" href="component_8hpp_source.html">component.hpp</a> の <a class="el" href="component_8hpp_source.html#l00125">125</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7c6e4b717bd2937fcd1939dc1a3ffebe" name="a7c6e4b717bd2937fcd1939dc1a3ffebe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c6e4b717bd2937fcd1939dc1a3ffebe">&#9670;&#160;</a></span>WRAP_MEMBER_PTR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WRAP_MEMBER_PTR</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>var</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>値:</b><div class="fragment"><div class="line">&amp;name::p_##var</div>
+</div><!-- fragment -->
+<p class="definition"> <a class="el" href="component_8hpp_source.html">component.hpp</a> の <a class="el" href="component_8hpp_source.html#l00123">123</a> 行目に定義があります。</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f7f8c59c1c248bac6d0283e91c8a15c6.html">Core</a></li><li class="navelem"><a class="el" href="dir_bfd096cbba80358637d44e82aa8d4a3b.html">ECS</a></li><li class="navelem"><a class="el" href="component_8hpp.html">component.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

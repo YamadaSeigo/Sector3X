@@ -1,0 +1,533 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::ECS::EntityIDAllocator クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pri-attribs">非公開変数類</a> &#124;
+<a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::ECS::EntityIDAllocator クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>エンティティIDを管理するクラス(スレッドセーフ)  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a>&gt;</code></p>
+<div class="dynheader">
+SectorFW::ECS::EntityIDAllocator 連携図</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a3dab0c96efb5c0d0ebb83cb37b9d8d62" id="r_a3dab0c96efb5c0d0ebb83cb37b9d8d62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3dab0c96efb5c0d0ebb83cb37b9d8d62">EntityIDAllocator</a> (size_t <a class="el" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>)</td></tr>
+<tr class="memdesc:a3dab0c96efb5c0d0ebb83cb37b9d8d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="separator:a3dab0c96efb5c0d0ebb83cb37b9d8d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa719757618ad45f54b2584165bb2a08b" id="r_aa719757618ad45f54b2584165bb2a08b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa719757618ad45f54b2584165bb2a08b">Create</a> ()</td></tr>
+<tr class="memdesc:aa719757618ad45f54b2584165bb2a08b"><td class="mdescLeft">&#160;</td><td class="mdescRight">新しいエンティティIDを作成する関数  <br /></td></tr>
+<tr class="separator:aa719757618ad45f54b2584165bb2a08b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab06a374ce8ac951eac0041ca2347d3ba" id="r_ab06a374ce8ac951eac0041ca2347d3ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab06a374ce8ac951eac0041ca2347d3ba">Destroy</a> (<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id)</td></tr>
+<tr class="memdesc:ab06a374ce8ac951eac0041ca2347d3ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティIDを破棄する関数  <br /></td></tr>
+<tr class="separator:ab06a374ce8ac951eac0041ca2347d3ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14f410330a60e401e216b0ec6ee618d2" id="r_a14f410330a60e401e216b0ec6ee618d2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14f410330a60e401e216b0ec6ee618d2">IsAlive</a> (<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id) const noexcept</td></tr>
+<tr class="memdesc:a14f410330a60e401e216b0ec6ee618d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティIDが有効かどうかを確認する関数  <br /></td></tr>
+<tr class="separator:a14f410330a60e401e216b0ec6ee618d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbd0665917c7edbc7204b8528c854790" id="r_abbd0665917c7edbc7204b8528c854790"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abbd0665917c7edbc7204b8528c854790">Capacity</a> () const noexcept</td></tr>
+<tr class="memdesc:abbd0665917c7edbc7204b8528c854790"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティIDの最大数を取得する関数  <br /></td></tr>
+<tr class="separator:abbd0665917c7edbc7204b8528c854790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea010bada488843ce402d32163c43186" id="r_aea010bada488843ce402d32163c43186"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea010bada488843ce402d32163c43186">NextIndex</a> () const noexcept</td></tr>
+<tr class="memdesc:aea010bada488843ce402d32163c43186"><td class="mdescLeft">&#160;</td><td class="mdescRight">次のエンティティIDのインデックスを取得する関数  <br /></td></tr>
+<tr class="separator:aea010bada488843ce402d32163c43186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+非公開変数類</h2></td></tr>
+<tr class="memitem:a5aceffcda3a26194f68d1ee4a206f9cd" id="r_a5aceffcda3a26194f68d1ee4a206f9cd"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a></td></tr>
+<tr class="memdesc:a5aceffcda3a26194f68d1ee4a206f9cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">最大エンティティ数  <br /></td></tr>
+<tr class="separator:a5aceffcda3a26194f68d1ee4a206f9cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98c40c37a5fa0b63f79a0ea89c025363" id="r_a98c40c37a5fa0b63f79a0ea89c025363"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98c40c37a5fa0b63f79a0ea89c025363">nextIndex</a></td></tr>
+<tr class="memdesc:a98c40c37a5fa0b63f79a0ea89c025363"><td class="mdescLeft">&#160;</td><td class="mdescRight">次のエンティティIDのインデックス  <br /></td></tr>
+<tr class="separator:a98c40c37a5fa0b63f79a0ea89c025363"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3d602be2d0b562bd9ce83d24a0bb491" id="r_ac3d602be2d0b562bd9ce83d24a0bb491"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::atomic&lt; uint32_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a></td></tr>
+<tr class="memdesc:ac3d602be2d0b562bd9ce83d24a0bb491"><td class="mdescLeft">&#160;</td><td class="mdescRight">世代管理のための配列  <br /></td></tr>
+<tr class="separator:ac3d602be2d0b562bd9ce83d24a0bb491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6aec72bc3eb20eef9aa651306040c887" id="r_a6aec72bc3eb20eef9aa651306040c887"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6aec72bc3eb20eef9aa651306040c887">freeQueue</a></td></tr>
+<tr class="memdesc:a6aec72bc3eb20eef9aa651306040c887"><td class="mdescLeft">&#160;</td><td class="mdescRight">未使用のエンティティIDを管理するキュー  <br /></td></tr>
+<tr class="separator:a6aec72bc3eb20eef9aa651306040c887"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>エンティティIDを管理するクラス(スレッドセーフ) </p>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00024">24</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="a3dab0c96efb5c0d0ebb83cb37b9d8d62" name="a3dab0c96efb5c0d0ebb83cb37b9d8d62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3dab0c96efb5c0d0ebb83cb37b9d8d62">&#9670;&#160;</a></span>EntityIDAllocator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SectorFW::ECS::EntityIDAllocator::EntityIDAllocator </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>maxEntities</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">maxEntities</td><td>最大エンティティ数 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00030">30</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   31</span>                : <a class="code hl_variable" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>(<span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>)),</div>
+<div class="line"><span class="lineno">   32</span>                <a class="code hl_variable" href="#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>(<a class="code hl_variable" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>),</div>
+<div class="line"><span class="lineno">   33</span>                <a class="code hl_variable" href="#a98c40c37a5fa0b63f79a0ea89c025363">nextIndex</a>(0),</div>
+<div class="line"><span class="lineno">   34</span>                <a class="code hl_variable" href="#a6aec72bc3eb20eef9aa651306040c887">freeQueue</a>(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>))</div>
+<div class="line"><span class="lineno">   35</span>            {</div>
+<div class="line"><span class="lineno">   36</span>                <span class="comment">// Initially empty</span></div>
+<div class="line"><span class="lineno">   37</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_a5aceffcda3a26194f68d1ee4a206f9cd"><div class="ttname"><a href="#a5aceffcda3a26194f68d1ee4a206f9cd">SectorFW::ECS::EntityIDAllocator::maxEntities</a></div><div class="ttdeci">const uint32_t maxEntities</div><div class="ttdoc">最大エンティティ数</div><div class="ttdef"><b>Definition</b> <a href="_entity_i_d_allocator_8h_source.html#l00100">EntityIDAllocator.h:100</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_a6aec72bc3eb20eef9aa651306040c887"><div class="ttname"><a href="#a6aec72bc3eb20eef9aa651306040c887">SectorFW::ECS::EntityIDAllocator::freeQueue</a></div><div class="ttdeci">moodycamel::ConcurrentQueue&lt; uint32_t &gt; freeQueue</div><div class="ttdoc">未使用のエンティティIDを管理するキュー</div><div class="ttdef"><b>Definition</b> <a href="_entity_i_d_allocator_8h_source.html#l00112">EntityIDAllocator.h:112</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_a98c40c37a5fa0b63f79a0ea89c025363"><div class="ttname"><a href="#a98c40c37a5fa0b63f79a0ea89c025363">SectorFW::ECS::EntityIDAllocator::nextIndex</a></div><div class="ttdeci">std::atomic&lt; uint32_t &gt; nextIndex</div><div class="ttdoc">次のエンティティIDのインデックス</div><div class="ttdef"><b>Definition</b> <a href="_entity_i_d_allocator_8h_source.html#l00104">EntityIDAllocator.h:104</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_ac3d602be2d0b562bd9ce83d24a0bb491"><div class="ttname"><a href="#ac3d602be2d0b562bd9ce83d24a0bb491">SectorFW::ECS::EntityIDAllocator::generations</a></div><div class="ttdeci">std::vector&lt; std::atomic&lt; uint32_t &gt; &gt; generations</div><div class="ttdoc">世代管理のための配列</div><div class="ttdef"><b>Definition</b> <a href="_entity_i_d_allocator_8h_source.html#l00108">EntityIDAllocator.h:108</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="abbd0665917c7edbc7204b8528c854790" name="abbd0665917c7edbc7204b8528c854790"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbd0665917c7edbc7204b8528c854790">&#9670;&#160;</a></span>Capacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SectorFW::ECS::EntityIDAllocator::Capacity </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティIDの最大数を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>uint32_t 最大エンティティ数 </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00090">90</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   90</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa719757618ad45f54b2584165bb2a08b" name="aa719757618ad45f54b2584165bb2a08b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa719757618ad45f54b2584165bb2a08b">&#9670;&#160;</a></span>Create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> SectorFW::ECS::EntityIDAllocator::Create </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>新しいエンティティIDを作成する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> 新しいエンティティID </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00042">42</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   42</span>                              {</div>
+<div class="line"><span class="lineno">   43</span>                uint32_t index;</div>
+<div class="line"><span class="lineno">   44</span> </div>
+<div class="line"><span class="lineno">   45</span>                <span class="comment">// 再利用できるインデックスを取得</span></div>
+<div class="line"><span class="lineno">   46</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a6aec72bc3eb20eef9aa651306040c887">freeQueue</a>.try_dequeue(index)) {</div>
+<div class="line"><span class="lineno">   47</span>                    uint32_t gen = <a class="code hl_variable" href="#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>[index].load(std::memory_order_acquire);</div>
+<div class="line"><span class="lineno">   48</span>                    <span class="keywordflow">return</span> EntityID{ index, gen };</div>
+<div class="line"><span class="lineno">   49</span>                }</div>
+<div class="line"><span class="lineno">   50</span> </div>
+<div class="line"><span class="lineno">   51</span>                <span class="comment">// 新しいインデックスを割り当て</span></div>
+<div class="line"><span class="lineno">   52</span>                index = <a class="code hl_variable" href="#a98c40c37a5fa0b63f79a0ea89c025363">nextIndex</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><span class="lineno">   53</span>                <span class="keywordflow">if</span> (index &gt;= <a class="code hl_variable" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>) {</div>
+<div class="line"><span class="lineno">   54</span>                    <span class="keywordflow">return</span> <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html#a06ebd3a276a9d81fc1e74a6fbfbf697f">EntityID::Invalid</a>(); <span class="comment">// Exhausted</span></div>
+<div class="line"><span class="lineno">   55</span>                }</div>
+<div class="line"><span class="lineno">   56</span> </div>
+<div class="line"><span class="lineno">   57</span>                <span class="comment">// 新しいIDの世代を0に初期化</span></div>
+<div class="line"><span class="lineno">   58</span>                <a class="code hl_variable" href="#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>[index].store(0, std::memory_order_release);</div>
+<div class="line"><span class="lineno">   59</span>                <span class="keywordflow">return</span> EntityID{ index, 0 };</div>
+<div class="line"><span class="lineno">   60</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_entity_i_d_html_a06ebd3a276a9d81fc1e74a6fbfbf697f"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html#a06ebd3a276a9d81fc1e74a6fbfbf697f">SectorFW::ECS::EntityID::Invalid</a></div><div class="ttdeci">static constexpr EntityID Invalid() noexcept</div><div class="ttdoc">無効なEntityIDを取得する</div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00044">entity.h:44</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<a id="ab06a374ce8ac951eac0041ca2347d3ba" name="ab06a374ce8ac951eac0041ca2347d3ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab06a374ce8ac951eac0041ca2347d3ba">&#9670;&#160;</a></span>Destroy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::EntityIDAllocator::Destroy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティIDを破棄する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>破棄するエンティティID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00065">65</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   65</span>                                      {</div>
+<div class="line"><span class="lineno">   66</span>                <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.index &gt;= <a class="code hl_variable" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>) <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">   67</span> </div>
+<div class="line"><span class="lineno">   68</span>                <span class="comment">// Invalidate old ID</span></div>
+<div class="line"><span class="lineno">   69</span>                <a class="code hl_variable" href="#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>[<span class="keywordtype">id</span>.index].fetch_add(1, std::memory_order_acq_rel);</div>
+<div class="line"><span class="lineno">   70</span> </div>
+<div class="line"><span class="lineno">   71</span>                <span class="comment">// Reuse the index</span></div>
+<div class="line"><span class="lineno">   72</span>                <span class="keywordtype">bool</span> success = <a class="code hl_variable" href="#a6aec72bc3eb20eef9aa651306040c887">freeQueue</a>.try_enqueue(<span class="keywordtype">id</span>.index);</div>
+<div class="line"><span class="lineno">   73</span>                <span class="keywordflow">if</span> (!success) {</div>
+<div class="line"><span class="lineno">   74</span>                    <span class="comment">// Free queue full → ID leak（無視してもよい or ログ出力）</span></div>
+<div class="line"><span class="lineno">   75</span>                }</div>
+<div class="line"><span class="lineno">   76</span>            }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a14f410330a60e401e216b0ec6ee618d2" name="a14f410330a60e401e216b0ec6ee618d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14f410330a60e401e216b0ec6ee618d2">&#9670;&#160;</a></span>IsAlive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SectorFW::ECS::EntityIDAllocator::IsAlive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティIDが有効かどうかを確認する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>bool 有効な場合はtrue、無効な場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00082">82</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>                                                    {</div>
+<div class="line"><span class="lineno">   83</span>                <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.index &gt;= <a class="code hl_variable" href="#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   84</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>[<span class="keywordtype">id</span>.index].load(std::memory_order_acquire) == <span class="keywordtype">id</span>.generation;</div>
+<div class="line"><span class="lineno">   85</span>            }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aea010bada488843ce402d32163c43186" name="aea010bada488843ce402d32163c43186"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea010bada488843ce402d32163c43186">&#9670;&#160;</a></span>NextIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SectorFW::ECS::EntityIDAllocator::NextIndex </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>次のエンティティIDのインデックスを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>uint32_t 次のエンティティIDのインデックス </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00095">95</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a98c40c37a5fa0b63f79a0ea89c025363">nextIndex</a>.load(std::memory_order_acquire); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a6aec72bc3eb20eef9aa651306040c887" name="a6aec72bc3eb20eef9aa651306040c887"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6aec72bc3eb20eef9aa651306040c887">&#9670;&#160;</a></span>freeQueue</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt;uint32_t&gt; SectorFW::ECS::EntityIDAllocator::freeQueue</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>未使用のエンティティIDを管理するキュー </p>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00112">112</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac3d602be2d0b562bd9ce83d24a0bb491" name="ac3d602be2d0b562bd9ce83d24a0bb491"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3d602be2d0b562bd9ce83d24a0bb491">&#9670;&#160;</a></span>generations</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::atomic&lt;uint32_t&gt; &gt; SectorFW::ECS::EntityIDAllocator::generations</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>世代管理のための配列 </p>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00108">108</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5aceffcda3a26194f68d1ee4a206f9cd" name="a5aceffcda3a26194f68d1ee4a206f9cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aceffcda3a26194f68d1ee4a206f9cd">&#9670;&#160;</a></span>maxEntities</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint32_t SectorFW::ECS::EntityIDAllocator::maxEntities</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>最大エンティティ数 </p>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00100">100</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a98c40c37a5fa0b63f79a0ea89c025363" name="a98c40c37a5fa0b63f79a0ea89c025363"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98c40c37a5fa0b63f79a0ea89c025363">&#9670;&#160;</a></span>nextIndex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;uint32_t&gt; SectorFW::ECS::EntityIDAllocator::nextIndex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>次のエンティティIDのインデックス </p>
+
+<p class="definition"> <a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a> の <a class="el" href="_entity_i_d_allocator_8h_source.html#l00104">104</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="_entity_i_d_allocator_8h_source.html">EntityIDAllocator.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

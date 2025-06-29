@@ -1,0 +1,11 @@
+digraph "SectorFW::AssetManager::GetOrCreateStorage"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="SectorFW::AssetManager\l::GetOrCreateStorage",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="アセットストレージを取得または作成する関数"];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="SectorFW::AssetManager\l::RegisterAsset",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_asset_manager.html#a955e58ca0603a796d11226d243802fb1",tooltip="アセットの登録"];
+}

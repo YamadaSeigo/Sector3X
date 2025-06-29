@@ -1,0 +1,27 @@
+var class_sector_f_w_1_1_e_c_s_1_1_entity_manager =
+[
+    [ "ISparseWrapper", "struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_i_sparse_wrapper.html", "struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_i_sparse_wrapper" ],
+    [ "SparseWrapper", "struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper.html", "struct_sector_f_w_1_1_e_c_s_1_1_entity_manager_1_1_sparse_wrapper" ],
+    [ "EntityManager", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a30766d99be488c12aaada61fd5091f43", null ],
+    [ "AddComponent", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#aaf8db4c10c141336b1699a7253eb52c0", null ],
+    [ "AddEntity", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#ad451213b64187278aa98895a907afd8a", null ],
+    [ "AddEntity", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a3814288117eb2df25cadf9511504545c", null ],
+    [ "DestroyEntity", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a7b586dc4a59c7547124ec368927aa12c", null ],
+    [ "ExpansionMember", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a606e3e3e31758aa7a6ca44158c89c2cd", null ],
+    [ "ExpansionMemberImpl", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#ade8a63395db56b6083a5fef862041ebf", null ],
+    [ "GetArchetypeManager", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a22e80d95568203859ebb0366941fbd3d", null ],
+    [ "GetComponent", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#afb5b1f3c6cc05672de80dde6566a026b", null ],
+    [ "GetMask", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a855b9b45271879dd3135c08a57a210e5", null ],
+    [ "GetMember", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a9b49e94e8e7d992ab4d304a6c9fea81e", null ],
+    [ "GetSparseComponents", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a1ff4c4483026c83ae68b990d27d56d34", null ],
+    [ "GetSparseStore", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a842d67c54e460bd3aca73e5426075005", null ],
+    [ "HasComponent", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a0491a4c148d0e30bcb588719b826ff02", null ],
+    [ "MemorySetChunk", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a55148377c74e6ffe28be866599069a41", null ],
+    [ "MemorySetChunk", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a66bbdc4844ec716ce0df19de7a858ed3", null ],
+    [ "MemorySetChunkSoA", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a580b21bfb37020049acfb3ef295ce1a2", null ],
+    [ "RemoveComponent", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a46a3ea3c9ec6bf7cd7df6e2cb66785b8", null ],
+    [ "StoreComponent", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#aa50cfbab2a767940133a8960eb168ae8", null ],
+    [ "archetypeManager", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a7a97cfbc6c5edfeb367adc28f86b1fad", null ],
+    [ "locations", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#aa265c1ee11500f18ecc2023b5ee5c1a6", null ],
+    [ "sparseStores", "class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a10b330f95638020878c4a09a574c0e15", null ]
+];

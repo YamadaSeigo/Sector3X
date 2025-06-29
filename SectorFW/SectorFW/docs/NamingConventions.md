@@ -11,7 +11,7 @@
 | ヘッダー         | クラス名と同じ    | `PlayerCharacter.h`   |
 | ソース           | クラス名と同じ    | `PlayerCharacter.cpp` |
 | インターフェース | `I` + クラス名    | `IInteractable.h`     |
-| データ定義       | すべて小文字      | `component.h`         |
+| データ定義       | すべて小文字      | `component.hpp`         |
 
 ---
 

@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Util/Grid.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_grid_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Grid.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_grid_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Size = <span class="keywordtype">size_t</span>&gt;</div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html">   20</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a8e45f95570a4555a1d7349aee9602f22">Grid2D</a> {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#a8e45f95570a4555a1d7349aee9602f22">   27</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a8e45f95570a4555a1d7349aee9602f22">Grid2D</a>(Size <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a75b7044d982c23aac35d48cf0a4a513e">width</a>, Size <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a375f350960786d7bec848bac09c80ecf">height</a>) noexcept</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            : <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a09904dbb829ceac6b9eeae4ce1319dc9">m_width</a>(<a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a75b7044d982c23aac35d48cf0a4a513e">width</a>), <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#aec92163d60299fbb874c8a35b8dbef7a">m_height</a>(<a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a375f350960786d7bec848bac09c80ecf">height</a>), <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">m_data</a>(<a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a75b7044d982c23aac35d48cf0a4a513e">width</a>* <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a375f350960786d7bec848bac09c80ecf">height</a>) {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        }</div>
+</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span></div>
+<div class="foldopen" id="foldopen00036" data-start="{" data-end="}">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#a813e8873ed49e72c11b5063769c3250e">   36</a></span>        T&amp; <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a813e8873ed49e72c11b5063769c3250e">operator()</a>(Size x, Size y) {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">m_data</a>[y * <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a09904dbb829ceac6b9eeae4ce1319dc9">m_width</a> + x];</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        }</div>
+</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#a446bf63f39b1a680123147ac8481231b">   45</a></span>        <span class="keyword">const</span> T&amp; <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a446bf63f39b1a680123147ac8481231b">operator()</a>(Size x, Size y)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">m_data</a>[y * <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a09904dbb829ceac6b9eeae4ce1319dc9">m_width</a> + x];</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        }</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#a75b7044d982c23aac35d48cf0a4a513e">   52</a></span>        Size <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a75b7044d982c23aac35d48cf0a4a513e">width</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a09904dbb829ceac6b9eeae4ce1319dc9">m_width</a>; }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#a375f350960786d7bec848bac09c80ecf">   57</a></span>        Size <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a375f350960786d7bec848bac09c80ecf">height</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#aec92163d60299fbb874c8a35b8dbef7a">m_height</a>; }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#a255ec55fcdec3afbf0aeb5c6c1345c53">   62</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a255ec55fcdec3afbf0aeb5c6c1345c53">begin</a>() noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">m_data</a>.begin(); }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#a1b7cf00a522dc8388ee9aa91f2ce3494">   67</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a1b7cf00a522dc8388ee9aa91f2ce3494">end</a>() noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">m_data</a>.end(); }</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#a96673b57ae4d915787e874ecfb41717e">   72</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#a96673b57ae4d915787e874ecfb41717e">begin</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">m_data</a>.begin(); }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#afc4b6fc844ffacd0762686a61864fe22">   77</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#afc4b6fc844ffacd0762686a61864fe22">end</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">m_data</a>.end(); }</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#afd35e10314deb739dd054f9e6e3c1280">   82</a></span>        Size <a class="code hl_function" href="class_sector_f_w_1_1_grid2_d.html#afd35e10314deb739dd054f9e6e3c1280">size</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a09904dbb829ceac6b9eeae4ce1319dc9">m_width</a> * <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#aec92163d60299fbb874c8a35b8dbef7a">m_height</a>; }</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#aec92163d60299fbb874c8a35b8dbef7a">   87</a></span>        Size <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a09904dbb829ceac6b9eeae4ce1319dc9">m_width</a>, <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#aec92163d60299fbb874c8a35b8dbef7a">m_height</a>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">   91</a></span>        std::vector&lt;T&gt; <a class="code hl_variable" href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">m_data</a>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    };</div>
+</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>}</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a09904dbb829ceac6b9eeae4ce1319dc9"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a09904dbb829ceac6b9eeae4ce1319dc9">SectorFW::Grid2D::m_width</a></div><div class="ttdeci">Size m_width</div><div class="ttdoc">グリッドの幅と高さ</div><div class="ttdef"><b>Definition</b> <a href="#l00087">Grid.hpp:87</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a1b7cf00a522dc8388ee9aa91f2ce3494"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a1b7cf00a522dc8388ee9aa91f2ce3494">SectorFW::Grid2D::end</a></div><div class="ttdeci">auto end() noexcept</div><div class="ttdoc">グリッドの要素をイテレートするためのend関数</div><div class="ttdef"><b>Definition</b> <a href="#l00067">Grid.hpp:67</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a255ec55fcdec3afbf0aeb5c6c1345c53"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a255ec55fcdec3afbf0aeb5c6c1345c53">SectorFW::Grid2D::begin</a></div><div class="ttdeci">auto begin() noexcept</div><div class="ttdoc">グリッドの要素をイテレートするためのbeginとend関数</div><div class="ttdef"><b>Definition</b> <a href="#l00062">Grid.hpp:62</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a375f350960786d7bec848bac09c80ecf"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a375f350960786d7bec848bac09c80ecf">SectorFW::Grid2D::height</a></div><div class="ttdeci">Size height() const noexcept</div><div class="ttdoc">グリッドの高さを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00057">Grid.hpp:57</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a446bf63f39b1a680123147ac8481231b"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a446bf63f39b1a680123147ac8481231b">SectorFW::Grid2D::operator()</a></div><div class="ttdeci">const T &amp; operator()(Size x, Size y) const</div><div class="ttdoc">グリッドの要素にアクセスする演算子オーバーロード（const版）</div><div class="ttdef"><b>Definition</b> <a href="#l00045">Grid.hpp:45</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a463e7a7aca85ba9dc144bfe27baf1ecf"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a463e7a7aca85ba9dc144bfe27baf1ecf">SectorFW::Grid2D::m_data</a></div><div class="ttdeci">std::vector&lt; T &gt; m_data</div><div class="ttdoc">グリッドの要素を格納するベクター</div><div class="ttdef"><b>Definition</b> <a href="#l00091">Grid.hpp:91</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a75b7044d982c23aac35d48cf0a4a513e"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a75b7044d982c23aac35d48cf0a4a513e">SectorFW::Grid2D::width</a></div><div class="ttdeci">Size width() const noexcept</div><div class="ttdoc">グリッドの幅を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00052">Grid.hpp:52</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a813e8873ed49e72c11b5063769c3250e"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a813e8873ed49e72c11b5063769c3250e">SectorFW::Grid2D::operator()</a></div><div class="ttdeci">T &amp; operator()(Size x, Size y)</div><div class="ttdoc">グリッドの要素にアクセスする演算子オーバーロード</div><div class="ttdef"><b>Definition</b> <a href="#l00036">Grid.hpp:36</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a8e45f95570a4555a1d7349aee9602f22"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a8e45f95570a4555a1d7349aee9602f22">SectorFW::Grid2D::Grid2D</a></div><div class="ttdeci">Grid2D(Size width, Size height) noexcept</div><div class="ttdoc">デフォルトコンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00027">Grid.hpp:27</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_a96673b57ae4d915787e874ecfb41717e"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#a96673b57ae4d915787e874ecfb41717e">SectorFW::Grid2D::begin</a></div><div class="ttdeci">auto begin() const noexcept</div><div class="ttdoc">グリッドの要素をイテレートするためのconst版beginとend関数</div><div class="ttdef"><b>Definition</b> <a href="#l00072">Grid.hpp:72</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_aec92163d60299fbb874c8a35b8dbef7a"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#aec92163d60299fbb874c8a35b8dbef7a">SectorFW::Grid2D::m_height</a></div><div class="ttdeci">Size m_height</div><div class="ttdef"><b>Definition</b> <a href="#l00087">Grid.hpp:87</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_afc4b6fc844ffacd0762686a61864fe22"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#afc4b6fc844ffacd0762686a61864fe22">SectorFW::Grid2D::end</a></div><div class="ttdeci">auto end() const noexcept</div><div class="ttdoc">グリッドの要素をイテレートするためのconst版end関数</div><div class="ttdef"><b>Definition</b> <a href="#l00077">Grid.hpp:77</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_grid2_d_html_afd35e10314deb739dd054f9e6e3c1280"><div class="ttname"><a href="class_sector_f_w_1_1_grid2_d.html#afd35e10314deb739dd054f9e6e3c1280">SectorFW::Grid2D::size</a></div><div class="ttdeci">Size size() const noexcept</div><div class="ttdoc">グリッドのサイズを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00082">Grid.hpp:82</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_ee6da17cfec8137cf237c714c1844f74.html">Util</a></li><li class="navelem"><a class="el" href="_grid_8hpp.html">Grid.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

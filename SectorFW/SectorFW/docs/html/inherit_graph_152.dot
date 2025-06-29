@@ -1,0 +1,9 @@
+digraph "クラス階層図"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node0 [id="Node000000",label="SectorFW::unique_variant\l_impl_alt\< Ts \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$struct_sector_f_w_1_1unique__variant__impl__alt.html",tooltip="unique_variant_impl_alt：可変長引数テンプレートを使用してユニークな型のvariantを生成する"];
+}

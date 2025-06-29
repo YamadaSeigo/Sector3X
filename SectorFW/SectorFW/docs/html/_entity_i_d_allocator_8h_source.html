@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/EntityIDAllocator.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_entity_i_d_allocator_8h_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">EntityIDAllocator.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_entity_i_d_allocator_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;atomic&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;../external/concurrentqueue/concurrentqueue.h&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="entity_8h.html">entity.h</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>{</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    {</div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">   24</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a3dab0c96efb5c0d0ebb83cb37b9d8d62">EntityIDAllocator</a> {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="}">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a3dab0c96efb5c0d0ebb83cb37b9d8d62">   30</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a3dab0c96efb5c0d0ebb83cb37b9d8d62">EntityIDAllocator</a>(<span class="keywordtype">size_t</span> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>)</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>                : <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>(static_cast&lt;uint32_t&gt;(<a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>)),</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>(<a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>),</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a98c40c37a5fa0b63f79a0ea89c025363">nextIndex</a>(0),</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a6aec72bc3eb20eef9aa651306040c887">freeQueue</a>(static_cast&lt;int&gt;(<a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>))</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                <span class="comment">// Initially empty</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            }</div>
+</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span></div>
+<div class="foldopen" id="foldopen00042" data-start="{" data-end="}">
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#aa719757618ad45f54b2584165bb2a08b">   42</a></span>            <a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#aa719757618ad45f54b2584165bb2a08b">Create</a>() {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                uint32_t index;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                <span class="comment">// 再利用できるインデックスを取得</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a6aec72bc3eb20eef9aa651306040c887">freeQueue</a>.try_dequeue(index)) {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                    uint32_t gen = <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>[index].load(std::memory_order_acquire);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                    <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>{ index, gen };</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                }</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                <span class="comment">// 新しいインデックスを割り当て</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                index = <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a98c40c37a5fa0b63f79a0ea89c025363">nextIndex</a>.fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                <span class="keywordflow">if</span> (index &gt;= <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>) {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                    <span class="keywordflow">return</span> <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html#a06ebd3a276a9d81fc1e74a6fbfbf697f">EntityID::Invalid</a>(); <span class="comment">// Exhausted</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                }</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                <span class="comment">// 新しいIDの世代を0に初期化</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>[index].store(0, std::memory_order_release);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>{ index, 0 };</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            }</div>
+</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
+<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ab06a374ce8ac951eac0041ca2347d3ba">   65</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ab06a374ce8ac951eac0041ca2347d3ba">Destroy</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>) {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.index &gt;= <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                <span class="comment">// Invalidate old ID</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>[<span class="keywordtype">id</span>.index].fetch_add(1, std::memory_order_acq_rel);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                <span class="comment">// Reuse the index</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <span class="keywordtype">bool</span> success = <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a6aec72bc3eb20eef9aa651306040c887">freeQueue</a>.try_enqueue(<span class="keywordtype">id</span>.index);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                <span class="keywordflow">if</span> (!success) {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                    <span class="comment">// Free queue full → ID leak（無視してもよい or ログ出力）</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            }</div>
+</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span></div>
+<div class="foldopen" id="foldopen00082" data-start="{" data-end="}">
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a14f410330a60e401e216b0ec6ee618d2">   82</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a14f410330a60e401e216b0ec6ee618d2">IsAlive</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>) <span class="keyword">const</span> <span class="keyword">noexcept</span>{</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.index &gt;= <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>[<span class="keywordtype">id</span>.index].load(std::memory_order_acquire) == <span class="keywordtype">id</span>.generation;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            }</div>
+</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#abbd0665917c7edbc7204b8528c854790">   90</a></span>            uint32_t <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#abbd0665917c7edbc7204b8528c854790">Capacity</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>; }</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#aea010bada488843ce402d32163c43186">   95</a></span>            uint32_t <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#aea010bada488843ce402d32163c43186">NextIndex</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a98c40c37a5fa0b63f79a0ea89c025363">nextIndex</a>.load(std::memory_order_acquire); }</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">  100</a></span>            <span class="keyword">const</span> uint32_t <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">maxEntities</a>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a98c40c37a5fa0b63f79a0ea89c025363">  104</a></span>            std::atomic&lt;uint32_t&gt; <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a98c40c37a5fa0b63f79a0ea89c025363">nextIndex</a>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ac3d602be2d0b562bd9ce83d24a0bb491">  108</a></span>            std::vector&lt;std::atomic&lt;uint32_t&gt;&gt; <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ac3d602be2d0b562bd9ce83d24a0bb491">generations</a>;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a6aec72bc3eb20eef9aa651306040c887">  112</a></span>            <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue&lt;uint32_t&gt;</a> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a6aec72bc3eb20eef9aa651306040c887">freeQueue</a>;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        };</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_a14f410330a60e401e216b0ec6ee618d2"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a14f410330a60e401e216b0ec6ee618d2">SectorFW::ECS::EntityIDAllocator::IsAlive</a></div><div class="ttdeci">bool IsAlive(EntityID id) const noexcept</div><div class="ttdoc">エンティティIDが有効かどうかを確認する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00082">EntityIDAllocator.h:82</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_a3dab0c96efb5c0d0ebb83cb37b9d8d62"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a3dab0c96efb5c0d0ebb83cb37b9d8d62">SectorFW::ECS::EntityIDAllocator::EntityIDAllocator</a></div><div class="ttdeci">EntityIDAllocator(size_t maxEntities)</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00030">EntityIDAllocator.h:30</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_a5aceffcda3a26194f68d1ee4a206f9cd"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a5aceffcda3a26194f68d1ee4a206f9cd">SectorFW::ECS::EntityIDAllocator::maxEntities</a></div><div class="ttdeci">const uint32_t maxEntities</div><div class="ttdoc">最大エンティティ数</div><div class="ttdef"><b>Definition</b> <a href="#l00100">EntityIDAllocator.h:100</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_a6aec72bc3eb20eef9aa651306040c887"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a6aec72bc3eb20eef9aa651306040c887">SectorFW::ECS::EntityIDAllocator::freeQueue</a></div><div class="ttdeci">moodycamel::ConcurrentQueue&lt; uint32_t &gt; freeQueue</div><div class="ttdoc">未使用のエンティティIDを管理するキュー</div><div class="ttdef"><b>Definition</b> <a href="#l00112">EntityIDAllocator.h:112</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_a98c40c37a5fa0b63f79a0ea89c025363"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#a98c40c37a5fa0b63f79a0ea89c025363">SectorFW::ECS::EntityIDAllocator::nextIndex</a></div><div class="ttdeci">std::atomic&lt; uint32_t &gt; nextIndex</div><div class="ttdoc">次のエンティティIDのインデックス</div><div class="ttdef"><b>Definition</b> <a href="#l00104">EntityIDAllocator.h:104</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_aa719757618ad45f54b2584165bb2a08b"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#aa719757618ad45f54b2584165bb2a08b">SectorFW::ECS::EntityIDAllocator::Create</a></div><div class="ttdeci">EntityID Create()</div><div class="ttdoc">新しいエンティティIDを作成する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00042">EntityIDAllocator.h:42</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_ab06a374ce8ac951eac0041ca2347d3ba"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ab06a374ce8ac951eac0041ca2347d3ba">SectorFW::ECS::EntityIDAllocator::Destroy</a></div><div class="ttdeci">void Destroy(EntityID id)</div><div class="ttdoc">エンティティIDを破棄する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00065">EntityIDAllocator.h:65</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_abbd0665917c7edbc7204b8528c854790"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#abbd0665917c7edbc7204b8528c854790">SectorFW::ECS::EntityIDAllocator::Capacity</a></div><div class="ttdeci">uint32_t Capacity() const noexcept</div><div class="ttdoc">エンティティIDの最大数を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00090">EntityIDAllocator.h:90</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_ac3d602be2d0b562bd9ce83d24a0bb491"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#ac3d602be2d0b562bd9ce83d24a0bb491">SectorFW::ECS::EntityIDAllocator::generations</a></div><div class="ttdeci">std::vector&lt; std::atomic&lt; uint32_t &gt; &gt; generations</div><div class="ttdoc">世代管理のための配列</div><div class="ttdef"><b>Definition</b> <a href="#l00108">EntityIDAllocator.h:108</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html_aea010bada488843ce402d32163c43186"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html#aea010bada488843ce402d32163c43186">SectorFW::ECS::EntityIDAllocator::NextIndex</a></div><div class="ttdeci">uint32_t NextIndex() const noexcept</div><div class="ttdoc">次のエンティティIDのインデックスを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00095">EntityIDAllocator.h:95</a></div></div>
+<div class="ttc" id="aclassmoodycamel_1_1_concurrent_queue_html"><div class="ttname"><a href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a></div><div class="ttdef"><b>Definition</b> <a href="concurrentqueue_8h_source.html#l00767">concurrentqueue.h:768</a></div></div>
+<div class="ttc" id="aentity_8h_html"><div class="ttname"><a href="entity_8h.html">entity.h</a></div><div class="ttdoc">エンティティIDを定義するヘッダーファイル</div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html">SectorFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_entity_i_d_html"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">SectorFW::ECS::EntityID</a></div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00021">entity.h:21</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_entity_i_d_html_a06ebd3a276a9d81fc1e74a6fbfbf697f"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html#a06ebd3a276a9d81fc1e74a6fbfbf697f">SectorFW::ECS::EntityID::Invalid</a></div><div class="ttdeci">static constexpr EntityID Invalid() noexcept</div><div class="ttdoc">無効なEntityIDを取得する</div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00044">entity.h:44</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f7f8c59c1c248bac6d0283e91c8a15c6.html">Core</a></li><li class="navelem"><a class="el" href="dir_bfd096cbba80358637d44e82aa8d4a3b.html">ECS</a></li><li class="navelem"><a class="el" href="_entity_i_d_allocator_8h.html">EntityIDAllocator.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

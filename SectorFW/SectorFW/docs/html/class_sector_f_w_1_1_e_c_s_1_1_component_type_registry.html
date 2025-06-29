@@ -1,0 +1,566 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::ECS::ComponentTypeRegistry クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-static-methods">静的公開メンバ関数</a> &#124;
+<a href="#pri-static-attribs">静的非公開変数類</a> &#124;
+<a href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::ECS::ComponentTypeRegistry クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>コンポーネントの型IDを管理するクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a1e71189d4403cea677e5b60429879b11" id="r_a1e71189d4403cea677e5b60429879b11"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a1e71189d4403cea677e5b60429879b11"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a1e71189d4403cea677e5b60429879b11">GetID</a> () noexcept</td></tr>
+<tr class="memdesc:a1e71189d4403cea677e5b60429879b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントの型IDを取得します。  <br /></td></tr>
+<tr class="separator:a1e71189d4403cea677e5b60429879b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a304569301d2f4a3d8e9bc2f75e1d9feb" id="r_a304569301d2f4a3d8e9bc2f75e1d9feb"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; <br />
+requires (!requires { typename T::soa_type; })</td></tr>
+<tr class="memitem:a304569301d2f4a3d8e9bc2f75e1d9feb"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a304569301d2f4a3d8e9bc2f75e1d9feb">SetMetaStructure</a> (<a class="el" href="class_one_or_more.html">OneOrMore</a>&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure.html">ComponentMeta::Structure</a> &gt; &amp;meta_structures)</td></tr>
+<tr class="memdesc:a304569301d2f4a3d8e9bc2f75e1d9feb"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントのメタ情報を設定します。(SoAコンポーネントではない場合)  <br /></td></tr>
+<tr class="separator:a304569301d2f4a3d8e9bc2f75e1d9feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ce806dea52c001501429e61997fc669" id="r_a4ce806dea52c001501429e61997fc669"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; <br />
+requires (requires { typename T::soa_type; })</td></tr>
+<tr class="memitem:a4ce806dea52c001501429e61997fc669"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4ce806dea52c001501429e61997fc669">SetMetaStructure</a> (<a class="el" href="class_one_or_more.html">OneOrMore</a>&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure.html">ComponentMeta::Structure</a> &gt; &amp;meta_structures)</td></tr>
+<tr class="memdesc:a4ce806dea52c001501429e61997fc669"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメタ情報を設定します。  <br /></td></tr>
+<tr class="separator:a4ce806dea52c001501429e61997fc669"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a875d4f6d1d6a035502c8d78789d19cbb" id="r_a875d4f6d1d6a035502c8d78789d19cbb"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a875d4f6d1d6a035502c8d78789d19cbb"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a875d4f6d1d6a035502c8d78789d19cbb">SetSoAComponentMeta</a> (<a class="el" href="class_one_or_more.html">OneOrMore</a>&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure.html">ComponentMeta::Structure</a> &gt; &amp;meta_structures)</td></tr>
+<tr class="memdesc:a875d4f6d1d6a035502c8d78789d19cbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメタ情報を設定します。(複数のメンバーを持つ場合)  <br /></td></tr>
+<tr class="separator:a875d4f6d1d6a035502c8d78789d19cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa11b91644cd0fe3d9b56086282f52c6b" id="r_aa11b91644cd0fe3d9b56086282f52c6b"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:aa11b91644cd0fe3d9b56086282f52c6b"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa11b91644cd0fe3d9b56086282f52c6b">Register</a> () noexcept</td></tr>
+<tr class="memdesc:aa11b91644cd0fe3d9b56086282f52c6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントを登録します。  <br /></td></tr>
+<tr class="separator:aa11b91644cd0fe3d9b56086282f52c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3399f597ac754ab21dda7db066911f1c" id="r_a3399f597ac754ab21dda7db066911f1c"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a3399f597ac754ab21dda7db066911f1c"><td class="memTemplItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3399f597ac754ab21dda7db066911f1c">IsSparse</a> () noexcept</td></tr>
+<tr class="memdesc:a3399f597ac754ab21dda7db066911f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントがまばらなコンポーネントかどうかを判定します。  <br /></td></tr>
+<tr class="separator:a3399f597ac754ab21dda7db066911f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa653a2d1d105fe2e3ea6f6451e6fa17b" id="r_aa653a2d1d105fe2e3ea6f6451e6fa17b"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta.html">ComponentMeta</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa653a2d1d105fe2e3ea6f6451e6fa17b">GetMeta</a> (<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> id) noexcept</td></tr>
+<tr class="memdesc:aa653a2d1d105fe2e3ea6f6451e6fa17b"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントのメタ情報を取得します。  <br /></td></tr>
+<tr class="separator:aa653a2d1d105fe2e3ea6f6451e6fa17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+静的非公開変数類</h2></td></tr>
+<tr class="memitem:a75e6c222b7fbd018d2ec9e6845137694" id="r_a75e6c222b7fbd018d2ec9e6845137694"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75e6c222b7fbd018d2ec9e6845137694">counter</a> = 0</td></tr>
+<tr class="memdesc:a75e6c222b7fbd018d2ec9e6845137694"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントの型IDをカウントする静的変数  <br /></td></tr>
+<tr class="separator:a75e6c222b7fbd018d2ec9e6845137694"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae45285bccbcaaec627ff21d86b1fdcdd" id="r_ae45285bccbcaaec627ff21d86b1fdcdd"><td class="memItemLeft" align="right" valign="top">static std::unordered_map&lt; <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a>, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta.html">ComponentMeta</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae45285bccbcaaec627ff21d86b1fdcdd">meta</a></td></tr>
+<tr class="memdesc:ae45285bccbcaaec627ff21d86b1fdcdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントのメタ情報を格納するマップ  <br /></td></tr>
+<tr class="separator:ae45285bccbcaaec627ff21d86b1fdcdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>コンポーネントの型IDを管理するクラス </p>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a> の <a class="el" href="_component_type_registry_8h_source.html#l00042">42</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">関数詳解</h2>
+<a id="a1e71189d4403cea677e5b60429879b11" name="a1e71189d4403cea677e5b60429879b11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e71189d4403cea677e5b60429879b11">&#9670;&#160;</a></span>GetID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> SectorFW::ECS::ComponentTypeRegistry::GetID </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントの型IDを取得します。 </p>
+<dl class="tparams"><dt>テンプレート引数</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>コンポーネントの型 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30" title="コンポーネントの型IDを定義する型">ComponentTypeID</a> コンポーネントの型ID </dd></dl>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a> の <a class="el" href="_component_type_registry_8h_source.html#l00050">50</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>                                                    {</div>
+<div class="line"><span class="lineno">   51</span>                <span class="keyword">static</span> <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> <span class="keywordtype">id</span> = <a class="code hl_variable" href="#a75e6c222b7fbd018d2ec9e6845137694">counter</a>++;</div>
+<div class="line"><span class="lineno">   52</span>                <span class="keywordflow">return</span> id;</div>
+<div class="line"><span class="lineno">   53</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_a75e6c222b7fbd018d2ec9e6845137694"><div class="ttname"><a href="#a75e6c222b7fbd018d2ec9e6845137694">SectorFW::ECS::ComponentTypeRegistry::counter</a></div><div class="ttdeci">static ComponentTypeID counter</div><div class="ttdoc">コンポーネントの型IDをカウントする静的変数</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00109">ComponentTypeRegistry.h:109</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_a2accadf823770a8124d2a1ed1ba0ad30"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">SectorFW::ECS::ComponentTypeID</a></div><div class="ttdeci">uint32_t ComponentTypeID</div><div class="ttdoc">コンポーネントの型IDを定義する型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00031">component.hpp:31</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+
+</div>
+</div>
+<a id="aa653a2d1d105fe2e3ea6f6451e6fa17b" name="aa653a2d1d105fe2e3ea6f6451e6fa17b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa653a2d1d105fe2e3ea6f6451e6fa17b">&#9670;&#160;</a></span>GetMeta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta.html">ComponentMeta</a> &amp; SectorFW::ECS::ComponentTypeRegistry::GetMeta </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントのメタ情報を取得します。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>コンポーネントの型ID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta.html" title="コンポーネントの型IDとメタ情報を管理するクラス @detail コンポーネントの型IDを取得し、コンポーネントのメタ情報を設定します。">ComponentMeta</a>&amp; コンポーネントのメタ情報への参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8cpp_source.html">ComponentTypeRegistry.cpp</a> の <a class="el" href="_component_type_registry_8cpp_source.html#l00008">8</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">    9</span>        {</div>
+<div class="line"><span class="lineno">   10</span>            <span class="keyword">auto</span> iter = <a class="code hl_variable" href="#ae45285bccbcaaec627ff21d86b1fdcdd">meta</a>.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   11</span> </div>
+<div class="line"><span class="lineno">   12</span>            <a class="code hl_define" href="message_8h.html#a601a6e74da786e0e3fcea967d8cb4cc3">DYNAMIC_ASSERT_MESSAGE</a>(iter != <a class="code hl_variable" href="#ae45285bccbcaaec627ff21d86b1fdcdd">meta</a>.end(), <span class="stringliteral">&quot;Not Registry ComponentType!&quot;</span>);</div>
+<div class="line"><span class="lineno">   13</span> </div>
+<div class="line"><span class="lineno">   14</span>            <span class="keywordflow">return</span> iter-&gt;second;</div>
+<div class="line"><span class="lineno">   15</span>        }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_ae45285bccbcaaec627ff21d86b1fdcdd"><div class="ttname"><a href="#ae45285bccbcaaec627ff21d86b1fdcdd">SectorFW::ECS::ComponentTypeRegistry::meta</a></div><div class="ttdeci">static std::unordered_map&lt; ComponentTypeID, ComponentMeta &gt; meta</div><div class="ttdoc">コンポーネントのメタ情報を格納するマップ</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00113">ComponentTypeRegistry.h:113</a></div></div>
+<div class="ttc" id="amessage_8h_html_a601a6e74da786e0e3fcea967d8cb4cc3"><div class="ttname"><a href="message_8h.html#a601a6e74da786e0e3fcea967d8cb4cc3">DYNAMIC_ASSERT_MESSAGE</a></div><div class="ttdeci">#define DYNAMIC_ASSERT_MESSAGE(expr,...)</div><div class="ttdef"><b>Definition</b> <a href="message_8h_source.html#l00011">message.h:11</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<a id="a3399f597ac754ab21dda7db066911f1c" name="a3399f597ac754ab21dda7db066911f1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3399f597ac754ab21dda7db066911f1c">&#9670;&#160;</a></span>IsSparse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr bool SectorFW::ECS::ComponentTypeRegistry::IsSparse </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントがまばらなコンポーネントかどうかを判定します。 </p>
+<dl class="section return"><dt>戻り値</dt><dd>true まばらなコンポーネントである場合 </dd></dl>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a> の <a class="el" href="_component_type_registry_8h_source.html#l00096">96</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   96</span>                                                      {</div>
+<div class="line"><span class="lineno">   97</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="namespace_sector_f_w_1_1_e_c_s.html#a394a4d8b0dd7a1c40cfdf5d86e82a381">is_sparse_component_v&lt;T&gt;</a>;</div>
+<div class="line"><span class="lineno">   98</span>            }</div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_a394a4d8b0dd7a1c40cfdf5d86e82a381"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#a394a4d8b0dd7a1c40cfdf5d86e82a381">SectorFW::ECS::is_sparse_component_v</a></div><div class="ttdeci">constexpr bool is_sparse_component_v</div><div class="ttdoc">まばらなコンポーネントを識別するためのトレイトの値</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00063">component.hpp:63</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
+
+</div>
+</div>
+<a id="aa11b91644cd0fe3d9b56086282f52c6b" name="aa11b91644cd0fe3d9b56086282f52c6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa11b91644cd0fe3d9b56086282f52c6b">&#9670;&#160;</a></span>Register()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SectorFW::ECS::ComponentTypeRegistry::Register </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントを登録します。 </p>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a> の <a class="el" href="_component_type_registry_8h_source.html#l00085">85</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>                                            {</div>
+<div class="line"><span class="lineno">   86</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> <span class="keywordtype">id</span> = <a class="code hl_function" href="#a1e71189d4403cea677e5b60429879b11">GetID&lt;T&gt;</a>();</div>
+<div class="line"><span class="lineno">   87</span>                OneOrMore&lt;ComponentMeta::Structure&gt; meta_structures;</div>
+<div class="line"><span class="lineno">   88</span>                <a class="code hl_function" href="#a304569301d2f4a3d8e9bc2f75e1d9feb">SetMetaStructure&lt;T&gt;</a>(meta_structures);</div>
+<div class="line"><span class="lineno">   89</span>                <a class="code hl_variable" href="#ae45285bccbcaaec627ff21d86b1fdcdd">meta</a>[id] = { meta_structures ,<a class="code hl_variable" href="namespace_sector_f_w_1_1_e_c_s.html#a394a4d8b0dd7a1c40cfdf5d86e82a381">is_sparse_component_v&lt;T&gt;</a> ,<a class="code hl_variable" href="namespace_sector_f_w_1_1_e_c_s.html#a4d695e9f399437bcc42a9fec0b80286e">is_soa_component_v&lt;T&gt;</a> };</div>
+<div class="line"><span class="lineno">   90</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_a1e71189d4403cea677e5b60429879b11"><div class="ttname"><a href="#a1e71189d4403cea677e5b60429879b11">SectorFW::ECS::ComponentTypeRegistry::GetID</a></div><div class="ttdeci">static ComponentTypeID GetID() noexcept</div><div class="ttdoc">コンポーネントの型IDを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00050">ComponentTypeRegistry.h:50</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_a304569301d2f4a3d8e9bc2f75e1d9feb"><div class="ttname"><a href="#a304569301d2f4a3d8e9bc2f75e1d9feb">SectorFW::ECS::ComponentTypeRegistry::SetMetaStructure</a></div><div class="ttdeci">static void SetMetaStructure(OneOrMore&lt; ComponentMeta::Structure &gt; &amp;meta_structures)</div><div class="ttdoc">コンポーネントのメタ情報を設定します。(SoAコンポーネントではない場合)</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00060">ComponentTypeRegistry.h:60</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_a4d695e9f399437bcc42a9fec0b80286e"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#a4d695e9f399437bcc42a9fec0b80286e">SectorFW::ECS::is_soa_component_v</a></div><div class="ttdeci">constexpr bool is_soa_component_v</div><div class="ttdoc">SoAコンポーネントを識別するためのトレイトの値</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00078">component.hpp:78</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 3 --></div>
+</div>
+
+</div>
+</div>
+<a id="a304569301d2f4a3d8e9bc2f75e1d9feb" name="a304569301d2f4a3d8e9bc2f75e1d9feb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a304569301d2f4a3d8e9bc2f75e1d9feb">&#9670;&#160;</a></span>SetMetaStructure() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; <br />
+requires (!requires { typename T::soa_type; })</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SectorFW::ECS::ComponentTypeRegistry::SetMetaStructure </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_one_or_more.html">OneOrMore</a>&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure.html">ComponentMeta::Structure</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>meta_structures</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントのメタ情報を設定します。(SoAコンポーネントではない場合) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">meta_structures</td><td>コンポーネントのメタ情報を格納する構造体 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a> の <a class="el" href="_component_type_registry_8h_source.html#l00060">60</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   60</span>                                                                                             {</div>
+<div class="line"><span class="lineno">   61</span>                meta_structures.<a class="code hl_function" href="class_one_or_more.html#a6a3167fed500a2b9b8f8d2251367647f">add</a>(ComponentMeta::Structure{ <span class="keyword">sizeof</span>(T), <span class="keyword">alignof</span>(T) });</div>
+<div class="line"><span class="lineno">   62</span>            }</div>
+<div class="ttc" id="aclass_one_or_more_html_a6a3167fed500a2b9b8f8d2251367647f"><div class="ttname"><a href="class_one_or_more.html#a6a3167fed500a2b9b8f8d2251367647f">OneOrMore::add</a></div><div class="ttdeci">void add(const T &amp;value)</div><div class="ttdoc">要素の追加</div><div class="ttdef"><b>Definition</b> <a href="_one_or_more_8hpp_source.html#l00033">OneOrMore.hpp:33</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 4 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 5 --></div>
+</div>
+
+</div>
+</div>
+<a id="a4ce806dea52c001501429e61997fc669" name="a4ce806dea52c001501429e61997fc669"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ce806dea52c001501429e61997fc669">&#9670;&#160;</a></span>SetMetaStructure() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; <br />
+requires (requires { typename T::soa_type; })</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SectorFW::ECS::ComponentTypeRegistry::SetMetaStructure </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_one_or_more.html">OneOrMore</a>&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure.html">ComponentMeta::Structure</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>meta_structures</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメタ情報を設定します。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">meta_structures</td><td>コンポーネントのメタ情報を格納する構造体 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a> の <a class="el" href="_component_type_registry_8h_source.html#l00069">69</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>                                                                                             {</div>
+<div class="line"><span class="lineno">   70</span>                <span class="keyword">using </span>soa_tuple = <span class="keyword">typename</span> T::soa_type;</div>
+<div class="line"><span class="lineno">   71</span>                <a class="code hl_function" href="#a875d4f6d1d6a035502c8d78789d19cbb">SetSoAComponentMeta&lt;soa_tuple&gt;</a>(meta_structures);</div>
+<div class="line"><span class="lineno">   72</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_a875d4f6d1d6a035502c8d78789d19cbb"><div class="ttname"><a href="#a875d4f6d1d6a035502c8d78789d19cbb">SectorFW::ECS::ComponentTypeRegistry::SetSoAComponentMeta</a></div><div class="ttdeci">static void SetSoAComponentMeta(OneOrMore&lt; ComponentMeta::Structure &gt; &amp;meta_structures)</div><div class="ttdoc">SoAコンポーネントのメタ情報を設定します。(複数のメンバーを持つ場合)</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00078">ComponentTypeRegistry.h:78</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 6 --></div>
+</div>
+
+</div>
+</div>
+<a id="a875d4f6d1d6a035502c8d78789d19cbb" name="a875d4f6d1d6a035502c8d78789d19cbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a875d4f6d1d6a035502c8d78789d19cbb">&#9670;&#160;</a></span>SetSoAComponentMeta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SectorFW::ECS::ComponentTypeRegistry::SetSoAComponentMeta </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_one_or_more.html">OneOrMore</a>&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure.html">ComponentMeta::Structure</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>meta_structures</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメタ情報を設定します。(複数のメンバーを持つ場合) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">meta_structures</td><td>コンポーネントのメタ情報を格納する構造体 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a> の <a class="el" href="_component_type_registry_8h_source.html#l00078">78</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   78</span>                                                                                                {</div>
+<div class="line"><span class="lineno">   79</span>                (<a class="code hl_function" href="#a304569301d2f4a3d8e9bc2f75e1d9feb">SetMetaStructure&lt;Ts&gt;</a>(meta_structures), ...);</div>
+<div class="line"><span class="lineno">   80</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 7 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 8 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a75e6c222b7fbd018d2ec9e6845137694" name="a75e6c222b7fbd018d2ec9e6845137694"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75e6c222b7fbd018d2ec9e6845137694">&#9670;&#160;</a></span>counter</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> SectorFW::ECS::ComponentTypeRegistry::counter = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントの型IDをカウントする静的変数 </p>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a> の <a class="el" href="_component_type_registry_8h_source.html#l00109">109</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae45285bccbcaaec627ff21d86b1fdcdd" name="ae45285bccbcaaec627ff21d86b1fdcdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae45285bccbcaaec627ff21d86b1fdcdd">&#9670;&#160;</a></span>meta</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a>, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta.html">ComponentMeta</a>&gt; SectorFW::ECS::ComponentTypeRegistry::meta</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントのメタ情報を格納するマップ </p>
+
+<p class="definition"> <a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a> の <a class="el" href="_component_type_registry_8h_source.html#l00113">113</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="_component_type_registry_8h_source.html">ComponentTypeRegistry.h</a></li>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/src/Core/<a class="el" href="_component_type_registry_8cpp_source.html">ComponentTypeRegistry.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html">ComponentTypeRegistry</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

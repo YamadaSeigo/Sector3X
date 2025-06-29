@@ -1,0 +1,11 @@
+digraph "クラス階層図"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node0 [id="Node000000",label="SectorFW::ECS::ISystem\l\< Partition \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_i_system.html",tooltip="システムのインターフェース @detail 分割のクラスを指定する"];
+  Node0 -> Node1 [id="edge14_Node000000_Node000001",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node1 [id="Node000001",label="SectorFW::ECS::ITypeSystem\l\< Partition, ComponentAccess\l\< AccessTypes... \>, ServiceContext\l\< Services... \> \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html",tooltip="ECSシステムのインターフェース"];
+}

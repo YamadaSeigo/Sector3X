@@ -1,34 +1,34 @@
+/*****************************************************************//**
+ * @file   AccessInfo.h
+ * @brief アクセス情報に関するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   June 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <unordered_set>
 
-#include "component.h"
+#include "component.hpp"
 
 namespace SectorFW
 {
 	namespace ECS
 	{
-		//----------------------------------------------
-		// System Interface with AccessInfo
-		//----------------------------------------------
+		/**
+		 * @brief アクセス情報を管理する構造体
+		 */
 		struct AccessInfo {
 			std::unordered_set<ComponentTypeID> read;
 			std::unordered_set<ComponentTypeID> write;
 		};
-
-		// Access Tag Types
+		/**
+		 * @brief コンポーネントの読み取りアクセスを表すテンプレート
+		 */
 		template<typename T> struct Read { using Type = T; };
+		/**
+		 * @brief コンポーネントの書き込みアクセスを表すテンプレート
+		 */
 		template<typename T> struct Write { using Type = T; };
-
-		// Register ComponentTypeID to AccessInfo
-		template<typename T>
-		void RegisterAccessType(AccessInfo& info) {
-			if constexpr (std::is_base_of_v<Read<typename T::Type>, T>) {
-				info.read.insert(ComponentTypeRegistry::GetID<typename T::Type>());
-			}
-			if constexpr (std::is_base_of_v<Write<typename T::Type>, T>) {
-				info.write.insert(ComponentTypeRegistry::GetID<typename T::Type>());
-			}
-		}
 	}
 }

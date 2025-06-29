@@ -1,0 +1,11 @@
+digraph "SectorFW::ECS::Query::MatchingChunks"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="SectorFW::ECS::Query\l::MatchingChunks",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="クエリにマッチするアーキタイプチャンクを取得します。"];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="SectorFW::ECS::ITypeSystem\l\< Partition, ComponentAccess\l\< AccessTypes... \>, ServiceContext\l\< Services... \> \>::ForEachChunkWithAccessor",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#ada7671b0175ea287ddb748d181e54918",tooltip="指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する"];
+}

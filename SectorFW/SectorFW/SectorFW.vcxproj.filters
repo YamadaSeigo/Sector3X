@@ -40,9 +40,6 @@
     <Filter Include="Inc\Core\ECS">
       <UniqueIdentifier>{551c94e0-2537-4dc6-a640-fc01d40dc461}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Inc\Core\ECS\System">
-      <UniqueIdentifier>{60a0066c-3e02-457e-83c2-8f1aa97a246e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utility\doxygen_sample.h">
@@ -60,7 +57,7 @@
     <ClInclude Include="inc\Core\GameEngine.h">
       <Filter>Inc\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\IGraphicsDevice.h">
+    <ClInclude Include="inc\Graphics\IGraphicsDevice.hpp">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\sector11fw.h">
@@ -78,7 +75,7 @@
     <ClInclude Include="inc\Util\alignment.h">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\AccessWrapper.h">
+    <ClInclude Include="inc\Util\AccessWrapper.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
     <ClInclude Include="inc\DX12Graphics.h">
@@ -90,10 +87,10 @@
     <ClInclude Include="inc\Math\AABB.hpp">
       <Filter>Inc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Level.h">
+    <ClInclude Include="inc\Core\Level.hpp">
       <Filter>Inc\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\World.h">
+    <ClInclude Include="inc\Core\World.hpp">
       <Filter>Inc\Core</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ECS\AccessInfo.h">
@@ -111,7 +108,7 @@
     <ClInclude Include="inc\Core\ECS\ArchetypeManager.h">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ECS\component.h">
+    <ClInclude Include="inc\Core\ECS\component.hpp">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ECS\ComponentTypeRegistry.h">
@@ -147,10 +144,10 @@
     <ClInclude Include="inc\Core\AssetManager.h">
       <Filter>Inc\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\TypeCheck.h">
+    <ClInclude Include="inc\Util\TypeChecker.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\CommonTypes.h">
+    <ClInclude Include="inc\Util\Grid.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ECS\EntityIDAllocator.h">
@@ -159,10 +156,7 @@
     <ClInclude Include="inc\Math\Quaternion.hpp">
       <Filter>Inc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\Transform.h">
-      <Filter>Inc\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Partition.h">
+    <ClInclude Include="inc\Core\Partition.hpp">
       <Filter>Inc\Core</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\SpatialChunk.h">
@@ -171,10 +165,37 @@
     <ClInclude Include="inc\Core\Grid2DPartition.h">
       <Filter>Inc\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\logger.hpp">
+    <ClInclude Include="inc\Util\logger.h">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\extract_type.h">
+    <ClInclude Include="inc\Util\extract_type.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Math\Matrix.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Math\Transform.h">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Math\convert.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\convert_directX.hpp">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\Flatten.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\ComponentLayoutRegistry.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\OneOrMore.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\for_each_macro.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\unique_variant.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
   </ItemGroup>
@@ -197,7 +218,7 @@
     <ClCompile Include="src\Core\ArchetypeManager.cpp">
       <Filter>Src\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Chunk.cpp">
+    <ClCompile Include="src\Core\ArchetypeChunk.cpp">
       <Filter>Src\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Utility\message.cpp">
@@ -210,6 +231,9 @@
       <Filter>Src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\GameEngine.cpp">
+      <Filter>Src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ComponentLayoutRegistry.cpp">
       <Filter>Src\Core</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,0 +1,663 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: moodycamel::ConcurrentQueue&lt; T, Traits &gt;::Block 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('structmoodycamel_1_1_concurrent_queue_1_1_block.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pub-attribs">公開変数類</a> &#124;
+<a href="#pri-methods">非公開メンバ関数</a> &#124;
+<a href="structmoodycamel_1_1_concurrent_queue_1_1_block-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">moodycamel::ConcurrentQueue&lt; T, Traits &gt;::Block 構造体</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+moodycamel::ConcurrentQueue&lt; T, Traits &gt;::Block 連携図</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:af0ffef9da63d0436cc27c53574ac486b" id="r_af0ffef9da63d0436cc27c53574ac486b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0ffef9da63d0436cc27c53574ac486b">Block</a> ()</td></tr>
+<tr class="separator:af0ffef9da63d0436cc27c53574ac486b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22e137108c0dccb82355980d212c158c" id="r_a22e137108c0dccb82355980d212c158c"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </td></tr>
+<tr class="memitem:a22e137108c0dccb82355980d212c158c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a22e137108c0dccb82355980d212c158c">is_empty</a> () const</td></tr>
+<tr class="separator:a22e137108c0dccb82355980d212c158c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc477f63e826a045c1fd6be8e830ea45" id="r_acc477f63e826a045c1fd6be8e830ea45"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </td></tr>
+<tr class="memitem:acc477f63e826a045c1fd6be8e830ea45"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#acc477f63e826a045c1fd6be8e830ea45">set_empty</a> (<a class="el" href="concurrentqueue_8h.html#aa4874b207a858e77ed8db8983686cde0">MOODYCAMEL_MAYBE_UNUSED</a> <a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ad68d536c896de4e839dd95225e7deea3">index_t</a> i)</td></tr>
+<tr class="separator:acc477f63e826a045c1fd6be8e830ea45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acca6f6e71a31f3a7ec75a73b47ff2a75" id="r_acca6f6e71a31f3a7ec75a73b47ff2a75"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </td></tr>
+<tr class="memitem:acca6f6e71a31f3a7ec75a73b47ff2a75"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#acca6f6e71a31f3a7ec75a73b47ff2a75">set_many_empty</a> (<a class="el" href="concurrentqueue_8h.html#aa4874b207a858e77ed8db8983686cde0">MOODYCAMEL_MAYBE_UNUSED</a> <a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ad68d536c896de4e839dd95225e7deea3">index_t</a> i, <a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ac0b73313ed107d313b55c8a77be19b28">size_t</a> count)</td></tr>
+<tr class="separator:acca6f6e71a31f3a7ec75a73b47ff2a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a418c78a496ab85826d7e49ebe200398f" id="r_a418c78a496ab85826d7e49ebe200398f"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </td></tr>
+<tr class="memitem:a418c78a496ab85826d7e49ebe200398f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a418c78a496ab85826d7e49ebe200398f">set_all_empty</a> ()</td></tr>
+<tr class="separator:a418c78a496ab85826d7e49ebe200398f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d9845a83b8696faaf0d817fa697d590" id="r_a4d9845a83b8696faaf0d817fa697d590"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </td></tr>
+<tr class="memitem:a4d9845a83b8696faaf0d817fa697d590"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4d9845a83b8696faaf0d817fa697d590">reset_empty</a> ()</td></tr>
+<tr class="separator:a4d9845a83b8696faaf0d817fa697d590"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc7254289a7dd533076372e2a39d6c26" id="r_adc7254289a7dd533076372e2a39d6c26"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc7254289a7dd533076372e2a39d6c26">operator[]</a> (<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ad68d536c896de4e839dd95225e7deea3">index_t</a> idx) <a class="el" href="concurrentqueue_8h.html#a144c527b7ec41a7a3f64e8f4d3852ad5">MOODYCAMEL_NOEXCEPT</a></td></tr>
+<tr class="separator:adc7254289a7dd533076372e2a39d6c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae07ed2da171f9e099c885ed61e0cc229" id="r_ae07ed2da171f9e099c885ed61e0cc229"><td class="memItemLeft" align="right" valign="top">T const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae07ed2da171f9e099c885ed61e0cc229">operator[]</a> (<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ad68d536c896de4e839dd95225e7deea3">index_t</a> idx) const <a class="el" href="concurrentqueue_8h.html#a144c527b7ec41a7a3f64e8f4d3852ad5">MOODYCAMEL_NOEXCEPT</a></td></tr>
+<tr class="separator:ae07ed2da171f9e099c885ed61e0cc229"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:ab1c9791e594ec0b021b1c004e40dacff" id="r_ab1c9791e594ec0b021b1c004e40dacff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmoodycamel_1_1_concurrent_queue_1_1_block.html">Block</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1c9791e594ec0b021b1c004e40dacff">next</a></td></tr>
+<tr class="separator:ab1c9791e594ec0b021b1c004e40dacff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab212fe682437fc19816e4884e92cdaa5" id="r_ab212fe682437fc19816e4884e92cdaa5"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; <a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ac0b73313ed107d313b55c8a77be19b28">size_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab212fe682437fc19816e4884e92cdaa5">elementsCompletelyDequeued</a></td></tr>
+<tr class="separator:ab212fe682437fc19816e4884e92cdaa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa45d6e6ba3ee5d8268b1c83118c9658" id="r_aaa45d6e6ba3ee5d8268b1c83118c9658"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa45d6e6ba3ee5d8268b1c83118c9658">emptyFlags</a> [<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ae555aae96010307e7991b1028b41cfb8">BLOCK_SIZE</a>&lt;=<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#aaadd55fc6ac80c277225977fe9bdecee">EXPLICIT_BLOCK_EMPTY_COUNTER_THRESHOLD</a> ? <a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ae555aae96010307e7991b1028b41cfb8">BLOCK_SIZE</a> :1]</td></tr>
+<tr class="separator:aaa45d6e6ba3ee5d8268b1c83118c9658"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a7017b93bd5e7749b77a64d72bcd1b2" id="r_a9a7017b93bd5e7749b77a64d72bcd1b2"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; std::uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a7017b93bd5e7749b77a64d72bcd1b2">freeListRefs</a></td></tr>
+<tr class="separator:a9a7017b93bd5e7749b77a64d72bcd1b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56bbe5337c148c1cf9f85a0e9907e23c" id="r_a56bbe5337c148c1cf9f85a0e9907e23c"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; <a class="el" href="structmoodycamel_1_1_concurrent_queue_1_1_block.html">Block</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a56bbe5337c148c1cf9f85a0e9907e23c">freeListNext</a></td></tr>
+<tr class="separator:a56bbe5337c148c1cf9f85a0e9907e23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac97822f68d4bbc7975529ea21726b240" id="r_ac97822f68d4bbc7975529ea21726b240"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac97822f68d4bbc7975529ea21726b240">dynamicallyAllocated</a></td></tr>
+<tr class="separator:ac97822f68d4bbc7975529ea21726b240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+非公開メンバ関数</h2></td></tr>
+<tr class="memitem:a131c46f5e3f81220c80e54bc14e78ed0" id="r_a131c46f5e3f81220c80e54bc14e78ed0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a131c46f5e3f81220c80e54bc14e78ed0">MOODYCAMEL_ALIGNED_TYPE_LIKE</a> (char[sizeof(T) *<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ae555aae96010307e7991b1028b41cfb8">BLOCK_SIZE</a>], T) elements</td></tr>
+<tr class="separator:a131c46f5e3f81220c80e54bc14e78ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt;<br />
+struct moodycamel::ConcurrentQueue&lt; T, Traits &gt;::Block</div>
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01559">1559</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="af0ffef9da63d0436cc27c53574ac486b" name="af0ffef9da63d0436cc27c53574ac486b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0ffef9da63d0436cc27c53574ac486b">&#9670;&#160;</a></span>Block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::Block </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01561">1561</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1562</span>            : <a class="code hl_variable" href="#ab1c9791e594ec0b021b1c004e40dacff">next</a>(<span class="keyword">nullptr</span>), <a class="code hl_variable" href="#ab212fe682437fc19816e4884e92cdaa5">elementsCompletelyDequeued</a>(0), <a class="code hl_variable" href="#a9a7017b93bd5e7749b77a64d72bcd1b2">freeListRefs</a>(0), <a class="code hl_variable" href="#a56bbe5337c148c1cf9f85a0e9907e23c">freeListNext</a>(<span class="keyword">nullptr</span>), <a class="code hl_variable" href="#ac97822f68d4bbc7975529ea21726b240">dynamicallyAllocated</a>(<span class="keyword">true</span>)</div>
+<div class="line"><span class="lineno"> 1563</span>        {</div>
+<div class="line"><span class="lineno"> 1564</span><span class="preprocessor">#ifdef MCDBGQ_TRACKMEM</span></div>
+<div class="line"><span class="lineno"> 1565</span>            <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">owner</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno"> 1566</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno"> 1567</span>        }</div>
+<div class="ttc" id="aclassmoodycamel_1_1_concurrent_queue_html"><div class="ttname"><a href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a></div><div class="ttdef"><b>Definition</b> <a href="concurrentqueue_8h_source.html#l00767">concurrentqueue.h:768</a></div></div>
+<div class="ttc" id="astructmoodycamel_1_1_concurrent_queue_1_1_block_html_a56bbe5337c148c1cf9f85a0e9907e23c"><div class="ttname"><a href="#a56bbe5337c148c1cf9f85a0e9907e23c">moodycamel::ConcurrentQueue::Block::freeListNext</a></div><div class="ttdeci">std::atomic&lt; Block * &gt; freeListNext</div><div class="ttdef"><b>Definition</b> <a href="concurrentqueue_8h_source.html#l01678">concurrentqueue.h:1678</a></div></div>
+<div class="ttc" id="astructmoodycamel_1_1_concurrent_queue_1_1_block_html_a9a7017b93bd5e7749b77a64d72bcd1b2"><div class="ttname"><a href="#a9a7017b93bd5e7749b77a64d72bcd1b2">moodycamel::ConcurrentQueue::Block::freeListRefs</a></div><div class="ttdeci">std::atomic&lt; std::uint32_t &gt; freeListRefs</div><div class="ttdef"><b>Definition</b> <a href="concurrentqueue_8h_source.html#l01677">concurrentqueue.h:1677</a></div></div>
+<div class="ttc" id="astructmoodycamel_1_1_concurrent_queue_1_1_block_html_ab1c9791e594ec0b021b1c004e40dacff"><div class="ttname"><a href="#ab1c9791e594ec0b021b1c004e40dacff">moodycamel::ConcurrentQueue::Block::next</a></div><div class="ttdeci">Block * next</div><div class="ttdef"><b>Definition</b> <a href="concurrentqueue_8h_source.html#l01673">concurrentqueue.h:1673</a></div></div>
+<div class="ttc" id="astructmoodycamel_1_1_concurrent_queue_1_1_block_html_ab212fe682437fc19816e4884e92cdaa5"><div class="ttname"><a href="#ab212fe682437fc19816e4884e92cdaa5">moodycamel::ConcurrentQueue::Block::elementsCompletelyDequeued</a></div><div class="ttdeci">std::atomic&lt; size_t &gt; elementsCompletelyDequeued</div><div class="ttdef"><b>Definition</b> <a href="concurrentqueue_8h_source.html#l01674">concurrentqueue.h:1674</a></div></div>
+<div class="ttc" id="astructmoodycamel_1_1_concurrent_queue_1_1_block_html_ac97822f68d4bbc7975529ea21726b240"><div class="ttname"><a href="#ac97822f68d4bbc7975529ea21726b240">moodycamel::ConcurrentQueue::Block::dynamicallyAllocated</a></div><div class="ttdeci">bool dynamicallyAllocated</div><div class="ttdef"><b>Definition</b> <a href="concurrentqueue_8h_source.html#l01679">concurrentqueue.h:1679</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="a22e137108c0dccb82355980d212c158c" name="a22e137108c0dccb82355980d212c158c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22e137108c0dccb82355980d212c158c">&#9670;&#160;</a></span>is_empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::is_empty </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01570">1570</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1571</span>        {</div>
+<div class="line"><span class="lineno"> 1572</span>            <a class="code hl_define" href="concurrentqueue_8h.html#a957a003c2194ffd8b8747f8ed288509a">MOODYCAMEL_CONSTEXPR_IF</a> (<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">context</a> == <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">explicit_context</a> &amp;&amp; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> &lt;= <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">EXPLICIT_BLOCK_EMPTY_COUNTER_THRESHOLD</a>) {</div>
+<div class="line"><span class="lineno"> 1573</span>                <span class="comment">// Check flags</span></div>
+<div class="line"><span class="lineno"> 1574</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> = 0; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> &lt; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a>; ++<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a>) {</div>
+<div class="line"><span class="lineno"> 1575</span>                    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#aaa45d6e6ba3ee5d8268b1c83118c9658">emptyFlags</a>[<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a>].<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">load</a>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>)) {</div>
+<div class="line"><span class="lineno"> 1576</span>                        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 1577</span>                    }</div>
+<div class="line"><span class="lineno"> 1578</span>                }</div>
+<div class="line"><span class="lineno"> 1579</span>                </div>
+<div class="line"><span class="lineno"> 1580</span>                <span class="comment">// Aha, empty; make sure we have all other memory effects that happened before the empty flags were set</span></div>
+<div class="line"><span class="lineno"> 1581</span>                <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::atomic_thread_fence</a>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_acquire</a>);</div>
+<div class="line"><span class="lineno"> 1582</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno"> 1583</span>            }</div>
+<div class="line"><span class="lineno"> 1584</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno"> 1585</span>                <span class="comment">// Check counter</span></div>
+<div class="line"><span class="lineno"> 1586</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="#ab212fe682437fc19816e4884e92cdaa5">elementsCompletelyDequeued</a>.load(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>) == <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a>) {</div>
+<div class="line"><span class="lineno"> 1587</span>                    <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::atomic_thread_fence</a>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_acquire</a>);</div>
+<div class="line"><span class="lineno"> 1588</span>                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno"> 1589</span>                }</div>
+<div class="line"><span class="lineno"> 1590</span>                <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">assert</a>(<a class="code hl_variable" href="#ab212fe682437fc19816e4884e92cdaa5">elementsCompletelyDequeued</a>.load(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>) &lt;= <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a>);</div>
+<div class="line"><span class="lineno"> 1591</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 1592</span>            }</div>
+<div class="line"><span class="lineno"> 1593</span>        }</div>
+<div class="ttc" id="aconcurrentqueue_8h_html_a957a003c2194ffd8b8747f8ed288509a"><div class="ttname"><a href="concurrentqueue_8h.html#a957a003c2194ffd8b8747f8ed288509a">MOODYCAMEL_CONSTEXPR_IF</a></div><div class="ttdeci">#define MOODYCAMEL_CONSTEXPR_IF</div><div class="ttdef"><b>Definition</b> <a href="concurrentqueue_8h_source.html#l00168">concurrentqueue.h:168</a></div></div>
+<div class="ttc" id="astructmoodycamel_1_1_concurrent_queue_1_1_block_html_aaa45d6e6ba3ee5d8268b1c83118c9658"><div class="ttname"><a href="#aaa45d6e6ba3ee5d8268b1c83118c9658">moodycamel::ConcurrentQueue::Block::emptyFlags</a></div><div class="ttdeci">std::atomic&lt; bool &gt; emptyFlags[BLOCK_SIZE&lt;=EXPLICIT_BLOCK_EMPTY_COUNTER_THRESHOLD ? BLOCK_SIZE :1]</div><div class="ttdef"><b>Definition</b> <a href="concurrentqueue_8h_source.html#l01675">concurrentqueue.h:1675</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a131c46f5e3f81220c80e54bc14e78ed0" name="a131c46f5e3f81220c80e54bc14e78ed0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a131c46f5e3f81220c80e54bc14e78ed0">&#9670;&#160;</a></span>MOODYCAMEL_ALIGNED_TYPE_LIKE()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::MOODYCAMEL_ALIGNED_TYPE_LIKE </td>
+          <td>(</td>
+          <td class="paramtype">char</td>          <td class="paramname"><span class="paramname"><em></em></span>[sizeof(T) *BLOCK_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae07ed2da171f9e099c885ed61e0cc229" name="ae07ed2da171f9e099c885ed61e0cc229"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae07ed2da171f9e099c885ed61e0cc229">&#9670;&#160;</a></span>operator[]() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T const  * <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::operator[] </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ad68d536c896de4e839dd95225e7deea3">index_t</a></td>          <td class="paramname"><span class="paramname"><em>idx</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01667">1667</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1667</span>{ <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">T</a> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">const</a>*<span class="keyword">&gt;</span>(<span class="keyword">static_cast&lt;</span><span class="keywordtype">void</span> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">const</a>*<span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">elements</a>)) + <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">idx</a> &amp; <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">index_t</a><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> - 1)); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="adc7254289a7dd533076372e2a39d6c26" name="adc7254289a7dd533076372e2a39d6c26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc7254289a7dd533076372e2a39d6c26">&#9670;&#160;</a></span>operator[]() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::operator[] </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ad68d536c896de4e839dd95225e7deea3">index_t</a></td>          <td class="paramname"><span class="paramname"><em>idx</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01666">1666</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1666</span>{ <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">T</a>*<span class="keyword">&gt;</span>(<span class="keyword">static_cast&lt;</span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">elements</a>)) + <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">idx</a> &amp; <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">index_t</a><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> - 1)); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4d9845a83b8696faaf0d817fa697d590" name="a4d9845a83b8696faaf0d817fa697d590"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d9845a83b8696faaf0d817fa697d590">&#9670;&#160;</a></span>reset_empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::reset_empty </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01652">1652</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1653</span>        {</div>
+<div class="line"><span class="lineno"> 1654</span>            <a class="code hl_define" href="concurrentqueue_8h.html#a957a003c2194ffd8b8747f8ed288509a">MOODYCAMEL_CONSTEXPR_IF</a> (<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">context</a> == <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">explicit_context</a> &amp;&amp; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> &lt;= <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">EXPLICIT_BLOCK_EMPTY_COUNTER_THRESHOLD</a>) {</div>
+<div class="line"><span class="lineno"> 1655</span>                <span class="comment">// Reset flags</span></div>
+<div class="line"><span class="lineno"> 1656</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> = 0; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> != <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a>; ++<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a>) {</div>
+<div class="line"><span class="lineno"> 1657</span>                    <a class="code hl_variable" href="#aaa45d6e6ba3ee5d8268b1c83118c9658">emptyFlags</a>[<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a>].store(<span class="keyword">false</span>, <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>);</div>
+<div class="line"><span class="lineno"> 1658</span>                }</div>
+<div class="line"><span class="lineno"> 1659</span>            }</div>
+<div class="line"><span class="lineno"> 1660</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno"> 1661</span>                <span class="comment">// Reset counter</span></div>
+<div class="line"><span class="lineno"> 1662</span>                <a class="code hl_variable" href="#ab212fe682437fc19816e4884e92cdaa5">elementsCompletelyDequeued</a>.store(0, <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>);</div>
+<div class="line"><span class="lineno"> 1663</span>            }</div>
+<div class="line"><span class="lineno"> 1664</span>        }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a418c78a496ab85826d7e49ebe200398f" name="a418c78a496ab85826d7e49ebe200398f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a418c78a496ab85826d7e49ebe200398f">&#9670;&#160;</a></span>set_all_empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::set_all_empty </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01637">1637</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1638</span>        {</div>
+<div class="line"><span class="lineno"> 1639</span>            <a class="code hl_define" href="concurrentqueue_8h.html#a957a003c2194ffd8b8747f8ed288509a">MOODYCAMEL_CONSTEXPR_IF</a> (<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">context</a> == <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">explicit_context</a> &amp;&amp; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> &lt;= <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">EXPLICIT_BLOCK_EMPTY_COUNTER_THRESHOLD</a>) {</div>
+<div class="line"><span class="lineno"> 1640</span>                <span class="comment">// Set all flags</span></div>
+<div class="line"><span class="lineno"> 1641</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> = 0; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> != <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a>; ++<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a>) {</div>
+<div class="line"><span class="lineno"> 1642</span>                    <a class="code hl_variable" href="#aaa45d6e6ba3ee5d8268b1c83118c9658">emptyFlags</a>[<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a>].store(<span class="keyword">true</span>, <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>);</div>
+<div class="line"><span class="lineno"> 1643</span>                }</div>
+<div class="line"><span class="lineno"> 1644</span>            }</div>
+<div class="line"><span class="lineno"> 1645</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno"> 1646</span>                <span class="comment">// Reset counter</span></div>
+<div class="line"><span class="lineno"> 1647</span>                <a class="code hl_variable" href="#ab212fe682437fc19816e4884e92cdaa5">elementsCompletelyDequeued</a>.store(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a>, <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>);</div>
+<div class="line"><span class="lineno"> 1648</span>            }</div>
+<div class="line"><span class="lineno"> 1649</span>        }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="acc477f63e826a045c1fd6be8e830ea45" name="acc477f63e826a045c1fd6be8e830ea45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc477f63e826a045c1fd6be8e830ea45">&#9670;&#160;</a></span>set_empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::set_empty </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="concurrentqueue_8h.html#aa4874b207a858e77ed8db8983686cde0">MOODYCAMEL_MAYBE_UNUSED</a> <a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ad68d536c896de4e839dd95225e7deea3">index_t</a></td>          <td class="paramname"><span class="paramname"><em>i</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01597">1597</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1598</span>        {</div>
+<div class="line"><span class="lineno"> 1599</span>            <a class="code hl_define" href="concurrentqueue_8h.html#a957a003c2194ffd8b8747f8ed288509a">MOODYCAMEL_CONSTEXPR_IF</a> (<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">context</a> == <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">explicit_context</a> &amp;&amp; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> &lt;= <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">EXPLICIT_BLOCK_EMPTY_COUNTER_THRESHOLD</a>) {</div>
+<div class="line"><span class="lineno"> 1600</span>                <span class="comment">// Set flag</span></div>
+<div class="line"><span class="lineno"> 1601</span>                <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">assert</a>(!<a class="code hl_variable" href="#aaa45d6e6ba3ee5d8268b1c83118c9658">emptyFlags</a>[<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> - 1 - <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> &amp; <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">index_t</a><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> - 1))].<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">load</a>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>));</div>
+<div class="line"><span class="lineno"> 1602</span>                <a class="code hl_variable" href="#aaa45d6e6ba3ee5d8268b1c83118c9658">emptyFlags</a>[<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> - 1 - <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> &amp; <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">index_t</a><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> - 1))].<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">store</a>(<span class="keyword">true</span>, <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_release</a>);</div>
+<div class="line"><span class="lineno"> 1603</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 1604</span>            }</div>
+<div class="line"><span class="lineno"> 1605</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno"> 1606</span>                <span class="comment">// Increment counter</span></div>
+<div class="line"><span class="lineno"> 1607</span>                <span class="keyword">auto</span> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">prevVal</a> = <a class="code hl_variable" href="#ab212fe682437fc19816e4884e92cdaa5">elementsCompletelyDequeued</a>.fetch_add(1, <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_acq_rel</a>);</div>
+<div class="line"><span class="lineno"> 1608</span>                <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">assert</a>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">prevVal</a> &lt; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a>);</div>
+<div class="line"><span class="lineno"> 1609</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">prevVal</a> == <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> - 1;</div>
+<div class="line"><span class="lineno"> 1610</span>            }</div>
+<div class="line"><span class="lineno"> 1611</span>        }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="acca6f6e71a31f3a7ec75a73b47ff2a75" name="acca6f6e71a31f3a7ec75a73b47ff2a75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acca6f6e71a31f3a7ec75a73b47ff2a75">&#9670;&#160;</a></span>set_many_empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#a2724abbb38a8122bb745726a7e6d483b">InnerQueueContext</a> context&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::set_many_empty </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="concurrentqueue_8h.html#aa4874b207a858e77ed8db8983686cde0">MOODYCAMEL_MAYBE_UNUSED</a> <a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ad68d536c896de4e839dd95225e7deea3">index_t</a></td>          <td class="paramname"><span class="paramname"><em>i</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ac0b73313ed107d313b55c8a77be19b28">size_t</a></td>          <td class="paramname"><span class="paramname"><em>count</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01616">1616</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1617</span>        {</div>
+<div class="line"><span class="lineno"> 1618</span>            <a class="code hl_define" href="concurrentqueue_8h.html#a957a003c2194ffd8b8747f8ed288509a">MOODYCAMEL_CONSTEXPR_IF</a> (<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">context</a> == <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">explicit_context</a> &amp;&amp; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> &lt;= <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">EXPLICIT_BLOCK_EMPTY_COUNTER_THRESHOLD</a>) {</div>
+<div class="line"><span class="lineno"> 1619</span>                <span class="comment">// Set flags</span></div>
+<div class="line"><span class="lineno"> 1620</span>                <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::atomic_thread_fence</a>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_release</a>);</div>
+<div class="line"><span class="lineno"> 1621</span>                <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> = <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> - 1 - <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> &amp; <span class="keyword">static_cast&lt;</span><a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">index_t</a><span class="keyword">&gt;</span>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a> - 1)) - <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">count</a> + 1;</div>
+<div class="line"><span class="lineno"> 1622</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">j</a> = 0; <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">j</a> != <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">count</a>; ++<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">j</a>) {</div>
+<div class="line"><span class="lineno"> 1623</span>                    <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">assert</a>(!<a class="code hl_variable" href="#aaa45d6e6ba3ee5d8268b1c83118c9658">emptyFlags</a>[<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> + <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">j</a>].<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">load</a>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>));</div>
+<div class="line"><span class="lineno"> 1624</span>                    <a class="code hl_variable" href="#aaa45d6e6ba3ee5d8268b1c83118c9658">emptyFlags</a>[<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">i</a> + <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">j</a>].store(<span class="keyword">true</span>, <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_relaxed</a>);</div>
+<div class="line"><span class="lineno"> 1625</span>                }</div>
+<div class="line"><span class="lineno"> 1626</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 1627</span>            }</div>
+<div class="line"><span class="lineno"> 1628</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno"> 1629</span>                <span class="comment">// Increment counter</span></div>
+<div class="line"><span class="lineno"> 1630</span>                <span class="keyword">auto</span> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">prevVal</a> = <a class="code hl_variable" href="#ab212fe682437fc19816e4884e92cdaa5">elementsCompletelyDequeued</a>.fetch_add(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">count</a>, <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">std::memory_order_acq_rel</a>);</div>
+<div class="line"><span class="lineno"> 1631</span>                <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">assert</a>(<a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">prevVal</a> + <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">count</a> &lt;= <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a>);</div>
+<div class="line"><span class="lineno"> 1632</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">prevVal</a> + <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">count</a> == <a class="code hl_class" href="classmoodycamel_1_1_concurrent_queue.html">BLOCK_SIZE</a>;</div>
+<div class="line"><span class="lineno"> 1633</span>            }</div>
+<div class="line"><span class="lineno"> 1634</span>        }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="ac97822f68d4bbc7975529ea21726b240" name="ac97822f68d4bbc7975529ea21726b240"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac97822f68d4bbc7975529ea21726b240">&#9670;&#160;</a></span>dynamicallyAllocated</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::dynamicallyAllocated</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01679">1679</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab212fe682437fc19816e4884e92cdaa5" name="ab212fe682437fc19816e4884e92cdaa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab212fe682437fc19816e4884e92cdaa5">&#9670;&#160;</a></span>elementsCompletelyDequeued</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ac0b73313ed107d313b55c8a77be19b28">size_t</a>&gt; <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::elementsCompletelyDequeued</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01674">1674</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aaa45d6e6ba3ee5d8268b1c83118c9658" name="aaa45d6e6ba3ee5d8268b1c83118c9658"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa45d6e6ba3ee5d8268b1c83118c9658">&#9670;&#160;</a></span>emptyFlags</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;bool&gt; <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::emptyFlags[<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ae555aae96010307e7991b1028b41cfb8">BLOCK_SIZE</a>&lt;=<a class="el" href="classmoodycamel_1_1_concurrent_queue.html#aaadd55fc6ac80c277225977fe9bdecee">EXPLICIT_BLOCK_EMPTY_COUNTER_THRESHOLD</a> ? <a class="el" href="classmoodycamel_1_1_concurrent_queue.html#ae555aae96010307e7991b1028b41cfb8">BLOCK_SIZE</a> :1]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01675">1675</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a56bbe5337c148c1cf9f85a0e9907e23c" name="a56bbe5337c148c1cf9f85a0e9907e23c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56bbe5337c148c1cf9f85a0e9907e23c">&#9670;&#160;</a></span>freeListNext</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;<a class="el" href="structmoodycamel_1_1_concurrent_queue_1_1_block.html">Block</a>*&gt; <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::freeListNext</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01678">1678</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9a7017b93bd5e7749b77a64d72bcd1b2" name="a9a7017b93bd5e7749b77a64d72bcd1b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a7017b93bd5e7749b77a64d72bcd1b2">&#9670;&#160;</a></span>freeListRefs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;std::uint32_t&gt; <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::freeListRefs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01677">1677</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab1c9791e594ec0b021b1c004e40dacff" name="ab1c9791e594ec0b021b1c004e40dacff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1c9791e594ec0b021b1c004e40dacff">&#9670;&#160;</a></span>next</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Traits = ConcurrentQueueDefaultTraits&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmoodycamel_1_1_concurrent_queue_1_1_block.html">Block</a>* <a class="el" href="classmoodycamel_1_1_concurrent_queue.html">moodycamel::ConcurrentQueue</a>&lt; T, Traits &gt;::Block::next</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a> の <a class="el" href="concurrentqueue_8h_source.html#l01673">1673</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/external/concurrentqueue/<a class="el" href="concurrentqueue_8h_source.html">concurrentqueue.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacemoodycamel.html">moodycamel</a></li><li class="navelem"><a class="el" href="classmoodycamel_1_1_concurrent_queue.html">ConcurrentQueue</a></li><li class="navelem"><a class="el" href="structmoodycamel_1_1_concurrent_queue_1_1_block.html">Block</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

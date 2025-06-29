@@ -10,8 +10,8 @@
 #include "Util/FrameTimer.h"
 #include "Util/NonCopyable.h"
 
-#include "World.h"
-#include "Util/TypeCheck.h"
+#include "World.hpp"
+#include "Util/TypeChecker.hpp"
 
 namespace SectorFW
 {

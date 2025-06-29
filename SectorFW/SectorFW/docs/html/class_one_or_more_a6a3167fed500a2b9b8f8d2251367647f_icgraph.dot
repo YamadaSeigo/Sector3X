@@ -1,0 +1,17 @@
+digraph "OneOrMore::add"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="OneOrMore::add",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="要素の追加"];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="SectorFW::ECS::Component\lTypeRegistry::SetMetaStructure",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a304569301d2f4a3d8e9bc2f75e1d9feb",tooltip="コンポーネントのメタ情報を設定します。(SoAコンポーネントではない場合)"];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="SectorFW::ECS::Component\lTypeRegistry::Register",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#aa11b91644cd0fe3d9b56086282f52c6b",tooltip="コンポーネントを登録します。"];
+  Node2 -> Node4 [id="edge3_Node000002_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="SectorFW::ECS::Component\lTypeRegistry::SetSoAComponentMeta",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a875d4f6d1d6a035502c8d78789d19cbb",tooltip="SoAコンポーネントのメタ情報を設定します。(複数のメンバーを持つ場合)"];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="SectorFW::ECS::Component\lTypeRegistry::SetMetaStructure",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a4ce806dea52c001501429e61997fc669",tooltip="SoAコンポーネントのメタ情報を設定します。"];
+}

@@ -4,12 +4,27 @@
 #include <cassert>
 #include <iostream>
 
+#include <xmmintrin.h> // SSE
+
 namespace SectorFW
 {
     namespace Math
     {
+        template<typename T, size_t N>
+        constexpr size_t GetAlignmentForVector() {
+            if constexpr (std::is_same_v<T, float>) {
+                return N * sizeof(T) >= 16 ? 16 : alignof(T);
+            }
+            else if constexpr (std::is_same_v<T, double>) {
+                return N * sizeof(T) >= 32 ? 32 : alignof(T);
+            }
+            else {
+                return alignof(T);
+            }
+        }
+
         template<typename T>
-        struct Vec2 {
+        struct alignas(GetAlignmentForVector<T, 2>()) Vec2 {
             union {
                 struct { T x, y; };
                 T data[2];
@@ -38,7 +53,7 @@ namespace SectorFW
         };
 
         template<typename T>
-        struct Vec3 {
+        struct alignas(GetAlignmentForVector<T, 3>()) Vec3 {
             union {
                 struct { T x, y, z; };
                 T data[3];
@@ -75,7 +90,7 @@ namespace SectorFW
         };
 
         template<typename T>
-        struct Vec4 {
+        struct alignas(GetAlignmentForVector<T, 4>()) Vec4 {
             union {
                 struct { T x, y, z, w; };
                 T data[4];
@@ -133,8 +148,30 @@ namespace SectorFW
             return true;
         }
 
-        using Vector2 = Vec2<float>;
-        using Vector3 = Vec3<float>;
-        using Vector4 = Vec4<float>;
+        using Vec2f = Vec2<float>;
+        using Vec3f = Vec3<float>;
+        using Vec4f = Vec4<float>;
+
+        template<>
+        inline Vec4f Vec4f::operator+(const Vec4f& rhs) const {
+            __m128 a = _mm_load_ps(this->data);     // this ÇÃ4óvëfÇÉçÅ[Éh
+            __m128 b = _mm_load_ps(rhs.data);       // rhs ÇÃ4óvëfÇÉçÅ[Éh
+            __m128 result = _mm_add_ps(a, b);       // SIMDâ¡éZ
+            Vec4f out;
+            _mm_store_ps(out.data, result);         // åãâ Çï€ë∂
+            return out;
+        }
+
+        template<>
+        inline float Vec4f::dot(const Vec4f& rhs) const {
+            __m128 a = _mm_load_ps(this->data);
+            __m128 b = _mm_load_ps(rhs.data);
+            __m128 mul = _mm_mul_ps(a, b);
+            __m128 shuf = _mm_movehdup_ps(mul);      // çÇà Çï°êª
+            __m128 sums = _mm_add_ps(mul, shuf);
+            shuf = _mm_movehl_ps(shuf, sums);        // è„à Ç…ãlÇﬂÇÈ
+            sums = _mm_add_ss(sums, shuf);
+            return _mm_cvtss_f32(sums);              // åãâ ÇfloatÇ…
+        }
     }
 }

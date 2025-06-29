@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/src/Core/ComponentTypeRegistry.cpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_component_type_registry_8cpp_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ComponentTypeRegistry.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_component_type_registry_8cpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="_component_type_registry_8h.html">Core/ECS/ComponentTypeRegistry.h</a>&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="message_8h.html">message.h</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>{</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    {</div>
+<div class="foldopen" id="foldopen00008" data-start="{" data-end="}">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#aa653a2d1d105fe2e3ea6f6451e6fa17b">    8</a></span>        <span class="keyword">const</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta.html">ComponentMeta</a>&amp; <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#aa653a2d1d105fe2e3ea6f6451e6fa17b">ComponentTypeRegistry::GetMeta</a>(<a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> <span class="keywordtype">id</span>) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>            <span class="keyword">auto</span> iter = <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#ae45285bccbcaaec627ff21d86b1fdcdd">meta</a>.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>            <a class="code hl_define" href="message_8h.html#a601a6e74da786e0e3fcea967d8cb4cc3">DYNAMIC_ASSERT_MESSAGE</a>(iter != <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#ae45285bccbcaaec627ff21d86b1fdcdd">meta</a>.end(), <span class="stringliteral">&quot;Not Registry ComponentType!&quot;</span>);</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            <span class="keywordflow">return</span> iter-&gt;second;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        }</div>
+</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    }</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>}</div>
+<div class="ttc" id="a_component_type_registry_8h_html"><div class="ttname"><a href="_component_type_registry_8h.html">ComponentTypeRegistry.h</a></div><div class="ttdoc">コンポーネントの型IDとメタ情報を管理するクラス</div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_aa653a2d1d105fe2e3ea6f6451e6fa17b"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#aa653a2d1d105fe2e3ea6f6451e6fa17b">SectorFW::ECS::ComponentTypeRegistry::GetMeta</a></div><div class="ttdeci">static const ComponentMeta &amp; GetMeta(ComponentTypeID id) noexcept</div><div class="ttdoc">コンポーネントのメタ情報を取得します。</div><div class="ttdef"><b>Definition</b> <a href="#l00008">ComponentTypeRegistry.cpp:8</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_ae45285bccbcaaec627ff21d86b1fdcdd"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#ae45285bccbcaaec627ff21d86b1fdcdd">SectorFW::ECS::ComponentTypeRegistry::meta</a></div><div class="ttdeci">static std::unordered_map&lt; ComponentTypeID, ComponentMeta &gt; meta</div><div class="ttdoc">コンポーネントのメタ情報を格納するマップ</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00113">ComponentTypeRegistry.h:113</a></div></div>
+<div class="ttc" id="amessage_8h_html"><div class="ttname"><a href="message_8h.html">message.h</a></div></div>
+<div class="ttc" id="amessage_8h_html_a601a6e74da786e0e3fcea967d8cb4cc3"><div class="ttname"><a href="message_8h.html#a601a6e74da786e0e3fcea967d8cb4cc3">DYNAMIC_ASSERT_MESSAGE</a></div><div class="ttdeci">#define DYNAMIC_ASSERT_MESSAGE(expr,...)</div><div class="ttdef"><b>Definition</b> <a href="message_8h_source.html#l00011">message.h:11</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html">SectorFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_a2accadf823770a8124d2a1ed1ba0ad30"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">SectorFW::ECS::ComponentTypeID</a></div><div class="ttdeci">uint32_t ComponentTypeID</div><div class="ttdoc">コンポーネントの型IDを定義する型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00031">component.hpp:31</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_component_meta_html"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_component_meta.html">SectorFW::ECS::ComponentMeta</a></div><div class="ttdoc">コンポーネントの型IDとメタ情報を管理するクラス @detail コンポーネントの型IDを取得し、コンポーネントのメタ情報を設定します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00023">ComponentTypeRegistry.h:23</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a2f0e5642e47e7ed59fe0f0829eafb5f.html">Core</a></li><li class="navelem"><a class="el" href="_component_type_registry_8cpp.html">ComponentTypeRegistry.cpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Util/AccessWrapper.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_access_wrapper_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">AccessWrapper.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_access_wrapper_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Container&gt;</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_read_write_view.html">   14</a></span><span class="keyword">class </span><a class="code hl_function" href="class_read_write_view.html#ae66d653e81f1fefa2aa5b4341b7cbb6d">ReadWriteView</a> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_read_write_view.html#a8465fbc771b974b627c61d3a0a5ab4a8">   16</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="class_read_write_view.html#a8465fbc771b974b627c61d3a0a5ab4a8">iterator</a> = <span class="keyword">typename</span> Container::iterator;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="class_read_write_view.html#a79591d326634966262209c9cfc457f8c">   17</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="class_read_write_view.html#a79591d326634966262209c9cfc457f8c">const_iterator</a> = <span class="keyword">typename</span> Container::const_iterator;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_read_write_view.html#a4efda4586a79d39e38c1d0da993adbfb">   18</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="class_read_write_view.html#a4efda4586a79d39e38c1d0da993adbfb">value_type</a> = <span class="keyword">typename</span> Container::value_type;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_read_write_view.html#ae66d653e81f1fefa2aa5b4341b7cbb6d">   24</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_read_write_view.html#ae66d653e81f1fefa2aa5b4341b7cbb6d">ReadWriteView</a>(Container&amp; container) noexcept : <a class="code hl_variable" href="class_read_write_view.html#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>(container) {}</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="class_read_write_view.html#a1bb972d01bd0e77d06da709f91dd7c42">   29</a></span>    <a class="code hl_typedef" href="class_read_write_view.html#a8465fbc771b974b627c61d3a0a5ab4a8">iterator</a> <a class="code hl_function" href="class_read_write_view.html#a1bb972d01bd0e77d06da709f91dd7c42">begin</a>() noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_read_write_view.html#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.begin(); }</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="class_read_write_view.html#ac18f4456cc7f8456fdfb899f553681e5">   34</a></span>    <a class="code hl_typedef" href="class_read_write_view.html#a8465fbc771b974b627c61d3a0a5ab4a8">iterator</a> <a class="code hl_function" href="class_read_write_view.html#ac18f4456cc7f8456fdfb899f553681e5">end</a>() noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_read_write_view.html#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.end(); }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="class_read_write_view.html#a3159d0747a95223e7844085216a77e30">   39</a></span>    <a class="code hl_typedef" href="class_read_write_view.html#a79591d326634966262209c9cfc457f8c">const_iterator</a> <a class="code hl_function" href="class_read_write_view.html#a3159d0747a95223e7844085216a77e30">begin</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_read_write_view.html#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.begin(); }</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_read_write_view.html#ae6c3f401f221d84ae597805c53933496">   44</a></span>    <a class="code hl_typedef" href="class_read_write_view.html#a79591d326634966262209c9cfc457f8c">const_iterator</a> <a class="code hl_function" href="class_read_write_view.html#ae6c3f401f221d84ae597805c53933496">end</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_read_write_view.html#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.end(); }</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Key&gt;</div>
+<div class="foldopen" id="foldopen00051" data-start="{" data-end="}">
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="class_read_write_view.html#a2af8676cdcbe726c7833ef1dffcfd717">   51</a></span>    <span class="keyword">auto</span>&amp; <a class="code hl_function" href="class_read_write_view.html#a2af8676cdcbe726c7833ef1dffcfd717">at</a>(<span class="keyword">const</span> Key&amp; key) {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="class_read_write_view.html#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>.at(key);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    }</div>
+</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="comment">// operator[] や insert, erase など構造変更は提供しない</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="class_read_write_view.html#a4a075c325c48e21cb53fac37e2eb7c53">   61</a></span>    Container&amp; <a class="code hl_variable" href="class_read_write_view.html#a4a075c325c48e21cb53fac37e2eb7c53">container_</a>;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>};</div>
+</div>
+<div class="ttc" id="aclass_read_write_view_html_a1bb972d01bd0e77d06da709f91dd7c42"><div class="ttname"><a href="class_read_write_view.html#a1bb972d01bd0e77d06da709f91dd7c42">ReadWriteView::begin</a></div><div class="ttdeci">iterator begin() noexcept</div><div class="ttdoc">コンテナの先頭要素へのイテレータを取得</div><div class="ttdef"><b>Definition</b> <a href="#l00029">AccessWrapper.hpp:29</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_a2af8676cdcbe726c7833ef1dffcfd717"><div class="ttname"><a href="class_read_write_view.html#a2af8676cdcbe726c7833ef1dffcfd717">ReadWriteView::at</a></div><div class="ttdeci">auto &amp; at(const Key &amp;key)</div><div class="ttdoc">指定したキーの要素を取得（at を持っているコンテナのみ有効）</div><div class="ttdef"><b>Definition</b> <a href="#l00051">AccessWrapper.hpp:51</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_a3159d0747a95223e7844085216a77e30"><div class="ttname"><a href="class_read_write_view.html#a3159d0747a95223e7844085216a77e30">ReadWriteView::begin</a></div><div class="ttdeci">const_iterator begin() const noexcept</div><div class="ttdoc">コンテナの先頭要素へのイテレータを取得（const）</div><div class="ttdef"><b>Definition</b> <a href="#l00039">AccessWrapper.hpp:39</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_a4a075c325c48e21cb53fac37e2eb7c53"><div class="ttname"><a href="class_read_write_view.html#a4a075c325c48e21cb53fac37e2eb7c53">ReadWriteView::container_</a></div><div class="ttdeci">Container &amp; container_</div><div class="ttdoc">コンテナの参照</div><div class="ttdef"><b>Definition</b> <a href="#l00061">AccessWrapper.hpp:61</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_a4efda4586a79d39e38c1d0da993adbfb"><div class="ttname"><a href="class_read_write_view.html#a4efda4586a79d39e38c1d0da993adbfb">ReadWriteView::value_type</a></div><div class="ttdeci">typename Container::value_type value_type</div><div class="ttdef"><b>Definition</b> <a href="#l00018">AccessWrapper.hpp:18</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_a79591d326634966262209c9cfc457f8c"><div class="ttname"><a href="class_read_write_view.html#a79591d326634966262209c9cfc457f8c">ReadWriteView::const_iterator</a></div><div class="ttdeci">typename Container::const_iterator const_iterator</div><div class="ttdef"><b>Definition</b> <a href="#l00017">AccessWrapper.hpp:17</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_a8465fbc771b974b627c61d3a0a5ab4a8"><div class="ttname"><a href="class_read_write_view.html#a8465fbc771b974b627c61d3a0a5ab4a8">ReadWriteView::iterator</a></div><div class="ttdeci">typename Container::iterator iterator</div><div class="ttdef"><b>Definition</b> <a href="#l00016">AccessWrapper.hpp:16</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_ac18f4456cc7f8456fdfb899f553681e5"><div class="ttname"><a href="class_read_write_view.html#ac18f4456cc7f8456fdfb899f553681e5">ReadWriteView::end</a></div><div class="ttdeci">iterator end() noexcept</div><div class="ttdoc">コンテナの末尾要素の次を指すイテレータを取得</div><div class="ttdef"><b>Definition</b> <a href="#l00034">AccessWrapper.hpp:34</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_ae66d653e81f1fefa2aa5b4341b7cbb6d"><div class="ttname"><a href="class_read_write_view.html#ae66d653e81f1fefa2aa5b4341b7cbb6d">ReadWriteView::ReadWriteView</a></div><div class="ttdeci">ReadWriteView(Container &amp;container) noexcept</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00024">AccessWrapper.hpp:24</a></div></div>
+<div class="ttc" id="aclass_read_write_view_html_ae6c3f401f221d84ae597805c53933496"><div class="ttname"><a href="class_read_write_view.html#ae6c3f401f221d84ae597805c53933496">ReadWriteView::end</a></div><div class="ttdeci">const_iterator end() const noexcept</div><div class="ttdoc">コンテナの末尾要素の次を指すイテレータを取得（const）</div><div class="ttdef"><b>Definition</b> <a href="#l00044">AccessWrapper.hpp:44</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_ee6da17cfec8137cf237c714c1844f74.html">Util</a></li><li class="navelem"><a class="el" href="_access_wrapper_8hpp.html">AccessWrapper.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

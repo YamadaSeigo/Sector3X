@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/ITypeSystem.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_i_type_system_8h_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ITypeSystem.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_i_type_system_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="_i_system_8h.html">ISystem.h</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_component_type_registry_8h.html">ComponentTypeRegistry.h</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_service_context_8h.html">ServiceContext.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_query_8h.html">Query.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="comment">//前方宣言</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Partition, <span class="keyword">typename</span> AccessSpec, <span class="keyword">typename</span> ContextSpec&gt;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">   21</a></span>        <span class="keyword">class </span><a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">ITypeSystem</a>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Partition, <span class="keyword">typename</span>... AccessTypes, <span class="keyword">typename</span>... Services&gt;</div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="};">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html">   30</a></span>        <span class="keyword">class </span><a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">ITypeSystem</a>&lt;Partition, <a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt;AccessTypes...&gt;, <a class="code hl_struct" href="struct_service_context.html">ServiceContext</a>&lt;Services...&gt;&gt; : <span class="keyword">public</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_system.html">ISystem</a>&lt;Partition&gt; {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#aab31222a397eb048ea739102b76fa2d4">   32</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#aab31222a397eb048ea739102b76fa2d4">AccessorTuple</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt;AccessTypes...&gt;<a class="code hl_class" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">::Tuple</a>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a2d03600898f76f4d2015cba7cf7f995d">   33</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a2d03600898f76f4d2015cba7cf7f995d">ContextTuple</a> = <a class="code hl_struct" href="struct_service_context.html">ServiceContext</a>&lt;Services...&gt;<a class="code hl_class" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">::Tuple</a>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="}">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#ada7671b0175ea287ddb748d181e54918">   40</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#ada7671b0175ea287ddb748d181e54918">ForEachChunkWithAccessor</a>(F&amp;&amp; func, Partition&amp; partition)</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_query.html">Query</a> query;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                query.<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_query.html#ac33a3031236823231de1194f5ab81c6a">With</a>&lt;<span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_access_policy.html">AccessPolicy&lt;AccessTypes&gt;::ComponentType</a>...&gt;();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                std::vector&lt;ArchetypeChunk*&gt; chunks = query.<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_query.html#a2cfabe5e07fcae65541d2cf86af2f81c">MatchingChunks</a>&lt;Partition&amp;&gt;(partition);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#ifdef _DEBUG</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                <span class="keywordflow">if</span> (chunks.empty()) {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                    <a class="code hl_define" href="logger_8h.html#afde44945335adc0c0ae2986fea13438f">LOG_WARNING</a>(<span class="stringliteral">&quot;No matching chunks found for the specified access types.&quot;</span>);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; chunk : chunks) </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                    <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">ComponentAccessor</a>&lt;AccessTypes...&gt; accessor(chunk);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                    func(accessor, chunk-&gt;GetEntityCount());</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                }</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            }</div>
+</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#aa9672c1c684be9446806f661457f9498">   61</a></span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#aa9672c1c684be9446806f661457f9498">UpdateImpl</a>(Partition&amp; partition, Services*... services) = 0;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a0b8454c84eff70a309824eb6f9b9fef5">   67</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a0b8454c84eff70a309824eb6f9b9fef5">SetContext</a>(<a class="code hl_typedef" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a2d03600898f76f4d2015cba7cf7f995d">ContextTuple</a> ctx) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a0d44eb0007d33f29af6aa560686cd6c2">context</a> = std::move(ctx);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            }</div>
+</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span></div>
+<div class="foldopen" id="foldopen00075" data-start="{" data-end="}">
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a22f0ffcba9daf87dea20de3e99cfbf56">   75</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a22f0ffcba9daf87dea20de3e99cfbf56">Update</a>(Partition&amp; partition)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                std::apply(</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                    [&amp;](Services*... unpacked) {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                        this-&gt;<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#aa9672c1c684be9446806f661457f9498">UpdateImpl</a>(partition, unpacked...);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                    },</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                    <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a0d44eb0007d33f29af6aa560686cd6c2">context</a></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                );</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            }</div>
+</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span></div>
+<div class="foldopen" id="foldopen00087" data-start="{" data-end="}">
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a4dea5919afbeb17db01c1b80dbb984c4">   87</a></span>            <span class="keyword">constexpr</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_e_c_s_1_1_access_info.html">AccessInfo</a> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a4dea5919afbeb17db01c1b80dbb984c4">GetAccessInfo</a>() const noexcept<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html#a407cd9ee7f97587623f15cfc7f9032c7">ComponentAccess&lt;AccessTypes...&gt;::GetAccessInfo</a>();</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            }</div>
+</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a0d44eb0007d33f29af6aa560686cd6c2">   94</a></span>            <a class="code hl_typedef" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a2d03600898f76f4d2015cba7cf7f995d">ContextTuple</a> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a0d44eb0007d33f29af6aa560686cd6c2">context</a>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00100" data-start="{" data-end="}">
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#ae45002704e186c042649f578d7ea481b">  100</a></span>            <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#ae45002704e186c042649f578d7ea481b">SetMask</a>(<a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&amp; mask) {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                mask.set(<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;T::Type&gt;</a>());</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            }</div>
+</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> <a class="code hl_class" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">Tuple</a>, std::size_t... Is&gt;</div>
+<div class="foldopen" id="foldopen00109" data-start="{" data-end="}">
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a45ebf1447df7e28c9b3e3221b37e322c">  109</a></span>            <span class="keyword">static</span> <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a45ebf1447df7e28c9b3e3221b37e322c">BuildMaskFromTupleImpl</a>(std::index_sequence&lt;Is...&gt;) {</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> mask;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                (<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#ae45002704e186c042649f578d7ea481b">SetMask&lt;std::tuple_element_t&lt;Is, Tuple&gt;</a>&gt;(mask), ...);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                <span class="keywordflow">return</span> mask;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            }</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Tuple&gt;</div>
+<div class="foldopen" id="foldopen00119" data-start="{" data-end="}">
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a7d552070f07ee461f54f7bb56a0bc41c">  119</a></span>            <span class="keyword">static</span> <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a7d552070f07ee461f54f7bb56a0bc41c">BuildMaskFromTuple</a>() {</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a45ebf1447df7e28c9b3e3221b37e322c">BuildMaskFromTupleImpl&lt;Tuple&gt;</a>(</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                    std::make_index_sequence&lt;std::tuple_size_v&lt;Tuple&gt;&gt;{});</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            }</div>
+</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a1ba86cca7d1179e2741580ec3b7b4ff9">  126</a></span>            <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a1ba86cca7d1179e2741580ec3b7b4ff9">required</a> = <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a7d552070f07ee461f54f7bb56a0bc41c">BuildMaskFromTuple&lt;AccessorTuple&gt;</a>();</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        };</div>
+</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>}</div>
+<div class="ttc" id="a_component_type_registry_8h_html"><div class="ttname"><a href="_component_type_registry_8h.html">ComponentTypeRegistry.h</a></div><div class="ttdoc">コンポーネントの型IDとメタ情報を管理するクラス</div></div>
+<div class="ttc" id="a_i_system_8h_html"><div class="ttname"><a href="_i_system_8h.html">ISystem.h</a></div><div class="ttdoc">システムのインターフェースを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_query_8h_html"><div class="ttname"><a href="_query_8h.html">Query.h</a></div><div class="ttdoc">ECSのクエリを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_service_context_8h_html"><div class="ttname"><a href="_service_context_8h.html">ServiceContext.h</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_accessor_html"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">SectorFW::ECS::ComponentAccessor</a></div><div class="ttdoc">コンポーネントアクセサークラス</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8h_source.html#l00092">Accessor.h:92</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_a1e71189d4403cea677e5b60429879b11"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">SectorFW::ECS::ComponentTypeRegistry::GetID</a></div><div class="ttdeci">static ComponentTypeID GetID() noexcept</div><div class="ttdoc">コンポーネントの型IDを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00050">ComponentTypeRegistry.h:50</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_system_html"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_system.html">SectorFW::ECS::ISystem</a></div><div class="ttdoc">システムのインターフェース @detail 分割のクラスを指定する</div><div class="ttdef"><b>Definition</b> <a href="_i_system_8h_source.html#l00027">ISystem.h:27</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a0b8454c84eff70a309824eb6f9b9fef5"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a0b8454c84eff70a309824eb6f9b9fef5">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::SetContext</a></div><div class="ttdeci">void SetContext(ContextTuple ctx) noexcept</div><div class="ttdoc">コンテキストを設定する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00067">ITypeSystem.h:67</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a0d44eb0007d33f29af6aa560686cd6c2"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a0d44eb0007d33f29af6aa560686cd6c2">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::context</a></div><div class="ttdeci">ContextTuple context</div><div class="ttdoc">システムのコンテキストを保持するタプル</div><div class="ttdef"><b>Definition</b> <a href="#l00094">ITypeSystem.h:94</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a1ba86cca7d1179e2741580ec3b7b4ff9"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a1ba86cca7d1179e2741580ec3b7b4ff9">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::required</a></div><div class="ttdeci">static ComponentMask required</div><div class="ttdoc">必要なコンポーネントマスクを定義する</div><div class="ttdef"><b>Definition</b> <a href="#l00126">ITypeSystem.h:126</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a22f0ffcba9daf87dea20de3e99cfbf56"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a22f0ffcba9daf87dea20de3e99cfbf56">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::Update</a></div><div class="ttdeci">void Update(Partition &amp;partition) override</div><div class="ttdoc">システムの更新関数</div><div class="ttdef"><b>Definition</b> <a href="#l00075">ITypeSystem.h:75</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a2d03600898f76f4d2015cba7cf7f995d"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a2d03600898f76f4d2015cba7cf7f995d">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::ContextTuple</a></div><div class="ttdeci">ServiceContext&lt; Services... &gt;::Tuple ContextTuple</div><div class="ttdef"><b>Definition</b> <a href="#l00033">ITypeSystem.h:33</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a45ebf1447df7e28c9b3e3221b37e322c"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a45ebf1447df7e28c9b3e3221b37e322c">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::BuildMaskFromTupleImpl</a></div><div class="ttdeci">static ComponentMask BuildMaskFromTupleImpl(std::index_sequence&lt; Is... &gt;)</div><div class="ttdoc">タプルからコンポーネントマスクを構築するヘルパー関数</div><div class="ttdef"><b>Definition</b> <a href="#l00109">ITypeSystem.h:109</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a4dea5919afbeb17db01c1b80dbb984c4"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a4dea5919afbeb17db01c1b80dbb984c4">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::GetAccessInfo</a></div><div class="ttdeci">constexpr AccessInfo GetAccessInfo() const noexcept override</div><div class="ttdoc">システムのアクセス情報を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00087">ITypeSystem.h:87</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a7d552070f07ee461f54f7bb56a0bc41c"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#a7d552070f07ee461f54f7bb56a0bc41c">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::BuildMaskFromTuple</a></div><div class="ttdeci">static ComponentMask BuildMaskFromTuple()</div><div class="ttdoc">タプルからコンポーネントマスクを構築する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00119">ITypeSystem.h:119</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_aa9672c1c684be9446806f661457f9498"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#aa9672c1c684be9446806f661457f9498">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::UpdateImpl</a></div><div class="ttdeci">virtual void UpdateImpl(Partition &amp;partition, Services *... services)=0</div><div class="ttdoc">システムの更新を実装する純粋仮想関数</div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_aab31222a397eb048ea739102b76fa2d4"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#aab31222a397eb048ea739102b76fa2d4">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::AccessorTuple</a></div><div class="ttdeci">ComponentAccess&lt; AccessTypes... &gt;::Tuple AccessorTuple</div><div class="ttdef"><b>Definition</b> <a href="#l00032">ITypeSystem.h:32</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_ada7671b0175ea287ddb748d181e54918"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#ada7671b0175ea287ddb748d181e54918">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::ForEachChunkWithAccessor</a></div><div class="ttdeci">void ForEachChunkWithAccessor(F &amp;&amp;func, Partition &amp;partition)</div><div class="ttdoc">指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する</div><div class="ttdef"><b>Definition</b> <a href="#l00040">ITypeSystem.h:40</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_ae45002704e186c042649f578d7ea481b"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html#ae45002704e186c042649f578d7ea481b">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::SetMask</a></div><div class="ttdeci">static void SetMask(ComponentMask &amp;mask)</div><div class="ttdoc">コンポーネントマスクを設定するヘルパー関数</div><div class="ttdef"><b>Definition</b> <a href="#l00100">ITypeSystem.h:100</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_html"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a></div><div class="ttdef"><b>Definition</b> <a href="#l00021">ITypeSystem.h:21</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_query_html"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_query.html">SectorFW::ECS::Query</a></div><div class="ttdoc">ECSのクエリを定義するクラス</div><div class="ttdef"><b>Definition</b> <a href="_query_8h_source.html#l00036">Query.h:37</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_query_html_a2cfabe5e07fcae65541d2cf86af2f81c"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_query.html#a2cfabe5e07fcae65541d2cf86af2f81c">SectorFW::ECS::Query::MatchingChunks</a></div><div class="ttdeci">std::vector&lt; ArchetypeChunk * &gt; MatchingChunks(T context) const noexcept</div><div class="ttdoc">クエリにマッチするアーキタイプチャンクを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_query_8h_source.html#l00074">Query.h:74</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_query_html_ac33a3031236823231de1194f5ab81c6a"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_query.html#ac33a3031236823231de1194f5ab81c6a">SectorFW::ECS::Query::With</a></div><div class="ttdeci">Query &amp; With() noexcept</div><div class="ttdoc">まばらなコンポーネントを除外するためのテンプレート</div><div class="ttdef"><b>Definition</b> <a href="_query_8h_source.html#l00044">Query.h:44</a></div></div>
+<div class="ttc" id="alogger_8h_html_afde44945335adc0c0ae2986fea13438f"><div class="ttname"><a href="logger_8h.html#afde44945335adc0c0ae2986fea13438f">LOG_WARNING</a></div><div class="ttdeci">#define LOG_WARNING(fmt,...)</div><div class="ttdef"><b>Definition</b> <a href="logger_8h_source.html#l00165">logger.h:165</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html">SectorFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_ace5c222981b965468c3868a48028a512"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">SectorFW::ECS::ComponentMask</a></div><div class="ttdeci">std::bitset&lt; MaxComponents &gt; ComponentMask</div><div class="ttdoc">コンポーネントマスクを定義するビットセット型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00035">component.hpp:35</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_access_info_html"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_access_info.html">SectorFW::ECS::AccessInfo</a></div><div class="ttdoc">アクセス情報を管理する構造体</div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00021">AccessInfo.h:21</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_access_policy_html"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_access_policy.html">SectorFW::ECS::AccessPolicy</a></div><div class="ttdoc">コンポーネントアクセスのポリシーを定義するテンプレート</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8h_source.html#l00055">Accessor.h:55</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_component_access_html"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">SectorFW::ECS::ComponentAccess</a></div><div class="ttdoc">コンポーネントアクセスの型を定義するテンプレート</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8h_source.html#l00022">Accessor.h:22</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_component_access_html_a407cd9ee7f97587623f15cfc7f9032c7"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html#a407cd9ee7f97587623f15cfc7f9032c7">SectorFW::ECS::ComponentAccess::GetAccessInfo</a></div><div class="ttdeci">static constexpr AccessInfo GetAccessInfo()</div><div class="ttdoc">アクセス情報を取得するための関数</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8h_source.html#l00031">Accessor.h:31</a></div></div>
+<div class="ttc" id="astruct_service_context_html"><div class="ttname"><a href="struct_service_context.html">ServiceContext</a></div><div class="ttdef"><b>Definition</b> <a href="_service_context_8h_source.html#l00005">ServiceContext.h:5</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f7f8c59c1c248bac6d0283e91c8a15c6.html">Core</a></li><li class="navelem"><a class="el" href="dir_bfd096cbba80358637d44e82aa8d4a3b.html">ECS</a></li><li class="navelem"><a class="el" href="_i_type_system_8h.html">ITypeSystem.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

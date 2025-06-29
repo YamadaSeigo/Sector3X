@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/IGraphicsDevice.h"
+#include "Graphics/IGraphicsDevice.hpp"
 
 #include <d3d11.h>
 #pragma comment(lib,"d3d11.lib")

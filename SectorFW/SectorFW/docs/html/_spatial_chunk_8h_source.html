@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/SpatialChunk.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_spatial_chunk_8h_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SpatialChunk.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_spatial_chunk_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="_a_a_b_b_8hpp.html">../Math/AABB.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_entity_manager_8h.html">ECS/EntityManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_spatial_chunk.html">   18</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_sector_f_w_1_1_spatial_chunk.html#a15982117ecb0c3451220ea59573a0996">SpatialChunk</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_spatial_chunk.html#a1f0f242c052c9d4401330ba06e6b536d">   25</a></span>        <span class="keyword">typedef</span> uint32_t <a class="code hl_typedef" href="class_sector_f_w_1_1_spatial_chunk.html#a1f0f242c052c9d4401330ba06e6b536d">SizeType</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_spatial_chunk.html#a15982117ecb0c3451220ea59573a0996">   30</a></span>        <a class="code hl_function" href="class_sector_f_w_1_1_spatial_chunk.html#a15982117ecb0c3451220ea59573a0996">SpatialChunk</a>() :<a class="code hl_variable" href="class_sector_f_w_1_1_spatial_chunk.html#afe5da638a98e5c7a9cda683118d138ad">entityManager</a>(<a class="code hl_namespace" href="namespacestd.html">std</a>::make_unique&lt;<a class="code hl_namespace" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a>::EntityManager&gt;()) {}</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_spatial_chunk.html#a941cda73e431335d6060f82fcd9daaae">   35</a></span>        <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a>&amp; <a class="code hl_function" href="class_sector_f_w_1_1_spatial_chunk.html#a941cda73e431335d6060f82fcd9daaae">GetEntityManager</a>() const noexcept { <span class="keywordflow">return</span> *<a class="code hl_variable" href="class_sector_f_w_1_1_spatial_chunk.html#afe5da638a98e5c7a9cda683118d138ad">entityManager</a>; }</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_spatial_chunk.html#a83641f487bfd871eb68ca7d22b4203a3">   37</a></span>        <a class="code hl_typedef" href="namespace_sector_f_w_1_1_math.html#ab74622751dce7bb167219150fb1a7c00">Math::AABB3f</a> <a class="code hl_variable" href="class_sector_f_w_1_1_spatial_chunk.html#a83641f487bfd871eb68ca7d22b4203a3">aabb</a>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_spatial_chunk.html#afe5da638a98e5c7a9cda683118d138ad">   42</a></span>        std::unique_ptr&lt;ECS::EntityManager&gt; <a class="code hl_variable" href="class_sector_f_w_1_1_spatial_chunk.html#afe5da638a98e5c7a9cda683118d138ad">entityManager</a>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    };</div>
+</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="namespace_sector_f_w.html#a6e618ede5096eb8dce1763332785b537">   47</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_sector_f_w.html#a6e618ede5096eb8dce1763332785b537">ChunkSizeType</a> = <a class="code hl_typedef" href="class_sector_f_w_1_1_spatial_chunk.html#a1f0f242c052c9d4401330ba06e6b536d">SpatialChunk::SizeType</a>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
+<div class="ttc" id="a_a_a_b_b_8hpp_html"><div class="ttname"><a href="_a_a_b_b_8hpp.html">AABB.hpp</a></div></div>
+<div class="ttc" id="a_entity_manager_8h_html"><div class="ttname"><a href="_entity_manager_8h.html">EntityManager.h</a></div><div class="ttdoc">エンティティマネージャーを定義するクラス</div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_entity_manager_html"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html">SectorFW::ECS::EntityManager</a></div><div class="ttdoc">エンティティマネージャーを表すクラス</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00028">EntityManager.h:28</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_spatial_chunk_html_a15982117ecb0c3451220ea59573a0996"><div class="ttname"><a href="class_sector_f_w_1_1_spatial_chunk.html#a15982117ecb0c3451220ea59573a0996">SectorFW::SpatialChunk::SpatialChunk</a></div><div class="ttdeci">SpatialChunk()</div><div class="ttdoc">コンストラクタ @detail EntityManagerの初期化も行っている</div><div class="ttdef"><b>Definition</b> <a href="#l00030">SpatialChunk.h:30</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_spatial_chunk_html_a1f0f242c052c9d4401330ba06e6b536d"><div class="ttname"><a href="class_sector_f_w_1_1_spatial_chunk.html#a1f0f242c052c9d4401330ba06e6b536d">SectorFW::SpatialChunk::SizeType</a></div><div class="ttdeci">uint32_t SizeType</div><div class="ttdoc">空間チャンクのサイズを定義する型 @detail 32ビット符号なし整数を使用</div><div class="ttdef"><b>Definition</b> <a href="#l00025">SpatialChunk.h:25</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_spatial_chunk_html_a83641f487bfd871eb68ca7d22b4203a3"><div class="ttname"><a href="class_sector_f_w_1_1_spatial_chunk.html#a83641f487bfd871eb68ca7d22b4203a3">SectorFW::SpatialChunk::aabb</a></div><div class="ttdeci">Math::AABB3f aabb</div><div class="ttdef"><b>Definition</b> <a href="#l00037">SpatialChunk.h:37</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_spatial_chunk_html_a941cda73e431335d6060f82fcd9daaae"><div class="ttname"><a href="class_sector_f_w_1_1_spatial_chunk.html#a941cda73e431335d6060f82fcd9daaae">SectorFW::SpatialChunk::GetEntityManager</a></div><div class="ttdeci">ECS::EntityManager &amp; GetEntityManager() const noexcept</div><div class="ttdoc">エンティティマネージャーの取得関数</div><div class="ttdef"><b>Definition</b> <a href="#l00035">SpatialChunk.h:35</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_spatial_chunk_html_afe5da638a98e5c7a9cda683118d138ad"><div class="ttname"><a href="class_sector_f_w_1_1_spatial_chunk.html#afe5da638a98e5c7a9cda683118d138ad">SectorFW::SpatialChunk::entityManager</a></div><div class="ttdeci">std::unique_ptr&lt; ECS::EntityManager &gt; entityManager</div><div class="ttdoc">エンティティマネージャー @detail 空間チャンク内のエンティティを管理する</div><div class="ttdef"><b>Definition</b> <a href="#l00042">SpatialChunk.h:42</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html">SectorFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_math_html_ab74622751dce7bb167219150fb1a7c00"><div class="ttname"><a href="namespace_sector_f_w_1_1_math.html#ab74622751dce7bb167219150fb1a7c00">SectorFW::Math::AABB3f</a></div><div class="ttdeci">AABB&lt; float, Vec3f &gt; AABB3f</div><div class="ttdef"><b>Definition</b> <a href="_a_a_b_b_8hpp_source.html#l00057">AABB.hpp:57</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html_a6e618ede5096eb8dce1763332785b537"><div class="ttname"><a href="namespace_sector_f_w.html#a6e618ede5096eb8dce1763332785b537">SectorFW::ChunkSizeType</a></div><div class="ttdeci">SpatialChunk::SizeType ChunkSizeType</div><div class="ttdoc">空間チャンクのサイズ型を定義する</div><div class="ttdef"><b>Definition</b> <a href="#l00047">SpatialChunk.h:47</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00053">entity.h:53</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f7f8c59c1c248bac6d0283e91c8a15c6.html">Core</a></li><li class="navelem"><a class="el" href="_spatial_chunk_8h.html">SpatialChunk.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

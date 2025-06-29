@@ -1,23 +1,43 @@
+/*****************************************************************//**
+ * @file   Accessor.h
+ * @brief コンポーネントにアクセスするためのアクセサークラス
+ * @author seigo_t03b63m
+ * @date   June 2025
+ *********************************************************************/
+
 #pragma once
 
 #include "AccessInfo.h"
+#include "Util/TypeChecker.hpp"
+
 
 namespace SectorFW
 {
 	namespace ECS
 	{
-		//=== ComponentAccess ===
+		/**
+		 * @brief コンポーネントアクセスの型を定義するテンプレート
+		 */
 		template<typename... AccessTypes>
 		struct ComponentAccess {
+			/**
+			 * @brief アクセス情報を取得するための型
+			 */
 			using Tuple = std::tuple<AccessTypes...>;
-
-			static AccessInfo GetAccessInfo() {
+			/**
+			 * @brief アクセス情報を取得するための関数
+			 * @return AccessInfo アクセス情報
+			 */
+			static constexpr AccessInfo GetAccessInfo() {
 				AccessInfo info;
 				(RegisterAccess<AccessTypes>(info), ...);
 				return info;
 			}
-
 		private:
+			/**
+			 * @brief 特定のアクセス型に対して、アクセス情報を登録する関数
+			 * @param info アクセス情報
+			 */
 			template<typename T>
 			static void RegisterAccess(AccessInfo& info) {
 				if constexpr (std::is_base_of_v<Read<typename T::Type>, T>) {
@@ -28,37 +48,142 @@ namespace SectorFW
 				}
 			}
 		};
-
-		//=== AccessPolicy ===
+		/**
+		 * @brief コンポーネントアクセスのポリシーを定義するテンプレート
+		 */
 		template<typename AccessType>
 		struct AccessPolicy;
-
+		/**
+		 * @brief 読み取りアクセスのポリシーを定義するテンプレート
+		 */
 		template<typename T>
 		struct AccessPolicy<Read<T>> {
 			using ComponentType = T;
 			using PointerType = const T*;
 		};
-
+		/**
+		 * @brief 書き込みアクセスのポリシーを定義するテンプレート
+		 */
 		template<typename T>
 		struct AccessPolicy<Write<T>> {
 			using ComponentType = T;
 			using PointerType = T*;
 		};
-
-		//=== ComponentAccessor ===
+		/**
+		 * @brief SoAコンポーネントの読み取りアクセスのポリシーを定義するテンプレート
+		 */
+		template<IsSoAComponent T>
+		struct AccessPolicy<Read<T>> {
+			using ComponentType = T;
+			using PointerType = const typename SoAPtr<T>::type;
+		};
+		/**
+		 * @brief SoAコンポーネントの書き込みアクセスのポリシーを定義するテンプレート
+		 */
+		template<IsSoAComponent T>
+		struct AccessPolicy<Write<T>> {
+			using ComponentType = T;
+			using PointerType = typename SoAPtr<T>::type;
+		};
+		/**
+		 * @brief コンポーネントアクセサークラス
+		 */
 		template<typename... AccessTypes>
 		class ComponentAccessor {
 		public:
-			explicit ComponentAccessor(ArchetypeChunk& chunk) :chunk(chunk) {}
-
+			/**
+			 * @brief コンポーネントアクセサーのコンストラクタ
+			 * @param chunk アクセスするアーキタイプチャンク
+			 */
+			explicit ComponentAccessor(ArchetypeChunk* chunk) noexcept : chunk(chunk) {}
+			/**
+			 * @brief 指定したアクセス型に対して、コンポーネントを取得する関数
+			 * @return　std::optional<PointerType> コンポーネントのポインタ
+			 */
 			template<typename AccessType>
-			typename AccessPolicy<AccessType>::PointerType Get() const {
-				//constexpr ComponentTypeID id = ComponentTypeRegistry::GetID<typename AccessPolicy<AccessType>::ComponentType>();
-				return reinterpret_cast<typename AccessPolicy<AccessType>::PointerType>(chunk.GetColumn<AccessType::T>);
-			}
+				requires OneOf<AccessType, AccessTypes...>
+			std::optional<typename AccessPolicy<AccessType>::PointerType> Get() noexcept{
+				using ComponentType = typename AccessPolicy<AccessType>::ComponentType;
+				using PtrType = SoAPtr<ComponentType>::type;
 
+				auto column = chunk->GetColumn<ComponentType>();
+				if (!column) return std::nullopt;
+				if constexpr (IsSoAComponent<ComponentType>) {
+					size_t offset = 0;
+					size_t capacity = chunk->GetCapacity();
+
+					BufferType* base = reinterpret_cast<BufferType*>(column.value());
+					PtrType soaPtr;
+					GetMemberStartPtr<PtrType>(base, capacity, offset, soaPtr,
+						std::make_index_sequence<std::tuple_size_v<decltype(PtrType::ptr_tuple)>>{});
+					return soaPtr;
+				}
+				else {
+					return column;
+				}
+			} 
+			/**
+			 * @brief requiresに一致しなかったときのフォールバック定義
+			 * @return std::optional<void> 空のオプション
+			 */
+			template<typename AccessType>
+			std::optional<void> Get() noexcept {
+				static_assert(OneOf<AccessType, AccessTypes...>,
+					"Get<AccessType>: AccessType must be one of the AccessTypes... used in this system.");
+				return std::nullopt;
+			}
 		private:
-			ArchetypeChunk& chunk;
+			/**
+			 * @brief SoAコンポーネントのメンバーの開始ポインタを取得する関数の実装
+			 * @param base SoAコンポーネントのベースポインタ
+			 * @param capacity SoAコンポーネントの容量
+			 * @param offset 現在のオフセット
+			 * @param value SoAコンポーネントのポインタ
+			 */
+			template<typename PtrType, size_t Index>
+			void GetMemberStartPtrImpl(BufferType* base, size_t capacity, size_t& offset, PtrType& value) noexcept
+			{
+				auto memPtr = std::get<Index>(PtrType::ptr_tuple);
+				decltype(auto) member = value.*memPtr;
+				using MemberRawType = std::remove_reference_t<decltype(member)>;
+				using MemberType = std::remove_pointer_t<MemberRawType>;
+
+				if constexpr (IsSoAComponent<MemberType>) {
+					GetMemberStartPtr<MemberType>(
+						base, capacity, offset, member,
+						std::make_index_sequence<std::tuple_size_v<typename MemberType::ptr_tuple>>{}
+					);
+				}
+				else {
+					offset = AlignTo(offset, alignof(MemberType));
+					if constexpr (std::is_pointer_v<MemberRawType>) {
+						// メンバがポインタ → reinterpret_castで代入可能
+						member = reinterpret_cast<MemberRawType>(base + offset);
+					}
+					else {
+						// メンバが値型（floatなど）→ 代入不能 → コンパイルエラーを防ぐためstatic_assert
+						static_assert(std::is_pointer_v<MemberRawType>, "Member must be a pointer type");
+					}
+					offset += sizeof(MemberType) * capacity;
+				}
+			}
+			/**
+			 * @brief SoAコンポーネントのメンバーの開始ポインタを取得する関数
+			 * @param base SoAコンポーネントのベースポインタ
+			 * @param capacity SoAコンポーネントの容量
+			 * @param offset 現在のオフセット
+			 * @param value SoAコンポーネントのポインタ
+			 * @param Is インデックスシーケンス
+			 */
+			template<typename PtrType, size_t... Is>
+			void GetMemberStartPtr(BufferType* base, size_t capacity, size_t& offset, PtrType& value,std::index_sequence<Is...>) noexcept
+			{
+				(GetMemberStartPtrImpl<PtrType, Is>(base, capacity, offset, value),...);
+			}
+			/**
+			 * @brief アーキタイプチャンクへのポインタ
+			 */
+			ArchetypeChunk* chunk;
 		};
 	}
 }

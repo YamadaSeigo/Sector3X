@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Util/Flatten.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_flatten_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Flatten.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_flatten_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;tuple&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> = <span class="keywordtype">void</span>&gt;</div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_value_or_self_helper.html">   19</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1_value_or_self_helper.html">ValueOrSelfHelper</a> {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_value_or_self_helper.html#aa7cc3a72a14e7fab88b521bc5efc4210">   20</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1_value_or_self_helper.html#aa7cc3a72a14e7fab88b521bc5efc4210">type</a> = T;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    };</div>
+</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4.html">   26</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1_value_or_self_helper.html">ValueOrSelfHelper</a>&lt;T, <a class="code hl_namespace" href="namespacestd.html">std</a>::void_t&lt;typename T::tuple_type&gt;&gt; {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4.html#abdd847bf2a4fbce5de3c6bf4b8910e5a">   27</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4.html#abdd847bf2a4fbce5de3c6bf4b8910e5a">type</a> = <span class="keyword">typename</span> T::tuple_type;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    };</div>
+</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="namespace_sector_f_w.html#a0d0c8969c4dbb30e7864ac0a41a6e2c2">   33</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_sector_f_w.html#a0d0c8969c4dbb30e7864ac0a41a6e2c2">ValueOrSelf</a> = <span class="keyword">typename</span> <a class="code hl_typedef" href="struct_sector_f_w_1_1_value_or_self_helper.html#aa7cc3a72a14e7fab88b521bc5efc4210">ValueOrSelfHelper&lt;T&gt;::type</a>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00038" data-start="{" data-end="};">
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten.html">   38</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1_flatten.html">Flatten</a> {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten.html#acf0627041f36dcc1e7f26615f2247aac">   39</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1_flatten.html#acf0627041f36dcc1e7f26615f2247aac">type</a> = std::tuple&lt;T&gt;;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    };</div>
+</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts&gt;</div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html">   45</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1_flatten.html">Flatten</a>&lt;<a class="code hl_namespace" href="namespacestd.html">std</a>::tuple&lt;Ts...&gt;&gt; {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#aec42ba091812fb3c6386889251d05b8a">   51</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#aec42ba091812fb3c6386889251d05b8a">flatten_t</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_flatten.html">Flatten&lt;ValueOrSelf&lt;T&gt;</a>&gt;<a class="code hl_typedef" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ae6075e7d04747a81df14eb6817d4596e">::type</a>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Tuples&gt;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat.html">   56</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat.html">TupleConcat</a>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... T1s, <span class="keyword">typename</span>... T2s&gt;</div>
+<div class="foldopen" id="foldopen00061" data-start="{" data-end="};">
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01std_7733d2f8b2d7255bfdc7511d2d274536.html">   61</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat.html">TupleConcat</a>&lt;<a class="code hl_namespace" href="namespacestd.html">std</a>::tuple&lt;T1s...&gt;, std::tuple&lt;T2s...&gt;&gt; {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01std_7733d2f8b2d7255bfdc7511d2d274536.html#a8cafe0c259a40dd1ab8e916f000ea0b8">   62</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01std_7733d2f8b2d7255bfdc7511d2d274536.html#a8cafe0c259a40dd1ab8e916f000ea0b8">type</a> = std::tuple&lt;T1s..., T2s...&gt;;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        };</div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2, <span class="keyword">typename</span>... Rest&gt;</div>
+<div class="foldopen" id="foldopen00068" data-start="{" data-end="};">
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01_t1_00_01_t2_00_01_rest_8_8_8_01_4.html">   68</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat.html">TupleConcat</a>&lt;T1, T2, Rest...&gt; {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01_t1_00_01_t2_00_01_rest_8_8_8_01_4.html#ad1932c6ea499477f7f1d57c248582d7d">   69</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01_t1_00_01_t2_00_01_rest_8_8_8_01_4.html#ad1932c6ea499477f7f1d57c248582d7d">type</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat.html">TupleConcat&lt;typename TupleConcat&lt;T1, T2&gt;::type</a>, Rest...&gt;<a class="code hl_typedef" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01_t1_00_01_t2_00_01_rest_8_8_8_01_4.html#ad1932c6ea499477f7f1d57c248582d7d">::type</a>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        };</div>
+</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ae6075e7d04747a81df14eb6817d4596e">   75</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ae6075e7d04747a81df14eb6817d4596e">type</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat.html">TupleConcat&lt;flatten_t&lt;Ts&gt;</a>...&gt;<a class="code hl_typedef" href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ae6075e7d04747a81df14eb6817d4596e">::type</a>;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    };</div>
+</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="namespace_sector_f_w.html#acc7abbdbe028f17adbe18ff1fd10938f">   81</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_sector_f_w.html#acc7abbdbe028f17adbe18ff1fd10938f">FlattenT</a> = <span class="keyword">typename</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_flatten.html">Flatten&lt;ValueOrSelf&lt;T&gt;</a>&gt;::type;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>}</div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html_a0d0c8969c4dbb30e7864ac0a41a6e2c2"><div class="ttname"><a href="namespace_sector_f_w.html#a0d0c8969c4dbb30e7864ac0a41a6e2c2">SectorFW::ValueOrSelf</a></div><div class="ttdeci">typename ValueOrSelfHelper&lt; T &gt;::type ValueOrSelf</div><div class="ttdoc">タプルを再帰的に展開するためのエイリアス</div><div class="ttdef"><b>Definition</b> <a href="#l00033">Flatten.hpp:33</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html_acc7abbdbe028f17adbe18ff1fd10938f"><div class="ttname"><a href="namespace_sector_f_w.html#acc7abbdbe028f17adbe18ff1fd10938f">SectorFW::FlattenT</a></div><div class="ttdeci">typename Flatten&lt; ValueOrSelf&lt; T &gt; &gt;::type FlattenT</div><div class="ttdoc">FlattenTは、与えられた型Tを再帰的に展開し、最終的な型を取得するためのエイリアス</div><div class="ttdef"><b>Definition</b> <a href="#l00081">Flatten.hpp:81</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00053">entity.h:53</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01_t1_00_01_t2_00_01_rest_8_8_8_01_4_html_ad1932c6ea499477f7f1d57c248582d7d"><div class="ttname"><a href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01_t1_00_01_t2_00_01_rest_8_8_8_01_4.html#ad1932c6ea499477f7f1d57c248582d7d">SectorFW::Flatten&lt; std::tuple&lt; Ts... &gt; &gt;::TupleConcat&lt; T1, T2, Rest... &gt;::type</a></div><div class="ttdeci">typename TupleConcat&lt; typename TupleConcat&lt; T1, T2 &gt;::type, Rest... &gt;::type type</div><div class="ttdef"><b>Definition</b> <a href="#l00069">Flatten.hpp:69</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01std_7733d2f8b2d7255bfdc7511d2d274536_html_a8cafe0c259a40dd1ab8e916f000ea0b8"><div class="ttname"><a href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_3_01std_7733d2f8b2d7255bfdc7511d2d274536.html#a8cafe0c259a40dd1ab8e916f000ea0b8">SectorFW::Flatten&lt; std::tuple&lt; Ts... &gt; &gt;::TupleConcat&lt; std::tuple&lt; T1s... &gt;, std::tuple&lt; T2s... &gt; &gt;::type</a></div><div class="ttdeci">std::tuple&lt; T1s..., T2s... &gt; type</div><div class="ttdef"><b>Definition</b> <a href="#l00062">Flatten.hpp:62</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat_html"><div class="ttname"><a href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_1_1_tuple_concat.html">SectorFW::Flatten&lt; std::tuple&lt; Ts... &gt; &gt;::TupleConcat</a></div><div class="ttdoc">タプルを結合するためのヘルパー構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00056">Flatten.hpp:56</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_html_ae6075e7d04747a81df14eb6817d4596e"><div class="ttname"><a href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#ae6075e7d04747a81df14eb6817d4596e">SectorFW::Flatten&lt; std::tuple&lt; Ts... &gt; &gt;::type</a></div><div class="ttdeci">typename TupleConcat&lt; flatten_t&lt; Ts &gt;... &gt;::type type</div><div class="ttdoc">再帰的に展開されたタプルの型を定義する</div><div class="ttdef"><b>Definition</b> <a href="#l00075">Flatten.hpp:75</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_html_aec42ba091812fb3c6386889251d05b8a"><div class="ttname"><a href="struct_sector_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#aec42ba091812fb3c6386889251d05b8a">SectorFW::Flatten&lt; std::tuple&lt; Ts... &gt; &gt;::flatten_t</a></div><div class="ttdeci">typename Flatten&lt; ValueOrSelf&lt; T &gt; &gt;::type flatten_t</div><div class="ttdoc">タプルの要素を再帰的に展開するためのヘルパー型</div><div class="ttdef"><b>Definition</b> <a href="#l00051">Flatten.hpp:51</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_flatten_html"><div class="ttname"><a href="struct_sector_f_w_1_1_flatten.html">SectorFW::Flatten</a></div><div class="ttdoc">タプルを再帰的に展開するための構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00038">Flatten.hpp:38</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_flatten_html_acf0627041f36dcc1e7f26615f2247aac"><div class="ttname"><a href="struct_sector_f_w_1_1_flatten.html#acf0627041f36dcc1e7f26615f2247aac">SectorFW::Flatten::type</a></div><div class="ttdeci">std::tuple&lt; T &gt; type</div><div class="ttdef"><b>Definition</b> <a href="#l00039">Flatten.hpp:39</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4_html_abdd847bf2a4fbce5de3c6bf4b8910e5a"><div class="ttname"><a href="struct_sector_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4.html#abdd847bf2a4fbce5de3c6bf4b8910e5a">SectorFW::ValueOrSelfHelper&lt; T, std::void_t&lt; typename T::tuple_type &gt; &gt;::type</a></div><div class="ttdeci">typename T::tuple_type type</div><div class="ttdef"><b>Definition</b> <a href="#l00027">Flatten.hpp:27</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_value_or_self_helper_html"><div class="ttname"><a href="struct_sector_f_w_1_1_value_or_self_helper.html">SectorFW::ValueOrSelfHelper</a></div><div class="ttdoc">タプルを再帰的に展開するためのヘルパー構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00019">Flatten.hpp:19</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_value_or_self_helper_html_aa7cc3a72a14e7fab88b521bc5efc4210"><div class="ttname"><a href="struct_sector_f_w_1_1_value_or_self_helper.html#aa7cc3a72a14e7fab88b521bc5efc4210">SectorFW::ValueOrSelfHelper::type</a></div><div class="ttdeci">T type</div><div class="ttdef"><b>Definition</b> <a href="#l00020">Flatten.hpp:20</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_ee6da17cfec8137cf237c714c1844f74.html">Util</a></li><li class="navelem"><a class="el" href="_flatten_8hpp.html">Flatten.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

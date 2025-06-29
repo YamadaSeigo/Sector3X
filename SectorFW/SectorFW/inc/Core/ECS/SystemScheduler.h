@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   SystemScheduler.h
+ * @brief システムスケジューラを定義するクラス
+ * @author seigo_t03b63m
+ * @date   June 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <mutex>
@@ -11,31 +18,45 @@ namespace SectorFW
 {
 	namespace ECS
 	{
+		/**
+		 * @brief システムが特定のパーティションから派生しているかどうかを確認するコンセプト
+		 */
 		template<typename T, typename...Deps>
 		concept SystemDerived = std::is_base_of_v<ITypeSystem<Deps...>, T>;
-
+		/**
+		 * @brief システムスケジューラを定義するクラス
+		 * @tparam Partition パーティションの型
+		 */
 		template<typename Partition>
 		class SystemScheduler {
 		public:
-
+			/**
+			 * @brief システムを追加する関数
+			 */
 			template<template<typename> class SystemType>
 			void AddSystem(){
-				/*std::unique_ptr<ISystem<Partition>> sys = std::make_unique<SystemType<Partition>>();
+				std::unique_ptr<ISystem<Partition>> sys = std::make_unique<SystemType<Partition>>();
 
 				accessList.push_back(sys->GetAccessInfo());
-				systems.push_back(std::move(sys));*/
+				systems.push_back(std::move(sys));
 			}
-
+			/**
+			 * @brief システムを追加する関数
+			 * @param ...deps 依存するコンポーネントのポインタ
+			 */
 			template<template<typename> class SystemType, typename ...Deps>
 				requires SystemDerived<SystemType, Deps...>
 			void AddSystem(Deps*... deps) {
-				/*std::unique_ptr<ISystem<Partition>> sys = std::make_unique<SystemType<Partition>>();
+				std::unique_ptr<ISystem<Partition>> sys = std::make_unique<SystemType<Partition>>();
 
 				accessList.push_back(sys->GetAccessInfo());
 				sys->SetContext(std::make_tuple(deps...));
-				systems.push_back(std::move(sys));*/
+				systems.push_back(std::move(sys));
 			}
-
+			/**
+			 * @brief システムをキューに追加する関数
+			 */
+			// TODO
 			template<typename SystemType>
 			void QueueSystem() {
 				/*auto sys = std::make_unique<SystemType>();
@@ -43,14 +64,17 @@ namespace SectorFW
 				std::scoped_lock lock(pendingMutex);
 				pendingSystems.push_back(std::move(system));*/
 			}
-
-
-			void UpdateAll(Partition& grid) {
+			/**
+			 * @brief すべてのシステムを更新する関数
+			 * @param partition 対象のパーティション
+			 */
+			void UpdateAll(Partition& partition) {
 				if (!pendingSystems.empty())
 				{
 					std::scoped_lock lock(pendingMutex);
+					systems.reserve(systems.size() + pendingSystems.size());
 					for (auto& sys : pendingSystems)
-						systems.push_back(std::move(sys));
+						systems.emplace_back(std::move(sys));
 					pendingSystems.clear();
 				}
 
@@ -60,7 +84,7 @@ namespace SectorFW
 				std::vector<size_t> indegree(n, 0);
 
 				for (size_t i = 0; i < n; ++i) {
-					for (size_t j = 0; j < n; ++j) {
+					for (size_t j = i + 1; j < n; ++j) {
 						if (i == j) continue;
 						if (HasConflict(accessList[i], accessList[j])) {
 							adjacency[i].push_back(j);
@@ -83,9 +107,9 @@ namespace SectorFW
 
 					std::vector<std::future<void>> futures;
 					for (size_t i : parallelGroup) {
-						futures.emplace_back(std::async(std::launch::async, [&grid, this, i]()
+						futures.emplace_back(std::async(std::launch::async, [&partition, this, i]()
 							{
-								systems[i]->Update(grid);
+								systems[i]->Update(partition);
 							}
 						));
 					}
@@ -98,9 +122,14 @@ namespace SectorFW
 					}
 				}
 			}
-
 		private:
-			bool HasConflict(const AccessInfo& a, const AccessInfo& b) {
+			/**
+			 * @brief アクセス情報が競合しているかどうかを確認する関数
+			 * @param a アクセス情報A
+			 * @param b アクセス情報B
+			 * @return bool 競合している場合はtrue、そうでない場合はfalse
+			 */
+			bool HasConflict(const AccessInfo& a, const AccessInfo& b) noexcept {
 				for (ComponentTypeID id : a.write) {
 					if (b.read.count(id) || b.write.count(id)) return true;
 				}
@@ -109,10 +138,21 @@ namespace SectorFW
 				}
 				return false;
 			}
-
+			/**
+			 * @brief システムのリスト
+			 */
 			std::vector<std::unique_ptr<ISystem<Partition>>> systems;
+			/**
+			 * @brief アクセス情報のリスト
+			 */
 			std::vector<AccessInfo> accessList;
+			/**
+			 * @brief 保留中のシステムのリスト
+			 */
 			std::vector<std::unique_ptr<ISystem<Partition>>> pendingSystems;
+			/**
+			 * @brief 保留中のシステムを管理するためのミューテックス
+			 */
 			std::mutex pendingMutex;
 		};
 	}

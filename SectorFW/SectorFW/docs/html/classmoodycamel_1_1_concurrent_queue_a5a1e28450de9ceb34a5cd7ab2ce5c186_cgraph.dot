@@ -1,0 +1,13 @@
+digraph "moodycamel::ConcurrentQueue::implicit_producer_thread_exited_callback"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="moodycamel::ConcurrentQueue\l::implicit_producer_thread\l_exited_callback",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="moodycamel::ConcurrentQueue\l::implicit_producer_thread_exited",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodycamel_1_1_concurrent_queue.html#af3814e70ea7d060964f376c2f1d7f0ab",tooltip=" "];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="moodycamel::details\l::thread_id",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespacemoodycamel_1_1details.html#a137f928bff88e1486d82701dea45164b",tooltip=" "];
+}

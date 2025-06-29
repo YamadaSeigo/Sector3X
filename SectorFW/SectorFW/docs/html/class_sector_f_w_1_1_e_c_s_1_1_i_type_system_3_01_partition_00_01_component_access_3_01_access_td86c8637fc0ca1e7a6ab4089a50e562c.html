@@ -1,0 +1,728 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pro-types">限定公開型</a> &#124;
+<a href="#pro-methods">限定公開メンバ関数</a> &#124;
+<a href="#pri-static-methods">静的非公開メンバ関数</a> &#124;
+<a href="#pri-attribs">非公開変数類</a> &#124;
+<a href="#pri-static-attribs">静的非公開変数類</a> &#124;
+<a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_t6f61b30038f78f57fb2b1c50f17309e0.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt; クラステンプレート<span class="mlabels"><span class="mlabel abstract">abstract</span></span></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>ECSシステムのインターフェース  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a>&gt;</code></p>
+<div class="dynheader">
+SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt; の継承関係図</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">凡例</a>]</span></center></div>
+<div class="dynheader">
+SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt; 連携図</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a0b8454c84eff70a309824eb6f9b9fef5" id="r_a0b8454c84eff70a309824eb6f9b9fef5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b8454c84eff70a309824eb6f9b9fef5">SetContext</a> (<a class="el" href="#a2d03600898f76f4d2015cba7cf7f995d">ContextTuple</a> ctx) noexcept</td></tr>
+<tr class="memdesc:a0b8454c84eff70a309824eb6f9b9fef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンテキストを設定する関数  <br /></td></tr>
+<tr class="separator:a0b8454c84eff70a309824eb6f9b9fef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22f0ffcba9daf87dea20de3e99cfbf56" id="r_a22f0ffcba9daf87dea20de3e99cfbf56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22f0ffcba9daf87dea20de3e99cfbf56">Update</a> (Partition &amp;partition) override</td></tr>
+<tr class="memdesc:a22f0ffcba9daf87dea20de3e99cfbf56"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムの更新関数  <br /></td></tr>
+<tr class="separator:a22f0ffcba9daf87dea20de3e99cfbf56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dea5919afbeb17db01c1b80dbb984c4" id="r_a4dea5919afbeb17db01c1b80dbb984c4"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_access_info.html">AccessInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dea5919afbeb17db01c1b80dbb984c4">GetAccessInfo</a> () const noexcept override</td></tr>
+<tr class="memdesc:a4dea5919afbeb17db01c1b80dbb984c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムのアクセス情報を取得する関数  <br /></td></tr>
+<tr class="separator:a4dea5919afbeb17db01c1b80dbb984c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_sector_f_w_1_1_e_c_s_1_1_i_system"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_sector_f_w_1_1_e_c_s_1_1_i_system')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_system.html">SectorFW::ECS::ISystem&lt; Partition &gt;</a> に属する継承公開メンバ関数</td></tr>
+<tr class="memitem:ae35225c40eadde1b69cca12684f21627 inherit pub_methods_class_sector_f_w_1_1_e_c_s_1_1_i_system" id="r_ae35225c40eadde1b69cca12684f21627"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_system.html#ae35225c40eadde1b69cca12684f21627">~ISystem</a> ()=default</td></tr>
+<tr class="memdesc:ae35225c40eadde1b69cca12684f21627 inherit pub_methods_class_sector_f_w_1_1_e_c_s_1_1_i_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="separator:ae35225c40eadde1b69cca12684f21627 inherit pub_methods_class_sector_f_w_1_1_e_c_s_1_1_i_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-types" name="pro-types"></a>
+限定公開型</h2></td></tr>
+<tr class="memitem:aab31222a397eb048ea739102b76fa2d4" id="r_aab31222a397eb048ea739102b76fa2d4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab31222a397eb048ea739102b76fa2d4">AccessorTuple</a> = <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt;AccessTypes...&gt;<a class="el" href="struct_service_context.html">::Tuple</a></td></tr>
+<tr class="separator:aab31222a397eb048ea739102b76fa2d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d03600898f76f4d2015cba7cf7f995d" id="r_a2d03600898f76f4d2015cba7cf7f995d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d03600898f76f4d2015cba7cf7f995d">ContextTuple</a> = <a class="el" href="struct_service_context.html">ServiceContext</a>&lt;Services...&gt;<a class="el" href="struct_service_context.html">::Tuple</a></td></tr>
+<tr class="separator:a2d03600898f76f4d2015cba7cf7f995d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:ada7671b0175ea287ddb748d181e54918" id="r_ada7671b0175ea287ddb748d181e54918"><td class="memTemplParams" colspan="2">template&lt;typename F&gt; </td></tr>
+<tr class="memitem:ada7671b0175ea287ddb748d181e54918"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ada7671b0175ea287ddb748d181e54918">ForEachChunkWithAccessor</a> (F &amp;&amp;func, Partition &amp;partition)</td></tr>
+<tr class="memdesc:ada7671b0175ea287ddb748d181e54918"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する  <br /></td></tr>
+<tr class="separator:ada7671b0175ea287ddb748d181e54918"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9672c1c684be9446806f661457f9498" id="r_aa9672c1c684be9446806f661457f9498"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9672c1c684be9446806f661457f9498">UpdateImpl</a> (Partition &amp;partition, Services *... services)=0</td></tr>
+<tr class="memdesc:aa9672c1c684be9446806f661457f9498"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムの更新を実装する純粋仮想関数  <br /></td></tr>
+<tr class="separator:aa9672c1c684be9446806f661457f9498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+静的非公開メンバ関数</h2></td></tr>
+<tr class="memitem:ae45002704e186c042649f578d7ea481b" id="r_ae45002704e186c042649f578d7ea481b"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:ae45002704e186c042649f578d7ea481b"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae45002704e186c042649f578d7ea481b">SetMask</a> (<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> &amp;mask)</td></tr>
+<tr class="memdesc:ae45002704e186c042649f578d7ea481b"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントマスクを設定するヘルパー関数  <br /></td></tr>
+<tr class="separator:ae45002704e186c042649f578d7ea481b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45ebf1447df7e28c9b3e3221b37e322c" id="r_a45ebf1447df7e28c9b3e3221b37e322c"><td class="memTemplParams" colspan="2">template&lt;typename <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">Tuple</a>, std::size_t... Is&gt; </td></tr>
+<tr class="memitem:a45ebf1447df7e28c9b3e3221b37e322c"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a45ebf1447df7e28c9b3e3221b37e322c">BuildMaskFromTupleImpl</a> (std::index_sequence&lt; Is... &gt;)</td></tr>
+<tr class="memdesc:a45ebf1447df7e28c9b3e3221b37e322c"><td class="mdescLeft">&#160;</td><td class="mdescRight">タプルからコンポーネントマスクを構築するヘルパー関数  <br /></td></tr>
+<tr class="separator:a45ebf1447df7e28c9b3e3221b37e322c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d552070f07ee461f54f7bb56a0bc41c" id="r_a7d552070f07ee461f54f7bb56a0bc41c"><td class="memTemplParams" colspan="2">template&lt;typename <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">Tuple</a>&gt; </td></tr>
+<tr class="memitem:a7d552070f07ee461f54f7bb56a0bc41c"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7d552070f07ee461f54f7bb56a0bc41c">BuildMaskFromTuple</a> ()</td></tr>
+<tr class="memdesc:a7d552070f07ee461f54f7bb56a0bc41c"><td class="mdescLeft">&#160;</td><td class="mdescRight">タプルからコンポーネントマスクを構築する関数  <br /></td></tr>
+<tr class="separator:a7d552070f07ee461f54f7bb56a0bc41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+非公開変数類</h2></td></tr>
+<tr class="memitem:a0d44eb0007d33f29af6aa560686cd6c2" id="r_a0d44eb0007d33f29af6aa560686cd6c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a2d03600898f76f4d2015cba7cf7f995d">ContextTuple</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d44eb0007d33f29af6aa560686cd6c2">context</a></td></tr>
+<tr class="memdesc:a0d44eb0007d33f29af6aa560686cd6c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムのコンテキストを保持するタプル  <br /></td></tr>
+<tr class="separator:a0d44eb0007d33f29af6aa560686cd6c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+静的非公開変数類</h2></td></tr>
+<tr class="memitem:a1ba86cca7d1179e2741580ec3b7b4ff9" id="r_a1ba86cca7d1179e2741580ec3b7b4ff9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ba86cca7d1179e2741580ec3b7b4ff9">required</a> = <a class="el" href="#a7d552070f07ee461f54f7bb56a0bc41c">BuildMaskFromTuple</a>&lt;<a class="el" href="#aab31222a397eb048ea739102b76fa2d4">AccessorTuple</a>&gt;()</td></tr>
+<tr class="memdesc:a1ba86cca7d1179e2741580ec3b7b4ff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">必要なコンポーネントマスクを定義する  <br /></td></tr>
+<tr class="separator:a1ba86cca7d1179e2741580ec3b7b4ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Partition, typename... AccessTypes, typename... Services&gt;<br />
+class SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;</div><p>ECSシステムのインターフェース </p>
+<dl class="tparams"><dt>テンプレート引数</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Partition</td><td>パーティションの型 </td></tr>
+    <tr><td class="paramname">AccessTypes</td><td>アクセスするコンポーネントの型 </td></tr>
+    <tr><td class="paramname">Services</td><td>サービスの型 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00030">30</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">型定義メンバ詳解</h2>
+<a id="aab31222a397eb048ea739102b76fa2d4" name="aab31222a397eb048ea739102b76fa2d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab31222a397eb048ea739102b76fa2d4">&#9670;&#160;</a></span>AccessorTuple</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::AccessorTuple = <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt;AccessTypes...&gt;<a class="el" href="struct_service_context.html">::Tuple</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00032">32</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2d03600898f76f4d2015cba7cf7f995d" name="a2d03600898f76f4d2015cba7cf7f995d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d03600898f76f4d2015cba7cf7f995d">&#9670;&#160;</a></span>ContextTuple</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::ContextTuple = <a class="el" href="struct_service_context.html">ServiceContext</a>&lt;Services...&gt;<a class="el" href="struct_service_context.html">::Tuple</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00033">33</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="a7d552070f07ee461f54f7bb56a0bc41c" name="a7d552070f07ee461f54f7bb56a0bc41c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d552070f07ee461f54f7bb56a0bc41c">&#9670;&#160;</a></span>BuildMaskFromTuple()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<div class="memtemplate">
+template&lt;typename <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">Tuple</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::BuildMaskFromTuple </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>タプルからコンポーネントマスクを構築する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512" title="コンポーネントマスクを定義するビットセット型">ComponentMask</a> コンポーネントマスク </dd></dl>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00119">119</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  119</span>                                                      {</div>
+<div class="line"><span class="lineno">  120</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="#a45ebf1447df7e28c9b3e3221b37e322c">BuildMaskFromTupleImpl&lt;Tuple&gt;</a>(</div>
+<div class="line"><span class="lineno">  121</span>                    <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">std::make_index_sequence</a>&lt;<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">std::tuple_size_v&lt;Tuple&gt;</a>&gt;{});</div>
+<div class="line"><span class="lineno">  122</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a45ebf1447df7e28c9b3e3221b37e322c"><div class="ttname"><a href="#a45ebf1447df7e28c9b3e3221b37e322c">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::BuildMaskFromTupleImpl</a></div><div class="ttdeci">static ComponentMask BuildMaskFromTupleImpl(std::index_sequence&lt; Is... &gt;)</div><div class="ttdoc">タプルからコンポーネントマスクを構築するヘルパー関数</div><div class="ttdef"><b>Definition</b> <a href="_i_type_system_8h_source.html#l00109">ITypeSystem.h:109</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_html"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a></div><div class="ttdef"><b>Definition</b> <a href="_i_type_system_8h_source.html#l00021">ITypeSystem.h:21</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
+
+</div>
+</div>
+<a id="a45ebf1447df7e28c9b3e3221b37e322c" name="a45ebf1447df7e28c9b3e3221b37e322c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45ebf1447df7e28c9b3e3221b37e322c">&#9670;&#160;</a></span>BuildMaskFromTupleImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<div class="memtemplate">
+template&lt;typename <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">Tuple</a>, std::size_t... Is&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::BuildMaskFromTupleImpl </td>
+          <td>(</td>
+          <td class="paramtype">std::index_sequence&lt; Is... &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>タプルからコンポーネントマスクを構築するヘルパー関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">Tuple</a></td><td>タプルの型 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512" title="コンポーネントマスクを定義するビットセット型">ComponentMask</a> コンポーネントマスク </dd></dl>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00109">109</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span>                                                                                  {</div>
+<div class="line"><span class="lineno">  110</span>                <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">ComponentMask</a> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">mask</a>;</div>
+<div class="line"><span class="lineno">  111</span>                (<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SetMask&lt;std::tuple_element_t&lt;Is, Tuple&gt;</a>&gt;(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">mask</a>), ...);</div>
+<div class="line"><span class="lineno">  112</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">mask</a>;</div>
+<div class="line"><span class="lineno">  113</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 3 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 4 --></div>
+</div>
+
+</div>
+</div>
+<a id="ada7671b0175ea287ddb748d181e54918" name="ada7671b0175ea287ddb748d181e54918"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada7671b0175ea287ddb748d181e54918">&#9670;&#160;</a></span>ForEachChunkWithAccessor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<div class="memtemplate">
+template&lt;typename F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::ForEachChunkWithAccessor </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>func</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Partition &amp;</td>          <td class="paramname"><span class="paramname"><em>partition</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">func</td><td>関数オブジェクトまたはラムダ式 </td></tr>
+    <tr><td class="paramname">partition</td><td>対象のパーティション </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00040">40</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>            {</div>
+<div class="line"><span class="lineno">   42</span>                <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">Query</a> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">query</a>;</div>
+<div class="line"><span class="lineno">   43</span>                <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">query</a>.With&lt;<span class="keyword">typename</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">AccessPolicy&lt;AccessTypes&gt;::ComponentType</a>...&gt;();</div>
+<div class="line"><span class="lineno">   44</span>                <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">std::vector&lt;ArchetypeChunk*&gt;</a> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">chunks</a> = <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">query</a>.MatchingChunks&lt;<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">Partition</a>&amp;&gt;(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">partition</a>);</div>
+<div class="line"><span class="lineno">   45</span><span class="preprocessor">#ifdef _DEBUG</span></div>
+<div class="line"><span class="lineno">   46</span>                <span class="keywordflow">if</span> (<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">chunks</a>.empty()) {</div>
+<div class="line"><span class="lineno">   47</span>                    <a class="code hl_define" href="logger_8h.html#afde44945335adc0c0ae2986fea13438f">LOG_WARNING</a>(<span class="stringliteral">&quot;No matching chunks found for the specified access types.&quot;</span>);</div>
+<div class="line"><span class="lineno">   48</span>                }</div>
+<div class="line"><span class="lineno">   49</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">   50</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">chunk</a> : <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">chunks</a>) </div>
+<div class="line"><span class="lineno">   51</span>                {</div>
+<div class="line"><span class="lineno">   52</span>                    <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">ComponentAccessor</a>&lt;<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">AccessTypes</a>...&gt; <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">accessor</a>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">chunk</a>);</div>
+<div class="line"><span class="lineno">   53</span>                    <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">func</a>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">accessor</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">chunk</a>-&gt;GetEntityCount());</div>
+<div class="line"><span class="lineno">   54</span>                }</div>
+<div class="line"><span class="lineno">   55</span>            }</div>
+<div class="ttc" id="alogger_8h_html_afde44945335adc0c0ae2986fea13438f"><div class="ttname"><a href="logger_8h.html#afde44945335adc0c0ae2986fea13438f">LOG_WARNING</a></div><div class="ttdeci">#define LOG_WARNING(fmt,...)</div><div class="ttdef"><b>Definition</b> <a href="logger_8h_source.html#l00165">logger.h:165</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 5 --></div>
+</div>
+
+</div>
+</div>
+<a id="a4dea5919afbeb17db01c1b80dbb984c4" name="a4dea5919afbeb17db01c1b80dbb984c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dea5919afbeb17db01c1b80dbb984c4">&#9670;&#160;</a></span>GetAccessInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_access_info.html">AccessInfo</a> <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::GetAccessInfo </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムのアクセス情報を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_access_info.html" title="アクセス情報を管理する構造体">AccessInfo</a> アクセス情報 </dd></dl>
+
+<p><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_system.html#a44a9dce4f1b5b21147950e2087d7be59">SectorFW::ECS::ISystem&lt; Partition &gt;</a>を実装しています。</p>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00087">87</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   87</span>                                                                         {</div>
+<div class="line"><span class="lineno">   88</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html#a407cd9ee7f97587623f15cfc7f9032c7">ComponentAccess&lt;AccessTypes...&gt;::GetAccessInfo</a>();</div>
+<div class="line"><span class="lineno">   89</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_e_c_s_1_1_component_access_html_a407cd9ee7f97587623f15cfc7f9032c7"><div class="ttname"><a href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html#a407cd9ee7f97587623f15cfc7f9032c7">SectorFW::ECS::ComponentAccess::GetAccessInfo</a></div><div class="ttdeci">static constexpr AccessInfo GetAccessInfo()</div><div class="ttdoc">アクセス情報を取得するための関数</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8h_source.html#l00031">Accessor.h:31</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 6 --></div>
+</div>
+
+</div>
+</div>
+<a id="a0b8454c84eff70a309824eb6f9b9fef5" name="a0b8454c84eff70a309824eb6f9b9fef5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b8454c84eff70a309824eb6f9b9fef5">&#9670;&#160;</a></span>SetContext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::SetContext </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a2d03600898f76f4d2015cba7cf7f995d">ContextTuple</a></td>          <td class="paramname"><span class="paramname"><em>ctx</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンテキストを設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctx</td><td>コンテキストのタプル </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00067">67</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>                                                       {</div>
+<div class="line"><span class="lineno">   68</span>                <a class="code hl_variable" href="#a0d44eb0007d33f29af6aa560686cd6c2">context</a> = <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">std::move</a>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">ctx</a>);</div>
+<div class="line"><span class="lineno">   69</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_a0d44eb0007d33f29af6aa560686cd6c2"><div class="ttname"><a href="#a0d44eb0007d33f29af6aa560686cd6c2">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::context</a></div><div class="ttdeci">ContextTuple context</div><div class="ttdoc">システムのコンテキストを保持するタプル</div><div class="ttdef"><b>Definition</b> <a href="_i_type_system_8h_source.html#l00094">ITypeSystem.h:94</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae45002704e186c042649f578d7ea481b" name="ae45002704e186c042649f578d7ea481b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae45002704e186c042649f578d7ea481b">&#9670;&#160;</a></span>SetMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::SetMask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mask</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントマスクを設定するヘルパー関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mask</td><td>コンポーネントマスクへの参照 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00100">100</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  100</span>                                                     {</div>
+<div class="line"><span class="lineno">  101</span>                <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">mask</a>.set(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">ComponentTypeRegistry::GetID&lt;T::Type&gt;</a>());</div>
+<div class="line"><span class="lineno">  102</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 7 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 8 --></div>
+</div>
+
+</div>
+</div>
+<a id="a22f0ffcba9daf87dea20de3e99cfbf56" name="a22f0ffcba9daf87dea20de3e99cfbf56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22f0ffcba9daf87dea20de3e99cfbf56">&#9670;&#160;</a></span>Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::Update </td>
+          <td>(</td>
+          <td class="paramtype">Partition &amp;</td>          <td class="paramname"><span class="paramname"><em>partition</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムの更新関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">partition</td><td>パーティションの参照 @detail 自身のコンテキストを使用して、UpdateImplを呼び出す </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_system.html#ae8a8addcedd8021aac391fc1a23da212">SectorFW::ECS::ISystem&lt; Partition &gt;</a>を実装しています。</p>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00075">75</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   75</span>                                                       {</div>
+<div class="line"><span class="lineno">   76</span>                <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">std::apply</a>(</div>
+<div class="line"><span class="lineno">   77</span>                    [&amp;](<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">Services</a>*... <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">unpacked</a>) {</div>
+<div class="line"><span class="lineno">   78</span>                        this-&gt;<a class="code hl_function" href="#aa9672c1c684be9446806f661457f9498">UpdateImpl</a>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">partition</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">unpacked</a>...);</div>
+<div class="line"><span class="lineno">   79</span>                    },</div>
+<div class="line"><span class="lineno">   80</span>                    <a class="code hl_variable" href="#a0d44eb0007d33f29af6aa560686cd6c2">context</a></div>
+<div class="line"><span class="lineno">   81</span>                );</div>
+<div class="line"><span class="lineno">   82</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c_html_aa9672c1c684be9446806f661457f9498"><div class="ttname"><a href="#aa9672c1c684be9446806f661457f9498">SectorFW::ECS::ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;::UpdateImpl</a></div><div class="ttdeci">virtual void UpdateImpl(Partition &amp;partition, Services *... services)=0</div><div class="ttdoc">システムの更新を実装する純粋仮想関数</div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 9 --></div>
+</div>
+
+</div>
+</div>
+<a id="aa9672c1c684be9446806f661457f9498" name="aa9672c1c684be9446806f661457f9498"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9672c1c684be9446806f661457f9498">&#9670;&#160;</a></span>UpdateImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::UpdateImpl </td>
+          <td>(</td>
+          <td class="paramtype">Partition &amp;</td>          <td class="paramname"><span class="paramname"><em>partition</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Services *...</td>          <td class="paramname"><span class="paramname"><em>services</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムの更新を実装する純粋仮想関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">partition</td><td>パーティションの参照 </td></tr>
+    <tr><td class="paramname">...services</td><td>サービスのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 10 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a0d44eb0007d33f29af6aa560686cd6c2" name="a0d44eb0007d33f29af6aa560686cd6c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d44eb0007d33f29af6aa560686cd6c2">&#9670;&#160;</a></span>context</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a2d03600898f76f4d2015cba7cf7f995d">ContextTuple</a> <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::context</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムのコンテキストを保持するタプル </p>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00094">94</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1ba86cca7d1179e2741580ec3b7b4ff9" name="a1ba86cca7d1179e2741580ec3b7b4ff9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ba86cca7d1179e2741580ec3b7b4ff9">&#9670;&#160;</a></span>required</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition, typename... AccessTypes, typename... Services&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system.html">SectorFW::ECS::ITypeSystem</a>&lt; Partition, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_access.html">ComponentAccess</a>&lt; AccessTypes... &gt;, <a class="el" href="struct_service_context.html">ServiceContext</a>&lt; Services... &gt; &gt;::required = <a class="el" href="#a7d552070f07ee461f54f7bb56a0bc41c">BuildMaskFromTuple</a>&lt;<a class="el" href="#aab31222a397eb048ea739102b76fa2d4">AccessorTuple</a>&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>必要なコンポーネントマスクを定義する </p>
+
+<p class="definition"> <a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a> の <a class="el" href="_i_type_system_8h_source.html#l00126">126</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="_i_type_system_8h_source.html">ITypeSystem.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_i_type_system_3_01_partition_00_01_component_access_3_01_access_td86c8637fc0ca1e7a6ab4089a50e562c.html">ITypeSystem&lt; Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt; &gt;</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

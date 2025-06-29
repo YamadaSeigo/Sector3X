@@ -1,0 +1,37 @@
+digraph "SectorFW::ECS::EntityManager::AddComponent"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="SectorFW::ECS::EntityManager\l::AddComponent",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="エンティティにコンポーネントを追加する関数"];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="SectorFW::ECS::Archetype\lChunk::AddEntity",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a177d6b725cf67286ea849e99fa728c6e",tooltip="エンティティを追加する関数"];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="SectorFW::ECS::Archetype\lChunk::Accessor::GetBuffer",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a2364dc240a173460e5edb1abfb0849a0",tooltip="アーキタイプチャンクバッファへのポインタ"];
+  Node3 -> Node4 [id="edge3_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="SectorFW::ECS::Archetype\lChunk::ArchetypeChunk",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html#aea5fd6e4cd7e8407657bfb79639eb833",tooltip="コンストラクタ"];
+  Node1 -> Node5 [id="edge4_Node000001_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="SectorFW::ECS::Archetype\lChunk::GetColumn",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a6ccfa1560cd83624a28b79ecffc35f41",tooltip="コンポーネントの列を取得する関数"];
+  Node5 -> Node6 [id="edge5_Node000005_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="SectorFW::ECS::Component\lTypeRegistry::GetID",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11",tooltip="コンポーネントの型IDを取得します。"];
+  Node1 -> Node6 [id="edge6_Node000001_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node1 -> Node7 [id="edge7_Node000001_Node000007",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="SectorFW::ECS::Archetype\lChunk::Accessor::GetLayoutInfo",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a236447942618c4c64fe919b0225f0240",tooltip="コンポーネントレイアウト情報を取得する関数"];
+  Node7 -> Node4 [id="edge8_Node000007_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node1 -> Node8 [id="edge9_Node000001_Node000008",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="SectorFW::ECS::EntityManager\l::GetMask",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a855b9b45271879dd3135c08a57a210e5",tooltip="エンティティのコンポーネントマスクを取得する関数"];
+  Node8 -> Node9 [id="edge10_Node000008_Node000009",color="steelblue1",style="solid",tooltip=" "];
+  Node9 [id="Node000009",label="SectorFW::ECS::Archetype\lChunk::Accessor::GetEntities",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a504b34555c6e9b0208e5dd7ca1bb14c3",tooltip="エンティティの配列を取得する関数"];
+  Node9 -> Node4 [id="edge11_Node000009_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node1 -> Node10 [id="edge12_Node000001_Node000010",color="steelblue1",style="solid",tooltip=" "];
+  Node10 [id="Node000010",label="SectorFW::ECS::Archetype\l::GetOrCreateChunk",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a594aa951341e0736d971c81203937ef6",tooltip="アーキタイプのチャンクを取得または作成する関数"];
+  Node1 -> Node11 [id="edge13_Node000001_Node000011",color="steelblue1",style="solid",tooltip=" "];
+  Node11 [id="Node000011",label="SectorFW::ECS::EntityManager\l::GetSparseStore",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a842d67c54e460bd3aca73e5426075005",tooltip="まばらなコンポーネントストアを取得する関数"];
+  Node11 -> Node6 [id="edge14_Node000011_Node000006",color="steelblue1",style="solid",tooltip=" "];
+  Node1 -> Node12 [id="edge15_Node000001_Node000012",color="steelblue1",style="solid",tooltip=" "];
+  Node12 [id="Node000012",label="SectorFW::ECS::Component\lTypeRegistry::IsSparse",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a3399f597ac754ab21dda7db066911f1c",tooltip="コンポーネントがまばらなコンポーネントかどうかを判定します。"];
+  Node1 -> Node13 [id="edge16_Node000001_Node000013",color="steelblue1",style="solid",tooltip=" "];
+  Node13 [id="Node000013",label="SectorFW::ECS::Archetype\lChunk::RemoveEntitySwapPop",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a02d306aafce7e81406f707405aa906eb",tooltip="エンティティを削除する関数(最後のエンティティと入れ替えて追放)"];
+}

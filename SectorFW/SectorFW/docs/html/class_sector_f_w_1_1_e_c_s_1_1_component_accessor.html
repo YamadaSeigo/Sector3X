@@ -1,0 +1,513 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::ECS::ComponentAccessor&lt; AccessTypes &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pri-methods">非公開メンバ関数</a> &#124;
+<a href="#pri-attribs">非公開変数類</a> &#124;
+<a href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::ECS::ComponentAccessor&lt; AccessTypes &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>コンポーネントアクセサークラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_accessor_8h_source.html">Accessor.h</a>&gt;</code></p>
+<div class="dynheader">
+SectorFW::ECS::ComponentAccessor&lt; AccessTypes &gt; 連携図</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a9705f85938396f6ad8a5be3e98fd73da" id="r_a9705f85938396f6ad8a5be3e98fd73da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9705f85938396f6ad8a5be3e98fd73da">ComponentAccessor</a> (<a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *<a class="el" href="#a1786b4e2cee1274e1c31b3f8fc3b3f86">chunk</a>) noexcept</td></tr>
+<tr class="memdesc:a9705f85938396f6ad8a5be3e98fd73da"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントアクセサーのコンストラクタ  <br /></td></tr>
+<tr class="separator:a9705f85938396f6ad8a5be3e98fd73da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ec7abb904a5cab804257d3c15ae106c" id="r_a5ec7abb904a5cab804257d3c15ae106c"><td class="memTemplParams" colspan="2">template&lt;typename AccessType&gt; <br />
+requires OneOf&lt;AccessType, AccessTypes...&gt;</td></tr>
+<tr class="memitem:a5ec7abb904a5cab804257d3c15ae106c"><td class="memTemplItemLeft" align="right" valign="top">std::optional&lt; typename <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_access_policy.html">AccessPolicy</a>&lt; AccessType &gt;::PointerType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5ec7abb904a5cab804257d3c15ae106c">Get</a> () noexcept</td></tr>
+<tr class="memdesc:a5ec7abb904a5cab804257d3c15ae106c"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定したアクセス型に対して、コンポーネントを取得する関数  <br /></td></tr>
+<tr class="separator:a5ec7abb904a5cab804257d3c15ae106c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d296e4311e7f56e8038b71bb83be406" id="r_a8d296e4311e7f56e8038b71bb83be406"><td class="memTemplParams" colspan="2">template&lt;typename AccessType&gt; </td></tr>
+<tr class="memitem:a8d296e4311e7f56e8038b71bb83be406"><td class="memTemplItemLeft" align="right" valign="top">std::optional&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8d296e4311e7f56e8038b71bb83be406">Get</a> () noexcept</td></tr>
+<tr class="memdesc:a8d296e4311e7f56e8038b71bb83be406"><td class="mdescLeft">&#160;</td><td class="mdescRight">requiresに一致しなかったときのフォールバック定義  <br /></td></tr>
+<tr class="separator:a8d296e4311e7f56e8038b71bb83be406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+非公開メンバ関数</h2></td></tr>
+<tr class="memitem:a02068442b0c002dcff2d67b53a041881" id="r_a02068442b0c002dcff2d67b53a041881"><td class="memTemplParams" colspan="2">template&lt;typename PtrType, size_t Index&gt; </td></tr>
+<tr class="memitem:a02068442b0c002dcff2d67b53a041881"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a02068442b0c002dcff2d67b53a041881">GetMemberStartPtrImpl</a> (<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#abc859415efffd8eaec6d46312f330451">BufferType</a> *base, size_t capacity, size_t &amp;offset, PtrType &amp;value) noexcept</td></tr>
+<tr class="memdesc:a02068442b0c002dcff2d67b53a041881"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメンバーの開始ポインタを取得する関数の実装  <br /></td></tr>
+<tr class="separator:a02068442b0c002dcff2d67b53a041881"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b1c9f7c5062fb64e7e2e749df3091bd" id="r_a2b1c9f7c5062fb64e7e2e749df3091bd"><td class="memTemplParams" colspan="2">template&lt;typename PtrType, size_t... Is&gt; </td></tr>
+<tr class="memitem:a2b1c9f7c5062fb64e7e2e749df3091bd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a2b1c9f7c5062fb64e7e2e749df3091bd">GetMemberStartPtr</a> (<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#abc859415efffd8eaec6d46312f330451">BufferType</a> *base, size_t capacity, size_t &amp;offset, PtrType &amp;value, std::index_sequence&lt; Is... &gt;) noexcept</td></tr>
+<tr class="memdesc:a2b1c9f7c5062fb64e7e2e749df3091bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメンバーの開始ポインタを取得する関数  <br /></td></tr>
+<tr class="separator:a2b1c9f7c5062fb64e7e2e749df3091bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+非公開変数類</h2></td></tr>
+<tr class="memitem:a1786b4e2cee1274e1c31b3f8fc3b3f86" id="r_a1786b4e2cee1274e1c31b3f8fc3b3f86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1786b4e2cee1274e1c31b3f8fc3b3f86">chunk</a></td></tr>
+<tr class="memdesc:a1786b4e2cee1274e1c31b3f8fc3b3f86"><td class="mdescLeft">&#160;</td><td class="mdescRight">アーキタイプチャンクへのポインタ  <br /></td></tr>
+<tr class="separator:a1786b4e2cee1274e1c31b3f8fc3b3f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename... AccessTypes&gt;<br />
+class SectorFW::ECS::ComponentAccessor&lt; AccessTypes &gt;</div><p>コンポーネントアクセサークラス </p>
+
+<p class="definition"> <a class="el" href="_accessor_8h_source.html">Accessor.h</a> の <a class="el" href="_accessor_8h_source.html#l00092">92</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="a9705f85938396f6ad8a5be3e98fd73da" name="a9705f85938396f6ad8a5be3e98fd73da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9705f85938396f6ad8a5be3e98fd73da">&#9670;&#160;</a></span>ComponentAccessor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... AccessTypes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">SectorFW::ECS::ComponentAccessor</a>&lt; AccessTypes &gt;::ComponentAccessor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *</td>          <td class="paramname"><span class="paramname"><em>chunk</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントアクセサーのコンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chunk</td><td>アクセスするアーキタイプチャンク </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_accessor_8h_source.html">Accessor.h</a> の <a class="el" href="_accessor_8h_source.html#l00098">98</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   98</span>: <a class="code hl_variable" href="#a1786b4e2cee1274e1c31b3f8fc3b3f86">chunk</a>(<a class="code hl_variable" href="#a1786b4e2cee1274e1c31b3f8fc3b3f86">chunk</a>) {}</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_accessor_html_a1786b4e2cee1274e1c31b3f8fc3b3f86"><div class="ttname"><a href="#a1786b4e2cee1274e1c31b3f8fc3b3f86">SectorFW::ECS::ComponentAccessor::chunk</a></div><div class="ttdeci">ArchetypeChunk * chunk</div><div class="ttdoc">アーキタイプチャンクへのポインタ</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8h_source.html#l00186">Accessor.h:186</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="a5ec7abb904a5cab804257d3c15ae106c" name="a5ec7abb904a5cab804257d3c15ae106c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ec7abb904a5cab804257d3c15ae106c">&#9670;&#160;</a></span>Get() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... AccessTypes&gt; </div>
+<div class="memtemplate">
+template&lt;typename AccessType&gt; <br />
+requires OneOf&lt;AccessType, AccessTypes...&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; typename <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_access_policy.html">AccessPolicy</a>&lt; AccessType &gt;::PointerType &gt; <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">SectorFW::ECS::ComponentAccessor</a>&lt; AccessTypes &gt;::Get </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>指定したアクセス型に対して、コンポーネントを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>　std::optional&lt;PointerType&gt; コンポーネントのポインタ </dd></dl>
+
+<p class="definition"> <a class="el" href="_accessor_8h_source.html">Accessor.h</a> の <a class="el" href="_accessor_8h_source.html#l00105">105</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  105</span>                                                                                    {</div>
+<div class="line"><span class="lineno">  106</span>                <span class="keyword">using </span><a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">ComponentType</a> = <span class="keyword">typename</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">AccessPolicy&lt;AccessType&gt;::ComponentType</a>;</div>
+<div class="line"><span class="lineno">  107</span>                <span class="keyword">using </span><a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">PtrType</a> = <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">SoAPtr&lt;ComponentType&gt;::type</a>;</div>
+<div class="line"><span class="lineno">  108</span> </div>
+<div class="line"><span class="lineno">  109</span>                <span class="keyword">auto</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">column</a> = <a class="code hl_variable" href="#a1786b4e2cee1274e1c31b3f8fc3b3f86">chunk</a>-&gt;GetColumn&lt;<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">ComponentType</a>&gt;();</div>
+<div class="line"><span class="lineno">  110</span>                <span class="keywordflow">if</span> (!<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">column</a>) <span class="keywordflow">return</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::nullopt</a>;</div>
+<div class="line"><span class="lineno">  111</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">IsSoAComponent&lt;ComponentType&gt;</a>) {</div>
+<div class="line"><span class="lineno">  112</span>                    <span class="keywordtype">size_t</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">offset</a> = 0;</div>
+<div class="line"><span class="lineno">  113</span>                    <span class="keywordtype">size_t</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">capacity</a> = <a class="code hl_variable" href="#a1786b4e2cee1274e1c31b3f8fc3b3f86">chunk</a>-&gt;GetCapacity();</div>
+<div class="line"><span class="lineno">  114</span> </div>
+<div class="line"><span class="lineno">  115</span>                    <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">BufferType</a>* <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">base</a> = <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">BufferType</a>*<span class="keyword">&gt;</span>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">column</a>.value());</div>
+<div class="line"><span class="lineno">  116</span>                    <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">PtrType</a> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">soaPtr</a>;</div>
+<div class="line"><span class="lineno">  117</span>                    <a class="code hl_function" href="#a2b1c9f7c5062fb64e7e2e749df3091bd">GetMemberStartPtr&lt;PtrType&gt;</a>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">base</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">capacity</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">offset</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">soaPtr</a>,</div>
+<div class="line"><span class="lineno">  118</span>                        <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::make_index_sequence</a>&lt;<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::tuple_size_v</a>&lt;<span class="keyword">decltype</span>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">PtrType::ptr_tuple</a>)&gt;&gt;{});</div>
+<div class="line"><span class="lineno">  119</span>                    <span class="keywordflow">return</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">soaPtr</a>;</div>
+<div class="line"><span class="lineno">  120</span>                }</div>
+<div class="line"><span class="lineno">  121</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  122</span>                    <span class="keywordflow">return</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">column</a>;</div>
+<div class="line"><span class="lineno">  123</span>                }</div>
+<div class="line"><span class="lineno">  124</span>            } </div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_accessor_html"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">SectorFW::ECS::ComponentAccessor</a></div><div class="ttdoc">コンポーネントアクセサークラス</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8h_source.html#l00092">Accessor.h:92</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_accessor_html_a2b1c9f7c5062fb64e7e2e749df3091bd"><div class="ttname"><a href="#a2b1c9f7c5062fb64e7e2e749df3091bd">SectorFW::ECS::ComponentAccessor::GetMemberStartPtr</a></div><div class="ttdeci">void GetMemberStartPtr(BufferType *base, size_t capacity, size_t &amp;offset, PtrType &amp;value, std::index_sequence&lt; Is... &gt;) noexcept</div><div class="ttdoc">SoAコンポーネントのメンバーの開始ポインタを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8h_source.html#l00179">Accessor.h:179</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<a id="a8d296e4311e7f56e8038b71bb83be406" name="a8d296e4311e7f56e8038b71bb83be406"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d296e4311e7f56e8038b71bb83be406">&#9670;&#160;</a></span>Get() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... AccessTypes&gt; </div>
+<div class="memtemplate">
+template&lt;typename AccessType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; void &gt; <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">SectorFW::ECS::ComponentAccessor</a>&lt; AccessTypes &gt;::Get </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>requiresに一致しなかったときのフォールバック定義 </p>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;void&gt; 空のオプション </dd></dl>
+
+<p class="definition"> <a class="el" href="_accessor_8h_source.html">Accessor.h</a> の <a class="el" href="_accessor_8h_source.html#l00130">130</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  130</span>                                             {</div>
+<div class="line"><span class="lineno">  131</span>                <span class="keyword">static_assert</span>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">OneOf</a>&lt;<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">AccessType</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">AccessTypes</a>...&gt;,</div>
+<div class="line"><span class="lineno">  132</span>                    <span class="stringliteral">&quot;Get&lt;AccessType&gt;: AccessType must be one of the AccessTypes... used in this system.&quot;</span>);</div>
+<div class="line"><span class="lineno">  133</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::nullopt</a>;</div>
+<div class="line"><span class="lineno">  134</span>            }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2b1c9f7c5062fb64e7e2e749df3091bd" name="a2b1c9f7c5062fb64e7e2e749df3091bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b1c9f7c5062fb64e7e2e749df3091bd">&#9670;&#160;</a></span>GetMemberStartPtr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... AccessTypes&gt; </div>
+<div class="memtemplate">
+template&lt;typename PtrType, size_t... Is&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">SectorFW::ECS::ComponentAccessor</a>&lt; AccessTypes &gt;::GetMemberStartPtr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#abc859415efffd8eaec6d46312f330451">BufferType</a> *</td>          <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>offset</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PtrType &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::index_sequence&lt; Is... &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメンバーの開始ポインタを取得する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SoAコンポーネントのベースポインタ </td></tr>
+    <tr><td class="paramname">capacity</td><td>SoAコンポーネントの容量 </td></tr>
+    <tr><td class="paramname">offset</td><td>現在のオフセット </td></tr>
+    <tr><td class="paramname">value</td><td>SoAコンポーネントのポインタ </td></tr>
+    <tr><td class="paramname">Is</td><td>インデックスシーケンス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_accessor_8h_source.html">Accessor.h</a> の <a class="el" href="_accessor_8h_source.html#l00179">179</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  180</span>            {</div>
+<div class="line"><span class="lineno">  181</span>                (<a class="code hl_function" href="#a02068442b0c002dcff2d67b53a041881">GetMemberStartPtrImpl&lt;PtrType, Is&gt;</a>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">base</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">capacity</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">offset</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">value</a>),...);</div>
+<div class="line"><span class="lineno">  182</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_accessor_html_a02068442b0c002dcff2d67b53a041881"><div class="ttname"><a href="#a02068442b0c002dcff2d67b53a041881">SectorFW::ECS::ComponentAccessor::GetMemberStartPtrImpl</a></div><div class="ttdeci">void GetMemberStartPtrImpl(BufferType *base, size_t capacity, size_t &amp;offset, PtrType &amp;value) noexcept</div><div class="ttdoc">SoAコンポーネントのメンバーの開始ポインタを取得する関数の実装</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8h_source.html#l00144">Accessor.h:144</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 3 --></div>
+</div>
+
+</div>
+</div>
+<a id="a02068442b0c002dcff2d67b53a041881" name="a02068442b0c002dcff2d67b53a041881"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02068442b0c002dcff2d67b53a041881">&#9670;&#160;</a></span>GetMemberStartPtrImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... AccessTypes&gt; </div>
+<div class="memtemplate">
+template&lt;typename PtrType, size_t Index&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">SectorFW::ECS::ComponentAccessor</a>&lt; AccessTypes &gt;::GetMemberStartPtrImpl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#abc859415efffd8eaec6d46312f330451">BufferType</a> *</td>          <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>offset</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PtrType &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメンバーの開始ポインタを取得する関数の実装 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SoAコンポーネントのベースポインタ </td></tr>
+    <tr><td class="paramname">capacity</td><td>SoAコンポーネントの容量 </td></tr>
+    <tr><td class="paramname">offset</td><td>現在のオフセット </td></tr>
+    <tr><td class="paramname">value</td><td>SoAコンポーネントのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_accessor_8h_source.html">Accessor.h</a> の <a class="el" href="_accessor_8h_source.html#l00144">144</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">  145</span>            {</div>
+<div class="line"><span class="lineno">  146</span>                <span class="keyword">auto</span> <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">memPtr</a> = <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::get&lt;Index&gt;</a>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">PtrType::ptr_tuple</a>);</div>
+<div class="line"><span class="lineno">  147</span>                <span class="keyword">decltype</span>(<span class="keyword">auto</span>) <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">member</a> = <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">value</a>.*<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">memPtr</a>;</div>
+<div class="line"><span class="lineno">  148</span>                <span class="keyword">using </span><a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">MemberRawType</a> = <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::remove_reference_t</a>&lt;<span class="keyword">decltype</span>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">member</a>)&gt;;</div>
+<div class="line"><span class="lineno">  149</span>                <span class="keyword">using </span><a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">MemberType</a> = <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::remove_pointer_t&lt;MemberRawType&gt;</a>;</div>
+<div class="line"><span class="lineno">  150</span> </div>
+<div class="line"><span class="lineno">  151</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">IsSoAComponent&lt;MemberType&gt;</a>) {</div>
+<div class="line"><span class="lineno">  152</span>                    <a class="code hl_function" href="#a2b1c9f7c5062fb64e7e2e749df3091bd">GetMemberStartPtr&lt;MemberType&gt;</a>(</div>
+<div class="line"><span class="lineno">  153</span>                        <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">base</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">capacity</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">offset</a>, <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">member</a>,</div>
+<div class="line"><span class="lineno">  154</span>                        <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::make_index_sequence</a>&lt;<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::tuple_size_v&lt;typename MemberType::ptr_tuple&gt;</a>&gt;{}</div>
+<div class="line"><span class="lineno">  155</span>                    );</div>
+<div class="line"><span class="lineno">  156</span>                }</div>
+<div class="line"><span class="lineno">  157</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  158</span>                    <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">offset</a> = <a class="code hl_function" href="alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328">AlignTo</a>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">offset</a>, <span class="keyword">alignof</span>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">MemberType</a>));</div>
+<div class="line"><span class="lineno">  159</span>                    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::is_pointer_v&lt;MemberRawType&gt;</a>) {</div>
+<div class="line"><span class="lineno">  160</span>                        <span class="comment">// メンバがポインタ → reinterpret_castで代入可能</span></div>
+<div class="line"><span class="lineno">  161</span>                        <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">member</a> = <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">MemberRawType</a><span class="keyword">&gt;</span>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">base</a> + <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">offset</a>);</div>
+<div class="line"><span class="lineno">  162</span>                    }</div>
+<div class="line"><span class="lineno">  163</span>                    <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  164</span>                        <span class="comment">// メンバが値型（floatなど）→ 代入不能 → コンパイルエラーを防ぐためstatic_assert</span></div>
+<div class="line"><span class="lineno">  165</span>                        <span class="keyword">static_assert</span>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">std::is_pointer_v&lt;MemberRawType&gt;</a>, <span class="stringliteral">&quot;Member must be a pointer type&quot;</span>);</div>
+<div class="line"><span class="lineno">  166</span>                    }</div>
+<div class="line"><span class="lineno">  167</span>                    <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">offset</a> += <span class="keyword">sizeof</span>(<a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">MemberType</a>) * <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">capacity</a>;</div>
+<div class="line"><span class="lineno">  168</span>                }</div>
+<div class="line"><span class="lineno">  169</span>            }</div>
+<div class="ttc" id="aalignment_8h_html_a80ec2ed7b06ff0ff25ebc3065be4f328"><div class="ttname"><a href="alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328">AlignTo</a></div><div class="ttdeci">size_t AlignTo(size_t offset, size_t alignment)</div><div class="ttdoc">指定したオフセットをアライメントに合わせて調整する関数</div><div class="ttdef"><b>Definition</b> <a href="alignment_8h_source.html#l00016">alignment.h:16</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 4 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 5 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a1786b4e2cee1274e1c31b3f8fc3b3f86" name="a1786b4e2cee1274e1c31b3f8fc3b3f86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1786b4e2cee1274e1c31b3f8fc3b3f86">&#9670;&#160;</a></span>chunk</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... AccessTypes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">SectorFW::ECS::ComponentAccessor</a>&lt; AccessTypes &gt;::chunk</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>アーキタイプチャンクへのポインタ </p>
+
+<p class="definition"> <a class="el" href="_accessor_8h_source.html">Accessor.h</a> の <a class="el" href="_accessor_8h_source.html#l00186">186</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="_accessor_8h_source.html">Accessor.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_component_accessor.html">ComponentAccessor</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

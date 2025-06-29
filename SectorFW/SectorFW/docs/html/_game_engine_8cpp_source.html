@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sector3X: C:/work/GitHub/Sector3X/Sector11FW/Sector11FW/inc/Core/GameEngine.cpp ソースファイル</title>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/src/Core/GameEngine.cpp ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -105,57 +105,54 @@ $(function(){initNavTree('_game_engine_8cpp_source.html',''); initResizable(true
   <div class="headertitle"><div class="title">GameEngine.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_game_engine_8cpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="_game_engine_8h.html">GameEngine.h</a>&quot;</span></div>
+<a href="_game_engine_8cpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="_game_engine_8h.html">Core/GameEngine.h</a>&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="foldopen" id="foldopen00003" data-start="{" data-end="}">
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="namespace_sector11_f_w.html">    3</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector11_f_w.html">Sector11FW</a></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>{</div>
-<div class="foldopen" id="foldopen00005" data-start="{" data-end="}">
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="class_sector11_f_w_1_1_game_engine.html#a8cc6162e843587ff3f69365907399ce3">    5</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_sector11_f_w_1_1_game_engine.html#a8cc6162e843587ff3f69365907399ce3">GameEngine::MainLoop</a>(<a class="code hl_class" href="class_f_p_s.html">FPS</a>&amp; fpsControl)</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>        uint64_t delta_time = 0;</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        <span class="comment">// 前回実行されてからの経過時間を計測</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        delta_time = fpsControl.<a class="code hl_function" href="class_f_p_s.html#af02372c3e55e98c6521f7dfd6cf1dd34">CalcDelta</a>();</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#ifdef _WIN32 </span><span class="comment">//timeBeginPeriod || timeEndPeriod</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;mmsystem.h&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma comment(lib, &quot;winmm.lib&quot;)</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#endif </span><span class="comment">//_WIN32</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <span class="comment">// 更新処理、描画処理を呼び出す</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <a class="code hl_function" href="class_sector11_f_w_1_1_game_engine.html#af059bdfcb446a032606d01f59814e0c3">Update</a>(delta_time);</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <a class="code hl_function" href="class_sector11_f_w_1_1_game_engine.html#a0b2dc2c5fcdb331a6ae4f4f74e8b7d39">Draw</a>(delta_time);</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="comment">// 規定時間までWAIT</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        fpsControl.<a class="code hl_function" href="class_f_p_s.html#aa4cafa33c5a1dc69aef26854193051e4">Wait</a>();</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    }</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="message_8h.html">message.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="}">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="namespace_sector_f_w.html#a393892d24cce8e09277b895a894509d3">   16</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespace_sector_f_w.html#a393892d24cce8e09277b895a894509d3">InitializeGameEngine</a>(<span class="keywordtype">bool</span> initialize)</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="comment">// グラフィックデバイスが初期化されていない場合は、エラーを出す</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <a class="code hl_define" href="message_8h.html#a601a6e74da786e0e3fcea967d8cb4cc3">DYNAMIC_ASSERT_MESSAGE</a>(initialize, <span class="stringliteral">&quot;GraphicsDevice is not Configure&quot;</span>);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        timeBeginPeriod(1);  <span class="comment">// 精度を1msに設定</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif </span><span class="comment">//_WIN32</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    }</div>
 </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="foldopen" id="foldopen00020" data-start="{" data-end="}">
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_sector11_f_w_1_1_game_engine.html#af059bdfcb446a032606d01f59814e0c3">   20</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_sector11_f_w_1_1_game_engine.html#af059bdfcb446a032606d01f59814e0c3">GameEngine::Update</a>(uint64_t delta_time)</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="}">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="namespace_sector_f_w.html#a30f45c1f9ec233bcb53d89232c64c958">   26</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespace_sector_f_w.html#a30f45c1f9ec233bcb53d89232c64c958">UnInitializeGameEngine</a>()</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        timeEndPeriod(1);    <span class="comment">// 後始末</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif </span><span class="comment">//_WIN32</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    }</div>
 </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="foldopen" id="foldopen00025" data-start="{" data-end="}">
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_sector11_f_w_1_1_game_engine.html#a0b2dc2c5fcdb331a6ae4f4f74e8b7d39">   25</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_sector11_f_w_1_1_game_engine.html#a0b2dc2c5fcdb331a6ae4f4f74e8b7d39">GameEngine::Draw</a>(uint64_t delta_time)</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    }</div>
-</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
-</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>}</div>
 <div class="ttc" id="a_game_engine_8h_html"><div class="ttname"><a href="_game_engine_8h.html">GameEngine.h</a></div><div class="ttdoc">ゲームロジックを実行するクラス</div></div>
-<div class="ttc" id="aclass_f_p_s_html"><div class="ttname"><a href="class_f_p_s.html">FPS</a></div><div class="ttdoc">FPS制御クラス</div><div class="ttdef"><b>Definition</b> <a href="_fps_control_8h_source.html#l00020">FpsControl.h:20</a></div></div>
-<div class="ttc" id="aclass_f_p_s_html_aa4cafa33c5a1dc69aef26854193051e4"><div class="ttname"><a href="class_f_p_s.html#aa4cafa33c5a1dc69aef26854193051e4">FPS::Wait</a></div><div class="ttdeci">void Wait() const</div><div class="ttdoc">FPS制御のための待機</div><div class="ttdef"><b>Definition</b> <a href="_fps_control_8h_source.html#l00053">FpsControl.h:53</a></div></div>
-<div class="ttc" id="aclass_f_p_s_html_af02372c3e55e98c6521f7dfd6cf1dd34"><div class="ttname"><a href="class_f_p_s.html#af02372c3e55e98c6521f7dfd6cf1dd34">FPS::CalcDelta</a></div><div class="ttdeci">uint64_t CalcDelta()</div><div class="ttdoc">デルタタイムの計算</div><div class="ttdef"><b>Definition</b> <a href="_fps_control_8h_source.html#l00041">FpsControl.h:41</a></div></div>
-<div class="ttc" id="aclass_sector11_f_w_1_1_game_engine_html_a0b2dc2c5fcdb331a6ae4f4f74e8b7d39"><div class="ttname"><a href="class_sector11_f_w_1_1_game_engine.html#a0b2dc2c5fcdb331a6ae4f4f74e8b7d39">Sector11FW::GameEngine::Draw</a></div><div class="ttdeci">static void Draw(uint64_t delta_time)</div><div class="ttdoc">描画処理</div><div class="ttdef"><b>Definition</b> <a href="#l00025">GameEngine.cpp:25</a></div></div>
-<div class="ttc" id="aclass_sector11_f_w_1_1_game_engine_html_a8cc6162e843587ff3f69365907399ce3"><div class="ttname"><a href="class_sector11_f_w_1_1_game_engine.html#a8cc6162e843587ff3f69365907399ce3">Sector11FW::GameEngine::MainLoop</a></div><div class="ttdeci">static void MainLoop(FPS &amp;fpsControl)</div><div class="ttdoc">メインループ</div><div class="ttdef"><b>Definition</b> <a href="#l00005">GameEngine.cpp:5</a></div></div>
-<div class="ttc" id="aclass_sector11_f_w_1_1_game_engine_html_af059bdfcb446a032606d01f59814e0c3"><div class="ttname"><a href="class_sector11_f_w_1_1_game_engine.html#af059bdfcb446a032606d01f59814e0c3">Sector11FW::GameEngine::Update</a></div><div class="ttdeci">static void Update(uint64_t delta_time)</div><div class="ttdoc">更新処理</div><div class="ttdef"><b>Definition</b> <a href="#l00020">GameEngine.cpp:20</a></div></div>
-<div class="ttc" id="anamespace_sector11_f_w_html"><div class="ttname"><a href="namespace_sector11_f_w.html">Sector11FW</a></div><div class="ttdef"><b>Definition</b> <a href="#l00003">GameEngine.cpp:4</a></div></div>
+<div class="ttc" id="amessage_8h_html"><div class="ttname"><a href="message_8h.html">message.h</a></div></div>
+<div class="ttc" id="amessage_8h_html_a601a6e74da786e0e3fcea967d8cb4cc3"><div class="ttname"><a href="message_8h.html#a601a6e74da786e0e3fcea967d8cb4cc3">DYNAMIC_ASSERT_MESSAGE</a></div><div class="ttdeci">#define DYNAMIC_ASSERT_MESSAGE(expr,...)</div><div class="ttdef"><b>Definition</b> <a href="message_8h_source.html#l00011">message.h:11</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html_a30f45c1f9ec233bcb53d89232c64c958"><div class="ttname"><a href="namespace_sector_f_w.html#a30f45c1f9ec233bcb53d89232c64c958">SectorFW::UnInitializeGameEngine</a></div><div class="ttdeci">void UnInitializeGameEngine()</div><div class="ttdef"><b>Definition</b> <a href="#l00026">GameEngine.cpp:26</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html_a393892d24cce8e09277b895a894509d3"><div class="ttname"><a href="namespace_sector_f_w.html#a393892d24cce8e09277b895a894509d3">SectorFW::InitializeGameEngine</a></div><div class="ttdeci">void InitializeGameEngine(bool initialize)</div><div class="ttdef"><b>Definition</b> <a href="#l00016">GameEngine.cpp:16</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f7f8c59c1c248bac6d0283e91c8a15c6.html">Core</a></li><li class="navelem"><a class="el" href="_game_engine_8cpp.html">GameEngine.cpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a2f0e5642e47e7ed59fe0f0829eafb5f.html">Core</a></li><li class="navelem"><a class="el" href="_game_engine_8cpp.html">GameEngine.cpp</a></li>
     <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>

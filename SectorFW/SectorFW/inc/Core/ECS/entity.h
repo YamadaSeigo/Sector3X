@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   entity.h
+ * @brief エンティティIDを定義するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   June 2025
+ *********************************************************************/
+
 #pragma once
 
 namespace SectorFW
@@ -20,14 +27,14 @@ namespace SectorFW
 			 * @param other EntityIDをコピーする
 			 * @return EntityID
              */
-            bool operator==(const EntityID& other) const {
+            bool operator==(const EntityID& other) const noexcept {
                 return index == other.index && generation == other.generation;
             }
             /**
 			 * @brief EntityIDが有効かどうかを確認する
 			 * @return 有効な場合はtrue、無効な場合はfalse
              */
-            bool IsValid() const {
+            bool IsValid() const noexcept {
                 return index != UINT32_MAX;
             }
             /**
@@ -51,7 +58,7 @@ namespace std {
      */
     template <>
     struct hash<SectorFW::ECS::EntityID> {
-        size_t operator()(const SectorFW::ECS::EntityID& id) const {
+        size_t operator()(const SectorFW::ECS::EntityID& id) const noexcept{
             // 高速な組み合わせ：FNV1a, Boostのhash_combine風
             return std::hash<uint64_t>{}(static_cast<uint64_t>(id.generation) << 32 | id.index);
         }

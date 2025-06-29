@@ -1,0 +1,13 @@
+digraph "SectorFW::ECS::EntityManager::GetSparseComponents"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="SectorFW::ECS::EntityManager\l::GetSparseComponents",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="まばらなコンポーネントを取得する関数"];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="SectorFW::ECS::EntityManager\l::GetSparseStore",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_entity_manager.html#a842d67c54e460bd3aca73e5426075005",tooltip="まばらなコンポーネントストアを取得する関数"];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="SectorFW::ECS::Component\lTypeRegistry::GetID",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11",tooltip="コンポーネントの型IDを取得します。"];
+}

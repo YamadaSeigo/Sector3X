@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/Archetype.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_archetype_8h_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Archetype.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_archetype_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_archetype_chunk_8h.html">ArchetypeChunk.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html">   22</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a72f0778633c6b55c8058b4864c085996">Archetype</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a72f0778633c6b55c8058b4864c085996">   28</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a72f0778633c6b55c8058b4864c085996">Archetype</a>(<a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab1c5cacc89eb08f84db895e47a201428">mask</a>) noexcept : <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab1c5cacc89eb08f84db895e47a201428">mask</a>(<a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab1c5cacc89eb08f84db895e47a201428">mask</a>) {}</div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a594aa951341e0736d971c81203937ef6">   33</a></span>            <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a594aa951341e0736d971c81203937ef6">GetOrCreateChunk</a>() {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; chunk : <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a2b8193802bbef08914edafd8b58173b2">chunks</a>) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                    <span class="keywordflow">if</span> (chunk-&gt;GetEntityCount() &lt; chunk-&gt;GetCapacity())</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                        <span class="keywordflow">return</span> chunk.get();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                std::unique_ptr&lt;ArchetypeChunk&gt; newChunk = std::make_unique&lt;ArchetypeChunk&gt;(<a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab1c5cacc89eb08f84db895e47a201428">mask</a>);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                <a class="code hl_class" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* ptr = newChunk.get();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a2b8193802bbef08914edafd8b58173b2">chunks</a>.emplace_back(std::move(newChunk));</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                <span class="keywordflow">return</span> ptr;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            }</div>
+</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab04ce30028bb351b110f9b9e4315a22c">   48</a></span>            <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&amp; <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab04ce30028bb351b110f9b9e4315a22c">GetMask</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab1c5cacc89eb08f84db895e47a201428">mask</a>; }</div>
+<div class="foldopen" id="foldopen00053" data-start="{" data-end="}">
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a746bf38fe2113143a469d7dc7565bb14">   53</a></span>            <span class="keyword">const</span> std::vector&lt;std::unique_ptr&lt;ArchetypeChunk&gt;&gt;&amp; <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a746bf38fe2113143a469d7dc7565bb14">GetChunks</a>() const noexcept {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a2b8193802bbef08914edafd8b58173b2">chunks</a>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            }</div>
+</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab1c5cacc89eb08f84db895e47a201428">   60</a></span>            <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab1c5cacc89eb08f84db895e47a201428">mask</a>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a2b8193802bbef08914edafd8b58173b2">   64</a></span>            std::vector&lt;std::unique_ptr&lt;ArchetypeChunk&gt;&gt; <a class="code hl_variable" href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a2b8193802bbef08914edafd8b58173b2">chunks</a>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        };</div>
+</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>}</div>
+<div class="ttc" id="a_archetype_chunk_8h_html"><div class="ttname"><a href="_archetype_chunk_8h.html">ArchetypeChunk.h</a></div><div class="ttdoc">アーキタイプチャンクを定義するクラス</div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_html"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">SectorFW::ECS::ArchetypeChunk</a></div><div class="ttdoc">アーキタイプチャンクを表すクラス</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00040">ArchetypeChunk.h:40</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_html_a2b8193802bbef08914edafd8b58173b2"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a2b8193802bbef08914edafd8b58173b2">SectorFW::ECS::Archetype::chunks</a></div><div class="ttdeci">std::vector&lt; std::unique_ptr&lt; ArchetypeChunk &gt; &gt; chunks</div><div class="ttdoc">アーキタイプのチャンクのベクター</div><div class="ttdef"><b>Definition</b> <a href="#l00064">Archetype.h:64</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_html_a594aa951341e0736d971c81203937ef6"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a594aa951341e0736d971c81203937ef6">SectorFW::ECS::Archetype::GetOrCreateChunk</a></div><div class="ttdeci">ArchetypeChunk * GetOrCreateChunk()</div><div class="ttdoc">アーキタイプのチャンクを取得または作成する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00033">Archetype.h:33</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_html_a72f0778633c6b55c8058b4864c085996"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a72f0778633c6b55c8058b4864c085996">SectorFW::ECS::Archetype::Archetype</a></div><div class="ttdeci">Archetype(ComponentMask mask) noexcept</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00028">Archetype.h:28</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_html_a746bf38fe2113143a469d7dc7565bb14"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#a746bf38fe2113143a469d7dc7565bb14">SectorFW::ECS::Archetype::GetChunks</a></div><div class="ttdeci">const std::vector&lt; std::unique_ptr&lt; ArchetypeChunk &gt; &gt; &amp; GetChunks() const noexcept</div><div class="ttdoc">アーキタイプのチャンクを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00053">Archetype.h:53</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_html_ab04ce30028bb351b110f9b9e4315a22c"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab04ce30028bb351b110f9b9e4315a22c">SectorFW::ECS::Archetype::GetMask</a></div><div class="ttdeci">const ComponentMask &amp; GetMask() const noexcept</div><div class="ttdoc">アーキタイプのコンポーネントマスクを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00048">Archetype.h:48</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_html_ab1c5cacc89eb08f84db895e47a201428"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_archetype.html#ab1c5cacc89eb08f84db895e47a201428">SectorFW::ECS::Archetype::mask</a></div><div class="ttdeci">ComponentMask mask</div><div class="ttdoc">アーキタイプのコンポーネントマスク</div><div class="ttdef"><b>Definition</b> <a href="#l00060">Archetype.h:60</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html">SectorFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_ace5c222981b965468c3868a48028a512"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">SectorFW::ECS::ComponentMask</a></div><div class="ttdeci">std::bitset&lt; MaxComponents &gt; ComponentMask</div><div class="ttdoc">コンポーネントマスクを定義するビットセット型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00035">component.hpp:35</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f7f8c59c1c248bac6d0283e91c8a15c6.html">Core</a></li><li class="navelem"><a class="el" href="dir_bfd096cbba80358637d44e82aa8d4a3b.html">ECS</a></li><li class="navelem"><a class="el" href="_archetype_8h.html">Archetype.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

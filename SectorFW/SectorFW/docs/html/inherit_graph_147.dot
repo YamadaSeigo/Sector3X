@@ -1,0 +1,9 @@
+digraph "クラス階層図"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node0 [id="Node000000",label="SectorFW::unique_types\l\< Ts \>::impl\< T, Us... \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html",tooltip="ユニークな型を抽出するための再帰的な実装"];
+}

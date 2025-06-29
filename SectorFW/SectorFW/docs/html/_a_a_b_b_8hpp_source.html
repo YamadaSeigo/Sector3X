@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Math/AABB.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_a_a_b_b_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">AABB.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_a_a_b_b_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_vector_8hpp.html">Vector.hpp</a>&quot;</span> <span class="comment">// Vec&lt;T, N&gt; を定義しているヘッダー</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w.html">SectorFW</a></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_sector_f_w_1_1_math.html">Math</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> VecT&gt;</div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html">   11</a></span>        <span class="keyword">struct </span><a class="code hl_function" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab51d2cb71697e51216b50223f37e623f">AABB</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">   12</a></span>            VecT <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a>;  <span class="comment">// 最小点（左下 / 前）</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">   13</a></span>            VecT <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a>;  <span class="comment">// 最大点（右上 / 奥）</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab51d2cb71697e51216b50223f37e623f">   15</a></span>            <a class="code hl_function" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab51d2cb71697e51216b50223f37e623f">AABB</a>() : <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a>(T(0)), <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a>(T(0)) {}</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a062ff7d1ab6a7df31521293a314b0a7d">   16</a></span>            <a class="code hl_function" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a062ff7d1ab6a7df31521293a314b0a7d">AABB</a>(<span class="keyword">const</span> VecT&amp; lower_bound_, <span class="keyword">const</span> VecT&amp; upper_bound_) : <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a>(lower_bound_), <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a>(upper_bound_) {}</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            <span class="comment">// サイズ（幅や高さ）</span></div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="}">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#aaa93c22d24d88baf3a7a7a01f2288567">   19</a></span>            VecT <a class="code hl_function" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#aaa93c22d24d88baf3a7a7a01f2288567">size</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a> - <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            }</div>
+</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <span class="comment">// 中心</span></div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="}">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#abf4f1a8e4eb956dda14069a10af2640b">   24</a></span>            VecT <a class="code hl_function" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#abf4f1a8e4eb956dda14069a10af2640b">center</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                <span class="keywordflow">return</span> (<a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a> + <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a>) * T(0.5);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            }</div>
+</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            <span class="comment">// 点がこのAABB内に含まれているか</span></div>
+<div class="foldopen" id="foldopen00029" data-start="{" data-end="}">
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a94e37a660fad5fd850c72033010d3a37">   29</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a94e37a660fad5fd850c72033010d3a37">contains</a>(<span class="keyword">const</span> VecT&amp; point)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <span class="keyword">sizeof</span>(VecT) / <span class="keyword">sizeof</span>(T); ++i) {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>                    <span class="keywordflow">if</span> (point[i] &lt; <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a>[i] || point[i] &gt; <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a>[i])</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                }</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            }</div>
+</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="comment">// AABBが別のAABBと交差しているか</span></div>
+<div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a5f8a5f8aab49088aef317cc8df56e54a">   38</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a5f8a5f8aab49088aef317cc8df56e54a">intersects</a>(<span class="keyword">const</span> <a class="code hl_function" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab51d2cb71697e51216b50223f37e623f">AABB</a>&amp; other)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <span class="keyword">sizeof</span>(VecT) / <span class="keyword">sizeof</span>(T); ++i) {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                    <span class="keywordflow">if</span> (<a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a>[i] &lt; other.<a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a>[i] || <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a>[i] &gt; other.<a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a>[i])</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                }</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            }</div>
+</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <span class="comment">// AABBを拡張して点を包むようにする</span></div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a1c82016668c91a010ecc3e0c26b5325f">   47</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a1c82016668c91a010ecc3e0c26b5325f">expandToInclude</a>(<span class="keyword">const</span> VecT&amp; point) {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <span class="keyword">sizeof</span>(VecT) / <span class="keyword">sizeof</span>(T); ++i) {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                    <span class="keywordflow">if</span> (point[i] &lt; <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a>[i]) <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">lower_bound</a>[i] = point[i];</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                    <span class="keywordflow">if</span> (point[i] &gt; <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a>[i]) <a class="code hl_variable" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">upper_bound</a>[i] = point[i];</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                }</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            }</div>
+</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        };</div>
+</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="namespace_sector_f_w_1_1_math.html#abf7fc590d46400abe08dbc4fba715a6a">   56</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="namespace_sector_f_w_1_1_math.html#abf7fc590d46400abe08dbc4fba715a6a">AABB2f</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html">AABB&lt;float, Vec2f&gt;</a>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="namespace_sector_f_w_1_1_math.html#ab74622751dce7bb167219150fb1a7c00">   57</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="namespace_sector_f_w_1_1_math.html#ab74622751dce7bb167219150fb1a7c00">AABB3f</a> = <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html">AABB&lt;float, Vec3f&gt;</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
+<div class="ttc" id="a_vector_8hpp_html"><div class="ttname"><a href="_vector_8hpp.html">Vector.hpp</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_math_html"><div class="ttname"><a href="namespace_sector_f_w_1_1_math.html">SectorFW::Math</a></div><div class="ttdef"><b>Definition</b> <a href="convert__direct_x_8hpp_source.html#l00009">convert_directX.hpp:10</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_math_html_ab74622751dce7bb167219150fb1a7c00"><div class="ttname"><a href="namespace_sector_f_w_1_1_math.html#ab74622751dce7bb167219150fb1a7c00">SectorFW::Math::AABB3f</a></div><div class="ttdeci">AABB&lt; float, Vec3f &gt; AABB3f</div><div class="ttdef"><b>Definition</b> <a href="#l00057">AABB.hpp:57</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_math_html_abf7fc590d46400abe08dbc4fba715a6a"><div class="ttname"><a href="namespace_sector_f_w_1_1_math.html#abf7fc590d46400abe08dbc4fba715a6a">SectorFW::Math::AABB2f</a></div><div class="ttdeci">AABB&lt; float, Vec2f &gt; AABB2f</div><div class="ttdef"><b>Definition</b> <a href="#l00056">AABB.hpp:56</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_html"><div class="ttname"><a href="namespace_sector_f_w.html">SectorFW</a></div><div class="ttdef"><b>Definition</b> <a href="_asset_manager_8h_source.html#l00014">AssetManager.h:15</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html">SectorFW::Math::AABB</a></div><div class="ttdef"><b>Definition</b> <a href="#l00011">AABB.hpp:11</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html_a062ff7d1ab6a7df31521293a314b0a7d"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a062ff7d1ab6a7df31521293a314b0a7d">SectorFW::Math::AABB::AABB</a></div><div class="ttdeci">AABB(const VecT &amp;lower_bound_, const VecT &amp;upper_bound_)</div><div class="ttdef"><b>Definition</b> <a href="#l00016">AABB.hpp:16</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html_a1c82016668c91a010ecc3e0c26b5325f"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a1c82016668c91a010ecc3e0c26b5325f">SectorFW::Math::AABB::expandToInclude</a></div><div class="ttdeci">void expandToInclude(const VecT &amp;point)</div><div class="ttdef"><b>Definition</b> <a href="#l00047">AABB.hpp:47</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html_a20f68a0de715caf7c3976915b642faa5"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a20f68a0de715caf7c3976915b642faa5">SectorFW::Math::AABB&lt; float, Vec2f &gt;::upper_bound</a></div><div class="ttdeci">Vec2f upper_bound</div><div class="ttdef"><b>Definition</b> <a href="#l00013">AABB.hpp:13</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html_a5f8a5f8aab49088aef317cc8df56e54a"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a5f8a5f8aab49088aef317cc8df56e54a">SectorFW::Math::AABB::intersects</a></div><div class="ttdeci">bool intersects(const AABB &amp;other) const</div><div class="ttdef"><b>Definition</b> <a href="#l00038">AABB.hpp:38</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html_a94e37a660fad5fd850c72033010d3a37"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#a94e37a660fad5fd850c72033010d3a37">SectorFW::Math::AABB::contains</a></div><div class="ttdeci">bool contains(const VecT &amp;point) const</div><div class="ttdef"><b>Definition</b> <a href="#l00029">AABB.hpp:29</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html_aaa93c22d24d88baf3a7a7a01f2288567"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#aaa93c22d24d88baf3a7a7a01f2288567">SectorFW::Math::AABB::size</a></div><div class="ttdeci">VecT size() const</div><div class="ttdef"><b>Definition</b> <a href="#l00019">AABB.hpp:19</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html_ab35d4fe2810495b2c768ff0ec7903f24"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab35d4fe2810495b2c768ff0ec7903f24">SectorFW::Math::AABB&lt; float, Vec2f &gt;::lower_bound</a></div><div class="ttdeci">Vec2f lower_bound</div><div class="ttdef"><b>Definition</b> <a href="#l00012">AABB.hpp:12</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html_ab51d2cb71697e51216b50223f37e623f"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#ab51d2cb71697e51216b50223f37e623f">SectorFW::Math::AABB::AABB</a></div><div class="ttdeci">AABB()</div><div class="ttdef"><b>Definition</b> <a href="#l00015">AABB.hpp:15</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_a_a_b_b_html_abf4f1a8e4eb956dda14069a10af2640b"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_a_a_b_b.html#abf4f1a8e4eb956dda14069a10af2640b">SectorFW::Math::AABB::center</a></div><div class="ttdeci">VecT center() const</div><div class="ttdef"><b>Definition</b> <a href="#l00024">AABB.hpp:24</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_dd3f321c45aa458ec97f6e6817f2e6ea.html">Math</a></li><li class="navelem"><a class="el" href="_a_a_b_b_8hpp.html">AABB.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

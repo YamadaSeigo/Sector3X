@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Util/unique_variant.hpp ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('unique__variant_8hpp.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">クラス</a> &#124;
+<a href="#namespaces">名前空間</a> &#124;
+<a href="#typedef-members">型定義</a> &#124;
+<a href="#var-members">変数</a>  </div>
+  <div class="headertitle"><div class="title">unique_variant.hpp ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>ユニークな型のvariantを生成するためのヘッダーファイル  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &lt;variant&gt;</code><br />
+<code>#include &lt;type_traits&gt;</code><br />
+<code>#include &lt;tuple&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+unique_variant.hpp の依存先関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+被依存関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+</div>
+<p><a href="unique__variant_8hpp_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1unique__types.html">SectorFW::unique_types&lt; Ts &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ユニークな型のリストを生成するためのヘルパー構造体  <a href="struct_sector_f_w_1_1unique__types.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1unique__types_1_1impl_3_4.html">SectorFW::unique_types&lt; Ts &gt;::impl&lt;&gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">空のタプルを生成する特化版  <a href="struct_sector_f_w_1_1unique__types_1_1impl_3_4.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html">SectorFW::unique_types&lt; Ts &gt;::impl&lt; T, Us... &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ユニークな型を抽出するための再帰的な実装  <a href="struct_sector_f_w_1_1unique__types_1_1impl_3_01_t_00_01_us_8_8_8_01_4.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1tuple__to__variant_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html">SectorFW::tuple_to_variant&lt; std::tuple&lt; Ts... &gt; &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">tuple → variant に変換する特化版  <a href="struct_sector_f_w_1_1tuple__to__variant_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html">SectorFW::unique_variant_impl&lt; std::tuple&lt; Ts... &gt; &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">unique_variant_impl：tuple&lt;Ts...&gt; の特化版  <a href="struct_sector_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1unique__variant__impl__alt.html">SectorFW::unique_variant_impl_alt&lt; Ts &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">unique_variant_impl_alt：可変長引数テンプレートを使用してユニークな型のvariantを生成する  <a href="struct_sector_f_w_1_1unique__variant__impl__alt.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+名前空間</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+型定義</h2></td></tr>
+<tr class="memitem:a6b03e733e0e5b718f65593f9b7f0a49a" id="r_a6b03e733e0e5b718f65593f9b7f0a49a"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a6b03e733e0e5b718f65593f9b7f0a49a"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w.html#a6b03e733e0e5b718f65593f9b7f0a49a">SectorFW::unique_variant_from_tuple</a> = typename <a class="el" href="struct_sector_f_w_1_1unique__variant__impl.html">unique_variant_impl</a>&lt;T&gt;::type</td></tr>
+<tr class="memdesc:a6b03e733e0e5b718f65593f9b7f0a49a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ユニークな型のvariantを生成するためのエイリアス(tuple版)  <br /></td></tr>
+<tr class="separator:a6b03e733e0e5b718f65593f9b7f0a49a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8e7962bbece335a780baaf3d4806e41" id="r_ae8e7962bbece335a780baaf3d4806e41"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:ae8e7962bbece335a780baaf3d4806e41"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w.html#ae8e7962bbece335a780baaf3d4806e41">SectorFW::unique_variant_from_args</a> = typename <a class="el" href="struct_sector_f_w_1_1unique__variant__impl__alt.html">unique_variant_impl_alt</a>&lt;Ts...&gt;::type</td></tr>
+<tr class="memdesc:ae8e7962bbece335a780baaf3d4806e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">ユニークな型のvariantを生成するためのエイリアス（可変長引数テンプレート版）  <br /></td></tr>
+<tr class="separator:ae8e7962bbece335a780baaf3d4806e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+変数</h2></td></tr>
+<tr class="memitem:a8778f24359ab4bfad4e7850cbfb4647b" id="r_a8778f24359ab4bfad4e7850cbfb4647b"><td class="memTemplParams" colspan="2">template&lt;typename T, typename... Ts&gt; </td></tr>
+<tr class="memitem:a8778f24359ab4bfad4e7850cbfb4647b"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sector_f_w.html#a8778f24359ab4bfad4e7850cbfb4647b">SectorFW::is_in_v</a> = (std::is_same_v&lt;T, Ts&gt; || ...)</td></tr>
+<tr class="memdesc:a8778f24359ab4bfad4e7850cbfb4647b"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定された型Tが、可変長引数の型リストTs...のいずれかと同じかどうかを判定する  <br /></td></tr>
+<tr class="separator:a8778f24359ab4bfad4e7850cbfb4647b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>ユニークな型のvariantを生成するためのヘッダーファイル </p>
+<dl class="section author"><dt>著者</dt><dd>seigo_t03b63m </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>June 2025 </dd></dl>
+
+<p class="definition"> <a class="el" href="unique__variant_8hpp_source.html">unique_variant.hpp</a> に定義があります。</p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_ee6da17cfec8137cf237c714c1844f74.html">Util</a></li><li class="navelem"><a class="el" href="unique__variant_8hpp.html">unique_variant.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

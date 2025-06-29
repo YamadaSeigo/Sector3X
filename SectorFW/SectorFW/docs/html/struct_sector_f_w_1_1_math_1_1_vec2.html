@@ -1,0 +1,605 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::Math::Vec2&lt; T &gt; 構造体テンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('struct_sector_f_w_1_1_math_1_1_vec2.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pub-attribs">公開変数類</a> &#124;
+<a href="struct_sector_f_w_1_1_math_1_1_vec2-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::Math::Vec2&lt; T &gt; 構造体テンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_vector_8hpp_source.html">Vector.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a3aa1c36cbc957d3a7606981783d7ac4c" id="r_a3aa1c36cbc957d3a7606981783d7ac4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3aa1c36cbc957d3a7606981783d7ac4c">Vec2</a> ()</td></tr>
+<tr class="separator:a3aa1c36cbc957d3a7606981783d7ac4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae74b5985eba4e659535e57a94cb564fc" id="r_ae74b5985eba4e659535e57a94cb564fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae74b5985eba4e659535e57a94cb564fc">Vec2</a> (T x_, T y_)</td></tr>
+<tr class="separator:ae74b5985eba4e659535e57a94cb564fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a96c27de2d47779f53413f52b1f88db" id="r_a9a96c27de2d47779f53413f52b1f88db"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a96c27de2d47779f53413f52b1f88db">Vec2</a> (T val)</td></tr>
+<tr class="separator:a9a96c27de2d47779f53413f52b1f88db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac83a601cd5ac4b457156c91ae33a2852" id="r_ac83a601cd5ac4b457156c91ae33a2852"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac83a601cd5ac4b457156c91ae33a2852">operator[]</a> (size_t i)</td></tr>
+<tr class="separator:ac83a601cd5ac4b457156c91ae33a2852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5b9663fd2bfee20566fa4c20477e000" id="r_ad5b9663fd2bfee20566fa4c20477e000"><td class="memItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad5b9663fd2bfee20566fa4c20477e000">operator[]</a> (size_t i) const</td></tr>
+<tr class="separator:ad5b9663fd2bfee20566fa4c20477e000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dd047aa3a890823238be05a366b03ce" id="r_a6dd047aa3a890823238be05a366b03ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6dd047aa3a890823238be05a366b03ce">operator+</a> (const <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a> &amp;rhs) const</td></tr>
+<tr class="separator:a6dd047aa3a890823238be05a366b03ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6ec7ea73a47e7b7341eeb5158627c7d" id="r_ac6ec7ea73a47e7b7341eeb5158627c7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6ec7ea73a47e7b7341eeb5158627c7d">operator-</a> (const <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a> &amp;rhs) const</td></tr>
+<tr class="separator:ac6ec7ea73a47e7b7341eeb5158627c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1b17c2bcebdce611a8346f663ac7504" id="r_ae1b17c2bcebdce611a8346f663ac7504"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1b17c2bcebdce611a8346f663ac7504">operator*</a> (T s) const</td></tr>
+<tr class="separator:ae1b17c2bcebdce611a8346f663ac7504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adce3cfa54ba2385eacba1b73f0f38c28" id="r_adce3cfa54ba2385eacba1b73f0f38c28"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adce3cfa54ba2385eacba1b73f0f38c28">dot</a> (const <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a> &amp;rhs) const</td></tr>
+<tr class="separator:adce3cfa54ba2385eacba1b73f0f38c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7db0dba23242c5430eff553a23a342a1" id="r_a7db0dba23242c5430eff553a23a342a1"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7db0dba23242c5430eff553a23a342a1">length</a> () const</td></tr>
+<tr class="separator:a7db0dba23242c5430eff553a23a342a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ac432dd1da5c1f3b0e5efeb9794450d" id="r_a2ac432dd1da5c1f3b0e5efeb9794450d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ac432dd1da5c1f3b0e5efeb9794450d">normalized</a> () const</td></tr>
+<tr class="separator:a2ac432dd1da5c1f3b0e5efeb9794450d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:aa9eeb0d79d85e135e2711fa189f5eb76" id="r_aa9eeb0d79d85e135e2711fa189f5eb76"><td class="memItemLeft" >union {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe9f5f7c1e162d57b56e035ace5464db" id="r_abe9f5f7c1e162d57b56e035ace5464db"><td class="memItemLeft" >&#160;&#160;&#160;struct {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55865d11257c4bd7807400a08c7c33ba" id="r_a55865d11257c4bd7807400a08c7c33ba"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;T&#160;&#160;&#160;<a class="el" href="#ae8eeb2eb29c112035bf43892312ea650">x</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a55865d11257c4bd7807400a08c7c33ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a671b419a438b56b1f63dcb4452d0341f" id="r_a671b419a438b56b1f63dcb4452d0341f"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;T&#160;&#160;&#160;<a class="el" href="#ae0a2d37b49ff94361bc8716566614b82">y</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a671b419a438b56b1f63dcb4452d0341f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe9f5f7c1e162d57b56e035ace5464db" id="r_abe9f5f7c1e162d57b56e035ace5464db"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;</td><td class="memItemRight" valign="bottom">&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:abe9f5f7c1e162d57b56e035ace5464db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a089689c649d9c84cab57ed1a728d2af1" id="r_a089689c649d9c84cab57ed1a728d2af1"><td class="memItemLeft" >&#160;&#160;&#160;T&#160;&#160;&#160;<a class="el" href="#a2410f7ab710e12041495b1854bf3d4ef">data</a> [2]&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a089689c649d9c84cab57ed1a728d2af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9eeb0d79d85e135e2711fa189f5eb76" id="r_aa9eeb0d79d85e135e2711fa189f5eb76"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom">&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:aa9eeb0d79d85e135e2711fa189f5eb76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+struct SectorFW::Math::Vec2&lt; T &gt;</div>
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00027">27</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="a3aa1c36cbc957d3a7606981783d7ac4c" name="a3aa1c36cbc957d3a7606981783d7ac4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aa1c36cbc957d3a7606981783d7ac4c">&#9670;&#160;</a></span>Vec2() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::Vec2 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00033">33</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   33</span>: <a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a>(0), <a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a>(0) {}</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_vec2_html_ae0a2d37b49ff94361bc8716566614b82"><div class="ttname"><a href="#ae0a2d37b49ff94361bc8716566614b82">SectorFW::Math::Vec2::y</a></div><div class="ttdeci">T y</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00029">Vector.hpp:29</a></div></div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_vec2_html_ae8eeb2eb29c112035bf43892312ea650"><div class="ttname"><a href="#ae8eeb2eb29c112035bf43892312ea650">SectorFW::Math::Vec2::x</a></div><div class="ttdeci">T x</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00029">Vector.hpp:29</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+
+</div>
+</div>
+<a id="ae74b5985eba4e659535e57a94cb564fc" name="ae74b5985eba4e659535e57a94cb564fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae74b5985eba4e659535e57a94cb564fc">&#9670;&#160;</a></span>Vec2() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::Vec2 </td>
+          <td>(</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>x_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>y_</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00034">34</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   34</span>: <a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">x_</a>), <a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">y_</a>) {}</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_vec2_html"><div class="ttname"><a href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a></div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00027">Vector.hpp:27</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9a96c27de2d47779f53413f52b1f88db" name="a9a96c27de2d47779f53413f52b1f88db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a96c27de2d47779f53413f52b1f88db">&#9670;&#160;</a></span>Vec2() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::Vec2 </td>
+          <td>(</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>val</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00035">35</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   35</span>: <a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">val</a>), <a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">val</a>) {}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="adce3cfa54ba2385eacba1b73f0f38c28" name="adce3cfa54ba2385eacba1b73f0f38c28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adce3cfa54ba2385eacba1b73f0f38c28">&#9670;&#160;</a></span>dot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::dot </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00044">44</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   44</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">rhs</a>.<a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a> + <a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">rhs</a>.<a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a>; }</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<a id="a7db0dba23242c5430eff553a23a342a1" name="a7db0dba23242c5430eff553a23a342a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7db0dba23242c5430eff553a23a342a1">&#9670;&#160;</a></span>length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::length </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00046">46</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   46</span>{ <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">std::sqrt</a>(<a class="code hl_function" href="#adce3cfa54ba2385eacba1b73f0f38c28">dot</a>(*<span class="keyword">this</span>)); }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_vec2_html_adce3cfa54ba2385eacba1b73f0f38c28"><div class="ttname"><a href="#adce3cfa54ba2385eacba1b73f0f38c28">SectorFW::Math::Vec2::dot</a></div><div class="ttdeci">T dot(const Vec2 &amp;rhs) const</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00044">Vector.hpp:44</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
+
+</div>
+</div>
+<a id="a2ac432dd1da5c1f3b0e5efeb9794450d" name="a2ac432dd1da5c1f3b0e5efeb9794450d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ac432dd1da5c1f3b0e5efeb9794450d">&#9670;&#160;</a></span>normalized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a> <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::normalized </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00048">48</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   48</span>                                    {</div>
+<div class="line"><span class="lineno">   49</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">T</a> <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">len</a> = <a class="code hl_function" href="#a7db0dba23242c5430eff553a23a342a1">length</a>();</div>
+<div class="line"><span class="lineno">   50</span>                <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">assert</a>(<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">len</a> != 0);</div>
+<div class="line"><span class="lineno">   51</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span> * (<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">T</a>(1) / <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">len</a>);</div>
+<div class="line"><span class="lineno">   52</span>            }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_vec2_html_a7db0dba23242c5430eff553a23a342a1"><div class="ttname"><a href="#a7db0dba23242c5430eff553a23a342a1">SectorFW::Math::Vec2::length</a></div><div class="ttdeci">T length() const</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00046">Vector.hpp:46</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae1b17c2bcebdce611a8346f663ac7504" name="ae1b17c2bcebdce611a8346f663ac7504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1b17c2bcebdce611a8346f663ac7504">&#9670;&#160;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a> <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::operator* </td>
+          <td>(</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00042">42</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   42</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="#a3aa1c36cbc957d3a7606981783d7ac4c">Vec2</a>(<a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">s</a>, <a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a> * <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">s</a>); }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_vec2_html_a3aa1c36cbc957d3a7606981783d7ac4c"><div class="ttname"><a href="#a3aa1c36cbc957d3a7606981783d7ac4c">SectorFW::Math::Vec2::Vec2</a></div><div class="ttdeci">Vec2()</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00033">Vector.hpp:33</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6dd047aa3a890823238be05a366b03ce" name="a6dd047aa3a890823238be05a366b03ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dd047aa3a890823238be05a366b03ce">&#9670;&#160;</a></span>operator+()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a> <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::operator+ </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00040">40</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="#a3aa1c36cbc957d3a7606981783d7ac4c">Vec2</a>(<a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">rhs</a>.<a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a>, <a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a> + <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">rhs</a>.<a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a>); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac6ec7ea73a47e7b7341eeb5158627c7d" name="ac6ec7ea73a47e7b7341eeb5158627c7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ec7ea73a47e7b7341eeb5158627c7d">&#9670;&#160;</a></span>operator-()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a> <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::operator- </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00041">41</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="#a3aa1c36cbc957d3a7606981783d7ac4c">Vec2</a>(<a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a> - <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">rhs</a>.<a class="code hl_variable" href="#ae8eeb2eb29c112035bf43892312ea650">x</a>, <a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a> - <a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">rhs</a>.<a class="code hl_variable" href="#ae0a2d37b49ff94361bc8716566614b82">y</a>); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac83a601cd5ac4b457156c91ae33a2852" name="ac83a601cd5ac4b457156c91ae33a2852"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac83a601cd5ac4b457156c91ae33a2852">&#9670;&#160;</a></span>operator[]() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T &amp; <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>i</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00037">37</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a2410f7ab710e12041495b1854bf3d4ef">data</a>[<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">i</a>]; }</div>
+<div class="ttc" id="astruct_sector_f_w_1_1_math_1_1_vec2_html_a2410f7ab710e12041495b1854bf3d4ef"><div class="ttname"><a href="#a2410f7ab710e12041495b1854bf3d4ef">SectorFW::Math::Vec2::data</a></div><div class="ttdeci">T data[2]</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00030">Vector.hpp:30</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad5b9663fd2bfee20566fa4c20477e000" name="ad5b9663fd2bfee20566fa4c20477e000"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5b9663fd2bfee20566fa4c20477e000">&#9670;&#160;</a></span>operator[]() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const T &amp; <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>i</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00038">38</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   38</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a2410f7ab710e12041495b1854bf3d4ef">data</a>[<a class="code hl_struct" href="struct_sector_f_w_1_1_math_1_1_vec2.html">i</a>]; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="aa9eeb0d79d85e135e2711fa189f5eb76" name="aa9eeb0d79d85e135e2711fa189f5eb76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9eeb0d79d85e135e2711fa189f5eb76">&#9670;&#160;</a></span>[union]</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union  { ... }  <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2410f7ab710e12041495b1854bf3d4ef" name="a2410f7ab710e12041495b1854bf3d4ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2410f7ab710e12041495b1854bf3d4ef">&#9670;&#160;</a></span>data</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::data[2]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00030">30</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae8eeb2eb29c112035bf43892312ea650" name="ae8eeb2eb29c112035bf43892312ea650"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8eeb2eb29c112035bf43892312ea650">&#9670;&#160;</a></span>x</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::x</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00029">29</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae0a2d37b49ff94361bc8716566614b82" name="ae0a2d37b49ff94361bc8716566614b82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0a2d37b49ff94361bc8716566614b82">&#9670;&#160;</a></span>y</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">SectorFW::Math::Vec2</a>&lt; T &gt;::y</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_vector_8hpp_source.html">Vector.hpp</a> の <a class="el" href="_vector_8hpp_source.html#l00029">29</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Math/<a class="el" href="_vector_8hpp_source.html">Vector.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_math.html">Math</a></li><li class="navelem"><a class="el" href="struct_sector_f_w_1_1_math_1_1_vec2.html">Vec2</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

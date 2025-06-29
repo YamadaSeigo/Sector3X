@@ -1,0 +1,624 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::ECS::ArchetypeChunk クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">クラス</a> &#124;
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pri-attribs">非公開変数類</a> &#124;
+<a href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::ECS::ArchetypeChunk クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>アーキタイプチャンクを表すクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a>&gt;</code></p>
+<div class="dynheader">
+SectorFW::ECS::ArchetypeChunk 連携図</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html">Accessor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">アーキタイプチャンクのアクセサークラス  <a href="struct_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:aea5fd6e4cd7e8407657bfb79639eb833" id="r_aea5fd6e4cd7e8407657bfb79639eb833"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea5fd6e4cd7e8407657bfb79639eb833">ArchetypeChunk</a> (<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> mask)</td></tr>
+<tr class="memdesc:aea5fd6e4cd7e8407657bfb79639eb833"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="separator:aea5fd6e4cd7e8407657bfb79639eb833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ccfa1560cd83624a28b79ecffc35f41" id="r_a6ccfa1560cd83624a28b79ecffc35f41"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a6ccfa1560cd83624a28b79ecffc35f41"><td class="memTemplItemLeft" align="right" valign="top">std::optional&lt; T * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a6ccfa1560cd83624a28b79ecffc35f41">GetColumn</a> () noexcept</td></tr>
+<tr class="memdesc:a6ccfa1560cd83624a28b79ecffc35f41"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントの列を取得する関数  <br /></td></tr>
+<tr class="separator:a6ccfa1560cd83624a28b79ecffc35f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a177d6b725cf67286ea849e99fa728c6e" id="r_a177d6b725cf67286ea849e99fa728c6e"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a177d6b725cf67286ea849e99fa728c6e">AddEntity</a> (<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id)</td></tr>
+<tr class="memdesc:a177d6b725cf67286ea849e99fa728c6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティを追加する関数  <br /></td></tr>
+<tr class="separator:a177d6b725cf67286ea849e99fa728c6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02d306aafce7e81406f707405aa906eb" id="r_a02d306aafce7e81406f707405aa906eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02d306aafce7e81406f707405aa906eb">RemoveEntitySwapPop</a> (size_t index) noexcept</td></tr>
+<tr class="memdesc:a02d306aafce7e81406f707405aa906eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティを削除する関数(最後のエンティティと入れ替えて追放)  <br /></td></tr>
+<tr class="separator:a02d306aafce7e81406f707405aa906eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71036536875ab0be096d853372118b07" id="r_a71036536875ab0be096d853372118b07"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71036536875ab0be096d853372118b07">GetEntityCount</a> () const noexcept</td></tr>
+<tr class="memdesc:a71036536875ab0be096d853372118b07"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの数を取得する関数  <br /></td></tr>
+<tr class="separator:a71036536875ab0be096d853372118b07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeacc4d4d3cc25efec7b93690465d5787" id="r_aeacc4d4d3cc25efec7b93690465d5787"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeacc4d4d3cc25efec7b93690465d5787">GetCapacity</a> () const noexcept</td></tr>
+<tr class="memdesc:aeacc4d4d3cc25efec7b93690465d5787"><td class="mdescLeft">&#160;</td><td class="mdescRight">チャンクの容量を取得する関数  <br /></td></tr>
+<tr class="separator:aeacc4d4d3cc25efec7b93690465d5787"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6197a8e94f02e81b87f630ff439c6d18" id="r_a6197a8e94f02e81b87f630ff439c6d18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6197a8e94f02e81b87f630ff439c6d18">GetComponentMask</a> () const noexcept</td></tr>
+<tr class="memdesc:a6197a8e94f02e81b87f630ff439c6d18"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントマスクを取得する関数  <br /></td></tr>
+<tr class="separator:a6197a8e94f02e81b87f630ff439c6d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+非公開変数類</h2></td></tr>
+<tr class="memitem:ae98b3bb5e4fe5e1b6bdcef25e5d76a68" id="r_ae98b3bb5e4fe5e1b6bdcef25e5d76a68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#abc859415efffd8eaec6d46312f330451">BufferType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae98b3bb5e4fe5e1b6bdcef25e5d76a68">buffer</a> [<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ad613cff8fc5f1e25698d0397b3dffa09">ChunkSizeBytes</a>] = {}</td></tr>
+<tr class="memdesc:ae98b3bb5e4fe5e1b6bdcef25e5d76a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">アーキタイプチャンクのバッファ  <br /></td></tr>
+<tr class="separator:ae98b3bb5e4fe5e1b6bdcef25e5d76a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a3e8dea53a9a906324a1ecfc4a1c210" id="r_a0a3e8dea53a9a906324a1ecfc4a1c210"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a3e8dea53a9a906324a1ecfc4a1c210">entityCount</a> = 0</td></tr>
+<tr class="memdesc:a0a3e8dea53a9a906324a1ecfc4a1c210"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの数  <br /></td></tr>
+<tr class="separator:a0a3e8dea53a9a906324a1ecfc4a1c210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13166323267b75ef08531de91bbcf8dd" id="r_a13166323267b75ef08531de91bbcf8dd"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13166323267b75ef08531de91bbcf8dd">entities</a></td></tr>
+<tr class="memdesc:a13166323267b75ef08531de91bbcf8dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティのIDを格納するベクター  <br /></td></tr>
+<tr class="separator:a13166323267b75ef08531de91bbcf8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b752efc4da54e33a5ec492ae9fb7a99" id="r_a2b752efc4da54e33a5ec492ae9fb7a99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b752efc4da54e33a5ec492ae9fb7a99">componentMask</a></td></tr>
+<tr class="memdesc:a2b752efc4da54e33a5ec492ae9fb7a99"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントマスク  <br /></td></tr>
+<tr class="separator:a2b752efc4da54e33a5ec492ae9fb7a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36062d11488abe0136bfa81f6fd81627" id="r_a36062d11488abe0136bfa81f6fd81627"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_layout.html">ComponentLayout</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36062d11488abe0136bfa81f6fd81627">layout</a></td></tr>
+<tr class="memdesc:a36062d11488abe0136bfa81f6fd81627"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントレイアウト  <br /></td></tr>
+<tr class="separator:a36062d11488abe0136bfa81f6fd81627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>アーキタイプチャンクを表すクラス </p>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00040">40</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="aea5fd6e4cd7e8407657bfb79639eb833" name="aea5fd6e4cd7e8407657bfb79639eb833"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea5fd6e4cd7e8407657bfb79639eb833">&#9670;&#160;</a></span>ArchetypeChunk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SectorFW::ECS::ArchetypeChunk::ArchetypeChunk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a></td>          <td class="paramname"><span class="paramname"><em>mask</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mask</td><td>コンポーネントマスク @detail maskからレイアウトを取得し、チャンクの容量を設定します。 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00047">47</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   47</span>                                               : <a class="code hl_variable" href="#a36062d11488abe0136bfa81f6fd81627">layout</a>(<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_layout_registry.html#a1efe567a4b64bb9a3e069d8181fe2a45">ComponentLayoutRegistry::GetLayout</a>(mask)),</div>
+<div class="line"><span class="lineno">   48</span>                <a class="code hl_variable" href="#a2b752efc4da54e33a5ec492ae9fb7a99">componentMask</a>(mask) {</div>
+<div class="line"><span class="lineno">   49</span>                assert(<a class="code hl_variable" href="#a36062d11488abe0136bfa81f6fd81627">layout</a>.capacity &gt; 0 &amp;&amp; <span class="stringliteral">&quot;Chunk capacity must be greater than 0&quot;</span>);</div>
+<div class="line"><span class="lineno">   50</span>                <a class="code hl_variable" href="#a13166323267b75ef08531de91bbcf8dd">entities</a>.resize(<a class="code hl_variable" href="#a36062d11488abe0136bfa81f6fd81627">layout</a>.capacity);</div>
+<div class="line"><span class="lineno">   51</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a13166323267b75ef08531de91bbcf8dd"><div class="ttname"><a href="#a13166323267b75ef08531de91bbcf8dd">SectorFW::ECS::ArchetypeChunk::entities</a></div><div class="ttdeci">std::vector&lt; EntityID &gt; entities</div><div class="ttdoc">エンティティのIDを格納するベクター</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00105">ArchetypeChunk.h:105</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a2b752efc4da54e33a5ec492ae9fb7a99"><div class="ttname"><a href="#a2b752efc4da54e33a5ec492ae9fb7a99">SectorFW::ECS::ArchetypeChunk::componentMask</a></div><div class="ttdeci">ComponentMask componentMask</div><div class="ttdoc">コンポーネントマスク</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00109">ArchetypeChunk.h:109</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a36062d11488abe0136bfa81f6fd81627"><div class="ttname"><a href="#a36062d11488abe0136bfa81f6fd81627">SectorFW::ECS::ArchetypeChunk::layout</a></div><div class="ttdeci">const ComponentLayout &amp; layout</div><div class="ttdoc">コンポーネントレイアウト</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00113">ArchetypeChunk.h:113</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_layout_registry_html_a1efe567a4b64bb9a3e069d8181fe2a45"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_layout_registry.html#a1efe567a4b64bb9a3e069d8181fe2a45">SectorFW::ECS::ComponentLayoutRegistry::GetLayout</a></div><div class="ttdeci">static const ComponentLayout &amp; GetLayout(const ComponentMask &amp;mask) noexcept</div><div class="ttdoc">コンポーネントマスクに対応するコンポーネントレイアウトを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_component_layout_registry_8cpp_source.html#l00011">ComponentLayoutRegistry.cpp:11</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="a177d6b725cf67286ea849e99fa728c6e" name="a177d6b725cf67286ea849e99fa728c6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a177d6b725cf67286ea849e99fa728c6e">&#9670;&#160;</a></span>AddEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SectorFW::ECS::ArchetypeChunk::AddEntity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>エンティティを追加する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>size_t 追加されたエンティティのインデックス </dd></dl>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8cpp_source.html">ArchetypeChunk.cpp</a> の <a class="el" href="_archetype_chunk_8cpp_source.html#l00008">8</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">    9</span>        {</div>
+<div class="line"><span class="lineno">   10</span>            <a class="code hl_define" href="message_8h.html#a601a6e74da786e0e3fcea967d8cb4cc3">DYNAMIC_ASSERT_MESSAGE</a>(<a class="code hl_variable" href="#a0a3e8dea53a9a906324a1ecfc4a1c210">entityCount</a> &lt; <a class="code hl_variable" href="#a36062d11488abe0136bfa81f6fd81627">layout</a>.capacity, <span class="stringliteral">&quot;entityCount(%d) over capacity(%d)&quot;</span>, <a class="code hl_variable" href="#a0a3e8dea53a9a906324a1ecfc4a1c210">entityCount</a>, <a class="code hl_variable" href="#a36062d11488abe0136bfa81f6fd81627">layout</a>.capacity);</div>
+<div class="line"><span class="lineno">   11</span>            <span class="keywordtype">size_t</span> index = <a class="code hl_variable" href="#a0a3e8dea53a9a906324a1ecfc4a1c210">entityCount</a>++;</div>
+<div class="line"><span class="lineno">   12</span>            <a class="code hl_variable" href="#a13166323267b75ef08531de91bbcf8dd">entities</a>[index] = id;</div>
+<div class="line"><span class="lineno">   13</span>            <span class="keywordflow">return</span> index;</div>
+<div class="line"><span class="lineno">   14</span>        }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a0a3e8dea53a9a906324a1ecfc4a1c210"><div class="ttname"><a href="#a0a3e8dea53a9a906324a1ecfc4a1c210">SectorFW::ECS::ArchetypeChunk::entityCount</a></div><div class="ttdeci">size_t entityCount</div><div class="ttdoc">エンティティの数</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00101">ArchetypeChunk.h:101</a></div></div>
+<div class="ttc" id="amessage_8h_html_a601a6e74da786e0e3fcea967d8cb4cc3"><div class="ttname"><a href="message_8h.html#a601a6e74da786e0e3fcea967d8cb4cc3">DYNAMIC_ASSERT_MESSAGE</a></div><div class="ttdeci">#define DYNAMIC_ASSERT_MESSAGE(expr,...)</div><div class="ttdef"><b>Definition</b> <a href="message_8h_source.html#l00011">message.h:11</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
+
+</div>
+</div>
+<a id="aeacc4d4d3cc25efec7b93690465d5787" name="aeacc4d4d3cc25efec7b93690465d5787"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeacc4d4d3cc25efec7b93690465d5787">&#9670;&#160;</a></span>GetCapacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SectorFW::ECS::ArchetypeChunk::GetCapacity </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>チャンクの容量を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>size_t チャンクの容量 </dd></dl>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00087">87</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   87</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a36062d11488abe0136bfa81f6fd81627">layout</a>.capacity; }</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 3 --></div>
+</div>
+
+</div>
+</div>
+<a id="a6ccfa1560cd83624a28b79ecffc35f41" name="a6ccfa1560cd83624a28b79ecffc35f41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ccfa1560cd83624a28b79ecffc35f41">&#9670;&#160;</a></span>GetColumn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; T * &gt; SectorFW::ECS::ArchetypeChunk::GetColumn </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントの列を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;T*&gt; コンポーネントのポインタ </dd></dl>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00057">57</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>                                                {</div>
+<div class="line"><span class="lineno">   58</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> <span class="keywordtype">id</span> = <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><span class="lineno">   59</span>                <span class="keyword">auto</span> it = <a class="code hl_variable" href="#a36062d11488abe0136bfa81f6fd81627">layout</a>.info.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   60</span>                <span class="keywordflow">if</span> (it == <a class="code hl_variable" href="#a36062d11488abe0136bfa81f6fd81627">layout</a>.info.end()) {</div>
+<div class="line"><span class="lineno">   61</span>                    <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;Component type ID {} not found in layout&quot;</span>, <span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">   62</span>                    <span class="keywordflow">return</span> std::nullopt; <span class="comment">// or throw an exception</span></div>
+<div class="line"><span class="lineno">   63</span>                }</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span>                <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span>T*<span class="keyword">&gt;</span>(&amp;<a class="code hl_variable" href="#ae98b3bb5e4fe5e1b6bdcef25e5d76a68">buffer</a>[it-&gt;second.get(0).offset]);</div>
+<div class="line"><span class="lineno">   66</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_archetype_chunk_html_ae98b3bb5e4fe5e1b6bdcef25e5d76a68"><div class="ttname"><a href="#ae98b3bb5e4fe5e1b6bdcef25e5d76a68">SectorFW::ECS::ArchetypeChunk::buffer</a></div><div class="ttdeci">BufferType buffer[ChunkSizeBytes]</div><div class="ttdoc">アーキタイプチャンクのバッファ</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00097">ArchetypeChunk.h:97</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_a1e71189d4403cea677e5b60429879b11"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">SectorFW::ECS::ComponentTypeRegistry::GetID</a></div><div class="ttdeci">static ComponentTypeID GetID() noexcept</div><div class="ttdoc">コンポーネントの型IDを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00050">ComponentTypeRegistry.h:50</a></div></div>
+<div class="ttc" id="alogger_8h_html_ae6fc70e87e424e7083c63696b8fb9e78"><div class="ttname"><a href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a></div><div class="ttdeci">#define LOG_ERROR(fmt,...)</div><div class="ttdef"><b>Definition</b> <a href="logger_8h_source.html#l00166">logger.h:166</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_a2accadf823770a8124d2a1ed1ba0ad30"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">SectorFW::ECS::ComponentTypeID</a></div><div class="ttdeci">uint32_t ComponentTypeID</div><div class="ttdoc">コンポーネントの型IDを定義する型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00031">component.hpp:31</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 4 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 5 --></div>
+</div>
+
+</div>
+</div>
+<a id="a6197a8e94f02e81b87f630ff439c6d18" name="a6197a8e94f02e81b87f630ff439c6d18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6197a8e94f02e81b87f630ff439c6d18">&#9670;&#160;</a></span>GetComponentMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> SectorFW::ECS::ArchetypeChunk::GetComponentMask </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントマスクを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512" title="コンポーネントマスクを定義するビットセット型">ComponentMask</a> コンポーネントマスク </dd></dl>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00092">92</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   92</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a2b752efc4da54e33a5ec492ae9fb7a99">componentMask</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a71036536875ab0be096d853372118b07" name="a71036536875ab0be096d853372118b07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71036536875ab0be096d853372118b07">&#9670;&#160;</a></span>GetEntityCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SectorFW::ECS::ArchetypeChunk::GetEntityCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティの数を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>size_t エンティティの数 </dd></dl>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00082">82</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="#a0a3e8dea53a9a906324a1ecfc4a1c210">entityCount</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a02d306aafce7e81406f707405aa906eb" name="a02d306aafce7e81406f707405aa906eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02d306aafce7e81406f707405aa906eb">&#9670;&#160;</a></span>RemoveEntitySwapPop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::ArchetypeChunk::RemoveEntitySwapPop </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティを削除する関数(最後のエンティティと入れ替えて追放) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>削除するエンティティのインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8cpp_source.html">ArchetypeChunk.cpp</a> の <a class="el" href="_archetype_chunk_8cpp_source.html#l00016">16</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   17</span>        {</div>
+<div class="line"><span class="lineno">   18</span>            <span class="keywordflow">if</span> (index &lt; <a class="code hl_variable" href="#a0a3e8dea53a9a906324a1ecfc4a1c210">entityCount</a> - 1) {</div>
+<div class="line"><span class="lineno">   19</span>                <a class="code hl_variable" href="#a13166323267b75ef08531de91bbcf8dd">entities</a>[index] = <a class="code hl_variable" href="#a13166323267b75ef08531de91bbcf8dd">entities</a>[<a class="code hl_variable" href="#a0a3e8dea53a9a906324a1ecfc4a1c210">entityCount</a> - 1];</div>
+<div class="line"><span class="lineno">   20</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; [_, infos] : <a class="code hl_variable" href="#a36062d11488abe0136bfa81f6fd81627">layout</a>.info) {</div>
+<div class="line"><span class="lineno">   21</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; i : infos) {</div>
+<div class="line"><span class="lineno">   22</span>                        std::memcpy(</div>
+<div class="line"><span class="lineno">   23</span>                            &amp;<a class="code hl_variable" href="#ae98b3bb5e4fe5e1b6bdcef25e5d76a68">buffer</a>[i.offset + index * i.stride],</div>
+<div class="line"><span class="lineno">   24</span>                            &amp;<a class="code hl_variable" href="#ae98b3bb5e4fe5e1b6bdcef25e5d76a68">buffer</a>[i.offset + (<a class="code hl_variable" href="#a0a3e8dea53a9a906324a1ecfc4a1c210">entityCount</a> - 1) * i.stride],</div>
+<div class="line"><span class="lineno">   25</span>                            i.stride</div>
+<div class="line"><span class="lineno">   26</span>                        );</div>
+<div class="line"><span class="lineno">   27</span>                    }</div>
+<div class="line"><span class="lineno">   28</span>                }</div>
+<div class="line"><span class="lineno">   29</span>            }</div>
+<div class="line"><span class="lineno">   30</span>            --<a class="code hl_variable" href="#a0a3e8dea53a9a906324a1ecfc4a1c210">entityCount</a>;</div>
+<div class="line"><span class="lineno">   31</span>        }</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 6 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="ae98b3bb5e4fe5e1b6bdcef25e5d76a68" name="ae98b3bb5e4fe5e1b6bdcef25e5d76a68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae98b3bb5e4fe5e1b6bdcef25e5d76a68">&#9670;&#160;</a></span>buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#abc859415efffd8eaec6d46312f330451">BufferType</a> SectorFW::ECS::ArchetypeChunk::buffer[<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ad613cff8fc5f1e25698d0397b3dffa09">ChunkSizeBytes</a>] = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>アーキタイプチャンクのバッファ </p>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00097">97</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   97</span>{};</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2b752efc4da54e33a5ec492ae9fb7a99" name="a2b752efc4da54e33a5ec492ae9fb7a99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b752efc4da54e33a5ec492ae9fb7a99">&#9670;&#160;</a></span>componentMask</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> SectorFW::ECS::ArchetypeChunk::componentMask</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントマスク </p>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00109">109</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a13166323267b75ef08531de91bbcf8dd" name="a13166323267b75ef08531de91bbcf8dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13166323267b75ef08531de91bbcf8dd">&#9670;&#160;</a></span>entities</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>&gt; SectorFW::ECS::ArchetypeChunk::entities</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティのIDを格納するベクター </p>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00105">105</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0a3e8dea53a9a906324a1ecfc4a1c210" name="a0a3e8dea53a9a906324a1ecfc4a1c210"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a3e8dea53a9a906324a1ecfc4a1c210">&#9670;&#160;</a></span>entityCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SectorFW::ECS::ArchetypeChunk::entityCount = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティの数 </p>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00101">101</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a36062d11488abe0136bfa81f6fd81627" name="a36062d11488abe0136bfa81f6fd81627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36062d11488abe0136bfa81f6fd81627">&#9670;&#160;</a></span>layout</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_layout.html">ComponentLayout</a>&amp; SectorFW::ECS::ArchetypeChunk::layout</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントレイアウト </p>
+
+<p class="definition"> <a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a> の <a class="el" href="_archetype_chunk_8h_source.html#l00113">113</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="_archetype_chunk_8h_source.html">ArchetypeChunk.h</a></li>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/src/Core/<a class="el" href="_archetype_chunk_8cpp_source.html">ArchetypeChunk.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

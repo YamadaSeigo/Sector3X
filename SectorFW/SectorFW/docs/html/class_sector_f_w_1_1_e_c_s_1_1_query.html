@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::ECS::Query クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_sector_f_w_1_1_e_c_s_1_1_query.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pri-attribs">非公開変数類</a> &#124;
+<a href="class_sector_f_w_1_1_e_c_s_1_1_query-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::ECS::Query クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>ECSのクエリを定義するクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_query_8h_source.html">Query.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:ac33a3031236823231de1194f5ab81c6a" id="r_ac33a3031236823231de1194f5ab81c6a"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:ac33a3031236823231de1194f5ab81c6a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac33a3031236823231de1194f5ab81c6a">With</a> () noexcept</td></tr>
+<tr class="memdesc:ac33a3031236823231de1194f5ab81c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントを除外するためのテンプレート  <br /></td></tr>
+<tr class="separator:ac33a3031236823231de1194f5ab81c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc7917d0acc3bb8c70c679f6510c444f" id="r_afc7917d0acc3bb8c70c679f6510c444f"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; <br />
+requires AllDense&lt;Ts...&gt;</td></tr>
+<tr class="memitem:afc7917d0acc3bb8c70c679f6510c444f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#afc7917d0acc3bb8c70c679f6510c444f">With</a> () noexcept</td></tr>
+<tr class="memdesc:afc7917d0acc3bb8c70c679f6510c444f"><td class="mdescLeft">&#160;</td><td class="mdescRight">クエリに含めるコンポーネントを指定するテンプレート  <br /></td></tr>
+<tr class="separator:afc7917d0acc3bb8c70c679f6510c444f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a214b8ca9e8cfe3078f9fdb1ce6d225e1" id="r_a214b8ca9e8cfe3078f9fdb1ce6d225e1"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; <br />
+requires AllDense&lt;Ts...&gt;</td></tr>
+<tr class="memitem:a214b8ca9e8cfe3078f9fdb1ce6d225e1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a214b8ca9e8cfe3078f9fdb1ce6d225e1">Without</a> () noexcept</td></tr>
+<tr class="memdesc:a214b8ca9e8cfe3078f9fdb1ce6d225e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">クエリから除外するコンポーネントを指定するテンプレート  <br /></td></tr>
+<tr class="separator:a214b8ca9e8cfe3078f9fdb1ce6d225e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cfabe5e07fcae65541d2cf86af2f81c" id="r_a2cfabe5e07fcae65541d2cf86af2f81c"><td class="memTemplParams" colspan="2">template&lt;ReferenceOnly T&gt; </td></tr>
+<tr class="memitem:a2cfabe5e07fcae65541d2cf86af2f81c"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a2cfabe5e07fcae65541d2cf86af2f81c">MatchingChunks</a> (T context) const noexcept</td></tr>
+<tr class="memdesc:a2cfabe5e07fcae65541d2cf86af2f81c"><td class="mdescLeft">&#160;</td><td class="mdescRight">クエリにマッチするアーキタイプチャンクを取得します。  <br /></td></tr>
+<tr class="separator:a2cfabe5e07fcae65541d2cf86af2f81c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4156de33e2823cda345829624c0f0fe" id="r_ac4156de33e2823cda345829624c0f0fe"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:ac4156de33e2823cda345829624c0f0fe"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac4156de33e2823cda345829624c0f0fe">MatchingChunks</a> (<a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a> &amp;context) const noexcept</td></tr>
+<tr class="memdesc:ac4156de33e2823cda345829624c0f0fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">ArchetypeManagerのクエリを表すクラス(特殊化)  <br /></td></tr>
+<tr class="separator:ac4156de33e2823cda345829624c0f0fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef413783f5f6018013669b27c340c1c3" id="r_aef413783f5f6018013669b27c340c1c3"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:aef413783f5f6018013669b27c340c1c3"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aef413783f5f6018013669b27c340c1c3">MatchingChunks</a> (<a class="el" href="class_sector_f_w_1_1_grid2_d_partition.html">Grid2DPartition</a> &amp;context) const noexcept</td></tr>
+<tr class="memdesc:aef413783f5f6018013669b27c340c1c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grid2DPartitionのクエリを表すクラス(特殊化)  <br /></td></tr>
+<tr class="separator:aef413783f5f6018013669b27c340c1c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+非公開変数類</h2></td></tr>
+<tr class="memitem:a5c1961957e6bd1881e096e253e24f013" id="r_a5c1961957e6bd1881e096e253e24f013"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c1961957e6bd1881e096e253e24f013">required</a></td></tr>
+<tr class="memdesc:a5c1961957e6bd1881e096e253e24f013"><td class="mdescLeft">&#160;</td><td class="mdescRight">クエリに必要なコンポーネントマスク  <br /></td></tr>
+<tr class="separator:a5c1961957e6bd1881e096e253e24f013"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d579e67da07489688535f6f91ef2d7b" id="r_a6d579e67da07489688535f6f91ef2d7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d579e67da07489688535f6f91ef2d7b">excluded</a></td></tr>
+<tr class="memdesc:a6d579e67da07489688535f6f91ef2d7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">クエリから除外するコンポーネントマスク  <br /></td></tr>
+<tr class="separator:a6d579e67da07489688535f6f91ef2d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>ECSのクエリを定義するクラス </p>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00036">36</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">関数詳解</h2>
+<a id="ac4156de33e2823cda345829624c0f0fe" name="ac4156de33e2823cda345829624c0f0fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4156de33e2823cda345829624c0f0fe">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SectorFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ArchetypeManagerのクエリを表すクラス(特殊化) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>アーキタイプマネージャーのコンテキスト </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::vector&lt;ArchetypeChunk*&gt; マッチするチャンクのベクター </dd></dl>
+
+<p class="definition"> <a class="el" href="_archetype_manager_8h_source.html">ArchetypeManager.h</a> の <a class="el" href="_archetype_manager_8h_source.html#l00056">56</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>        {</div>
+<div class="line"><span class="lineno">   58</span>            std::vector&lt;ArchetypeChunk*&gt; result;</div>
+<div class="line"><span class="lineno">   59</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [_, arch] : context.GetAll()) {</div>
+<div class="line"><span class="lineno">   60</span>                <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&amp; mask = arch-&gt;GetMask();</div>
+<div class="line"><span class="lineno">   61</span>                <span class="keywordflow">if</span> ((mask &amp; <a class="code hl_variable" href="#a5c1961957e6bd1881e096e253e24f013">required</a>) == <a class="code hl_variable" href="#a5c1961957e6bd1881e096e253e24f013">required</a> &amp;&amp; (mask &amp; <a class="code hl_variable" href="#a6d579e67da07489688535f6f91ef2d7b">excluded</a>).none()) {</div>
+<div class="line"><span class="lineno">   62</span>                    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; chunks = arch-&gt;GetChunks();</div>
+<div class="line"><span class="lineno">   63</span>                    result.reserve(result.size() + chunks.size());</div>
+<div class="line"><span class="lineno">   64</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; chunk : chunks) {</div>
+<div class="line"><span class="lineno">   65</span>                        result.emplace_back(chunk.get());</div>
+<div class="line"><span class="lineno">   66</span>                    }</div>
+<div class="line"><span class="lineno">   67</span>                }</div>
+<div class="line"><span class="lineno">   68</span>            }</div>
+<div class="line"><span class="lineno">   69</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">   70</span>        }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_query_html_a5c1961957e6bd1881e096e253e24f013"><div class="ttname"><a href="#a5c1961957e6bd1881e096e253e24f013">SectorFW::ECS::Query::required</a></div><div class="ttdeci">ComponentMask required</div><div class="ttdoc">クエリに必要なコンポーネントマスク</div><div class="ttdef"><b>Definition</b> <a href="_query_8h_source.html#l00083">Query.h:83</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_query_html_a6d579e67da07489688535f6f91ef2d7b"><div class="ttname"><a href="#a6d579e67da07489688535f6f91ef2d7b">SectorFW::ECS::Query::excluded</a></div><div class="ttdeci">ComponentMask excluded</div><div class="ttdoc">クエリから除外するコンポーネントマスク</div><div class="ttdef"><b>Definition</b> <a href="_query_8h_source.html#l00087">Query.h:87</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_ace5c222981b965468c3868a48028a512"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">SectorFW::ECS::ComponentMask</a></div><div class="ttdeci">std::bitset&lt; MaxComponents &gt; ComponentMask</div><div class="ttdoc">コンポーネントマスクを定義するビットセット型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00035">component.hpp:35</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aef413783f5f6018013669b27c340c1c3" name="aef413783f5f6018013669b27c340c1c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef413783f5f6018013669b27c340c1c3">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SectorFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_sector_f_w_1_1_grid2_d_partition.html">Grid2DPartition</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Grid2DPartitionのクエリを表すクラス(特殊化) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Grid2DPartitionのコンテキスト </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::vector&lt;ArchetypeChunk*&gt; マッチするチャンクのベクター </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid2_d_partition_8h_source.html">Grid2DPartition.h</a> の <a class="el" href="_grid2_d_partition_8h_source.html#l00089">89</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   90</span>        {</div>
+<div class="line"><span class="lineno">   91</span>            std::vector&lt;ArchetypeChunk*&gt; result;</div>
+<div class="line"><span class="lineno">   92</span>            {</div>
+<div class="line"><span class="lineno">   93</span>                <span class="keyword">const</span> <span class="keyword">auto</span>&amp; allChunk = context.GetGlobalEntityManager().GetArchetypeManager().GetAll();</div>
+<div class="line"><span class="lineno">   94</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [_, arch] : allChunk) {</div>
+<div class="line"><span class="lineno">   95</span>                    <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&amp; mask = arch-&gt;GetMask();</div>
+<div class="line"><span class="lineno">   96</span>                    <span class="keywordflow">if</span> ((mask &amp; <a class="code hl_variable" href="#a5c1961957e6bd1881e096e253e24f013">required</a>) == <a class="code hl_variable" href="#a5c1961957e6bd1881e096e253e24f013">required</a> &amp;&amp; (mask &amp; <a class="code hl_variable" href="#a6d579e67da07489688535f6f91ef2d7b">excluded</a>).none()) {</div>
+<div class="line"><span class="lineno">   97</span>                        <span class="keyword">auto</span>&amp; chunks = arch-&gt;GetChunks();</div>
+<div class="line"><span class="lineno">   98</span>                        result.reserve(result.size() + chunks.size());</div>
+<div class="line"><span class="lineno">   99</span>                        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; chunk : chunks) {</div>
+<div class="line"><span class="lineno">  100</span>                            result.push_back(chunk.get());</div>
+<div class="line"><span class="lineno">  101</span>                        }</div>
+<div class="line"><span class="lineno">  102</span>                    }</div>
+<div class="line"><span class="lineno">  103</span>                }</div>
+<div class="line"><span class="lineno">  104</span>            }</div>
+<div class="line"><span class="lineno">  105</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; grid = context.GetGrid();</div>
+<div class="line"><span class="lineno">  106</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; spatial : grid)</div>
+<div class="line"><span class="lineno">  107</span>            {</div>
+<div class="line"><span class="lineno">  108</span>                <span class="keyword">const</span> <span class="keyword">auto</span>&amp; allChunk = spatial.GetEntityManager().GetArchetypeManager().GetAll();</div>
+<div class="line"><span class="lineno">  109</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [_, arch] : allChunk) {</div>
+<div class="line"><span class="lineno">  110</span>                    <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>&amp; mask = arch-&gt;GetMask();</div>
+<div class="line"><span class="lineno">  111</span>                    <span class="keywordflow">if</span> ((mask &amp; <a class="code hl_variable" href="#a5c1961957e6bd1881e096e253e24f013">required</a>) == <a class="code hl_variable" href="#a5c1961957e6bd1881e096e253e24f013">required</a> &amp;&amp; (mask &amp; <a class="code hl_variable" href="#a6d579e67da07489688535f6f91ef2d7b">excluded</a>).none()) {</div>
+<div class="line"><span class="lineno">  112</span>                        <span class="keyword">auto</span>&amp; chunks = arch-&gt;GetChunks();</div>
+<div class="line"><span class="lineno">  113</span>                        result.reserve(result.size() + chunks.size());</div>
+<div class="line"><span class="lineno">  114</span>                        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; chunk : chunks) {</div>
+<div class="line"><span class="lineno">  115</span>                            result.push_back(chunk.get());</div>
+<div class="line"><span class="lineno">  116</span>                        }</div>
+<div class="line"><span class="lineno">  117</span>                    }</div>
+<div class="line"><span class="lineno">  118</span>                }</div>
+<div class="line"><span class="lineno">  119</span>            }</div>
+<div class="line"><span class="lineno">  120</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  121</span>        }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2cfabe5e07fcae65541d2cf86af2f81c" name="a2cfabe5e07fcae65541d2cf86af2f81c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cfabe5e07fcae65541d2cf86af2f81c">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;ReferenceOnly T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SectorFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>クエリにマッチするアーキタイプチャンクを取得します。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>コンテキストを指定するテンプレート </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::vector&lt;ArchetypeChunk*&gt; マッチするチャンクのベクター </dd></dl>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00074">74</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>                                                                                {</div>
+<div class="line"><span class="lineno">   75</span>                <span class="keyword">static_assert</span>(<a class="code hl_variable" href="namespace_sector_f_w_1_1_e_c_s.html#a64808bf185894b957e530f6f189e28f4">always_false&lt;T&gt;</a> &amp;&amp; <span class="stringliteral">&quot;Query::MatchingChunks must be specialized for the context type&quot;</span>);</div>
+<div class="line"><span class="lineno">   76</span> </div>
+<div class="line"><span class="lineno">   77</span>                <span class="keywordflow">return</span> {};</div>
+<div class="line"><span class="lineno">   78</span>            }</div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_a64808bf185894b957e530f6f189e28f4"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#a64808bf185894b957e530f6f189e28f4">SectorFW::ECS::always_false</a></div><div class="ttdeci">constexpr bool always_false</div><div class="ttdoc">常にfalseを返す定数テンプレート</div><div class="ttdef"><b>Definition</b> <a href="_query_8h_source.html#l00032">Query.h:32</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+
+</div>
+</div>
+<a id="ac33a3031236823231de1194f5ab81c6a" name="ac33a3031236823231de1194f5ab81c6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac33a3031236823231de1194f5ab81c6a">&#9670;&#160;</a></span>With() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp; SectorFW::ECS::Query::With </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>まばらなコンポーネントを除外するためのテンプレート </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html" title="ECSのクエリを定義するクラス">Query</a>&amp; クエリ自身の参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00044">44</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   44</span>                                   {</div>
+<div class="line"><span class="lineno">   45</span>                <span class="keyword">static_assert</span>(AllDense&lt;Ts...&gt;, <span class="stringliteral">&quot;All types in With must be dense components (not sparse)&quot;</span>);</div>
+<div class="line"><span class="lineno">   46</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">   47</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<a id="afc7917d0acc3bb8c70c679f6510c444f" name="afc7917d0acc3bb8c70c679f6510c444f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc7917d0acc3bb8c70c679f6510c444f">&#9670;&#160;</a></span>With() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; <br />
+requires AllDense&lt;Ts...&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp; SectorFW::ECS::Query::With </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>クエリに含めるコンポーネントを指定するテンプレート </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html" title="ECSのクエリを定義するクラス">Query</a>&amp; クエリ自身の参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00054">54</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   54</span>                                   {</div>
+<div class="line"><span class="lineno">   55</span>                (<a class="code hl_variable" href="#a5c1961957e6bd1881e096e253e24f013">required</a>.set(<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;Ts&gt;</a>()), ...);</div>
+<div class="line"><span class="lineno">   56</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">   57</span>            }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_a1e71189d4403cea677e5b60429879b11"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">SectorFW::ECS::ComponentTypeRegistry::GetID</a></div><div class="ttdeci">static ComponentTypeID GetID() noexcept</div><div class="ttdoc">コンポーネントの型IDを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00050">ComponentTypeRegistry.h:50</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
+
+</div>
+</div>
+<a id="a214b8ca9e8cfe3078f9fdb1ce6d225e1" name="a214b8ca9e8cfe3078f9fdb1ce6d225e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a214b8ca9e8cfe3078f9fdb1ce6d225e1">&#9670;&#160;</a></span>Without()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; <br />
+requires AllDense&lt;Ts...&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp; SectorFW::ECS::Query::Without </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>クエリから除外するコンポーネントを指定するテンプレート </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html" title="ECSのクエリを定義するクラス">Query</a>&amp; クエリ自身の参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00064">64</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   64</span>                                      {</div>
+<div class="line"><span class="lineno">   65</span>                (<a class="code hl_variable" href="#a6d579e67da07489688535f6f91ef2d7b">excluded</a>.set(<a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#a1e71189d4403cea677e5b60429879b11">ComponentTypeRegistry::GetID&lt;Ts&gt;</a>()), ...);</div>
+<div class="line"><span class="lineno">   66</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">   67</span>            }</div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 3 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a6d579e67da07489688535f6f91ef2d7b" name="a6d579e67da07489688535f6f91ef2d7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d579e67da07489688535f6f91ef2d7b">&#9670;&#160;</a></span>excluded</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> SectorFW::ECS::Query::excluded</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>クエリから除外するコンポーネントマスク </p>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00087">87</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5c1961957e6bd1881e096e253e24f013" name="a5c1961957e6bd1881e096e253e24f013"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c1961957e6bd1881e096e253e24f013">&#9670;&#160;</a></span>required</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> SectorFW::ECS::Query::required</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>クエリに必要なコンポーネントマスク </p>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00083">83</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="_query_8h_source.html">Query.h</a></li>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="_archetype_manager_8h_source.html">ArchetypeManager.h</a></li>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/<a class="el" href="_grid2_d_partition_8h_source.html">Grid2DPartition.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_query.html">Query</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

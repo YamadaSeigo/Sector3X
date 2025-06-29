@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Util/FrameTimer.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_frame_timer_8h_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">FrameTimer.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_frame_timer_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;thread&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span></div>
+<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="class_frame_timer.html">   15</a></span><span class="keyword">class </span><a class="code hl_function" href="class_frame_timer.html#aa2ac0cee560c4996e6b688b83079c0ba">FrameTimer</a> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="class_frame_timer.html#a3217946eb0acbe1bc79ac90f6f8144e1">   17</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="class_frame_timer.html#a3217946eb0acbe1bc79ac90f6f8144e1">clock</a> = std::chrono::steady_clock;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_frame_timer.html#ac5742bb027cf48a1bc48baef2e59fab8">   18</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="class_frame_timer.html#ac5742bb027cf48a1bc48baef2e59fab8">time_point</a> = std::chrono::time_point&lt;clock&gt;;</div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="}">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="class_frame_timer.html#aa2ac0cee560c4996e6b688b83079c0ba">   23</a></span>    <a class="code hl_function" href="class_frame_timer.html#aa2ac0cee560c4996e6b688b83079c0ba">FrameTimer</a>() noexcept</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        : <a class="code hl_variable" href="class_frame_timer.html#ac30f2288583bdbc3087ca3f7cfe04bed">startTime</a>(<a class="code hl_typedef" href="class_frame_timer.html#a3217946eb0acbe1bc79ac90f6f8144e1">clock</a>::now()),</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <a class="code hl_variable" href="class_frame_timer.html#ae5708e6f4c2836ef31363260282a8612">lastTime</a>(<a class="code hl_typedef" href="class_frame_timer.html#a3217946eb0acbe1bc79ac90f6f8144e1">clock</a>::now()),</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <a class="code hl_variable" href="class_frame_timer.html#af6d4f16124ee3bea923afce7d06002df">deltaTime</a>(0.0),</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <a class="code hl_variable" href="class_frame_timer.html#a028199259d1f5daa799aef4de8bfffb7">frameCount</a>(0),</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <a class="code hl_variable" href="class_frame_timer.html#a4a238adcbb665a6e6f34125f80f31c7b">fps</a>(0.0),</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <a class="code hl_variable" href="class_frame_timer.html#a32d588be3d4823c1c0a2671ce0856a57">timeSinceLastFPSUpdate</a>(0.0),</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <a class="code hl_variable" href="class_frame_timer.html#ae50133c9239c24ec5e7a236783d92a02">maxFrameRate</a>(0.0) {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    }</div>
+</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span></div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="class_frame_timer.html#a9d85f6d41e3706c74c4c6ad764651b7e">   35</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_frame_timer.html#a9d85f6d41e3706c74c4c6ad764651b7e">Reset</a>() noexcept {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <a class="code hl_variable" href="class_frame_timer.html#ac30f2288583bdbc3087ca3f7cfe04bed">startTime</a> = clock::now();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <a class="code hl_variable" href="class_frame_timer.html#ae5708e6f4c2836ef31363260282a8612">lastTime</a> = <a class="code hl_variable" href="class_frame_timer.html#ac30f2288583bdbc3087ca3f7cfe04bed">startTime</a>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <a class="code hl_variable" href="class_frame_timer.html#af6d4f16124ee3bea923afce7d06002df">deltaTime</a> = 0.0;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <a class="code hl_variable" href="class_frame_timer.html#a028199259d1f5daa799aef4de8bfffb7">frameCount</a> = 0;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <a class="code hl_variable" href="class_frame_timer.html#a4a238adcbb665a6e6f34125f80f31c7b">fps</a> = 0.0;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <a class="code hl_variable" href="class_frame_timer.html#a32d588be3d4823c1c0a2671ce0856a57">timeSinceLastFPSUpdate</a> = 0.0;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    }</div>
+</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="class_frame_timer.html#aa3786a8b83778be5b59e106f04456d47">   46</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_frame_timer.html#aa3786a8b83778be5b59e106f04456d47">Tick</a>() {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keyword">auto</span> now = clock::now();</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        std::chrono::duration&lt;double&gt; frameDuration = now - <a class="code hl_variable" href="class_frame_timer.html#ae5708e6f4c2836ef31363260282a8612">lastTime</a>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="comment">// 最大FPS制限がある場合は待機</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_frame_timer.html#ae50133c9239c24ec5e7a236783d92a02">maxFrameRate</a> &gt; 0.0) {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> minFrameTime = 1.0 / <a class="code hl_variable" href="class_frame_timer.html#ae50133c9239c24ec5e7a236783d92a02">maxFrameRate</a>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keywordflow">if</span> (frameDuration.count() &lt; minFrameTime) {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keyword">auto</span> sleepDuration = std::chrono::duration&lt;double&gt;(minFrameTime - frameDuration.count());</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                std::this_thread::sleep_for(std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(sleepDuration));</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                now = clock::now();</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                frameDuration = now - <a class="code hl_variable" href="class_frame_timer.html#ae5708e6f4c2836ef31363260282a8612">lastTime</a>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                <span class="comment">// busy waitで調整（より精密に）</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                <span class="keywordflow">while</span> (frameDuration.count() &lt; minFrameTime) {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                    now = clock::now();</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                    frameDuration = now - <a class="code hl_variable" href="class_frame_timer.html#ae5708e6f4c2836ef31363260282a8612">lastTime</a>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            }</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <a class="code hl_variable" href="class_frame_timer.html#af6d4f16124ee3bea923afce7d06002df">deltaTime</a> = frameDuration.count();</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <a class="code hl_variable" href="class_frame_timer.html#ae5708e6f4c2836ef31363260282a8612">lastTime</a> = now;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="comment">// FPS計測</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <a class="code hl_variable" href="class_frame_timer.html#a028199259d1f5daa799aef4de8bfffb7">frameCount</a>++;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <a class="code hl_variable" href="class_frame_timer.html#a32d588be3d4823c1c0a2671ce0856a57">timeSinceLastFPSUpdate</a> += <a class="code hl_variable" href="class_frame_timer.html#af6d4f16124ee3bea923afce7d06002df">deltaTime</a>;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_frame_timer.html#a32d588be3d4823c1c0a2671ce0856a57">timeSinceLastFPSUpdate</a> &gt;= 1.0) {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <a class="code hl_variable" href="class_frame_timer.html#a4a238adcbb665a6e6f34125f80f31c7b">fps</a> = <a class="code hl_variable" href="class_frame_timer.html#a028199259d1f5daa799aef4de8bfffb7">frameCount</a> / <a class="code hl_variable" href="class_frame_timer.html#a32d588be3d4823c1c0a2671ce0856a57">timeSinceLastFPSUpdate</a>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <a class="code hl_variable" href="class_frame_timer.html#a028199259d1f5daa799aef4de8bfffb7">frameCount</a> = 0;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <a class="code hl_variable" href="class_frame_timer.html#a32d588be3d4823c1c0a2671ce0856a57">timeSinceLastFPSUpdate</a> = 0.0;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        }</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    }</div>
+</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="class_frame_timer.html#a29cf3680664b7783fab3331dbd6176fb">   85</a></span>    <span class="keywordtype">double</span> <a class="code hl_function" href="class_frame_timer.html#a29cf3680664b7783fab3331dbd6176fb">GetDeltaTime</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_frame_timer.html#af6d4f16124ee3bea923afce7d06002df">deltaTime</a>; }</div>
+<div class="foldopen" id="foldopen00090" data-start="{" data-end="}">
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="class_frame_timer.html#adeb483d987cd3d30e6a3fcff6c3f1040">   90</a></span>    <span class="keywordtype">double</span> <a class="code hl_function" href="class_frame_timer.html#adeb483d987cd3d30e6a3fcff6c3f1040">GetTotalTime</a>() const noexcept {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keywordflow">return</span> std::chrono::duration&lt;double&gt;(clock::now() - <a class="code hl_variable" href="class_frame_timer.html#ac30f2288583bdbc3087ca3f7cfe04bed">startTime</a>).count();</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    }</div>
+</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="class_frame_timer.html#a2ed250232f00bfe334a420b94791b4b2">   97</a></span>    <span class="keywordtype">double</span> <a class="code hl_function" href="class_frame_timer.html#a2ed250232f00bfe334a420b94791b4b2">GetFPS</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="class_frame_timer.html#a4a238adcbb665a6e6f34125f80f31c7b">fps</a>; }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="class_frame_timer.html#a40826a4a33433071b9fc00d4fb5f6176">  102</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_frame_timer.html#a40826a4a33433071b9fc00d4fb5f6176">SetMaxFrameRate</a>(<span class="keywordtype">double</span> fpsLimit) <span class="keyword">noexcept</span> { <a class="code hl_variable" href="class_frame_timer.html#ae50133c9239c24ec5e7a236783d92a02">maxFrameRate</a> = fpsLimit; }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="class_frame_timer.html#ac30f2288583bdbc3087ca3f7cfe04bed">  107</a></span>    <a class="code hl_typedef" href="class_frame_timer.html#ac5742bb027cf48a1bc48baef2e59fab8">time_point</a> <a class="code hl_variable" href="class_frame_timer.html#ac30f2288583bdbc3087ca3f7cfe04bed">startTime</a>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="class_frame_timer.html#ae5708e6f4c2836ef31363260282a8612">  111</a></span>    <a class="code hl_typedef" href="class_frame_timer.html#ac5742bb027cf48a1bc48baef2e59fab8">time_point</a> <a class="code hl_variable" href="class_frame_timer.html#ae5708e6f4c2836ef31363260282a8612">lastTime</a>;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="class_frame_timer.html#af6d4f16124ee3bea923afce7d06002df">  115</a></span>    <span class="keywordtype">double</span> <a class="code hl_variable" href="class_frame_timer.html#af6d4f16124ee3bea923afce7d06002df">deltaTime</a>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="class_frame_timer.html#a028199259d1f5daa799aef4de8bfffb7">  119</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="class_frame_timer.html#a028199259d1f5daa799aef4de8bfffb7">frameCount</a>;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="class_frame_timer.html#a32d588be3d4823c1c0a2671ce0856a57">  123</a></span>    <span class="keywordtype">double</span> <a class="code hl_variable" href="class_frame_timer.html#a32d588be3d4823c1c0a2671ce0856a57">timeSinceLastFPSUpdate</a>;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="class_frame_timer.html#a4a238adcbb665a6e6f34125f80f31c7b">  127</a></span>    <span class="keywordtype">double</span> <a class="code hl_variable" href="class_frame_timer.html#a4a238adcbb665a6e6f34125f80f31c7b">fps</a>;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="class_frame_timer.html#ae50133c9239c24ec5e7a236783d92a02">  131</a></span>    <span class="keywordtype">double</span> <a class="code hl_variable" href="class_frame_timer.html#ae50133c9239c24ec5e7a236783d92a02">maxFrameRate</a>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>};</div>
+</div>
+<div class="ttc" id="aclass_frame_timer_html_a028199259d1f5daa799aef4de8bfffb7"><div class="ttname"><a href="class_frame_timer.html#a028199259d1f5daa799aef4de8bfffb7">FrameTimer::frameCount</a></div><div class="ttdeci">int frameCount</div><div class="ttdoc">フレームカウント（1秒あたりのフレーム数）</div><div class="ttdef"><b>Definition</b> <a href="#l00119">FrameTimer.h:119</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_a29cf3680664b7783fab3331dbd6176fb"><div class="ttname"><a href="class_frame_timer.html#a29cf3680664b7783fab3331dbd6176fb">FrameTimer::GetDeltaTime</a></div><div class="ttdeci">double GetDeltaTime() const noexcept</div><div class="ttdoc">デルタタイムを取得します。</div><div class="ttdef"><b>Definition</b> <a href="#l00085">FrameTimer.h:85</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_a2ed250232f00bfe334a420b94791b4b2"><div class="ttname"><a href="class_frame_timer.html#a2ed250232f00bfe334a420b94791b4b2">FrameTimer::GetFPS</a></div><div class="ttdeci">double GetFPS() const noexcept</div><div class="ttdoc">現在のFPSを取得します。</div><div class="ttdef"><b>Definition</b> <a href="#l00097">FrameTimer.h:97</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_a3217946eb0acbe1bc79ac90f6f8144e1"><div class="ttname"><a href="class_frame_timer.html#a3217946eb0acbe1bc79ac90f6f8144e1">FrameTimer::clock</a></div><div class="ttdeci">std::chrono::steady_clock clock</div><div class="ttdef"><b>Definition</b> <a href="#l00017">FrameTimer.h:17</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_a32d588be3d4823c1c0a2671ce0856a57"><div class="ttname"><a href="class_frame_timer.html#a32d588be3d4823c1c0a2671ce0856a57">FrameTimer::timeSinceLastFPSUpdate</a></div><div class="ttdeci">double timeSinceLastFPSUpdate</div><div class="ttdoc">最後のFPS更新からの経過時間</div><div class="ttdef"><b>Definition</b> <a href="#l00123">FrameTimer.h:123</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_a40826a4a33433071b9fc00d4fb5f6176"><div class="ttname"><a href="class_frame_timer.html#a40826a4a33433071b9fc00d4fb5f6176">FrameTimer::SetMaxFrameRate</a></div><div class="ttdeci">void SetMaxFrameRate(double fpsLimit) noexcept</div><div class="ttdoc">最大フレームレートを設定します。</div><div class="ttdef"><b>Definition</b> <a href="#l00102">FrameTimer.h:102</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_a4a238adcbb665a6e6f34125f80f31c7b"><div class="ttname"><a href="class_frame_timer.html#a4a238adcbb665a6e6f34125f80f31c7b">FrameTimer::fps</a></div><div class="ttdeci">double fps</div><div class="ttdoc">現在のFPS</div><div class="ttdef"><b>Definition</b> <a href="#l00127">FrameTimer.h:127</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_a9d85f6d41e3706c74c4c6ad764651b7e"><div class="ttname"><a href="class_frame_timer.html#a9d85f6d41e3706c74c4c6ad764651b7e">FrameTimer::Reset</a></div><div class="ttdeci">void Reset() noexcept</div><div class="ttdoc">タイマーをリセットします。</div><div class="ttdef"><b>Definition</b> <a href="#l00035">FrameTimer.h:35</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_aa2ac0cee560c4996e6b688b83079c0ba"><div class="ttname"><a href="class_frame_timer.html#aa2ac0cee560c4996e6b688b83079c0ba">FrameTimer::FrameTimer</a></div><div class="ttdeci">FrameTimer() noexcept</div><div class="ttdoc">コンストラクタ @detail タイマーを初期化し、開始時間を設定します。</div><div class="ttdef"><b>Definition</b> <a href="#l00023">FrameTimer.h:23</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_aa3786a8b83778be5b59e106f04456d47"><div class="ttname"><a href="class_frame_timer.html#aa3786a8b83778be5b59e106f04456d47">FrameTimer::Tick</a></div><div class="ttdeci">void Tick()</div><div class="ttdoc">フレームタイマーを更新します。</div><div class="ttdef"><b>Definition</b> <a href="#l00046">FrameTimer.h:46</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_ac30f2288583bdbc3087ca3f7cfe04bed"><div class="ttname"><a href="class_frame_timer.html#ac30f2288583bdbc3087ca3f7cfe04bed">FrameTimer::startTime</a></div><div class="ttdeci">time_point startTime</div><div class="ttdoc">初めの開始時間</div><div class="ttdef"><b>Definition</b> <a href="#l00107">FrameTimer.h:107</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_ac5742bb027cf48a1bc48baef2e59fab8"><div class="ttname"><a href="class_frame_timer.html#ac5742bb027cf48a1bc48baef2e59fab8">FrameTimer::time_point</a></div><div class="ttdeci">std::chrono::time_point&lt; clock &gt; time_point</div><div class="ttdef"><b>Definition</b> <a href="#l00018">FrameTimer.h:18</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_adeb483d987cd3d30e6a3fcff6c3f1040"><div class="ttname"><a href="class_frame_timer.html#adeb483d987cd3d30e6a3fcff6c3f1040">FrameTimer::GetTotalTime</a></div><div class="ttdeci">double GetTotalTime() const noexcept</div><div class="ttdoc">開始時間からの経過時間を取得します。</div><div class="ttdef"><b>Definition</b> <a href="#l00090">FrameTimer.h:90</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_ae50133c9239c24ec5e7a236783d92a02"><div class="ttname"><a href="class_frame_timer.html#ae50133c9239c24ec5e7a236783d92a02">FrameTimer::maxFrameRate</a></div><div class="ttdeci">double maxFrameRate</div><div class="ttdoc">最大フレームレート（FPS制限）</div><div class="ttdef"><b>Definition</b> <a href="#l00131">FrameTimer.h:131</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_ae5708e6f4c2836ef31363260282a8612"><div class="ttname"><a href="class_frame_timer.html#ae5708e6f4c2836ef31363260282a8612">FrameTimer::lastTime</a></div><div class="ttdeci">time_point lastTime</div><div class="ttdoc">最後の更新時間</div><div class="ttdef"><b>Definition</b> <a href="#l00111">FrameTimer.h:111</a></div></div>
+<div class="ttc" id="aclass_frame_timer_html_af6d4f16124ee3bea923afce7d06002df"><div class="ttname"><a href="class_frame_timer.html#af6d4f16124ee3bea923afce7d06002df">FrameTimer::deltaTime</a></div><div class="ttdeci">double deltaTime</div><div class="ttdoc">デルタタイム（前フレームからの経過時間）</div><div class="ttdef"><b>Definition</b> <a href="#l00115">FrameTimer.h:115</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_ee6da17cfec8137cf237c714c1844f74.html">Util</a></li><li class="navelem"><a class="el" href="_frame_timer_8h.html">FrameTimer.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

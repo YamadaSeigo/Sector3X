@@ -1,0 +1,13 @@
+digraph "SectorFW::ECS::ComponentLayoutRegistry::AddNewComponentLayout"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="SectorFW::ECS::Component\lLayoutRegistry::AddNewComponent\lLayout",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="新しいコンポーネントレイアウトを追加します。"];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="AlignTo",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328",tooltip="指定したオフセットをアライメントに合わせて調整する関数"];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="SectorFW::ECS::Component\lTypeRegistry::GetMeta",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#aa653a2d1d105fe2e3ea6f6451e6fa17b",tooltip="コンポーネントのメタ情報を取得します。"];
+}

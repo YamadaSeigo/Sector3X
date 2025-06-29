@@ -53,7 +53,7 @@ namespace SectorFW
         };
 
 
-        using AABB2 = AABB<float, Vector2>;
-        using AABB3 = AABB<float, Vector3>;
+        using AABB2f = AABB<float, Vec2f>;
+        using AABB3f = AABB<float, Vec3f>;
     }
 }

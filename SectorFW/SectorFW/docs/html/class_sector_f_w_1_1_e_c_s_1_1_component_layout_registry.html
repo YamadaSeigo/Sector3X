@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sector3X: SectorFW::ECS::ComponentLayoutRegistry クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sector3X
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_sector_f_w_1_1_e_c_s_1_1_component_layout_registry.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-static-methods">静的公開メンバ関数</a> &#124;
+<a href="#pri-static-methods">静的非公開メンバ関数</a> &#124;
+<a href="#pri-static-attribs">静的非公開変数類</a> &#124;
+<a href="class_sector_f_w_1_1_e_c_s_1_1_component_layout_registry-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">SectorFW::ECS::ComponentLayoutRegistry クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>コンポーネントレイアウトレジストリを管理するクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_component_layout_registry_8h_source.html">ComponentLayoutRegistry.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a1efe567a4b64bb9a3e069d8181fe2a45" id="r_a1efe567a4b64bb9a3e069d8181fe2a45"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_layout.html">ComponentLayout</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1efe567a4b64bb9a3e069d8181fe2a45">GetLayout</a> (const <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> &amp;mask) noexcept</td></tr>
+<tr class="memdesc:a1efe567a4b64bb9a3e069d8181fe2a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントマスクに対応するコンポーネントレイアウトを取得します。  <br /></td></tr>
+<tr class="separator:a1efe567a4b64bb9a3e069d8181fe2a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+静的非公開メンバ関数</h2></td></tr>
+<tr class="memitem:aa24c8bfd308ab11a023266556758b271" id="r_aa24c8bfd308ab11a023266556758b271"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa24c8bfd308ab11a023266556758b271">AddNewComponentLayout</a> (const <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> &amp;mask)</td></tr>
+<tr class="memdesc:aa24c8bfd308ab11a023266556758b271"><td class="mdescLeft">&#160;</td><td class="mdescRight">新しいコンポーネントレイアウトを追加します。  <br /></td></tr>
+<tr class="separator:aa24c8bfd308ab11a023266556758b271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+静的非公開変数類</h2></td></tr>
+<tr class="memitem:a1eb6cdf09bfcd902299cd0f8a4484bce" id="r_a1eb6cdf09bfcd902299cd0f8a4484bce"><td class="memItemLeft" align="right" valign="top">static std::unordered_map&lt; <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_layout.html">ComponentLayout</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1eb6cdf09bfcd902299cd0f8a4484bce">componentLayout</a></td></tr>
+<tr class="memdesc:a1eb6cdf09bfcd902299cd0f8a4484bce"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントレイアウトを格納するマップ  <br /></td></tr>
+<tr class="separator:a1eb6cdf09bfcd902299cd0f8a4484bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9be0894a2036e0f0e32d291f2ef18d0" id="r_af9be0894a2036e0f0e32d291f2ef18d0"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9be0894a2036e0f0e32d291f2ef18d0">map_mutex</a></td></tr>
+<tr class="memdesc:af9be0894a2036e0f0e32d291f2ef18d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンポーネントレイアウトのマップへのアクセスを保護するミューテックス  <br /></td></tr>
+<tr class="separator:af9be0894a2036e0f0e32d291f2ef18d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>コンポーネントレイアウトレジストリを管理するクラス </p>
+
+<p class="definition"> <a class="el" href="_component_layout_registry_8h_source.html">ComponentLayoutRegistry.h</a> の <a class="el" href="_component_layout_registry_8h_source.html#l00032">32</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">関数詳解</h2>
+<a id="aa24c8bfd308ab11a023266556758b271" name="aa24c8bfd308ab11a023266556758b271"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa24c8bfd308ab11a023266556758b271">&#9670;&#160;</a></span>AddNewComponentLayout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::ECS::ComponentLayoutRegistry::AddNewComponentLayout </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mask</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>新しいコンポーネントレイアウトを追加します。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mask</td><td>コンポーネントマスク @detail マスクに含まれるコンポーネントのメタ情報を基にレイアウトを計算します。 </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>hasSoA</p>
+
+<p class="definition"> <a class="el" href="_component_layout_registry_8cpp_source.html">ComponentLayoutRegistry.cpp</a> の <a class="el" href="_component_layout_registry_8cpp_source.html#l00024">24</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   25</span>        {</div>
+<div class="line"><span class="lineno">   26</span>            ComponentLayout layout;</div>
+<div class="line"><span class="lineno">   27</span> </div>
+<div class="line"><span class="lineno">   28</span>            <span class="keyword">struct </span>Entry {</div>
+<div class="line"><span class="lineno">   29</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> id;</div>
+<div class="line"><span class="lineno">   30</span>                <span class="keyword">const</span> ComponentMeta&amp; meta;</div>
+<div class="line"><span class="lineno">   31</span>            };</div>
+<div class="line"><span class="lineno">   32</span> </div>
+<div class="line"><span class="lineno">   33</span>            std::vector&lt;Entry&gt; component;</div>
+<div class="line"><span class="lineno">   34</span> </div>
+<div class="line"><span class="lineno">   35</span>            <span class="keywordtype">bool</span> hasSoA = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   36</span> </div>
+<div class="line"><span class="lineno">   37</span>            <span class="comment">// 最小ループでビット走査</span></div>
+<div class="line"><span class="lineno">   38</span>            <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> working = mask;</div>
+<div class="line"><span class="lineno">   39</span>            <span class="keywordflow">while</span> (working.any()) {</div>
+<div class="line"><span class="lineno">   40</span>                <a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a> index = <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">ComponentTypeID</a><span class="keyword">&gt;</span>(std::countr_zero(working.to_ullong()));</div>
+<div class="line"><span class="lineno">   41</span>                working.reset(index);</div>
+<div class="line"><span class="lineno">   42</span>                <span class="keyword">const</span> ComponentMeta&amp; meta = <a class="code hl_function" href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#aa653a2d1d105fe2e3ea6f6451e6fa17b">ComponentTypeRegistry::GetMeta</a>(index);</div>
+<div class="line"><span class="lineno">   43</span>                <span class="keywordflow">if</span> (meta.isSparse) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">   44</span> </div>
+<div class="line"><span class="lineno">   45</span>                <span class="keywordflow">if</span> (meta.isSoA) {</div>
+<div class="line"><span class="lineno">   46</span>                    hasSoA = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   47</span>                }</div>
+<div class="line"><span class="lineno">   48</span> </div>
+<div class="line"><span class="lineno">   49</span>                component.emplace_back(index, meta);</div>
+<div class="line"><span class="lineno">   50</span>            }</div>
+<div class="line"><span class="lineno">   51</span> </div>
+<div class="line"><span class="lineno">   52</span>            <span class="keywordflow">if</span> (hasSoA)</div>
+<div class="line"><span class="lineno">   53</span>            {</div>
+<div class="line"><span class="lineno">   54</span>                <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">auto</span> getTotalSize = [](<span class="keyword">const</span> std::vector&lt;Entry&gt;&amp; layout, <span class="keywordtype">size_t</span> count)-&gt;<span class="keywordtype">size_t</span> {</div>
+<div class="line"><span class="lineno">   55</span>                    <span class="keywordtype">size_t</span> offset = 0;</div>
+<div class="line"><span class="lineno">   56</span> </div>
+<div class="line"><span class="lineno">   57</span>                    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry : layout) {</div>
+<div class="line"><span class="lineno">   58</span>                        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; structure : entry.meta.structure) {</div>
+<div class="line"><span class="lineno">   59</span>                            offset = <a class="code hl_function" href="alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328">AlignTo</a>(offset, structure.align);</div>
+<div class="line"><span class="lineno">   60</span>                            offset += structure.size * count;</div>
+<div class="line"><span class="lineno">   61</span>                        }</div>
+<div class="line"><span class="lineno">   62</span>                    }</div>
+<div class="line"><span class="lineno">   63</span> </div>
+<div class="line"><span class="lineno">   64</span>                    <span class="keywordflow">return</span> offset;</div>
+<div class="line"><span class="lineno">   65</span>                    };</div>
+<div class="line"><span class="lineno">   66</span> </div>
+<div class="line"><span class="lineno">   67</span>                <span class="keywordtype">size_t</span> low = 0, high = <a class="code hl_variable" href="namespace_sector_f_w_1_1_e_c_s.html#ad613cff8fc5f1e25698d0397b3dffa09">ChunkSizeBytes</a>;</div>
+<div class="line"><span class="lineno">   68</span> </div>
+<div class="line"><span class="lineno">   69</span>                <span class="keywordflow">while</span> (low &lt; high) {</div>
+<div class="line"><span class="lineno">   70</span>                    <span class="keywordtype">size_t</span> mid = (low + high + 1) / 2;</div>
+<div class="line"><span class="lineno">   71</span>                    <span class="keywordflow">if</span> (getTotalSize(component, mid) &lt;= <a class="code hl_variable" href="namespace_sector_f_w_1_1_e_c_s.html#ad613cff8fc5f1e25698d0397b3dffa09">ChunkSizeBytes</a>) {</div>
+<div class="line"><span class="lineno">   72</span>                        low = mid;</div>
+<div class="line"><span class="lineno">   73</span>                    }</div>
+<div class="line"><span class="lineno">   74</span>                    <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   75</span>                        high = mid - 1;</div>
+<div class="line"><span class="lineno">   76</span>                    }</div>
+<div class="line"><span class="lineno">   77</span>                }</div>
+<div class="line"><span class="lineno">   78</span> </div>
+<div class="line"><span class="lineno">   79</span>                layout.capacity = low;</div>
+<div class="line"><span class="lineno">   80</span> </div>
+<div class="line"><span class="lineno">   81</span>                <span class="keywordtype">size_t</span> offset = 0;</div>
+<div class="line"><span class="lineno">   82</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; c : component) {</div>
+<div class="line"><span class="lineno">   83</span>                    <span class="keyword">auto</span>&amp; info = layout.info[c.id];</div>
+<div class="line"><span class="lineno">   84</span>                    info.reserve(c.meta.structure.size());</div>
+<div class="line"><span class="lineno">   85</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; structure : c.meta.structure)</div>
+<div class="line"><span class="lineno">   86</span>                    {</div>
+<div class="line"><span class="lineno">   87</span>                        offset = <a class="code hl_function" href="alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328">AlignTo</a>(offset, structure.align);</div>
+<div class="line"><span class="lineno">   88</span>                        info.add({ offset, structure.size });</div>
+<div class="line"><span class="lineno">   89</span>                        offset += structure.size * low;</div>
+<div class="line"><span class="lineno">   90</span>                    }</div>
+<div class="line"><span class="lineno">   91</span>                }</div>
+<div class="line"><span class="lineno">   92</span>            }</div>
+<div class="line"><span class="lineno">   93</span>            <span class="keywordflow">else</span> </div>
+<div class="line"><span class="lineno">   94</span>            {</div>
+<div class="line"><span class="lineno">   95</span>                <span class="keywordtype">size_t</span> totalSize = 0;</div>
+<div class="line"><span class="lineno">   96</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; c : component) {</div>
+<div class="line"><span class="lineno">   97</span>                    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; structure : c.meta.structure) {</div>
+<div class="line"><span class="lineno">   98</span>                        totalSize = <a class="code hl_function" href="alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328">AlignTo</a>(totalSize, structure.align);</div>
+<div class="line"><span class="lineno">   99</span>                        totalSize += structure.size;</div>
+<div class="line"><span class="lineno">  100</span>                    }</div>
+<div class="line"><span class="lineno">  101</span>                }</div>
+<div class="line"><span class="lineno">  102</span> </div>
+<div class="line"><span class="lineno">  103</span>                layout.capacity = totalSize &gt; 0 ? <a class="code hl_variable" href="namespace_sector_f_w_1_1_e_c_s.html#ad613cff8fc5f1e25698d0397b3dffa09">ChunkSizeBytes</a> / totalSize : 0;</div>
+<div class="line"><span class="lineno">  104</span> </div>
+<div class="line"><span class="lineno">  105</span>                <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
+<div class="line"><span class="lineno">  106</span>                    <span class="keywordtype">size_t</span> offset = 0;</div>
+<div class="line"><span class="lineno">  107</span>                    <span class="keywordtype">bool</span> fits = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  108</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; c : component) {</div>
+<div class="line"><span class="lineno">  109</span>                        <span class="comment">// SoAはここでは処理しない</span></div>
+<div class="line"><span class="lineno">  110</span>                        assert(c.meta.isSoA == <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  111</span> </div>
+<div class="line"><span class="lineno">  112</span>                        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; structure : c.meta.structure) {</div>
+<div class="line"><span class="lineno">  113</span>                            <span class="keywordflow">if</span> (structure.size == 0) <span class="keywordflow">continue</span>; <span class="comment">// サイズが0の構造体はスキップ</span></div>
+<div class="line"><span class="lineno">  114</span>                            offset = <a class="code hl_function" href="alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328">AlignTo</a>(offset, structure.align);</div>
+<div class="line"><span class="lineno">  115</span>                            <span class="keywordflow">if</span> (offset + structure.size * layout.capacity &gt; <a class="code hl_variable" href="namespace_sector_f_w_1_1_e_c_s.html#ad613cff8fc5f1e25698d0397b3dffa09">ChunkSizeBytes</a>) {</div>
+<div class="line"><span class="lineno">  116</span>                                fits = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  117</span>                                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  118</span>                            }</div>
+<div class="line"><span class="lineno">  119</span>                            layout.info[c.id].add({ offset, structure.size });</div>
+<div class="line"><span class="lineno">  120</span>                            offset += structure.size * layout.capacity;</div>
+<div class="line"><span class="lineno">  121</span>                        }</div>
+<div class="line"><span class="lineno">  122</span>                    }</div>
+<div class="line"><span class="lineno">  123</span>                    <span class="keywordflow">if</span> (fits) <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  124</span> </div>
+<div class="line"><span class="lineno">  125</span>                    <span class="keywordflow">if</span> (layout.capacity == 0) <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  126</span> </div>
+<div class="line"><span class="lineno">  127</span>                    --layout.capacity;</div>
+<div class="line"><span class="lineno">  128</span>                    layout.info.clear();</div>
+<div class="line"><span class="lineno">  129</span>                }</div>
+<div class="line"><span class="lineno">  130</span>            }<span class="comment">// !hasSoA</span></div>
+<div class="line"><span class="lineno">  131</span> </div>
+<div class="line"><span class="lineno">  132</span>            <a class="code hl_variable" href="#a1eb6cdf09bfcd902299cd0f8a4484bce">componentLayout</a>[mask] = std::move(layout);</div>
+<div class="line"><span class="lineno">  133</span>        }</div>
+<div class="ttc" id="aalignment_8h_html_a80ec2ed7b06ff0ff25ebc3065be4f328"><div class="ttname"><a href="alignment_8h.html#a80ec2ed7b06ff0ff25ebc3065be4f328">AlignTo</a></div><div class="ttdeci">size_t AlignTo(size_t offset, size_t alignment)</div><div class="ttdoc">指定したオフセットをアライメントに合わせて調整する関数</div><div class="ttdef"><b>Definition</b> <a href="alignment_8h_source.html#l00016">alignment.h:16</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_layout_registry_html_a1eb6cdf09bfcd902299cd0f8a4484bce"><div class="ttname"><a href="#a1eb6cdf09bfcd902299cd0f8a4484bce">SectorFW::ECS::ComponentLayoutRegistry::componentLayout</a></div><div class="ttdeci">static std::unordered_map&lt; ComponentMask, ComponentLayout &gt; componentLayout</div><div class="ttdoc">コンポーネントレイアウトを格納するマップ</div><div class="ttdef"><b>Definition</b> <a href="_component_layout_registry_8h_source.html#l00051">ComponentLayoutRegistry.h:51</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_type_registry_html_aa653a2d1d105fe2e3ea6f6451e6fa17b"><div class="ttname"><a href="class_sector_f_w_1_1_e_c_s_1_1_component_type_registry.html#aa653a2d1d105fe2e3ea6f6451e6fa17b">SectorFW::ECS::ComponentTypeRegistry::GetMeta</a></div><div class="ttdeci">static const ComponentMeta &amp; GetMeta(ComponentTypeID id) noexcept</div><div class="ttdoc">コンポーネントのメタ情報を取得します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8cpp_source.html#l00008">ComponentTypeRegistry.cpp:8</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_a2accadf823770a8124d2a1ed1ba0ad30"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#a2accadf823770a8124d2a1ed1ba0ad30">SectorFW::ECS::ComponentTypeID</a></div><div class="ttdeci">uint32_t ComponentTypeID</div><div class="ttdoc">コンポーネントの型IDを定義する型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00031">component.hpp:31</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_ace5c222981b965468c3868a48028a512"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">SectorFW::ECS::ComponentMask</a></div><div class="ttdeci">std::bitset&lt; MaxComponents &gt; ComponentMask</div><div class="ttdoc">コンポーネントマスクを定義するビットセット型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00035">component.hpp:35</a></div></div>
+<div class="ttc" id="anamespace_sector_f_w_1_1_e_c_s_html_ad613cff8fc5f1e25698d0397b3dffa09"><div class="ttname"><a href="namespace_sector_f_w_1_1_e_c_s.html#ad613cff8fc5f1e25698d0397b3dffa09">SectorFW::ECS::ChunkSizeBytes</a></div><div class="ttdeci">constexpr size_t ChunkSizeBytes</div><div class="ttdoc">アーキタイプチャンクのサイズ（バイト単位）</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00030">ArchetypeChunk.h:30</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 0 --></div>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 1 --></div>
+</div>
+
+</div>
+</div>
+<a id="a1efe567a4b64bb9a3e069d8181fe2a45" name="a1efe567a4b64bb9a3e069d8181fe2a45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1efe567a4b64bb9a3e069d8181fe2a45">&#9670;&#160;</a></span>GetLayout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_layout.html">ComponentLayout</a> &amp; SectorFW::ECS::ComponentLayoutRegistry::GetLayout </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mask</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントマスクに対応するコンポーネントレイアウトを取得します。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mask</td><td>コンポーネントマスク </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>const <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_layout.html" title="コンポーネントレイアウトを定義する構造体 @detail コンポーネントの型IDとその情報を格納します。">ComponentLayout</a>&amp; コンポーネントレイアウトへの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_component_layout_registry_8cpp_source.html">ComponentLayoutRegistry.cpp</a> の <a class="el" href="_component_layout_registry_8cpp_source.html#l00011">11</a> 行目に定義があります。</p>
+<div class="fragment"><div class="line"><span class="lineno">   12</span>        {</div>
+<div class="line"><span class="lineno">   13</span>            std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="#af9be0894a2036e0f0e32d291f2ef18d0">map_mutex</a>);</div>
+<div class="line"><span class="lineno">   14</span> </div>
+<div class="line"><span class="lineno">   15</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a1eb6cdf09bfcd902299cd0f8a4484bce">componentLayout</a>.contains(mask)) {</div>
+<div class="line"><span class="lineno">   16</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="#a1eb6cdf09bfcd902299cd0f8a4484bce">componentLayout</a>.at(mask);</div>
+<div class="line"><span class="lineno">   17</span>            }</div>
+<div class="line"><span class="lineno">   18</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   19</span>                <a class="code hl_function" href="#aa24c8bfd308ab11a023266556758b271">AddNewComponentLayout</a>(mask);</div>
+<div class="line"><span class="lineno">   20</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="#a1eb6cdf09bfcd902299cd0f8a4484bce">componentLayout</a>.at(mask);</div>
+<div class="line"><span class="lineno">   21</span>            }</div>
+<div class="line"><span class="lineno">   22</span>        }</div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_layout_registry_html_aa24c8bfd308ab11a023266556758b271"><div class="ttname"><a href="#aa24c8bfd308ab11a023266556758b271">SectorFW::ECS::ComponentLayoutRegistry::AddNewComponentLayout</a></div><div class="ttdeci">static void AddNewComponentLayout(const ComponentMask &amp;mask)</div><div class="ttdoc">新しいコンポーネントレイアウトを追加します。</div><div class="ttdef"><b>Definition</b> <a href="_component_layout_registry_8cpp_source.html#l00024">ComponentLayoutRegistry.cpp:24</a></div></div>
+<div class="ttc" id="aclass_sector_f_w_1_1_e_c_s_1_1_component_layout_registry_html_af9be0894a2036e0f0e32d291f2ef18d0"><div class="ttname"><a href="#af9be0894a2036e0f0e32d291f2ef18d0">SectorFW::ECS::ComponentLayoutRegistry::map_mutex</a></div><div class="ttdeci">static std::mutex map_mutex</div><div class="ttdoc">コンポーネントレイアウトのマップへのアクセスを保護するミューテックス</div><div class="ttdef"><b>Definition</b> <a href="_component_layout_registry_8h_source.html#l00055">ComponentLayoutRegistry.h:55</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><!-- SVG 2 --></div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">メンバ詳解</h2>
+<a id="a1eb6cdf09bfcd902299cd0f8a4484bce" name="a1eb6cdf09bfcd902299cd0f8a4484bce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1eb6cdf09bfcd902299cd0f8a4484bce">&#9670;&#160;</a></span>componentLayout</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="namespace_sector_f_w_1_1_e_c_s.html#ace5c222981b965468c3868a48028a512">ComponentMask</a>, <a class="el" href="struct_sector_f_w_1_1_e_c_s_1_1_component_layout.html">ComponentLayout</a>&gt; SectorFW::ECS::ComponentLayoutRegistry::componentLayout</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントレイアウトを格納するマップ </p>
+
+<p class="definition"> <a class="el" href="_component_layout_registry_8h_source.html">ComponentLayoutRegistry.h</a> の <a class="el" href="_component_layout_registry_8h_source.html#l00051">51</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af9be0894a2036e0f0e32d291f2ef18d0" name="af9be0894a2036e0f0e32d291f2ef18d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9be0894a2036e0f0e32d291f2ef18d0">&#9670;&#160;</a></span>map_mutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex SectorFW::ECS::ComponentLayoutRegistry::map_mutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンポーネントレイアウトのマップへのアクセスを保護するミューテックス </p>
+
+<p class="definition"> <a class="el" href="_component_layout_registry_8h_source.html">ComponentLayoutRegistry.h</a> の <a class="el" href="_component_layout_registry_8h_source.html#l00055">55</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/inc/Core/ECS/<a class="el" href="_component_layout_registry_8h_source.html">ComponentLayoutRegistry.h</a></li>
+<li>C:/work/GitHub/Sector3X/SectorFW/SectorFW/src/Core/<a class="el" href="_component_layout_registry_8cpp_source.html">ComponentLayoutRegistry.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a class="el" href="namespace_sector_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a class="el" href="class_sector_f_w_1_1_e_c_s_1_1_component_layout_registry.html">ComponentLayoutRegistry</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>
