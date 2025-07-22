@@ -8,7 +8,7 @@
 #pragma once
 
 #include "ECS/ComponentTypeRegistry.h"
-#include "ECS/SystemScheduler.h"
+#include "ECS/SystemScheduler.hpp"
 #include "Math/Transform.h"
 #include "Partition.hpp"
 
@@ -56,20 +56,21 @@ namespace SectorFW
 			ChunkSizeType _chunkWidth = DefaultChunkWidth, ChunkSizeType _chunkHeight = DefaultChunkHeight,
 			ChunkSizeType _chunkCellSize = DefaultChunkCellSize) noexcept
 			: name(name), state(state), chunkCellSize(_chunkCellSize),
-			partition(_chunkWidth, _chunkHeight, _chunkCellSize){}
+			partition(_chunkWidth, _chunkHeight, _chunkCellSize) {
+		}
 		/**
 		 * @brief 更新処理
 		 */
-		void Update() {
-			scheduler.UpdateAll(partition);
+		void Update(const ECS::ServiceLocator& serviceLocator) {
+			scheduler.UpdateAll(partition, serviceLocator);
 		}
 		/**
 		 * @brief 限定的な更新処理
 		 */
-		void UpdateLimited() {
+		void UpdateLimited(const ECS::ServiceLocator& serviceLocator) {
 			// 限定的なSystemだけを実行（例：位置補間やフェードアウト処理）
 			for (auto& sys : limitedSystems) {
-				sys->Update(partition);
+				sys->Update(partition, serviceLocator);
 			}
 		}
 		/**

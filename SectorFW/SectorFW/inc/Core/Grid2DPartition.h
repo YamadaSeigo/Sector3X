@@ -25,14 +25,15 @@ namespace SectorFW
 		 * @param chunkSize チャンクのサイズ
 		 */
 		explicit Grid2DPartition(ChunkSizeType chunkWidth, ChunkSizeType chunkHeight, ChunkSizeType chunkSize) noexcept :
-			grid(chunkWidth, chunkHeight), chunkSize(chunkSize) {}
+			grid(chunkWidth, chunkHeight), chunkSize(chunkSize) {
+		}
 		/**
 		 * @brief 指定した位置に基づいてチャンクを取得します。
 		 * @param location 位置（Math::Vec3f型）
 		 * @param policy アウトオブバウンズポリシー
 		 * @return std::optional<SpatialChunk*> チャンクへのポインタ
 		 */
-		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::Reject) noexcept{
+		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::Reject) noexcept {
 			// 位置に基づいてチャンクを取得するロジックを実装
 			// ここではダミーの実装を返す
 			ChunkSizeType x = static_cast<ChunkSizeType>(floor(location.x / chunkSize));
@@ -85,7 +86,7 @@ namespace SectorFW
 		 * @param context Grid2DPartitionのコンテキスト
 		 * @return std::vector<ArchetypeChunk*> マッチするチャンクのベクター
 		 */
-		template<> 
+		template<>
 		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(Grid2DPartition& context) const noexcept
 		{
 			std::vector<ArchetypeChunk*> result;

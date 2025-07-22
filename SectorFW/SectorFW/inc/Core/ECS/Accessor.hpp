@@ -10,7 +10,6 @@
 #include "AccessInfo.h"
 #include "Util/TypeChecker.hpp"
 
-
 namespace SectorFW
 {
 	namespace ECS
@@ -102,7 +101,7 @@ namespace SectorFW
 			 */
 			template<typename AccessType>
 				requires OneOf<AccessType, AccessTypes...>
-			std::optional<typename AccessPolicy<AccessType>::PointerType> Get() noexcept{
+			std::optional<typename AccessPolicy<AccessType>::PointerType> Get() noexcept {
 				using ComponentType = typename AccessPolicy<AccessType>::ComponentType;
 				using PtrType = SoAPtr<ComponentType>::type;
 
@@ -121,7 +120,7 @@ namespace SectorFW
 				else {
 					return column;
 				}
-			} 
+			}
 			/**
 			 * @brief requiresに一致しなかったときのフォールバック定義
 			 * @return std::optional<void> 空のオプション
@@ -176,9 +175,9 @@ namespace SectorFW
 			 * @param Is インデックスシーケンス
 			 */
 			template<typename PtrType, size_t... Is>
-			void GetMemberStartPtr(BufferType* base, size_t capacity, size_t& offset, PtrType& value,std::index_sequence<Is...>) noexcept
+			void GetMemberStartPtr(BufferType* base, size_t capacity, size_t& offset, PtrType& value, std::index_sequence<Is...>) noexcept
 			{
-				(GetMemberStartPtrImpl<PtrType, Is>(base, capacity, offset, value),...);
+				(GetMemberStartPtrImpl<PtrType, Is>(base, capacity, offset, value), ...);
 			}
 			/**
 			 * @brief アーキタイプチャンクへのポインタ

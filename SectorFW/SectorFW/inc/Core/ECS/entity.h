@@ -17,50 +17,50 @@ namespace SectorFW
 		// EntityIDは通常uint32_t
 		//using EntityID = uint32_t;
 
-        // Entity ID structure
-        struct EntityID {
-            uint32_t index = 0;
-            uint32_t generation = 0;
+		// Entity ID structure
+		struct EntityID {
+			uint32_t index = 0;
+			uint32_t generation = 0;
 
-            /**
+			/**
 			 * @brief コンストラクタ
 			 * @param other EntityIDをコピーする
 			 * @return EntityID
-             */
-            bool operator==(const EntityID& other) const noexcept {
-                return index == other.index && generation == other.generation;
-            }
-            /**
+			 */
+			bool operator==(const EntityID& other) const noexcept {
+				return index == other.index && generation == other.generation;
+			}
+			/**
 			 * @brief EntityIDが有効かどうかを確認する
 			 * @return 有効な場合はtrue、無効な場合はfalse
-             */
-            bool IsValid() const noexcept {
-                return index != UINT32_MAX;
-            }
-            /**
+			 */
+			bool IsValid() const noexcept {
+				return index != UINT32_MAX;
+			}
+			/**
 			 * @brief 無効なEntityIDを取得する
 			 * @return 無効なEntityID
-             */
-            static constexpr EntityID Invalid() noexcept{
-                return EntityID{ UINT32_MAX, 0 };
-            }
-        };
+			 */
+			static constexpr EntityID Invalid() noexcept {
+				return EntityID{ UINT32_MAX, 0 };
+			}
+		};
 	}
 }
 
 #include <functional>
 
 namespace std {
-    /**
+	/**
 	 * @brief EntityIDのハッシュ関数
 	 * @param id EntityID
 	 * @return ハッシュ値
-     */
-    template <>
-    struct hash<SectorFW::ECS::EntityID> {
-        size_t operator()(const SectorFW::ECS::EntityID& id) const noexcept{
-            // 高速な組み合わせ：FNV1a, Boostのhash_combine風
-            return std::hash<uint64_t>{}(static_cast<uint64_t>(id.generation) << 32 | id.index);
-        }
-    };
+	 */
+	template <>
+	struct hash<SectorFW::ECS::EntityID> {
+		size_t operator()(const SectorFW::ECS::EntityID& id) const noexcept {
+			// 高速な組み合わせ：FNV1a, Boostのhash_combine風
+			return std::hash<uint64_t>{}(static_cast<uint64_t>(id.generation) << 32 | id.index);
+		}
+	};
 }

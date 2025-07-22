@@ -12,7 +12,5 @@ namespace SectorFW
 		Math::Vec3f location;
 		Math::Quatf rotation;
 		Math::Vec3f scale;
-
-		using SoAType = FlattenT<Transform>;
 	};
 }

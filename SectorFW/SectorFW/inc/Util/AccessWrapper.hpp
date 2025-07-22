@@ -7,9 +7,9 @@
 
 #pragma once
 
-/**
- * @brief コンテナの読み書きビューを提供するクラス
- */
+ /**
+  * @brief コンテナの読み書きビューを提供するクラス
+  */
 template<typename Container>
 class ReadWriteView {
 public:

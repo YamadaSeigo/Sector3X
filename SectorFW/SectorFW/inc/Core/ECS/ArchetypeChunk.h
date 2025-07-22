@@ -54,15 +54,20 @@ namespace SectorFW
 			 * @return std::optional<T*> コンポーネントのポインタ
 			 */
 			template<typename T>
-			std::optional<T*> GetColumn() noexcept{
+			std::optional<T*> GetColumn() noexcept {
 				ComponentTypeID id = ComponentTypeRegistry::GetID<T>();
 				auto it = layout.info.find(id);
 				if (it == layout.info.end()) {
 					LOG_ERROR("Component type ID {} not found in layout", id);
 					return std::nullopt; // or throw an exception
 				}
+				auto info = it->second.get(0);
+				if (!info) {
+					LOG_ERROR("Component type ID {} not found info", id);
+					return std::nullopt;
+				}
 
-				return reinterpret_cast<T*>(&buffer[it->second.get(0).offset]);
+				return reinterpret_cast<T*>(&buffer[info.value().get().offset]);
 			}
 			/**
 			 * @brief エンティティを追加する関数

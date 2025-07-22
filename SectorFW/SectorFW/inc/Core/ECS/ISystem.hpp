@@ -7,7 +7,8 @@
 
 #pragma once
 
-#include "Accessor.h"
+#include "Accessor.hpp"
+#include "ServiceContext.h"
 #include "Util/Grid.hpp"
 
 namespace SectorFW
@@ -30,7 +31,7 @@ namespace SectorFW
 			 * @brief システムの更新関数
 			 * @param partition 対象のパーティション
 			 */
-			virtual void Update(Partition& partition) = 0;
+			virtual void Update(Partition& partition, const ServiceLocator& serviceLocator) = 0;
 			/**
 			 * @brief アクセス情報の取得関数
 			 * @return AccessInfo アクセス情報

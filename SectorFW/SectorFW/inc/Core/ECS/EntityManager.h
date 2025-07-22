@@ -11,7 +11,7 @@
 #include <atomic>
 
 #include "ArchetypeManager.h"
-#include "SparseComponentStore.h"
+#include "SparseComponentStore.hpp"
 
 #include "Util/TypeChecker.hpp"
 #include "Util/AccessWrapper.hpp"
@@ -84,7 +84,7 @@ namespace SectorFW
 			 * @return bool コンポーネントがある場合はtrue、ない場合はfalse
 			 */
 			template<typename T>
-			bool HasComponent(EntityID id) const noexcept{
+			bool HasComponent(EntityID id) const noexcept {
 				ComponentTypeID typeID = ComponentTypeRegistry::GetID<T>();
 				if (locations.contains(id)) {
 					const ComponentMask& mask = GetMask(id);
@@ -103,7 +103,7 @@ namespace SectorFW
 			 * @return T* コンポーネントのポインタ
 			 */
 			template<typename T>
-			T* GetComponent(EntityID id) noexcept{
+			T* GetComponent(EntityID id) noexcept {
 				if (ComponentTypeRegistry::IsSparse<T>()) {
 					return GetSparseStore<T>().Get(id);
 				}
@@ -247,7 +247,7 @@ namespace SectorFW
 			 */
 			template<typename T>
 				requires (!requires { typename T::soa_type; })
-			void MemorySetChunk(ArchetypeChunk* chunk, size_t index, const T& value) noexcept{
+			void MemorySetChunk(ArchetypeChunk* chunk, size_t index, const T& value) noexcept {
 				auto column = chunk->GetColumn<T>();
 				if (!column) return;
 
@@ -393,7 +393,7 @@ namespace SectorFW
 			 * @return SparseComponentStore<T>& まばらなコンポーネントストアへの参照
 			 */
 			template<typename T>
-			SparseComponentStore<T>& GetSparseStore() noexcept{
+			SparseComponentStore<T>& GetSparseStore() noexcept {
 				ComponentTypeID id = ComponentTypeRegistry::GetID<T>();
 				if (!sparseStores.contains(id)) {
 					auto wrapper = std::make_shared<SparseWrapper<T>>();

@@ -12,7 +12,7 @@
 #include <future>
 
 #include "EntityManager.h"
-#include "ITypeSystem.h"
+#include "ITypeSystem.hpp"
 
 namespace SectorFW
 {
@@ -32,31 +32,20 @@ namespace SectorFW
 		public:
 			/**
 			 * @brief システムを追加する関数
+			 * @param serviceLocator サービスロケーター
 			 */
 			template<template<typename> class SystemType>
-			void AddSystem(){
-				std::unique_ptr<ISystem<Partition>> sys = std::make_unique<SystemType<Partition>>();
+			void AddSystem(const ServiceLocator& serviceLocator) {
+				auto typeSys = new SystemType<Partition>();
+				typeSys->SetContext(serviceLocator);
 
-				accessList.push_back(sys->GetAccessInfo());
-				systems.push_back(std::move(sys));
-			}
-			/**
-			 * @brief システムを追加する関数
-			 * @param ...deps 依存するコンポーネントのポインタ
-			 */
-			template<template<typename> class SystemType, typename ...Deps>
-				requires SystemDerived<SystemType, Deps...>
-			void AddSystem(Deps*... deps) {
-				std::unique_ptr<ISystem<Partition>> sys = std::make_unique<SystemType<Partition>>();
-
-				accessList.push_back(sys->GetAccessInfo());
-				sys->SetContext(std::make_tuple(deps...));
-				systems.push_back(std::move(sys));
+				accessList.push_back(typeSys->GetAccessInfo());
+				systems.emplace_back(typeSys);
 			}
 			/**
 			 * @brief システムをキューに追加する関数
 			 */
-			// TODO
+			 // TODO
 			template<typename SystemType>
 			void QueueSystem() {
 				/*auto sys = std::make_unique<SystemType>();
@@ -68,7 +57,7 @@ namespace SectorFW
 			 * @brief すべてのシステムを更新する関数
 			 * @param partition 対象のパーティション
 			 */
-			void UpdateAll(Partition& partition) {
+			void UpdateAll(Partition& partition, const ServiceLocator& serviceLocator) {
 				if (!pendingSystems.empty())
 				{
 					std::scoped_lock lock(pendingMutex);
@@ -107,9 +96,9 @@ namespace SectorFW
 
 					std::vector<std::future<void>> futures;
 					for (size_t i : parallelGroup) {
-						futures.emplace_back(std::async(std::launch::async, [&partition, this, i]()
+						futures.emplace_back(std::async(std::launch::async, [&partition, this, i, &serviceLocator]()
 							{
-								systems[i]->Update(partition);
+								systems[i]->Update(partition, serviceLocator);
 							}
 						));
 					}

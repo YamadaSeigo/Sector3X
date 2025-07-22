@@ -7,10 +7,11 @@
 
 #pragma once
 
-#include "ISystem.h"
+#include "ISystem.hpp"
 #include "ComponentTypeRegistry.h"
 #include "ServiceContext.h"
 #include "Query.h"
+#include "Util/UndeletablePtr.hpp"
 
 namespace SectorFW
 {
@@ -47,7 +48,7 @@ namespace SectorFW
 					LOG_WARNING("No matching chunks found for the specified access types.");
 				}
 #endif
-				for (auto& chunk : chunks) 
+				for (auto& chunk : chunks)
 				{
 					ComponentAccessor<AccessTypes...> accessor(chunk);
 					func(accessor, chunk->GetEntityCount());
@@ -58,26 +59,41 @@ namespace SectorFW
 			 * @param partition パーティションの参照
 			 * @param ...services サービスのポインタ
 			 */
-			virtual void UpdateImpl(Partition& partition, Services*... services) = 0;
+			virtual void UpdateImpl(Partition& partition, UndeletablePtr<Services>... services) = 0;
 		public:
 			/**
 			 * @brief コンテキストを設定する関数
 			 * @param ctx コンテキストのタプル
 			 */
-			void SetContext(ContextTuple ctx) noexcept {
-				context = std::move(ctx);
+			void SetContext(const ServiceLocator& serviceLocator) noexcept {
+				if constexpr (AllStaticServices<Services...>) {
+					context = std::make_tuple(serviceLocator.Get<Services>()...);
+				}
 			}
+
 			/**
 			 * @brief システムの更新関数
 			 * @param partition パーティションの参照
 			 * @detail 自身のコンテキストを使用して、UpdateImplを呼び出す
 			 */
-			void Update(Partition& partition) override {
+			void Update(Partition& partition, const ServiceLocator& serviceLocator) override {
+				if constexpr (AllStaticServices<Services...>) {
+					// 静的サービスを使用する場合、サービスロケーターから直接取得
+					std::apply(
+						[&](Services*... unpacked) {
+							this->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
+						},
+						context
+					);
+					return;
+				}
+
+				auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
 				std::apply(
 					[&](Services*... unpacked) {
-						this->UpdateImpl(partition, unpacked...);
+						this->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
 					},
-					context
+					serviceTuple
 				);
 			}
 			/**

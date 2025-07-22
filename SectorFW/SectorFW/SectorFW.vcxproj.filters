@@ -96,7 +96,7 @@
     <ClInclude Include="inc\Core\ECS\AccessInfo.h">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ECS\Accessor.h">
+    <ClInclude Include="inc\Core\ECS\Accessor.hpp">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ECS\Archetype.h">
@@ -120,7 +120,7 @@
     <ClInclude Include="inc\Core\ECS\EntityManager.h">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ISystem.h">
+    <ClInclude Include="inc\Core\ECS\ISystem.hpp">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ECS\Query.h">
@@ -129,13 +129,13 @@
     <ClInclude Include="inc\Core\ECS\ServiceContext.h">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ECS\SparseComponentStore.h">
+    <ClInclude Include="inc\Core\ECS\SparseComponentStore.hpp">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ECS\SystemScheduler.h">
+    <ClInclude Include="inc\Core\ECS\SystemScheduler.hpp">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ITypeSystem.h">
+    <ClInclude Include="inc\Core\ECS\ITypeSystem.hpp">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\AssetStorage.h">
@@ -196,6 +196,9 @@
       <Filter>Inc\Util</Filter>
     </ClInclude>
     <ClInclude Include="inc\Util\unique_variant.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\UndeletablePtr.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
   </ItemGroup>

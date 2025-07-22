@@ -16,20 +16,20 @@
 
 namespace SectorFW
 {
-    /**
+	/**
 	 * @brief チャンクを検索する際のポリシーを定義する列挙型
-     */
-    enum class EOutOfBoundsPolicy {
-        Reject,
-        ClampToEdge
-    };
-    /**
+	 */
+	enum class EOutOfBoundsPolicy {
+		Reject,
+		ClampToEdge
+	};
+	/**
 	 * @brief Partitionが実装する必要のあるインターフェースを定義するコンセプト
-     */
-    template <typename Derived>
-    concept PartitionConcept = requires(Derived t, Math::Vec3f v, ChunkSizeType size, EOutOfBoundsPolicy policy) {
-        Derived{ size,size,size };
-        { t.GetChunk(v, policy) } -> std::same_as< std::optional<SpatialChunk*>>;
-        { t.GetGlobalEntityManager() } -> std::same_as<ECS::EntityManager&>;
-    };
+	 */
+	template <typename Derived>
+	concept PartitionConcept = requires(Derived t, Math::Vec3f v, ChunkSizeType size, EOutOfBoundsPolicy policy) {
+		Derived{ size,size,size };
+		{ t.GetChunk(v, policy) } -> std::same_as< std::optional<SpatialChunk*>>;
+		{ t.GetGlobalEntityManager() } -> std::same_as<ECS::EntityManager&>;
+	};
 }

@@ -9,9 +9,9 @@
 #include <chrono>
 #include <thread>
 
-/**
- * @brief フレームタイマーを定義するクラス
- */
+ /**
+  * @brief フレームタイマーを定義するクラス
+  */
 class FrameTimer {
 public:
 	using clock = std::chrono::steady_clock;

@@ -113,7 +113,7 @@ public:
 	 * @brief ‰æ–Ê‚ðƒNƒŠƒA
 	 * @param clearColor
 	 */
-	void Clear(const float clearColor[4])	{
+	void Clear(const float clearColor[4]) {
 		static_cast<Impl*>(this)->ClearImpl(clearColor);
 	}
 	/**

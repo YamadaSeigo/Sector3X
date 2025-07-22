@@ -22,7 +22,7 @@
     <ClInclude Include="inc\Core\AssetManager.h" />
     <ClInclude Include="inc\Core\AssetStorage.h" />
     <ClInclude Include="inc\Core\ECS\AccessInfo.h" />
-    <ClInclude Include="inc\Core\ECS\Accessor.h" />
+    <ClInclude Include="inc\Core\ECS\Accessor.hpp" />
     <ClInclude Include="inc\Core\ECS\Archetype.h" />
     <ClInclude Include="inc\Core\ECS\ArchetypeChunk.h" />
     <ClInclude Include="inc\Core\ECS\ArchetypeManager.h" />
@@ -32,12 +32,12 @@
     <ClInclude Include="inc\Core\ECS\entity.h" />
     <ClInclude Include="inc\Core\ECS\EntityIDAllocator.h" />
     <ClInclude Include="inc\Core\ECS\EntityManager.h" />
-    <ClInclude Include="inc\Core\ECS\ISystem.h" />
-    <ClInclude Include="inc\Core\ECS\ITypeSystem.h" />
+    <ClInclude Include="inc\Core\ECS\ISystem.hpp" />
+    <ClInclude Include="inc\Core\ECS\ITypeSystem.hpp" />
     <ClInclude Include="inc\Core\ECS\Query.h" />
     <ClInclude Include="inc\Core\ECS\ServiceContext.h" />
-    <ClInclude Include="inc\Core\ECS\SparseComponentStore.h" />
-    <ClInclude Include="inc\Core\ECS\SystemScheduler.h" />
+    <ClInclude Include="inc\Core\ECS\SparseComponentStore.hpp" />
+    <ClInclude Include="inc\Core\ECS\SystemScheduler.hpp" />
     <ClInclude Include="inc\Core\GameEngine.h" />
     <ClInclude Include="inc\Core\Grid2DPartition.h" />
     <ClInclude Include="inc\Core\Partition.hpp" />
@@ -66,6 +66,7 @@
     <ClInclude Include="inc\Util\NonCopyable.h" />
     <ClInclude Include="inc\Util\OneOrMore.hpp" />
     <ClInclude Include="inc\Util\TypeChecker.hpp" />
+    <ClInclude Include="inc\Util\UndeletablePtr.hpp" />
     <ClInclude Include="inc\Util\unique_variant.hpp" />
     <ClInclude Include="inc\WindowHandler.h" />
     <ClInclude Include="src\Utility\doxygen_sample.h" />

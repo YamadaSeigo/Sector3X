@@ -18,9 +18,7 @@ constexpr double FPS_LIMIT = 10.0;	// フレームレート制限
 using namespace SectorFW;
 using namespace SectorFW::ECS;
 
-//----------------------------------------------
-// Example System using the Factory
-//----------------------------------------------
+
 struct Velocity
 {
 	float vx = 0, vy = 0, vz = 0;
@@ -108,23 +106,34 @@ public:
 					/*velocityPtr.value()[i].vx += 1.0f;
 					LOG_INFO("%f", velocityPtr.value()[i].vx);*/
 
-					LOG_INFO("Velocity: (%f, %f, %d)", p_x[i], p_y[i], p_z[i]);
+					//LOG_INFO("Velocity: (%f, %f, %d)", p_x[i], p_y[i], p_z[i]);
 				}
 			}, partition);
 	}
 };
 
+class AssetService
+{
+public:
+	STATIC_SERVICE_TAG
+	int assetCount = 0;
+};
 
 template<typename Partition>
 class HealthRegenSystem : public ITypeSystem<
 	Partition,
 	ComponentAccess<Read<Health>,Write<Health>>,
-	ServiceContext<>>{
+	ServiceContext<AssetService>>{
+
+	using Accessor = ComponentAccessor<Read<Health>, Write<Health>>;
 public:
 
-	void UpdateImpl(Partition& partition) override {
+	void UpdateImpl(Partition& partition, UndeletablePtr<AssetService> assetService) override {
+		assetService->assetCount++;
+		LOG_INFO("Asset Count: %d", assetService->assetCount);
 	}
 };
+
 
 int main(void)
 {
@@ -139,7 +148,12 @@ int main(void)
 	ComponentTypeRegistry::Register<Position>();
 	ComponentTypeRegistry::Register<Health>();
 
-	World<Grid2DPartition> world;
+	AssetService assetService;
+
+	ECS::ServiceLocator serviceLocator;
+	serviceLocator.Init<AssetService>();
+
+	World<Grid2DPartition> world(std::move(serviceLocator));
 
 	for (int i = 0; i < 1; ++i) {
 		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("Level" + std::to_string(i)));
@@ -153,8 +167,8 @@ int main(void)
 		}
 
 		// System登録
-		scheduler.AddSystem<MovementSystem>();
-		scheduler.AddSystem<HealthRegenSystem>();
+		scheduler.AddSystem<MovementSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<HealthRegenSystem>(world.GetServiceLocator());
 
 		world.AddLevel(std::move(level));
 	}
@@ -166,7 +180,6 @@ int main(void)
 	// メッセージループ
 	WindowHandler::Run([]() {
 		// ここにメインループの処理を書く
-
 		gameEngine.MainLoop();
 
 		});

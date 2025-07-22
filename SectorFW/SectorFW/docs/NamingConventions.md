@@ -38,7 +38,7 @@
 | メンバ変数   | `m_`               | `m_camelCase` | `m_isDead`                  |
 | ポインタ     | `p` または `*`     | 任意（好み）  | `pOwner` / `*Owner`         |
 | 参照         | `Ref`（任意）      | 読みやすく    | `targetRef`                 |
-| コンスタント | `k` または全大文字 |               | `kMaxPlayers`, `MAX_HEALTH` |
+| コンスタント | `c` または全大文字 |               | `cMaxPlayers`, `MAX_HEALTH` |
 
 ---
 

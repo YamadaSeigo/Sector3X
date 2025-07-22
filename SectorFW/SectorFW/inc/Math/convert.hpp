@@ -12,6 +12,9 @@ namespace SectorFW
 		To Convert(const From& from); // ’è‹`‚È‚µF“Áê‰»‚Ì‚İ‹–‰Â
 
 		template<typename To, typename From>
+		To Convert(const From& from) { return To(); }
+
+		template<typename To, typename From>
 		concept BitCastable =
 			sizeof(To) == sizeof(From) &&
 			std::is_trivially_copyable_v<To> &&
