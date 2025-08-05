@@ -40,6 +40,12 @@
     <Filter Include="Inc\Core\ECS">
       <UniqueIdentifier>{551c94e0-2537-4dc6-a640-fc01d40dc461}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\Graphics\DX11">
+      <UniqueIdentifier>{bce58d2d-ccdc-481b-9e50-2c40d6204e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Graphics\DX12">
+      <UniqueIdentifier>{138a7dc2-8986-4efc-97a6-d81c84624262}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utility\doxygen_sample.h">
@@ -126,7 +132,7 @@
     <ClInclude Include="inc\Core\ECS\Query.h">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ServiceContext.h">
+    <ClInclude Include="inc\Core\ECS\ServiceContext.hpp">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ECS\SparseComponentStore.hpp">
@@ -137,12 +143,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\ECS\ITypeSystem.hpp">
       <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\AssetStorage.h">
-      <Filter>Inc\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\AssetManager.h">
-      <Filter>Inc\Core</Filter>
     </ClInclude>
     <ClInclude Include="inc\Util\TypeChecker.hpp">
       <Filter>Inc\Util</Filter>
@@ -156,7 +156,7 @@
     <ClInclude Include="inc\Math\Quaternion.hpp">
       <Filter>Inc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Partition.hpp">
+    <ClInclude Include="inc\Core\partition.hpp">
       <Filter>Inc\Core</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\SpatialChunk.h">
@@ -174,7 +174,7 @@
     <ClInclude Include="inc\Math\Matrix.hpp">
       <Filter>Inc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Math\Transform.h">
+    <ClInclude Include="inc\Math\Transform.hpp">
       <Filter>Inc\Math</Filter>
     </ClInclude>
     <ClInclude Include="inc\Math\convert.hpp">
@@ -199,6 +199,72 @@
       <Filter>Inc\Util</Filter>
     </ClInclude>
     <ClInclude Include="inc\Util\UndeletablePtr.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\_dx11inc.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\RenderTypes.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ResouceManagerBase.hpp">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\DX11MeshManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\DX11MaterialManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\RenderQueue.hpp">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\RenderGraph.hpp">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\RenderBackend.hpp">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\DX11RenderBackend.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX12\DX12RenderBackend.h">
+      <Filter>Inc\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX12\dx12inc.h">
+      <Filter>Inc\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\DX11ShaderManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\DX11PSOManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\RenderService.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ECS\ServiceLocator.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\TextureLoader.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\DX11TextureManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\CopyableAtomic.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\DX11ModelAssetManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\DX11ConstantBufferManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DX11\DX11SamplerManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Util\PathView.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
   </ItemGroup>
@@ -238,6 +304,27 @@
     </ClCompile>
     <ClCompile Include="src\Core\ComponentLayoutRegistry.cpp">
       <Filter>Src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11RenderBackend.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11MaterialManager.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11ShaderManager.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11MeshManager.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11ModelAssetManager.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11TextureManager.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11PSOManager.cpp">
+      <Filter>Src\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

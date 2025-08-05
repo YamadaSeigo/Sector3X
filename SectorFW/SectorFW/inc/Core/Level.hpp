@@ -9,8 +9,8 @@
 
 #include "ECS/ComponentTypeRegistry.h"
 #include "ECS/SystemScheduler.hpp"
-#include "Math/Transform.h"
-#include "Partition.hpp"
+#include "Math/Transform.hpp"
+#include "partition.hpp"
 
 #include "Util/logger.h"
 #include "Util/extract_type.hpp"
@@ -42,6 +42,8 @@ namespace SectorFW
 	class Level {
 		using SchedulerType = ECS::SystemScheduler<Partition>;
 		using SystemType = ECS::ISystem<Partition>;
+
+		using TransformType = CTransform; // Transformコンポーネントの型
 
 	public:
 		/**
@@ -98,14 +100,15 @@ namespace SectorFW
 			(SetMask<Components>(mask), ...);
 
 			// Transformコンポーネントが存在するかどうかをチェック
-			ComponentTypeID typeID = ComponentTypeRegistry::GetID<Transform>();
+			ComponentTypeID typeID = ComponentTypeRegistry::GetID<TransformType>();
 			bool hasTransform = mask.test(typeID);
 
 			EntityID id = EntityID::Invalid();
 
+			//Transformコンポーネントが存在する場合、パーティションからチャンクを取得
 			if (hasTransform)
 			{
-				auto transform = extract_first_of_type<Transform>(components...);
+				auto transform = extract_first_of_type<TransformType>(components...);
 				if (transform)
 				{
 					auto chunk = partition.GetChunk(transform->location); // Transformの位置に基づいてチャンクを取得
@@ -115,6 +118,7 @@ namespace SectorFW
 					}
 				}
 			}
+			// Transformコンポーネントが存在しない場合、グローバルエンティティマネージャーを使用
 			else
 			{
 				id = partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
@@ -122,7 +126,7 @@ namespace SectorFW
 
 			// エンティティIDが無効な場合はエラーをログ出力
 			if (!id.IsValid()) {
-				LOG_ERROR("EntityID is not Valid : \n");
+				LOG_ERROR("EntityID is not Valid : %d", id.index);
 				return std::nullopt; // エンティティの追加に失敗した場合
 			}
 

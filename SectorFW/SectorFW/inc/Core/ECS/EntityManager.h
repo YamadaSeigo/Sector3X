@@ -281,10 +281,10 @@ namespace SectorFW
 			template<typename Variant, typename U, size_t Index>
 			void ExpansionMemberImpl(std::vector<Variant>& vec, U& value) {
 				auto ptr = std::get<Index>(U::member_ptr_tuple);
-				static_assert(std::is_member_object_pointer_v<decltype(ptr)>);
+				static_assert(std::is_member_object_pointer_v<decltype(ptr)>);	// メンバーオブジェクトポインタであることを確認
 				auto& member = value.*ptr;
 
-				using MemberT = std::remove_cvref_t<decltype(member)>;
+				using MemberT = std::remove_cvref_t<decltype(member)>; //constと参照を除去した型
 
 				if constexpr (IsSoAComponent<MemberT>) {
 					ExpansionMember<Variant>(vec, member, std::make_index_sequence<std::tuple_size_v<typename MemberT::tuple_type>>{});

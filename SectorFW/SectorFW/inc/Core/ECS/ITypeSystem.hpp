@@ -9,7 +9,6 @@
 
 #include "ISystem.hpp"
 #include "ComponentTypeRegistry.h"
-#include "ServiceContext.h"
 #include "Query.h"
 #include "Util/UndeletablePtr.hpp"
 
@@ -37,8 +36,8 @@ namespace SectorFW
 			 * @param func 関数オブジェクトまたはラムダ式
 			 * @param partition 対象のパーティション
 			 */
-			template<typename F>
-			void ForEachChunkWithAccessor(F&& func, Partition& partition)
+			template<typename F, typename... Args>
+			void ForEachChunkWithAccessor(F&& func, Partition& partition, Args... args)
 			{
 				Query query;
 				query.With<typename AccessPolicy<AccessTypes>::ComponentType...>();
@@ -51,7 +50,7 @@ namespace SectorFW
 				for (auto& chunk : chunks)
 				{
 					ComponentAccessor<AccessTypes...> accessor(chunk);
-					func(accessor, chunk->GetEntityCount());
+					func(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
 				}
 			}
 			/**

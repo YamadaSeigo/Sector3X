@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   Quaternion.hpp
+ * @brief クォータニオンを定義するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   July 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <cmath>
@@ -12,7 +19,7 @@ namespace SectorFW
 			T x, y, z, w;
 
 			Quat() :x(0), y(0), z(0), w(1) {}
-			Quat(T x, T y, T z, T w) : x(x), y(y), z(z), w(w) {}
+			explicit Quat(T x, T y, T z, T w) : x(x), y(y), z(z), w(w) {}
 
 			// --- クォータニオンの正規化 ---
 			void Normalize() {

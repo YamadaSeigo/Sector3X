@@ -8,7 +8,7 @@
 #pragma once
 
 #include <algorithm>
-#include "Partition.hpp"
+#include "partition.hpp"
 
 namespace SectorFW
 {

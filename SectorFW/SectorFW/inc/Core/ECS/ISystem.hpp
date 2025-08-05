@@ -8,7 +8,7 @@
 #pragma once
 
 #include "Accessor.hpp"
-#include "ServiceContext.h"
+#include "ServiceLocator.h"
 #include "Util/Grid.hpp"
 
 namespace SectorFW

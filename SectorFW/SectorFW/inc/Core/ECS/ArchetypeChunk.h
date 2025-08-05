@@ -58,12 +58,12 @@ namespace SectorFW
 				ComponentTypeID id = ComponentTypeRegistry::GetID<T>();
 				auto it = layout.info.find(id);
 				if (it == layout.info.end()) {
-					LOG_ERROR("Component type ID {} not found in layout", id);
+					LOG_ERROR("Component type ID %d not found in layout", id);
 					return std::nullopt; // or throw an exception
 				}
 				auto info = it->second.get(0);
 				if (!info) {
-					LOG_ERROR("Component type ID {} not found info", id);
+					LOG_ERROR("Component type ID %d not found info", id);
 					return std::nullopt;
 				}
 

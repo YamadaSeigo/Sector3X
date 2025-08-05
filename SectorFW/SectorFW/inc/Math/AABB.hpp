@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   AABB.hpp
+ * @brief Axis-Aligned Bounding Box (AABB)‚ð’è‹`‚·‚éƒNƒ‰ƒX
+ * @author seigo_t03b63m
+ * @date   July 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <limits>

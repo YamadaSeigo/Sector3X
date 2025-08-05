@@ -89,6 +89,16 @@ namespace SectorFW
 		 */
 		template<typename... AccessTypes>
 		class ComponentAccessor {
+			// 判定テンプレート
+			template <typename, typename = std::void_t<>>
+			struct IsToPtr : std::false_type {};
+
+			template <typename T>
+			struct IsToPtr<T, std::void_t<typename T::ToPtrTag>> : std::true_type {};
+
+			/*template<typename T>
+			constexpr bool is_toPtr_v = typename IsToPtr<T>::value;*/
+
 		public:
 			/**
 			 * @brief コンポーネントアクセサーのコンストラクタ
@@ -143,14 +153,15 @@ namespace SectorFW
 			void GetMemberStartPtrImpl(BufferType* base, size_t capacity, size_t& offset, PtrType& value) noexcept
 			{
 				auto memPtr = std::get<Index>(PtrType::ptr_tuple);
-				decltype(auto) member = value.*memPtr;
+				static_assert(std::is_member_object_pointer_v<decltype(memPtr)>);	// メンバーオブジェクトポインタであることを確認
+				auto& member = value.*memPtr;
 				using MemberRawType = std::remove_reference_t<decltype(member)>;
 				using MemberType = std::remove_pointer_t<MemberRawType>;
 
-				if constexpr (IsSoAComponent<MemberType>) {
+				if constexpr (IsToPtr<MemberType>::value) {
 					GetMemberStartPtr<MemberType>(
 						base, capacity, offset, member,
-						std::make_index_sequence<std::tuple_size_v<typename MemberType::ptr_tuple>>{}
+						std::make_index_sequence<std::tuple_size_v<decltype(MemberType::ptr_tuple)>>{}
 					);
 				}
 				else {

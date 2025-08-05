@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   Matrix.hpp
+ * @brief 行列を定義するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   July 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <array>
@@ -12,6 +19,9 @@ namespace SectorFW
 	{
 		template <size_t Rows, size_t Cols, typename T>
 		struct Matrix {
+			static constexpr size_t Rows = Rows;
+			static constexpr size_t Cols = Cols;
+
 			std::array<std::array<T, Cols>, Rows> m{};
 
 			// 単位行列（正方行列のみ）
@@ -37,11 +47,19 @@ namespace SectorFW
 			// 添字アクセス
 			std::array<T, Cols>& operator[](size_t row) { return m[row]; }
 			const std::array<T, Cols>& operator[](size_t row) const { return m[row]; }
+
+			Matrix& operator=(const Matrix& other) {
+				assert(Rows == other.Rows && Cols == other.Cols);
+				m = other.m;
+				return *this;
+			}
+
+			const float* ToPointer() const { return &m[0][0]; }
 		};
 
 		// 平行移動行列
 		template<typename T>
-		Matrix<4, 4, T> MakeTranslation(const Vec3<T>& t) {
+		Matrix<4, 4, T> MakeTranslationMatrix(const Vec3<T>& t) {
 			auto m = Matrix<4, 4, T>::Identity();
 			m[0][3] = t.x;
 			m[1][3] = t.y;
@@ -51,7 +69,7 @@ namespace SectorFW
 
 		// スケーリング行列
 		template<typename T>
-		Matrix<4, 4, T> MakeScaling(const Vec3<T>& s) {
+		Matrix<4, 4, T> MakeScalingMatrix(const Vec3<T>& s) {
 			Matrix<4, 4, T> m = {};
 			m[0][0] = s.x;
 			m[1][1] = s.y;
@@ -62,7 +80,7 @@ namespace SectorFW
 
 		// クォータニオン → 回転行列
 		template<typename T>
-		Matrix<4, 4, T> MakeRotation(const Quat<T>& q) {
+		Matrix<4, 4, T> MakeRotationMatrix(const Quat<T>& q) {
 			Matrix<4, 4, T> m;
 			T x = q.x, y = q.y, z = q.z, w = q.w;
 			T xx = x * x, yy = y * y, zz = z * z;
