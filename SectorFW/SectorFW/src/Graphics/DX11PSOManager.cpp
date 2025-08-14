@@ -5,7 +5,17 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
-		DX11PSOData DX11PSOManager::CreateResource(const DX11PSOCreateDesc& desc)
+		std::optional<PSOHandle> DX11PSOManager::FindExisting(const DX11PSOCreateDesc& desc) {
+			auto it = shaderToPSO_.find(desc.shader.index);
+			if (it != shaderToPSO_.end()) return it->second;
+			return std::nullopt;
+		}
+
+		void DX11PSOManager::RegisterKey(const DX11PSOCreateDesc& desc, PSOHandle h) {
+			shaderToPSO_.emplace(desc.shader.index, h);
+		}
+
+		DX11PSOData DX11PSOManager::CreateResource(const DX11PSOCreateDesc& desc, PSOHandle h)
 		{
 			DX11PSOData pso{};
 			auto& shaderData = shaderManager->Get(desc.shader);
@@ -22,6 +32,7 @@ namespace SectorFW
 			}
 
 			pso.shader = desc.shader;
+			pso.rasterizerState = desc.rasterizerState;
 			return pso;
 		}
 	}

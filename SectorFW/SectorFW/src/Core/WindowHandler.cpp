@@ -14,9 +14,12 @@ namespace SectorFW
 	HINSTANCE WindowHandler::m_hInstance;
 	// メッセージ構造体
 	MSG WindowHandler::m_msg;
+	// マウス入力ハンドラ
+	Input::WinMouseInput* WindowHandler::m_mouseInput = nullptr;
 
 	void WindowHandler::Run(void(*pLoop)())
 	{
+		LONG dx = 0, dy = 0;
 		while (true)
 		{
 			// 新たにメッセージがあれば
@@ -35,12 +38,56 @@ namespace SectorFW
 
 			// メッセージが無ければ、ループ処理を実行
 			pLoop();
+
+			m_mouseInput->ConsumeDelta(dx, dy);
 		}
 	}
 
 	LRESULT WindowHandler::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		switch (uMsg) {
+		case WM_CREATE:
+		{
+			static Input::WinMouseInput mouseInput(hwnd);
+			m_mouseInput = &mouseInput;
+			m_mouseInput->RegisterRawInput(false);
+			return 0;
+		}
+
+		case WM_LBUTTONDOWN:
+		case WM_RBUTTONDOWN:
+			if (!m_mouseInput->IsCaptured())
+				m_mouseInput->ToggleCapture(true);
+			return 0;
+
+		case WM_KEYDOWN:
+			if (wParam == VK_ESCAPE && m_mouseInput->IsCaptured()) {
+				m_mouseInput->ToggleCapture(false);
+				return 0;
+			}
+			break;
+
+		case WM_INPUT:
+			m_mouseInput->HandleRawInput(lParam);
+			return 0;
+		case WM_KILLFOCUS:
+			m_mouseInput->OnFocusLost();
+			return 0;
+
+			//case WM_ACTIVATE:
+			//	if (LOWORD(wParam) == WA_INACTIVE) {
+			//		m_mouseInput->OnFocusLost();  // 安全のため解除
+			//	}
+			//	else {
+			//		m_mouseInput->OnFocus();      // 必要なら再キャプチャ
+			//	}
+			//	break;
+
+		case WM_MOVE:
+		case WM_SIZE:
+			m_mouseInput->Reclip();
+			return 0;
+
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;

@@ -1,23 +1,15 @@
-
-#include "SectorFW/inc/sector11fw.h"
-#include "SectorFW/inc/WindowHandler.h"
-#include "SectorFW/inc/DX11Graphics.h"
-
-#define WINDOW_NAME "SectorX Console Project"
-
+#include "system/CameraSystem.h"
 #include <string>
 
 //デバッグ用
 #include <immintrin.h> // AVX2, AVX512など
 
+#define WINDOW_NAME "SectorX Console Project"
+
 constexpr uint32_t WINDOW_WIDTH = 720;	// ウィンドウの幅
 constexpr uint32_t WINDOW_HEIGHT = 540;	// ウィンドウの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
-
-using namespace SectorFW;
-using namespace SectorFW::ECS;
-
 
 struct Velocity
 {
@@ -47,12 +39,10 @@ class MovementSystem : public ITypeSystem<
 	Partition,
 	ComponentAccess<Read<Velocity>, Write<Position>>,
 	ServiceContext<>>{
-
 	using Accessor = ComponentAccessor<Read<Velocity>, Write<Position>>;
 
 public:
 	void UpdateImpl(Partition& partition) override {
-
 		this->ForEachChunkWithAccessor([](Accessor& accessor, size_t entityCount)
 			{
 				auto velocityPtr = accessor.Get<Read<Velocity>>();
@@ -128,7 +118,7 @@ public:
 	}
 
 	STATIC_SERVICE_TAG
-	int assetCount = 0;
+		int assetCount = 0;
 };
 
 template<typename Partition>
@@ -136,12 +126,10 @@ class HealthRegenSystem : public ITypeSystem<
 	Partition,
 	ComponentAccess<Write<Player>>,
 	ServiceContext<AssetService, Graphics::RenderService>>{
-
 	using Accessor = ComponentAccessor<Write<Player>>;
 public:
 
 	void UpdateImpl(Partition& partition, UndeletablePtr<AssetService> assetService, UndeletablePtr<Graphics::RenderService> renderService) override {
-
 		/*auto queueView = renderService->GetQueueView("GBuffer");
 
 		Graphics::DrawCommand cmd;
@@ -162,7 +150,6 @@ public:
 					auto y = position.y()[i];
 					auto z = position.z()[i];
 				}
-
 			}, partition);
 
 		//assetService->assetCount++;
@@ -178,10 +165,9 @@ struct CModel
 template<typename Partition>
 class SampleSystem : public ITypeSystem<
 	Partition,
-	ComponentAccess<Read<TransformSoA>,Read<CModel>>,//アクセスするコンポーネントの指定
+	ComponentAccess<Read<TransformSoA>, Read<CModel>>,//アクセスするコンポーネントの指定
 	ServiceContext<Graphics::RenderService>>{//受け取るサービスの指定
-
-	using Accessor = ComponentAccessor<Read<TransformSoA>,Read<CModel>>;
+	using Accessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
 public:
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService) override {
@@ -196,8 +182,14 @@ public:
 				auto transform = accessor.Get<Read<TransformSoA>>();
 				auto model = accessor.Get<Read<CModel>>();
 				for (size_t i = 0; i < entityCount; ++i) {
-					Math::Vec3f pos = { transform->px()[i],transform->py()[i],transform->pz()[i] };
-					auto worldMtx = Math::MakeTranslationMatrix(pos);
+					Math::Vec3f pos(transform->px()[i], transform->py()[i], transform->pz()[i]);
+					Math::Quatf rot(transform->qx()[i], transform->qy()[i], transform->qz()[i], transform->qw()[i]);
+					Math::Vec3f scale(transform->sx()[i], transform->sy()[i], transform->sz()[i]);
+					auto transMtx = Math::MakeTranslationMatrix(pos);
+					auto rotMtx = Math::MakeRotationMatrix(rot);
+					auto scaleMtx = Math::MakeScalingMatrix(scale);
+					//ワールド行列を計算
+					auto worldMtx = transMtx * rotMtx * scaleMtx;
 
 					//モデルアセットを取得
 					Graphics::DX11ModelAssetData modelAsset = modelMgr->Get(model.value()[i].handle);
@@ -206,12 +198,24 @@ public:
 						cmd.mesh = mesh.mesh;
 						cmd.material = mesh.material;
 						cmd.pso = mesh.pso;
-						cmd.instance.worldMtx = worldMtx;
+						cmd.instance.worldMtx = worldMtx * mesh.instance.worldMtx;
 						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, mesh.mesh.index);
 						queue.PushCommand(std::move(cmd));
 					}
 				}
 			}, partition, modelManager, queueLimited);
+	}
+};
+
+template<typename Partition>
+class VoidSystem : public ITypeSystem<
+	Partition,
+	ComponentAccess<>,//アクセスするコンポーネントの指定
+	ServiceContext<>>{//受け取るサービスの指定
+	using Accessor = ComponentAccessor<>;
+public:
+	//指定したサービスを関数の引数として受け取る
+	void UpdateImpl(Partition& partition) override {
 	}
 };
 
@@ -237,10 +241,34 @@ int main(void)
 	Graphics::DX11GraphicsDevice graphics;
 	graphics.Configure(WindowHandler::GetMainHandle(), WINDOW_WIDTH, WINDOW_HEIGHT);
 
+	// デバイス & サービス（Worldコンテナ）
+	Physics::PhysicsDevice::InitParams params;
+	params.maxBodies = 100000;
+	params.maxBodyPairs = 64 * 1024;
+	params.maxContactConstraints = 64 * 1024;
+	params.workerThreads = -1; // 自動
+
+	Physics::PhysicsDevice physics;
+	bool ok = physics.Initialize(params);
+	if (!ok) {
+		assert(false && "Failed Physics Device Initialize");
+	}
+
+	Physics::PhysicsShapeManager shapeManager;
+	Physics::PhysicsDevice::Plan physicsPlan = { 1.0f / (float)FPS_LIMIT, 1, false };
+	Physics::PhysicsService physicsService(physics, shapeManager, physicsPlan);
+
 	AssetService assetService;
 
-	ECS::ServiceLocator serviceLocator(graphics.GetRenderService());
-	serviceLocator.Init<AssetService>();
+	Input::WinInput winInput(WindowHandler::GetMouseInput());
+	InputService* inputService = &winInput;
+
+	auto bufferMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11BufferManager>();
+	Graphics::DX113DCameraService dx11CameraService(bufferMgr);
+	Graphics::I3DCameraService* cameraService = &dx11CameraService;
+
+	ECS::ServiceLocator serviceLocator(graphics.GetRenderService(), &physicsService, inputService, cameraService);
+	serviceLocator.InitAndRegisterStaticService<AssetService>();
 
 	//デバッグ用の初期化
 	//========================================================================================-
@@ -252,19 +280,23 @@ int main(void)
 	shaderDesc.templateID = MaterialTemplateID::PBR;
 	shaderDesc.vsPath = L"asset/shader/VS_Default.cso";
 	shaderDesc.psPath = L"asset/shader/PS_Default.cso";
-	auto shaderHandle = shaderMgr->Add(shaderDesc);
+	ShaderHandle shaderHandle;
+	shaderMgr->Add(shaderDesc, shaderHandle);
 
-	DX11PSOCreateDesc psoDesc = {shaderHandle};
+	DX11PSOCreateDesc psoDesc = { shaderHandle };
 	auto psoMgr = graphics.GetRenderService()->GetResourceManager<DX11PSOManager>();
-	auto psoHandle = psoMgr->Add(psoDesc);
+	PSOHandle psoHandle;
+	psoMgr->Add(psoDesc, psoHandle);
 
 	auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11ModelAssetManager>();
 	// モデルアセットの読み込み
 	DX11ModelAssetCreateDesc modelDesc;
-	modelDesc.path = "asset/model/Houseplant.glb";
+	modelDesc.path = "asset/model/Cubone.glb";
 	modelDesc.shader = shaderHandle;
 	modelDesc.pso = psoHandle;
-	auto modelAssetHandle = modelAssetMgr->Add(modelDesc);
+	modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
+	ModelAssetHandle modelAssetHandle;
+	modelAssetMgr->Add(modelDesc, modelAssetHandle);
 
 	//========================================================================================-
 
@@ -273,17 +305,18 @@ int main(void)
 	for (int i = 0; i < 1; ++i) {
 		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("Level" + std::to_string(i)));
 
-
 		// Entity生成
-		for (int j = 0; j < 1; ++j) {
-			auto id = level->AddEntity(
-				/*Player{
-					Velocity{ static_cast<float>(j), static_cast<float>(j), 0.0f },
-					Position{ static_cast<float>(j * 10), static_cast<float>(j * 100), 0.0f }
-				},*/
-				TransformSoA{ 0.0f,0.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
-				CModel{ modelAssetHandle }
-			);
+		for (int j = 0; j < 10; ++j) {
+			for (int k = 0; k < 10; ++k) {
+				auto id = level->AddEntity(
+					/*Player{
+						Velocity{ static_cast<float>(j), static_cast<float>(j), 0.0f },
+						Position{ static_cast<float>(j * 10), static_cast<float>(j * 100), 0.0f }
+					},*/
+					TransformSoA{ float(j),0.0f, float(k) ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
+					CModel{ modelAssetHandle }
+				);
+			}
 		}
 
 		// System登録
@@ -291,17 +324,17 @@ int main(void)
 		//scheduler.AddSystem<MovementSystem>(world.GetServiceLocator());
 
 		scheduler.AddSystem<SampleSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<CameraSystem>(world.GetServiceLocator());
 
 		world.AddLevel(std::move(level));
 	}
 
-	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
+	static GameEngine gameEngine(std::move(graphics), physics, std::move(world), FPS_LIMIT);
 
 	// メッセージループ
 	WindowHandler::Run([]() {
 		// ここにメインループの処理を書く
 		gameEngine.MainLoop();
-
 		});
 
 	return WindowHandler::Destroy();

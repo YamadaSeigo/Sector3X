@@ -19,4 +19,6 @@
 
 #include "Core/Grid2DPartition.h"
 
+#include "Physics/PhysicsService.h"
+
 #endif // A_SECTOR11FW_H_

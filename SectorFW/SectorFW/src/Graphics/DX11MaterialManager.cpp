@@ -6,139 +6,173 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
-		DX11MaterialData DX11MaterialManager::CreateResource(const DX11MaterialCreateDesc& desc)
+		// --- 追加: Key 作成ヘルパ ---
+		DX11MaterialManager::MaterialKey DX11MaterialManager::MakeKey(const DX11MaterialCreateDesc& desc) {
+			DX11MaterialManager::MaterialKey k;
+			k.shaderIndex = desc.shader.index;
+
+			k.psSrvs.reserve(desc.psSRV.size());
+			for (auto& [slot, h] : desc.psSRV)     k.psSrvs.emplace_back(slot, h.index);
+
+			k.vsSrvs.reserve(desc.vsSRV.size());
+			for (auto& [slot, h] : desc.vsSRV)     k.vsSrvs.emplace_back(slot, h.index);
+
+			k.psCbvs.reserve(desc.psCBV.size());
+			for (auto& [slot, h] : desc.psCBV)     k.psCbvs.emplace_back(slot, h.index);
+
+			k.vsCbvs.reserve(desc.vsCBV.size());
+			for (auto& [slot, h] : desc.vsCBV)     k.vsCbvs.emplace_back(slot, h.index);
+
+			k.samplers.reserve(desc.samplerMap.size());
+			for (auto& [slot, h] : desc.samplerMap) k.samplers.emplace_back(slot, h.index);
+
+			auto bySlot = [](auto& a, auto& b) { return a.first < b.first; };
+			std::sort(k.psSrvs.begin(), k.psSrvs.end(), bySlot);
+			std::sort(k.vsSrvs.begin(), k.vsSrvs.end(), bySlot);
+			std::sort(k.psCbvs.begin(), k.psCbvs.end(), bySlot);
+			std::sort(k.vsCbvs.begin(), k.vsCbvs.end(), bySlot);
+			std::sort(k.samplers.begin(), k.samplers.end(), bySlot);
+			return k;
+		}
+
+		std::optional<MaterialHandle>
+			DX11MaterialManager::FindExisting(const DX11MaterialCreateDesc& desc) {
+			auto key = MakeKey(desc);
+			if (auto it = matCache.find(key); it != matCache.end()) {
+				return it->second;
+			}
+			return std::nullopt;
+		}
+		void DX11MaterialManager::RegisterKey(const DX11MaterialCreateDesc& desc, MaterialHandle h) {
+			auto key = MakeKey(desc);
+			matCache.emplace(key, h);
+			handleToKey.emplace(h.index, std::move(key));
+		}
+
+		DX11MaterialData DX11MaterialManager::CreateResource(const DX11MaterialCreateDesc& desc, MaterialHandle h)
 		{
 			auto& shader = shaderManager->Get(desc.shader);
 
 			DX11MaterialData mat{};
 			mat.templateID = shader.templateID;
 			mat.shader = desc.shader;
-			mat.usedTextures.reserve(desc.srvMap.size());
-			for (const auto& [slot, texHandle] : desc.srvMap) {
-				mat.usedTextures.push_back(texHandle);
-			}
+			mat.usedTextures.reserve(desc.psSRV.size());
 
 			// === リフレクション情報取得 ===
-			const auto& bindings = shader.bindings;
+			const auto& psBindings = shader.psBindings;
+			const auto& vsBindings = shader.vsBindings;
 
-			std::unordered_map<UINT, ID3D11ShaderResourceView*> srvMap;
-			for (const auto& [slot, texHandle] : desc.srvMap) {
+			std::unordered_map<UINT, ID3D11ShaderResourceView*> psSRVMap;
+			for (const auto& [slot, texHandle] : desc.psSRV) {
 				const auto& texData = textureManager->Get(texHandle);
-				srvMap[slot] = texData.srv.Get();
+				psSRVMap[slot] = texData.srv.Get();
 				mat.usedTextures.push_back(texHandle);
 				textureManager->AddRef(texHandle); // 所有権追跡開始
 			}
 
-			std::unordered_map<UINT, ID3D11Buffer*> cbvMap;
-			for (const auto& [slot, cbHandle] : desc.cbvMap) {
+			std::unordered_map<UINT, ID3D11ShaderResourceView*> vsSRVMap;
+			for (const auto& [slot, texHandle] : desc.vsSRV) {
+				const auto& texData = textureManager->Get(texHandle);
+				psSRVMap[slot] = texData.srv.Get();
+				mat.usedTextures.push_back(texHandle);
+				textureManager->AddRef(texHandle); // 所有権追跡開始
+			}
+
+			std::unordered_map<UINT, ID3D11Buffer*> psCBVMap;
+			for (const auto& [slot, cbHandle] : desc.psCBV) {
 				const auto& cbData = cbManager->Get(cbHandle);
-				cbvMap[slot] = cbData.buffer;
+				psCBVMap[slot] = cbData.buffer.Get();
 				mat.usedCBBuffers.push_back(cbHandle);
+				cbManager->AddRef(cbHandle);  // 所有権追跡開始
+			}
+
+			std::unordered_map<UINT, ID3D11Buffer*> vsCBVMap;
+			for (const auto& [slot, cbHandle] : desc.vsCBV) {
+				const auto& cbData = cbManager->Get(cbHandle);
+				vsCBVMap[slot] = cbData.buffer.Get();
+				mat.usedCBBuffers.push_back(cbHandle);
+				cbManager->AddRef(cbHandle);  // 所有権追跡開始
 			}
 
 			std::unordered_map<UINT, ID3D11SamplerState*> samplerMap;
 			for (const auto& [slot, samplerHandle] : desc.samplerMap) {
 				const auto& samplerData = samplerManager->Get(samplerHandle);
-				samplerMap[slot] = samplerData.state;
+				samplerMap[slot] = samplerData.state.Get();
 				mat.usedSamplers.push_back(samplerHandle);
 				samplerManager->AddRef(samplerHandle); // 所有権追跡開始
 			}
 
 			// === キャッシュ構築 ===
-			mat.textureCache = BuildBindingCacheSRV(bindings, srvMap);
-			mat.textureCache.valid = mat.textureCache.minSlot != UINT_MAX; // キャッシュが有効
+			mat.psSRV = BuildBindingCacheSRV(psBindings, psSRVMap);
+			mat.psSRV.valid = mat.psSRV.minSlot != UINT_MAX; // キャッシュが有効
 
-			mat.cbvCache = BuildBindingCacheCBV(bindings, cbvMap);
-			mat.cbvCache.valid = mat.cbvCache.minSlot != UINT_MAX; // CBVキャッシュが有効
+			mat.vsSRV = BuildBindingCacheSRV(vsBindings, vsSRVMap);
+			mat.vsSRV.valid = mat.vsSRV.minSlot != UINT_MAX; // キャッシュが有効
 
-			mat.samplerCache = BuildBindingCacheSampler(bindings, samplerMap);
+			mat.psCBV = BuildBindingCacheCBV(psBindings, psCBVMap);
+			mat.psCBV.valid = mat.psCBV.minSlot != UINT_MAX; // CBVキャッシュが有効
+
+			mat.vsCBV = BuildBindingCacheCBV(vsBindings, vsCBVMap);
+			mat.vsCBV.valid = mat.vsCBV.minSlot != UINT_MAX; // CBVキャッシュが有効
+
+			mat.samplerCache = BuildBindingCacheSampler(psBindings, samplerMap);
 			mat.samplerCache.valid = mat.samplerCache.minSlot != UINT_MAX; // サンプラキャッシュが有効
 
 			return mat;
 		}
 
-		void DX11MaterialManager::ScheduleDestroy(uint32_t idx, uint64_t deleteFrame)
+		void DX11MaterialManager::RemoveFromCaches(uint32_t idx)
 		{
-			slots[idx].alive = false;
-			pendingDelete.push_back({ idx, deleteFrame });
-		}
-		void DX11MaterialManager::ProcessDeferredDeletes(uint64_t currentFrame)
-		{
-			auto it = pendingDelete.begin();
-			while (it != pendingDelete.end()) {
-				if (it->deleteSync <= currentFrame) {
-					auto& data = slots[it->index].data;
-					data.textureCache.valid = false; // キャッシュを無効化
-					data.cbvCache.valid = false; // CBVキャッシュを無効化
-					data.samplerCache.valid = false; // サンプラキャッシュを無効化
-
-					uint64_t deleteSync = currentFrame + RENDER_QUEUE_BUFFER_COUNT;
-					for (auto& texHandle : data.usedTextures) {
-						textureManager->Release(texHandle, deleteSync); // テクスチャの参照を解放
-					}
-					for (auto& cbHandle : data.usedCBBuffers) {
-						cbManager->Release(cbHandle, deleteSync); // CBの参照を解放
-					}
-					for (auto& samplerHandle : data.usedSamplers) {
-						samplerManager->Release(samplerHandle, deleteSync); // サンプラの参照を解放
-					}
-
-					freeList.push_back(it->index);
-					it = pendingDelete.erase(it);
-				}
-				else {
-					++it;
-				}
+			if (auto k = handleToKey.find(idx); k != handleToKey.end()) {
+				matCache.erase(k->second);
+				handleToKey.erase(k);
 			}
 		}
-		void DX11MaterialManager::BindMaterialSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache)
+		void DX11MaterialManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
 		{
-			if (!cache.valid) {
-				LOG_ERROR("Attempted to bind invalid material SRV cache.");
-				//assert(false && "Invalid material SRV cache");
-				return; // キャッシュが無効なら何もしない
-			}
+			auto& m = slots[idx].data;
+			m.psSRV.valid = false;
+			m.vsSRV.valid = false;
+			m.psCBV.valid = false;
+			m.vsCBV.valid = false;
+			m.samplerCache.valid = false;
 
-			if (cache.contiguous) {
-				ctx->PSSetShaderResources(cache.minSlot, cache.count, cache.contiguousViews.data());
-			}
-			else {
-				for (auto& [slot, srv] : cache.individualViews) {
-					ctx->PSSetShaderResources(slot, 1, &srv);
-				}
-			}
+			// 子の参照を連鎖解放（1～2フレ先に遅延）
+			const uint64_t del = currentFrame + RENDER_QUEUE_BUFFER_COUNT;
+			for (auto& th : m.usedTextures)  textureManager->Release(th, del);
+			for (auto& cb : m.usedCBBuffers) cbManager->Release(cb, del);
+			for (auto& sp : m.usedSamplers)  samplerManager->Release(sp, del);
 		}
-		void DX11MaterialManager::BindMaterialCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache)
+
+		void DX11MaterialManager::BindMaterialPSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache)
 		{
-			if (!cache.valid) {
-				LOG_ERROR("Attempted to bind invalid material CBV cache.");
-				//assert(false && "Invalid material CBV cache");
-				return; // キャッシュが無効なら何もしない
-			}
-			if (cache.contiguous) {
-				ctx->VSSetConstantBuffers(cache.minSlot, cache.count, cache.contiguousViews.data());
-			}
-			else {
-				for (auto& [slot, cbv] : cache.individualViews) {
-					ctx->VSSetConstantBuffers(slot, 1, &cbv);
-				}
-			}
+			if (!cache.valid) return; // キャッシュが無効なら何もしない
+			if (cache.contiguous) ctx->PSSetShaderResources(cache.minSlot, cache.count, cache.contiguousViews.data());
+			else for (auto& [slot, srv] : cache.individualViews) ctx->PSSetShaderResources(slot, 1, &srv);
+		}
+		void DX11MaterialManager::BindMaterialVSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache)
+		{
+			if (!cache.valid) return; // キャッシュが無効なら何もしない
+			if (cache.contiguous) ctx->VSSetShaderResources(cache.minSlot, cache.count, cache.contiguousViews.data());
+			else for (auto& [slot, srv] : cache.individualViews) ctx->VSSetShaderResources(slot, 1, &srv);
+		}
+		void DX11MaterialManager::BindMaterialPSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache)
+		{
+			if (!cache.valid) return; // キャッシュが無効なら何もしない
+			if (cache.contiguous) ctx->PSSetConstantBuffers(cache.minSlot, cache.count, cache.contiguousViews.data());
+			else for (auto& [slot, cbv] : cache.individualViews) ctx->PSSetConstantBuffers(slot, 1, &cbv);
+		}
+		void DX11MaterialManager::BindMaterialVSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache)
+		{
+			if (!cache.valid) return; // キャッシュが無効なら何もしない
+			if (cache.contiguous) ctx->VSSetConstantBuffers(cache.minSlot, cache.count, cache.contiguousViews.data());
+			else for (auto& [slot, cbv] : cache.individualViews) ctx->VSSetConstantBuffers(slot, 1, &cbv);
 		}
 		void DX11MaterialManager::BindMaterialSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache)
 		{
-			if (!cache.valid) {
-				LOG_ERROR("Attempted to bind invalid material sampler cache.");
-				//assert(false && "Invalid material sampler cache");
-				return; // キャッシュが無効なら何もしない
-			}
-			if (cache.contiguous) {
-				ctx->PSSetSamplers(cache.minSlot, cache.count, cache.contiguousViews.data());
-			}
-			else {
-				for (auto& [slot, sampler] : cache.individualViews) {
-					ctx->PSSetSamplers(slot, 1, &sampler);
-				}
-			}
+			if (!cache.valid) return; // キャッシュが無効なら何もしない
+			if (cache.contiguous) ctx->PSSetSamplers(cache.minSlot, cache.count, cache.contiguousViews.data());
+			else for (auto& [slot, sampler] : cache.individualViews) ctx->PSSetSamplers(slot, 1, &sampler);
 		}
 		MaterialBindingCacheSRV DX11MaterialManager::BuildBindingCacheSRV(const std::vector<ShaderResourceBinding>& bindings, const std::unordered_map<UINT, ID3D11ShaderResourceView*>& srvMap)
 		{

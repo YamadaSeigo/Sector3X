@@ -4,6 +4,5 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
-
 	}
 }

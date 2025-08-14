@@ -37,7 +37,7 @@ namespace SectorFW
 			 * @return EntityID 新しく追加されたエンティティのID
 			 */
 			template<typename... Components>
-			EntityID AddEntity(const Components&... components) {
+			[[nodiscard]] EntityID AddEntity(const Components&... components) {
 				ComponentMask mask;
 				(SetMask<Components>(mask), ...);
 
@@ -60,7 +60,7 @@ namespace SectorFW
 			 * @return EntityID 新しく追加されたエンティティのID
 			 */
 			template<typename... Components>
-			EntityID AddEntity(ComponentMask mask, const Components&... components) {
+			[[nodiscard]] EntityID AddEntity(ComponentMask mask, const Components&... components) {
 				EntityID id = entityAllocator.Create();
 
 				if (!id.IsValid()) return id;

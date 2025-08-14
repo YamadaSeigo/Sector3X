@@ -13,6 +13,8 @@
 #include <tchar.h>
 #include <cassert>
 
+#include "Input/WinInput.h"
+
 #include "Util/NonCopyable.h"
 
 namespace SectorFW
@@ -206,10 +208,14 @@ namespace SectorFW
 		}
 
 		static HWND GetMainHandle() {
-#ifdef _DEBUG
 			assert(m_isCreated && "not create window");
-#endif
+
 			return m_hWnd;
+		}
+
+		static Input::WinMouseInput* GetMouseInput() {
+			assert(m_isCreated && "not create window");
+			return m_mouseInput;
 		}
 
 	private:
@@ -237,6 +243,8 @@ namespace SectorFW
 		static HINSTANCE m_hInstance;
 		// メッセージ構造体
 		static MSG m_msg;
+		// マウス入力ハンドラ
+		static Input::WinMouseInput* m_mouseInput; // マウス入力ハンドラ
 	};
 }
 

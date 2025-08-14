@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <optional>
 
 #include "RenderQueue.hpp"
 #include "RenderService.h"
@@ -9,12 +10,17 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
-		template<typename RTV, typename SRV>
+		template<typename RTV, typename SRV, typename Buffer>
 		struct RenderPass {
 			std::string name;
 			std::vector<RTV> rtvs; // RenderTargetViewハンドル
 			void* dsv = nullptr; // DepthStencilViewハンドル
 			RenderQueue queue;
+			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // プリミティブトポロジ
+			std::optional<RasterizerStateID> rasterizerState = RasterizerStateID::SolidCullBack; // ラスタライザーステートID
+			BlendStateID blendState = BlendStateID::Opaque; // ブレンドステートID
+			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // 深度ステンシルステートID
+			std::vector<BufferHandle> cbvs; // 定数バッファハンドルのリスト
 			std::function<void()> customExecute; // FullscreenQuadなど
 
 			// ムーブコンストラクタ
@@ -23,6 +29,8 @@ namespace SectorFW
 				, rtvs(std::move(other.rtvs))
 				, dsv(other.dsv)
 				, queue(std::move(other.queue))
+				, topology(other.topology)
+				, cbvs(std::move(other.cbvs))
 				, customExecute(std::move(other.customExecute)) {
 				other.dsv = nullptr; // 安全のためヌルクリア
 			}
@@ -34,6 +42,8 @@ namespace SectorFW
 					rtvs = std::move(other.rtvs);
 					dsv = other.dsv;
 					queue = std::move(other.queue);
+					topology = other.topology;
+					cbvs = std::move(other.cbvs);
 					customExecute = std::move(other.customExecute);
 					other.dsv = nullptr;
 				}
@@ -48,10 +58,10 @@ namespace SectorFW
 			RenderPass& operator=(const RenderPass&) = delete;
 		};
 
-		template<typename Backend, PointerType RTV, PointerType SRV>
+		template<typename Backend, PointerType RTV, PointerType SRV, PointerType Buffer>
 		class RenderGraph {
 		public:
-			using PassType = RenderPass<RTV, SRV>;
+			using PassType = RenderPass<RTV, SRV, Buffer>;
 
 			RenderGraph(Backend& backend) : backend(backend) {
 				// レンダーバックエンドでRenderServiceにリソースマネージャーを登録
@@ -60,11 +70,13 @@ namespace SectorFW
 
 			void AddPass(const std::string& name,
 				const std::vector<RTV>& rtvs,
-				void* dsv) {
-				RenderPass<RTV, SRV> pass;
+				void* dsv,
+				std::vector<BufferHandle>&& cbvs = {}) {
+				PassType pass;
 				pass.name = name;
 				pass.rtvs = rtvs;
 				pass.dsv = dsv;
+				pass.cbvs = std::move(cbvs);
 				passes.push_back(std::move(pass));
 
 				std::unique_lock lock(*renderService.queueMutex);
@@ -72,7 +84,7 @@ namespace SectorFW
 				renderService.queueIndex[name] = renderService.renderQueues.size() - 1; // レンダーサービスにキューを登録
 			}
 
-			RenderPass<RTV, SRV>& GetPass(const std::string& name) {
+			PassType& GetPass(const std::string& name) {
 				for (auto& p : passes) {
 					if (p.name == name) return p;
 				}
@@ -81,17 +93,30 @@ namespace SectorFW
 			}
 
 			void Execute() {
+				//フレームのインクリメントとリソースの破棄処理
+				backend.ProcessDeferredDeletes(++renderService.currentFrame);
+
 				for (auto& pass : passes) {
+					backend.SetPrimitiveTopology(pass.topology);
+
+					bool useRasterizer = pass.rasterizerState.has_value();
+					if (useRasterizer)
+						backend.SetRasterizerState(*pass.rasterizerState);
+
+					backend.SetBlendState(pass.blendState); // デフォルトのブレンドステートを使用
+
+					backend.SetDepthStencilState(pass.depthStencilState);
+
 					backend.SetRenderTargets(pass.rtvs, pass.dsv);
+
+					backend.BindGlobalCBVs(pass.cbvs);
 
 					std::vector<DrawCommand> cmds;
 					pass.queue.Submit(cmds);
-					backend.ExecuteDrawInstanced(cmds); // インスタンシング対応
+					backend.ExecuteDrawInstanced(cmds, !useRasterizer); // インスタンシング対応
 
 					if (pass.customExecute) pass.customExecute();
 				}
-				//フレームのインクリメントとリソースの破棄処理
-				backend.ProcessDeferredDeletes(++renderService.currentFrame);
 			}
 
 			RenderService* GetRenderService() {
@@ -105,7 +130,7 @@ namespace SectorFW
 
 		private:
 			Backend& backend;
-			std::vector<RenderPass<RTV, SRV>> passes;
+			std::vector<PassType> passes;
 			RenderService renderService; // レンダーサービスのインスタンス
 		};
 	}

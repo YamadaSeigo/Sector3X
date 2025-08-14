@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include "DX11ShaderManager.h"
 #include "DX11TextureManager.h"
-#include "DX11ConstantBufferManager.h"
+#include "DX11BufferManager.h"
 #include "DX11SamplerManager.h"
 
 namespace SectorFW
@@ -13,8 +13,10 @@ namespace SectorFW
 	{
 		struct DX11MaterialCreateDesc {
 			ShaderHandle shader;
-			std::unordered_map<UINT, TextureHandle> srvMap;
-			std::unordered_map<UINT, ConstantBufferHandle> cbvMap; // CBVバインディング
+			std::unordered_map<UINT, TextureHandle> psSRV;
+			std::unordered_map<UINT, TextureHandle> vsSRV;
+			std::unordered_map<UINT, BufferHandle> psCBV; // CBVバインディング
+			std::unordered_map<UINT, BufferHandle> vsCBV; // CBVバインディング
 			std::unordered_map<UINT, SamplerHandle> samplerMap; // サンプラーバインディング
 		};
 
@@ -35,11 +37,11 @@ namespace SectorFW
 		struct DX11MaterialData {
 			MaterialTemplateID templateID;
 			ShaderHandle shader;
-			MaterialBindingCacheSRV textureCache;
-			MaterialBindingCacheCBV cbvCache; // CBVバインディングキャッシュ
+			MaterialBindingCacheSRV psSRV, vsSRV;
+			MaterialBindingCacheCBV psCBV, vsCBV; // CBVバインディングキャッシュ
 			MaterialBindingCacheSampler samplerCache; // サンプラーバインディングキャッシュ
 			std::vector<TextureHandle> usedTextures; // テクスチャハンドルのキャッシュ
-			std::vector<ConstantBufferHandle> usedCBBuffers; // 使用中のCBハンドル
+			std::vector<BufferHandle> usedCBBuffers; // 使用中のCBハンドル
 			std::vector<SamplerHandle> usedSamplers; // 使用中のサンプラーハンドル
 		};
 
@@ -47,18 +49,24 @@ namespace SectorFW
 		public:
 			explicit DX11MaterialManager(DX11ShaderManager* shaderMgr,
 				DX11TextureManager* textureMgr,
-				DX11ConstantBufferManager* cbMgr,
+				DX11BufferManager* cbMgr,
 				DX11SamplerManager* samplerMgr)
-				noexcept : shaderManager(shaderMgr), textureManager(textureMgr), cbManager(cbMgr), samplerManager(samplerMgr) {}
+				noexcept : shaderManager(shaderMgr), textureManager(textureMgr), cbManager(cbMgr), samplerManager(samplerMgr) {
+			}
 
-			DX11MaterialData CreateResource(const DX11MaterialCreateDesc& desc);
+			// ResourceManagerBase フック
+			std::optional<MaterialHandle> FindExisting(const DX11MaterialCreateDesc& desc);
+			void RegisterKey(const DX11MaterialCreateDesc& desc, MaterialHandle h);
 
-			void ScheduleDestroy(uint32_t idx, uint64_t deleteFrame);
+			DX11MaterialData CreateResource(const DX11MaterialCreateDesc& desc, MaterialHandle h);
 
-			void ProcessDeferredDeletes(uint64_t currentFrame);
+			void RemoveFromCaches(uint32_t idx);
+			void DestroyResource(uint32_t idx, uint64_t currentFrame);
 
-			static void BindMaterialSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache);
-			static void BindMaterialCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache);
+			static void BindMaterialPSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache);
+			static void BindMaterialVSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache);
+			static void BindMaterialPSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache);
+			static void BindMaterialVSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache);
 			static void BindMaterialSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache);
 		private:
 			MaterialBindingCacheSRV BuildBindingCacheSRV(
@@ -74,18 +82,39 @@ namespace SectorFW
 				const std::unordered_map<UINT, ID3D11SamplerState*>& samplerMap);
 
 		private:
-			struct PendingDelete { uint32_t index; uint64_t deleteSync; };
-			std::vector<PendingDelete> pendingDelete;
 			DX11ShaderManager* shaderManager;
 			DX11TextureManager* textureManager;
-			DX11ConstantBufferManager* cbManager;
+			DX11BufferManager* cbManager;
 			DX11SamplerManager* samplerManager;
-		};
 
-		struct DX11MaterialAutoBindContext {
-			DX11ConstantBufferManager* cbManager = nullptr;
-			DX11SamplerManager* samplerManager = nullptr;
-			DX11TextureManager* texManager = nullptr;
+			// ==== マテリアルキー（不変の組をソートしてハッシュ化）====
+			struct MaterialKey {
+				uint32_t shaderIndex{};
+				std::vector<std::pair<UINT, uint32_t>> psSrvs;
+				std::vector<std::pair<UINT, uint32_t>> vsSrvs;
+				std::vector<std::pair<UINT, uint32_t>> psCbvs;
+				std::vector<std::pair<UINT, uint32_t>> vsCbvs;
+				std::vector<std::pair<UINT, uint32_t>> samplers;
+				bool operator==(const MaterialKey&) const = default;
+			};
+			struct MaterialKeyHash {
+				size_t operator()(MaterialKey const& k) const noexcept {
+					auto hc = [](size_t& seed, size_t v) {
+						seed ^= v + 0x9e3779b97f4a7c15ull + (seed << 6) + (seed >> 2);
+						};
+					size_t h = 0;
+					hc(h, k.shaderIndex);
+					for (auto& p : k.psSrvs) { hc(h, (size_t)p.first); hc(h, (size_t)p.second); }
+					for (auto& p : k.psCbvs) { hc(h, (size_t)p.first); hc(h, (size_t)p.second); }
+					for (auto& p : k.samplers) { hc(h, (size_t)p.first); hc(h, (size_t)p.second); }
+					return h;
+				}
+			};
+
+			static MaterialKey MakeKey(const DX11MaterialCreateDesc& desc);
+
+			std::unordered_map<MaterialKey, MaterialHandle, MaterialKeyHash> matCache;
+			std::unordered_map<uint32_t, MaterialKey> handleToKey;
 		};
 	}
 }

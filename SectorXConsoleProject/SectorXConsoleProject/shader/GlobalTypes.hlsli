@@ -1,7 +1,24 @@
 
+
+
 cbuffer ViewProjectionBuffer : register(b0)
 {
-    float4x4 uViewProj;
+    row_major float4x4 uViewProj;
+};
+
+//==========================================
+//ライトバッファここ
+//==========================================
+
+cbuffer MaterialCB : register(b2)
+{
+    float4 baseColorFactor; // glTF baseColorFactor
+    float metallicFactor; // glTF metallicFactor
+    float roughnessFactor; // glTF roughnessFactor
+    float hasBaseColorTex; // 1 or 0
+    float hasNormalTex; // 1 or 0
+    float hasMRRTex; // 1 or 0 (MetallicRoughness)
+    float3 _pad_; // 16B境界合わせ
 };
 
 struct VSInput
@@ -15,4 +32,5 @@ struct VSInput
     float4 iRow2 : INSTANCE_ROW2;
     float4 iRow3 : INSTANCE_ROW3;
 };
+
 

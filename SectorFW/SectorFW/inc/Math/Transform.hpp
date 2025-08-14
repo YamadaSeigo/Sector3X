@@ -25,13 +25,13 @@ namespace SectorFW
 		Math::Vec3f scale;
 
 		// コンストラクタ
-		Transform() : location(0, 0, 0), rotation(0, 0, 0, 1), scale(1, 1, 1) {}
-		explicit Transform(const Math::Vec3f& location_, const Math::Quatf& rotation_, const Math::Vec3f& scale_)
+		Transform() noexcept : location(0, 0, 0), rotation(0, 0, 0, 1), scale(1, 1, 1) {}
+		explicit Transform(const Math::Vec3f& location_, const Math::Quatf& rotation_, const Math::Vec3f& scale_) noexcept
 			: location(location_), rotation(rotation_), scale(scale_) {
 		}
 		explicit Transform(float px, float py, float pz,
 			float qx, float qy, float qz, float qw,
-			float sx, float sy, float sz)
+			float sx, float sy, float sz) noexcept
 			: location(px, py, pz), rotation(qx, qy, qz, qw), scale(sx, sy, sz) {
 		}
 	};
@@ -54,33 +54,47 @@ namespace SectorFW
 		};
 
 		// コンストラクタ
-		TransformSoA() : px(0), py(0), pz(0), qx(0), qy(0), qz(0), qw(1), sx(1), sy(1), sz(1) {}
+		TransformSoA() noexcept : px(0), py(0), pz(0), qx(0), qy(0), qz(0), qw(1), sx(1), sy(1), sz(1) {}
 		explicit TransformSoA(float px_, float py_, float pz_,
 			float qx_, float qy_, float qz_, float qw_,
-			float sx_, float sy_, float sz_)
+			float sx_, float sy_, float sz_) noexcept
 			: px(px_), py(py_), pz(pz_), qx(qx_), qy(qy_), qz(qz_), qw(qw_),
 			sx(sx_), sy(sy_), sz(sz_) {
 		}
 
 		explicit TransformSoA(const Math::Vec3f& location,
 			const Math::Quatf& rotation,
-			const Math::Vec3f& scale)
+			const Math::Vec3f& scale) noexcept
 			: px(location.x), py(location.y), pz(location.z),
 			qx(rotation.x), qy(rotation.y), qz(rotation.z), qw(rotation.w),
 			sx(scale.x), sy(scale.y), sz(scale.z) {
 		}
 
-		explicit TransformSoA(const Transform& transform)
+		explicit TransformSoA(const Transform& transform) noexcept
 			: px(transform.location.x), py(transform.location.y), pz(transform.location.z),
 			qx(transform.rotation.x), qy(transform.rotation.y), qz(transform.rotation.z), qw(transform.rotation.w),
 			sx(transform.scale.x), sy(transform.scale.y), sz(transform.scale.z) {
 		}
 
 		// TransformSoAからTransformへの変換
-		Transform ToAoS() const {
+		Transform ToAoS() const noexcept {
 			return Transform(px, py, pz,
 				qx, qy, qz, qw,
 				sx, sy, sz);
+		}
+
+		TransformSoA& operator=(const TransformSoA& transform) noexcept {
+			px = transform.location.x;
+			py = transform.location.y;
+			pz = transform.location.z;
+			qx = transform.rotation.x;
+			qy = transform.rotation.y;
+			qz = transform.rotation.z;
+			qw = transform.rotation.w;
+			sx = transform.scale.x;
+			sy = transform.scale.y;
+			sz = transform.scale.z;
+			return *this;
 		}
 
 		DEFINE_SOA(TransformSoA, px, py, pz, qx, qy, qz, qw, sx, sy, sz)

@@ -13,7 +13,7 @@ namespace SectorFW
 		struct ShaderHandle { uint32_t index; uint32_t generation; };
 		struct PSOHandle { uint32_t index; uint32_t generation; };
 		struct TextureHandle { uint32_t index; uint32_t generation; };
-		struct ConstantBufferHandle { uint32_t index; uint32_t generation; };
+		struct BufferHandle { uint32_t index; uint32_t generation; };
 		struct SamplerHandle { uint32_t index; uint32_t generation; };
 		struct ModelAssetHandle { uint32_t index; uint32_t generation; };
 
@@ -51,6 +51,63 @@ namespace SectorFW
 			Unlit,
 			Toon,
 			// ...
+			MAX_COUNT, // 有効なテンプレートの数
 		};
+
+		enum class PrimitiveTopology {
+			Undefined,
+			PointList,
+			LineList,
+			LineStrip,
+			TriangleList,
+			TriangleStrip,
+			LineListAdj,
+			LineStripAdj,
+			TriangleListAdj,
+			TriangleStripAdj,
+			Patch1,
+			Patch2,
+			// ... Patch3～Patch32 など必要に応じて
+			MAX_COUNT, // ここまでが有効なトポロジ
+		};
+
+		enum class RasterizerStateID {
+			SolidCullBack,
+			SolidCullNone,
+			Wireframe,
+			// ...
+			MAX_COUNT, // 有効なラスタライザーステートの数
+		};
+
+		enum class BlendStateID {
+			Opaque,       // No blending
+			AlphaBlend,   // SrcAlpha / InvSrcAlpha
+			Additive,     // SrcAlpha / One
+			Multiply,     // DestColor / Zero
+			// ...
+			MAX_COUNT,    // 有効なブレンドステートの数
+		};
+
+		enum class DepthStencilStateID {
+			Default,          // DepthTest ON, ZWrite ON
+			DepthReadOnly,    // DepthTest ON, ZWrite OFF
+			NoDepth,          // DepthTest OFF, ZWrite OFF
+			// ...
+			MAX_COUNT,        // 有効な深度ステンシルステートの数
+		};
+
+		struct alignas(16) PBRMaterialCB {
+			float baseColorFactor[4] = { 1,1,1,1 };
+			float metallicFactor = 1.0f;
+			float roughnessFactor = 1.0f;
+			float hasBaseColorTex = 0.0f;
+			float hasNormalTex = 0.0f;
+			float hasMRRTex = 0.0f;
+			float _pad[3] = { 0,0,0 }; // 16B境界
+		};
+
+		enum class ShaderStage { VS, PS /* 将来: GS, HS, DS, CS */ };
+
+		using ShaderVariantID = uint32_t;
 	}
 }

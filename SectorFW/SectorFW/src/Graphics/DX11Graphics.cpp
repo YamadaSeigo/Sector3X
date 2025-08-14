@@ -2,6 +2,8 @@
 
 #include "Util/logger.h"
 
+#include "Math/convert.hpp"
+
 namespace SectorFW
 {
 	namespace Graphics
@@ -110,6 +112,7 @@ namespace SectorFW
 		void DX11GraphicsDevice::ClearImpl(const FLOAT clearColor[4])
 		{
 			m_context->ClearRenderTargetView(m_renderTargetView.Get(), clearColor);
+			m_context->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 		}
 
 		void DX11GraphicsDevice::DrawImpl()
@@ -129,7 +132,10 @@ namespace SectorFW
 			std::vector<ID3D11RenderTargetView*> rtvs{
 				m_renderTargetView.Get() };
 
-			graph.AddPass("TestPass", rtvs, m_depthStencilView.Get());
+			auto constantMgr = GetRenderGraph().GetRenderService()->GetResourceManager<DX11BufferManager>();
+			auto cameraHandle = constantMgr->FindByName(DX113DCameraService::BUFFER_NAME);
+
+			graph.AddPass("TestPass", rtvs, m_depthStencilView.Get(), { cameraHandle });
 		}
 
 		inline DX11GraphicsDevice::DX11RenderGraph& DX11GraphicsDevice::GetRenderGraph()
@@ -137,11 +143,11 @@ namespace SectorFW
 			static DX11MeshManager meshManager(m_device.Get());
 			static DX11ShaderManager shaderManager(m_device.Get());
 			static DX11TextureManager textureManager(m_device.Get());
-			static DX11ConstantBufferManager cbManager(m_device.Get(), m_context.Get());
+			static DX11BufferManager cbManager(m_device.Get(), m_context.Get());
 			static DX11SamplerManager samplerManager(m_device.Get());
 			static DX11MaterialManager materialManager(&shaderManager, &textureManager, &cbManager, &samplerManager);
 			static DX11PSOManager psoManager(m_device.Get(), &shaderManager);
-			static DX11ModelAssetManager modelAssetManager(meshManager, materialManager, shaderManager, textureManager, m_device.Get());
+			static DX11ModelAssetManager modelAssetManager(meshManager, materialManager, shaderManager, textureManager, cbManager, samplerManager, m_device.Get());
 
 			static DX11Backend backend = DX11Backend(
 				m_device.Get(), m_context.Get(),

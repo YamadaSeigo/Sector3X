@@ -35,5 +35,4 @@ namespace SectorFW
 			return value.fetch_sub(arg, order);
 		}
 	};
-
 }

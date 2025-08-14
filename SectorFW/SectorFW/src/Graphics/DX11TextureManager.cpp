@@ -17,20 +17,8 @@ namespace SectorFW
 
 		DX11TextureManager::DX11TextureManager(ID3D11Device* device) : device(device) {}
 
-		DX11TextureData DX11TextureManager::CreateResource(const DX11TextureCreateDesc& desc)
+		DX11TextureData DX11TextureManager::CreateResource(const DX11TextureCreateDesc& desc, TextureHandle h)
 		{
-			//将来の拡張性のために、複数排他制御
-			std::scoped_lock lock(cacheMutex);
-
-			auto it = cache.find(desc.path);
-			if (it != cache.end()) {
-
-				DX11TextureData data;
-				data.srv = it->second;
-				data.path = it->first;
-				return data;
-			}
-
 			DX11TextureData tex{};
 
 			std::wstring wpath(desc.path.begin(), desc.path.end());
@@ -86,46 +74,21 @@ namespace SectorFW
 
 			texture->Release();
 
-			auto node = cache.emplace(desc.path, srv);
 			tex.srv = srv;
-			tex.path = node.first->first;
+			tex.path = desc.path; // キャッシュ用パス
 
 			return tex;
 		}
 
-		void DX11TextureManager::ScheduleDestroy(uint32_t idx, uint64_t deleteFrame)
+		void DX11TextureManager::RemoveFromCaches(uint32_t idx)
 		{
-			slots[idx].alive = false;
-			pendingDelete.push_back({ idx, deleteFrame ,});
+			auto& d = slots[idx].data;
+			if (!d.path.empty()) pathToHandle.erase(d.path);
 		}
 
-		void DX11TextureManager::ProcessDeferredDeletes(uint64_t currentFrame)
+		void DX11TextureManager::DestroyResource(uint32_t idx, uint64_t)
 		{
-			auto it = pendingDelete.begin();
-			while (it != pendingDelete.end()) {
-				if (it->deleteSync <= currentFrame) {
-					auto& data = slots[it->index].data;
-					if (data.srv) {
-						data.srv->Release();
-						data.srv = nullptr;
-					}
-
-					// キャッシュからも除去
-					{
-						std::scoped_lock lock(cacheMutex);
-						auto cacheIt = cache.find(std::string(data.path));
-						if (cacheIt != cache.end()) {
-							cache.erase(cacheIt);
-						}
-					}
-
-					freeList.push_back(it->index);
-					it = pendingDelete.erase(it);
-				}
-				else {
-					++it;
-				}
-			}
+			slots[idx].data.srv.Reset();
 		}
 	}
 }

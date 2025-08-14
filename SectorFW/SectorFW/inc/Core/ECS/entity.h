@@ -48,8 +48,6 @@ namespace SectorFW
 	}
 }
 
-#include <functional>
-
 namespace std {
 	/**
 	 * @brief EntityID‚ÌƒnƒbƒVƒ…ŠÖ”

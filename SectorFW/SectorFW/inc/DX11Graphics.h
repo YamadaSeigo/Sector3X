@@ -10,6 +10,7 @@
 #include "Graphics/IGraphicsDevice.hpp"
 #include "Graphics/RenderGraph.hpp"
 #include "Graphics/DX11/DX11RenderBackend.h"
+#include "Graphics/DX11/DX113DCameraService.h"
 
 namespace SectorFW
 {
@@ -22,7 +23,7 @@ namespace SectorFW
 		class DX11GraphicsDevice : public IGraphicsDevice<DX11GraphicsDevice>
 		{
 		public:
-			using DX11RenderGraph = RenderGraph<DX11Backend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*>;
+			using DX11RenderGraph = RenderGraph<DX11Backend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>;
 
 			/**
 			 * @brief コンストラクタ
@@ -57,7 +58,7 @@ namespace SectorFW
 			 */
 			void PresentImpl();
 
-			RenderService* GetRenderService() noexcept{
+			RenderService* GetRenderService() noexcept {
 				return GetRenderGraph().GetRenderService();
 			}
 

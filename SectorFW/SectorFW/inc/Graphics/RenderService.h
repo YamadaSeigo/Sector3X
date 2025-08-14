@@ -8,20 +8,20 @@
 #include "RenderQueue.hpp"
 #include "../Util/TypeChecker.hpp"
 
-
 namespace SectorFW
 {
 	namespace Graphics
 	{
 		struct RenderService
 		{
-			template<typename Backend, PointerType RTV, PointerType SRV>
+			template<typename Backend, PointerType RTV, PointerType SRV, PointerType Buffer>
 			friend class RenderGraph;
 
 			struct RenderQueueLimited
 			{
-				explicit RenderQueueLimited(RenderQueue& queue,uint64_t currentFrame) noexcept
-					: queue(queue),currentFrame(currentFrame){}
+				explicit RenderQueueLimited(RenderQueue& queue, uint64_t currentFrame) noexcept
+					: queue(queue), currentFrame(currentFrame) {
+				}
 
 				void PushCommand(const DrawCommand& cmd) {
 					queue.Push(cmd);

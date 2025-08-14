@@ -9,13 +9,13 @@ namespace SectorFW
 	public:
 		explicit World(ECS::ServiceLocator&& serviceLocator) noexcept
 			: serviceLocator(std::move(serviceLocator)) {
-			assert(this->serviceLocator.IsInitialized() && "ServiceLocator is not already initialized.");
 		}
 
 		// ムーブコンストラクタ
 		World(World&& other) noexcept
 			: levelSets(std::move(other.levelSets)),
-			serviceLocator(std::move(other.serviceLocator)) {}
+			serviceLocator(std::move(other.serviceLocator)) {
+		}
 
 		// ムーブ代入演算子
 		World& operator=(World&& other) noexcept {

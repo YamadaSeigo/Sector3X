@@ -1,17 +1,13 @@
 #include "Graphics/DX11/DX11MeshManager.h"
 
+#include "Util/logger.h"
+
 namespace SectorFW
 {
 	namespace Graphics
 	{
-		DX11MeshData DX11MeshManager::CreateResource(const DX11MeshCreateDesc& desc)
+		DX11MeshData DX11MeshManager::CreateResource(const DX11MeshCreateDesc& desc, MeshHandle h)
 		{
-			if (!desc.sourcePath.empty()) {
-				std::scoped_lock lock(cacheMutex);
-				auto it = meshCache.find(desc.sourcePath);
-				if (it != meshCache.end()) return it->second;
-			}
-
 			DX11MeshData mesh{};
 			// Vertex Buffer
 			D3D11_BUFFER_DESC vbDesc = {};
@@ -19,9 +15,16 @@ namespace SectorFW
 			vbDesc.Usage = D3D11_USAGE_DEFAULT;
 			vbDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
+			HRESULT hr;
+
 			D3D11_SUBRESOURCE_DATA vbData = {};
 			vbData.pSysMem = desc.vertices;
-			device->CreateBuffer(&vbDesc, &vbData, &mesh.vb);
+			hr = device->CreateBuffer(&vbDesc, &vbData, &mesh.vb);
+			if (FAILED(hr)) {
+				LOG_ERROR("Failed to create vertex buffer: {}", hr);
+				assert(false && "Failed to create vertex buffer");
+				return {};
+			}
 
 			// Index Buffer
 			D3D11_BUFFER_DESC ibDesc = {};
@@ -31,46 +34,33 @@ namespace SectorFW
 
 			D3D11_SUBRESOURCE_DATA ibData = {};
 			ibData.pSysMem = desc.indices;
-			device->CreateBuffer(&ibDesc, &ibData, &mesh.ib);
+			hr = device->CreateBuffer(&ibDesc, &ibData, &mesh.ib);
+			if (FAILED(hr)) {
+				LOG_ERROR("Failed to create index buffer: {}", hr);
+				assert(false && "Failed to create index buffer");
+				return {};
+			}
 
 			mesh.indexCount = (uint32_t)(desc.iSize / sizeof(uint32_t));
 			mesh.stride = (uint32_t)desc.stride;
-
-			if (!desc.sourcePath.empty()) {
-				std::scoped_lock lock(cacheMutex);
-				auto node = meshCache.emplace(desc.sourcePath, mesh);
-				mesh.path = node.first->first;
-			}
+			mesh.path = desc.sourcePath;
 
 			return mesh;
 		}
-		void DX11MeshManager::ScheduleDestroy(uint32_t idx, uint64_t deleteFrame)
+
+		void DX11MeshManager::RemoveFromCaches(uint32_t idx)
 		{
-			slots[idx].alive = false;
-			pendingDelete.push_back({ idx, deleteFrame });
-		}
-		void DX11MeshManager::ProcessDeferredDeletes(uint64_t currentFrame)
-		{
-			auto it = pendingDelete.begin();
-			while (it != pendingDelete.end()) {
-				if (it->deleteSync <= currentFrame) {
-					auto& data = slots[it->index].data;
-
-					if (data.vb) { data.vb->Release(); data.vb = nullptr; }
-					if (data.ib) { data.ib->Release(); data.ib = nullptr; }
-
-					auto meshIt = meshCache.find(std::wstring(data.path));
-					if (meshIt != meshCache.end()) {
-						meshCache.erase(meshIt);
-					}
-
-					freeList.push_back(it->index);
-					it = pendingDelete.erase(it);
-				}
-				else {
-					++it;
-				}
+			auto& data = slots[idx].data;
+			auto pathIt = pathToHandle.find(data.path);
+			if (pathIt != pathToHandle.end()) {
+				pathToHandle.erase(pathIt);
 			}
+		}
+		void DX11MeshManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
+		{
+			auto& data = slots[idx].data;
+			if (data.vb) { data.vb.Reset(); }
+			if (data.ib) { data.ib.Reset(); }
 		}
 	}
 }

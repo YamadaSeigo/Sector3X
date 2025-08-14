@@ -19,7 +19,7 @@ namespace SectorFW
 	namespace Math
 	{
 		template<typename T, size_t N>
-		constexpr size_t GetAlignmentForVector() {
+		constexpr size_t GetAlignmentForVector() noexcept {
 			if constexpr (std::is_same_v<T, float>) {
 				return N * sizeof(T) >= 16 ? 16 : alignof(T);
 			}
@@ -38,22 +38,22 @@ namespace SectorFW
 				T data[2];
 			};
 
-			Vec2() : x(0), y(0) {}
-			Vec2(T x_, T y_) : x(x_), y(y_) {}
-			explicit Vec2(T val) : x(val), y(val) {}
+			Vec2() noexcept : x(0), y(0) {}
+			Vec2(T x_, T y_) noexcept : x(x_), y(y_) {}
+			explicit Vec2(T val) noexcept : x(val), y(val) {}
 
-			T& operator[](size_t i) { return data[i]; }
-			const T& operator[](size_t i) const { return data[i]; }
+			T& operator[](size_t i) noexcept { return data[i]; }
+			const T& operator[](size_t i) const noexcept { return data[i]; }
 
-			Vec2 operator+(const Vec2& rhs) const { return Vec2(x + rhs.x, y + rhs.y); }
-			Vec2 operator-(const Vec2& rhs) const { return Vec2(x - rhs.x, y - rhs.y); }
-			Vec2 operator*(T s) const { return Vec2(x * s, y * s); }
+			Vec2 operator+(const Vec2& rhs) const noexcept { return Vec2(x + rhs.x, y + rhs.y); }
+			Vec2 operator-(const Vec2& rhs) const noexcept { return Vec2(x - rhs.x, y - rhs.y); }
+			Vec2 operator*(T s) const noexcept { return Vec2(x * s, y * s); }
 
-			T dot(const Vec2& rhs) const { return x * rhs.x + y * rhs.y; }
+			T dot(const Vec2& rhs) const noexcept { return x * rhs.x + y * rhs.y; }
 
-			T length() const { return std::sqrt(dot(*this)); }
+			T length() const noexcept { return std::sqrt(dot(*this)); }
 
-			Vec2 normalized() const {
+			Vec2 normalized() const noexcept {
 				T len = length();
 				assert(len != 0);
 				return *this * (T(1) / len);
@@ -67,28 +67,56 @@ namespace SectorFW
 				T data[3];
 			};
 
-			Vec3() : x(0), y(0), z(0) {}
-			Vec3(T x_, T y_, T z_) : x(x_), y(y_), z(z_) {}
-			explicit Vec3(T val) : x(val), y(val), z(val) {}
+			Vec3() noexcept : x(0), y(0), z(0) {}
+			Vec3(T x_, T y_, T z_) noexcept : x(x_), y(y_), z(z_) {}
+			explicit Vec3(T val) noexcept : x(val), y(val), z(val) {}
 
-			T& operator[](size_t i) { return data[i]; }
-			const T& operator[](size_t i) const { return data[i]; }
+			T& operator[](size_t i) noexcept { return data[i]; }
+			const T& operator[](size_t i) const noexcept { return data[i]; }
 
-			Vec3 operator+(const Vec3& rhs) const { return Vec3(x + rhs.x, y + rhs.y, z + rhs.z); }
-			Vec3 operator-(const Vec3& rhs) const { return Vec3(x - rhs.x, y - rhs.y, z - rhs.z); }
-			Vec3 operator*(T s) const { return Vec3(x * s, y * s, z * s); }
+			Vec3& operator=(const Vec3& rhs) noexcept {
+				if (this != &rhs) {
+					x = rhs.x; y = rhs.y; z = rhs.z;
+				}
+				return *this;
+			}
+			Vec3& operator=(T&& val) noexcept {
+				x = val; y = val; z = val;
+				return *this;
+			}
+			Vec3& operator=(const T& val) noexcept {
+				x = val; y = val; z = val;
+				return *this;
+			}
 
-			T dot(const Vec3& rhs) const { return x * rhs.x + y * rhs.y + z * rhs.z; }
+			Vec3 operator+(const Vec3& rhs) const noexcept { return Vec3(x + rhs.x, y + rhs.y, z + rhs.z); }
+			Vec3 operator+(const T& s) const noexcept { return Vec3(x + s, y + s, z + s); }
+			Vec3& operator+=(const Vec3& rhs) noexcept { x += rhs.x; y += rhs.y; z += rhs.z; return *this; }
+			Vec3& operator+=(const T& s) noexcept { x += s; y += s; z += s; return *this; }
+			Vec3 operator-(const Vec3& rhs) const noexcept { return Vec3(x - rhs.x, y - rhs.y, z - rhs.z); }
+			Vec3 operator-(const T& s) const noexcept { return Vec3(x - s, y - s, z - s); }
+			Vec3& operator-=(const Vec3& rhs) noexcept { x -= rhs.x; y -= rhs.y; z -= rhs.z; return *this; }
+			Vec3& operator-=(const T& s) noexcept { x -= s; y -= s; z -= s; return *this; }
+			Vec3 operator*(const Vec3& rhs) const noexcept { return Vec3(x * rhs.x, y * rhs.y, z * rhs.z); }
+			Vec3 operator*(T s) const noexcept { return Vec3(x * s, y * s, z * s); }
+			Vec3& operator*=(const Vec3& rhs) noexcept { x *= rhs.x; y *= rhs.y; z *= rhs.z; return *this; }
+			Vec3& operator*=(T s) noexcept { x *= s; y *= s; z *= s; return *this; }
+			Vec3 operator/(const Vec3& rhs) const noexcept { assert(rhs.x != 0 && rhs.y != 0 && rhs.z != 0); return Vec3(x / rhs.x, y / rhs.y, z / rhs.z); }
+			Vec3 operator/(T s) const noexcept { assert(s != 0); return Vec3(x / s, y / s, z / s); }
+			Vec3& operator/=(const Vec3& rhs) noexcept { assert(rhs.x != 0 && rhs.y != 0 && rhs.z != 0); x /= rhs.x; y /= rhs.y; z /= rhs.z; return *this; }
+			Vec3& operator/=(T s) noexcept { assert(s != 0); x /= s; y /= s; z /= s; return *this; }
 
-			T length() const { return std::sqrt(dot(*this)); }
+			T dot(const Vec3& rhs) const noexcept { return x * rhs.x + y * rhs.y + z * rhs.z; }
 
-			Vec3 normalized() const {
+			T length() const noexcept { return std::sqrt(dot(*this)); }
+
+			Vec3 normalized() const noexcept {
 				T len = length();
 				assert(len != 0);
 				return *this * (T(1) / len);
 			}
 
-			Vec3 cross(const Vec3& rhs) const {
+			Vec3 cross(const Vec3& rhs) const noexcept {
 				return Vec3(
 					y * rhs.z - z * rhs.y,
 					z * rhs.x - x * rhs.z,
@@ -97,6 +125,48 @@ namespace SectorFW
 			}
 		};
 
+		// ‹K–ñƒ^ƒO
+		struct RH_ZBackward {}; // —á: OpenGL•— (‰EèŒn, +Z‚ª‰œ ¨ forward = (0,0,-1))
+		struct LH_ZForward {}; // —á: DirectX LH•— (¶èŒn, +Z‚ª‘O ¨ forward = (0,0,+1))
+
+		template<typename T, typename Convention = RH_ZBackward>
+		struct Axes {
+			// Šî–{²i‹K–ñ‚Å•Ï‚í‚é‚Ì‚Í forward ‚Æ cross ‚Ì‡˜j
+			static constexpr Vec3<T> up()       noexcept { return { T(0), T(1), T(0) }; }
+			static constexpr Vec3<T> down()     noexcept { return { T(0), T(-1), T(0) }; }
+			static constexpr Vec3<T> right()    noexcept { return { T(1), T(0), T(0) }; } // ‰E•ûŒü‚Ì+X‚ÍŒÅ’è
+			static constexpr Vec3<T> left()     noexcept { return { T(-1), T(0), T(0) }; }
+
+			static constexpr Vec3<T> forward()  noexcept {
+				if constexpr (std::is_same_v<Convention, RH_ZBackward>) return { T(0), T(0), T(-1) };
+				else                                                    return { T(0), T(0), T(1) }; // LH_ZForward
+			}
+			static constexpr Vec3<T> back()     noexcept { auto f = forward(); return Vec3<T>{-f.x, -f.y, -f.z}; }
+
+			// —^‚¦‚½ forward / up ‚©‚çu‰Ev(³‹K’¼ŒğŠî’ê) ‚ğì‚éFƒNƒƒXÏ‚Ì‡˜‚ª‹K–ñ‚Å•Ï‚í‚é
+			static Vec3<T> makeRight(const Vec3<T>& up, const Vec3<T>& forward) noexcept {
+				if constexpr (std::is_same_v<Convention, RH_ZBackward>) {
+					return up.cross(forward).normalized();     // ‰EèŒn: right = up ~ forward
+				}
+				else {
+					return forward.cross(up).normalized();     // ¶èŒn: right = forward ~ up
+				}
+			}
+
+			// —^‚¦‚½ up ‚Æ right ‚©‚ç forward ‚ğì‚éi”’lˆÀ’è‚Ì‚½‚ßÄ’¼Œğ‰»‚É‚àg‚¦‚éj
+			static Vec3<T> makeForward(const Vec3<T>& up, const Vec3<T>& right) noexcept {
+				if constexpr (std::is_same_v<Convention, RH_ZBackward>) {
+					return right.cross(up).normalized();       // ‰EèŒn: forward = right ~ up
+				}
+				else {
+					return up.cross(right).normalized();       // ¶èŒn: forward = up ~ right
+				}
+			}
+		};
+
+		using RFAxes = Axes<float, RH_ZBackward>; // OpenGL•—i‰EèŒn, forward = -Zj
+		using LFAxes = Axes<float, LH_ZForward>; // OpenGL•—i¶èŒn, forward = +Zj
+
 		template<typename T>
 		struct alignas(GetAlignmentForVector<T, 4>()) Vec4 {
 			union {
@@ -104,22 +174,22 @@ namespace SectorFW
 				T data[4];
 			};
 
-			Vec4() : x(0), y(0), z(0), w(0) {}
-			Vec4(T x_, T y_, T z_, T w_) : x(x_), y(y_), z(z_), w(w_) {}
-			explicit Vec4(T val) : x(val), y(val), z(val), w(val) {}
+			Vec4() noexcept : x(0), y(0), z(0), w(0) {}
+			Vec4(T x_, T y_, T z_, T w_) noexcept : x(x_), y(y_), z(z_), w(w_) {}
+			explicit Vec4(T val) noexcept : x(val), y(val), z(val), w(val) {}
 
-			T& operator[](size_t i) { return data[i]; }
-			const T& operator[](size_t i) const { return data[i]; }
+			T& operator[](size_t i) noexcept { return data[i]; }
+			const T& operator[](size_t i) const noexcept { return data[i]; }
 
-			Vec4 operator+(const Vec4& rhs) const { return Vec4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w); }
-			Vec4 operator-(const Vec4& rhs) const { return Vec4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w); }
-			Vec4 operator*(T s) const { return Vec4(x * s, y * s, z * s, w * s); }
+			Vec4 operator+(const Vec4& rhs) const noexcept { return Vec4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w); }
+			Vec4 operator-(const Vec4& rhs) const noexcept { return Vec4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w); }
+			Vec4 operator*(T s) const noexcept { return Vec4(x * s, y * s, z * s, w * s); }
 
-			T dot(const Vec4& rhs) const { return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w; }
+			T dot(const Vec4& rhs) const noexcept { return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w; }
 
-			T length() const { return std::sqrt(dot(*this)); }
+			T length() const noexcept { return std::sqrt(dot(*this)); }
 
-			Vec4 normalized() const {
+			Vec4 normalized() const noexcept {
 				T len = length();
 				assert(len != 0);
 				return *this * (T(1) / len);
@@ -127,30 +197,30 @@ namespace SectorFW
 		};
 
 		template<typename T, typename U>
-		inline T lerp(const T& a, const T& b, U t) {
+		inline T lerp(const T& a, const T& b, U t) noexcept {
 			return a * (U(1) - t) + b * t;
 		}
 
 		template<typename T>
-		inline T smoothstep(T edge0, T edge1, T x) {
+		inline T smoothstep(T edge0, T edge1, T x) noexcept {
 			T t = std::clamp((x - edge0) / (edge1 - edge0), T(0), T(1));
 			return t * t * (T(3) - T(2) * t);
 		}
 
 		template<typename T>
-		inline T step(T edge, T x) {
+		inline T step(T edge, T x) noexcept {
 			return x < edge ? T(0) : T(1);
 		}
 
 		template<typename VecT>
-		inline bool any(const VecT& v) {
+		inline bool any(const VecT& v) noexcept {
 			for (size_t i = 0; i < sizeof(v.data) / sizeof(v.data[0]); ++i)
 				if (v[i]) return true;
 			return false;
 		}
 
 		template<typename VecT>
-		inline bool all(const VecT& v) {
+		inline bool all(const VecT& v) noexcept {
 			for (size_t i = 0; i < sizeof(v.data) / sizeof(v.data[0]); ++i)
 				if (!v[i]) return false;
 			return true;
@@ -161,7 +231,7 @@ namespace SectorFW
 		using Vec4f = Vec4<float>;
 
 		template<>
-		inline Vec4f Vec4f::operator+(const Vec4f& rhs) const {
+		inline Vec4f Vec4f::operator+(const Vec4f& rhs) const noexcept {
 			__m128 a = _mm_load_ps(this->data);     // this ‚Ì4—v‘f‚ğƒ[ƒh
 			__m128 b = _mm_load_ps(rhs.data);       // rhs ‚Ì4—v‘f‚ğƒ[ƒh
 			__m128 result = _mm_add_ps(a, b);       // SIMD‰ÁZ
@@ -171,7 +241,7 @@ namespace SectorFW
 		}
 
 		template<>
-		inline float Vec4f::dot(const Vec4f& rhs) const {
+		inline float Vec4f::dot(const Vec4f& rhs) const noexcept {
 			__m128 a = _mm_load_ps(this->data);
 			__m128 b = _mm_load_ps(rhs.data);
 			__m128 mul = _mm_mul_ps(a, b);

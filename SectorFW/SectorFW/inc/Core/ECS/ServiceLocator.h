@@ -6,6 +6,8 @@
 #include <memory>
 
 #include "Graphics/RenderService.h"
+#include "Util/TypeChecker.hpp"
+//#include "Input/InputService.h"
 
 namespace SectorFW
 {
@@ -33,12 +35,13 @@ namespace SectorFW
 			 * @brief コンストラクタ
 			 * @detail 複数回生成すると実行時エラー
 			 */
-			explicit ServiceLocator(Graphics::RenderService* renderService) : mapMutex(std::make_unique<std::shared_mutex>()) {
+			template<PointerType... Service>
+			explicit ServiceLocator(Service... service)
+				: mapMutex(std::make_unique<std::shared_mutex>()) {
 				assert(!created && "ServiceLocator instance already created.");
 				created = true;
 
-				services[typeid(Graphics::RenderService)] = 
-					Location{ renderService,updateServices.size(),Graphics::RenderService::isStatic };
+				(AllRegisterStaticServiceWithArg<std::remove_pointer_t<Service>>(service), ...);
 			}
 			/**
 			 * @brief　コピーコンストラクタを削除
@@ -61,51 +64,31 @@ namespace SectorFW
 			 * @brief 初期化処理(必ず呼び出す必要がある、複数回呼び出し禁止)
 			 */
 			template<typename... Services>
-			void Init() noexcept {
+			void InitAndRegisterStaticService() noexcept {
 				assert(!initialized && "ServiceLocator is already initialized.");
 
-				std::unique_lock lock(*mapMutex);
+				std::unique_lock<std::shared_mutex> lock(*mapMutex);
 				initialized = true;
-				(AllRegister<Services>(), ...);
+				(AllRegisterStaticService<Services>(), ...);
 			}
 			/**
-			 * @brief サービスを登録する(動的なサービス限定)
+			 * @brief 動的サービスの登録を行う
 			 * @tparam T サービスの型
 			 */
-			template<typename T>
-			void Register() noexcept {
-				static_assert(!T::isStatic, "Cannot re-register static service.");
-
-				if (IsRegistered<T>()) {
-					assert(false && "Service already registered.");
-					return;
-				}
-
-				// ServiceLocator は唯一のインスタンスとして設計されており、
-				// 各サービス型ごとに1つだけ static に保持して問題ない
-				static std::unique_ptr<T> service;
-				service = std::make_unique<T>();
-
-				std::unique_lock lock(*mapMutex);
-
-				size_t updateIndex = updateServices.size();
-				if constexpr (isUpdateService<T>) {
-					IUpdateService* updateService = static_cast<IUpdateService*>(service.get());
-					updateService->typeIndex = typeid(T);
-					updateServices.push_back(updateService);
-				}
-
-				services[typeid(T)] = Location{ service.get(),updateIndex,T::isStatic };
+			template<typename... T>
+			void RegisterDynamicService() noexcept {
+				// 動的サービスの登録を行う
+				(AllRegisterDynamicService<T>(), ...);
 			}
 			/**
 			 * @brief サービスの登録を解除する(動的なサービス限定)
 			 * @tparam T サービスの型
 			 */
 			template<typename T>
-			void Unregister() {
+			void UnregisterDynamicService() {
 				static_assert(!T::isStatic, "Cannot unregister static service.");
 
-				std::unique_lock lock(*mapMutex);
+				std::unique_lock<std::shared_mutex> lock(*mapMutex);
 				auto iter = services.find(typeid(T));
 
 				if (iter != services.end())
@@ -138,9 +121,9 @@ namespace SectorFW
 			 */
 			template<typename T>
 			T* Get() const noexcept {
-				static_assert(T::isStatic || true, "Dynamic services can be null");
+				//static_assert(T::isStatic || true, "Dynamic services can be null");
 
-				std::shared_lock lock(*mapMutex);
+				std::shared_lock<std::shared_mutex> lock(*mapMutex);
 				auto it = services.find(typeid(T));
 				if (it == services.end()) {
 					assert(!T::isStatic && "Static service not registered!");
@@ -159,18 +142,34 @@ namespace SectorFW
 			 * @brief サービスの更新を行う
 			 */
 			void UpdateService(double deltaTime) {
-				std::shared_lock lock(*mapMutex);
+				std::shared_lock<std::shared_mutex> lock(*mapMutex);
 				for (auto& service : updateServices) {
 					service->Update(deltaTime);
 				}
 			}
 		private:
+			template<typename T>
+			void AllRegisterStaticServiceWithArg(T* service) noexcept {
+				static_assert(T::isStatic, "Cannot register dynamic service with argument.");
+				assert((!IsRegistered<T>() && service) && "Cannot register service.");
+
+				size_t updateIndex = updateServices.size();
+				if constexpr (isUpdateService<T>) {
+					IUpdateService* updateService = static_cast<IUpdateService*>(service);
+					updateService->typeIndex = typeid(T);
+					updateServices.push_back(updateService);
+				}
+
+				services[typeid(T)] = Location{ service,updateIndex, T::isStatic };
+			}
+
 			/**
 			 * @brief すべてのサービスを登録する
 			 * @param service サービスのポインタ
 			 */
 			template<typename T>
-			void AllRegister() noexcept {
+			void AllRegisterStaticService() noexcept {
+				static_assert(T::isStatic, "Cannot register dynamic service.");
 				assert((!IsRegistered<T>()) && "Cannot re-register static service.");
 
 				// ServiceLocator は唯一のインスタンスとして設計されており、
@@ -186,6 +185,36 @@ namespace SectorFW
 
 				services[typeid(T)] = Location{ service.get(),updateIndex, T::isStatic };
 			}
+			/**
+			 * @brief サービスを登録する(動的なサービス限定)
+			 * @tparam T サービスの型
+			 */
+			template<typename T>
+			void AllRegisterDynamicService() noexcept {
+				static_assert(!T::isStatic, "Cannot re-register static service.");
+
+				if (IsRegistered<T>()) {
+					assert(false && "Service already registered.");
+					return;
+				}
+
+				// ServiceLocator は唯一のインスタンスとして設計されており、
+				// 各サービス型ごとに1つだけ static に保持して問題ない
+				static std::unique_ptr<T> service;
+				service = std::make_unique<T>();
+
+				std::unique_lock<std::shared_mutex> lock(*mapMutex);
+
+				size_t updateIndex = updateServices.size();
+				if constexpr (isUpdateService<T>) {
+					IUpdateService* updateService = static_cast<IUpdateService*>(service.get());
+					updateService->typeIndex = typeid(T);
+					updateServices.push_back(updateService);
+				}
+
+				services[typeid(T)] = Location{ service.get(),updateIndex,T::isStatic };
+			}
+
 			/**
 			 * @brief サービスが登録されているかどうか
 			 * @return 登録されている場合true
