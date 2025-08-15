@@ -1,8 +1,8 @@
 #pragma once
 
-#include <sector11fw.h>
-#include <WindowHandler.h>
-#include <DX11Graphics.h>
+#include <SectorFW/sector11fw.h>
+#include <SectorFW/WindowHandler.h>
+#include <SectorFW/DX11Graphics.h>
 
 using namespace SectorFW;
 using namespace SectorFW::ECS;
