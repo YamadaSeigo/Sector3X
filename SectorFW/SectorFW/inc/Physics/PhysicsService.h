@@ -13,10 +13,16 @@ namespace SectorFW
 	{
 		class PhysicsService : public ECS::IUpdateService{
 		public:
-			explicit PhysicsService(PhysicsDevice& device, PhysicsShapeManager& shapeMgr, 
-				PhysicsDevice::Plan plan = { 1.0f / 60.0f, 1, false }, size_t queueCapacityPow2 = 4096)
+			struct Plan {
+				float fixed_dt = 1.0f / 60.0f;
+				int   substeps = 1;
+				bool  collect_debug = false; // 後でデバッグライン等を拾う用
+			};
+
+
+			explicit PhysicsService(PhysicsDevice& device, PhysicsShapeManager& shapeMgr,
+				Plan plan = { 1.0f / 60.0f, 1, false }, size_t queueCapacityPow2 = 4096)
 				: m_device(device), m_mgr(&shapeMgr), plan(plan), m_queue(queueCapacityPow2) {
-				m_device.SetPlan(plan);
 				m_device.SetShapeResolver(m_mgr);
 			}
 
@@ -57,19 +63,19 @@ namespace SectorFW
 
 				while (m_accum + 1e-6f >= plan.fixed_dt) { // 浮動誤差対策の微小マージン
 					DrainAllToDevice();                   // ここで一括適用
-					m_device.Step();
-					m_accum -= plan.fixed_dt;
+					m_device.Step(plan.fixed_dt, plan.substeps);
 
-					// 最新スナップショットを internal に保存（外に参照を渡す方針でもOK）
-					m_snapshot.poses.clear();
-					m_snapshot.contacts.clear();
-					m_snapshot.rayHits.clear();
+					// スナップショットを組み立てる
 					m_device.BuildSnapshot(m_snapshot);
+					m_prevSnapshot = std::move(m_currSnapshot); // 前フレームのスナップショットを保存
+					m_currSnapshot = std::move(m_snapshot);      // 今回のスナップショットを更新
 
-					// prev/curr のダブルバッファを運用したい場合はここで入れ替え・保持
-					m_prevSnapshot = m_currSnapshot;
-					m_currSnapshot = m_snapshot; // コピー（必要ならムーブや参照化）
+					m_accum -= plan.fixed_dt;
 				}
+			}
+
+			void BuildPoseBatch(PoseBatchView& v) const{
+				m_device.ReadPosesBatch(v);
 			}
 
 			// 補間に使うための α を取得（描画フレームで使う）
@@ -100,7 +106,7 @@ namespace SectorFW
 			PhysicsShapeManager* m_mgr{ nullptr }; // 所有しない
 			SpscRing<PhysicsCommand> m_queue;
 
-			PhysicsDevice::Plan plan;
+			Plan plan;
 
 			float m_accum = 0.0f;
 

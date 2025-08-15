@@ -115,6 +115,6 @@ namespace SectorFW
 			ShapeDesc   shape;
 			ShapeScale  scale;     // オプション
 			// 必要ならマテリアル等を追加
-		};
+		};	
 	}
 }

@@ -72,12 +72,6 @@ namespace SectorFW
 			};
 
 		public:
-			struct Plan {
-				float fixed_dt = 1.0f / 60.0f;
-				int   substeps = 1;
-				bool  collect_debug = false; // 後でデバッグライン等を拾う用
-			};
-
 			struct InitParams {
 				uint32_t maxBodies = 100000;
 				uint32_t maxBodyPairs = 1024 * 64;
@@ -93,22 +87,18 @@ namespace SectorFW
 			bool IsInitialized() const noexcept { return m_initialized; }
 			void Shutdown();
 
-			void SetPlan(const Plan& plan) noexcept {
-				this->m_plan = plan;
-			}
-
 			// 1 fixed-step 中に呼ぶ：事前キューを適用
 			void ApplyCommand(const PhysicsCommand& cmd);
 
 			// 物理を1ステップ進める
-			void Step();
+			void Step(float fixed_dt, int substeps);
 
 			// スナップショット抽出（poses / contacts / rayHits）
 			void BuildSnapshot(PhysicsSnapshot& out);
 
 			void ReadPosesBatch(const PoseBatchView& out_soav);
 
-			void ApplyKinematicTargetsBatch(const KinematicBatchView& v);
+			void ApplyKinematicTargetsBatch(const KinematicBatchView& v, float fixed_dt);
 
 			// --- Entity <-> BodyID 紐付け（外部は使わない想定でもOK）
 			std::optional<JPH::BodyID> FindBody(Entity e) const;
@@ -137,8 +127,6 @@ namespace SectorFW
 			std::unique_ptr<MyContactListenerOwner> m_contactListener;
 			std::vector<ContactEvent> m_pendingContacts;
 			std::vector<PendingRayHit> m_pendingRayHits;
-
-			Plan m_plan = { 1.0f / 60.0f, 1, false }; // デフォルトプラン
 
 			bool m_initialized = false;
 

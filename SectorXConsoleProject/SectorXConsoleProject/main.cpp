@@ -207,18 +207,6 @@ public:
 	}
 };
 
-template<typename Partition>
-class VoidSystem : public ITypeSystem<
-	Partition,
-	ComponentAccess<>,//アクセスするコンポーネントの指定
-	ServiceContext<>>{//受け取るサービスの指定
-	using Accessor = ComponentAccessor<>;
-public:
-	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition) override {
-	}
-};
-
 int main(void)
 {
 	LOG_INFO("SectorX Console Project started");
@@ -255,7 +243,7 @@ int main(void)
 	}
 
 	Physics::PhysicsShapeManager shapeManager;
-	Physics::PhysicsDevice::Plan physicsPlan = { 1.0f / (float)FPS_LIMIT, 1, false };
+	Physics::PhysicsService::Plan physicsPlan = { 1.0f / (float)FPS_LIMIT, 1, false };
 	Physics::PhysicsService physicsService(physics, shapeManager, physicsPlan);
 
 	AssetService assetService;
@@ -329,7 +317,7 @@ int main(void)
 		world.AddLevel(std::move(level));
 	}
 
-	static GameEngine gameEngine(std::move(graphics), physics, std::move(world), FPS_LIMIT);
+	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
 
 	// メッセージループ
 	WindowHandler::Run([]() {

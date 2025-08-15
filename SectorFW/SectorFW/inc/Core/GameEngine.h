@@ -13,8 +13,6 @@
 #include "World.hpp"
 #include "Util/TypeChecker.hpp"
 
-#include "Physics/PhysicsDevice.h"
-
 namespace SectorFW
 {
 	template<typename T>
@@ -41,9 +39,8 @@ namespace SectorFW
 		 * @param graphicsDevice グラフィックデバイス
 		 * @details FPS制御クラスを初期化し、グラフィックデバイスを設定します。
 		 */
-		explicit GameEngine(Graphics&& graphicsDevice, Physics::PhysicsDevice& physicsDevice,
-			WorldType&& world, double fps = 60.0)
-			: m_graphicsDevice(std::move(graphicsDevice)), m_physicsDevice(physicsDevice), m_world(std::move(world))
+		explicit GameEngine(Graphics&& graphicsDevice, WorldType&& world, double fps = 60.0)
+			: m_graphicsDevice(std::move(graphicsDevice)), m_world(std::move(world))
 		{
 			InitializeGameEngine(m_graphicsDevice.IsInitialized());
 
@@ -81,8 +78,6 @@ namespace SectorFW
 		{
 			m_world.UpdateServiceLocator(delta_time);
 
-			m_physicsDevice.Step();
-
 			m_world.UpdateAllLevels();
 		}
 		/**
@@ -107,8 +102,6 @@ namespace SectorFW
 		FrameTimer m_frameTimer;
 		// グラフィックデバイス
 		Graphics m_graphicsDevice;
-		// 物理デバイス
-		Physics::PhysicsDevice& m_physicsDevice;
 		//ワールド管理
 		WorldType m_world;
 	};

@@ -245,9 +245,9 @@ namespace SectorFW::Physics {
 	}
 
 	// ===== Step =====
-	void PhysicsDevice::Step() {
-		for (int i = 0; i < m_plan.substeps; ++i) {
-			m_physics.Update(m_plan.fixed_dt / float(m_plan.substeps), 1, m_tempAlloc, m_jobs);
+	void PhysicsDevice::Step(float fixed_dt, int substeps) {
+		for (int i = 0; i < substeps; ++i) {
+			m_physics.Update(fixed_dt / float(substeps), 1, m_tempAlloc, m_jobs);
 		}
 	}
 
@@ -337,7 +337,7 @@ namespace SectorFW::Physics {
 		}
 	}
 
-	void PhysicsDevice::ApplyKinematicTargetsBatch(const KinematicBatchView& v)
+	void PhysicsDevice::ApplyKinematicTargetsBatch(const KinematicBatchView& v, float fixed_dt)
 	{
 		using namespace JPH;
 		constexpr size_t kChunk = 128; // ロック粒度(環境に合わせて 64-256 でチューニング)
@@ -365,7 +365,7 @@ namespace SectorFW::Physics {
 
 				// ---- 推奨パス：ロック済み Body に直接 MoveKinematic ----
 				// ※ Jolt の Body にはロック下で呼べる MoveKinematic が用意されています
-				b->MoveKinematic(targetPos, targetRot, m_plan.fixed_dt);
+				b->MoveKinematic(targetPos, targetRot, fixed_dt);
 			}
 
 			i += n;

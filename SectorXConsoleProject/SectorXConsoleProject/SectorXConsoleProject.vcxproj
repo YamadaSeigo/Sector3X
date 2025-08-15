@@ -71,10 +71,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)../SectorFW;$(SolutionDir)../SectorFW/SectorFW/third_party;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)../SectorFW/SectorFW/inc;$(SolutionDir)../SectorFW/SectorFW/third_party;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)../SectorFW;$(SolutionDir)../SectorFW/SectorFW/third_party;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)../SectorFW/SectorFW/inc;$(SolutionDir)../SectorFW/SectorFW/third_party;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -176,6 +176,8 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\CameraSystem.h" />
+    <ClInclude Include="system\PhysicsSystem.h" />
+    <ClInclude Include="system\VoidSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
