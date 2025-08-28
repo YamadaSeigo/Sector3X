@@ -26,7 +26,7 @@ IslandBuilder::~IslandBuilder()
 	JPH_ASSERT(mContactIslandEnds == nullptr);
 	JPH_ASSERT(mIslandsSorted == nullptr);
 
-	delete [] mBodyLinks;
+	delete[] mBodyLinks;
 }
 
 void IslandBuilder::Init(uint32 inMaxActiveBodies)
@@ -35,12 +35,12 @@ void IslandBuilder::Init(uint32 inMaxActiveBodies)
 
 	// Link each body to itself, BuildBodyIslands() will restore this so that we don't need to do this each step
 	JPH_ASSERT(mBodyLinks == nullptr);
-	mBodyLinks = new BodyLink [mMaxActiveBodies];
+	mBodyLinks = new BodyLink[mMaxActiveBodies];
 	for (uint32 i = 0; i < mMaxActiveBodies; ++i)
 		mBodyLinks[i].mLinkedTo.store(i, memory_order_relaxed);
 }
 
-void IslandBuilder::PrepareContactConstraints(uint32 inMaxContacts, TempAllocator *inTempAllocator)
+void IslandBuilder::PrepareContactConstraints(uint32 inMaxContacts, TempAllocator* inTempAllocator)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -53,18 +53,18 @@ void IslandBuilder::PrepareContactConstraints(uint32 inMaxContacts, TempAllocato
 
 	// Create contact link buffer, not initialized so each contact needs to be explicitly set
 	JPH_ASSERT(mContactLinks == nullptr);
-	mContactLinks = (uint32 *)inTempAllocator->Allocate(inMaxContacts * sizeof(uint32));
+	mContactLinks = (uint32*)inTempAllocator->Allocate(inMaxContacts * sizeof(uint32));
 	mMaxContacts = inMaxContacts;
 
 #ifdef JPH_VALIDATE_ISLAND_BUILDER
 	// Create validation structures
 	JPH_ASSERT(mLinkValidation == nullptr);
-	mLinkValidation = (LinkValidation *)inTempAllocator->Allocate(inMaxContacts * sizeof(LinkValidation));
+	mLinkValidation = (LinkValidation*)inTempAllocator->Allocate(inMaxContacts * sizeof(LinkValidation));
 	mNumLinkValidation = 0;
 #endif
 }
 
-void IslandBuilder::PrepareNonContactConstraints(uint32 inNumConstraints, TempAllocator *inTempAllocator)
+void IslandBuilder::PrepareNonContactConstraints(uint32 inNumConstraints, TempAllocator* inTempAllocator)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -79,7 +79,7 @@ void IslandBuilder::PrepareNonContactConstraints(uint32 inNumConstraints, TempAl
 
 	// Create constraint link buffer, not initialized so each constraint needs to be explicitly set
 	JPH_ASSERT(mConstraintLinks == nullptr);
-	mConstraintLinks = (uint32 *)inTempAllocator->Allocate(inNumConstraints * sizeof(uint32));
+	mConstraintLinks = (uint32*)inTempAllocator->Allocate(inNumConstraints * sizeof(uint32));
 }
 
 uint32 IslandBuilder::GetLowestBodyIndex(uint32 inActiveBodyIndex) const
@@ -205,7 +205,7 @@ void IslandBuilder::ValidateIslands(uint32 inNumActiveBodies) const
 
 #endif
 
-void IslandBuilder::BuildBodyIslands(const BodyID *inActiveBodies, uint32 inNumActiveBodies, TempAllocator *inTempAllocator)
+void IslandBuilder::BuildBodyIslands(const BodyID* inActiveBodies, uint32 inNumActiveBodies, TempAllocator* inTempAllocator)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -214,11 +214,11 @@ void IslandBuilder::BuildBodyIslands(const BodyID *inActiveBodies, uint32 inNumA
 
 	// Create output arrays for body ID's, don't call constructors
 	JPH_ASSERT(mBodyIslands == nullptr);
-	mBodyIslands = (BodyID *)inTempAllocator->Allocate(inNumActiveBodies * sizeof(BodyID));
+	mBodyIslands = (BodyID*)inTempAllocator->Allocate(inNumActiveBodies * sizeof(BodyID));
 
 	// Create output array for start index of each island. At this point we don't know how many islands there will be, but we know it cannot be more than inNumActiveBodies.
 	// Note: We allocate 1 extra entry because we always increment the count of the next island.
-	uint32 *body_island_starts = (uint32 *)inTempAllocator->Allocate((inNumActiveBodies + 1) * sizeof(uint32));
+	uint32* body_island_starts = (uint32*)inTempAllocator->Allocate((inNumActiveBodies + 1) * sizeof(uint32));
 
 	// First island always starts at 0
 	body_island_starts[0] = 0;
@@ -227,7 +227,7 @@ void IslandBuilder::BuildBodyIslands(const BodyID *inActiveBodies, uint32 inNumA
 	JPH_ASSERT(mNumIslands == 0);
 	for (uint32 i = 0; i < inNumActiveBodies; ++i)
 	{
-		BodyLink &link = mBodyLinks[i];
+		BodyLink& link = mBodyLinks[i];
 		uint32 s = link.mLinkedTo.load(memory_order_relaxed);
 		if (s != i)
 		{
@@ -261,10 +261,10 @@ void IslandBuilder::BuildBodyIslands(const BodyID *inActiveBodies, uint32 inNumA
 	// Convert the to a linear list grouped by island
 	for (uint32 i = 0; i < inNumActiveBodies; ++i)
 	{
-		BodyLink &link = mBodyLinks[i];
+		BodyLink& link = mBodyLinks[i];
 
 		// Copy the body to the correct location in the array and increment it
-		uint32 &start = body_island_starts[link.mIslandIndex];
+		uint32& start = body_island_starts[link.mIslandIndex];
 		mBodyIslands[start] = inActiveBodies[i];
 		start++;
 
@@ -280,7 +280,7 @@ void IslandBuilder::BuildBodyIslands(const BodyID *inActiveBodies, uint32 inNumA
 	mBodyIslandEnds = body_island_starts;
 }
 
-void IslandBuilder::BuildConstraintIslands(const uint32 *inConstraintToBody, uint32 inNumConstraints, uint32 *&outConstraints, uint32 *&outConstraintsEnd, TempAllocator *inTempAllocator) const
+void IslandBuilder::BuildConstraintIslands(const uint32* inConstraintToBody, uint32 inNumConstraints, uint32*& outConstraints, uint32*& outConstraintsEnd, TempAllocator* inTempAllocator) const
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -290,8 +290,8 @@ void IslandBuilder::BuildConstraintIslands(const uint32 *inConstraintToBody, uin
 
 	// Create output arrays for constraints
 	// Note: For the end indices we allocate 1 extra entry so we don't have to do an if in the inner loop
-	uint32 *constraints = (uint32 *)inTempAllocator->Allocate(inNumConstraints * sizeof(uint32));
-	uint32 *constraint_ends = (uint32 *)inTempAllocator->Allocate((mNumIslands + 1) * sizeof(uint32));
+	uint32* constraints = (uint32*)inTempAllocator->Allocate(inNumConstraints * sizeof(uint32));
+	uint32* constraint_ends = (uint32*)inTempAllocator->Allocate((mNumIslands + 1) * sizeof(uint32));
 
 	// Reset sizes
 	for (uint32 island = 0; island < mNumIslands; ++island)
@@ -324,7 +324,7 @@ void IslandBuilder::BuildConstraintIslands(const uint32 *inConstraintToBody, uin
 	outConstraintsEnd = constraint_ends;
 }
 
-void IslandBuilder::SortIslands(TempAllocator *inTempAllocator)
+void IslandBuilder::SortIslands(TempAllocator* inTempAllocator)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -332,20 +332,20 @@ void IslandBuilder::SortIslands(TempAllocator *inTempAllocator)
 	{
 		// Allocate mapping table
 		JPH_ASSERT(mIslandsSorted == nullptr);
-		mIslandsSorted = (uint32 *)inTempAllocator->Allocate(mNumIslands * sizeof(uint32));
+		mIslandsSorted = (uint32*)inTempAllocator->Allocate(mNumIslands * sizeof(uint32));
 
 		// Initialize index
 		for (uint32 island = 0; island < mNumIslands; ++island)
 			mIslandsSorted[island] = island;
 
 		// Determine the sum of contact constraints / constraints per island
-		uint32 *num_constraints = (uint32 *)inTempAllocator->Allocate(mNumIslands * sizeof(uint32));
+		uint32* num_constraints = (uint32*)inTempAllocator->Allocate(mNumIslands * sizeof(uint32));
 		if (mNumContacts > 0 && mNumConstraints > 0)
 		{
 			num_constraints[0] = mConstraintIslandEnds[0] + mContactIslandEnds[0];
 			for (uint32 island = 1; island < mNumIslands; ++island)
 				num_constraints[island] = mConstraintIslandEnds[island] - mConstraintIslandEnds[island - 1]
-										+ mContactIslandEnds[island] - mContactIslandEnds[island - 1];
+				+ mContactIslandEnds[island] - mContactIslandEnds[island - 1];
 		}
 		else if (mNumContacts > 0)
 		{
@@ -364,13 +364,13 @@ void IslandBuilder::SortIslands(TempAllocator *inTempAllocator)
 		// first which improves the chance that all jobs finish at the same time.
 		QuickSort(mIslandsSorted, mIslandsSorted + mNumIslands, [num_constraints](uint32 inLHS, uint32 inRHS) {
 			return num_constraints[inLHS] > num_constraints[inRHS];
-		});
+			});
 
 		inTempAllocator->Free(num_constraints, mNumIslands * sizeof(uint32));
 	}
 }
 
-void IslandBuilder::Finalize(const BodyID *inActiveBodies, uint32 inNumActiveBodies, uint32 inNumContacts, TempAllocator *inTempAllocator)
+void IslandBuilder::Finalize(const BodyID* inActiveBodies, uint32 inNumActiveBodies, uint32 inNumContacts, TempAllocator* inTempAllocator)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -381,18 +381,18 @@ void IslandBuilder::Finalize(const BodyID *inActiveBodies, uint32 inNumActiveBod
 	BuildConstraintIslands(mContactLinks, mNumContacts, mContactIslands, mContactIslandEnds, inTempAllocator);
 	SortIslands(inTempAllocator);
 
-	mNumPositionSteps = (uint8 *)inTempAllocator->Allocate(mNumIslands * sizeof(uint8));
+	mNumPositionSteps = (uint8*)inTempAllocator->Allocate(mNumIslands * sizeof(uint8));
 }
 
-void IslandBuilder::GetBodiesInIsland(uint32 inIslandIndex, BodyID *&outBodiesBegin, BodyID *&outBodiesEnd) const
+void IslandBuilder::GetBodiesInIsland(uint32 inIslandIndex, BodyID*& outBodiesBegin, BodyID*& outBodiesEnd) const
 {
 	JPH_ASSERT(inIslandIndex < mNumIslands);
-	uint32 sorted_index = mIslandsSorted != nullptr? mIslandsSorted[inIslandIndex] : inIslandIndex;
-	outBodiesBegin = sorted_index > 0? mBodyIslands + mBodyIslandEnds[sorted_index - 1] : mBodyIslands;
+	uint32 sorted_index = mIslandsSorted != nullptr ? mIslandsSorted[inIslandIndex] : inIslandIndex;
+	outBodiesBegin = sorted_index > 0 ? mBodyIslands + mBodyIslandEnds[sorted_index - 1] : mBodyIslands;
 	outBodiesEnd = mBodyIslands + mBodyIslandEnds[sorted_index];
 }
 
-bool IslandBuilder::GetConstraintsInIsland(uint32 inIslandIndex, uint32 *&outConstraintsBegin, uint32 *&outConstraintsEnd) const
+bool IslandBuilder::GetConstraintsInIsland(uint32 inIslandIndex, uint32*& outConstraintsBegin, uint32*& outConstraintsEnd) const
 {
 	JPH_ASSERT(inIslandIndex < mNumIslands);
 	if (mNumConstraints == 0)
@@ -404,13 +404,13 @@ bool IslandBuilder::GetConstraintsInIsland(uint32 inIslandIndex, uint32 *&outCon
 	else
 	{
 		uint32 sorted_index = mIslandsSorted[inIslandIndex];
-		outConstraintsBegin = sorted_index > 0? mConstraintIslands + mConstraintIslandEnds[sorted_index - 1] : mConstraintIslands;
+		outConstraintsBegin = sorted_index > 0 ? mConstraintIslands + mConstraintIslandEnds[sorted_index - 1] : mConstraintIslands;
 		outConstraintsEnd = mConstraintIslands + mConstraintIslandEnds[sorted_index];
 		return outConstraintsBegin != outConstraintsEnd;
 	}
 }
 
-bool IslandBuilder::GetContactsInIsland(uint32 inIslandIndex, uint32 *&outContactsBegin, uint32 *&outContactsEnd) const
+bool IslandBuilder::GetContactsInIsland(uint32 inIslandIndex, uint32*& outContactsBegin, uint32*& outContactsEnd) const
 {
 	JPH_ASSERT(inIslandIndex < mNumIslands);
 	if (mNumContacts == 0)
@@ -422,13 +422,13 @@ bool IslandBuilder::GetContactsInIsland(uint32 inIslandIndex, uint32 *&outContac
 	else
 	{
 		uint32 sorted_index = mIslandsSorted[inIslandIndex];
-		outContactsBegin = sorted_index > 0? mContactIslands + mContactIslandEnds[sorted_index - 1] : mContactIslands;
+		outContactsBegin = sorted_index > 0 ? mContactIslands + mContactIslandEnds[sorted_index - 1] : mContactIslands;
 		outContactsEnd = mContactIslands + mContactIslandEnds[sorted_index];
 		return outContactsBegin != outContactsEnd;
 	}
 }
 
-void IslandBuilder::ResetIslands(TempAllocator *inTempAllocator)
+void IslandBuilder::ResetIslands(TempAllocator* inTempAllocator)
 {
 	JPH_PROFILE_FUNCTION();
 

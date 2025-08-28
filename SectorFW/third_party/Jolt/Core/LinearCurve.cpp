@@ -14,7 +14,7 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(LinearCurve::Point)
 {
 	JPH_ADD_ATTRIBUTE(Point, mX)
-	JPH_ADD_ATTRIBUTE(Point, mY)
+		JPH_ADD_ATTRIBUTE(Point, mY)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(LinearCurve)
@@ -27,7 +27,7 @@ float LinearCurve::GetValue(float inX) const
 	if (mPoints.empty())
 		return 0.0f;
 
-	Points::const_iterator i2 = std::lower_bound(mPoints.begin(), mPoints.end(), inX, [](const Point &inPoint, float inValue) { return inPoint.mX < inValue; });
+	Points::const_iterator i2 = std::lower_bound(mPoints.begin(), mPoints.end(), inX, [](const Point& inPoint, float inValue) { return inPoint.mX < inValue; });
 
 	if (i2 == mPoints.begin())
 		return mPoints.front().mY;
@@ -38,12 +38,12 @@ float LinearCurve::GetValue(float inX) const
 	return i1->mY + (inX - i1->mX) * (i2->mY - i1->mY) / (i2->mX - i1->mX);
 }
 
-void LinearCurve::SaveBinaryState(StreamOut &inStream) const
+void LinearCurve::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mPoints);
 }
 
-void LinearCurve::RestoreBinaryState(StreamIn &inStream)
+void LinearCurve::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mPoints);
 }

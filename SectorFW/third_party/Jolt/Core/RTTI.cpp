@@ -13,7 +13,7 @@ JPH_NAMESPACE_BEGIN
 // RTTI
 //////////////////////////////////////////////////////////////////////////////////////////
 
-RTTI::RTTI(const char *inName, int inSize, pCreateObjectFunction inCreateObject, pDestructObjectFunction inDestructObject) :
+RTTI::RTTI(const char* inName, int inSize, pCreateObjectFunction inCreateObject, pDestructObjectFunction inDestructObject) :
 	mName(inName),
 	mSize(inSize),
 	mCreate(inCreateObject),
@@ -22,7 +22,7 @@ RTTI::RTTI(const char *inName, int inSize, pCreateObjectFunction inCreateObject,
 	JPH_ASSERT(inDestructObject != nullptr, "Object cannot be destructed");
 }
 
-RTTI::RTTI(const char *inName, int inSize, pCreateObjectFunction inCreateObject, pDestructObjectFunction inDestructObject, pCreateRTTIFunction inCreateRTTI) :
+RTTI::RTTI(const char* inName, int inSize, pCreateObjectFunction inCreateObject, pDestructObjectFunction inDestructObject, pCreateRTTIFunction inCreateRTTI) :
 	mName(inName),
 	mSize(inSize),
 	mCreate(inCreateObject),
@@ -38,7 +38,7 @@ int RTTI::GetBaseClassCount() const
 	return (int)mBaseClasses.size();
 }
 
-const RTTI *RTTI::GetBaseClass(int inIdx) const
+const RTTI* RTTI::GetBaseClass(int inIdx) const
 {
 	return mBaseClasses[inIdx].mRTTI;
 }
@@ -50,17 +50,17 @@ uint32 RTTI::GetHash() const
 	return (uint32)(hash ^ (hash >> 32));
 }
 
-void *RTTI::CreateObject() const
+void* RTTI::CreateObject() const
 {
-	return IsAbstract()? nullptr : mCreate();
+	return IsAbstract() ? nullptr : mCreate();
 }
 
-void RTTI::DestructObject(void *inObject) const
+void RTTI::DestructObject(void* inObject) const
 {
 	mDestruct(inObject);
 }
 
-void RTTI::AddBaseClass(const RTTI *inRTTI, int inOffset)
+void RTTI::AddBaseClass(const RTTI* inRTTI, int inOffset)
 {
 	JPH_ASSERT(inOffset >= 0 && inOffset < mSize, "Base class not contained in derived class");
 
@@ -72,12 +72,12 @@ void RTTI::AddBaseClass(const RTTI *inRTTI, int inOffset)
 
 #ifdef JPH_OBJECT_STREAM
 	// Add attributes of base class
-	for (const SerializableAttribute &a : inRTTI->mAttributes)
+	for (const SerializableAttribute& a : inRTTI->mAttributes)
 		mAttributes.push_back(SerializableAttribute(a, inOffset));
 #endif // JPH_OBJECT_STREAM
 }
 
-bool RTTI::operator == (const RTTI &inRHS) const
+bool RTTI::operator == (const RTTI& inRHS) const
 {
 	// Compare addresses
 	if (this == &inRHS)
@@ -89,21 +89,21 @@ bool RTTI::operator == (const RTTI &inRHS) const
 	return false;
 }
 
-bool RTTI::IsKindOf(const RTTI *inRTTI) const
+bool RTTI::IsKindOf(const RTTI* inRTTI) const
 {
 	// Check if this is the same type
 	if (this == inRTTI)
 		return true;
 
 	// Check all base classes
-	for (const BaseClass &b : mBaseClasses)
+	for (const BaseClass& b : mBaseClasses)
 		if (b.mRTTI->IsKindOf(inRTTI))
 			return true;
 
 	return false;
 }
 
-const void *RTTI::CastTo(const void *inObject, const RTTI *inRTTI) const
+const void* RTTI::CastTo(const void* inObject, const RTTI* inRTTI) const
 {
 	JPH_ASSERT(inObject != nullptr);
 
@@ -112,13 +112,13 @@ const void *RTTI::CastTo(const void *inObject, const RTTI *inRTTI) const
 		return inObject;
 
 	// Check all base classes
-	for (const BaseClass &b : mBaseClasses)
+	for (const BaseClass& b : mBaseClasses)
 	{
 		// Cast the pointer to the base class
-		const void *casted = (const void *)(((const uint8 *)inObject) + b.mOffset);
+		const void* casted = (const void*)(((const uint8*)inObject) + b.mOffset);
 
 		// Test base class
-		const void *rv = b.mRTTI->CastTo(casted, inRTTI);
+		const void* rv = b.mRTTI->CastTo(casted, inRTTI);
 		if (rv != nullptr)
 			return rv;
 	}
@@ -129,7 +129,7 @@ const void *RTTI::CastTo(const void *inObject, const RTTI *inRTTI) const
 
 #ifdef JPH_OBJECT_STREAM
 
-void RTTI::AddAttribute(const SerializableAttribute &inAttribute)
+void RTTI::AddAttribute(const SerializableAttribute& inAttribute)
 {
 	mAttributes.push_back(inAttribute);
 }
@@ -139,7 +139,7 @@ int RTTI::GetAttributeCount() const
 	return (int)mAttributes.size();
 }
 
-const SerializableAttribute &RTTI::GetAttribute(int inIdx) const
+const SerializableAttribute& RTTI::GetAttribute(int inIdx) const
 {
 	return mAttributes[inIdx];
 }

@@ -87,269 +87,281 @@
     <ClInclude Include="src\Utility\pch.h">
       <Filter>Src\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\FrameTimer.h">
-      <Filter>Inc\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Util\NonCopyable.h">
-      <Filter>Inc\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\GameEngine.h">
-      <Filter>Inc\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\IGraphicsDevice.hpp">
-      <Filter>Inc\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\sector11fw.h">
-      <Filter>Inc\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\DX11Graphics.h">
-      <Filter>Inc\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\WindowHandler.h">
-      <Filter>Inc\Header</Filter>
-    </ClInclude>
     <ClInclude Include="src\Utility\message.h">
       <Filter>Src\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\alignment.h">
-      <Filter>Inc\Util</Filter>
+    <ClInclude Include="inc\SectorFW\Physics\gltf_to_shape.h">
+      <Filter>Inc\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\AccessWrapper.hpp">
-      <Filter>Inc\Util</Filter>
+    <ClInclude Include="inc\SectorFW\Physics\IShapeResolver.h">
+      <Filter>Inc\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\DX12Graphics.h">
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsComponent.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsContactListener.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsDevice.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsDevice_Util.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsLayers.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsService.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsShapeManager.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsSnapshot.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsTypes.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\AABB.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\convert.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\Matrix.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\Quaternion.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\Transform.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\Vector.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Input\InputDevice.hpp">
+      <Filter>Inc\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Input\WinInput.h">
+      <Filter>Inc\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Input\WinMouseInput.h">
+      <Filter>Inc\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\DX11Graphics.h">
       <Filter>Inc\Header</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Math\Vector.hpp">
-      <Filter>Inc\Math</Filter>
+    <ClInclude Include="inc\SectorFW\DX12Graphics.h">
+      <Filter>Inc\Header</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Math\AABB.hpp">
-      <Filter>Inc\Math</Filter>
+    <ClInclude Include="inc\SectorFW\sector11fw.h">
+      <Filter>Inc\Header</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Level.hpp">
-      <Filter>Inc\Core</Filter>
+    <ClInclude Include="inc\SectorFW\WindowHandler.h">
+      <Filter>Inc\Header</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\World.hpp">
-      <Filter>Inc\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\AccessInfo.h">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\Accessor.hpp">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\Archetype.h">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ArchetypeChunk.h">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ArchetypeManager.h">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\component.hpp">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ComponentTypeRegistry.h">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\entity.h">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\EntityManager.h">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ISystem.hpp">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\Query.h">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ServiceContext.hpp">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\SparseComponentStore.hpp">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\SystemScheduler.hpp">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ITypeSystem.hpp">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Util\TypeChecker.hpp">
-      <Filter>Inc\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Util\Grid.hpp">
-      <Filter>Inc\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\EntityIDAllocator.h">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Math\Quaternion.hpp">
-      <Filter>Inc\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\partition.hpp">
-      <Filter>Inc\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\SpatialChunk.h">
-      <Filter>Inc\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Grid2DPartition.h">
-      <Filter>Inc\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Util\logger.h">
-      <Filter>Inc\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Util\extract_type.hpp">
-      <Filter>Inc\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Math\Matrix.hpp">
-      <Filter>Inc\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Math\Transform.hpp">
-      <Filter>Inc\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Math\convert.hpp">
-      <Filter>Inc\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\convert_directX.hpp">
+    <ClInclude Include="inc\SectorFW\Graphics\convert_directX.hpp">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\Flatten.hpp">
-      <Filter>Inc\Util</Filter>
+    <ClInclude Include="inc\SectorFW\Graphics\I3DCameraService.h">
+      <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ComponentLayoutRegistry.h">
-      <Filter>Inc\Core\ECS</Filter>
+    <ClInclude Include="inc\SectorFW\Graphics\IGraphicsDevice.hpp">
+      <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\OneOrMore.hpp">
-      <Filter>Inc\Util</Filter>
+    <ClInclude Include="inc\SectorFW\Graphics\RenderBackend.hpp">
+      <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\for_each_macro.hpp">
-      <Filter>Inc\Util</Filter>
+    <ClInclude Include="inc\SectorFW\Graphics\RenderGraph.hpp">
+      <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\unique_variant.hpp">
-      <Filter>Inc\Util</Filter>
+    <ClInclude Include="inc\SectorFW\Graphics\RenderQueue.hpp">
+      <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\UndeletablePtr.hpp">
-      <Filter>Inc\Util</Filter>
+    <ClInclude Include="inc\SectorFW\Graphics\RenderService.h">
+      <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\_dx11inc.h">
+    <ClInclude Include="inc\SectorFW\Graphics\RenderTypes.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\_dx11inc.h">
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\RenderTypes.h">
-      <Filter>Inc\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX11MeshManager.h">
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11BufferManager.h">
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX11MaterialManager.h">
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11MaterialManager.h">
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\RenderQueue.hpp">
-      <Filter>Inc\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\RenderGraph.hpp">
-      <Filter>Inc\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\RenderBackend.hpp">
-      <Filter>Inc\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX11RenderBackend.h">
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11MeshManager.h">
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\DX12\DX12RenderBackend.h">
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ModelAssetManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11PSOManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11RenderBackend.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11SamplerManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShaderManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11TextureManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX113DCameraService.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX12\dx12inc.h">
       <Filter>Inc\Graphics\DX12</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\DX12\dx12inc.h">
+    <ClInclude Include="inc\SectorFW\Graphics\DX12\DX12RenderBackend.h">
       <Filter>Inc\Graphics\DX12</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX11ShaderManager.h">
-      <Filter>Inc\Graphics\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX11PSOManager.h">
-      <Filter>Inc\Graphics\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\RenderService.h">
-      <Filter>Inc\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ECS\ServiceLocator.h">
+    <ClInclude Include="inc\SectorFW\Core\ECS\AccessInfo.h">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Util\TextureLoader.h">
+    <ClInclude Include="inc\SectorFW\Core\ECS\Accessor.hpp">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\Archetype.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\ArchetypeChunk.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\ArchetypeManager.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\component.hpp">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\ComponentLayoutRegistry.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\ComponentTypeRegistry.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\entity.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\EntityIDAllocator.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\EntityManager.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\ISystem.hpp">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\ITypeSystem.hpp">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\Query.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\ServiceContext.hpp">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\ServiceLocator.h">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\SparseComponentStore.hpp">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ECS\SystemScheduler.hpp">
+      <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\GameEngine.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\Grid2DPartition.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\Level.hpp">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\partition.hpp">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\SpatialChunk.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\World.hpp">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\AccessWrapper.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX11TextureManager.h">
-      <Filter>Inc\Graphics\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Util\CopyableAtomic.hpp">
+    <ClInclude Include="inc\SectorFW\Util\alignment.h">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX11ModelAssetManager.h">
-      <Filter>Inc\Graphics\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX11BufferManager.h">
-      <Filter>Inc\Graphics\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX11SamplerManager.h">
-      <Filter>Inc\Graphics\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Util\PathView.hpp">
+    <ClInclude Include="inc\SectorFW\Util\CopyableAtomic.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Input\InputDevice.hpp">
-      <Filter>Inc\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Input\WinInput.h">
-      <Filter>Inc\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\I3DCameraService.h">
-      <Filter>Inc\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\DX11\DX113DCameraService.h">
-      <Filter>Inc\Graphics\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Input\WinMouseInput.h">
-      <Filter>Inc\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Physics\PhysicsTypes.h">
-      <Filter>Inc\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Util\SpscRing.hpp">
+    <ClInclude Include="inc\SectorFW\Util\extract_type.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Physics\PhysicsSnapshot.h">
-      <Filter>Inc\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Physics\PhysicsDevice.h">
-      <Filter>Inc\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Physics\PhysicsService.h">
-      <Filter>Inc\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Physics\PhysicsDevice_Util.h">
-      <Filter>Inc\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Physics\PhysicsLayers.h">
-      <Filter>Inc\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Physics\PhysicsContactListener.h">
-      <Filter>Inc\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Util\ResouceManagerBase.hpp">
+    <ClInclude Include="inc\SectorFW\Util\Flatten.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Physics\PhysicsShapeManager.h">
-      <Filter>Inc\Physics</Filter>
+    <ClInclude Include="inc\SectorFW\Util\for_each_macro.hpp">
+      <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Physics\gltf_to_shape.h">
-      <Filter>Inc\Physics</Filter>
+    <ClInclude Include="inc\SectorFW\Util\FrameTimer.h">
+      <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Physics\IShapeResolver.h">
-      <Filter>Inc\Physics</Filter>
+    <ClInclude Include="inc\SectorFW\Util\Grid.hpp">
+      <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Physics\PhysicsComponent.h">
-      <Filter>Inc\Physics</Filter>
+    <ClInclude Include="inc\SectorFW\Util\logger.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\NonCopyable.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\OneOrMore.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\PathView.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\ResouceManagerBase.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\SpscRing.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\TextureLoader.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\TypeChecker.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\UndeletablePtr.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\unique_variant.hpp">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\sx_math.h">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\EntityManagerRegistryService.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\RegistryTypes.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\Morton2D.h">
+      <Filter>Inc\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

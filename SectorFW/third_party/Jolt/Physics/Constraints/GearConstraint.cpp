@@ -11,7 +11,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -20,13 +20,13 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(GearConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(GearConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(GearConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(GearConstraintSettings, mHingeAxis1)
-	JPH_ADD_ATTRIBUTE(GearConstraintSettings, mHingeAxis2)
-	JPH_ADD_ATTRIBUTE(GearConstraintSettings, mRatio)
+		JPH_ADD_ENUM_ATTRIBUTE(GearConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(GearConstraintSettings, mHingeAxis1)
+		JPH_ADD_ATTRIBUTE(GearConstraintSettings, mHingeAxis2)
+		JPH_ADD_ATTRIBUTE(GearConstraintSettings, mRatio)
 }
 
-void GearConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void GearConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -36,7 +36,7 @@ void GearConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mRatio);
 }
 
-void GearConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void GearConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -46,12 +46,12 @@ void GearConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mRatio);
 }
 
-TwoBodyConstraint *GearConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* GearConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new GearConstraint(inBody1, inBody2, *this);
 }
 
-GearConstraint::GearConstraint(Body &inBody1, Body &inBody2, const GearConstraintSettings &inSettings) :
+GearConstraint::GearConstraint(Body& inBody1, Body& inBody2, const GearConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings),
 	mLocalSpaceHingeAxis1(inSettings.mHingeAxis1),
 	mLocalSpaceHingeAxis2(inSettings.mHingeAxis2),
@@ -136,7 +136,7 @@ bool GearConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumgart
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void GearConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void GearConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	RMat44 transform1 = mBody1->GetCenterOfMassTransform();
 	RMat44 transform2 = mBody2->GetCenterOfMassTransform();
@@ -148,14 +148,14 @@ void GearConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 
 #endif // JPH_DEBUG_RENDERER
 
-void GearConstraint::SaveState(StateRecorder &inStream) const
+void GearConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
 	mGearConstraintPart.SaveState(inStream);
 }
 
-void GearConstraint::RestoreState(StateRecorder &inStream)
+void GearConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
@@ -164,7 +164,7 @@ void GearConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> GearConstraint::GetConstraintSettings() const
 {
-	GearConstraintSettings *settings = new GearConstraintSettings;
+	GearConstraintSettings* settings = new GearConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mHingeAxis1 = mLocalSpaceHingeAxis1;

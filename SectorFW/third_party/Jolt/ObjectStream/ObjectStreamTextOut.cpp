@@ -11,7 +11,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-ObjectStreamTextOut::ObjectStreamTextOut(ostream &inStream) :
+ObjectStreamTextOut::ObjectStreamTextOut(ostream& inStream) :
 	ObjectStreamOut(inStream)
 {
 	WriteWord(StringFormat("TOS%2d.%02d", ObjectStream::sVersion, ObjectStream::sRevision));
@@ -48,7 +48,7 @@ void ObjectStreamTextOut::WriteDataType(EOSDataType inType)
 	}
 }
 
-void ObjectStreamTextOut::WriteName(const char *inName)
+void ObjectStreamTextOut::WriteName(const char* inName)
 {
 	WriteWord(String(inName) + " ");
 }
@@ -63,32 +63,32 @@ void ObjectStreamTextOut::WriteCount(uint32 inCount)
 	WriteWord(std::to_string(inCount));
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const uint8 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const uint8& inPrimitive)
 {
 	WriteWord(std::to_string(inPrimitive));
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const uint16 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const uint16& inPrimitive)
 {
 	WriteWord(std::to_string(inPrimitive));
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const int &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const int& inPrimitive)
 {
 	WriteWord(std::to_string(inPrimitive));
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const uint32 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const uint32& inPrimitive)
 {
 	WriteWord(std::to_string(inPrimitive));
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const uint64 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const uint64& inPrimitive)
 {
 	WriteWord(std::to_string(inPrimitive));
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const float &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const float& inPrimitive)
 {
 	std::ostringstream stream;
 	stream.precision(9);
@@ -96,7 +96,7 @@ void ObjectStreamTextOut::WritePrimitiveData(const float &inPrimitive)
 	WriteWord(stream.str());
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const double &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const double& inPrimitive)
 {
 	std::ostringstream stream;
 	stream.precision(17);
@@ -104,21 +104,12 @@ void ObjectStreamTextOut::WritePrimitiveData(const double &inPrimitive)
 	WriteWord(stream.str());
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const bool &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const bool& inPrimitive)
 {
-	WriteWord(inPrimitive? "true" : "false");
+	WriteWord(inPrimitive ? "true" : "false");
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const Float3 &inPrimitive)
-{
-	WritePrimitiveData(inPrimitive.x);
-	WriteChar(' ');
-	WritePrimitiveData(inPrimitive.y);
-	WriteChar(' ');
-	WritePrimitiveData(inPrimitive.z);
-}
-
-void ObjectStreamTextOut::WritePrimitiveData(const Double3 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const Float3& inPrimitive)
 {
 	WritePrimitiveData(inPrimitive.x);
 	WriteChar(' ');
@@ -127,7 +118,16 @@ void ObjectStreamTextOut::WritePrimitiveData(const Double3 &inPrimitive)
 	WritePrimitiveData(inPrimitive.z);
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const Vec3 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const Double3& inPrimitive)
+{
+	WritePrimitiveData(inPrimitive.x);
+	WriteChar(' ');
+	WritePrimitiveData(inPrimitive.y);
+	WriteChar(' ');
+	WritePrimitiveData(inPrimitive.z);
+}
+
+void ObjectStreamTextOut::WritePrimitiveData(const Vec3& inPrimitive)
 {
 	WritePrimitiveData(inPrimitive.GetX());
 	WriteChar(' ');
@@ -136,7 +136,7 @@ void ObjectStreamTextOut::WritePrimitiveData(const Vec3 &inPrimitive)
 	WritePrimitiveData(inPrimitive.GetZ());
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const DVec3 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const DVec3& inPrimitive)
 {
 	WritePrimitiveData(inPrimitive.GetX());
 	WriteChar(' ');
@@ -145,7 +145,7 @@ void ObjectStreamTextOut::WritePrimitiveData(const DVec3 &inPrimitive)
 	WritePrimitiveData(inPrimitive.GetZ());
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const Vec4 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const Vec4& inPrimitive)
 {
 	WritePrimitiveData(inPrimitive.GetX());
 	WriteChar(' ');
@@ -156,7 +156,7 @@ void ObjectStreamTextOut::WritePrimitiveData(const Vec4 &inPrimitive)
 	WritePrimitiveData(inPrimitive.GetW());
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const Quat &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const Quat& inPrimitive)
 {
 	WritePrimitiveData(inPrimitive.GetX());
 	WriteChar(' ');
@@ -167,7 +167,7 @@ void ObjectStreamTextOut::WritePrimitiveData(const Quat &inPrimitive)
 	WritePrimitiveData(inPrimitive.GetW());
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const Mat44 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const Mat44& inPrimitive)
 {
 	WritePrimitiveData(inPrimitive.GetColumn4(0));
 	WriteChar(' ');
@@ -178,7 +178,7 @@ void ObjectStreamTextOut::WritePrimitiveData(const Mat44 &inPrimitive)
 	WritePrimitiveData(inPrimitive.GetColumn4(3));
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const DMat44 &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const DMat44& inPrimitive)
 {
 	WritePrimitiveData(inPrimitive.GetColumn4(0));
 	WriteChar(' ');
@@ -189,7 +189,7 @@ void ObjectStreamTextOut::WritePrimitiveData(const DMat44 &inPrimitive)
 	WritePrimitiveData(inPrimitive.GetTranslation());
 }
 
-void ObjectStreamTextOut::WritePrimitiveData(const String &inPrimitive)
+void ObjectStreamTextOut::WritePrimitiveData(const String& inPrimitive)
 {
 	String temporary(inPrimitive);
 	StringReplace(temporary, "\\", "\\\\");
@@ -221,7 +221,7 @@ void ObjectStreamTextOut::WriteChar(char inChar)
 	mStream.put(inChar);
 }
 
-void ObjectStreamTextOut::WriteWord(const string_view &inWord)
+void ObjectStreamTextOut::WriteWord(const string_view& inWord)
 {
 	mStream << inWord;
 }

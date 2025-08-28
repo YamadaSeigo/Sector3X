@@ -9,21 +9,21 @@
 #include <Jolt/Core/FPException.h>
 
 #ifdef JPH_PLATFORM_WINDOWS
-	JPH_SUPPRESS_WARNING_PUSH
-	JPH_MSVC_SUPPRESS_WARNING(5039) // winbase.h(13179): warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc. Undefined behavior may occur if this function throws an exception.
-	#ifndef WIN32_LEAN_AND_MEAN
-		#define WIN32_LEAN_AND_MEAN
-	#endif
+JPH_SUPPRESS_WARNING_PUSH
+JPH_MSVC_SUPPRESS_WARNING(5039) // winbase.h(13179): warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc. Undefined behavior may occur if this function throws an exception.
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #ifndef JPH_COMPILER_MINGW
-	#include <Windows.h>
+#include <Windows.h>
 #else
-	#include <windows.h>
+#include <windows.h>
 #endif
 
-	JPH_SUPPRESS_WARNING_POP
+JPH_SUPPRESS_WARNING_POP
 #endif
 #ifdef JPH_PLATFORM_LINUX
-	#include <sys/prctl.h>
+#include <sys/prctl.h>
 #endif
 
 JPH_NAMESPACE_BEGIN
@@ -36,7 +36,7 @@ void JobSystemThreadPool::Init(uint inMaxJobs, uint inMaxBarriers, int inNumThre
 	mJobs.Init(inMaxJobs, inMaxJobs);
 
 	// Init queue
-	for (atomic<Job *> &j : mQueue)
+	for (atomic<Job*>& j : mQueue)
 		j = nullptr;
 
 	// Start the worker threads
@@ -91,7 +91,7 @@ void JobSystemThreadPool::StopThreads()
 	mSemaphore.Release((uint)mThreads.size());
 
 	// Wait for all threads to finish
-	for (thread &t : mThreads)
+	for (thread& t : mThreads)
 		if (t.joinable())
 			t.join();
 
@@ -102,7 +102,7 @@ void JobSystemThreadPool::StopThreads()
 	for (uint head = 0; head != mTail; ++head)
 	{
 		// Fetch job
-		Job *job_ptr = mQueue[head & (cQueueLength - 1)].exchange(nullptr);
+		Job* job_ptr = mQueue[head & (cQueueLength - 1)].exchange(nullptr);
 		if (job_ptr != nullptr)
 		{
 			// And execute it
@@ -117,7 +117,7 @@ void JobSystemThreadPool::StopThreads()
 	mTail = 0;
 }
 
-JobHandle JobSystemThreadPool::CreateJob(const char *inJobName, ColorArg inColor, const JobFunction &inJobFunction, uint32 inNumDependencies)
+JobHandle JobSystemThreadPool::CreateJob(const char* inJobName, ColorArg inColor, const JobFunction& inJobFunction, uint32 inNumDependencies)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -131,7 +131,7 @@ JobHandle JobSystemThreadPool::CreateJob(const char *inJobName, ColorArg inColor
 		JPH_ASSERT(false, "No jobs available!");
 		std::this_thread::sleep_for(std::chrono::microseconds(100));
 	}
-	Job *job = &mJobs.Get(index);
+	Job* job = &mJobs.Get(index);
 
 	// Construct handle to keep a reference, the job is queued below and may immediately complete
 	JobHandle handle(job);
@@ -144,7 +144,7 @@ JobHandle JobSystemThreadPool::CreateJob(const char *inJobName, ColorArg inColor
 	return handle;
 }
 
-void JobSystemThreadPool::FreeJob(Job *inJob)
+void JobSystemThreadPool::FreeJob(Job* inJob)
 {
 	mJobs.DestructObject(inJob);
 }
@@ -158,7 +158,7 @@ uint JobSystemThreadPool::GetHead() const
 	return head;
 }
 
-void JobSystemThreadPool::QueueJobInternal(Job *inJob)
+void JobSystemThreadPool::QueueJobInternal(Job* inJob)
 {
 	// Add reference to job because we're adding the job to the queue
 	inJob->AddRef();
@@ -191,7 +191,7 @@ void JobSystemThreadPool::QueueJobInternal(Job *inJob)
 		}
 
 		// Write the job pointer if the slot is empty
-		Job *expected_job = nullptr;
+		Job* expected_job = nullptr;
 		bool success = mQueue[old_value & (cQueueLength - 1)].compare_exchange_strong(expected_job, inJob);
 
 		// Regardless of who wrote the slot, we will update the tail (if the successful thread got scheduled out
@@ -204,7 +204,7 @@ void JobSystemThreadPool::QueueJobInternal(Job *inJob)
 	}
 }
 
-void JobSystemThreadPool::QueueJob(Job *inJob)
+void JobSystemThreadPool::QueueJob(Job* inJob)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -219,7 +219,7 @@ void JobSystemThreadPool::QueueJob(Job *inJob)
 	mSemaphore.Release();
 }
 
-void JobSystemThreadPool::QueueJobs(Job **inJobs, uint inNumJobs)
+void JobSystemThreadPool::QueueJobs(Job** inJobs, uint inNumJobs)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -230,7 +230,7 @@ void JobSystemThreadPool::QueueJobs(Job **inJobs, uint inNumJobs)
 		return;
 
 	// Queue all jobs
-	for (Job **job = inJobs, **job_end = inJobs + inNumJobs; job < job_end; ++job)
+	for (Job** job = inJobs, **job_end = inJobs + inNumJobs; job < job_end; ++job)
 		QueueJobInternal(*job);
 
 	// Wake up threads
@@ -240,40 +240,40 @@ void JobSystemThreadPool::QueueJobs(Job **inJobs, uint inNumJobs)
 #if defined(JPH_PLATFORM_WINDOWS)
 
 #if !defined(JPH_COMPILER_MINGW) // MinGW doesn't support __try/__except)
-	// Sets the current thread name in MSVC debugger
-	static void RaiseThreadNameException(const char *inName)
+// Sets the current thread name in MSVC debugger
+static void RaiseThreadNameException(const char* inName)
+{
+#pragma pack(push, 8)
+
+	struct THREADNAME_INFO
 	{
-		#pragma pack(push, 8)
+		DWORD	dwType;			// Must be 0x1000.
+		LPCSTR	szName;			// Pointer to name (in user addr space).
+		DWORD	dwThreadID;		// Thread ID (-1=caller thread).
+		DWORD	dwFlags;		// Reserved for future use, must be zero.
+	};
 
-		struct THREADNAME_INFO
-		{
-			DWORD	dwType;			// Must be 0x1000.
-			LPCSTR	szName;			// Pointer to name (in user addr space).
-			DWORD	dwThreadID;		// Thread ID (-1=caller thread).
-			DWORD	dwFlags;		// Reserved for future use, must be zero.
-		};
+#pragma pack(pop)
 
-		#pragma pack(pop)
+	THREADNAME_INFO info;
+	info.dwType = 0x1000;
+	info.szName = inName;
+	info.dwThreadID = (DWORD)-1;
+	info.dwFlags = 0;
 
-		THREADNAME_INFO info;
-		info.dwType = 0x1000;
-		info.szName = inName;
-		info.dwThreadID = (DWORD)-1;
-		info.dwFlags = 0;
-
-		__try
-		{
-			RaiseException(0x406D1388, 0, sizeof(info) / sizeof(ULONG_PTR), (ULONG_PTR *)&info);
-		}
-		__except(EXCEPTION_EXECUTE_HANDLER)
-		{
-		}
+	__try
+	{
+		RaiseException(0x406D1388, 0, sizeof(info) / sizeof(ULONG_PTR), (ULONG_PTR*)&info);
 	}
+	__except (EXCEPTION_EXECUTE_HANDLER)
+	{
+	}
+}
 #endif // !JPH_COMPILER_MINGW
 
-	static void SetThreadName(const char* inName)
-	{
-		JPH_SUPPRESS_WARNING_PUSH
+static void SetThreadName(const char* inName)
+{
+	JPH_SUPPRESS_WARNING_PUSH
 
 		// Suppress casting warning, it's fine here as GetProcAddress doesn't really return a FARPROC
 		JPH_CLANG_SUPPRESS_WARNING("-Wcast-function-type") // error : cast from 'FARPROC' (aka 'long long (*)()') to 'SetThreadDescriptionFunc' (aka 'long (*)(void *, const wchar_t *)') converts to incompatible function type
@@ -281,9 +281,9 @@ void JobSystemThreadPool::QueueJobs(Job **inJobs, uint inNumJobs)
 		JPH_MSVC_SUPPRESS_WARNING(4191) // reinterpret_cast' : unsafe conversion from 'FARPROC' to 'SetThreadDescriptionFunc'. Calling this function through the result pointer may cause your program to fail
 
 		using SetThreadDescriptionFunc = HRESULT(WINAPI*)(HANDLE hThread, PCWSTR lpThreadDescription);
-		static SetThreadDescriptionFunc SetThreadDescription = reinterpret_cast<SetThreadDescriptionFunc>(GetProcAddress(GetModuleHandleW(L"Kernel32.dll"), "SetThreadDescription"));
+	static SetThreadDescriptionFunc SetThreadDescription = reinterpret_cast<SetThreadDescriptionFunc>(GetProcAddress(GetModuleHandleW(L"Kernel32.dll"), "SetThreadDescription"));
 
-		JPH_SUPPRESS_WARNING_POP
+	JPH_SUPPRESS_WARNING_POP
 
 		if (SetThreadDescription)
 		{
@@ -297,13 +297,13 @@ void JobSystemThreadPool::QueueJobs(Job **inJobs, uint inNumJobs)
 		else if (IsDebuggerPresent())
 			RaiseThreadNameException(inName);
 #endif // !JPH_COMPILER_MINGW
-	}
+}
 #elif defined(JPH_PLATFORM_LINUX)
-	static void SetThreadName(const char *inName)
-	{
-		JPH_ASSERT(strlen(inName) < 16); // String will be truncated if it is longer
-		prctl(PR_SET_NAME, inName, 0, 0, 0);
-	}
+static void SetThreadName(const char* inName)
+{
+	JPH_ASSERT(strlen(inName) < 16); // String will be truncated if it is longer
+	prctl(PR_SET_NAME, inName, 0, 0, 0);
+}
 #endif // JPH_PLATFORM_LINUX
 
 void JobSystemThreadPool::ThreadMain(int inThreadIndex)
@@ -325,7 +325,7 @@ void JobSystemThreadPool::ThreadMain(int inThreadIndex)
 	// Call the thread init function
 	mThreadInitFunction(inThreadIndex);
 
-	atomic<uint> &head = mHeads[inThreadIndex];
+	atomic<uint>& head = mHeads[inThreadIndex];
 
 	while (!mQuit)
 	{
@@ -339,10 +339,10 @@ void JobSystemThreadPool::ThreadMain(int inThreadIndex)
 			while (head != mTail)
 			{
 				// Exchange any job pointer we find with a nullptr
-				atomic<Job *> &job = mQueue[head & (cQueueLength - 1)];
+				atomic<Job*>& job = mQueue[head & (cQueueLength - 1)];
 				if (job.load() != nullptr)
 				{
-					Job *job_ptr = job.exchange(nullptr);
+					Job* job_ptr = job.exchange(nullptr);
 					if (job_ptr != nullptr)
 					{
 						// And execute it

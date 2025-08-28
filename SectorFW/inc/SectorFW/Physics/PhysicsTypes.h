@@ -6,8 +6,9 @@
 #include <atomic>
 #include <optional>
 
-#include "Core/ECS/entity.h"
-#include "Math/Quaternion.hpp"
+#include "../Core/ECS/entity.h"
+#include "../Math/Quaternion.hpp"
+#include "../Core/RegistryTypes.h"
 
 namespace SectorFW
 {
@@ -27,13 +28,14 @@ namespace SectorFW
 
 		// 生成
 		struct CreateBodyCmd {
-			Entity	e;
+			Entity      e{};
+			EntityManagerKey  owner{};     // ★ ManagerKey に拡張
 			ShapeHandle shape;
 			Mat34f     worldTM;
-			bool       kinematic{ false };
 			float      density{ 1000.0f };
 			uint16_t   layer{ 0 };
-			uint16_t   broadphase{ 0 };
+			uint8_t    broadphase{ 0 };
+			bool       kinematic{ false };
 			float      friction{ 0.6f };
 			float      restitution{ 0.0f };
 		};
@@ -46,8 +48,8 @@ namespace SectorFW
 		// テレポート（強制ワープ）
 		struct TeleportCmd {
 			Entity e;
-			Mat34f worldTM;
 			bool   wake{ true };
+			Mat34f worldTM;
 		};
 
 		// 速度設定 / インパルス
@@ -115,6 +117,6 @@ namespace SectorFW
 			ShapeDesc   shape;
 			ShapeScale  scale;     // オプション
 			// 必要ならマテリアル等を追加
-		};	
+		};
 	}
 }

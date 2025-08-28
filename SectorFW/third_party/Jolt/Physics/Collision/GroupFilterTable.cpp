@@ -15,11 +15,11 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(GroupFilterTable)
 {
 	JPH_ADD_BASE_CLASS(GroupFilterTable, GroupFilter)
 
-	JPH_ADD_ATTRIBUTE(GroupFilterTable, mNumSubGroups)
-	JPH_ADD_ATTRIBUTE(GroupFilterTable, mTable)
+		JPH_ADD_ATTRIBUTE(GroupFilterTable, mNumSubGroups)
+		JPH_ADD_ATTRIBUTE(GroupFilterTable, mTable)
 }
 
-void GroupFilterTable::SaveBinaryState(StreamOut &inStream) const
+void GroupFilterTable::SaveBinaryState(StreamOut& inStream) const
 {
 	GroupFilter::SaveBinaryState(inStream);
 
@@ -27,7 +27,7 @@ void GroupFilterTable::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mTable);
 }
 
-void GroupFilterTable::RestoreBinaryState(StreamIn &inStream)
+void GroupFilterTable::RestoreBinaryState(StreamIn& inStream)
 {
 	GroupFilter::RestoreBinaryState(inStream);
 

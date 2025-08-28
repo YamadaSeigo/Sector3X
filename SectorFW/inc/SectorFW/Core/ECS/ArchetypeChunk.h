@@ -95,6 +95,11 @@ namespace SectorFW
 			 * @return ComponentMask コンポーネントマスク
 			 */
 			ComponentMask GetComponentMask() const noexcept { return componentMask; }
+			/**
+			 * @brief エンティティIDの配列を取得する関数
+			 * @return const std::vector<EntityID>& エンティティIDの配列への参照
+			 */
+			const std::vector<EntityID>& GetEntities() const noexcept { return entities; }
 		private:
 			/**
 			 * @brief アーキタイプチャンクのバッファ

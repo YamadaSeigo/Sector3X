@@ -9,8 +9,15 @@
 
 #include "Graphics/IGraphicsDevice.hpp"
 #include "Graphics/RenderGraph.hpp"
+#include "Graphics/RenderTypes.h"
 #include "Graphics/DX11/DX11RenderBackend.h"
 #include "Graphics/DX11/DX113DCameraService.h"
+
+#include <thread>
+#include <atomic>
+#include <mutex>
+#include <condition_variable>
+#include <queue>
 
 namespace SectorFW
 {
@@ -32,7 +39,12 @@ namespace SectorFW
 			/**
 			 * @brief デストラクタ
 			 */
-			~DX11GraphicsDevice() = default;
+			~DX11GraphicsDevice();
+
+			DX11GraphicsDevice(DX11GraphicsDevice&& rhs) noexcept;
+			DX11GraphicsDevice& operator=(DX11GraphicsDevice&& rhs) noexcept;
+			DX11GraphicsDevice(const DX11GraphicsDevice&) = delete;
+			DX11GraphicsDevice& operator=(const DX11GraphicsDevice&) = delete;
 			/**
 			 * @brief 初期化関数
 			 * @param nativeWindowHandle ウィンドウハンドル
@@ -58,6 +70,12 @@ namespace SectorFW
 			 */
 			void PresentImpl();
 
+			void StartRenderThread();
+			void StopRenderThread();
+			void SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx);
+			void WaitSubmittedFramesImpl(uint64_t uptoFrame);
+
+
 			RenderService* GetRenderService() noexcept {
 				return GetRenderGraph().GetRenderService();
 			}
@@ -70,6 +88,36 @@ namespace SectorFW
 			 * @return DX11RenderGraph& RenderGraphの参照
 			 */
 			inline DX11RenderGraph& GetRenderGraph();
+
+			// ===== レンダースレッド実装 =====
+			struct RenderSubmit {
+				FLOAT clearColor[4]{ 0,0,0,1 };
+				uint64_t frameIdx{};
+				bool doClear{ true };
+			};
+
+			struct RTState {
+				std::mutex qMtx;
+				std::condition_variable qCv;
+				std::deque<RenderSubmit> queue;
+
+				std::mutex doneMtx;
+				std::condition_variable doneCv;
+
+				std::atomic<bool> running{ false };
+				std::thread thread;
+
+				std::atomic<DX11GraphicsDevice*> owner{ nullptr };
+
+				// フレーム進捗
+				std::atomic<uint64_t> lastSubmitted{ 0 };
+				std::atomic<uint64_t> lastCompleted{ 0 };
+
+				// 上限（= バッファ数）
+				static constexpr uint32_t MaxInFlight = RENDER_QUEUE_BUFFER_COUNT;
+			};
+
+			void RenderThreadMain(std::shared_ptr<RTState> st);
 		private:
 			// デバイス
 			ComPtr<ID3D11Device> m_device;
@@ -83,6 +131,8 @@ namespace SectorFW
 			ComPtr<ID3D11Texture2D> m_depthStencilBuffer;
 			// デフォルトの深度ステンシルビュー
 			ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+
+			std::shared_ptr<RTState> m_rt;
 		};
 	}
 }

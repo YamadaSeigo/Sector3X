@@ -11,11 +11,11 @@
 #include <bitset>
 #include <type_traits>
 
-#include "Util/Flatten.hpp"
+#include "../../Util/Flatten.hpp"
 
-#include "Util/for_each_macro.hpp"
-#include "Util/unique_variant.hpp"
-#include "Util/TypeChecker.hpp"
+#include "../../Util/for_each_macro.hpp"
+#include "../../Util/unique_variant.hpp"
+#include "../../Util/TypeChecker.hpp"
 
 namespace SectorFW
 {
@@ -128,7 +128,7 @@ namespace SectorFW
 		//引数をSoAPtrでラップしてポインタ型を取得するマクロ
 #define WRAP_DECLTYPE_PTR(x) SectorFW::ECS::SoAPtr<decltype(x)>::type p_##x
 		//コンポーネントのメンバーを取得するため関数定義マクロ
-#define DEFINE_GET_FUNCTION(x) decltype(p_##x) x##() noexcept {return p_##x;} SectorFW::ECS::ConstReturnType<decltype(p_##x)> x##() const noexcept {return p_##x;}
+#define DEFINE_GET_FUNCTION(x) inline decltype(p_##x) x##() noexcept {return p_##x;} inline SectorFW::ECS::ConstReturnType<decltype(p_##x)> x##() const noexcept {return p_##x;}
 		//SoAコンポーネントの定義マクロ
 #define DEFINE_SOA(className, ...)\
 		using tuple_type = std::tuple<FOR_EACH(WRAP_DECLTYPE,COMMA,__VA_ARGS__)>;\

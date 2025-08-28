@@ -15,7 +15,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-CollideConvexVsTriangles::CollideConvexVsTriangles(const ConvexShape *inShape1, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeID &inSubShapeID1, const CollideShapeSettings &inCollideShapeSettings, CollideShapeCollector &ioCollector) :
+CollideConvexVsTriangles::CollideConvexVsTriangles(const ConvexShape* inShape1, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeID& inSubShapeID1, const CollideShapeSettings& inCollideShapeSettings, CollideShapeCollector& ioCollector) :
 	mCollideShapeSettings(inCollideShapeSettings),
 	mCollector(ioCollector),
 	mShape1(inShape1),
@@ -35,10 +35,10 @@ CollideConvexVsTriangles::CollideConvexVsTriangles(const ConvexShape *inShape1, 
 	mBoundsOf1InSpaceOf2 = mBoundsOf1.Transformed(transform1_to_2);	// Convert bounding box of 1 into space of 2
 
 	// Determine if shape 2 is inside out or not
-	mScaleSign2 = ScaleHelpers::IsInsideOut(inScale2)? -1.0f : 1.0f;
+	mScaleSign2 = ScaleHelpers::IsInsideOut(inScale2) ? -1.0f : 1.0f;
 }
 
-void CollideConvexVsTriangles::Collide(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8 inActiveEdges, const SubShapeID &inSubShapeID2)
+void CollideConvexVsTriangles::Collide(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8 inActiveEdges, const SubShapeID& inSubShapeID2)
 {
 	// Scale triangle and transform it to the space of 1
 	Vec3 v0 = mTransform2To1 * (mScale2 * inV0);
@@ -123,7 +123,7 @@ void CollideConvexVsTriangles::Collide(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2,
 
 		// Update the penetration axis to account for active edges
 		// Note that we flip the triangle normal as the penetration axis is pointing towards the triangle instead of away
-		penetration_axis = ActiveEdges::FixNormal(v0, v1, v2, back_facing? triangle_normal : -triangle_normal, inActiveEdges, point2, penetration_axis, active_edge_movement_direction);
+		penetration_axis = ActiveEdges::FixNormal(v0, v1, v2, back_facing ? triangle_normal : -triangle_normal, inActiveEdges, point2, penetration_axis, active_edge_movement_direction);
 	}
 
 	// Convert to world space
@@ -149,7 +149,7 @@ void CollideConvexVsTriangles::Collide(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2,
 
 	// Notify the collector
 	JPH_IF_TRACK_NARROWPHASE_STATS(TrackNarrowPhaseCollector track;)
-	mCollector.AddHit(result);
+		mCollector.AddHit(result);
 }
 
 JPH_NAMESPACE_END

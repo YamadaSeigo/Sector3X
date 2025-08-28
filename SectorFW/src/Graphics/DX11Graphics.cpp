@@ -8,6 +8,48 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
+		DX11GraphicsDevice::~DX11GraphicsDevice()
+		{
+			// ここでレンダースレッドを停止
+			StopRenderThread();
+		}
+
+		DX11GraphicsDevice::DX11GraphicsDevice(DX11GraphicsDevice&& rhs) noexcept
+		{
+			m_device = rhs.m_device;
+			m_context = rhs.m_context;
+			m_swapChain = rhs.m_swapChain;
+			m_renderTargetView = rhs.m_renderTargetView;
+			m_depthStencilBuffer = rhs.m_depthStencilBuffer;
+			m_depthStencilView = rhs.m_depthStencilView;
+
+			*this = std::move(rhs);
+		}
+
+		DX11GraphicsDevice& DX11GraphicsDevice::operator=(DX11GraphicsDevice&& rhs) noexcept
+		{
+			if (this == &rhs) return *this;
+
+			// 自分側に既存ランナーがいれば止める（所有を捨てる前にクリーンアップ）
+			StopRenderThread();
+
+			// COM とスワップチェーンなどを移譲
+			m_device = rhs.m_device;
+			m_context = rhs.m_context;
+			m_swapChain = rhs.m_swapChain;
+			m_renderTargetView = rhs.m_renderTargetView;
+			m_depthStencilBuffer = rhs.m_depthStencilBuffer;
+			m_depthStencilView = rhs.m_depthStencilView;
+
+			// 共有状態を移譲し、owner を新しい this へ
+			m_rt = std::move(rhs.m_rt);
+			if (m_rt) m_rt->owner.store(this, std::memory_order_release);
+
+			// rhs をヌル化
+			rhs.m_rt.reset();
+			return *this;
+		}
+
 		bool DX11GraphicsDevice::InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height)
 		{
 			if (!std::holds_alternative<HWND>(nativeWindowHandle)) return false;
@@ -106,6 +148,9 @@ namespace SectorFW
 				return false;
 			}
 
+			// ここでレンダースレッドを起動
+			StartRenderThread();
+
 			return true;
 		}
 
@@ -126,6 +171,69 @@ namespace SectorFW
 			m_swapChain->Present(1, 0);
 		}
 
+		// ==== レンダースレッド API ====
+		void DX11GraphicsDevice::StartRenderThread() {
+			if (m_rt && m_rt->running.load()) return;
+			if (!m_rt) m_rt = std::make_shared<RTState>();
+			m_rt->owner.store(this, std::memory_order_release);
+			m_rt->running.store(true, std::memory_order_release);
+
+			// 既存 thread を再利用しない（ムーブ可能にするため shared_ptr で捕捉）
+			m_rt->thread = std::thread([st = m_rt] { st->owner.load()->RenderThreadMain(st); });
+		}
+
+		void DX11GraphicsDevice::StopRenderThread() {
+			if (!m_rt) return;
+			if (!m_rt->running.exchange(false)) {
+				// 既に止まっている
+				if (m_rt->thread.joinable()) m_rt->thread.join();
+				return;
+			}
+			// 起床
+			{
+				std::lock_guard<std::mutex> lk(m_rt->qMtx);
+				// 何もしない（キューが空でも起こすための notify）
+			}
+			m_rt->qCv.notify_all();
+
+			if (m_rt->thread.joinable()) m_rt->thread.join();
+		}
+
+		void DX11GraphicsDevice::SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx) {
+			auto st = m_rt;
+			if (!st) return;
+
+			// === バックプレッシャ：RENDER_QUEUE_BUFFER_COUNT 枠を超えない ===
+			// 条件: (lastSubmitted - lastCompleted) >= MaxInFlight
+			{
+				std::unique_lock<std::mutex> lk(st->doneMtx);
+				st->doneCv.wait(lk, [&] {
+					const uint64_t sub = st->lastSubmitted.load(std::memory_order_acquire);
+					const uint64_t cmp = st->lastCompleted.load(std::memory_order_acquire);
+					return (sub - cmp) < RTState::MaxInFlight;
+					});
+			}
+
+			RenderSubmit job{};
+			memcpy(job.clearColor, clearColor, sizeof(FLOAT) * 4);
+			job.frameIdx = frameIdx;
+			job.doClear = true;
+
+			{
+				std::lock_guard<std::mutex> lk(st->qMtx);
+				st->queue.emplace_back(job);
+				st->lastSubmitted.fetch_add(1, std::memory_order_release);
+			}
+			st->qCv.notify_one();
+		}
+
+		void DX11GraphicsDevice::WaitSubmittedFramesImpl(uint64_t uptoFrame) {
+			auto st = m_rt;
+			if (!st) return;
+			std::unique_lock<std::mutex> lk(st->doneMtx);
+			st->doneCv.wait(lk, [&] { return st->lastCompleted.load(std::memory_order_acquire) >= uptoFrame; });
+		}
+
 		void DX11GraphicsDevice::TestInitialize()
 		{
 			auto& graph = GetRenderGraph();
@@ -135,7 +243,18 @@ namespace SectorFW
 			auto constantMgr = GetRenderGraph().GetRenderService()->GetResourceManager<DX11BufferManager>();
 			auto cameraHandle = constantMgr->FindByName(DX113DCameraService::BUFFER_NAME);
 
-			graph.AddPass("TestPass", rtvs, m_depthStencilView.Get(), { cameraHandle });
+			RenderPassDesc<ID3D11RenderTargetView*> passDesc;
+			passDesc.name = "Default";
+			passDesc.rtvs = rtvs;
+			passDesc.dsv = m_depthStencilView.Get();
+			passDesc.cbvs = { cameraHandle };
+
+			graph.AddPass(passDesc);
+
+			passDesc.name = "DrawLine";
+			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+
+			graph.AddPass(passDesc);
 		}
 
 		inline DX11GraphicsDevice::DX11RenderGraph& DX11GraphicsDevice::GetRenderGraph()
@@ -157,6 +276,32 @@ namespace SectorFW
 
 			static DX11RenderGraph m_renderGraph = DX11RenderGraph(backend);
 			return m_renderGraph;
+		}
+
+		void DX11GraphicsDevice::RenderThreadMain(std::shared_ptr<RTState> st) {
+			// Immediate Context はこのスレッド専有
+			while (st->running.load(std::memory_order_acquire)) {
+				RenderSubmit job{};
+				{
+					std::unique_lock<std::mutex> lk(st->qMtx);
+					st->qCv.wait(lk, [&] { return !st->queue.empty() || !st->running.load(); });
+					if (!st->running.load() && st->queue.empty()) break;
+					job = st->queue.front();
+					st->queue.pop_front();
+				}
+
+				// 実行
+				if (job.doClear) ClearImpl(job.clearColor);
+				DrawImpl();
+				PresentImpl();
+
+				// 完了を記録して通知
+				{
+					std::lock_guard<std::mutex> lk(st->doneMtx);
+					st->lastCompleted.fetch_add(1, std::memory_order_release);
+				}
+				st->doneCv.notify_all();
+			}
 		}
 	}
 }

@@ -196,22 +196,6 @@ namespace SectorFW
 			}
 		};
 
-		template<typename T, typename U>
-		inline T lerp(const T& a, const T& b, U t) noexcept {
-			return a * (U(1) - t) + b * t;
-		}
-
-		template<typename T>
-		inline T smoothstep(T edge0, T edge1, T x) noexcept {
-			T t = std::clamp((x - edge0) / (edge1 - edge0), T(0), T(1));
-			return t * t * (T(3) - T(2) * t);
-		}
-
-		template<typename T>
-		inline T step(T edge, T x) noexcept {
-			return x < edge ? T(0) : T(1);
-		}
-
 		template<typename VecT>
 		inline bool any(const VecT& v) noexcept {
 			for (size_t i = 0; i < sizeof(v.data) / sizeof(v.data[0]); ++i)

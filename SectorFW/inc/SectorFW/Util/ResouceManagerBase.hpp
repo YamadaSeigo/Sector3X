@@ -101,6 +101,12 @@ namespace SectorFW
 			return slots[h.index].data;
 		}
 
+		const ResourceType& GetDirect(uint32_t idx) const {
+			std::shared_lock<std::shared_mutex> lock(mapMutex);
+
+			return slots[idx].data;
+		}
+
 		// 期限到達で最終判断：ref==0 なら破棄、>0 なら削除キャンセル
 		void ProcessDeferredDeletes(uint64_t currentFrame) {
 			std::lock_guard lk(pendingMutex_);

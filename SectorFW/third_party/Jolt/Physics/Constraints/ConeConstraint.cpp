@@ -10,7 +10,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -19,15 +19,15 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(ConeConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(ConeConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(ConeConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mPoint1)
-	JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mTwistAxis1)
-	JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mPoint2)
-	JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mTwistAxis2)
-	JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mHalfConeAngle)
+		JPH_ADD_ENUM_ATTRIBUTE(ConeConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mPoint1)
+		JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mTwistAxis1)
+		JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mPoint2)
+		JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mTwistAxis2)
+		JPH_ADD_ATTRIBUTE(ConeConstraintSettings, mHalfConeAngle)
 }
 
-void ConeConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void ConeConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -39,7 +39,7 @@ void ConeConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mHalfConeAngle);
 }
 
-void ConeConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void ConeConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -51,12 +51,12 @@ void ConeConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mHalfConeAngle);
 }
 
-TwoBodyConstraint *ConeConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* ConeConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new ConeConstraint(inBody1, inBody2, *this);
 }
 
-ConeConstraint::ConeConstraint(Body &inBody1, Body &inBody2, const ConeConstraintSettings &inSettings) :
+ConeConstraint::ConeConstraint(Body& inBody1, Body& inBody2, const ConeConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings)
 {
 	// Store limits
@@ -89,7 +89,7 @@ ConeConstraint::ConeConstraint(Body &inBody1, Body &inBody2, const ConeConstrain
 	}
 }
 
-void ConeConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaCOM)
+void ConeConstraint::NotifyShapeChanged(const BodyID& inBodyID, Vec3Arg inDeltaCOM)
 {
 	if (mBody1->GetID() == inBodyID)
 		mLocalSpacePosition1 -= inDeltaCOM;
@@ -167,7 +167,7 @@ bool ConeConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumgart
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void ConeConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void ConeConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	RMat44 transform1 = mBody1->GetCenterOfMassTransform();
 	RMat44 transform2 = mBody2->GetCenterOfMassTransform();
@@ -184,7 +184,7 @@ void ConeConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 	inRenderer->DrawLine(p2, p2 + mDrawConstraintSize * transform2.Multiply3x3(mLocalSpaceTwistAxis2), Color::sGreen);
 }
 
-void ConeConstraint::DrawConstraintLimits(DebugRenderer *inRenderer) const
+void ConeConstraint::DrawConstraintLimits(DebugRenderer* inRenderer) const
 {
 	// Get constraint properties in world space
 	RMat44 transform1 = mBody1->GetCenterOfMassTransform();
@@ -196,7 +196,7 @@ void ConeConstraint::DrawConstraintLimits(DebugRenderer *inRenderer) const
 }
 #endif // JPH_DEBUG_RENDERER
 
-void ConeConstraint::SaveState(StateRecorder &inStream) const
+void ConeConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
@@ -205,7 +205,7 @@ void ConeConstraint::SaveState(StateRecorder &inStream) const
 	inStream.Write(mWorldSpaceRotationAxis); // When twist is too small, the rotation is used from last frame so we need to store it
 }
 
-void ConeConstraint::RestoreState(StateRecorder &inStream)
+void ConeConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
@@ -216,7 +216,7 @@ void ConeConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> ConeConstraint::GetConstraintSettings() const
 {
-	ConeConstraintSettings *settings = new ConeConstraintSettings;
+	ConeConstraintSettings* settings = new ConeConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mPoint1 = RVec3(mLocalSpacePosition1);

@@ -31,7 +31,7 @@ namespace SectorFW
 
 		class DX11MeshManager : public ResourceManagerBase<DX11MeshManager, MeshHandle, DX11MeshCreateDesc, DX11MeshData> {
 		public:
-			explicit DX11MeshManager(ID3D11Device* dev) : device(dev) {}
+			explicit DX11MeshManager(ID3D11Device* dev);
 
 			std::optional<MeshHandle> FindExisting(const DX11MeshCreateDesc& d) {
 				if (!d.sourcePath.empty()) {
@@ -48,10 +48,16 @@ namespace SectorFW
 
 			void RemoveFromCaches(uint32_t idx);
 			void DestroyResource(uint32_t idx, uint64_t currentFrame);
+
+			MeshHandle GetBoxMesh() const noexcept { return boxHandle; }
+			MeshHandle GetSphereMesh() const noexcept { return sphereHandle; }
 		private:
 			ID3D11Device* device;
 
 			std::unordered_map<std::wstring, MeshHandle> pathToHandle;
+
+			MeshHandle boxHandle; // デフォルトメッシュ（立方体）
+			MeshHandle sphereHandle; // デフォルトメッシュ（球）
 		};
 	}
 }

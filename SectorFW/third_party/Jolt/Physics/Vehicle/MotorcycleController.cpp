@@ -10,7 +10,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -19,20 +19,20 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(MotorcycleControllerSettings)
 {
 	JPH_ADD_BASE_CLASS(MotorcycleControllerSettings, VehicleControllerSettings)
 
-	JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mMaxLeanAngle)
-	JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSpringConstant)
-	JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSpringDamping)
-	JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSpringIntegrationCoefficient)
-	JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSpringIntegrationCoefficientDecay)
-	JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSmoothingFactor)
+		JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mMaxLeanAngle)
+		JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSpringConstant)
+		JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSpringDamping)
+		JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSpringIntegrationCoefficient)
+		JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSpringIntegrationCoefficientDecay)
+		JPH_ADD_ATTRIBUTE(MotorcycleControllerSettings, mLeanSmoothingFactor)
 }
 
-VehicleController *MotorcycleControllerSettings::ConstructController(VehicleConstraint &inConstraint) const
+VehicleController* MotorcycleControllerSettings::ConstructController(VehicleConstraint& inConstraint) const
 {
 	return new MotorcycleController(*this, inConstraint);
 }
 
-void MotorcycleControllerSettings::SaveBinaryState(StreamOut &inStream) const
+void MotorcycleControllerSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	WheeledVehicleControllerSettings::SaveBinaryState(inStream);
 
@@ -44,7 +44,7 @@ void MotorcycleControllerSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mLeanSmoothingFactor);
 }
 
-void MotorcycleControllerSettings::RestoreBinaryState(StreamIn &inStream)
+void MotorcycleControllerSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	WheeledVehicleControllerSettings::RestoreBinaryState(inStream);
 
@@ -56,7 +56,7 @@ void MotorcycleControllerSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mLeanSmoothingFactor);
 }
 
-MotorcycleController::MotorcycleController(const MotorcycleControllerSettings &inSettings, VehicleConstraint &inConstraint) :
+MotorcycleController::MotorcycleController(const MotorcycleControllerSettings& inSettings, VehicleConstraint& inConstraint) :
 	WheeledVehicleController(inSettings, inConstraint),
 	mMaxLeanAngle(inSettings.mMaxLeanAngle),
 	mLeanSpringConstant(inSettings.mLeanSpringConstant),
@@ -71,13 +71,13 @@ float MotorcycleController::GetWheelBase() const
 {
 	float low = FLT_MAX, high = -FLT_MAX;
 
-	for (const Wheel *w : mConstraint.GetWheels())
+	for (const Wheel* w : mConstraint.GetWheels())
 	{
-		const WheelSettings *s = w->GetSettings();
+		const WheelSettings* s = w->GetSettings();
 
 		// Measure distance along the forward axis by looking at the fully extended suspension.
 		// If the suspension force point is active, use that instead.
-		Vec3 force_point = s->mEnableSuspensionForcePoint? s->mSuspensionForcePoint : s->mPosition + s->mSuspensionDirection * s->mSuspensionMaxLength;
+		Vec3 force_point = s->mEnableSuspensionForcePoint ? s->mSuspensionForcePoint : s->mPosition + s->mSuspensionDirection * s->mSuspensionMaxLength;
 		float value = force_point.Dot(mConstraint.GetLocalForward());
 
 		// Update min and max
@@ -88,11 +88,11 @@ float MotorcycleController::GetWheelBase() const
 	return high - low;
 }
 
-void MotorcycleController::PreCollide(float inDeltaTime, PhysicsSystem &inPhysicsSystem)
+void MotorcycleController::PreCollide(float inDeltaTime, PhysicsSystem& inPhysicsSystem)
 {
 	WheeledVehicleController::PreCollide(inDeltaTime, inPhysicsSystem);
 
-	const Body *body = mConstraint.GetVehicleBody();
+	const Body* body = mConstraint.GetVehicleBody();
 	Vec3 forward = body->GetRotation() * mConstraint.GetLocalForward();
 	float wheel_base = GetWheelBase();
 	Vec3 world_up = mConstraint.GetWorldUp();
@@ -101,7 +101,7 @@ void MotorcycleController::PreCollide(float inDeltaTime, PhysicsSystem &inPhysic
 	{
 		// Calculate the target lean vector, this is in the direction of the total applied impulse by the ground on the wheels
 		Vec3 target_lean = Vec3::sZero();
-		for (const Wheel *w : mConstraint.GetWheels())
+		for (const Wheel* w : mConstraint.GetWheels())
 			if (w->HasContact())
 				target_lean += w->GetContactNormal() * w->GetSuspensionLambda() + w->GetContactLateral() * w->GetLateralLambda();
 
@@ -146,7 +146,7 @@ void MotorcycleController::PreCollide(float inDeltaTime, PhysicsSystem &inPhysic
 	// TurnRadius = WheelBase / (Sin(SteerAngle) * Cos(CasterAngle))
 	// => SteerAngle = ASin(WheelBase * Tan(LeanAngle) * Gravity / (Velocity^2 * Cos(CasterAngle))
 	// The caster angle is different for each wheel so we can only calculate part of the equation here
-	float max_steer_angle_factor = wheel_base * Tan(mMaxLeanAngle) * (mConstraint.IsGravityOverridden()? mConstraint.GetGravityOverride() : inPhysicsSystem.GetGravity()).Length();
+	float max_steer_angle_factor = wheel_base * Tan(mMaxLeanAngle) * (mConstraint.IsGravityOverridden() ? mConstraint.GetGravityOverride() : inPhysicsSystem.GetGravity()).Length();
 
 	// Calculate forward velocity
 	float velocity = body->GetLinearVelocity().Dot(forward);
@@ -156,10 +156,10 @@ void MotorcycleController::PreCollide(float inDeltaTime, PhysicsSystem &inPhysic
 	float steer_strength = abs(mRightInput);
 	float steer_sign = -Sign(mRightInput);
 
-	for (Wheel *w_base : mConstraint.GetWheels())
+	for (Wheel* w_base : mConstraint.GetWheels())
 	{
-		WheelWV *w = static_cast<WheelWV *>(w_base);
-		const WheelSettingsWV *s = w->GetSettings();
+		WheelWV* w = static_cast<WheelWV*>(w_base);
+		const WheelSettingsWV* s = w->GetSettings();
 
 		// Check if this wheel can steer
 		if (s->mMaxSteerAngle != 0.0f)
@@ -195,7 +195,7 @@ bool MotorcycleController::SolveLongitudinalAndLateralConstraints(float inDeltaT
 	{
 		// Only apply a lean impulse if all wheels are in contact, otherwise we can easily spin out
 		bool all_in_contact = true;
-		for (const Wheel *w : mConstraint.GetWheels())
+		for (const Wheel* w : mConstraint.GetWheels())
 			if (!w->HasContact() || w->GetSuspensionLambda() <= 0.0f)
 			{
 				all_in_contact = false;
@@ -204,8 +204,8 @@ bool MotorcycleController::SolveLongitudinalAndLateralConstraints(float inDeltaT
 
 		if (all_in_contact)
 		{
-			Body *body = mConstraint.GetVehicleBody();
-			const MotionProperties *mp = body->GetMotionProperties();
+			Body* body = mConstraint.GetVehicleBody();
+			const MotionProperties* mp = body->GetMotionProperties();
 
 			Vec3 forward = body->GetRotation() * mConstraint.GetLocalForward();
 			Vec3 up = body->GetRotation() * mConstraint.GetLocalUp();
@@ -229,9 +229,9 @@ bool MotorcycleController::SolveLongitudinalAndLateralConstraints(float inDeltaT
 			Vec3 dw = mp->GetAngularVelocity() - old_w;
 			Vec3 linear_acceleration = Vec3::sZero();
 			float total_lambda = 0.0f;
-			for (Wheel *w_base : mConstraint.GetWheels())
+			for (Wheel* w_base : mConstraint.GetWheels())
 			{
-				const WheelWV *w = static_cast<WheelWV *>(w_base);
+				const WheelWV* w = static_cast<WheelWV*>(w_base);
 
 				// We weigh the importance of each contact point according to the contact force
 				float lambda = w->GetSuspensionLambda();
@@ -260,14 +260,14 @@ bool MotorcycleController::SolveLongitudinalAndLateralConstraints(float inDeltaT
 	return impulse;
 }
 
-void MotorcycleController::SaveState(StateRecorder &inStream) const
+void MotorcycleController::SaveState(StateRecorder& inStream) const
 {
 	WheeledVehicleController::SaveState(inStream);
 
 	inStream.Write(mTargetLean);
 }
 
-void MotorcycleController::RestoreState(StateRecorder &inStream)
+void MotorcycleController::RestoreState(StateRecorder& inStream)
 {
 	WheeledVehicleController::RestoreState(inStream);
 
@@ -276,12 +276,12 @@ void MotorcycleController::RestoreState(StateRecorder &inStream)
 
 #ifdef JPH_DEBUG_RENDERER
 
-void MotorcycleController::Draw(DebugRenderer *inRenderer) const
+void MotorcycleController::Draw(DebugRenderer* inRenderer) const
 {
 	WheeledVehicleController::Draw(inRenderer);
 
 	// Draw current and desired lean angle
-	Body *body = mConstraint.GetVehicleBody();
+	Body* body = mConstraint.GetVehicleBody();
 	RVec3 center_of_mass = body->GetCenterOfMassPosition();
 	Vec3 up = body->GetRotation() * mConstraint.GetLocalUp();
 	inRenderer->DrawArrow(center_of_mass, center_of_mass + up, Color::sYellow, 0.1f);

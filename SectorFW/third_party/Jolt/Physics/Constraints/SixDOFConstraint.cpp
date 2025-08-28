@@ -11,7 +11,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -20,22 +20,22 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(SixDOFConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(SixDOFConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(SixDOFConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mPosition1)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mAxisX1)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mAxisY1)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mPosition2)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mAxisX2)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mAxisY2)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mMaxFriction)
-	JPH_ADD_ENUM_ATTRIBUTE(SixDOFConstraintSettings, mSwingType)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mLimitMin)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mLimitMax)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mLimitsSpringSettings)
-	JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mMotorSettings)
+		JPH_ADD_ENUM_ATTRIBUTE(SixDOFConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mPosition1)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mAxisX1)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mAxisY1)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mPosition2)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mAxisX2)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mAxisY2)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mMaxFriction)
+		JPH_ADD_ENUM_ATTRIBUTE(SixDOFConstraintSettings, mSwingType)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mLimitMin)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mLimitMax)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mLimitsSpringSettings)
+		JPH_ADD_ATTRIBUTE(SixDOFConstraintSettings, mMotorSettings)
 }
 
-void SixDOFConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void SixDOFConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -50,13 +50,13 @@ void SixDOFConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mSwingType);
 	inStream.Write(mLimitMin);
 	inStream.Write(mLimitMax);
-	for (const SpringSettings &s : mLimitsSpringSettings)
+	for (const SpringSettings& s : mLimitsSpringSettings)
 		s.SaveBinaryState(inStream);
-	for (const MotorSettings &m : mMotorSettings)
+	for (const MotorSettings& m : mMotorSettings)
 		m.SaveBinaryState(inStream);
 }
 
-void SixDOFConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void SixDOFConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -71,13 +71,13 @@ void SixDOFConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mSwingType);
 	inStream.Read(mLimitMin);
 	inStream.Read(mLimitMax);
-	for (SpringSettings &s : mLimitsSpringSettings)
+	for (SpringSettings& s : mLimitsSpringSettings)
 		s.RestoreBinaryState(inStream);
-	for (MotorSettings &m : mMotorSettings)
+	for (MotorSettings& m : mMotorSettings)
 		m.RestoreBinaryState(inStream);
 }
 
-TwoBodyConstraint *SixDOFConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* SixDOFConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new SixDOFConstraint(inBody1, inBody2, *this);
 }
@@ -128,7 +128,7 @@ void SixDOFConstraint::UpdateFixedFreeAxis()
 	mFixedAxis = 0;
 	for (int a = 0; a < EAxis::Num; ++a)
 	{
-		float limit = a >= EAxis::RotationX? JPH_PI : FLT_MAX;
+		float limit = a >= EAxis::RotationX ? JPH_PI : FLT_MAX;
 
 		if (mLimitMin[a] >= mLimitMax[a])
 			mFixedAxis |= 1 << a;
@@ -139,19 +139,19 @@ void SixDOFConstraint::UpdateFixedFreeAxis()
 	// On change we deactivate all constraints to reset warm starting
 	if (old_free_axis != mFreeAxis || old_fixed_axis != mFixedAxis)
 	{
-		for (AxisConstraintPart &c : mTranslationConstraintPart)
+		for (AxisConstraintPart& c : mTranslationConstraintPart)
 			c.Deactivate();
 		mPointConstraintPart.Deactivate();
 		mSwingTwistConstraintPart.Deactivate();
 		mRotationConstraintPart.Deactivate();
-		for (AxisConstraintPart &c : mMotorTranslationConstraintPart)
+		for (AxisConstraintPart& c : mMotorTranslationConstraintPart)
 			c.Deactivate();
-		for (AngleConstraintPart &c : mMotorRotationConstraintPart)
+		for (AngleConstraintPart& c : mMotorRotationConstraintPart)
 			c.Deactivate();
 	}
 }
 
-SixDOFConstraint::SixDOFConstraint(Body &inBody1, Body &inBody2, const SixDOFConstraintSettings &inSettings) :
+SixDOFConstraint::SixDOFConstraint(Body& inBody1, Body& inBody2, const SixDOFConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings)
 {
 	// Override swing type
@@ -203,7 +203,7 @@ SixDOFConstraint::SixDOFConstraint(Body &inBody1, Body &inBody2, const SixDOFCon
 	CacheRotationMotorActive();
 }
 
-void SixDOFConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaCOM)
+void SixDOFConstraint::NotifyShapeChanged(const BodyID& inBodyID, Vec3Arg inDeltaCOM)
 {
 	if (mBody1->GetID() == inBodyID)
 		mLocalSpacePosition1 -= inDeltaCOM;
@@ -247,7 +247,7 @@ void SixDOFConstraint::SetMaxFriction(EAxis inAxis, float inFriction)
 		CacheRotationMotorActive();
 }
 
-void SixDOFConstraint::GetPositionConstraintProperties(Vec3 &outR1PlusU, Vec3 &outR2, Vec3 &outU) const
+void SixDOFConstraint::GetPositionConstraintProperties(Vec3& outR1PlusU, Vec3& outR2, Vec3& outU) const
 {
 	RVec3 p1 = mBody1->GetCenterOfMassTransform() * mLocalSpacePosition1;
 	RVec3 p2 = mBody2->GetCenterOfMassTransform() * mLocalSpacePosition2;
@@ -428,14 +428,14 @@ void SixDOFConstraint::SetupVelocityConstraint(float inDeltaTime)
 				break;
 
 			case EMotorState::Position:
-				{
-					const SpringSettings &spring_settings = mMotorSettings[i].mSpringSettings;
-					if (spring_settings.HasStiffness())
-						mMotorTranslationConstraintPart[i].CalculateConstraintPropertiesWithSettings(inDeltaTime, *mBody1, r1_plus_u, *mBody2, r2, translation_axis, 0.0f, translation_axis.Dot(u) - mTargetPosition[i], spring_settings);
-					else
-						mMotorTranslationConstraintPart[i].Deactivate();
-					break;
-				}
+			{
+				const SpringSettings& spring_settings = mMotorSettings[i].mSpringSettings;
+				if (spring_settings.HasStiffness())
+					mMotorTranslationConstraintPart[i].CalculateConstraintPropertiesWithSettings(inDeltaTime, *mBody1, r1_plus_u, *mBody2, r2, translation_axis, 0.0f, translation_axis.Dot(u) - mTargetPosition[i], spring_settings);
+				else
+					mMotorTranslationConstraintPart[i].Deactivate();
+				break;
+			}
 			}
 		}
 	}
@@ -466,7 +466,7 @@ void SixDOFConstraint::SetupVelocityConstraint(float inDeltaTime)
 				mRotationAxis[i] = ws_axis.GetColumn3(i);
 
 			// Get target orientation along the shortest path from q
-			Quat target_orientation = q.Dot(mTargetOrientation) > 0.0f? mTargetOrientation : -mTargetOrientation;
+			Quat target_orientation = q.Dot(mTargetOrientation) > 0.0f ? mTargetOrientation : -mTargetOrientation;
 
 			// The definition of the constraint rotation q:
 			// R2 * ConstraintToBody2 = R1 * ConstraintToBody1 * q (1)
@@ -559,14 +559,14 @@ void SixDOFConstraint::SetupVelocityConstraint(float inDeltaTime)
 					break;
 
 				case EMotorState::Position:
-					{
-						const SpringSettings &spring_settings = mMotorSettings[axis].mSpringSettings;
-						if (spring_settings.HasStiffness())
-							mMotorRotationConstraintPart[i].CalculateConstraintPropertiesWithSettings(inDeltaTime, *mBody1, *mBody2, rotation_axis, 0.0f, rotation_error[i], spring_settings);
-						else
-							mMotorRotationConstraintPart[i].Deactivate();
-						break;
-					}
+				{
+					const SpringSettings& spring_settings = mMotorSettings[axis].mSpringSettings;
+					if (spring_settings.HasStiffness())
+						mMotorRotationConstraintPart[i].CalculateConstraintPropertiesWithSettings(inDeltaTime, *mBody1, *mBody2, rotation_axis, 0.0f, rotation_error[i], spring_settings);
+					else
+						mMotorRotationConstraintPart[i].Deactivate();
+					break;
+				}
 				}
 			}
 		}
@@ -575,14 +575,14 @@ void SixDOFConstraint::SetupVelocityConstraint(float inDeltaTime)
 
 void SixDOFConstraint::ResetWarmStart()
 {
-	for (AxisConstraintPart &c : mMotorTranslationConstraintPart)
+	for (AxisConstraintPart& c : mMotorTranslationConstraintPart)
 		c.Deactivate();
-	for (AngleConstraintPart &c : mMotorRotationConstraintPart)
+	for (AngleConstraintPart& c : mMotorRotationConstraintPart)
 		c.Deactivate();
 	mRotationConstraintPart.Deactivate();
 	mSwingTwistConstraintPart.Deactivate();
 	mPointConstraintPart.Deactivate();
-	for (AxisConstraintPart &c : mTranslationConstraintPart)
+	for (AxisConstraintPart& c : mTranslationConstraintPart)
 		c.Deactivate();
 }
 
@@ -596,7 +596,7 @@ void SixDOFConstraint::WarmStartVelocityConstraint(float inWarmStartImpulseRatio
 
 	// Warm start rotation motors
 	if (mRotationMotorActive)
-		for (AngleConstraintPart &c : mMotorRotationConstraintPart)
+		for (AngleConstraintPart& c : mMotorRotationConstraintPart)
 			if (c.IsActive())
 				c.WarmStart(*mBody1, *mBody2, inWarmStartImpulseRatio);
 
@@ -780,7 +780,7 @@ bool SixDOFConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumga
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void SixDOFConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void SixDOFConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	// Get constraint properties in world space
 	RVec3 position1 = mBody1->GetCenterOfMassTransform() * mLocalSpacePosition1;
@@ -817,7 +817,7 @@ void SixDOFConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 		inRenderer->DrawArrow(position1, position1 + rotation2 * target_angular_velocity, Color::sRed, 0.1f);
 }
 
-void SixDOFConstraint::DrawConstraintLimits(DebugRenderer *inRenderer) const
+void SixDOFConstraint::DrawConstraintLimits(DebugRenderer* inRenderer) const
 {
 	// Get matrix that transforms from constraint space to world space
 	RMat44 constraint_body1_to_world = RMat44::sRotationTranslation(mBody1->GetRotation() * mConstraintToBody1, mBody1->GetCenterOfMassTransform() * mLocalSpacePosition1);
@@ -831,18 +831,18 @@ void SixDOFConstraint::DrawConstraintLimits(DebugRenderer *inRenderer) const
 }
 #endif // JPH_DEBUG_RENDERER
 
-void SixDOFConstraint::SaveState(StateRecorder &inStream) const
+void SixDOFConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
-	for (const AxisConstraintPart &c : mTranslationConstraintPart)
+	for (const AxisConstraintPart& c : mTranslationConstraintPart)
 		c.SaveState(inStream);
 	mPointConstraintPart.SaveState(inStream);
 	mSwingTwistConstraintPart.SaveState(inStream);
 	mRotationConstraintPart.SaveState(inStream);
-	for (const AxisConstraintPart &c : mMotorTranslationConstraintPart)
+	for (const AxisConstraintPart& c : mMotorTranslationConstraintPart)
 		c.SaveState(inStream);
-	for (const AngleConstraintPart &c : mMotorRotationConstraintPart)
+	for (const AngleConstraintPart& c : mMotorRotationConstraintPart)
 		c.SaveState(inStream);
 
 	inStream.Write(mMotorState);
@@ -852,18 +852,18 @@ void SixDOFConstraint::SaveState(StateRecorder &inStream) const
 	inStream.Write(mTargetOrientation);
 }
 
-void SixDOFConstraint::RestoreState(StateRecorder &inStream)
+void SixDOFConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
-	for (AxisConstraintPart &c : mTranslationConstraintPart)
+	for (AxisConstraintPart& c : mTranslationConstraintPart)
 		c.RestoreState(inStream);
 	mPointConstraintPart.RestoreState(inStream);
 	mSwingTwistConstraintPart.RestoreState(inStream);
 	mRotationConstraintPart.RestoreState(inStream);
-	for (AxisConstraintPart &c : mMotorTranslationConstraintPart)
+	for (AxisConstraintPart& c : mMotorTranslationConstraintPart)
 		c.RestoreState(inStream);
-	for (AngleConstraintPart &c : mMotorRotationConstraintPart)
+	for (AngleConstraintPart& c : mMotorRotationConstraintPart)
 		c.RestoreState(inStream);
 
 	inStream.Read(mMotorState);
@@ -879,7 +879,7 @@ void SixDOFConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> SixDOFConstraint::GetConstraintSettings() const
 {
-	SixDOFConstraintSettings *settings = new SixDOFConstraintSettings;
+	SixDOFConstraintSettings* settings = new SixDOFConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mPosition1 = RVec3(mLocalSpacePosition1);

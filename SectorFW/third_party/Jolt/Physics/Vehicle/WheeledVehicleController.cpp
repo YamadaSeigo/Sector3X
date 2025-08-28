@@ -12,7 +12,7 @@
 #include <Jolt/Math/DynMatrix.h>
 #include <Jolt/Math/GaussianElimination.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 //#define JPH_TRACE_VEHICLE_STATS
@@ -23,23 +23,23 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(WheeledVehicleControllerSettings)
 {
 	JPH_ADD_BASE_CLASS(WheeledVehicleControllerSettings, VehicleControllerSettings)
 
-	JPH_ADD_ATTRIBUTE(WheeledVehicleControllerSettings, mEngine)
-	JPH_ADD_ATTRIBUTE(WheeledVehicleControllerSettings, mTransmission)
-	JPH_ADD_ATTRIBUTE(WheeledVehicleControllerSettings, mDifferentials)
-	JPH_ADD_ATTRIBUTE(WheeledVehicleControllerSettings, mDifferentialLimitedSlipRatio)
+		JPH_ADD_ATTRIBUTE(WheeledVehicleControllerSettings, mEngine)
+		JPH_ADD_ATTRIBUTE(WheeledVehicleControllerSettings, mTransmission)
+		JPH_ADD_ATTRIBUTE(WheeledVehicleControllerSettings, mDifferentials)
+		JPH_ADD_ATTRIBUTE(WheeledVehicleControllerSettings, mDifferentialLimitedSlipRatio)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(WheelSettingsWV)
 {
 	JPH_ADD_BASE_CLASS(WheelSettingsWV, WheelSettings)
 
-	JPH_ADD_ATTRIBUTE(WheelSettingsWV, mInertia)
-	JPH_ADD_ATTRIBUTE(WheelSettingsWV, mAngularDamping)
-	JPH_ADD_ATTRIBUTE(WheelSettingsWV, mMaxSteerAngle)
-	JPH_ADD_ATTRIBUTE(WheelSettingsWV, mLongitudinalFriction)
-	JPH_ADD_ATTRIBUTE(WheelSettingsWV, mLateralFriction)
-	JPH_ADD_ATTRIBUTE(WheelSettingsWV, mMaxBrakeTorque)
-	JPH_ADD_ATTRIBUTE(WheelSettingsWV, mMaxHandBrakeTorque)
+		JPH_ADD_ATTRIBUTE(WheelSettingsWV, mInertia)
+		JPH_ADD_ATTRIBUTE(WheelSettingsWV, mAngularDamping)
+		JPH_ADD_ATTRIBUTE(WheelSettingsWV, mMaxSteerAngle)
+		JPH_ADD_ATTRIBUTE(WheelSettingsWV, mLongitudinalFriction)
+		JPH_ADD_ATTRIBUTE(WheelSettingsWV, mLateralFriction)
+		JPH_ADD_ATTRIBUTE(WheelSettingsWV, mMaxBrakeTorque)
+		JPH_ADD_ATTRIBUTE(WheelSettingsWV, mMaxHandBrakeTorque)
 }
 
 WheelSettingsWV::WheelSettingsWV()
@@ -55,7 +55,7 @@ WheelSettingsWV::WheelSettingsWV()
 	mLateralFriction.AddPoint(20.0f, 1.0f);
 }
 
-void WheelSettingsWV::SaveBinaryState(StreamOut &inStream) const
+void WheelSettingsWV::SaveBinaryState(StreamOut& inStream) const
 {
 	WheelSettings::SaveBinaryState(inStream);
 
@@ -68,7 +68,7 @@ void WheelSettingsWV::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mMaxHandBrakeTorque);
 }
 
-void WheelSettingsWV::RestoreBinaryState(StreamIn &inStream)
+void WheelSettingsWV::RestoreBinaryState(StreamIn& inStream)
 {
 	WheelSettings::RestoreBinaryState(inStream);
 
@@ -81,7 +81,7 @@ void WheelSettingsWV::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mMaxHandBrakeTorque);
 }
 
-WheelWV::WheelWV(const WheelSettingsWV &inSettings) :
+WheelWV::WheelWV(const WheelSettingsWV& inSettings) :
 	Wheel(inSettings)
 {
 	JPH_ASSERT(inSettings.mInertia >= 0.0f);
@@ -91,9 +91,9 @@ WheelWV::WheelWV(const WheelSettingsWV &inSettings) :
 	JPH_ASSERT(inSettings.mMaxHandBrakeTorque >= 0.0f);
 }
 
-void WheelWV::Update(uint inWheelIndex, float inDeltaTime, const VehicleConstraint &inConstraint)
+void WheelWV::Update(uint inWheelIndex, float inDeltaTime, const VehicleConstraint& inConstraint)
 {
-	const WheelSettingsWV *settings = GetSettings();
+	const WheelSettingsWV* settings = GetSettings();
 
 	// Angular damping: dw/dt = -c * w
 	// Solution: w(t) = w(0) * e^(-c * t) or w2 = w1 * e^(-c * dt)
@@ -106,7 +106,7 @@ void WheelWV::Update(uint inWheelIndex, float inDeltaTime, const VehicleConstrai
 
 	if (mContactBody != nullptr)
 	{
-		const Body *body = inConstraint.GetVehicleBody();
+		const Body* body = inConstraint.GetVehicleBody();
 
 		// Calculate relative velocity between wheel contact point and floor
 		Vec3 relative_velocity = body->GetPointVelocity(mContactPosition) - mContactPointVelocity;
@@ -141,12 +141,12 @@ void WheelWV::Update(uint inWheelIndex, float inDeltaTime, const VehicleConstrai
 	}
 }
 
-VehicleController *WheeledVehicleControllerSettings::ConstructController(VehicleConstraint &inConstraint) const
+VehicleController* WheeledVehicleControllerSettings::ConstructController(VehicleConstraint& inConstraint) const
 {
 	return new WheeledVehicleController(*this, inConstraint);
 }
 
-void WheeledVehicleControllerSettings::SaveBinaryState(StreamOut &inStream) const
+void WheeledVehicleControllerSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	mEngine.SaveBinaryState(inStream);
 
@@ -154,13 +154,13 @@ void WheeledVehicleControllerSettings::SaveBinaryState(StreamOut &inStream) cons
 
 	uint32 num_differentials = (uint32)mDifferentials.size();
 	inStream.Write(num_differentials);
-	for (const VehicleDifferentialSettings &d : mDifferentials)
+	for (const VehicleDifferentialSettings& d : mDifferentials)
 		d.SaveBinaryState(inStream);
 
 	inStream.Write(mDifferentialLimitedSlipRatio);
 }
 
-void WheeledVehicleControllerSettings::RestoreBinaryState(StreamIn &inStream)
+void WheeledVehicleControllerSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	mEngine.RestoreBinaryState(inStream);
 
@@ -169,23 +169,23 @@ void WheeledVehicleControllerSettings::RestoreBinaryState(StreamIn &inStream)
 	uint32 num_differentials = 0;
 	inStream.Read(num_differentials);
 	mDifferentials.resize(num_differentials);
-	for (VehicleDifferentialSettings &d : mDifferentials)
+	for (VehicleDifferentialSettings& d : mDifferentials)
 		d.RestoreBinaryState(inStream);
 
 	inStream.Read(mDifferentialLimitedSlipRatio);
 }
 
-WheeledVehicleController::WheeledVehicleController(const WheeledVehicleControllerSettings &inSettings, VehicleConstraint &inConstraint) :
+WheeledVehicleController::WheeledVehicleController(const WheeledVehicleControllerSettings& inSettings, VehicleConstraint& inConstraint) :
 	VehicleController(inConstraint)
 {
 	// Copy engine settings
-	static_cast<VehicleEngineSettings &>(mEngine) = inSettings.mEngine;
+	static_cast<VehicleEngineSettings&>(mEngine) = inSettings.mEngine;
 	JPH_ASSERT(inSettings.mEngine.mMinRPM >= 0.0f);
 	JPH_ASSERT(inSettings.mEngine.mMinRPM <= inSettings.mEngine.mMaxRPM);
 	mEngine.SetCurrentRPM(mEngine.mMinRPM);
 
 	// Copy transmission settings
-	static_cast<VehicleTransmissionSettings &>(mTransmission) = inSettings.mTransmission;
+	static_cast<VehicleTransmissionSettings&>(mTransmission) = inSettings.mTransmission;
 #ifdef JPH_ENABLE_ASSERTS
 	for (float r : inSettings.mTransmission.mGearRatios)
 		JPH_ASSERT(r > 0.0f);
@@ -202,7 +202,7 @@ WheeledVehicleController::WheeledVehicleController(const WheeledVehicleControlle
 	mDifferentials.resize(inSettings.mDifferentials.size());
 	for (uint i = 0; i < mDifferentials.size(); ++i)
 	{
-		const VehicleDifferentialSettings &d = inSettings.mDifferentials[i];
+		const VehicleDifferentialSettings& d = inSettings.mDifferentials[i];
 		mDifferentials[i] = d;
 		JPH_ASSERT(d.mDifferentialRatio > 0.0f);
 		JPH_ASSERT(d.mLeftRightSplit >= 0.0f && d.mLeftRightSplit <= 1.0f);
@@ -218,7 +218,7 @@ float WheeledVehicleController::GetWheelSpeedAtClutch() const
 {
 	float wheel_speed_at_clutch = 0.0f;
 	int num_driven_wheels = 0;
-	for (const VehicleDifferentialSettings &d : mDifferentials)
+	for (const VehicleDifferentialSettings& d : mDifferentials)
 	{
 		int wheels[] = { d.mLeftWheel, d.mRightWheel };
 		for (int w : wheels)
@@ -238,7 +238,7 @@ bool WheeledVehicleController::AllowSleep() const
 		&& mEngine.AllowSleep();								// Engine is idling
 }
 
-void WheeledVehicleController::PreCollide(float inDeltaTime, PhysicsSystem &inPhysicsSystem)
+void WheeledVehicleController::PreCollide(float inDeltaTime, PhysicsSystem& inPhysicsSystem)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -254,28 +254,28 @@ void WheeledVehicleController::PreCollide(float inDeltaTime, PhysicsSystem &inPh
 	Trace("%.3f, %.1f, %d, %.1f, %.1f, %.1f, %.1f", sTime, mForwardInput, mTransmission.GetCurrentGear(), mTransmission.GetClutchFriction(), mEngine.GetCurrentRPM(), GetWheelSpeedAtClutch(), mConstraint.GetVehicleBody()->GetLinearVelocity().Length() * 3.6f);
 #endif // JPH_TRACE_VEHICLE_STATS
 
-	for (Wheel *w_base : mConstraint.GetWheels())
+	for (Wheel* w_base : mConstraint.GetWheels())
 	{
-		WheelWV *w = static_cast<WheelWV *>(w_base);
+		WheelWV* w = static_cast<WheelWV*>(w_base);
 
 		// Set steering angle
 		w->SetSteerAngle(-mRightInput * w->GetSettings()->mMaxSteerAngle);
 	}
 }
 
-void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inPhysicsSystem)
+void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem& inPhysicsSystem)
 {
 	JPH_PROFILE_FUNCTION();
 
 	// Remember old RPM so we can detect if we're increasing or decreasing
 	float old_engine_rpm = mEngine.GetCurrentRPM();
 
-	Wheels &wheels = mConstraint.GetWheels();
+	Wheels& wheels = mConstraint.GetWheels();
 
 	// Update wheel angle, do this before applying torque to the wheels (as friction will slow them down again)
 	for (uint wheel_index = 0, num_wheels = (uint)wheels.size(); wheel_index < num_wheels; ++wheel_index)
 	{
-		WheelWV *w = static_cast<WheelWV *>(wheels[wheel_index]);
+		WheelWV* w = static_cast<WheelWV*>(wheels[wheel_index]);
 		w->Update(wheel_index, inDeltaTime, mConstraint);
 	}
 
@@ -293,7 +293,7 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 	// Define a struct that contains information about driven differentials (i.e. that have wheels connected)
 	struct DrivenDifferential
 	{
-		const VehicleDifferentialSettings *	mDifferential;
+		const VehicleDifferentialSettings* mDifferential;
 		float								mAngularVelocity;
 		float								mClutchToDifferentialTorqueRatio;
 		float								mTempTorqueFactor;
@@ -303,7 +303,7 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 	Array<DrivenDifferential> driven_differentials;
 	driven_differentials.reserve(mDifferentials.size());
 	float differential_omega_min = FLT_MAX, differential_omega_max = 0.0f;
-	for (const VehicleDifferentialSettings &d : mDifferentials)
+	for (const VehicleDifferentialSettings& d : mDifferentials)
 	{
 		float avg_omega = 0.0f;
 		int avg_omega_denom = 0;
@@ -331,7 +331,7 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 	{
 		// Calculate factor based on relative speed of a differential
 		float sum_factor = 0.0f;
-		for (DrivenDifferential &d : driven_differentials)
+		for (DrivenDifferential& d : driven_differentials)
 		{
 			// Differential with max velocity gets factor 0, differential with min velocity 1
 			d.mTempTorqueFactor = (differential_omega_max - d.mAngularVelocity) / (differential_omega_max - differential_omega_min);
@@ -339,7 +339,7 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 		}
 
 		// Normalize the result
-		for (DrivenDifferential &d : driven_differentials)
+		for (DrivenDifferential& d : driven_differentials)
 			d.mTempTorqueFactor /= sum_factor;
 
 		// Prevent div by zero
@@ -352,14 +352,14 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 		float one_min_alpha = 1.0f - alpha;
 
 		// Update torque ratio for all differentials
-		for (DrivenDifferential &d : driven_differentials)
+		for (DrivenDifferential& d : driven_differentials)
 			d.mClutchToDifferentialTorqueRatio = one_min_alpha * d.mClutchToDifferentialTorqueRatio + alpha * d.mTempTorqueFactor;
 	}
 
 #ifdef JPH_ENABLE_ASSERTS
 	// Assert the values add up to 1
 	float sum_torque_factors = 0.0f;
-	for (DrivenDifferential &d : driven_differentials)
+	for (DrivenDifferential& d : driven_differentials)
 		sum_torque_factors += d.mClutchToDifferentialTorqueRatio;
 	JPH_ASSERT(abs(sum_torque_factors - 1.0f) < 1.0e-6f);
 #endif // JPH_ENABLE_ASSERTS
@@ -367,7 +367,7 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 	// Define a struct that collects information about the wheels that connect to the engine
 	struct DrivenWheel
 	{
-		WheelWV *				mWheel;
+		WheelWV* mWheel;
 		float					mClutchToWheelRatio;
 		float					mClutchToWheelTorqueRatio;
 		float					mEstimatedAngularImpulse;
@@ -377,12 +377,12 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 
 	// Collect driven wheels
 	float transmission_ratio = mTransmission.GetCurrentRatio();
-	for (const DrivenDifferential &dd : driven_differentials)
+	for (const DrivenDifferential& dd : driven_differentials)
 	{
 		VehicleDifferentialSettings d = *dd.mDifferential;
 
-		WheelWV *wl = d.mLeftWheel != -1? static_cast<WheelWV *>(wheels[d.mLeftWheel]) : nullptr;
-		WheelWV *wr = d.mRightWheel != -1? static_cast<WheelWV *>(wheels[d.mRightWheel]) : nullptr;
+		WheelWV* wl = d.mLeftWheel != -1 ? static_cast<WheelWV*>(wheels[d.mLeftWheel]) : nullptr;
+		WheelWV* wr = d.mRightWheel != -1 ? static_cast<WheelWV*>(wheels[d.mRightWheel]) : nullptr;
 
 		float clutch_to_wheel_ratio = transmission_ratio * d.mDifferentialRatio;
 
@@ -494,19 +494,19 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 		float w_engine = mEngine.GetAngularVelocity();
 
 		// Calculate the total strength of the clutch
-		float clutch_strength = transmission_ratio != 0.0f? mTransmission.GetClutchFriction() * mTransmission.mClutchStrength : 0.0f;
+		float clutch_strength = transmission_ratio != 0.0f ? mTransmission.GetClutchFriction() * mTransmission.mClutchStrength : 0.0f;
 
 		// dt / Ie
 		float dt_div_ie = inDeltaTime / mEngine.mInertia;
 
 		// Calculate scale factor for impulses based on previous delta time
-		float impulse_scale = mPreviousDeltaTime > 0.0f? inDeltaTime / mPreviousDeltaTime : 0.0f;
+		float impulse_scale = mPreviousDeltaTime > 0.0f ? inDeltaTime / mPreviousDeltaTime : 0.0f;
 
 		// Iterate the rows for the wheels
 		for (int i = 0; i < (int)driven_wheels.size(); ++i)
 		{
-			DrivenWheel &w_i = driven_wheels[i];
-			const WheelSettingsWV *settings = w_i.mWheel->GetSettings();
+			DrivenWheel& w_i = driven_wheels[i];
+			const WheelSettingsWV* settings = w_i.mWheel->GetSettings();
 
 			// Get wheel inertia
 			float inertia = settings->mInertia;
@@ -520,7 +520,7 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 			// Fill in the columns of a for wheel j
 			for (int j = 0; j < (int)driven_wheels.size(); ++j)
 			{
-				const DrivenWheel &w_j = driven_wheels[j];
+				const DrivenWheel& w_j = driven_wheels[j];
 				a(i, j) = dt_s_r_f_div_iw * w_j.mClutchToWheelRatio / num_driven_wheels_float;
 			}
 
@@ -574,8 +574,8 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 			// Update the angular velocities for the wheels
 			for (int i = 0; i < (int)driven_wheels.size(); ++i)
 			{
-				DrivenWheel &w_i = driven_wheels[i];
-				const WheelSettingsWV *settings = w_i.mWheel->GetSettings();
+				DrivenWheel& w_i = driven_wheels[i];
+				const WheelSettingsWV* settings = w_i.mWheel->GetSettings();
 
 				// Get solved wheel angular velocity
 				float angular_velocity = b(i, 0);
@@ -608,7 +608,7 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 
 	// Calculate if any of the wheels are slipping, this is used to prevent gear switching
 	bool wheels_slipping = false;
-	for (const DrivenWheel &w : driven_wheels)
+	for (const DrivenWheel& w : driven_wheels)
 		wheels_slipping |= w.mClutchToWheelTorqueRatio > 0.0f && (!w.mWheel->HasContact() || w.mWheel->mLongitudinalSlip > 0.1f);
 
 	// Only allow shifting up when we're not slipping and we're increasing our RPM.
@@ -620,10 +620,10 @@ void WheeledVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 	mTransmission.Update(inDeltaTime, mEngine.GetCurrentRPM(), mForwardInput, can_shift_up);
 
 	// Braking
-	for (Wheel *w_base : wheels)
+	for (Wheel* w_base : wheels)
 	{
-		WheelWV *w = static_cast<WheelWV *>(w_base);
-		const WheelSettingsWV *settings = w->GetSettings();
+		WheelWV* w = static_cast<WheelWV*>(w_base);
+		const WheelSettingsWV* settings = w->GetSettings();
 
 		// Combine brake with hand brake torque
 		float brake_torque = mBrakeInput * settings->mMaxBrakeTorque + mHandBrakeInput * settings->mMaxHandBrakeTorque;
@@ -659,15 +659,15 @@ bool WheeledVehicleController::SolveLongitudinalAndLateralConstraints(float inDe
 {
 	bool impulse = false;
 
-	float *max_lateral_friction_impulse = (float *)JPH_STACK_ALLOC(mConstraint.GetWheels().size() * sizeof(float));
+	float* max_lateral_friction_impulse = (float*)JPH_STACK_ALLOC(mConstraint.GetWheels().size() * sizeof(float));
 
 	uint wheel_index = 0;
-	for (Wheel *w_base : mConstraint.GetWheels())
+	for (Wheel* w_base : mConstraint.GetWheels())
 	{
 		if (w_base->HasContact())
 		{
-			WheelWV *w = static_cast<WheelWV *>(w_base);
-			const WheelSettingsWV *settings = w->GetSettings();
+			WheelWV* w = static_cast<WheelWV*>(w_base);
+			const WheelSettingsWV* settings = w->GetSettings();
 
 			// Calculate max impulse that we can apply on the ground
 			float max_longitudinal_friction_impulse;
@@ -722,11 +722,11 @@ bool WheeledVehicleController::SolveLongitudinalAndLateralConstraints(float inDe
 	}
 
 	wheel_index = 0;
-	for (Wheel *w_base : mConstraint.GetWheels())
+	for (Wheel* w_base : mConstraint.GetWheels())
 	{
 		if (w_base->HasContact())
 		{
-			WheelWV *w = static_cast<WheelWV *>(w_base);
+			WheelWV* w = static_cast<WheelWV*>(w_base);
 
 			// Lateral friction
 			float max_lateral_impulse = max_lateral_friction_impulse[wheel_index];
@@ -740,12 +740,12 @@ bool WheeledVehicleController::SolveLongitudinalAndLateralConstraints(float inDe
 
 #ifdef JPH_DEBUG_RENDERER
 
-void WheeledVehicleController::Draw(DebugRenderer *inRenderer) const
+void WheeledVehicleController::Draw(DebugRenderer* inRenderer) const
 {
 	float constraint_size = mConstraint.GetDrawConstraintSize();
 
 	// Draw RPM
-	Body *body = mConstraint.GetVehicleBody();
+	Body* body = mConstraint.GetVehicleBody();
 	Vec3 rpm_meter_up = body->GetRotation() * mConstraint.GetLocalUp();
 	RVec3 rpm_meter_pos = body->GetPosition() + body->GetRotation() * mRPMMeterPosition;
 	Vec3 rpm_meter_fwd = body->GetRotation() * mConstraint.GetLocalForward();
@@ -762,17 +762,17 @@ void WheeledVehicleController::Draw(DebugRenderer *inRenderer) const
 
 	// Draw current vehicle state
 	String status = StringFormat("Forward: %.1f, Right: %.1f\nBrake: %.1f, HandBrake: %.1f\n"
-								 "Gear: %d, Clutch: %.1f\nEngineRPM: %.0f, V: %.1f km/h",
-								 (double)mForwardInput, (double)mRightInput, (double)mBrakeInput, (double)mHandBrakeInput,
-								 mTransmission.GetCurrentGear(), (double)mTransmission.GetClutchFriction(), (double)mEngine.GetCurrentRPM(), (double)body->GetLinearVelocity().Length() * 3.6);
+		"Gear: %d, Clutch: %.1f\nEngineRPM: %.0f, V: %.1f km/h",
+		(double)mForwardInput, (double)mRightInput, (double)mBrakeInput, (double)mHandBrakeInput,
+		mTransmission.GetCurrentGear(), (double)mTransmission.GetClutchFriction(), (double)mEngine.GetCurrentRPM(), (double)body->GetLinearVelocity().Length() * 3.6);
 	inRenderer->DrawText3D(body->GetPosition(), status, Color::sWhite, constraint_size);
 
 	RMat44 body_transform = body->GetWorldTransform();
 
-	for (const Wheel *w_base : mConstraint.GetWheels())
+	for (const Wheel* w_base : mConstraint.GetWheels())
 	{
-		const WheelWV *w = static_cast<const WheelWV *>(w_base);
-		const WheelSettings *settings = w->GetSettings();
+		const WheelWV* w = static_cast<const WheelWV*>(w_base);
+		const WheelSettings* settings = w->GetSettings();
 
 		// Calculate where the suspension attaches to the body in world space
 		RVec3 ws_position = body_transform * settings->mPosition;
@@ -786,7 +786,7 @@ void WheeledVehicleController::Draw(DebugRenderer *inRenderer) const
 
 		// Draw current length
 		RVec3 wheel_pos = ws_position + ws_direction * w->GetSuspensionLength();
-		inRenderer->DrawMarker(wheel_pos, w->GetSuspensionLength() < settings->mSuspensionMinLength? Color::sRed : Color::sGreen, constraint_size);
+		inRenderer->DrawMarker(wheel_pos, w->GetSuspensionLength() < settings->mSuspensionMinLength ? Color::sRed : Color::sGreen, constraint_size);
 
 		// Draw wheel basis
 		Vec3 wheel_forward, wheel_up, wheel_right;
@@ -803,7 +803,7 @@ void WheeledVehicleController::Draw(DebugRenderer *inRenderer) const
 		// Draw wheel
 		RMat44 wheel_transform(Vec4(wheel_up, 0.0f), Vec4(wheel_right, 0.0f), Vec4(wheel_forward, 0.0f), wheel_pos);
 		wheel_transform.SetRotation(wheel_transform.GetRotation() * Mat44::sRotationY(-w->GetRotationAngle()));
-		inRenderer->DrawCylinder(wheel_transform, settings->mWidth * 0.5f, settings->mRadius, w->GetSuspensionLength() <= settings->mSuspensionMinLength? Color::sRed : Color::sGreen, DebugRenderer::ECastShadow::Off, DebugRenderer::EDrawMode::Wireframe);
+		inRenderer->DrawCylinder(wheel_transform, settings->mWidth * 0.5f, settings->mRadius, w->GetSuspensionLength() <= settings->mSuspensionMinLength ? Color::sRed : Color::sGreen, DebugRenderer::ECastShadow::Off, DebugRenderer::EDrawMode::Wireframe);
 
 		if (w->HasContact())
 		{
@@ -824,7 +824,7 @@ void WheeledVehicleController::Draw(DebugRenderer *inRenderer) const
 
 #endif // JPH_DEBUG_RENDERER
 
-void WheeledVehicleController::SaveState(StateRecorder &inStream) const
+void WheeledVehicleController::SaveState(StateRecorder& inStream) const
 {
 	inStream.Write(mForwardInput);
 	inStream.Write(mRightInput);
@@ -836,7 +836,7 @@ void WheeledVehicleController::SaveState(StateRecorder &inStream) const
 	mTransmission.SaveState(inStream);
 }
 
-void WheeledVehicleController::RestoreState(StateRecorder &inStream)
+void WheeledVehicleController::RestoreState(StateRecorder& inStream)
 {
 	inStream.Read(mForwardInput);
 	inStream.Read(mRightInput);

@@ -10,7 +10,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -19,24 +19,24 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(SwingTwistConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(SwingTwistConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(SwingTwistConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPosition1)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistAxis1)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPlaneAxis1)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPosition2)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistAxis2)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPlaneAxis2)
-	JPH_ADD_ENUM_ATTRIBUTE(SwingTwistConstraintSettings, mSwingType)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mNormalHalfConeAngle)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPlaneHalfConeAngle)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistMinAngle)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistMaxAngle)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mMaxFrictionTorque)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mSwingMotorSettings)
-	JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistMotorSettings)
+		JPH_ADD_ENUM_ATTRIBUTE(SwingTwistConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPosition1)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistAxis1)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPlaneAxis1)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPosition2)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistAxis2)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPlaneAxis2)
+		JPH_ADD_ENUM_ATTRIBUTE(SwingTwistConstraintSettings, mSwingType)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mNormalHalfConeAngle)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mPlaneHalfConeAngle)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistMinAngle)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistMaxAngle)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mMaxFrictionTorque)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mSwingMotorSettings)
+		JPH_ADD_ATTRIBUTE(SwingTwistConstraintSettings, mTwistMotorSettings)
 }
 
-void SwingTwistConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void SwingTwistConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -57,7 +57,7 @@ void SwingTwistConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	mTwistMotorSettings.SaveBinaryState(inStream);
 }
 
-void SwingTwistConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void SwingTwistConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -78,7 +78,7 @@ void SwingTwistConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	mTwistMotorSettings.RestoreBinaryState(inStream);
 }
 
-TwoBodyConstraint *SwingTwistConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* SwingTwistConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new SwingTwistConstraint(inBody1, inBody2, *this);
 }
@@ -89,7 +89,7 @@ void SwingTwistConstraint::UpdateLimits()
 	mSwingTwistConstraintPart.SetLimits(mTwistMinAngle, mTwistMaxAngle, -mPlaneHalfConeAngle, mPlaneHalfConeAngle, -mNormalHalfConeAngle, mNormalHalfConeAngle);
 }
 
-SwingTwistConstraint::SwingTwistConstraint(Body &inBody1, Body &inBody2, const SwingTwistConstraintSettings &inSettings) :
+SwingTwistConstraint::SwingTwistConstraint(Body& inBody1, Body& inBody2, const SwingTwistConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings),
 	mNormalHalfConeAngle(inSettings.mNormalHalfConeAngle),
 	mPlaneHalfConeAngle(inSettings.mPlaneHalfConeAngle),
@@ -130,7 +130,7 @@ SwingTwistConstraint::SwingTwistConstraint(Body &inBody1, Body &inBody2, const S
 	UpdateLimits();
 }
 
-void SwingTwistConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaCOM)
+void SwingTwistConstraint::NotifyShapeChanged(const BodyID& inBodyID, Vec3Arg inDeltaCOM)
 {
 	if (mBody1->GetID() == inBodyID)
 		mLocalSpacePosition1 -= inDeltaCOM;
@@ -165,7 +165,7 @@ void SwingTwistConstraint::SetSwingMotorState(EMotorState inState)
 		mSwingMotorState = inState;
 
 		// Ensure that warm starting next frame doesn't apply any impulses (motor parts are repurposed for different modes)
-		for (AngleConstraintPart &c : mMotorConstraintPart)
+		for (AngleConstraintPart& c : mMotorConstraintPart)
 			c.Deactivate();
 	}
 }
@@ -223,7 +223,7 @@ void SwingTwistConstraint::SetupVelocityConstraint(float inDeltaTime)
 		if (mSwingMotorState == EMotorState::Position || mTwistMotorState == EMotorState::Position)
 		{
 			// Get target orientation along the shortest path from q
-			Quat target_orientation = q.Dot(mTargetOrientation) > 0.0f? mTargetOrientation : -mTargetOrientation;
+			Quat target_orientation = q.Dot(mTargetOrientation) > 0.0f ? mTargetOrientation : -mTargetOrientation;
 
 			// The definition of the constraint rotation q:
 			// R2 * ConstraintToBody2 = R1 * ConstraintToBody1 * q (1)
@@ -265,7 +265,7 @@ void SwingTwistConstraint::SetupVelocityConstraint(float inDeltaTime)
 			else
 			{
 				// Disable friction
-				for (AngleConstraintPart &c : mMotorConstraintPart)
+				for (AngleConstraintPart& c : mMotorConstraintPart)
 					c.Deactivate();
 			}
 			break;
@@ -324,14 +324,14 @@ void SwingTwistConstraint::SetupVelocityConstraint(float inDeltaTime)
 	else
 	{
 		// Disable rotation motor
-		for (AngleConstraintPart &c : mMotorConstraintPart)
+		for (AngleConstraintPart& c : mMotorConstraintPart)
 			c.Deactivate();
 	}
 }
 
 void SwingTwistConstraint::ResetWarmStart()
 {
-	for (AngleConstraintPart &c : mMotorConstraintPart)
+	for (AngleConstraintPart& c : mMotorConstraintPart)
 		c.Deactivate();
 	mSwingTwistConstraintPart.Deactivate();
 	mPointConstraintPart.Deactivate();
@@ -340,7 +340,7 @@ void SwingTwistConstraint::ResetWarmStart()
 void SwingTwistConstraint::WarmStartVelocityConstraint(float inWarmStartImpulseRatio)
 {
 	// Warm starting: Apply previous frame impulse
-	for (AngleConstraintPart &c : mMotorConstraintPart)
+	for (AngleConstraintPart& c : mMotorConstraintPart)
 		c.WarmStart(*mBody1, *mBody2, inWarmStartImpulseRatio);
 	mSwingTwistConstraintPart.WarmStart(*mBody1, *mBody2, inWarmStartImpulseRatio);
 	mPointConstraintPart.WarmStart(*mBody1, *mBody2, inWarmStartImpulseRatio);
@@ -422,7 +422,7 @@ bool SwingTwistConstraint::SolvePositionConstraint(float inDeltaTime, float inBa
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void SwingTwistConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void SwingTwistConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	// Get constraint properties in world space
 	RMat44 transform1 = mBody1->GetCenterOfMassTransform();
@@ -455,7 +455,7 @@ void SwingTwistConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 	}
 }
 
-void SwingTwistConstraint::DrawConstraintLimits(DebugRenderer *inRenderer) const
+void SwingTwistConstraint::DrawConstraintLimits(DebugRenderer* inRenderer) const
 {
 	// Get matrix that transforms from constraint space to world space
 	RMat44 constraint_to_world = RMat44::sRotationTranslation(mBody1->GetRotation() * mConstraintToBody1, mBody1->GetCenterOfMassTransform() * mLocalSpacePosition1);
@@ -469,13 +469,13 @@ void SwingTwistConstraint::DrawConstraintLimits(DebugRenderer *inRenderer) const
 }
 #endif // JPH_DEBUG_RENDERER
 
-void SwingTwistConstraint::SaveState(StateRecorder &inStream) const
+void SwingTwistConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
 	mPointConstraintPart.SaveState(inStream);
 	mSwingTwistConstraintPart.SaveState(inStream);
-	for (const AngleConstraintPart &c : mMotorConstraintPart)
+	for (const AngleConstraintPart& c : mMotorConstraintPart)
 		c.SaveState(inStream);
 
 	inStream.Write(mSwingMotorState);
@@ -484,13 +484,13 @@ void SwingTwistConstraint::SaveState(StateRecorder &inStream) const
 	inStream.Write(mTargetOrientation);
 }
 
-void SwingTwistConstraint::RestoreState(StateRecorder &inStream)
+void SwingTwistConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
 	mPointConstraintPart.RestoreState(inStream);
 	mSwingTwistConstraintPart.RestoreState(inStream);
-	for (AngleConstraintPart &c : mMotorConstraintPart)
+	for (AngleConstraintPart& c : mMotorConstraintPart)
 		c.RestoreState(inStream);
 
 	inStream.Read(mSwingMotorState);
@@ -501,7 +501,7 @@ void SwingTwistConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> SwingTwistConstraint::GetConstraintSettings() const
 {
-	SwingTwistConstraintSettings *settings = new SwingTwistConstraintSettings;
+	SwingTwistConstraintSettings* settings = new SwingTwistConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mPosition1 = RVec3(mLocalSpacePosition1);

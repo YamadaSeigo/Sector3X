@@ -19,93 +19,93 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::Vertex)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Vertex, mPosition)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Vertex, mVelocity)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Vertex, mInvMass)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Vertex, mVelocity)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Vertex, mInvMass)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::Face)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Face, mVertex)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Face, mMaterialIndex)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Face, mMaterialIndex)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::Edge)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Edge, mVertex)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Edge, mRestLength)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Edge, mCompliance)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Edge, mRestLength)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Edge, mCompliance)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::RodStretchShear)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodStretchShear, mVertex)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodStretchShear, mLength)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodStretchShear, mInvMass)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodStretchShear, mCompliance)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodStretchShear, mBishop)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodStretchShear, mLength)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodStretchShear, mInvMass)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodStretchShear, mCompliance)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodStretchShear, mBishop)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::RodBendTwist)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodBendTwist, mRod)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodBendTwist, mCompliance)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodBendTwist, mOmega0)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodBendTwist, mCompliance)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::RodBendTwist, mOmega0)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::DihedralBend)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::DihedralBend, mVertex)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::DihedralBend, mCompliance)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::DihedralBend, mInitialAngle)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::DihedralBend, mCompliance)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::DihedralBend, mInitialAngle)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::Volume)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Volume, mVertex)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Volume, mSixRestVolume)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Volume, mCompliance)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Volume, mSixRestVolume)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Volume, mCompliance)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::InvBind)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::InvBind, mJointIndex)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::InvBind, mInvBind)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::InvBind, mInvBind)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::SkinWeight)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::SkinWeight, mInvBindIndex)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::SkinWeight, mWeight)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::SkinWeight, mWeight)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::Skinned)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Skinned, mVertex)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Skinned, mWeights)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Skinned, mMaxDistance)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Skinned, mBackStopDistance)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Skinned, mBackStopRadius)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Skinned, mWeights)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Skinned, mMaxDistance)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Skinned, mBackStopDistance)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::Skinned, mBackStopRadius)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings::LRA)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::LRA, mVertex)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::LRA, mMaxDistance)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings::LRA, mMaxDistance)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodySharedSettings)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mVertices)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mFaces)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mEdgeConstraints)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mDihedralBendConstraints)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mVolumeConstraints)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mSkinnedConstraints)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mInvBindMatrices)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mLRAConstraints)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mRodStretchShearConstraints)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mRodBendTwistConstraints)
-	JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mMaterials)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mFaces)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mEdgeConstraints)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mDihedralBendConstraints)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mVolumeConstraints)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mSkinnedConstraints)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mInvBindMatrices)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mLRAConstraints)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mRodStretchShearConstraints)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mRodBendTwistConstraints)
+		JPH_ADD_ATTRIBUTE(SoftBodySharedSettings, mMaterials)
 }
 
 void SoftBodySharedSettings::CalculateClosestKinematic()
@@ -120,12 +120,12 @@ void SoftBodySharedSettings::CalculateClosestKinematic()
 	// Create a list of connected vertices
 	Array<Array<uint32>> connectivity;
 	connectivity.resize(mVertices.size());
-	for (const Edge &e : mEdgeConstraints)
+	for (const Edge& e : mEdgeConstraints)
 	{
 		connectivity[e.mVertex[0]].push_back(e.mVertex[1]);
 		connectivity[e.mVertex[1]].push_back(e.mVertex[0]);
 	}
-	for (const RodStretchShear &r : mRodStretchShearConstraints)
+	for (const RodStretchShear& r : mRodStretchShearConstraints)
 	{
 		connectivity[r.mVertex[0]].push_back(r.mVertex[1]);
 		connectivity[r.mVertex[1]].push_back(r.mVertex[0]);
@@ -138,7 +138,7 @@ void SoftBodySharedSettings::CalculateClosestKinematic()
 	struct Open
 	{
 		// Order so that we get the shortest distance first
-		bool	operator < (const Open &inRHS) const
+		bool	operator < (const Open& inRHS) const
 		{
 			return mDistance > inRHS.mDistance;
 		}
@@ -161,34 +161,34 @@ void SoftBodySharedSettings::CalculateClosestKinematic()
 
 	// Visit all vertices remembering the closest kinematic vertex and its distance
 	JPH_IF_ENABLE_ASSERTS(float last_closest = 0.0f;)
-	while (!to_visit.empty())
-	{
-		// Pop element from the open list
-		BinaryHeapPop(to_visit.begin(), to_visit.end(), std::less<Open> { });
-		Open current = to_visit.back();
-		to_visit.pop_back();
-		JPH_ASSERT(current.mDistance >= last_closest);
-		JPH_IF_ENABLE_ASSERTS(last_closest = current.mDistance;)
-
-		// Loop through all of its connected vertices
-		for (uint32 v : connectivity[current.mVertex])
+		while (!to_visit.empty())
 		{
-			// Calculate distance from the current vertex to this target vertex and check if it is smaller
-			float new_distance = current.mDistance + (Vec3(mVertices[v].mPosition) - Vec3(mVertices[current.mVertex].mPosition)).Length();
-			if (new_distance < mClosestKinematic[v].mDistance)
-			{
-				// Remember new closest vertex
-				mClosestKinematic[v].mVertex = mClosestKinematic[current.mVertex].mVertex;
-				mClosestKinematic[v].mHops = mClosestKinematic[current.mVertex].mHops + 1;
-				mClosestKinematic[v].mDistance = new_distance;
-				to_visit.push_back({ v, new_distance });
-				BinaryHeapPush(to_visit.begin(), to_visit.end(), std::less<Open> { });
-			}
+			// Pop element from the open list
+			BinaryHeapPop(to_visit.begin(), to_visit.end(), std::less<Open> { });
+			Open current = to_visit.back();
+			to_visit.pop_back();
+			JPH_ASSERT(current.mDistance >= last_closest);
+			JPH_IF_ENABLE_ASSERTS(last_closest = current.mDistance;)
+
+				// Loop through all of its connected vertices
+				for (uint32 v : connectivity[current.mVertex])
+				{
+					// Calculate distance from the current vertex to this target vertex and check if it is smaller
+					float new_distance = current.mDistance + (Vec3(mVertices[v].mPosition) - Vec3(mVertices[current.mVertex].mPosition)).Length();
+					if (new_distance < mClosestKinematic[v].mDistance)
+					{
+						// Remember new closest vertex
+						mClosestKinematic[v].mVertex = mClosestKinematic[current.mVertex].mVertex;
+						mClosestKinematic[v].mHops = mClosestKinematic[current.mVertex].mHops + 1;
+						mClosestKinematic[v].mDistance = new_distance;
+						to_visit.push_back({ v, new_distance });
+						BinaryHeapPush(to_visit.begin(), to_visit.end(), std::less<Open> { });
+					}
+				}
 		}
-	}
 }
 
-void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexAttributes, uint inVertexAttributesLength, EBendType inBendType, float inAngleTolerance)
+void SoftBodySharedSettings::CreateConstraints(const VertexAttributes* inVertexAttributes, uint inVertexAttributesLength, EBendType inBendType, float inAngleTolerance)
 {
 	struct EdgeHelper
 	{
@@ -199,7 +199,7 @@ void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexA
 	// Create list of all edges
 	Array<EdgeHelper> edges;
 	edges.reserve(mFaces.size() * 3);
-	for (const Face &f : mFaces)
+	for (const Face& f : mFaces)
 		for (int i = 0; i < 3; ++i)
 		{
 			uint32 v0 = f.mVertex[i];
@@ -213,7 +213,7 @@ void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexA
 		}
 
 	// Sort the edges
-	QuickSort(edges.begin(), edges.end(), [](const EdgeHelper &inLHS, const EdgeHelper &inRHS) { return inLHS.mVertex[0] < inRHS.mVertex[0] || (inLHS.mVertex[0] == inRHS.mVertex[0] && inLHS.mVertex[1] < inRHS.mVertex[1]); });
+	QuickSort(edges.begin(), edges.end(), [](const EdgeHelper& inLHS, const EdgeHelper& inRHS) { return inLHS.mVertex[0] < inRHS.mVertex[0] || (inLHS.mVertex[0] == inRHS.mVertex[0] && inLHS.mVertex[1] < inRHS.mVertex[1]); });
 
 	// Only add edges if one of the vertices is movable
 	auto add_edge = [this](uint32 inVtx1, uint32 inVtx2, float inCompliance1, float inCompliance2) {
@@ -228,12 +228,12 @@ void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexA
 			JPH_ASSERT(temp_edge.mRestLength > 0.0f);
 			mEdgeConstraints.push_back(temp_edge);
 		}
-	};
+		};
 
 	// Helper function to get the attributes of a vertex
 	auto attr = [inVertexAttributes, inVertexAttributesLength](uint32 inVertex) {
 		return inVertexAttributes[min(inVertex, inVertexAttributesLength - 1)];
-	};
+		};
 
 	// Create the constraints
 	float sq_sin_tolerance = Square(Sin(inAngleTolerance));
@@ -242,11 +242,11 @@ void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexA
 	mEdgeConstraints.reserve(edges.size());
 	for (Array<EdgeHelper>::size_type i = 0; i < edges.size(); ++i)
 	{
-		const EdgeHelper &e0 = edges[i];
+		const EdgeHelper& e0 = edges[i];
 
 		// Get attributes for the vertices of the edge
-		const VertexAttributes &a0 = attr(e0.mVertex[0]);
-		const VertexAttributes &a1 = attr(e0.mVertex[1]);
+		const VertexAttributes& a0 = attr(e0.mVertex[0]);
+		const VertexAttributes& a1 = attr(e0.mVertex[1]);
 
 		// Flag that indicates if this edge is a shear edge (if 2 triangles form a quad-like shape and this edge is on the diagonal)
 		bool is_shear = false;
@@ -254,16 +254,16 @@ void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexA
 		// Test if there are any shared edges
 		for (Array<EdgeHelper>::size_type j = i + 1; j < edges.size(); ++j)
 		{
-			const EdgeHelper &e1 = edges[j];
+			const EdgeHelper& e1 = edges[j];
 			if (e0.mVertex[0] == e1.mVertex[0] && e0.mVertex[1] == e1.mVertex[1])
 			{
 				// Get opposing vertices
-				const Face &f0 = mFaces[e0.mEdgeIdx / 3];
-				const Face &f1 = mFaces[e1.mEdgeIdx / 3];
+				const Face& f0 = mFaces[e0.mEdgeIdx / 3];
+				const Face& f1 = mFaces[e1.mEdgeIdx / 3];
 				uint32 vopposite0 = f0.mVertex[(e0.mEdgeIdx + 2) % 3];
 				uint32 vopposite1 = f1.mVertex[(e1.mEdgeIdx + 2) % 3];
-				const VertexAttributes &a_opposite0 = attr(vopposite0);
-				const VertexAttributes &a_opposite1 = attr(vopposite1);
+				const VertexAttributes& a_opposite0 = attr(vopposite0);
+				const VertexAttributes& a_opposite1 = attr(vopposite1);
 
 				// If the opposite vertices happen to be the same vertex then we have 2 triangles back to back and we skip creating shear / bend constraints
 				if (vopposite0 == vopposite1)
@@ -322,7 +322,7 @@ void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexA
 		}
 
 		// Create a edge constraint for the current edge
-		add_edge(e0.mVertex[0], e0.mVertex[1], is_shear? a0.mShearCompliance : a0.mCompliance, is_shear? a1.mShearCompliance : a1.mCompliance);
+		add_edge(e0.mVertex[0], e0.mVertex[1], is_shear ? a0.mShearCompliance : a0.mCompliance, is_shear ? a1.mShearCompliance : a1.mCompliance);
 	}
 	mEdgeConstraints.shrink_to_fit();
 
@@ -331,7 +331,7 @@ void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexA
 
 	// Check if any vertices have LRA constraints
 	bool has_lra_constraints = false;
-	for (const VertexAttributes *va = inVertexAttributes; va < inVertexAttributes + inVertexAttributesLength; ++va)
+	for (const VertexAttributes* va = inVertexAttributes; va < inVertexAttributes + inVertexAttributesLength; ++va)
 		if (va->mLRAType != ELRAType::None)
 		{
 			has_lra_constraints = true;
@@ -351,7 +351,7 @@ void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexA
 				if (closest != 0xffffffff)
 				{
 					// Check which LRA constraint to create
-					const VertexAttributes &va = attr(v);
+					const VertexAttributes& va = attr(v);
 					switch (va.mLRAType)
 					{
 					case ELRAType::None:
@@ -372,7 +372,7 @@ void SoftBodySharedSettings::CreateConstraints(const VertexAttributes *inVertexA
 
 void SoftBodySharedSettings::CalculateEdgeLengths()
 {
-	for (Edge &e : mEdgeConstraints)
+	for (Edge& e : mEdgeConstraints)
 	{
 		JPH_ASSERT(e.mVertex[0] != e.mVertex[1], "Edges need to connect 2 different vertices");
 		e.mRestLength = (Vec3(mVertices[e.mVertex[1]].mPosition) - Vec3(mVertices[e.mVertex[0]].mPosition)).Length();
@@ -385,7 +385,7 @@ void SoftBodySharedSettings::CalculateRodProperties()
 	// Mark connections through bend twist constraints
 	Array<Array<uint32>> connections;
 	connections.resize(mRodStretchShearConstraints.size());
-	for (const RodBendTwist &c : mRodBendTwistConstraints)
+	for (const RodBendTwist& c : mRodBendTwistConstraints)
 	{
 		JPH_ASSERT(c.mRod[0] != c.mRod[1], "A bend twist constraint needs to be attached to different rods");
 		connections[c.mRod[1]].push_back(c.mRod[0]);
@@ -402,7 +402,7 @@ void SoftBodySharedSettings::CalculateRodProperties()
 	stack.reserve(mRodStretchShearConstraints.size());
 	for (uint32 r0_idx = 0; r0_idx < mRodStretchShearConstraints.size(); ++r0_idx)
 	{
-		RodStretchShear &r0 = mRodStretchShearConstraints[r0_idx];
+		RodStretchShear& r0 = mRodStretchShearConstraints[r0_idx];
 
 		// Do not calculate a 2nd time
 		if (r0.mBishop == Quat::sZero())
@@ -432,8 +432,8 @@ void SoftBodySharedSettings::CalculateRodProperties()
 				uint32 r2_idx = stack.back().mTo;
 				stack.pop_back();
 
-				const RodStretchShear &r1 = mRodStretchShearConstraints[r1_idx];
-				RodStretchShear &r2 = mRodStretchShearConstraints[r2_idx];
+				const RodStretchShear& r1 = mRodStretchShearConstraints[r1_idx];
+				RodStretchShear& r2 = mRodStretchShearConstraints[r2_idx];
 
 				// Get the normal and tangent of the first rod's Bishop frame (that was already calculated)
 				Mat44 r1_frame = Mat44::sRotation(r1.mBishop);
@@ -471,20 +471,20 @@ void SoftBodySharedSettings::CalculateRodProperties()
 	}
 
 	// Calculate inverse mass for all rods by taking the minimum inverse mass (aka the heaviest vertex) of both vertices
-	for (RodStretchShear &r : mRodStretchShearConstraints)
+	for (RodStretchShear& r : mRodStretchShearConstraints)
 	{
 		JPH_ASSERT(r.mVertex[0] != r.mVertex[1], "A rod stretch shear constraint requires two different vertices");
 		r.mInvMass = min(mVertices[r.mVertex[0]].mInvMass, mVertices[r.mVertex[1]].mInvMass);
 	}
 
 	// Calculate the initial rotation between the rods
-	for (RodBendTwist &r : mRodBendTwistConstraints)
+	for (RodBendTwist& r : mRodBendTwistConstraints)
 		r.mOmega0 = (mRodStretchShearConstraints[r.mRod[0]].mBishop.Conjugated() * mRodStretchShearConstraints[r.mRod[1]].mBishop).Normalized();
 }
 
 void SoftBodySharedSettings::CalculateLRALengths(float inMaxDistanceMultiplier)
 {
-	for (LRA &l : mLRAConstraints)
+	for (LRA& l : mLRAConstraints)
 	{
 		JPH_ASSERT(l.mVertex[0] != l.mVertex[1], "LRA constraints need to connect 2 different vertices");
 		l.mMaxDistance = inMaxDistanceMultiplier * (Vec3(mVertices[l.mVertex[1]].mPosition) - Vec3(mVertices[l.mVertex[0]].mPosition)).Length();
@@ -494,7 +494,7 @@ void SoftBodySharedSettings::CalculateLRALengths(float inMaxDistanceMultiplier)
 
 void SoftBodySharedSettings::CalculateBendConstraintConstants()
 {
-	for (DihedralBend &b : mDihedralBendConstraints)
+	for (DihedralBend& b : mDihedralBendConstraints)
 	{
 		JPH_ASSERT(b.mVertex[0] != b.mVertex[1] && b.mVertex[0] != b.mVertex[2] && b.mVertex[0] != b.mVertex[3]
 			&& b.mVertex[1] != b.mVertex[2] && b.mVertex[1] != b.mVertex[3]
@@ -537,7 +537,7 @@ void SoftBodySharedSettings::CalculateBendConstraintConstants()
 
 void SoftBodySharedSettings::CalculateVolumeConstraintVolumes()
 {
-	for (Volume &v : mVolumeConstraints)
+	for (Volume& v : mVolumeConstraints)
 	{
 		JPH_ASSERT(v.mVertex[0] != v.mVertex[1] && v.mVertex[0] != v.mVertex[2] && v.mVertex[0] != v.mVertex[3]
 			&& v.mVertex[1] != v.mVertex[2] && v.mVertex[1] != v.mVertex[3]
@@ -569,14 +569,14 @@ void SoftBodySharedSettings::CalculateSkinnedConstraintNormals()
 	using VertexIndexSet = UnorderedSet<uint32>;
 	VertexIndexSet skinned_vertices;
 	skinned_vertices.reserve(VertexIndexSet::size_type(mSkinnedConstraints.size()));
-	for (const Skinned &s : mSkinnedConstraints)
+	for (const Skinned& s : mSkinnedConstraints)
 		skinned_vertices.insert(s.mVertex);
 
 	// Now collect all faces that connect only to skinned vertices
 	using ConnectedFacesMap = UnorderedMap<uint32, VertexIndexSet>;
 	ConnectedFacesMap connected_faces;
 	connected_faces.reserve(ConnectedFacesMap::size_type(mVertices.size()));
-	for (const Face &f : mFaces)
+	for (const Face& f : mFaces)
 	{
 		// Must connect to only skinned vertices
 		bool valid = true;
@@ -592,14 +592,14 @@ void SoftBodySharedSettings::CalculateSkinnedConstraintNormals()
 
 	// Populate the list of connecting faces per skinned vertex
 	mSkinnedConstraintNormals.reserve(mFaces.size());
-	for (Skinned &s : mSkinnedConstraints)
+	for (Skinned& s : mSkinnedConstraints)
 	{
 		uint32 start = uint32(mSkinnedConstraintNormals.size());
 		JPH_ASSERT((start >> 24) == 0);
 		ConnectedFacesMap::const_iterator connected_faces_it = connected_faces.find(s.mVertex);
 		if (connected_faces_it != connected_faces.cend())
 		{
-			const VertexIndexSet &faces = connected_faces_it->second;
+			const VertexIndexSet& faces = connected_faces_it->second;
 			uint32 num = uint32(faces.size());
 			JPH_ASSERT(num < 256);
 			mSkinnedConstraintNormals.insert(mSkinnedConstraintNormals.end(), faces.begin(), faces.end());
@@ -612,7 +612,7 @@ void SoftBodySharedSettings::CalculateSkinnedConstraintNormals()
 	mSkinnedConstraintNormals.shrink_to_fit();
 }
 
-void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
+void SoftBodySharedSettings::Optimize(OptimizationResults& outResults)
 {
 	// Clear any previous results
 	mUpdateGroups.clear();
@@ -626,36 +626,36 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 	Array<Array<Connection>> connectivity;
 	connectivity.resize(mVertices.size());
 	auto add_connection = [&connectivity](uint inV1, uint inV2) {
-			for (int i = 0; i < 2; ++i)
-			{
-				bool found = false;
-				for (Connection &c : connectivity[inV1])
-					if (c.mVertex == inV2)
-					{
-						c.mCount++;
-						found = true;
-						break;
-					}
-				if (!found)
-					connectivity[inV1].push_back({ inV2, 1 });
+		for (int i = 0; i < 2; ++i)
+		{
+			bool found = false;
+			for (Connection& c : connectivity[inV1])
+				if (c.mVertex == inV2)
+				{
+					c.mCount++;
+					found = true;
+					break;
+				}
+			if (!found)
+				connectivity[inV1].push_back({ inV2, 1 });
 
-				std::swap(inV1, inV2);
-			}
+			std::swap(inV1, inV2);
+		}
 		};
-	for (const Edge &c : mEdgeConstraints)
+	for (const Edge& c : mEdgeConstraints)
 		add_connection(c.mVertex[0], c.mVertex[1]);
-	for (const LRA &c : mLRAConstraints)
+	for (const LRA& c : mLRAConstraints)
 		add_connection(c.mVertex[0], c.mVertex[1]);
-	for (const RodStretchShear &c : mRodStretchShearConstraints)
+	for (const RodStretchShear& c : mRodStretchShearConstraints)
 		add_connection(c.mVertex[0], c.mVertex[1]);
-	for (const RodBendTwist &c : mRodBendTwistConstraints)
+	for (const RodBendTwist& c : mRodBendTwistConstraints)
 	{
 		add_connection(mRodStretchShearConstraints[c.mRod[0]].mVertex[0], mRodStretchShearConstraints[c.mRod[1]].mVertex[0]);
 		add_connection(mRodStretchShearConstraints[c.mRod[0]].mVertex[1], mRodStretchShearConstraints[c.mRod[1]].mVertex[0]);
 		add_connection(mRodStretchShearConstraints[c.mRod[0]].mVertex[0], mRodStretchShearConstraints[c.mRod[1]].mVertex[1]);
 		add_connection(mRodStretchShearConstraints[c.mRod[0]].mVertex[1], mRodStretchShearConstraints[c.mRod[1]].mVertex[1]);
 	}
-	for (const DihedralBend &c : mDihedralBendConstraints)
+	for (const DihedralBend& c : mDihedralBendConstraints)
 	{
 		add_connection(c.mVertex[0], c.mVertex[1]);
 		add_connection(c.mVertex[0], c.mVertex[2]);
@@ -664,7 +664,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		add_connection(c.mVertex[1], c.mVertex[3]);
 		add_connection(c.mVertex[2], c.mVertex[3]);
 	}
-	for (const Volume &c : mVolumeConstraints)
+	for (const Volume& c : mVolumeConstraints)
 	{
 		add_connection(c.mVertex[0], c.mVertex[1]);
 		add_connection(c.mVertex[0], c.mVertex[2]);
@@ -706,11 +706,11 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 
 		// Find the vertex that has the lowest value on the axis with the largest extent
 		uint current_vertex = UINT_MAX;
-		Float3 current_vertex_position { FLT_MAX, FLT_MAX, FLT_MAX };
+		Float3 current_vertex_position{ FLT_MAX, FLT_MAX, FLT_MAX };
 		for (uint i = 0; i < (uint)mVertices.size(); ++i)
 			if (group_idx[i] == -1)
 			{
-				const Float3 &vertex_position = mVertices[i].mPosition;
+				const Float3& vertex_position = mVertices[i].mPosition;
 				float max_axis_value = vertex_position[max_axis];
 				float mid_axis_value = vertex_position[mid_axis];
 				float min_axis_value = vertex_position[min_axis];
@@ -740,14 +740,14 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 			uint best_num_connections = 0;
 			float best_dist_sq = FLT_MAX;
 			for (uint i = 0; i < (uint)current_group.size(); ++i) // For all vertices in the current group
-				for (const Connection &c : connectivity[current_group[i]]) // For all connections to other vertices
+				for (const Connection& c : connectivity[current_group[i]]) // For all connections to other vertices
 				{
 					uint v = c.mVertex;
 					if (group_idx[v] == -1) // Ungrouped vertices only
 					{
 						// Count the number of connections to this group
 						uint num_connections = 0;
-						for (const Connection &v2 : connectivity[v])
+						for (const Connection& v2 : connectivity[v])
 							if (group_idx[v2.mVertex] == current_group_idx)
 								num_connections += v2.mCount;
 
@@ -817,7 +817,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 	};
 	Array<Group> groups;
 	groups.resize(current_group_idx + 1); // + non parallel group
-	for (const Edge &e : mEdgeConstraints)
+	for (const Edge& e : mEdgeConstraints)
 	{
 		int g1 = group_idx[e.mVertex[0]];
 		int g2 = group_idx[e.mVertex[1]];
@@ -827,7 +827,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		else // In different groups -> parallel group
 			groups.back().mEdgeConstraints.push_back(uint(&e - mEdgeConstraints.data()));
 	}
-	for (const LRA &l : mLRAConstraints)
+	for (const LRA& l : mLRAConstraints)
 	{
 		int g1 = group_idx[l.mVertex[0]];
 		int g2 = group_idx[l.mVertex[1]];
@@ -837,7 +837,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		else // In different groups -> parallel group
 			groups.back().mLRAConstraints.push_back(uint(&l - mLRAConstraints.data()));
 	}
-	for (const RodStretchShear &r : mRodStretchShearConstraints)
+	for (const RodStretchShear& r : mRodStretchShearConstraints)
 	{
 		int g1 = group_idx[r.mVertex[0]];
 		int g2 = group_idx[r.mVertex[1]];
@@ -847,7 +847,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		else // In different groups -> parallel group
 			groups.back().mRodStretchShearConstraints.push_back(uint(&r - mRodStretchShearConstraints.data()));
 	}
-	for (const RodBendTwist &r : mRodBendTwistConstraints)
+	for (const RodBendTwist& r : mRodBendTwistConstraints)
 	{
 		int g1 = group_idx[mRodStretchShearConstraints[r.mRod[0]].mVertex[0]];
 		int g2 = group_idx[mRodStretchShearConstraints[r.mRod[0]].mVertex[1]];
@@ -859,7 +859,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		else // In different groups -> parallel group
 			groups.back().mRodBendTwistConstraints.push_back(uint(&r - mRodBendTwistConstraints.data()));
 	}
-	for (const DihedralBend &d : mDihedralBendConstraints)
+	for (const DihedralBend& d : mDihedralBendConstraints)
 	{
 		int g1 = group_idx[d.mVertex[0]];
 		int g2 = group_idx[d.mVertex[1]];
@@ -871,7 +871,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		else // In different groups -> parallel group
 			groups.back().mDihedralBendConstraints.push_back(uint(&d - mDihedralBendConstraints.data()));
 	}
-	for (const Volume &v : mVolumeConstraints)
+	for (const Volume& v : mVolumeConstraints)
 	{
 		int g1 = group_idx[v.mVertex[0]];
 		int g2 = group_idx[v.mVertex[1]];
@@ -883,7 +883,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		else // In different groups -> parallel group
 			groups.back().mVolumeConstraints.push_back(uint(&v - mVolumeConstraints.data()));
 	}
-	for (const Skinned &s : mSkinnedConstraints)
+	for (const Skinned& s : mSkinnedConstraints)
 	{
 		int g1 = group_idx[s.mVertex];
 		JPH_ASSERT(g1 >= 0);
@@ -891,19 +891,19 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 	}
 
 	// Sort the parallel groups from big to small (this means the big groups will be scheduled first and have more time to complete)
-	QuickSort(groups.begin(), groups.end() - 1, [](const Group &inLHS, const Group &inRHS) { return inLHS.GetSize() > inRHS.GetSize(); });
+	QuickSort(groups.begin(), groups.end() - 1, [](const Group& inLHS, const Group& inRHS) { return inLHS.GetSize() > inRHS.GetSize(); });
 
 	// Make sure we know the closest kinematic vertex so we can sort
 	CalculateClosestKinematic();
 
 	// Sort within each group
-	for (Group &group : groups)
+	for (Group& group : groups)
 	{
 		// Sort the edge constraints
 		QuickSort(group.mEdgeConstraints.begin(), group.mEdgeConstraints.end(), [this](uint inLHS, uint inRHS)
 			{
-				const Edge &e1 = mEdgeConstraints[inLHS];
-				const Edge &e2 = mEdgeConstraints[inRHS];
+				const Edge& e1 = mEdgeConstraints[inLHS];
+				const Edge& e2 = mEdgeConstraints[inRHS];
 
 				// First sort so that the edge with the smallest distance to a kinematic vertex comes first
 				float d1 = min(mClosestKinematic[e1.mVertex[0]].mDistance, mClosestKinematic[e1.mVertex[1]].mDistance);
@@ -924,8 +924,8 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		// Sort the LRA constraints
 		QuickSort(group.mLRAConstraints.begin(), group.mLRAConstraints.end(), [this](uint inLHS, uint inRHS)
 			{
-				const LRA &l1 = mLRAConstraints[inLHS];
-				const LRA &l2 = mLRAConstraints[inRHS];
+				const LRA& l1 = mLRAConstraints[inLHS];
+				const LRA& l2 = mLRAConstraints[inRHS];
 
 				// First sort so that the longest constraint comes first (meaning the shortest constraint has the most influence on the end result)
 				// Most of the time there will be a single LRA constraint per vertex and since the LRA constraint only modifies a single vertex,
@@ -945,8 +945,8 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		// Sort the rod stretch shear constraints
 		QuickSort(group.mRodStretchShearConstraints.begin(), group.mRodStretchShearConstraints.end(), [this](uint inLHS, uint inRHS)
 			{
-				const RodStretchShear &r1 = mRodStretchShearConstraints[inLHS];
-				const RodStretchShear &r2 = mRodStretchShearConstraints[inRHS];
+				const RodStretchShear& r1 = mRodStretchShearConstraints[inLHS];
+				const RodStretchShear& r2 = mRodStretchShearConstraints[inRHS];
 
 				// First sort so that the rod with the smallest distance to a kinematic vertex comes first
 				float d1 = min(mClosestKinematic[r1.mVertex[0]].mDistance, mClosestKinematic[r1.mVertex[1]].mDistance);
@@ -972,22 +972,22 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 		// Sort the rod bend twist constraints
 		QuickSort(group.mRodBendTwistConstraints.begin(), group.mRodBendTwistConstraints.end(), [this](uint inLHS, uint inRHS)
 			{
-				const RodBendTwist &b1 = mRodBendTwistConstraints[inLHS];
-				const RodStretchShear &b1_r1 = mRodStretchShearConstraints[b1.mRod[0]];
-				const RodStretchShear &b1_r2 = mRodStretchShearConstraints[b1.mRod[1]];
+				const RodBendTwist& b1 = mRodBendTwistConstraints[inLHS];
+				const RodStretchShear& b1_r1 = mRodStretchShearConstraints[b1.mRod[0]];
+				const RodStretchShear& b1_r2 = mRodStretchShearConstraints[b1.mRod[1]];
 
-				const RodBendTwist &b2 = mRodBendTwistConstraints[inRHS];
-				const RodStretchShear &b2_r1 = mRodStretchShearConstraints[b2.mRod[0]];
-				const RodStretchShear &b2_r2 = mRodStretchShearConstraints[b2.mRod[1]];
+				const RodBendTwist& b2 = mRodBendTwistConstraints[inRHS];
+				const RodStretchShear& b2_r1 = mRodStretchShearConstraints[b2.mRod[0]];
+				const RodStretchShear& b2_r2 = mRodStretchShearConstraints[b2.mRod[1]];
 
 				// First sort so that the rod with the smallest number of hops to a kinematic vertex comes first.
 				// Note that we don't use distance because of the bilateral interleaving below.
 				uint32 m1 = min(
-							min(mClosestKinematic[b1_r1.mVertex[0]].mHops, mClosestKinematic[b1_r1.mVertex[1]].mHops),
-							min(mClosestKinematic[b1_r2.mVertex[0]].mHops, mClosestKinematic[b1_r2.mVertex[1]].mHops));
+					min(mClosestKinematic[b1_r1.mVertex[0]].mHops, mClosestKinematic[b1_r1.mVertex[1]].mHops),
+					min(mClosestKinematic[b1_r2.mVertex[0]].mHops, mClosestKinematic[b1_r2.mVertex[1]].mHops));
 				uint32 m2 = min(
-							min(mClosestKinematic[b2_r1.mVertex[0]].mHops, mClosestKinematic[b2_r1.mVertex[1]].mHops),
-							min(mClosestKinematic[b2_r2.mVertex[0]].mHops, mClosestKinematic[b2_r2.mVertex[1]].mHops));
+					min(mClosestKinematic[b2_r1.mVertex[0]].mHops, mClosestKinematic[b2_r1.mVertex[1]].mHops),
+					min(mClosestKinematic[b2_r2.mVertex[0]].mHops, mClosestKinematic[b2_r2.mVertex[1]].mHops));
 				if (m1 != m2)
 					return m1 < m2;
 
@@ -995,11 +995,11 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 				// This ensures that we consistently order the rods that are attached to other kinematic constraints.
 				// Again, this helps bilateral interleaving below.
 				m1 = min(
-							min(mClosestKinematic[b1_r1.mVertex[0]].mVertex, mClosestKinematic[b1_r1.mVertex[1]].mVertex),
-							min(mClosestKinematic[b1_r2.mVertex[0]].mVertex, mClosestKinematic[b1_r2.mVertex[1]].mVertex));
+					min(mClosestKinematic[b1_r1.mVertex[0]].mVertex, mClosestKinematic[b1_r1.mVertex[1]].mVertex),
+					min(mClosestKinematic[b1_r2.mVertex[0]].mVertex, mClosestKinematic[b1_r2.mVertex[1]].mVertex));
 				m2 = min(
-							min(mClosestKinematic[b2_r1.mVertex[0]].mVertex, mClosestKinematic[b2_r1.mVertex[1]].mVertex),
-							min(mClosestKinematic[b2_r2.mVertex[0]].mVertex, mClosestKinematic[b2_r2.mVertex[1]].mVertex));
+					min(mClosestKinematic[b2_r1.mVertex[0]].mVertex, mClosestKinematic[b2_r1.mVertex[1]].mVertex),
+					min(mClosestKinematic[b2_r2.mVertex[0]].mVertex, mClosestKinematic[b2_r2.mVertex[1]].mVertex));
 				if (m1 != m2)
 					return m1 < m2;
 
@@ -1019,59 +1019,59 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 
 		// Sort the dihedral bend constraints
 		QuickSort(group.mDihedralBendConstraints.begin(), group.mDihedralBendConstraints.end(), [this](uint inLHS, uint inRHS)
-		{
-			const DihedralBend &b1 = mDihedralBendConstraints[inLHS];
-			const DihedralBend &b2 = mDihedralBendConstraints[inRHS];
+			{
+				const DihedralBend& b1 = mDihedralBendConstraints[inLHS];
+				const DihedralBend& b2 = mDihedralBendConstraints[inRHS];
 
-			// First sort so that the constraint with the smallest distance to a kinematic vertex comes first
-			float d1 = min(
-						min(mClosestKinematic[b1.mVertex[0]].mDistance, mClosestKinematic[b1.mVertex[1]].mDistance),
-						min(mClosestKinematic[b1.mVertex[2]].mDistance, mClosestKinematic[b1.mVertex[3]].mDistance));
-			float d2 = min(
-						min(mClosestKinematic[b2.mVertex[0]].mDistance, mClosestKinematic[b2.mVertex[1]].mDistance),
-						min(mClosestKinematic[b2.mVertex[2]].mDistance, mClosestKinematic[b2.mVertex[3]].mDistance));
-			if (d1 != d2)
-				return d1 < d2;
+				// First sort so that the constraint with the smallest distance to a kinematic vertex comes first
+				float d1 = min(
+					min(mClosestKinematic[b1.mVertex[0]].mDistance, mClosestKinematic[b1.mVertex[1]].mDistance),
+					min(mClosestKinematic[b1.mVertex[2]].mDistance, mClosestKinematic[b1.mVertex[3]].mDistance));
+				float d2 = min(
+					min(mClosestKinematic[b2.mVertex[0]].mDistance, mClosestKinematic[b2.mVertex[1]].mDistance),
+					min(mClosestKinematic[b2.mVertex[2]].mDistance, mClosestKinematic[b2.mVertex[3]].mDistance));
+				if (d1 != d2)
+					return d1 < d2;
 
-			// Finally order so that the smallest vertex index goes first
-			uint32 m1 = b1.GetMinVertexIndex();
-			uint32 m2 = b2.GetMinVertexIndex();
-			if (m1 != m2)
-				return m1 < m2;
+				// Finally order so that the smallest vertex index goes first
+				uint32 m1 = b1.GetMinVertexIndex();
+				uint32 m2 = b2.GetMinVertexIndex();
+				if (m1 != m2)
+					return m1 < m2;
 
-			return inLHS < inRHS;
-		});
+				return inLHS < inRHS;
+			});
 
 		// Sort the volume constraints
 		QuickSort(group.mVolumeConstraints.begin(), group.mVolumeConstraints.end(), [this](uint inLHS, uint inRHS)
-		{
-			const Volume &v1 = mVolumeConstraints[inLHS];
-			const Volume &v2 = mVolumeConstraints[inRHS];
+			{
+				const Volume& v1 = mVolumeConstraints[inLHS];
+				const Volume& v2 = mVolumeConstraints[inRHS];
 
-			// First sort so that the constraint with the smallest distance to a kinematic vertex comes first
-			float d1 = min(
-						min(mClosestKinematic[v1.mVertex[0]].mDistance, mClosestKinematic[v1.mVertex[1]].mDistance),
-						min(mClosestKinematic[v1.mVertex[2]].mDistance, mClosestKinematic[v1.mVertex[3]].mDistance));
-			float d2 = min(
-						min(mClosestKinematic[v2.mVertex[0]].mDistance, mClosestKinematic[v2.mVertex[1]].mDistance),
-						min(mClosestKinematic[v2.mVertex[2]].mDistance, mClosestKinematic[v2.mVertex[3]].mDistance));
-			if (d1 != d2)
-				return d1 < d2;
+				// First sort so that the constraint with the smallest distance to a kinematic vertex comes first
+				float d1 = min(
+					min(mClosestKinematic[v1.mVertex[0]].mDistance, mClosestKinematic[v1.mVertex[1]].mDistance),
+					min(mClosestKinematic[v1.mVertex[2]].mDistance, mClosestKinematic[v1.mVertex[3]].mDistance));
+				float d2 = min(
+					min(mClosestKinematic[v2.mVertex[0]].mDistance, mClosestKinematic[v2.mVertex[1]].mDistance),
+					min(mClosestKinematic[v2.mVertex[2]].mDistance, mClosestKinematic[v2.mVertex[3]].mDistance));
+				if (d1 != d2)
+					return d1 < d2;
 
-			// Order constraints so that the ones with the smallest index go first
-			uint32 m1 = v1.GetMinVertexIndex();
-			uint32 m2 = v2.GetMinVertexIndex();
-			if (m1 != m2)
-				return m1 < m2;
+				// Order constraints so that the ones with the smallest index go first
+				uint32 m1 = v1.GetMinVertexIndex();
+				uint32 m2 = v2.GetMinVertexIndex();
+				if (m1 != m2)
+					return m1 < m2;
 
-			return inLHS < inRHS;
-		});
+				return inLHS < inRHS;
+			});
 
 		// Sort the skinned constraints
 		QuickSort(group.mSkinnedConstraints.begin(), group.mSkinnedConstraints.end(), [this](uint inLHS, uint inRHS)
 			{
-				const Skinned &s1 = mSkinnedConstraints[inLHS];
-				const Skinned &s2 = mSkinnedConstraints[inRHS];
+				const Skinned& s1 = mSkinnedConstraints[inLHS];
+				const Skinned& s2 = mSkinnedConstraints[inRHS];
 
 				// Order the skinned constraints so that the ones with the smallest index go first (hoping to get better cache locality when we process the edges).
 				if (s1.mVertex != s2.mVertex)
@@ -1118,7 +1118,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 	outResults.mSkinnedRemap.resize(temp_skinned.size(), ~uint(0));
 
 	// Finalize update groups
-	for (const Group &group : groups)
+	for (const Group& group : groups)
 	{
 		// Reorder edge constraints for this group
 		for (uint idx : group.mEdgeConstraints)
@@ -1174,7 +1174,7 @@ void SoftBodySharedSettings::Optimize(OptimizationResults &outResults)
 	}
 
 	// Remap bend twist indices because mRodStretchShearConstraints has been reordered
-	for (RodBendTwist &r : mRodBendTwistConstraints)
+	for (RodBendTwist& r : mRodBendTwistConstraints)
 		for (int i = 0; i < 2; ++i)
 			r.mRod[i] = outResults.mRodStretchShearConstraintRemap[r.mRod[i]];
 
@@ -1202,7 +1202,7 @@ Ref<SoftBodySharedSettings> SoftBodySharedSettings::Clone() const
 	return clone;
 }
 
-void SoftBodySharedSettings::SaveBinaryState(StreamOut &inStream) const
+void SoftBodySharedSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mVertices);
 	inStream.Write(mFaces);
@@ -1215,29 +1215,29 @@ void SoftBodySharedSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mUpdateGroups);
 
 	// Can't write mRodStretchShearConstraints directly because the class contains padding
-	inStream.Write(mRodStretchShearConstraints, [](const RodStretchShear &inElement, StreamOut &inS) {
+	inStream.Write(mRodStretchShearConstraints, [](const RodStretchShear& inElement, StreamOut& inS) {
 		inS.Write(inElement.mVertex);
 		inS.Write(inElement.mLength);
 		inS.Write(inElement.mInvMass);
 		inS.Write(inElement.mCompliance);
 		inS.Write(inElement.mBishop);
-	});
+		});
 
 	// Can't write mRodBendTwistConstraints directly because the class contains padding
-	inStream.Write(mRodBendTwistConstraints, [](const RodBendTwist &inElement, StreamOut &inS) {
+	inStream.Write(mRodBendTwistConstraints, [](const RodBendTwist& inElement, StreamOut& inS) {
 		inS.Write(inElement.mRod);
 		inS.Write(inElement.mCompliance);
 		inS.Write(inElement.mOmega0);
-	});
+		});
 
 	// Can't write mInvBindMatrices directly because the class contains padding
-	inStream.Write(mInvBindMatrices, [](const InvBind &inElement, StreamOut &inS) {
+	inStream.Write(mInvBindMatrices, [](const InvBind& inElement, StreamOut& inS) {
 		inS.Write(inElement.mJointIndex);
 		inS.Write(inElement.mInvBind);
-	});
+		});
 }
 
-void SoftBodySharedSettings::RestoreBinaryState(StreamIn &inStream)
+void SoftBodySharedSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mVertices);
 	inStream.Read(mFaces);
@@ -1249,27 +1249,27 @@ void SoftBodySharedSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mLRAConstraints);
 	inStream.Read(mUpdateGroups);
 
-	inStream.Read(mRodStretchShearConstraints, [](StreamIn &inS, RodStretchShear &outElement) {
+	inStream.Read(mRodStretchShearConstraints, [](StreamIn& inS, RodStretchShear& outElement) {
 		inS.Read(outElement.mVertex);
 		inS.Read(outElement.mLength);
 		inS.Read(outElement.mInvMass);
 		inS.Read(outElement.mCompliance);
 		inS.Read(outElement.mBishop);
-	});
+		});
 
-	inStream.Read(mRodBendTwistConstraints, [](StreamIn &inS, RodBendTwist &outElement) {
+	inStream.Read(mRodBendTwistConstraints, [](StreamIn& inS, RodBendTwist& outElement) {
 		inS.Read(outElement.mRod);
 		inS.Read(outElement.mCompliance);
 		inS.Read(outElement.mOmega0);
-	});
+		});
 
-	inStream.Read(mInvBindMatrices, [](StreamIn &inS, InvBind &outElement) {
+	inStream.Read(mInvBindMatrices, [](StreamIn& inS, InvBind& outElement) {
 		inS.Read(outElement.mJointIndex);
 		inS.Read(outElement.mInvBind);
-	});
+		});
 }
 
-void SoftBodySharedSettings::SaveWithMaterials(StreamOut &inStream, SharedSettingsToIDMap &ioSettingsMap, MaterialToIDMap &ioMaterialMap) const
+void SoftBodySharedSettings::SaveWithMaterials(StreamOut& inStream, SharedSettingsToIDMap& ioSettingsMap, MaterialToIDMap& ioMaterialMap) const
 {
 	SharedSettingsToIDMap::const_iterator settings_iter = ioSettingsMap.find(this);
 	if (settings_iter == ioSettingsMap.end())
@@ -1292,7 +1292,7 @@ void SoftBodySharedSettings::SaveWithMaterials(StreamOut &inStream, SharedSettin
 	}
 }
 
-SoftBodySharedSettings::SettingsResult SoftBodySharedSettings::sRestoreWithMaterials(StreamIn &inStream, IDToSharedSettingsMap &ioSettingsMap, IDToMaterialMap &ioMaterialMap)
+SoftBodySharedSettings::SettingsResult SoftBodySharedSettings::sRestoreWithMaterials(StreamIn& inStream, IDToSharedSettingsMap& ioSettingsMap, IDToMaterialMap& ioMaterialMap)
 {
 	SettingsResult result;
 
@@ -1346,7 +1346,7 @@ Ref<SoftBodySharedSettings> SoftBodySharedSettings::sCreateCube(uint inGridSize,
 	const Vec3 cOffset = Vec3::sReplicate(-0.5f * inGridSpacing * (inGridSize - 1));
 
 	// Create settings
-	SoftBodySharedSettings *settings = new SoftBodySharedSettings;
+	SoftBodySharedSettings* settings = new SoftBodySharedSettings;
 	for (uint z = 0; z < inGridSize; ++z)
 		for (uint y = 0; y < inGridSize; ++y)
 			for (uint x = 0; x < inGridSize; ++x)
@@ -1358,9 +1358,9 @@ Ref<SoftBodySharedSettings> SoftBodySharedSettings::sCreateCube(uint inGridSize,
 
 	// Function to get the vertex index of a point on the cube
 	auto vertex_index = [inGridSize](uint inX, uint inY, uint inZ)
-	{
-		return inX + inY * inGridSize + inZ * inGridSize * inGridSize;
-	};
+		{
+			return inX + inY * inGridSize + inZ * inGridSize * inGridSize;
+		};
 
 	// Create edges
 	for (uint z = 0; z < inGridSize; ++z)

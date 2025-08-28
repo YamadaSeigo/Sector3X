@@ -8,7 +8,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-void BroadPhase::Init(BodyManager *inBodyManager, const BroadPhaseLayerInterface &inLayerInterface)
+void BroadPhase::Init(BodyManager* inBodyManager, const BroadPhaseLayerInterface& inLayerInterface)
 {
 	mBodyManager = inBodyManager;
 }

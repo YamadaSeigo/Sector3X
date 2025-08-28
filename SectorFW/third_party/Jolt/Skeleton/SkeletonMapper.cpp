@@ -8,7 +8,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-void SkeletonMapper::Initialize(const Skeleton *inSkeleton1, const Mat44 *inNeutralPose1, const Skeleton *inSkeleton2, const Mat44 *inNeutralPose2, const CanMapJoint &inCanMapJoint)
+void SkeletonMapper::Initialize(const Skeleton* inSkeleton1, const Mat44* inNeutralPose1, const Skeleton* inSkeleton2, const Mat44* inNeutralPose2, const CanMapJoint& inCanMapJoint)
 {
 	JPH_ASSERT(mMappings.empty() && mChains.empty() && mUnmapped.empty()); // Should not be initialized yet
 
@@ -57,8 +57,7 @@ void SkeletonMapper::Initialize(const Skeleton *inSkeleton1, const Mat44 *inNeut
 			{
 				cur_chain.push_back(cur);
 				cur = inSkeleton2->GetJoint(cur).mParentJointIndex;
-			}
-			while (cur >= 0 && cur != start && !mapped2[cur]);
+			} while (cur >= 0 && cur != start && !mapped2[cur]);
 			cur_chain.push_back(start);
 
 			if (cur == start // This should be the correct chain
@@ -80,8 +79,7 @@ void SkeletonMapper::Initialize(const Skeleton *inSkeleton1, const Mat44 *inNeut
 			{
 				chain1.push_back(cur);
 				cur = inSkeleton1->GetJoint(cur).mParentJointIndex;
-			}
-			while (cur >= 0 && cur != start && !mapped1[cur]);
+			} while (cur >= 0 && cur != start && !mapped1[cur]);
 			chain1.push_back(start);
 
 			// If the chain exists in 1 too
@@ -109,7 +107,7 @@ void SkeletonMapper::Initialize(const Skeleton *inSkeleton1, const Mat44 *inNeut
 			mUnmapped.emplace_back(j2, inSkeleton2->GetJoint(j2).mParentJointIndex);
 }
 
-void SkeletonMapper::LockTranslations(const Skeleton *inSkeleton2, const bool *inLockedTranslations, const Mat44 *inNeutralPose2)
+void SkeletonMapper::LockTranslations(const Skeleton* inSkeleton2, const bool* inLockedTranslations, const Mat44* inNeutralPose2)
 {
 	JPH_ASSERT(inSkeleton2->AreJointsCorrectlyOrdered());
 
@@ -130,7 +128,7 @@ void SkeletonMapper::LockTranslations(const Skeleton *inSkeleton2, const bool *i
 		}
 }
 
-void SkeletonMapper::LockAllTranslations(const Skeleton *inSkeleton2, const Mat44 *inNeutralPose2)
+void SkeletonMapper::LockAllTranslations(const Skeleton* inSkeleton2, const Mat44* inNeutralPose2)
 {
 	JPH_ASSERT(!mMappings.empty(), "Call Initialize first!");
 	JPH_ASSERT(inSkeleton2->AreJointsCorrectlyOrdered());
@@ -141,7 +139,7 @@ void SkeletonMapper::LockAllTranslations(const Skeleton *inSkeleton2, const Mat4
 
 	// Create temp array to hold locked joints
 	int n = inSkeleton2->GetJointCount();
-	bool *locked_translations = (bool *)JPH_STACK_ALLOC(n * sizeof(bool));
+	bool* locked_translations = (bool*)JPH_STACK_ALLOC(n * sizeof(bool));
 	memset(locked_translations, 0, n * sizeof(bool));
 
 	// Mark root as locked
@@ -162,17 +160,17 @@ void SkeletonMapper::LockAllTranslations(const Skeleton *inSkeleton2, const Mat4
 	LockTranslations(inSkeleton2, locked_translations, inNeutralPose2);
 }
 
-void SkeletonMapper::Map(const Mat44 *inPose1ModelSpace, const Mat44 *inPose2LocalSpace, Mat44 *outPose2ModelSpace) const
+void SkeletonMapper::Map(const Mat44* inPose1ModelSpace, const Mat44* inPose2LocalSpace, Mat44* outPose2ModelSpace) const
 {
 	// Apply direct mappings
-	for (const Mapping &m : mMappings)
+	for (const Mapping& m : mMappings)
 		outPose2ModelSpace[m.mJointIdx2] = inPose1ModelSpace[m.mJointIdx1] * m.mJoint1To2;
 
 	// Apply chain mappings
-	for (const Chain &c : mChains)
+	for (const Chain& c : mChains)
 	{
 		// Calculate end of chain given local space transforms of the joints of the chain
-		Mat44 &chain_start = outPose2ModelSpace[c.mJointIndices2.front()];
+		Mat44& chain_start = outPose2ModelSpace[c.mJointIndices2.front()];
 		Mat44 chain_end = chain_start;
 		for (int j = 1; j < (int)c.mJointIndices2.size(); ++j)
 			chain_end = chain_end * inPose2LocalSpace[c.mJointIndices2[j]];
@@ -195,7 +193,7 @@ void SkeletonMapper::Map(const Mat44 *inPose1ModelSpace, const Mat44 *inPose2Loc
 	}
 
 	// All unmapped joints take the local pose and convert it to model space
-	for (const Unmapped &u : mUnmapped)
+	for (const Unmapped& u : mUnmapped)
 		if (u.mParentJointIdx >= 0)
 		{
 			JPH_ASSERT(u.mParentJointIdx < u.mJointIdx, "Joints must be ordered: parents first");
@@ -205,20 +203,20 @@ void SkeletonMapper::Map(const Mat44 *inPose1ModelSpace, const Mat44 *inPose2Loc
 			outPose2ModelSpace[u.mJointIdx] = inPose2LocalSpace[u.mJointIdx];
 
 	// Update all locked joint translations
-	for (const Locked &l : mLockedTranslations)
+	for (const Locked& l : mLockedTranslations)
 		outPose2ModelSpace[l.mJointIdx].SetTranslation(outPose2ModelSpace[l.mParentJointIdx] * l.mTranslation);
 }
 
-void SkeletonMapper::MapReverse(const Mat44 *inPose2ModelSpace, Mat44 *outPose1ModelSpace) const
+void SkeletonMapper::MapReverse(const Mat44* inPose2ModelSpace, Mat44* outPose1ModelSpace) const
 {
 	// Normally each joint in skeleton 1 should be present in the mapping, so we only need to apply the direct mappings
-	for (const Mapping &m : mMappings)
+	for (const Mapping& m : mMappings)
 		outPose1ModelSpace[m.mJointIdx1] = inPose2ModelSpace[m.mJointIdx2] * m.mJoint2To1;
 }
 
 int SkeletonMapper::GetMappedJointIdx(int inJoint1Idx) const
 {
-	for (const Mapping &m : mMappings)
+	for (const Mapping& m : mMappings)
 		if (m.mJointIdx1 == inJoint1Idx)
 			return m.mJointIdx2;
 
@@ -227,7 +225,7 @@ int SkeletonMapper::GetMappedJointIdx(int inJoint1Idx) const
 
 bool SkeletonMapper::IsJointTranslationLocked(int inJoint2Idx) const
 {
-	for (const Locked &l : mLockedTranslations)
+	for (const Locked& l : mLockedTranslations)
 		if (l.mJointIdx == inJoint2Idx)
 			return true;
 

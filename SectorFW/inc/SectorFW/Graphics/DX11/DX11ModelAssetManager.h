@@ -4,8 +4,8 @@
 
 #include "DX11MeshManager.h"
 
-#include "Math/Matrix.hpp"
-#include "Util/PathView.hpp"
+#include "../../Math/Matrix.hpp"
+#include "../../Util/PathView.hpp"
 
 namespace SectorFW
 {
@@ -35,19 +35,13 @@ namespace SectorFW
 				MeshHandle mesh;
 				MaterialHandle material;
 				PSOHandle pso;
+				bool hasInstanceData = false;
 				InstanceData instance;
 			};
 
 			std::vector<SubMesh> subMeshes = {};
 
 			std::optional<Skeleton> skeleton; // スケルトンがある場合
-
-			std::vector<DrawCommand> ToDrawCommands() const {
-				std::vector<DrawCommand> cmds;
-				for (const auto& sm : subMeshes)
-					cmds.emplace_back(sm.mesh, sm.material, sm.pso, sm.instance);
-				return cmds;
-			}
 		private:
 			path_view path; // キャッシュ用のパスビュー
 

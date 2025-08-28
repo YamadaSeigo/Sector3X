@@ -15,7 +15,7 @@ JPH_NAMESPACE_BEGIN
 
 JobSystemWithBarrier::BarrierImpl::BarrierImpl()
 {
-	for (atomic<Job *> &j : mJobs)
+	for (atomic<Job*>& j : mJobs)
 		j = nullptr;
 }
 
@@ -24,14 +24,14 @@ JobSystemWithBarrier::BarrierImpl::~BarrierImpl()
 	JPH_ASSERT(IsEmpty());
 }
 
-void JobSystemWithBarrier::BarrierImpl::AddJob(const JobHandle &inJob)
+void JobSystemWithBarrier::BarrierImpl::AddJob(const JobHandle& inJob)
 {
 	JPH_PROFILE_FUNCTION();
 
 	bool release_semaphore = false;
 
 	// Set the barrier on the job, this returns true if the barrier was successfully set (otherwise the job is already done and we don't need to add it to our list)
-	Job *job = inJob.GetPtr();
+	Job* job = inJob.GetPtr();
 	if (job->SetBarrier(this))
 	{
 		// If the job can be executed we want to release the semaphore an extra time to allow the waiting thread to start executing it
@@ -58,16 +58,16 @@ void JobSystemWithBarrier::BarrierImpl::AddJob(const JobHandle &inJob)
 		mSemaphore.Release();
 }
 
-void JobSystemWithBarrier::BarrierImpl::AddJobs(const JobHandle *inHandles, uint inNumHandles)
+void JobSystemWithBarrier::BarrierImpl::AddJobs(const JobHandle* inHandles, uint inNumHandles)
 {
 	JPH_PROFILE_FUNCTION();
 
 	bool release_semaphore = false;
 
-	for (const JobHandle *handle = inHandles, *handles_end = inHandles + inNumHandles; handle < handles_end; ++handle)
+	for (const JobHandle* handle = inHandles, *handles_end = inHandles + inNumHandles; handle < handles_end; ++handle)
 	{
 		// Set the barrier on the job, this returns true if the barrier was successfully set (otherwise the job is already done and we don't need to add it to our list)
-		Job *job = handle->GetPtr();
+		Job* job = handle->GetPtr();
 		if (job->SetBarrier(this))
 		{
 			// If the job can be executed we want to release the semaphore an extra time to allow the waiting thread to start executing it
@@ -95,7 +95,7 @@ void JobSystemWithBarrier::BarrierImpl::AddJobs(const JobHandle *inHandles, uint
 		mSemaphore.Release();
 }
 
-void JobSystemWithBarrier::BarrierImpl::OnJobFinished(Job *inJob)
+void JobSystemWithBarrier::BarrierImpl::OnJobFinished(Job* inJob)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -118,8 +118,8 @@ void JobSystemWithBarrier::BarrierImpl::Wait()
 				// Loop through the jobs and erase jobs from the beginning of the list that are done
 				while (mJobReadIndex < mJobWriteIndex)
 				{
-					atomic<Job *> &job = mJobs[mJobReadIndex & (cMaxJobs - 1)];
-					Job *job_ptr = job.load();
+					atomic<Job*>& job = mJobs[mJobReadIndex & (cMaxJobs - 1)];
+					Job* job_ptr = job.load();
 					if (job_ptr == nullptr || !job_ptr->IsDone())
 						break;
 
@@ -132,8 +132,8 @@ void JobSystemWithBarrier::BarrierImpl::Wait()
 				// Loop through the jobs and execute the first executable job
 				for (uint index = mJobReadIndex; index < mJobWriteIndex; ++index)
 				{
-					const atomic<Job *> &job = mJobs[index & (cMaxJobs - 1)];
-					Job *job_ptr = job.load();
+					const atomic<Job*>& job = mJobs[index & (cMaxJobs - 1)];
+					Job* job_ptr = job.load();
 					if (job_ptr != nullptr && job_ptr->CanBeExecuted())
 					{
 						// This will only execute the job if it has not already executed
@@ -142,7 +142,6 @@ void JobSystemWithBarrier::BarrierImpl::Wait()
 						break;
 					}
 				}
-
 			} while (has_executed);
 		}
 
@@ -158,8 +157,8 @@ void JobSystemWithBarrier::BarrierImpl::Wait()
 	// All jobs should be done now, release them
 	while (mJobReadIndex < mJobWriteIndex)
 	{
-		atomic<Job *> &job = mJobs[mJobReadIndex & (cMaxJobs - 1)];
-		Job *job_ptr = job.load();
+		atomic<Job*>& job = mJobs[mJobReadIndex & (cMaxJobs - 1)];
+		Job* job_ptr = job.load();
 		JPH_ASSERT(job_ptr != nullptr && job_ptr->IsDone());
 		job_ptr->Release();
 		job = nullptr;
@@ -173,7 +172,7 @@ void JobSystemWithBarrier::Init(uint inMaxBarriers)
 
 	// Init freelist of barriers
 	mMaxBarriers = inMaxBarriers;
-	mBarriers = new BarrierImpl [inMaxBarriers];
+	mBarriers = new BarrierImpl[inMaxBarriers];
 }
 
 JobSystemWithBarrier::JobSystemWithBarrier(uint inMaxBarriers)
@@ -185,13 +184,13 @@ JobSystemWithBarrier::~JobSystemWithBarrier()
 {
 	// Ensure that none of the barriers are used
 #ifdef JPH_ENABLE_ASSERTS
-	for (const BarrierImpl *b = mBarriers, *b_end = mBarriers + mMaxBarriers; b < b_end; ++b)
+	for (const BarrierImpl* b = mBarriers, *b_end = mBarriers + mMaxBarriers; b < b_end; ++b)
 		JPH_ASSERT(!b->mInUse);
 #endif // JPH_ENABLE_ASSERTS
-	delete [] mBarriers;
+	delete[] mBarriers;
 }
 
-JobSystem::Barrier *JobSystemWithBarrier::CreateBarrier()
+JobSystem::Barrier* JobSystemWithBarrier::CreateBarrier()
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -206,25 +205,25 @@ JobSystem::Barrier *JobSystemWithBarrier::CreateBarrier()
 	return nullptr;
 }
 
-void JobSystemWithBarrier::DestroyBarrier(Barrier *inBarrier)
+void JobSystemWithBarrier::DestroyBarrier(Barrier* inBarrier)
 {
 	JPH_PROFILE_FUNCTION();
 
 	// Check that no jobs are in the barrier
-	JPH_ASSERT(static_cast<BarrierImpl *>(inBarrier)->IsEmpty());
+	JPH_ASSERT(static_cast<BarrierImpl*>(inBarrier)->IsEmpty());
 
 	// Flag the barrier as unused
 	bool expected = true;
-	static_cast<BarrierImpl *>(inBarrier)->mInUse.compare_exchange_strong(expected, false);
+	static_cast<BarrierImpl*>(inBarrier)->mInUse.compare_exchange_strong(expected, false);
 	JPH_ASSERT(expected);
 }
 
-void JobSystemWithBarrier::WaitForJobs(Barrier *inBarrier)
+void JobSystemWithBarrier::WaitForJobs(Barrier* inBarrier)
 {
 	JPH_PROFILE_FUNCTION();
 
 	// Let our barrier implementation wait for the jobs
-	static_cast<BarrierImpl *>(inBarrier)->Wait();
+	static_cast<BarrierImpl*>(inBarrier)->Wait();
 }
 
 JPH_NAMESPACE_END

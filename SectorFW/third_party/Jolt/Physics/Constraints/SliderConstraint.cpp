@@ -10,7 +10,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -21,21 +21,21 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(SliderConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(SliderConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(SliderConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mAutoDetectPoint)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mPoint1)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mSliderAxis1)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mNormalAxis1)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mPoint2)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mSliderAxis2)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mNormalAxis2)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mLimitsMin)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mLimitsMax)
-	JPH_ADD_ENUM_ATTRIBUTE_WITH_ALIAS(SliderConstraintSettings, mLimitsSpringSettings.mMode, "mSpringMode")
-	JPH_ADD_ATTRIBUTE_WITH_ALIAS(SliderConstraintSettings, mLimitsSpringSettings.mFrequency, "mFrequency") // Renaming attributes to stay compatible with old versions of the library
-	JPH_ADD_ATTRIBUTE_WITH_ALIAS(SliderConstraintSettings, mLimitsSpringSettings.mDamping, "mDamping")
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mMaxFrictionForce)
-	JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mMotorSettings)
+		JPH_ADD_ENUM_ATTRIBUTE(SliderConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mAutoDetectPoint)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mPoint1)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mSliderAxis1)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mNormalAxis1)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mPoint2)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mSliderAxis2)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mNormalAxis2)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mLimitsMin)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mLimitsMax)
+		JPH_ADD_ENUM_ATTRIBUTE_WITH_ALIAS(SliderConstraintSettings, mLimitsSpringSettings.mMode, "mSpringMode")
+		JPH_ADD_ATTRIBUTE_WITH_ALIAS(SliderConstraintSettings, mLimitsSpringSettings.mFrequency, "mFrequency") // Renaming attributes to stay compatible with old versions of the library
+		JPH_ADD_ATTRIBUTE_WITH_ALIAS(SliderConstraintSettings, mLimitsSpringSettings.mDamping, "mDamping")
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mMaxFrictionForce)
+		JPH_ADD_ATTRIBUTE(SliderConstraintSettings, mMotorSettings)
 }
 
 void SliderConstraintSettings::SetSliderAxis(Vec3Arg inSliderAxis)
@@ -46,7 +46,7 @@ void SliderConstraintSettings::SetSliderAxis(Vec3Arg inSliderAxis)
 	mNormalAxis1 = mNormalAxis2 = inSliderAxis.GetNormalizedPerpendicular();
 }
 
-void SliderConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void SliderConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -65,7 +65,7 @@ void SliderConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	mMotorSettings.SaveBinaryState(inStream);
 }
 
-void SliderConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void SliderConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -84,12 +84,12 @@ void SliderConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	mMotorSettings.RestoreBinaryState(inStream);
 }
 
-TwoBodyConstraint *SliderConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* SliderConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new SliderConstraint(inBody1, inBody2, *this);
 }
 
-SliderConstraint::SliderConstraint(Body &inBody1, Body &inBody2, const SliderConstraintSettings &inSettings) :
+SliderConstraint::SliderConstraint(Body& inBody1, Body& inBody2, const SliderConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings),
 	mMaxFrictionForce(inSettings.mMaxFrictionForce),
 	mMotorSettings(inSettings.mMotorSettings)
@@ -163,7 +163,7 @@ SliderConstraint::SliderConstraint(Body &inBody1, Body &inBody2, const SliderCon
 	SetLimitsSpringSettings(inSettings.mLimitsSpringSettings);
 }
 
-void SliderConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaCOM)
+void SliderConstraint::NotifyShapeChanged(const BodyID& inBodyID, Vec3Arg inDeltaCOM)
 {
 	if (mBody1->GetID() == inBodyID)
 		mLocalSpacePosition1 -= inDeltaCOM;
@@ -225,7 +225,7 @@ void SliderConstraint::CalculatePositionLimitsConstraintProperties(float inDelta
 	// Check if distance is within limits
 	bool below_min = mD <= mLimitsMin;
 	if (mHasLimits && (below_min || mD >= mLimitsMax))
-		mPositionLimitsConstraintPart.CalculateConstraintPropertiesWithSettings(inDeltaTime, *mBody1, mR1 + mU, *mBody2, mR2, mWorldSpaceSliderAxis, 0.0f, mD - (below_min? mLimitsMin : mLimitsMax), mLimitsSpringSettings);
+		mPositionLimitsConstraintPart.CalculateConstraintPropertiesWithSettings(inDeltaTime, *mBody1, mR1 + mU, *mBody2, mR2, mWorldSpaceSliderAxis, 0.0f, mD - (below_min ? mLimitsMin : mLimitsMax), mLimitsSpringSettings);
 	else
 		mPositionLimitsConstraintPart.Deactivate();
 }
@@ -293,11 +293,11 @@ bool SliderConstraint::SolveVelocityConstraint(float inDeltaTime)
 		switch (mMotorState)
 		{
 		case EMotorState::Off:
-			{
-				float max_lambda = mMaxFrictionForce * inDeltaTime;
-				motor = mMotorConstraintPart.SolveVelocityConstraint(*mBody1, *mBody2, mWorldSpaceSliderAxis, -max_lambda, max_lambda);
-				break;
-			}
+		{
+			float max_lambda = mMaxFrictionForce * inDeltaTime;
+			motor = mMotorConstraintPart.SolveVelocityConstraint(*mBody1, *mBody2, mWorldSpaceSliderAxis, -max_lambda, max_lambda);
+			break;
+		}
 
 		case EMotorState::Velocity:
 		case EMotorState::Position:
@@ -378,7 +378,7 @@ bool SliderConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumga
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void SliderConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void SliderConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	RMat44 transform1 = mBody1->GetCenterOfMassTransform();
 	RMat44 transform2 = mBody2->GetCenterOfMassTransform();
@@ -401,19 +401,19 @@ void SliderConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 		break;
 
 	case EMotorState::Velocity:
-		{
-			Vec3 cur_vel = (mBody2->GetLinearVelocity() - mBody1->GetLinearVelocity()).Dot(slider_axis) * slider_axis;
-			inRenderer->DrawLine(position2, position2 + cur_vel, Color::sBlue);
-			inRenderer->DrawArrow(position2 + cur_vel, position2 + mTargetVelocity * slider_axis, Color::sRed, 0.1f);
-			break;
-		}
+	{
+		Vec3 cur_vel = (mBody2->GetLinearVelocity() - mBody1->GetLinearVelocity()).Dot(slider_axis) * slider_axis;
+		inRenderer->DrawLine(position2, position2 + cur_vel, Color::sBlue);
+		inRenderer->DrawArrow(position2 + cur_vel, position2 + mTargetVelocity * slider_axis, Color::sRed, 0.1f);
+		break;
+	}
 
 	case EMotorState::Off:
 		break;
 	}
 }
 
-void SliderConstraint::DrawConstraintLimits(DebugRenderer *inRenderer) const
+void SliderConstraint::DrawConstraintLimits(DebugRenderer* inRenderer) const
 {
 	if (mHasLimits)
 	{
@@ -438,7 +438,7 @@ void SliderConstraint::DrawConstraintLimits(DebugRenderer *inRenderer) const
 }
 #endif // JPH_DEBUG_RENDERER
 
-void SliderConstraint::SaveState(StateRecorder &inStream) const
+void SliderConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
@@ -452,7 +452,7 @@ void SliderConstraint::SaveState(StateRecorder &inStream) const
 	inStream.Write(mTargetPosition);
 }
 
-void SliderConstraint::RestoreState(StateRecorder &inStream)
+void SliderConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
@@ -468,7 +468,7 @@ void SliderConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> SliderConstraint::GetConstraintSettings() const
 {
-	SliderConstraintSettings *settings = new SliderConstraintSettings;
+	SliderConstraintSettings* settings = new SliderConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mPoint1 = RVec3(mLocalSpacePosition1);

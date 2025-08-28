@@ -23,30 +23,30 @@ JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(RagdollSettings::Part)
 {
 	JPH_ADD_BASE_CLASS(RagdollSettings::Part, BodyCreationSettings)
 
-	JPH_ADD_ATTRIBUTE(RagdollSettings::Part, mToParent)
+		JPH_ADD_ATTRIBUTE(RagdollSettings::Part, mToParent)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(RagdollSettings::AdditionalConstraint)
 {
 	JPH_ADD_ATTRIBUTE(RagdollSettings::AdditionalConstraint, mBodyIdx)
-	JPH_ADD_ATTRIBUTE(RagdollSettings::AdditionalConstraint, mConstraint)
+		JPH_ADD_ATTRIBUTE(RagdollSettings::AdditionalConstraint, mConstraint)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(RagdollSettings)
 {
 	JPH_ADD_ATTRIBUTE(RagdollSettings, mSkeleton)
-	JPH_ADD_ATTRIBUTE(RagdollSettings, mParts)
-	JPH_ADD_ATTRIBUTE(RagdollSettings, mAdditionalConstraints)
+		JPH_ADD_ATTRIBUTE(RagdollSettings, mParts)
+		JPH_ADD_ATTRIBUTE(RagdollSettings, mAdditionalConstraints)
 }
 
-static inline BodyInterface &sRagdollGetBodyInterface(PhysicsSystem *inSystem, bool inLockBodies)
+static inline BodyInterface& sRagdollGetBodyInterface(PhysicsSystem* inSystem, bool inLockBodies)
 {
-	return inLockBodies? inSystem->GetBodyInterface() : inSystem->GetBodyInterfaceNoLock();
+	return inLockBodies ? inSystem->GetBodyInterface() : inSystem->GetBodyInterfaceNoLock();
 }
 
-static inline const BodyLockInterface &sRagdollGetBodyLockInterface(const PhysicsSystem *inSystem, bool inLockBodies)
+static inline const BodyLockInterface& sRagdollGetBodyLockInterface(const PhysicsSystem* inSystem, bool inLockBodies)
 {
-	return inLockBodies? static_cast<const BodyLockInterface &>(inSystem->GetBodyLockInterface()) : static_cast<const BodyLockInterface &>(inSystem->GetBodyLockInterfaceNoLock());
+	return inLockBodies ? static_cast<const BodyLockInterface&>(inSystem->GetBodyLockInterface()) : static_cast<const BodyLockInterface&>(inSystem->GetBodyLockInterfaceNoLock());
 }
 
 bool RagdollSettings::Stabilize()
@@ -67,7 +67,7 @@ bool RagdollSettings::Stabilize()
 	for (size_t v = 0; v < visited.size(); ++v)
 	{
 		// Mark static bodies as visited so we won't process these
-		Part &p = mParts[v];
+		Part& p = mParts[v];
 		bool has_mass_properties = p.HasMassProperties();
 		visited[v] = !has_mass_properties;
 
@@ -134,7 +134,7 @@ bool RagdollSettings::Stabilize()
 			// Adjust all masses and inertia tensors for the new mass
 			for (int i : indices)
 			{
-				Part &p = mParts[i];
+				Part& p = mParts[i];
 				float old_mass = p.mMassPropertiesOverride.mMass;
 				float new_mass = mass_ratios[i] * ratio_to_mass;
 				p.mMassPropertiesOverride.mMass = new_mass;
@@ -172,8 +172,8 @@ bool RagdollSettings::Stabilize()
 			// Adjust inertia tensors for all parts
 			for (int i : indices)
 			{
-				Part &p = mParts[i];
-				Principal &principal = principals[i];
+				Part& p = mParts[i];
+				Principal& principal = principals[i];
 				if (principal.mChildSum != 0.0f)
 				{
 					// Calculate minimum inertia this object should have based on it children
@@ -190,7 +190,7 @@ bool RagdollSettings::Stabilize()
 	return true;
 }
 
-void RagdollSettings::DisableParentChildCollisions(const Mat44 *inJointMatrices, float inMinSeparationDistance)
+void RagdollSettings::DisableParentChildCollisions(const Mat44* inJointMatrices, float inMinSeparationDistance)
 {
 	int joint_count = mSkeleton->GetJointCount();
 	JPH_ASSERT(joint_count == (int)mParts.size());
@@ -211,8 +211,8 @@ void RagdollSettings::DisableParentChildCollisions(const Mat44 *inJointMatrices,
 		for (int j1 = 0; j1 < joint_count; ++j1)
 		{
 			// Shape and transform for joint 1
-			const Part &part1 = mParts[j1];
-			const Shape *shape1 = part1.GetShape();
+			const Part& part1 = mParts[j1];
+			const Shape* shape1 = part1.GetShape();
 			Vec3 scale1;
 			Mat44 com1 = (inJointMatrices[j1].PreTranslated(shape1->GetCenterOfMass())).Decompose(scale1);
 
@@ -221,8 +221,8 @@ void RagdollSettings::DisableParentChildCollisions(const Mat44 *inJointMatrices,
 				if (group_filter->IsCollisionEnabled(j1, j2)) // Only if collision is still enabled we need to test
 				{
 					// Shape and transform for joint 2
-					const Part &part2 = mParts[j2];
-					const Shape *shape2 = part2.GetShape();
+					const Part& part2 = mParts[j2];
+					const Shape* shape2 = part2.GetShape();
 					Vec3 scale2;
 					Mat44 com2 = (inJointMatrices[j2].PreTranslated(shape2->GetCenterOfMass())).Decompose(scale2);
 
@@ -251,13 +251,13 @@ void RagdollSettings::DisableParentChildCollisions(const Mat44 *inJointMatrices,
 	// Loop over the body parts and assign them a sub group ID and the group filter
 	for (int joint_idx = 0; joint_idx < joint_count; ++joint_idx)
 	{
-		Part &part = mParts[joint_idx];
+		Part& part = mParts[joint_idx];
 		part.mCollisionGroup.SetSubGroupID(joint_idx);
 		part.mCollisionGroup.SetGroupFilter(group_filter);
 	}
 }
 
-void RagdollSettings::SaveBinaryState(StreamOut &inStream, bool inSaveShapes, bool inSaveGroupFilter) const
+void RagdollSettings::SaveBinaryState(StreamOut& inStream, bool inSaveShapes, bool inSaveGroupFilter) const
 {
 	BodyCreationSettings::ShapeToIDMap shape_to_id;
 	BodyCreationSettings::MaterialToIDMap material_to_id;
@@ -268,10 +268,10 @@ void RagdollSettings::SaveBinaryState(StreamOut &inStream, bool inSaveShapes, bo
 
 	// Save parts
 	inStream.Write((uint32)mParts.size());
-	for (const Part &p : mParts)
+	for (const Part& p : mParts)
 	{
 		// Write body creation settings
-		p.SaveWithChildren(inStream, inSaveShapes? &shape_to_id : nullptr, inSaveShapes? &material_to_id : nullptr, inSaveGroupFilter? &group_filter_to_id : nullptr);
+		p.SaveWithChildren(inStream, inSaveShapes ? &shape_to_id : nullptr, inSaveShapes ? &material_to_id : nullptr, inSaveGroupFilter ? &group_filter_to_id : nullptr);
 
 		// Save constraint
 		inStream.Write(p.mToParent != nullptr);
@@ -281,7 +281,7 @@ void RagdollSettings::SaveBinaryState(StreamOut &inStream, bool inSaveShapes, bo
 
 	// Save additional constraints
 	inStream.Write((uint32)mAdditionalConstraints.size());
-	for (const AdditionalConstraint &c : mAdditionalConstraints)
+	for (const AdditionalConstraint& c : mAdditionalConstraints)
 	{
 		// Save bodies indices
 		inStream.Write(c.mBodyIdx);
@@ -291,7 +291,7 @@ void RagdollSettings::SaveBinaryState(StreamOut &inStream, bool inSaveShapes, bo
 	}
 }
 
-RagdollSettings::RagdollResult RagdollSettings::sRestoreFromBinaryState(StreamIn &inStream)
+RagdollSettings::RagdollResult RagdollSettings::sRestoreFromBinaryState(StreamIn& inStream)
 {
 	RagdollResult result;
 
@@ -320,7 +320,7 @@ RagdollSettings::RagdollResult RagdollSettings::sRestoreFromBinaryState(StreamIn
 	uint32 len = 0;
 	inStream.Read(len);
 	ragdoll->mParts.resize(len);
-	for (Part &p : ragdoll->mParts)
+	for (Part& p : ragdoll->mParts)
 	{
 		// Read creation settings
 		BodyCreationSettings::BCSResult bcs_result = BodyCreationSettings::sRestoreWithChildren(inStream, id_to_shape, id_to_material, id_to_group_filter);
@@ -329,7 +329,7 @@ RagdollSettings::RagdollResult RagdollSettings::sRestoreFromBinaryState(StreamIn
 			result.SetError(bcs_result.GetError());
 			return result;
 		}
-		static_cast<BodyCreationSettings &>(p) = bcs_result.Get();
+		static_cast<BodyCreationSettings&>(p) = bcs_result.Get();
 
 		// Read constraint
 		bool has_constraint = false;
@@ -350,7 +350,7 @@ RagdollSettings::RagdollResult RagdollSettings::sRestoreFromBinaryState(StreamIn
 	len = 0;
 	inStream.Read(len);
 	ragdoll->mAdditionalConstraints.resize(len);
-	for (AdditionalConstraint &c : ragdoll->mAdditionalConstraints)
+	for (AdditionalConstraint& c : ragdoll->mAdditionalConstraints)
 	{
 		// Read body indices
 		inStream.Read(c.mBodyIdx);
@@ -373,20 +373,20 @@ RagdollSettings::RagdollResult RagdollSettings::sRestoreFromBinaryState(StreamIn
 	return result;
 }
 
-Ragdoll *RagdollSettings::CreateRagdoll(CollisionGroup::GroupID inCollisionGroup, uint64 inUserData, PhysicsSystem *inSystem) const
+Ragdoll* RagdollSettings::CreateRagdoll(CollisionGroup::GroupID inCollisionGroup, uint64 inUserData, PhysicsSystem* inSystem) const
 {
-	Ragdoll *r = new Ragdoll(inSystem);
+	Ragdoll* r = new Ragdoll(inSystem);
 	r->mRagdollSettings = this;
 	r->mBodyIDs.reserve(mParts.size());
 	r->mConstraints.reserve(mParts.size() + mAdditionalConstraints.size());
 
 	// Create bodies and constraints
-	BodyInterface &bi = inSystem->GetBodyInterface();
-	Body **bodies = (Body **)JPH_STACK_ALLOC(mParts.size() * sizeof(Body *));
+	BodyInterface& bi = inSystem->GetBodyInterface();
+	Body** bodies = (Body**)JPH_STACK_ALLOC(mParts.size() * sizeof(Body*));
 	int joint_idx = 0;
-	for (const Part &p : mParts)
+	for (const Part& p : mParts)
 	{
-		Body *body2 = bi.CreateBody(p);
+		Body* body2 = bi.CreateBody(p);
 		if (body2 == nullptr)
 		{
 			// Out of bodies, failed to create ragdoll
@@ -402,7 +402,7 @@ Ragdoll *RagdollSettings::CreateRagdoll(CollisionGroup::GroupID inCollisionGroup
 		// Create constraint
 		if (p.mToParent != nullptr)
 		{
-			Body *body1 = bodies[mSkeleton->GetJoint(joint_idx).mParentJointIndex];
+			Body* body1 = bodies[mSkeleton->GetJoint(joint_idx).mParentJointIndex];
 			r->mConstraints.push_back(p.mToParent->Create(*body1, *body2));
 		}
 
@@ -413,10 +413,10 @@ Ragdoll *RagdollSettings::CreateRagdoll(CollisionGroup::GroupID inCollisionGroup
 	}
 
 	// Add additional constraints
-	for (const AdditionalConstraint &c : mAdditionalConstraints)
+	for (const AdditionalConstraint& c : mAdditionalConstraints)
 	{
-		Body *body1 = bodies[c.mBodyIdx[0]];
-		Body *body2 = bodies[c.mBodyIdx[1]];
+		Body* body1 = bodies[c.mBodyIdx[0]];
+		Body* body2 = bodies[c.mBodyIdx[1]];
 		r->mConstraints.push_back(c.mConstraint->Create(*body1, *body2));
 	}
 
@@ -429,7 +429,7 @@ void RagdollSettings::CalculateBodyIndexToConstraintIndex()
 	mBodyIndexToConstraintIndex.reserve(mParts.size());
 
 	int constraint_index = 0;
-	for (const Part &p : mParts)
+	for (const Part& p : mParts)
 	{
 		if (p.mToParent != nullptr)
 			mBodyIndexToConstraintIndex.push_back(constraint_index++);
@@ -445,7 +445,7 @@ void RagdollSettings::CalculateConstraintIndexToBodyIdxPair()
 
 	// Add constraints between parts
 	int joint_idx = 0;
-	for (const Part &p : mParts)
+	for (const Part& p : mParts)
 	{
 		if (p.mToParent != nullptr)
 		{
@@ -457,7 +457,7 @@ void RagdollSettings::CalculateConstraintIndexToBodyIdxPair()
 	}
 
 	// Add additional constraints
-	for (const AdditionalConstraint &c : mAdditionalConstraints)
+	for (const AdditionalConstraint& c : mAdditionalConstraints)
 		mConstraintIndexToBodyIdxPair.emplace_back(c.mBodyIdx[0], c.mBodyIdx[1]);
 }
 
@@ -473,29 +473,29 @@ void Ragdoll::AddToPhysicsSystem(EActivation inActivationMode, bool inLockBodies
 	{
 		// Create copy of body ids since they will be shuffled
 		int num_bodies = (int)mBodyIDs.size();
-		BodyID *bodies = (BodyID *)JPH_STACK_ALLOC(num_bodies * sizeof(BodyID));
+		BodyID* bodies = (BodyID*)JPH_STACK_ALLOC(num_bodies * sizeof(BodyID));
 		memcpy(bodies, mBodyIDs.data(), num_bodies * sizeof(BodyID));
 
 		// Insert bodies as a batch
-		BodyInterface &bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
+		BodyInterface& bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
 		BodyInterface::AddState add_state = bi.AddBodiesPrepare(bodies, num_bodies);
 		bi.AddBodiesFinalize(bodies, num_bodies, add_state, inActivationMode);
 	}
 
 	// Add all constraints
-	mSystem->AddConstraints((Constraint **)mConstraints.data(), (int)mConstraints.size());
+	mSystem->AddConstraints((Constraint**)mConstraints.data(), (int)mConstraints.size());
 }
 
 void Ragdoll::RemoveFromPhysicsSystem(bool inLockBodies)
 {
 	// Remove all constraints before removing the bodies
-	mSystem->RemoveConstraints((Constraint **)mConstraints.data(), (int)mConstraints.size());
+	mSystem->RemoveConstraints((Constraint**)mConstraints.data(), (int)mConstraints.size());
 
 	// Scope for JPH_STACK_ALLOC
 	{
 		// Create copy of body ids since they will be shuffled
 		int num_bodies = (int)mBodyIDs.size();
-		BodyID *bodies = (BodyID *)JPH_STACK_ALLOC(num_bodies * sizeof(BodyID));
+		BodyID* bodies = (BodyID*)JPH_STACK_ALLOC(num_bodies * sizeof(BodyID));
 		memcpy(bodies, mBodyIDs.data(), num_bodies * sizeof(BodyID));
 
 		// Remove all bodies as a batch
@@ -517,7 +517,7 @@ bool Ragdoll::IsActive(bool inLockBodies) const
 	// Test if any body is active
 	for (int b = 0; b < body_count; ++b)
 	{
-		const Body *body = lock.GetBody(b);
+		const Body* body = lock.GetBody(b);
 		if (body->IsActive())
 			return true;
 	}
@@ -534,30 +534,30 @@ void Ragdoll::SetGroupID(CollisionGroup::GroupID inGroupID, bool inLockBodies)
 	// Update group ID
 	for (int b = 0; b < body_count; ++b)
 	{
-		Body *body = lock.GetBody(b);
+		Body* body = lock.GetBody(b);
 		body->GetCollisionGroup().SetGroupID(inGroupID);
 	}
 }
 
-void Ragdoll::SetPose(const SkeletonPose &inPose, bool inLockBodies)
+void Ragdoll::SetPose(const SkeletonPose& inPose, bool inLockBodies)
 {
 	JPH_ASSERT(inPose.GetSkeleton() == mRagdollSettings->mSkeleton);
 
 	SetPose(inPose.GetRootOffset(), inPose.GetJointMatrices().data(), inLockBodies);
 }
 
-void Ragdoll::SetPose(RVec3Arg inRootOffset, const Mat44 *inJointMatrices, bool inLockBodies)
+void Ragdoll::SetPose(RVec3Arg inRootOffset, const Mat44* inJointMatrices, bool inLockBodies)
 {
 	// Move bodies instantly into the correct position
-	BodyInterface &bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
+	BodyInterface& bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
 	for (int i = 0; i < (int)mBodyIDs.size(); ++i)
 	{
-		const Mat44 &joint = inJointMatrices[i];
+		const Mat44& joint = inJointMatrices[i];
 		bi.SetPositionAndRotation(mBodyIDs[i], inRootOffset + joint.GetTranslation(), joint.GetQuaternion(), EActivation::DontActivate);
 	}
 }
 
-void Ragdoll::GetPose(SkeletonPose &outPose, bool inLockBodies)
+void Ragdoll::GetPose(SkeletonPose& outPose, bool inLockBodies)
 {
 	JPH_ASSERT(outPose.GetSkeleton() == mRagdollSettings->mSkeleton);
 
@@ -566,7 +566,7 @@ void Ragdoll::GetPose(SkeletonPose &outPose, bool inLockBodies)
 	outPose.SetRootOffset(root_offset);
 }
 
-void Ragdoll::GetPose(RVec3 &outRootOffset, Mat44 *outJointMatrices, bool inLockBodies)
+void Ragdoll::GetPose(RVec3& outRootOffset, Mat44* outJointMatrices, bool inLockBodies)
 {
 	// Lock the bodies
 	int body_count = (int)mBodyIDs.size();
@@ -575,7 +575,7 @@ void Ragdoll::GetPose(RVec3 &outRootOffset, Mat44 *outJointMatrices, bool inLock
 	BodyLockMultiRead lock(sRagdollGetBodyLockInterface(mSystem, inLockBodies), mBodyIDs.data(), body_count);
 
 	// Get root matrix
-	const Body *root = lock.GetBody(0);
+	const Body* root = lock.GetBody(0);
 	RMat44 root_transform = root->GetWorldTransform();
 	outRootOffset = root_transform.GetTranslation();
 	outJointMatrices[0] = Mat44(root_transform.GetColumn4(0), root_transform.GetColumn4(1), root_transform.GetColumn4(2), Vec4(0, 0, 0, 1));
@@ -583,7 +583,7 @@ void Ragdoll::GetPose(RVec3 &outRootOffset, Mat44 *outJointMatrices, bool inLock
 	// Get other matrices
 	for (int b = 1; b < body_count; ++b)
 	{
-		const Body *body = lock.GetBody(b);
+		const Body* body = lock.GetBody(b);
 		RMat44 transform = body->GetWorldTransform();
 		outJointMatrices[b] = Mat44(transform.GetColumn4(0), transform.GetColumn4(1), transform.GetColumn4(2), Vec4(Vec3(transform.GetTranslation() - outRootOffset), 1));
 	}
@@ -591,29 +591,29 @@ void Ragdoll::GetPose(RVec3 &outRootOffset, Mat44 *outJointMatrices, bool inLock
 
 void Ragdoll::ResetWarmStart()
 {
-	for (TwoBodyConstraint *c : mConstraints)
+	for (TwoBodyConstraint* c : mConstraints)
 		c->ResetWarmStart();
 }
 
-void Ragdoll::DriveToPoseUsingKinematics(const SkeletonPose &inPose, float inDeltaTime, bool inLockBodies)
+void Ragdoll::DriveToPoseUsingKinematics(const SkeletonPose& inPose, float inDeltaTime, bool inLockBodies)
 {
 	JPH_ASSERT(inPose.GetSkeleton() == mRagdollSettings->mSkeleton);
 
 	DriveToPoseUsingKinematics(inPose.GetRootOffset(), inPose.GetJointMatrices().data(), inDeltaTime, inLockBodies);
 }
 
-void Ragdoll::DriveToPoseUsingKinematics(RVec3Arg inRootOffset, const Mat44 *inJointMatrices, float inDeltaTime, bool inLockBodies)
+void Ragdoll::DriveToPoseUsingKinematics(RVec3Arg inRootOffset, const Mat44* inJointMatrices, float inDeltaTime, bool inLockBodies)
 {
 	// Move bodies into the correct position using kinematics
-	BodyInterface &bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
+	BodyInterface& bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
 	for (int i = 0; i < (int)mBodyIDs.size(); ++i)
 	{
-		const Mat44 &joint = inJointMatrices[i];
+		const Mat44& joint = inJointMatrices[i];
 		bi.MoveKinematic(mBodyIDs[i], inRootOffset + joint.GetTranslation(), joint.GetQuaternion(), inDeltaTime);
 	}
 }
 
-void Ragdoll::DriveToPoseUsingMotors(const SkeletonPose &inPose)
+void Ragdoll::DriveToPoseUsingMotors(const SkeletonPose& inPose)
 {
 	JPH_ASSERT(inPose.GetSkeleton() == mRagdollSettings->mSkeleton);
 
@@ -624,21 +624,21 @@ void Ragdoll::DriveToPoseUsingMotors(const SkeletonPose &inPose)
 		if (constraint_idx >= 0)
 		{
 			// Get desired rotation of this body relative to its parent
-			const SkeletalAnimation::JointState &joint_state = inPose.GetJoint(i);
+			const SkeletalAnimation::JointState& joint_state = inPose.GetJoint(i);
 
 			// Drive constraint to target
-			TwoBodyConstraint *constraint = mConstraints[constraint_idx];
+			TwoBodyConstraint* constraint = mConstraints[constraint_idx];
 			EConstraintSubType sub_type = constraint->GetSubType();
 			if (sub_type == EConstraintSubType::SwingTwist)
 			{
-				SwingTwistConstraint *st_constraint = static_cast<SwingTwistConstraint *>(constraint);
+				SwingTwistConstraint* st_constraint = static_cast<SwingTwistConstraint*>(constraint);
 				st_constraint->SetSwingMotorState(EMotorState::Position);
 				st_constraint->SetTwistMotorState(EMotorState::Position);
 				st_constraint->SetTargetOrientationBS(joint_state.mRotation);
 			}
 			else if (sub_type == EConstraintSubType::Hinge)
 			{
-				HingeConstraint *h_constraint = static_cast<HingeConstraint *>(constraint);
+				HingeConstraint* h_constraint = static_cast<HingeConstraint*>(constraint);
 				h_constraint->SetMotorState(EMotorState::Position);
 				h_constraint->SetTargetOrientationBS(joint_state.mRotation);
 			}
@@ -650,38 +650,38 @@ void Ragdoll::DriveToPoseUsingMotors(const SkeletonPose &inPose)
 
 void Ragdoll::SetLinearAndAngularVelocity(Vec3Arg inLinearVelocity, Vec3Arg inAngularVelocity, bool inLockBodies)
 {
-	BodyInterface &bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
+	BodyInterface& bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
 	for (BodyID body_id : mBodyIDs)
 		bi.SetLinearAndAngularVelocity(body_id, inLinearVelocity, inAngularVelocity);
 }
 
 void Ragdoll::SetLinearVelocity(Vec3Arg inLinearVelocity, bool inLockBodies)
 {
-	BodyInterface &bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
+	BodyInterface& bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
 	for (BodyID body_id : mBodyIDs)
 		bi.SetLinearVelocity(body_id, inLinearVelocity);
 }
 
 void Ragdoll::AddLinearVelocity(Vec3Arg inLinearVelocity, bool inLockBodies)
 {
-	BodyInterface &bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
+	BodyInterface& bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
 	for (BodyID body_id : mBodyIDs)
 		bi.AddLinearVelocity(body_id, inLinearVelocity);
 }
 
 void Ragdoll::AddImpulse(Vec3Arg inImpulse, bool inLockBodies)
 {
-	BodyInterface &bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
+	BodyInterface& bi = sRagdollGetBodyInterface(mSystem, inLockBodies);
 	for (BodyID body_id : mBodyIDs)
 		bi.AddImpulse(body_id, inImpulse);
 }
 
-void Ragdoll::GetRootTransform(RVec3 &outPosition, Quat &outRotation, bool inLockBodies) const
+void Ragdoll::GetRootTransform(RVec3& outPosition, Quat& outRotation, bool inLockBodies) const
 {
 	BodyLockRead lock(sRagdollGetBodyLockInterface(mSystem, inLockBodies), mBodyIDs[0]);
 	if (lock.Succeeded())
 	{
-		const Body &body = lock.GetBody();
+		const Body& body = lock.GetBody();
 		outPosition = body.GetPosition();
 		outRotation = body.GetRotation();
 	}
@@ -702,7 +702,7 @@ AABox Ragdoll::GetWorldSpaceBounds(bool inLockBodies) const
 	AABox bounds;
 	for (int b = 0; b < body_count; ++b)
 	{
-		const Body *body = lock.GetBody(b);
+		const Body* body = lock.GetBody(b);
 		if (body != nullptr)
 			bounds.Encapsulate(body->GetWorldSpaceBounds());
 	}

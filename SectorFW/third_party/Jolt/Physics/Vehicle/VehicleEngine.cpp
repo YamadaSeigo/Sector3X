@@ -7,7 +7,7 @@
 #include <Jolt/Physics/Vehicle/VehicleEngine.h>
 #include <Jolt/ObjectStream/TypeDeclarations.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -15,9 +15,9 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(VehicleEngineSettings)
 {
 	JPH_ADD_ATTRIBUTE(VehicleEngineSettings, mMaxTorque)
-	JPH_ADD_ATTRIBUTE(VehicleEngineSettings, mMinRPM)
-	JPH_ADD_ATTRIBUTE(VehicleEngineSettings, mMaxRPM)
-	JPH_ADD_ATTRIBUTE(VehicleEngineSettings, mNormalizedTorque)
+		JPH_ADD_ATTRIBUTE(VehicleEngineSettings, mMinRPM)
+		JPH_ADD_ATTRIBUTE(VehicleEngineSettings, mMaxRPM)
+		JPH_ADD_ATTRIBUTE(VehicleEngineSettings, mNormalizedTorque)
 }
 
 VehicleEngineSettings::VehicleEngineSettings()
@@ -28,7 +28,7 @@ VehicleEngineSettings::VehicleEngineSettings()
 	mNormalizedTorque.AddPoint(1.0f, 0.8f);
 }
 
-void VehicleEngineSettings::SaveBinaryState(StreamOut &inStream) const
+void VehicleEngineSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mMaxTorque);
 	inStream.Write(mMinRPM);
@@ -36,7 +36,7 @@ void VehicleEngineSettings::SaveBinaryState(StreamOut &inStream) const
 	mNormalizedTorque.SaveBinaryState(inStream);
 }
 
-void VehicleEngineSettings::RestoreBinaryState(StreamIn &inStream)
+void VehicleEngineSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mMaxTorque);
 	inStream.Read(mMinRPM);
@@ -63,12 +63,12 @@ void VehicleEngine::ApplyDamping(float inDeltaTime)
 
 #ifdef JPH_DEBUG_RENDERER
 
-void VehicleEngine::DrawRPM(DebugRenderer *inRenderer, RVec3Arg inPosition, Vec3Arg inForward, Vec3Arg inUp, float inSize, float inShiftDownRPM, float inShiftUpRPM) const
+void VehicleEngine::DrawRPM(DebugRenderer* inRenderer, RVec3Arg inPosition, Vec3Arg inForward, Vec3Arg inUp, float inSize, float inShiftDownRPM, float inShiftUpRPM) const
 {
 	// Function to draw part of a pie
 	auto draw_pie = [this, inRenderer, inSize, inPosition, inForward, inUp](float inMinRPM, float inMaxRPM, Color inColor) {
 		inRenderer->DrawPie(inPosition, inSize, inForward, inUp, ConvertRPMToAngle(inMinRPM), ConvertRPMToAngle(inMaxRPM), inColor, DebugRenderer::ECastShadow::Off);
-	};
+		};
 
 	// Draw segment under min RPM
 	draw_pie(0, mMinRPM, Color::sGrey);
@@ -92,7 +92,7 @@ void VehicleEngine::DrawRPM(DebugRenderer *inRenderer, RVec3Arg inPosition, Vec3
 	}
 	else
 	{
-		draw_pie(inShiftDownRPM, inShiftUpRPM, mCurrentRPM <= inShiftDownRPM? Color::sDarkOrange : Color::sOrange);
+		draw_pie(inShiftDownRPM, inShiftUpRPM, mCurrentRPM <= inShiftDownRPM ? Color::sDarkOrange : Color::sOrange);
 	}
 
 	// Draw segment above inShiftUpRPM
@@ -109,12 +109,12 @@ void VehicleEngine::DrawRPM(DebugRenderer *inRenderer, RVec3Arg inPosition, Vec3
 
 #endif // JPH_DEBUG_RENDERER
 
-void VehicleEngine::SaveState(StateRecorder &inStream) const
+void VehicleEngine::SaveState(StateRecorder& inStream) const
 {
 	inStream.Write(mCurrentRPM);
 }
 
-void VehicleEngine::RestoreState(StateRecorder &inStream)
+void VehicleEngine::RestoreState(StateRecorder& inStream)
 {
 	inStream.Read(mCurrentRPM);
 }

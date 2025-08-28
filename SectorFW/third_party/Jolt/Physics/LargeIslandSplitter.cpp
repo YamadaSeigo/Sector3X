@@ -16,7 +16,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-LargeIslandSplitter::EStatus LargeIslandSplitter::Splits::FetchNextBatch(uint32 &outConstraintsBegin, uint32 &outConstraintsEnd, uint32 &outContactsBegin, uint32 &outContactsEnd, bool &outFirstIteration)
+LargeIslandSplitter::EStatus LargeIslandSplitter::Splits::FetchNextBatch(uint32& outConstraintsBegin, uint32& outConstraintsEnd, uint32& outContactsBegin, uint32& outContactsEnd, bool& outFirstIteration)
 {
 	{
 		// First check if we can get a new batch (doing a read to avoid hammering an atomic with an atomic subtract)
@@ -45,7 +45,7 @@ LargeIslandSplitter::EStatus LargeIslandSplitter::Splits::FetchNextBatch(uint32 
 		{
 			// Parallel split is split into batches
 			JPH_ASSERT(split_index < mNumSplits);
-			const Split &split = mSplits[split_index];
+			const Split& split = mSplits[split_index];
 			if (item >= split.GetNumItems())
 				return EStatus::WaitingForBatch;
 		}
@@ -59,7 +59,7 @@ LargeIslandSplitter::EStatus LargeIslandSplitter::Splits::FetchNextBatch(uint32 
 
 	uint split_index = sGetSplit(status);
 	JPH_ASSERT(split_index < mNumSplits || split_index == cNonParallelSplitIdx);
-	const Split &split = mSplits[split_index];
+	const Split& split = mSplits[split_index];
 	uint item_begin = sGetItem(status);
 	if (split_index == cNonParallelSplitIdx)
 	{
@@ -120,13 +120,13 @@ LargeIslandSplitter::EStatus LargeIslandSplitter::Splits::FetchNextBatch(uint32 
 	return EStatus::BatchRetrieved;
 }
 
-void LargeIslandSplitter::Splits::MarkBatchProcessed(uint inNumProcessed, bool &outLastIteration, bool &outFinalBatch)
+void LargeIslandSplitter::Splits::MarkBatchProcessed(uint inNumProcessed, bool& outLastIteration, bool& outFinalBatch)
 {
 	// We fetched this batch, nobody should change the split and or iteration until we mark the last batch as processed so we can safely get the current status
 	uint64 status = mStatus.load(memory_order_relaxed);
 	uint split_index = sGetSplit(status);
 	JPH_ASSERT(split_index < mNumSplits || split_index == cNonParallelSplitIdx);
-	const Split &split = mSplits[split_index];
+	const Split& split = mSplits[split_index];
 	uint num_items_in_split = split.GetNumItems();
 
 	// Determine if this is the last iteration before possibly incrementing it
@@ -164,8 +164,7 @@ void LargeIslandSplitter::Splits::MarkBatchProcessed(uint inNumProcessed, bool &
 			// If we're beyond the end of splits, go to the non-parallel split
 			if (split_index >= mNumSplits)
 				split_index = cNonParallelSplitIdx;
-		}
-		while (iteration < mNumIterations
+		} while (iteration < mNumIterations
 			&& mSplits[split_index].GetNumItems() == 0); // We don't support processing empty splits, skip to the next split in this case
 
 		mStatus.store((uint64(iteration) << StatusIterationShift) | (uint64(split_index) << StatusSplitShift), memory_order_release);
@@ -183,7 +182,7 @@ LargeIslandSplitter::~LargeIslandSplitter()
 	JPH_ASSERT(mSplitIslands == nullptr);
 }
 
-void LargeIslandSplitter::Prepare(const IslandBuilder &inIslandBuilder, uint32 inNumActiveBodies, TempAllocator *inTempAllocator)
+void LargeIslandSplitter::Prepare(const IslandBuilder& inIslandBuilder, uint32 inNumActiveBodies, TempAllocator* inTempAllocator)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -192,12 +191,12 @@ void LargeIslandSplitter::Prepare(const IslandBuilder &inIslandBuilder, uint32 i
 	for (uint32 island = 0; island < inIslandBuilder.GetNumIslands(); ++island)
 	{
 		// Get the contacts in this island
-		uint32 *contacts_start, *contacts_end;
+		uint32* contacts_start, * contacts_end;
 		inIslandBuilder.GetContactsInIsland(island, contacts_start, contacts_end);
 		uint num_contacts_in_island = uint(contacts_end - contacts_start);
 
 		// Get the constraints in this island
-		uint32 *constraints_start, *constraints_end;
+		uint32* constraints_start, * constraints_end;
 		inIslandBuilder.GetConstraintsInIsland(island, constraints_start, constraints_end);
 		uint num_constraints_in_island = uint(constraints_end - constraints_start);
 
@@ -216,15 +215,15 @@ void LargeIslandSplitter::Prepare(const IslandBuilder &inIslandBuilder, uint32 i
 		mNumActiveBodies = inNumActiveBodies;
 
 		// Allocate split mask buffer
-		mSplitMasks = (SplitMask *)inTempAllocator->Allocate(mNumActiveBodies * sizeof(SplitMask));
+		mSplitMasks = (SplitMask*)inTempAllocator->Allocate(mNumActiveBodies * sizeof(SplitMask));
 
 		// Allocate contact and constraint buffer
 		uint contact_and_constraint_indices_size = mContactAndConstraintsSize * sizeof(uint32);
-		mContactAndConstraintsSplitIdx = (uint32 *)inTempAllocator->Allocate(contact_and_constraint_indices_size);
-		mContactAndConstraintIndices = (uint32 *)inTempAllocator->Allocate(contact_and_constraint_indices_size);
+		mContactAndConstraintsSplitIdx = (uint32*)inTempAllocator->Allocate(contact_and_constraint_indices_size);
+		mContactAndConstraintIndices = (uint32*)inTempAllocator->Allocate(contact_and_constraint_indices_size);
 
 		// Allocate island split buffer
-		mSplitIslands = (Splits *)inTempAllocator->Allocate(mNumSplitIslands * sizeof(Splits));
+		mSplitIslands = (Splits*)inTempAllocator->Allocate(mNumSplitIslands * sizeof(Splits));
 
 		// Prevent any of the splits from being picked up as work
 		for (uint i = 0; i < mNumSplitIslands; ++i)
@@ -232,7 +231,7 @@ void LargeIslandSplitter::Prepare(const IslandBuilder &inIslandBuilder, uint32 i
 	}
 }
 
-uint LargeIslandSplitter::AssignSplit(const Body *inBody1, const Body *inBody2)
+uint LargeIslandSplitter::AssignSplit(const Body* inBody1, const Body* inBody2)
 {
 	uint32 idx1 = inBody1->GetIndexInActiveBodiesInternal();
 	uint32 idx2 = inBody2->GetIndexInActiveBodiesInternal();
@@ -242,7 +241,7 @@ uint LargeIslandSplitter::AssignSplit(const Body *inBody1, const Body *inBody2)
 	{
 		// Body 1 is not active or a kinematic body, so we only need to set 1 body
 		JPH_ASSERT(idx2 < mNumActiveBodies);
-		SplitMask &mask = mSplitMasks[idx2];
+		SplitMask& mask = mSplitMasks[idx2];
 		uint split = min(CountTrailingZeros(~uint32(mask)), cNonParallelSplitIdx);
 		mask |= SplitMask(1U << split);
 		return split;
@@ -251,7 +250,7 @@ uint LargeIslandSplitter::AssignSplit(const Body *inBody1, const Body *inBody2)
 	{
 		// Body 2 is not active or a kinematic body, so we only need to set 1 body
 		JPH_ASSERT(idx1 < mNumActiveBodies);
-		SplitMask &mask = mSplitMasks[idx1];
+		SplitMask& mask = mSplitMasks[idx1];
 		uint split = min(CountTrailingZeros(~uint32(mask)), cNonParallelSplitIdx);
 		mask |= SplitMask(1U << split);
 		return split;
@@ -261,8 +260,8 @@ uint LargeIslandSplitter::AssignSplit(const Body *inBody1, const Body *inBody2)
 		// If both bodies are active, we need to set 2 bodies
 		JPH_ASSERT(idx1 < mNumActiveBodies);
 		JPH_ASSERT(idx2 < mNumActiveBodies);
-		SplitMask &mask1 = mSplitMasks[idx1];
-		SplitMask &mask2 = mSplitMasks[idx2];
+		SplitMask& mask1 = mSplitMasks[idx1];
+		SplitMask& mask2 = mSplitMasks[idx2];
 		uint split = min(CountTrailingZeros((~uint32(mask1)) & (~uint32(mask2))), cNonParallelSplitIdx);
 		SplitMask mask = SplitMask(1U << split);
 		mask1 |= mask;
@@ -271,7 +270,7 @@ uint LargeIslandSplitter::AssignSplit(const Body *inBody1, const Body *inBody2)
 	}
 }
 
-uint LargeIslandSplitter::AssignToNonParallelSplit(const Body *inBody)
+uint LargeIslandSplitter::AssignToNonParallelSplit(const Body* inBody)
 {
 	uint32 idx = inBody->GetIndexInActiveBodiesInternal();
 	if (idx != Body::cInactiveIndex)
@@ -283,17 +282,17 @@ uint LargeIslandSplitter::AssignToNonParallelSplit(const Body *inBody)
 	return cNonParallelSplitIdx;
 }
 
-bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder &inIslandBuilder, const BodyManager &inBodyManager, const ContactConstraintManager &inContactManager, Constraint **inActiveConstraints, CalculateSolverSteps &ioStepsCalculator)
+bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder& inIslandBuilder, const BodyManager& inBodyManager, const ContactConstraintManager& inContactManager, Constraint** inActiveConstraints, CalculateSolverSteps& ioStepsCalculator)
 {
 	JPH_PROFILE_FUNCTION();
 
 	// Get the contacts in this island
-	uint32 *contacts_start, *contacts_end;
+	uint32* contacts_start, * contacts_end;
 	inIslandBuilder.GetContactsInIsland(inIslandIndex, contacts_start, contacts_end);
 	uint num_contacts_in_island = uint(contacts_end - contacts_start);
 
 	// Get the constraints in this island
-	uint32 *constraints_start, *constraints_end;
+	uint32* constraints_start, * constraints_end;
 	inIslandBuilder.GetConstraintsInIsland(inIslandIndex, constraints_start, constraints_end);
 	uint num_constraints_in_island = uint(constraints_end - constraints_start);
 
@@ -303,12 +302,12 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 		return false;
 
 	// Get bodies in this island
-	BodyID *bodies_start, *bodies_end;
+	BodyID* bodies_start, * bodies_end;
 	inIslandBuilder.GetBodiesInIsland(inIslandIndex, bodies_start, bodies_end);
 
 	// Reset the split mask for all bodies in this island
-	Body const * const *bodies = inBodyManager.GetBodies().data();
-	for (const BodyID *b = bodies_start; b < bodies_end; ++b)
+	Body const* const* bodies = inBodyManager.GetBodies().data();
+	for (const BodyID* b = bodies_start; b < bodies_end; ++b)
 		mSplitMasks[bodies[b->GetIndex()]->GetIndexInActiveBodiesInternal()] = 0;
 
 	// Count the number of contacts and constraints per split
@@ -317,14 +316,14 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 
 	// Get space to store split indices
 	uint offset = mContactAndConstraintsNextFree.fetch_add(island_size, memory_order_relaxed);
-	uint32 *contact_split_idx = mContactAndConstraintsSplitIdx + offset;
-	uint32 *constraint_split_idx = contact_split_idx + num_contacts_in_island;
+	uint32* contact_split_idx = mContactAndConstraintsSplitIdx + offset;
+	uint32* constraint_split_idx = contact_split_idx + num_contacts_in_island;
 
 	// Assign the contacts to a split
-	uint32 *cur_contact_split_idx = contact_split_idx;
-	for (const uint32 *c = contacts_start; c < contacts_end; ++c)
+	uint32* cur_contact_split_idx = contact_split_idx;
+	for (const uint32* c = contacts_start; c < contacts_end; ++c)
 	{
-		const Body *body1, *body2;
+		const Body* body1, * body2;
 		inContactManager.GetAffectedBodies(*c, body1, body2);
 		uint split = AssignSplit(body1, body2);
 		num_contacts_in_split[split]++;
@@ -337,10 +336,10 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 	}
 
 	// Assign the constraints to a split
-	uint32 *cur_constraint_split_idx = constraint_split_idx;
-	for (const uint32 *c = constraints_start; c < constraints_end; ++c)
+	uint32* cur_constraint_split_idx = constraint_split_idx;
+	for (const uint32* c = constraints_start; c < constraints_end; ++c)
 	{
-		const Constraint *constraint = inActiveConstraints[*c];
+		const Constraint* constraint = inActiveConstraints[*c];
 		uint split = constraint->BuildIslandSplits(*this);
 		num_constraints_in_split[split]++;
 		*cur_constraint_split_idx++ = split;
@@ -354,7 +353,7 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 	uint split_remap_table[cNumSplits];
 	uint new_split_idx = mNextSplitIsland.fetch_add(1, memory_order_relaxed);
 	JPH_ASSERT(new_split_idx < mNumSplitIslands);
-	Splits &splits = mSplitIslands[new_split_idx];
+	Splits& splits = mSplitIslands[new_split_idx];
 	splits.mIslandIndex = inIslandIndex;
 	splits.mNumSplits = 0;
 	splits.mNumIterations = ioStepsCalculator.GetNumVelocitySteps() + 1; // Iteration 0 is used for warm starting
@@ -363,7 +362,7 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 	splits.mItemsProcessed.store(0, memory_order_release);
 
 	// Allocate space to store the sorted constraint and contact indices per split
-	uint32 *constraint_buffer_cur[cNumSplits], *contact_buffer_cur[cNumSplits];
+	uint32* constraint_buffer_cur[cNumSplits], * contact_buffer_cur[cNumSplits];
 	for (uint s = 0; s < cNumSplits; ++s)
 	{
 		// If this split doesn't contain enough constraints and contacts, we will combine it with the non parallel split
@@ -385,7 +384,7 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 				target_split = splits.mNumSplits++;
 			else
 				target_split = cNonParallelSplitIdx;
-			Split &split = splits.mSplits[target_split];
+			Split& split = splits.mSplits[target_split];
 			split_remap_table[s] = target_split;
 
 			// Allocate space for contacts
@@ -429,7 +428,7 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 		if (s >= splits.GetNumSplits())
 			s = cNonParallelSplitIdx;
 
-		const Split &split = splits.mSplits[s];
+		const Split& split = splits.mSplits[s];
 		stats += StringFormat("g:%d:%d:%d, ", s, split.GetNumContacts(), split.GetNumConstraints());
 		sum += split.GetNumItems();
 	}
@@ -445,7 +444,7 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 			s = cNonParallelSplitIdx;
 
 		// Check that we wrote all elements
-		Split &split = splits.mSplits[s];
+		Split& split = splits.mSplits[s];
 		JPH_ASSERT(contact_buffer_cur[s] == mContactAndConstraintIndices + split.mContactBufferEnd);
 		JPH_ASSERT(constraint_buffer_cur[s] == mContactAndConstraintIndices + split.mConstraintBufferEnd);
 	}
@@ -459,9 +458,9 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 		// Validate contacts
 		uint32 split_contacts_begin, split_contacts_end;
 		splits.GetContactsInSplit(s, split_contacts_begin, split_contacts_end);
-		for (uint32 *c = mContactAndConstraintIndices + split_contacts_begin; c < mContactAndConstraintIndices + split_contacts_end; ++c)
+		for (uint32* c = mContactAndConstraintIndices + split_contacts_begin; c < mContactAndConstraintIndices + split_contacts_end; ++c)
 		{
-			const Body *body1, *body2;
+			const Body* body1, * body2;
 			inContactManager.GetAffectedBodies(*c, body1, body2);
 
 			uint32 idx1 = body1->GetIndexInActiveBodiesInternal();
@@ -487,7 +486,7 @@ bool LargeIslandSplitter::SplitIsland(uint32 inIslandIndex, const IslandBuilder 
 	return true;
 }
 
-LargeIslandSplitter::EStatus LargeIslandSplitter::FetchNextBatch(uint &outSplitIslandIndex, uint32 *&outConstraintsBegin, uint32 *&outConstraintsEnd, uint32 *&outContactsBegin, uint32 *&outContactsEnd, bool &outFirstIteration)
+LargeIslandSplitter::EStatus LargeIslandSplitter::FetchNextBatch(uint& outSplitIslandIndex, uint32*& outConstraintsBegin, uint32*& outConstraintsEnd, uint32*& outContactsBegin, uint32*& outContactsEnd, bool& outFirstIteration)
 {
 	// We can't be done when all islands haven't been submitted yet
 	uint num_splits_created = mNextSplitIsland.load(memory_order_acquire);
@@ -495,7 +494,7 @@ LargeIslandSplitter::EStatus LargeIslandSplitter::FetchNextBatch(uint &outSplitI
 
 	// Loop over all split islands to find work
 	uint32 constraints_begin, constraints_end, contacts_begin, contacts_end;
-	for (Splits *s = mSplitIslands; s < mSplitIslands + num_splits_created; ++s)
+	for (Splits* s = mSplitIslands; s < mSplitIslands + num_splits_created; ++s)
 		switch (s->FetchNextBatch(constraints_begin, constraints_end, contacts_begin, contacts_end, outFirstIteration))
 		{
 		case EStatus::AllBatchesDone:
@@ -514,21 +513,21 @@ LargeIslandSplitter::EStatus LargeIslandSplitter::FetchNextBatch(uint &outSplitI
 			return EStatus::BatchRetrieved;
 		}
 
-	return all_done? EStatus::AllBatchesDone : EStatus::WaitingForBatch;
+	return all_done ? EStatus::AllBatchesDone : EStatus::WaitingForBatch;
 }
 
-void LargeIslandSplitter::MarkBatchProcessed(uint inSplitIslandIndex, const uint32 *inConstraintsBegin, const uint32 *inConstraintsEnd, const uint32 *inContactsBegin, const uint32 *inContactsEnd, bool &outLastIteration, bool &outFinalBatch)
+void LargeIslandSplitter::MarkBatchProcessed(uint inSplitIslandIndex, const uint32* inConstraintsBegin, const uint32* inConstraintsEnd, const uint32* inContactsBegin, const uint32* inContactsEnd, bool& outLastIteration, bool& outFinalBatch)
 {
 	uint num_items_processed = uint(inConstraintsEnd - inConstraintsBegin) + uint(inContactsEnd - inContactsBegin);
 
 	JPH_ASSERT(inSplitIslandIndex < mNextSplitIsland.load(memory_order_relaxed));
-	Splits &splits = mSplitIslands[inSplitIslandIndex];
+	Splits& splits = mSplitIslands[inSplitIslandIndex];
 	splits.MarkBatchProcessed(num_items_processed, outLastIteration, outFinalBatch);
 }
 
 void LargeIslandSplitter::PrepareForSolvePositions()
 {
-	for (Splits *s = mSplitIslands, *s_end = mSplitIslands + mNumSplitIslands; s < s_end; ++s)
+	for (Splits* s = mSplitIslands, *s_end = mSplitIslands + mNumSplitIslands; s < s_end; ++s)
 	{
 		// Set the number of iterations to the number of position steps
 		s->mNumIterations = s->mNumPositionSteps;
@@ -538,7 +537,7 @@ void LargeIslandSplitter::PrepareForSolvePositions()
 	}
 }
 
-void LargeIslandSplitter::Reset(TempAllocator *inTempAllocator)
+void LargeIslandSplitter::Reset(TempAllocator* inTempAllocator)
 {
 	JPH_PROFILE_FUNCTION();
 

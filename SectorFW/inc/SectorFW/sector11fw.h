@@ -10,6 +10,7 @@
 #ifndef A_SECTOR11FW_H_
 #define A_SECTOR11FW_H_
 
+#include "Math/sx_math.h"
 #include "Math/Vector.hpp"
 #include "Math/Quaternion.hpp"
 

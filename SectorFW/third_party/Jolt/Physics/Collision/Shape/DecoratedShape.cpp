@@ -13,10 +13,10 @@ JPH_IMPLEMENT_SERIALIZABLE_ABSTRACT(DecoratedShapeSettings)
 {
 	JPH_ADD_BASE_CLASS(DecoratedShapeSettings, ShapeSettings)
 
-	JPH_ADD_ATTRIBUTE(DecoratedShapeSettings, mInnerShape)
+		JPH_ADD_ATTRIBUTE(DecoratedShapeSettings, mInnerShape)
 }
 
-DecoratedShape::DecoratedShape(EShapeSubType inSubType, const DecoratedShapeSettings &inSettings, ShapeResult &outResult) :
+DecoratedShape::DecoratedShape(EShapeSubType inSubType, const DecoratedShapeSettings& inSettings, ShapeResult& outResult) :
 	Shape(EShapeType::Decorated, inSubType, inSettings, outResult)
 {
 	// Check that there's a shape
@@ -44,34 +44,34 @@ DecoratedShape::DecoratedShape(EShapeSubType inSubType, const DecoratedShapeSett
 	}
 }
 
-const PhysicsMaterial *DecoratedShape::GetMaterial(const SubShapeID &inSubShapeID) const
+const PhysicsMaterial* DecoratedShape::GetMaterial(const SubShapeID& inSubShapeID) const
 {
 	return mInnerShape->GetMaterial(inSubShapeID);
 }
 
-void DecoratedShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace &outVertices) const
+void DecoratedShape::GetSupportingFace(const SubShapeID& inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace& outVertices) const
 {
 	mInnerShape->GetSupportingFace(inSubShapeID, inDirection, inScale, inCenterOfMassTransform, outVertices);
 }
 
-uint64 DecoratedShape::GetSubShapeUserData(const SubShapeID &inSubShapeID) const
+uint64 DecoratedShape::GetSubShapeUserData(const SubShapeID& inSubShapeID) const
 {
 	return mInnerShape->GetSubShapeUserData(inSubShapeID);
 }
 
-void DecoratedShape::SaveSubShapeState(ShapeList &outSubShapes) const
+void DecoratedShape::SaveSubShapeState(ShapeList& outSubShapes) const
 {
 	outSubShapes.clear();
 	outSubShapes.push_back(mInnerShape);
 }
 
-void DecoratedShape::RestoreSubShapeState(const ShapeRefC *inSubShapes, uint inNumShapes)
+void DecoratedShape::RestoreSubShapeState(const ShapeRefC* inSubShapes, uint inNumShapes)
 {
 	JPH_ASSERT(inNumShapes == 1);
 	mInnerShape = inSubShapes[0];
 }
 
-Shape::Stats DecoratedShape::GetStatsRecursive(VisitedShapes &ioVisitedShapes) const
+Shape::Stats DecoratedShape::GetStatsRecursive(VisitedShapes& ioVisitedShapes) const
 {
 	// Get own stats
 	Stats stats = Shape::GetStatsRecursive(ioVisitedShapes);

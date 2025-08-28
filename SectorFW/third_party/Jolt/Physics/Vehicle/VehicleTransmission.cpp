@@ -12,17 +12,17 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(VehicleTransmissionSettings)
 {
 	JPH_ADD_ENUM_ATTRIBUTE(VehicleTransmissionSettings, mMode)
-	JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mGearRatios)
-	JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mReverseGearRatios)
-	JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mSwitchTime)
-	JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mClutchReleaseTime)
-	JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mSwitchLatency)
-	JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mShiftUpRPM)
-	JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mShiftDownRPM)
-	JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mClutchStrength)
+		JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mGearRatios)
+		JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mReverseGearRatios)
+		JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mSwitchTime)
+		JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mClutchReleaseTime)
+		JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mSwitchLatency)
+		JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mShiftUpRPM)
+		JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mShiftDownRPM)
+		JPH_ADD_ATTRIBUTE(VehicleTransmissionSettings, mClutchStrength)
 }
 
-void VehicleTransmissionSettings::SaveBinaryState(StreamOut &inStream) const
+void VehicleTransmissionSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mMode);
 	inStream.Write(mGearRatios);
@@ -35,7 +35,7 @@ void VehicleTransmissionSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mClutchStrength);
 }
 
-void VehicleTransmissionSettings::RestoreBinaryState(StreamIn &inStream)
+void VehicleTransmissionSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mMode);
 	inStream.Read(mGearRatios);
@@ -59,7 +59,7 @@ void VehicleTransmission::Update(float inDeltaTime, float inCurrentRPM, float in
 			|| inForwardInput * float(mCurrentGear) < 0.0f) // Changing between forward / reverse
 		{
 			// Switch to first gear or reverse depending on input
-			mCurrentGear = inForwardInput > 0.0f? 1 : (inForwardInput < 0.0f? -1 : 0);
+			mCurrentGear = inForwardInput > 0.0f ? 1 : (inForwardInput < 0.0f ? -1 : 0);
 		}
 		else if (mGearSwitchLatencyTimeLeft == 0.0f) // If not in the timout after switching gears
 		{
@@ -83,14 +83,14 @@ void VehicleTransmission::Update(float inDeltaTime, float inCurrentRPM, float in
 				if (mCurrentGear < 0)
 				{
 					// Shift down, reverse
-					int max_gear = inForwardInput != 0.0f? -1 : 0;
+					int max_gear = inForwardInput != 0.0f ? -1 : 0;
 					if (mCurrentGear < max_gear)
 						mCurrentGear++;
 				}
 				else
 				{
 					// Shift down, forward
-					int min_gear = inForwardInput != 0.0f? 1 : 0;
+					int min_gear = inForwardInput != 0.0f ? 1 : 0;
 					if (mCurrentGear > min_gear)
 						mCurrentGear--;
 				}
@@ -100,7 +100,7 @@ void VehicleTransmission::Update(float inDeltaTime, float inCurrentRPM, float in
 		if (old_gear != mCurrentGear)
 		{
 			// We've shifted gear, start switch countdown
-			mGearSwitchTimeLeft = old_gear != 0? mSwitchTime : 0.0f;
+			mGearSwitchTimeLeft = old_gear != 0 ? mSwitchTime : 0.0f;
 			mClutchReleaseTimeLeft = mClutchReleaseTime;
 			mGearSwitchLatencyTimeLeft = mSwitchLatency;
 			mClutchFriction = 0.0f;
@@ -138,7 +138,7 @@ float VehicleTransmission::GetCurrentRatio() const
 		return mGearRatios[mCurrentGear - 1];
 }
 
-void VehicleTransmission::SaveState(StateRecorder &inStream) const
+void VehicleTransmission::SaveState(StateRecorder& inStream) const
 {
 	inStream.Write(mCurrentGear);
 	inStream.Write(mClutchFriction);
@@ -147,7 +147,7 @@ void VehicleTransmission::SaveState(StateRecorder &inStream) const
 	inStream.Write(mGearSwitchLatencyTimeLeft);
 }
 
-void VehicleTransmission::RestoreState(StateRecorder &inStream)
+void VehicleTransmission::RestoreState(StateRecorder& inStream)
 {
 	inStream.Read(mCurrentGear);
 	inStream.Read(mClutchFriction);

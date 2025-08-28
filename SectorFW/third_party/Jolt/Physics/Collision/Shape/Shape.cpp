@@ -23,7 +23,7 @@ JPH_IMPLEMENT_SERIALIZABLE_ABSTRACT_BASE(ShapeSettings)
 {
 	JPH_ADD_BASE_CLASS(ShapeSettings, SerializableObject)
 
-	JPH_ADD_ATTRIBUTE(ShapeSettings, mUserData)
+		JPH_ADD_ATTRIBUTE(ShapeSettings, mUserData)
 }
 
 #ifdef JPH_DEBUG_RENDERER
@@ -32,13 +32,13 @@ bool Shape::sDrawSubmergedVolumes = false;
 
 ShapeFunctions ShapeFunctions::sRegistry[NumSubShapeTypes];
 
-const Shape *Shape::GetLeafShape([[maybe_unused]] const SubShapeID &inSubShapeID, SubShapeID &outRemainder) const
+const Shape* Shape::GetLeafShape([[maybe_unused]] const SubShapeID& inSubShapeID, SubShapeID& outRemainder) const
 {
 	outRemainder = inSubShapeID;
 	return this;
 }
 
-TransformedShape Shape::GetSubShapeTransformedShape(const SubShapeID &inSubShapeID, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, SubShapeID &outRemainder) const
+TransformedShape Shape::GetSubShapeTransformedShape(const SubShapeID& inSubShapeID, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, SubShapeID& outRemainder) const
 {
 	// We have reached the leaf shape so there is no remainder
 	outRemainder = SubShapeID();
@@ -49,7 +49,7 @@ TransformedShape Shape::GetSubShapeTransformedShape(const SubShapeID &inSubShape
 	return ts;
 }
 
-void Shape::CollectTransformedShapes(const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, const SubShapeIDCreator &inSubShapeIDCreator, TransformedShapeCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void Shape::CollectTransformedShapes(const AABox& inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, const SubShapeIDCreator& inSubShapeIDCreator, TransformedShapeCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
@@ -60,7 +60,7 @@ void Shape::CollectTransformedShapes(const AABox &inBox, Vec3Arg inPositionCOM, 
 	ioCollector.AddHit(ts);
 }
 
-void Shape::TransformShape(Mat44Arg inCenterOfMassTransform, TransformedShapeCollector &ioCollector) const
+void Shape::TransformShape(Mat44Arg inCenterOfMassTransform, TransformedShapeCollector& ioCollector) const
 {
 	Vec3 scale;
 	Mat44 transform = inCenterOfMassTransform.Decompose(scale);
@@ -69,19 +69,19 @@ void Shape::TransformShape(Mat44Arg inCenterOfMassTransform, TransformedShapeCol
 	ioCollector.AddHit(ts);
 }
 
-void Shape::SaveBinaryState(StreamOut &inStream) const
+void Shape::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mShapeSubType);
 	inStream.Write(mUserData);
 }
 
-void Shape::RestoreBinaryState(StreamIn &inStream)
+void Shape::RestoreBinaryState(StreamIn& inStream)
 {
 	// Type hash read by sRestoreFromBinaryState
 	inStream.Read(mUserData);
 }
 
-Shape::ShapeResult Shape::sRestoreFromBinaryState(StreamIn &inStream)
+Shape::ShapeResult Shape::sRestoreFromBinaryState(StreamIn& inStream)
 {
 	ShapeResult result;
 
@@ -107,7 +107,7 @@ Shape::ShapeResult Shape::sRestoreFromBinaryState(StreamIn &inStream)
 	return result;
 }
 
-void Shape::SaveWithChildren(StreamOut &inStream, ShapeToIDMap &ioShapeMap, MaterialToIDMap &ioMaterialMap) const
+void Shape::SaveWithChildren(StreamOut& inStream, ShapeToIDMap& ioShapeMap, MaterialToIDMap& ioMaterialMap) const
 {
 	ShapeToIDMap::const_iterator shape_id_iter = ioShapeMap.find(this);
 	if (shape_id_iter == ioShapeMap.end())
@@ -124,7 +124,7 @@ void Shape::SaveWithChildren(StreamOut &inStream, ShapeToIDMap &ioShapeMap, Mate
 		ShapeList sub_shapes;
 		SaveSubShapeState(sub_shapes);
 		inStream.Write(uint32(sub_shapes.size()));
-		for (const Shape *shape : sub_shapes)
+		for (const Shape* shape : sub_shapes)
 		{
 			if (shape == nullptr)
 				inStream.Write(~uint32(0));
@@ -144,7 +144,7 @@ void Shape::SaveWithChildren(StreamOut &inStream, ShapeToIDMap &ioShapeMap, Mate
 	}
 }
 
-Shape::ShapeResult Shape::sRestoreWithChildren(StreamIn &inStream, IDToShapeMap &ioShapeMap, IDToMaterialMap &ioMaterialMap)
+Shape::ShapeResult Shape::sRestoreWithChildren(StreamIn& inStream, IDToShapeMap& ioShapeMap, IDToMaterialMap& ioMaterialMap)
 {
 	ShapeResult result;
 
@@ -204,13 +204,13 @@ Shape::ShapeResult Shape::sRestoreWithChildren(StreamIn &inStream, IDToShapeMap 
 		result.SetError(mlresult.GetError());
 		return result;
 	}
-	const PhysicsMaterialList &materials = mlresult.Get();
+	const PhysicsMaterialList& materials = mlresult.Get();
 	result.Get()->RestoreMaterialState(materials.data(), (uint)materials.size());
 
 	return result;
 }
 
-Shape::Stats Shape::GetStatsRecursive(VisitedShapes &ioVisitedShapes) const
+Shape::Stats Shape::GetStatsRecursive(VisitedShapes& ioVisitedShapes) const
 {
 	Stats stats = GetStats();
 
@@ -248,7 +248,7 @@ Shape::ShapeResult Shape::ScaleShape(Vec3Arg inScale) const
 		// Test if the scale is near unit
 		ShapeResult result;
 		if (inScale.IsClose(unit_scale))
-			result.Set(const_cast<Shape *>(this));
+			result.Set(const_cast<Shape*>(this));
 		else
 			result.Set(new ScaledShape(this, inScale));
 		return result;
@@ -257,7 +257,7 @@ Shape::ShapeResult Shape::ScaleShape(Vec3Arg inScale) const
 	// Collect the leaf shapes and their transforms
 	struct Collector : TransformedShapeCollector
 	{
-		virtual void				AddHit(const ResultType &inResult) override
+		virtual void				AddHit(const ResultType& inResult) override
 		{
 			mShapes.push_back(inResult);
 		}
@@ -270,9 +270,9 @@ Shape::ShapeResult Shape::ScaleShape(Vec3Arg inScale) const
 	// Construct a compound shape
 	StaticCompoundShapeSettings compound;
 	compound.mSubShapes.reserve(collector.mShapes.size());
-	for (const TransformedShape &ts : collector.mShapes)
+	for (const TransformedShape& ts : collector.mShapes)
 	{
-		const Shape *shape = ts.mShape;
+		const Shape* shape = ts.mShape;
 
 		// Construct a scaled shape if scale is not unit
 		Vec3 scale = ts.GetShapeScale();
@@ -286,7 +286,7 @@ Shape::ShapeResult Shape::ScaleShape(Vec3Arg inScale) const
 	return compound.Create();
 }
 
-void Shape::sCollidePointUsingRayCast(const Shape &inShape, Vec3Arg inPoint, const SubShapeIDCreator &inSubShapeIDCreator, CollidePointCollector &ioCollector, const ShapeFilter &inShapeFilter)
+void Shape::sCollidePointUsingRayCast(const Shape& inShape, Vec3Arg inPoint, const SubShapeIDCreator& inSubShapeIDCreator, CollidePointCollector& ioCollector, const ShapeFilter& inShapeFilter)
 {
 	// First test if we're inside our bounding box
 	AABox bounds = inShape.GetLocalBounds();
@@ -296,7 +296,7 @@ void Shape::sCollidePointUsingRayCast(const Shape &inShape, Vec3Arg inPoint, con
 		class HitCountCollector : public CastRayCollector
 		{
 		public:
-			virtual void	AddHit(const RayCastResult &inResult) override
+			virtual void	AddHit(const RayCastResult& inResult) override
 			{
 				// Store the last sub shape ID so that we can provide something to our outer hit collector
 				mSubShapeID = inResult.mSubShapeID2;
@@ -314,7 +314,7 @@ void Shape::sCollidePointUsingRayCast(const Shape &inShape, Vec3Arg inPoint, con
 		settings.SetBackFaceMode(EBackFaceMode::CollideWithBackFaces);
 
 		// Cast a ray that's 10% longer than the height of our bounding box
-		inShape.CastRay(RayCast { inPoint, 1.1f * bounds.GetSize().GetY() * Vec3::sAxisY() }, settings, inSubShapeIDCreator, collector, inShapeFilter);
+		inShape.CastRay(RayCast{ inPoint, 1.1f * bounds.GetSize().GetY() * Vec3::sAxisY() }, settings, inSubShapeIDCreator, collector, inShapeFilter);
 
 		// Odd amount of hits means inside
 		if ((collector.mHitCount & 1) == 1)

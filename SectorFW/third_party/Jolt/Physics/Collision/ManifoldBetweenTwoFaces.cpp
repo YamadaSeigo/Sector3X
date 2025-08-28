@@ -8,12 +8,12 @@
 #include <Jolt/Physics/Constraints/ContactConstraintManager.h>
 #include <Jolt/Geometry/ClipPoly.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
 
-void PruneContactPoints(Vec3Arg inPenetrationAxis, ContactPoints &ioContactPointsOn1, ContactPoints &ioContactPointsOn2 JPH_IF_DEBUG_RENDERER(, RVec3Arg inCenterOfMass))
+void PruneContactPoints(Vec3Arg inPenetrationAxis, ContactPoints& ioContactPointsOn1, ContactPoints& ioContactPointsOn2 JPH_IF_DEBUG_RENDERER(, RVec3Arg inCenterOfMass))
 {
 	// Makes no sense to call this with 4 or less points
 	JPH_ASSERT(ioContactPointsOn1.size() > 4);
@@ -134,7 +134,7 @@ void PruneContactPoints(Vec3Arg inPenetrationAxis, ContactPoints &ioContactPoint
 	ioContactPointsOn2 = points_to_keep_on_2;
 }
 
-void ManifoldBetweenTwoFaces(Vec3Arg inContactPoint1, Vec3Arg inContactPoint2, Vec3Arg inPenetrationAxis, float inMaxContactDistance, const ConvexShape::SupportingFace &inShape1Face, const ConvexShape::SupportingFace &inShape2Face, ContactPoints &outContactPoints1, ContactPoints &outContactPoints2 JPH_IF_DEBUG_RENDERER(, RVec3Arg inCenterOfMass))
+void ManifoldBetweenTwoFaces(Vec3Arg inContactPoint1, Vec3Arg inContactPoint2, Vec3Arg inPenetrationAxis, float inMaxContactDistance, const ConvexShape::SupportingFace& inShape1Face, const ConvexShape::SupportingFace& inShape2Face, ContactPoints& outContactPoints1, ContactPoints& outContactPoints2 JPH_IF_DEBUG_RENDERER(, RVec3Arg inCenterOfMass))
 {
 	JPH_ASSERT(inMaxContactDistance > 0.0f);
 
@@ -207,7 +207,7 @@ void ManifoldBetweenTwoFaces(Vec3Arg inContactPoint1, Vec3Arg inContactPoint2, V
 			}
 		}
 
-	#ifdef JPH_DEBUG_RENDERER
+#ifdef JPH_DEBUG_RENDERER
 		if (ContactConstraintManager::sDrawSupportingFaces)
 		{
 			RMat44 com = RMat44::sTranslation(inCenterOfMass);
@@ -234,7 +234,7 @@ void ManifoldBetweenTwoFaces(Vec3Arg inContactPoint1, Vec3Arg inContactPoint2, V
 				DebugRenderer::sInstance->DrawMarker(inCenterOfMass + outContactPoints2[p], Color::sOrange, 0.1f);
 			}
 		}
-	#endif // JPH_DEBUG_RENDERER
+#endif // JPH_DEBUG_RENDERER
 	}
 
 	// If the clipping result is empty, use the contact point itself

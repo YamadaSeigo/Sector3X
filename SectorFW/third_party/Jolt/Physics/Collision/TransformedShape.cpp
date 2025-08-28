@@ -14,7 +14,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-bool TransformedShape::CastRay(const RRayCast &inRay, RayCastResult &ioHit) const
+bool TransformedShape::CastRay(const RRayCast& inRay, RayCastResult& ioHit) const
 {
 	if (mShape != nullptr)
 	{
@@ -40,7 +40,7 @@ bool TransformedShape::CastRay(const RRayCast &inRay, RayCastResult &ioHit) cons
 	return false;
 }
 
-void TransformedShape::CastRay(const RRayCast &inRay, const RayCastSettings &inRayCastSettings, CastRayCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void TransformedShape::CastRay(const RRayCast& inRay, const RayCastSettings& inRayCastSettings, CastRayCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	if (mShape != nullptr)
 	{
@@ -62,7 +62,7 @@ void TransformedShape::CastRay(const RRayCast &inRay, const RayCastSettings &inR
 	}
 }
 
-void TransformedShape::CollidePoint(RVec3Arg inPoint, CollidePointCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void TransformedShape::CollidePoint(RVec3Arg inPoint, CollidePointCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	if (mShape != nullptr)
 	{
@@ -79,7 +79,7 @@ void TransformedShape::CollidePoint(RVec3Arg inPoint, CollidePointCollector &ioC
 	}
 }
 
-void TransformedShape::CollideShape(const Shape *inShape, Vec3Arg inShapeScale, RMat44Arg inCenterOfMassTransform, const CollideShapeSettings &inCollideShapeSettings, RVec3Arg inBaseOffset, CollideShapeCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void TransformedShape::CollideShape(const Shape* inShape, Vec3Arg inShapeScale, RMat44Arg inCenterOfMassTransform, const CollideShapeSettings& inCollideShapeSettings, RVec3Arg inBaseOffset, CollideShapeCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	if (mShape != nullptr)
 	{
@@ -94,7 +94,7 @@ void TransformedShape::CollideShape(const Shape *inShape, Vec3Arg inShapeScale, 
 	}
 }
 
-void TransformedShape::CastShape(const RShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, RVec3Arg inBaseOffset, CastShapeCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void TransformedShape::CastShape(const RShapeCast& inShapeCast, const ShapeCastSettings& inShapeCastSettings, RVec3Arg inBaseOffset, CastShapeCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	if (mShape != nullptr)
 	{
@@ -113,20 +113,20 @@ void TransformedShape::CastShape(const RShapeCast &inShapeCast, const ShapeCastS
 	}
 }
 
-void TransformedShape::CollectTransformedShapes(const AABox &inBox, TransformedShapeCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void TransformedShape::CollectTransformedShapes(const AABox& inBox, TransformedShapeCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	if (mShape != nullptr)
 	{
 		struct MyCollector : public TransformedShapeCollector
 		{
-										MyCollector(TransformedShapeCollector &ioCollector, RVec3 inShapePositionCOM) :
+			MyCollector(TransformedShapeCollector& ioCollector, RVec3 inShapePositionCOM) :
 				TransformedShapeCollector(ioCollector),
 				mCollector(ioCollector),
 				mShapePositionCOM(inShapePositionCOM)
 			{
 			}
 
-			virtual void				AddHit(const TransformedShape &inResult) override
+			virtual void				AddHit(const TransformedShape& inResult) override
 			{
 				// Apply the center of mass offset
 				TransformedShape ts = inResult;
@@ -139,7 +139,7 @@ void TransformedShape::CollectTransformedShapes(const AABox &inBox, TransformedS
 				UpdateEarlyOutFraction(mCollector.GetEarlyOutFraction());
 			}
 
-			TransformedShapeCollector &	mCollector;
+			TransformedShapeCollector& mCollector;
 			RVec3						mShapePositionCOM;
 		};
 
@@ -157,7 +157,7 @@ void TransformedShape::CollectTransformedShapes(const AABox &inBox, TransformedS
 	}
 }
 
-void TransformedShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, RVec3Arg inBaseOffset) const
+void TransformedShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox& inBox, RVec3Arg inBaseOffset) const
 {
 	if (mShape != nullptr)
 	{
@@ -169,7 +169,7 @@ void TransformedShape::GetTrianglesStart(GetTrianglesContext &ioContext, const A
 	}
 }
 
-int TransformedShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials) const
+int TransformedShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
 {
 	if (mShape != nullptr)
 		return mShape->GetTrianglesNext(ioContext, inMaxTrianglesRequested, outTriangleVertices, outMaterials);

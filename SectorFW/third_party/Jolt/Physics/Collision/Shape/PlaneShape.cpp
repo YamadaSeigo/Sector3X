@@ -21,7 +21,7 @@
 #include <Jolt/Geometry/Plane.h>
 #include <Jolt/ObjectStream/TypeDeclarations.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -30,9 +30,9 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(PlaneShapeSettings)
 {
 	JPH_ADD_BASE_CLASS(PlaneShapeSettings, ShapeSettings)
 
-	JPH_ADD_ATTRIBUTE(PlaneShapeSettings, mPlane)
-	JPH_ADD_ATTRIBUTE(PlaneShapeSettings, mMaterial)
-	JPH_ADD_ATTRIBUTE(PlaneShapeSettings, mHalfExtent)
+		JPH_ADD_ATTRIBUTE(PlaneShapeSettings, mPlane)
+		JPH_ADD_ATTRIBUTE(PlaneShapeSettings, mMaterial)
+		JPH_ADD_ATTRIBUTE(PlaneShapeSettings, mHalfExtent)
 }
 
 ShapeSettings::ShapeResult PlaneShapeSettings::Create() const
@@ -42,14 +42,14 @@ ShapeSettings::ShapeResult PlaneShapeSettings::Create() const
 	return mCachedResult;
 }
 
-inline static void sPlaneGetOrthogonalBasis(Vec3Arg inNormal, Vec3 &outPerp1, Vec3 &outPerp2)
+inline static void sPlaneGetOrthogonalBasis(Vec3Arg inNormal, Vec3& outPerp1, Vec3& outPerp2)
 {
 	outPerp1 = inNormal.Cross(Vec3::sAxisY()).NormalizedOr(Vec3::sAxisX());
 	outPerp2 = outPerp1.Cross(inNormal).Normalized();
 	outPerp1 = inNormal.Cross(outPerp2);
 }
 
-void PlaneShape::GetVertices(Vec3 *outVertices) const
+void PlaneShape::GetVertices(Vec3* outVertices) const
 {
 	// Create orthogonal basis
 	Vec3 normal = mPlane.GetNormal();
@@ -77,14 +77,14 @@ void PlaneShape::CalculateLocalBounds()
 	// Encapsulate the vertices and a point mHalfExtent behind the plane
 	mLocalBounds = AABox();
 	Vec3 normal = mPlane.GetNormal();
-	for (const Vec3 &v : vertices)
+	for (const Vec3& v : vertices)
 	{
 		mLocalBounds.Encapsulate(v);
 		mLocalBounds.Encapsulate(v - mHalfExtent * normal);
 	}
 }
 
-PlaneShape::PlaneShape(const PlaneShapeSettings &inSettings, ShapeResult &outResult) :
+PlaneShape::PlaneShape(const PlaneShapeSettings& inSettings, ShapeResult& outResult) :
 	Shape(EShapeType::Plane, EShapeSubType::Plane, inSettings, outResult),
 	mPlane(inSettings.mPlane),
 	mMaterial(inSettings.mMaterial),
@@ -107,7 +107,7 @@ MassProperties PlaneShape::GetMassProperties() const
 	return MassProperties();
 }
 
-void PlaneShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace &outVertices) const
+void PlaneShape::GetSupportingFace(const SubShapeID& inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace& outVertices) const
 {
 	// Get the vertices of the plane
 	Vec3 vertices[4];
@@ -123,12 +123,12 @@ void PlaneShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDir
 	// Transform them to world space
 	outVertices.clear();
 	Mat44 com = inCenterOfMassTransform.PreScaled(inScale);
-	for (const Vec3 &v : vertices)
+	for (const Vec3& v : vertices)
 		outVertices.push_back(com * v);
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void PlaneShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
+void PlaneShape::Draw(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
 {
 	// Get the vertices of the plane
 	Vec3 local_vertices[4];
@@ -148,7 +148,7 @@ void PlaneShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransfo
 		vertices[i] = com * local_vertices[i];
 
 	// Determine the color
-	Color color = inUseMaterialColors? GetMaterial(SubShapeID())->GetDebugColor() : inColor;
+	Color color = inUseMaterialColors ? GetMaterial(SubShapeID())->GetDebugColor() : inColor;
 
 	// Draw the plane
 	if (inDrawWireframe)
@@ -164,7 +164,7 @@ void PlaneShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransfo
 }
 #endif // JPH_DEBUG_RENDERER
 
-bool PlaneShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubShapeIDCreator, RayCastResult &ioHit) const
+bool PlaneShape::CastRay(const RayCast& inRay, const SubShapeIDCreator& inSubShapeIDCreator, RayCastResult& ioHit) const
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -194,7 +194,7 @@ bool PlaneShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubSha
 	return false;
 }
 
-void PlaneShape::CastRay(const RayCast &inRay, const RayCastSettings &inRayCastSettings, const SubShapeIDCreator &inSubShapeIDCreator, CastRayCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void PlaneShape::CastRay(const RayCast& inRay, const RayCastSettings& inRayCastSettings, const SubShapeIDCreator& inSubShapeIDCreator, CastRayCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -233,7 +233,7 @@ void PlaneShape::CastRay(const RayCast &inRay, const RayCastSettings &inRayCastS
 	}
 }
 
-void PlaneShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubShapeIDCreator, CollidePointCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void PlaneShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator& inSubShapeIDCreator, CollidePointCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -246,7 +246,7 @@ void PlaneShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubSha
 		ioCollector.AddHit({ TransformedShape::sGetBodyID(ioCollector.GetContext()), inSubShapeIDCreator.GetID() });
 }
 
-void PlaneShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator &inVertices, uint inNumVertices, int inCollidingShapeIndex) const
+void PlaneShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator& inVertices, uint inNumVertices, int inCollidingShapeIndex) const
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -264,7 +264,7 @@ void PlaneShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3A
 }
 
 // This is a version of GetSupportingFace that returns a face that is large enough to cover the shape we're colliding with but not as large as the regular GetSupportedFace to avoid numerical precision issues
-inline static void sGetSupportingFace(const ConvexShape *inShape, Vec3Arg inShapeCOM, const Plane &inPlane, Mat44Arg inPlaneToWorld, ConvexShape::SupportingFace &outPlaneFace)
+inline static void sGetSupportingFace(const ConvexShape* inShape, Vec3Arg inShapeCOM, const Plane& inPlane, Mat44Arg inPlaneToWorld, ConvexShape::SupportingFace& outPlaneFace)
 {
 	// Project COM of shape onto plane
 	Plane world_plane = inPlane.GetTransformed(inPlaneToWorld);
@@ -288,15 +288,15 @@ inline static void sGetSupportingFace(const ConvexShape *inShape, Vec3Arg inShap
 	outPlaneFace[3] = center - perp1 + perp2;
 }
 
-void PlaneShape::sCastConvexVsPlane(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, const Shape *inShape, Vec3Arg inScale, [[maybe_unused]] const ShapeFilter &inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, CastShapeCollector &ioCollector)
+void PlaneShape::sCastConvexVsPlane(const ShapeCast& inShapeCast, const ShapeCastSettings& inShapeCastSettings, const Shape* inShape, Vec3Arg inScale, [[maybe_unused]] const ShapeFilter& inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, CastShapeCollector& ioCollector)
 {
 	JPH_PROFILE_FUNCTION();
 
 	// Get the shapes
 	JPH_ASSERT(inShapeCast.mShape->GetType() == EShapeType::Convex);
 	JPH_ASSERT(inShape->GetType() == EShapeType::Plane);
-	const ConvexShape *convex_shape = static_cast<const ConvexShape *>(inShapeCast.mShape);
-	const PlaneShape *plane_shape = static_cast<const PlaneShape *>(inShape);
+	const ConvexShape* convex_shape = static_cast<const ConvexShape*>(inShapeCast.mShape);
+	const PlaneShape* plane_shape = static_cast<const PlaneShape*>(inShape);
 
 	// Shape cast is provided relative to COM of inShape, so all we need to do is transform our plane with inScale
 	Plane plane = plane_shape->mPlane.Scaled(inScale);
@@ -304,7 +304,7 @@ void PlaneShape::sCastConvexVsPlane(const ShapeCast &inShapeCast, const ShapeCas
 
 	// Get support function
 	ConvexShape::SupportBuffer shape1_support_buffer;
-	const ConvexShape::Support *shape1_support = convex_shape->GetSupportFunction(ConvexShape::ESupportMode::Default, shape1_support_buffer, inShapeCast.mScale);
+	const ConvexShape::Support* shape1_support = convex_shape->GetSupportFunction(ConvexShape::ESupportMode::Default, shape1_support_buffer, inShapeCast.mScale);
 
 	// Get the support point of the convex shape in the opposite direction of the plane normal in our local space
 	Vec3 normal_in_convex_shape_space = inShapeCast.mCenterOfMassStart.Multiply3x3Transposed(normal);
@@ -377,7 +377,7 @@ void PlaneShape::sCastConvexVsPlane(const ShapeCast &inShapeCast, const ShapeCas
 
 	// Notify the collector
 	JPH_IF_TRACK_NARROWPHASE_STATS(TrackNarrowPhaseCollector track;)
-	ioCollector.AddHit(result);
+		ioCollector.AddHit(result);
 }
 
 struct PlaneShape::PSGetTrianglesContext
@@ -386,12 +386,12 @@ struct PlaneShape::PSGetTrianglesContext
 	bool	mDone = false;
 };
 
-void PlaneShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
+void PlaneShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox& inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
 {
 	static_assert(sizeof(PSGetTrianglesContext) <= sizeof(GetTrianglesContext), "GetTrianglesContext too small");
 	JPH_ASSERT(IsAligned(&ioContext, alignof(PSGetTrianglesContext)));
 
-	PSGetTrianglesContext *context = new (&ioContext) PSGetTrianglesContext();
+	PSGetTrianglesContext* context = new (&ioContext) PSGetTrianglesContext();
 
 	// Get the vertices of the plane
 	Vec3 vertices[4];
@@ -410,13 +410,13 @@ void PlaneShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &
 		(com * vertices[i]).StoreFloat3(&context->mVertices[i]);
 }
 
-int PlaneShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials) const
+int PlaneShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
 {
 	static_assert(cGetTrianglesMinTrianglesRequested >= 2, "cGetTrianglesMinTrianglesRequested is too small");
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
 
 	// Check if we're done
-	PSGetTrianglesContext &context = (PSGetTrianglesContext &)ioContext;
+	PSGetTrianglesContext& context = (PSGetTrianglesContext&)ioContext;
 	if (context.mDone)
 		return 0;
 	context.mDone = true;
@@ -434,7 +434,7 @@ int PlaneShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTriang
 	if (outMaterials != nullptr)
 	{
 		// Get material
-		const PhysicsMaterial *material = GetMaterial(SubShapeID());
+		const PhysicsMaterial* material = GetMaterial(SubShapeID());
 		outMaterials[0] = material;
 		outMaterials[1] = material;
 	}
@@ -442,15 +442,15 @@ int PlaneShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTriang
 	return 2;
 }
 
-void PlaneShape::sCollideConvexVsPlane(const Shape *inShape1, const Shape *inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, const CollideShapeSettings &inCollideShapeSettings, CollideShapeCollector &ioCollector, [[maybe_unused]] const ShapeFilter &inShapeFilter)
+void PlaneShape::sCollideConvexVsPlane(const Shape* inShape1, const Shape* inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, const CollideShapeSettings& inCollideShapeSettings, CollideShapeCollector& ioCollector, [[maybe_unused]] const ShapeFilter& inShapeFilter)
 {
 	JPH_PROFILE_FUNCTION();
 
 	// Get the shapes
 	JPH_ASSERT(inShape1->GetType() == EShapeType::Convex);
 	JPH_ASSERT(inShape2->GetType() == EShapeType::Plane);
-	const ConvexShape *shape1 = static_cast<const ConvexShape *>(inShape1);
-	const PlaneShape *shape2 = static_cast<const PlaneShape *>(inShape2);
+	const ConvexShape* shape1 = static_cast<const ConvexShape*>(inShape1);
+	const PlaneShape* shape2 = static_cast<const PlaneShape*>(inShape2);
 
 	// Transform the plane to the space of the convex shape
 	Plane scaled_plane = shape2->mPlane.Scaled(inScale2);
@@ -459,7 +459,7 @@ void PlaneShape::sCollideConvexVsPlane(const Shape *inShape1, const Shape *inSha
 
 	// Get support function
 	ConvexShape::SupportBuffer shape1_support_buffer;
-	const ConvexShape::Support *shape1_support = shape1->GetSupportFunction(ConvexShape::ESupportMode::Default, shape1_support_buffer, inScale1);
+	const ConvexShape::Support* shape1_support = shape1->GetSupportFunction(ConvexShape::ESupportMode::Default, shape1_support_buffer, inScale1);
 
 	// Get the support point of the convex shape in the opposite direction of the plane normal
 	Vec3 support_point = shape1_support->GetSupport(-normal);
@@ -489,11 +489,11 @@ void PlaneShape::sCollideConvexVsPlane(const Shape *inShape1, const Shape *inSha
 
 		// Notify the collector
 		JPH_IF_TRACK_NARROWPHASE_STATS(TrackNarrowPhaseCollector track;)
-		ioCollector.AddHit(result);
+			ioCollector.AddHit(result);
 	}
 }
 
-void PlaneShape::SaveBinaryState(StreamOut &inStream) const
+void PlaneShape::SaveBinaryState(StreamOut& inStream) const
 {
 	Shape::SaveBinaryState(inStream);
 
@@ -501,7 +501,7 @@ void PlaneShape::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mHalfExtent);
 }
 
-void PlaneShape::RestoreBinaryState(StreamIn &inStream)
+void PlaneShape::RestoreBinaryState(StreamIn& inStream)
 {
 	Shape::RestoreBinaryState(inStream);
 
@@ -511,12 +511,12 @@ void PlaneShape::RestoreBinaryState(StreamIn &inStream)
 	CalculateLocalBounds();
 }
 
-void PlaneShape::SaveMaterialState(PhysicsMaterialList &outMaterials) const
+void PlaneShape::SaveMaterialState(PhysicsMaterialList& outMaterials) const
 {
 	outMaterials = { mMaterial };
 }
 
-void PlaneShape::RestoreMaterialState(const PhysicsMaterialRefC *inMaterials, uint inNumMaterials)
+void PlaneShape::RestoreMaterialState(const PhysicsMaterialRefC* inMaterials, uint inNumMaterials)
 {
 	JPH_ASSERT(inNumMaterials == 1);
 	mMaterial = inMaterials[0];
@@ -524,8 +524,8 @@ void PlaneShape::RestoreMaterialState(const PhysicsMaterialRefC *inMaterials, ui
 
 void PlaneShape::sRegister()
 {
-	ShapeFunctions &f = ShapeFunctions::sGet(EShapeSubType::Plane);
-	f.mConstruct = []() -> Shape * { return new PlaneShape; };
+	ShapeFunctions& f = ShapeFunctions::sGet(EShapeSubType::Plane);
+	f.mConstruct = []() -> Shape* { return new PlaneShape; };
 	f.mColor = Color::sDarkRed;
 
 	for (EShapeSubType s : sConvexSubShapeTypes)

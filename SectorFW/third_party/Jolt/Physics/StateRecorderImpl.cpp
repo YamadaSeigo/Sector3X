@@ -8,9 +8,9 @@
 
 JPH_NAMESPACE_BEGIN
 
-void StateRecorderImpl::WriteBytes(const void *inData, size_t inNumBytes)
+void StateRecorderImpl::WriteBytes(const void* inData, size_t inNumBytes)
 {
-	mStream.write((const char *)inData, inNumBytes);
+	mStream.write((const char*)inData, inNumBytes);
 }
 
 void StateRecorderImpl::Rewind()
@@ -24,21 +24,21 @@ void StateRecorderImpl::Clear()
 	mStream.str({});
 }
 
-void StateRecorderImpl::ReadBytes(void *outData, size_t inNumBytes)
+void StateRecorderImpl::ReadBytes(void* outData, size_t inNumBytes)
 {
 	if (IsValidating())
 	{
 		// Read data in temporary buffer to compare with current value
-		void *data = JPH_STACK_ALLOC(inNumBytes);
-		mStream.read((char *)data, inNumBytes);
+		void* data = JPH_STACK_ALLOC(inNumBytes);
+		mStream.read((char*)data, inNumBytes);
 		if (memcmp(data, outData, inNumBytes) != 0)
 		{
 			// Mismatch, print error
 			Trace("Mismatch reading %u bytes", (uint)inNumBytes);
 			for (size_t i = 0; i < inNumBytes; ++i)
 			{
-				int b1 = reinterpret_cast<uint8 *>(outData)[i];
-				int b2 = reinterpret_cast<uint8 *>(data)[i];
+				int b1 = reinterpret_cast<uint8*>(outData)[i];
+				int b2 = reinterpret_cast<uint8*>(data)[i];
 				if (b1 != b2)
 					Trace("Offset %d: %02X -> %02X", i, b1, b2);
 			}
@@ -50,10 +50,10 @@ void StateRecorderImpl::ReadBytes(void *outData, size_t inNumBytes)
 		return;
 	}
 
-	mStream.read((char *)outData, inNumBytes);
+	mStream.read((char*)outData, inNumBytes);
 }
 
-bool StateRecorderImpl::IsEqual(StateRecorderImpl &inReference)
+bool StateRecorderImpl::IsEqual(StateRecorderImpl& inReference)
 {
 	// Get length of new state
 	mStream.seekg(0, std::stringstream::end);

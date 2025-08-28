@@ -74,14 +74,9 @@ namespace SectorFW
 			m_mouseInput->OnFocusLost();
 			return 0;
 
-			//case WM_ACTIVATE:
-			//	if (LOWORD(wParam) == WA_INACTIVE) {
-			//		m_mouseInput->OnFocusLost();  // 安全のため解除
-			//	}
-			//	else {
-			//		m_mouseInput->OnFocus();      // 必要なら再キャプチャ
-			//	}
-			//	break;
+		case WM_ACTIVATE:
+			m_mouseInput->OnFocusLost();      // 必要なら再キャプチャ
+			break;
 
 		case WM_MOVE:
 		case WM_SIZE:

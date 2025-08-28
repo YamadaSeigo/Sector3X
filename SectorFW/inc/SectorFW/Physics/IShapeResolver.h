@@ -7,12 +7,12 @@
 
 namespace SectorFW
 {
-    namespace Physics
-    {
-        // IShapeResolver.h
-        struct IShapeResolver {
-            virtual ~IShapeResolver() = default;
-            virtual JPH::RefConst<JPH::Shape> Resolve(ShapeHandle h) const = 0;
-        };
-    }
+	namespace Physics
+	{
+		// IShapeResolver.h
+		struct IShapeResolver {
+			virtual ~IShapeResolver() = default;
+			virtual JPH::RefConst<JPH::Shape> Resolve(ShapeHandle h) const = 0;
+		};
+	}
 }

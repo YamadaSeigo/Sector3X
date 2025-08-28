@@ -15,11 +15,11 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(PhysicsMaterialSimple)
 {
 	JPH_ADD_BASE_CLASS(PhysicsMaterialSimple, PhysicsMaterial)
 
-	JPH_ADD_ATTRIBUTE(PhysicsMaterialSimple, mDebugName)
-	JPH_ADD_ATTRIBUTE(PhysicsMaterialSimple, mDebugColor)
+		JPH_ADD_ATTRIBUTE(PhysicsMaterialSimple, mDebugName)
+		JPH_ADD_ATTRIBUTE(PhysicsMaterialSimple, mDebugColor)
 }
 
-void PhysicsMaterialSimple::SaveBinaryState(StreamOut &inStream) const
+void PhysicsMaterialSimple::SaveBinaryState(StreamOut& inStream) const
 {
 	PhysicsMaterial::SaveBinaryState(inStream);
 
@@ -27,7 +27,7 @@ void PhysicsMaterialSimple::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mDebugColor);
 }
 
-void PhysicsMaterialSimple::RestoreBinaryState(StreamIn &inStream)
+void PhysicsMaterialSimple::RestoreBinaryState(StreamIn& inStream)
 {
 	PhysicsMaterial::RestoreBinaryState(inStream);
 

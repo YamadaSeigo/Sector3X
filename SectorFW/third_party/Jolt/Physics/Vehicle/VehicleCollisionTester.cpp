@@ -16,26 +16,26 @@
 
 JPH_NAMESPACE_BEGIN
 
-bool VehicleCollisionTesterRay::Collide(PhysicsSystem &inPhysicsSystem, const VehicleConstraint &inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID &inVehicleBodyID, Body *&outBody, SubShapeID &outSubShapeID, RVec3 &outContactPosition, Vec3 &outContactNormal, float &outSuspensionLength) const
+bool VehicleCollisionTesterRay::Collide(PhysicsSystem& inPhysicsSystem, const VehicleConstraint& inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID& inVehicleBodyID, Body*& outBody, SubShapeID& outSubShapeID, RVec3& outContactPosition, Vec3& outContactNormal, float& outSuspensionLength) const
 {
 	const DefaultBroadPhaseLayerFilter default_broadphase_layer_filter = inPhysicsSystem.GetDefaultBroadPhaseLayerFilter(mObjectLayer);
-	const BroadPhaseLayerFilter &broadphase_layer_filter = mBroadPhaseLayerFilter != nullptr? *mBroadPhaseLayerFilter : default_broadphase_layer_filter;
+	const BroadPhaseLayerFilter& broadphase_layer_filter = mBroadPhaseLayerFilter != nullptr ? *mBroadPhaseLayerFilter : default_broadphase_layer_filter;
 
 	const DefaultObjectLayerFilter default_object_layer_filter = inPhysicsSystem.GetDefaultLayerFilter(mObjectLayer);
-	const ObjectLayerFilter &object_layer_filter = mObjectLayerFilter != nullptr? *mObjectLayerFilter : default_object_layer_filter;
+	const ObjectLayerFilter& object_layer_filter = mObjectLayerFilter != nullptr ? *mObjectLayerFilter : default_object_layer_filter;
 
 	const IgnoreSingleBodyFilter default_body_filter(inVehicleBodyID);
-	const BodyFilter &body_filter = mBodyFilter != nullptr? *mBodyFilter : default_body_filter;
+	const BodyFilter& body_filter = mBodyFilter != nullptr ? *mBodyFilter : default_body_filter;
 
-	const WheelSettings *wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
+	const WheelSettings* wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
 	float wheel_radius = wheel_settings->mRadius;
 	float ray_length = wheel_settings->mSuspensionMaxLength + wheel_radius;
-	RRayCast ray { inOrigin, ray_length * inDirection };
+	RRayCast ray{ inOrigin, ray_length * inDirection };
 
 	class MyCollector : public CastRayCollector
 	{
 	public:
-							MyCollector(PhysicsSystem &inPhysicsSystem, const RRayCast &inRay, Vec3Arg inUpDirection, float inCosMaxSlopeAngle) :
+		MyCollector(PhysicsSystem& inPhysicsSystem, const RRayCast& inRay, Vec3Arg inUpDirection, float inCosMaxSlopeAngle) :
 			mPhysicsSystem(inPhysicsSystem),
 			mRay(inRay),
 			mUpDirection(inUpDirection),
@@ -43,7 +43,7 @@ bool VehicleCollisionTesterRay::Collide(PhysicsSystem &inPhysicsSystem, const Ve
 		{
 		}
 
-		virtual void		AddHit(const RayCastResult &inResult) override
+		virtual void		AddHit(const RayCastResult& inResult) override
 		{
 			// Test if this collision is closer than the previous one
 			if (inResult.mFraction < GetEarlyOutFraction())
@@ -51,7 +51,7 @@ bool VehicleCollisionTesterRay::Collide(PhysicsSystem &inPhysicsSystem, const Ve
 				// Lock the body
 				BodyLockRead lock(mPhysicsSystem.GetBodyLockInterfaceNoLock(), inResult.mBodyID);
 				JPH_ASSERT(lock.Succeeded()); // When this runs all bodies are locked so this should not fail
-				const Body *body = &lock.GetBody();
+				const Body* body = &lock.GetBody();
 
 				if (body->IsSensor())
 					return;
@@ -74,13 +74,13 @@ bool VehicleCollisionTesterRay::Collide(PhysicsSystem &inPhysicsSystem, const Ve
 		}
 
 		// Configuration
-		PhysicsSystem &		mPhysicsSystem;
+		PhysicsSystem& mPhysicsSystem;
 		RRayCast			mRay;
 		Vec3				mUpDirection;
 		float				mCosMaxSlopeAngle;
 
 		// Resulting closest collision
-		const Body *		mBody = nullptr;
+		const Body* mBody = nullptr;
 		SubShapeID			mSubShapeID2;
 		RVec3				mContactPosition;
 		Vec3				mContactNormal;
@@ -93,7 +93,7 @@ bool VehicleCollisionTesterRay::Collide(PhysicsSystem &inPhysicsSystem, const Ve
 	if (collector.mBody == nullptr)
 		return false;
 
-	outBody = const_cast<Body *>(collector.mBody);
+	outBody = const_cast<Body*>(collector.mBody);
 	outSubShapeID = collector.mSubShapeID2;
 	outContactPosition = collector.mContactPosition;
 	outContactNormal = collector.mContactNormal;
@@ -102,10 +102,10 @@ bool VehicleCollisionTesterRay::Collide(PhysicsSystem &inPhysicsSystem, const Ve
 	return true;
 }
 
-void VehicleCollisionTesterRay::PredictContactProperties(PhysicsSystem &inPhysicsSystem, const VehicleConstraint &inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID &inVehicleBodyID, Body *&ioBody, SubShapeID &ioSubShapeID, RVec3 &ioContactPosition, Vec3 &ioContactNormal, float &ioSuspensionLength) const
+void VehicleCollisionTesterRay::PredictContactProperties(PhysicsSystem& inPhysicsSystem, const VehicleConstraint& inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID& inVehicleBodyID, Body*& ioBody, SubShapeID& ioSubShapeID, RVec3& ioContactPosition, Vec3& ioContactNormal, float& ioSuspensionLength) const
 {
 	// Recalculate the contact points assuming the contact point is on an infinite plane
-	const WheelSettings *wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
+	const WheelSettings* wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
 	float d_dot_n = inDirection.Dot(ioContactNormal);
 	if (d_dot_n < -1.0e-6f)
 	{
@@ -122,21 +122,21 @@ void VehicleCollisionTesterRay::PredictContactProperties(PhysicsSystem &inPhysic
 	}
 }
 
-bool VehicleCollisionTesterCastSphere::Collide(PhysicsSystem &inPhysicsSystem, const VehicleConstraint &inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID &inVehicleBodyID, Body *&outBody, SubShapeID &outSubShapeID, RVec3 &outContactPosition, Vec3 &outContactNormal, float &outSuspensionLength) const
+bool VehicleCollisionTesterCastSphere::Collide(PhysicsSystem& inPhysicsSystem, const VehicleConstraint& inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID& inVehicleBodyID, Body*& outBody, SubShapeID& outSubShapeID, RVec3& outContactPosition, Vec3& outContactNormal, float& outSuspensionLength) const
 {
 	const DefaultBroadPhaseLayerFilter default_broadphase_layer_filter = inPhysicsSystem.GetDefaultBroadPhaseLayerFilter(mObjectLayer);
-	const BroadPhaseLayerFilter &broadphase_layer_filter = mBroadPhaseLayerFilter != nullptr? *mBroadPhaseLayerFilter : default_broadphase_layer_filter;
+	const BroadPhaseLayerFilter& broadphase_layer_filter = mBroadPhaseLayerFilter != nullptr ? *mBroadPhaseLayerFilter : default_broadphase_layer_filter;
 
 	const DefaultObjectLayerFilter default_object_layer_filter = inPhysicsSystem.GetDefaultLayerFilter(mObjectLayer);
-	const ObjectLayerFilter &object_layer_filter = mObjectLayerFilter != nullptr? *mObjectLayerFilter : default_object_layer_filter;
+	const ObjectLayerFilter& object_layer_filter = mObjectLayerFilter != nullptr ? *mObjectLayerFilter : default_object_layer_filter;
 
 	const IgnoreSingleBodyFilter default_body_filter(inVehicleBodyID);
-	const BodyFilter &body_filter = mBodyFilter != nullptr? *mBodyFilter : default_body_filter;
+	const BodyFilter& body_filter = mBodyFilter != nullptr ? *mBodyFilter : default_body_filter;
 
 	SphereShape sphere(mRadius);
 	sphere.SetEmbedded();
 
-	const WheelSettings *wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
+	const WheelSettings* wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
 	float wheel_radius = wheel_settings->mRadius;
 	float shape_cast_length = wheel_settings->mSuspensionMaxLength + wheel_radius - mRadius;
 	RShapeCast shape_cast(&sphere, Vec3::sOne(), RMat44::sTranslation(inOrigin), inDirection * shape_cast_length);
@@ -148,7 +148,7 @@ bool VehicleCollisionTesterCastSphere::Collide(PhysicsSystem &inPhysicsSystem, c
 	class MyCollector : public CastShapeCollector
 	{
 	public:
-							MyCollector(PhysicsSystem &inPhysicsSystem, const RShapeCast &inShapeCast, Vec3Arg inUpDirection, float inCosMaxSlopeAngle) :
+		MyCollector(PhysicsSystem& inPhysicsSystem, const RShapeCast& inShapeCast, Vec3Arg inUpDirection, float inCosMaxSlopeAngle) :
 			mPhysicsSystem(inPhysicsSystem),
 			mShapeCast(inShapeCast),
 			mUpDirection(inUpDirection),
@@ -156,7 +156,7 @@ bool VehicleCollisionTesterCastSphere::Collide(PhysicsSystem &inPhysicsSystem, c
 		{
 		}
 
-		virtual void		AddHit(const ShapeCastResult &inResult) override
+		virtual void		AddHit(const ShapeCastResult& inResult) override
 		{
 			// Test if this collision is closer/deeper than the previous one
 			float early_out = inResult.GetEarlyOutFraction();
@@ -165,7 +165,7 @@ bool VehicleCollisionTesterCastSphere::Collide(PhysicsSystem &inPhysicsSystem, c
 				// Lock the body
 				BodyLockRead lock(mPhysicsSystem.GetBodyLockInterfaceNoLock(), inResult.mBodyID2);
 				JPH_ASSERT(lock.Succeeded()); // When this runs all bodies are locked so this should not fail
-				const Body *body = &lock.GetBody();
+				const Body* body = &lock.GetBody();
 
 				if (body->IsSensor())
 					return;
@@ -188,13 +188,13 @@ bool VehicleCollisionTesterCastSphere::Collide(PhysicsSystem &inPhysicsSystem, c
 		}
 
 		// Configuration
-		PhysicsSystem &		mPhysicsSystem;
-		const RShapeCast &	mShapeCast;
+		PhysicsSystem& mPhysicsSystem;
+		const RShapeCast& mShapeCast;
 		Vec3				mUpDirection;
 		float				mCosMaxSlopeAngle;
 
 		// Resulting closest collision
-		const Body *		mBody = nullptr;
+		const Body* mBody = nullptr;
 		SubShapeID			mSubShapeID2;
 		RVec3				mContactPosition;
 		Vec3				mContactNormal;
@@ -206,7 +206,7 @@ bool VehicleCollisionTesterCastSphere::Collide(PhysicsSystem &inPhysicsSystem, c
 	if (collector.mBody == nullptr)
 		return false;
 
-	outBody = const_cast<Body *>(collector.mBody);
+	outBody = const_cast<Body*>(collector.mBody);
 	outSubShapeID = collector.mSubShapeID2;
 	outContactPosition = collector.mContactPosition;
 	outContactNormal = collector.mContactNormal;
@@ -215,10 +215,10 @@ bool VehicleCollisionTesterCastSphere::Collide(PhysicsSystem &inPhysicsSystem, c
 	return true;
 }
 
-void VehicleCollisionTesterCastSphere::PredictContactProperties(PhysicsSystem &inPhysicsSystem, const VehicleConstraint &inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID &inVehicleBodyID, Body *&ioBody, SubShapeID &ioSubShapeID, RVec3 &ioContactPosition, Vec3 &ioContactNormal, float &ioSuspensionLength) const
+void VehicleCollisionTesterCastSphere::PredictContactProperties(PhysicsSystem& inPhysicsSystem, const VehicleConstraint& inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID& inVehicleBodyID, Body*& ioBody, SubShapeID& ioSubShapeID, RVec3& ioContactPosition, Vec3& ioContactNormal, float& ioSuspensionLength) const
 {
 	// Recalculate the contact points assuming the contact point is on an infinite plane
-	const WheelSettings *wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
+	const WheelSettings* wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
 	float d_dot_n = inDirection.Dot(ioContactNormal);
 	if (d_dot_n < -1.0e-6f)
 	{
@@ -238,18 +238,18 @@ void VehicleCollisionTesterCastSphere::PredictContactProperties(PhysicsSystem &i
 	}
 }
 
-bool VehicleCollisionTesterCastCylinder::Collide(PhysicsSystem &inPhysicsSystem, const VehicleConstraint &inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID &inVehicleBodyID, Body *&outBody, SubShapeID &outSubShapeID, RVec3 &outContactPosition, Vec3 &outContactNormal, float &outSuspensionLength) const
+bool VehicleCollisionTesterCastCylinder::Collide(PhysicsSystem& inPhysicsSystem, const VehicleConstraint& inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID& inVehicleBodyID, Body*& outBody, SubShapeID& outSubShapeID, RVec3& outContactPosition, Vec3& outContactNormal, float& outSuspensionLength) const
 {
 	const DefaultBroadPhaseLayerFilter default_broadphase_layer_filter = inPhysicsSystem.GetDefaultBroadPhaseLayerFilter(mObjectLayer);
-	const BroadPhaseLayerFilter &broadphase_layer_filter = mBroadPhaseLayerFilter != nullptr? *mBroadPhaseLayerFilter : default_broadphase_layer_filter;
+	const BroadPhaseLayerFilter& broadphase_layer_filter = mBroadPhaseLayerFilter != nullptr ? *mBroadPhaseLayerFilter : default_broadphase_layer_filter;
 
 	const DefaultObjectLayerFilter default_object_layer_filter = inPhysicsSystem.GetDefaultLayerFilter(mObjectLayer);
-	const ObjectLayerFilter &object_layer_filter = mObjectLayerFilter != nullptr? *mObjectLayerFilter : default_object_layer_filter;
+	const ObjectLayerFilter& object_layer_filter = mObjectLayerFilter != nullptr ? *mObjectLayerFilter : default_object_layer_filter;
 
 	const IgnoreSingleBodyFilter default_body_filter(inVehicleBodyID);
-	const BodyFilter &body_filter = mBodyFilter != nullptr? *mBodyFilter : default_body_filter;
+	const BodyFilter& body_filter = mBodyFilter != nullptr ? *mBodyFilter : default_body_filter;
 
-	const WheelSettings *wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
+	const WheelSettings* wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
 	float max_suspension_length = wheel_settings->mSuspensionMaxLength;
 
 	// Get the wheel transform given that the cylinder rotates around the Y axis
@@ -270,13 +270,13 @@ bool VehicleCollisionTesterCastCylinder::Collide(PhysicsSystem &inPhysicsSystem,
 	class MyCollector : public CastShapeCollector
 	{
 	public:
-							MyCollector(PhysicsSystem &inPhysicsSystem, const RShapeCast &inShapeCast) :
+		MyCollector(PhysicsSystem& inPhysicsSystem, const RShapeCast& inShapeCast) :
 			mPhysicsSystem(inPhysicsSystem),
 			mShapeCast(inShapeCast)
 		{
 		}
 
-		virtual void		AddHit(const ShapeCastResult &inResult) override
+		virtual void		AddHit(const ShapeCastResult& inResult) override
 		{
 			// Test if this collision is closer/deeper than the previous one
 			float early_out = inResult.GetEarlyOutFraction();
@@ -285,7 +285,7 @@ bool VehicleCollisionTesterCastCylinder::Collide(PhysicsSystem &inPhysicsSystem,
 				// Lock the body
 				BodyLockRead lock(mPhysicsSystem.GetBodyLockInterfaceNoLock(), inResult.mBodyID2);
 				JPH_ASSERT(lock.Succeeded()); // When this runs all bodies are locked so this should not fail
-				const Body *body = &lock.GetBody();
+				const Body* body = &lock.GetBody();
 
 				if (body->IsSensor())
 					return;
@@ -303,11 +303,11 @@ bool VehicleCollisionTesterCastCylinder::Collide(PhysicsSystem &inPhysicsSystem,
 		}
 
 		// Configuration
-		PhysicsSystem &		mPhysicsSystem;
-		const RShapeCast &	mShapeCast;
+		PhysicsSystem& mPhysicsSystem;
+		const RShapeCast& mShapeCast;
 
 		// Resulting closest collision
-		const Body *		mBody = nullptr;
+		const Body* mBody = nullptr;
 		SubShapeID			mSubShapeID2;
 		RVec3				mContactPosition;
 		Vec3				mContactNormal;
@@ -319,7 +319,7 @@ bool VehicleCollisionTesterCastCylinder::Collide(PhysicsSystem &inPhysicsSystem,
 	if (collector.mBody == nullptr)
 		return false;
 
-	outBody = const_cast<Body *>(collector.mBody);
+	outBody = const_cast<Body*>(collector.mBody);
 	outSubShapeID = collector.mSubShapeID2;
 	outContactPosition = collector.mContactPosition;
 	outContactNormal = collector.mContactNormal;
@@ -328,10 +328,10 @@ bool VehicleCollisionTesterCastCylinder::Collide(PhysicsSystem &inPhysicsSystem,
 	return true;
 }
 
-void VehicleCollisionTesterCastCylinder::PredictContactProperties(PhysicsSystem &inPhysicsSystem, const VehicleConstraint &inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID &inVehicleBodyID, Body *&ioBody, SubShapeID &ioSubShapeID, RVec3 &ioContactPosition, Vec3 &ioContactNormal, float &ioSuspensionLength) const
+void VehicleCollisionTesterCastCylinder::PredictContactProperties(PhysicsSystem& inPhysicsSystem, const VehicleConstraint& inVehicleConstraint, uint inWheelIndex, RVec3Arg inOrigin, Vec3Arg inDirection, const BodyID& inVehicleBodyID, Body*& ioBody, SubShapeID& ioSubShapeID, RVec3& ioContactPosition, Vec3& ioContactNormal, float& ioSuspensionLength) const
 {
 	// Recalculate the contact points assuming the contact point is on an infinite plane
-	const WheelSettings *wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
+	const WheelSettings* wheel_settings = inVehicleConstraint.GetWheel(inWheelIndex)->GetSettings();
 	float d_dot_n = inDirection.Dot(ioContactNormal);
 	if (d_dot_n < -1.0e-6f)
 	{

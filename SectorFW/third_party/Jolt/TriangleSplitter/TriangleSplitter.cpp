@@ -8,7 +8,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-TriangleSplitter::TriangleSplitter(const VertexList &inVertices, const IndexedTriangleList &inTriangles) :
+TriangleSplitter::TriangleSplitter(const VertexList& inVertices, const IndexedTriangleList& inTriangles) :
 	mVertices(inVertices),
 	mTriangles(inTriangles)
 {
@@ -28,11 +28,11 @@ TriangleSplitter::TriangleSplitter(const VertexList &inVertices, const IndexedTr
 	mCentroids.back() = Float3(0, 0, 0);
 }
 
-bool TriangleSplitter::SplitInternal(const Range &inTriangles, uint inDimension, float inSplit, Range &outLeft, Range &outRight)
+bool TriangleSplitter::SplitInternal(const Range& inTriangles, uint inDimension, float inSplit, Range& outLeft, Range& outRight)
 {
 	// Divide triangles
-	uint *start = mSortedTriangleIdx.data() + inTriangles.mBegin;
-	uint *end = mSortedTriangleIdx.data() + inTriangles.mEnd;
+	uint* start = mSortedTriangleIdx.data() + inTriangles.mBegin;
+	uint* end = mSortedTriangleIdx.data() + inTriangles.mEnd;
 	while (start < end)
 	{
 		// Search for first element that is on the right hand side of the split plane

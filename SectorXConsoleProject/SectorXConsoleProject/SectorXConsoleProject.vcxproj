@@ -168,7 +168,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="system\BodyIDWriteBackFromEventSystem.hpp" />
+    <ClInclude Include="system\BuildBodiesFromIntentsSystem.hpp" />
     <ClInclude Include="system\CameraSystem.h" />
+    <ClInclude Include="system\ShapeDimsRenderSystem.h" />
+    <ClInclude Include="system\ModelRenderSystem.h" />
     <ClInclude Include="system\PhysicsSystem.h" />
     <ClInclude Include="system\VoidSystem.h" />
   </ItemGroup>

@@ -8,7 +8,10 @@
 #pragma once
 
 #include <algorithm>
+#include <cmath>
 #include "partition.hpp"
+#include "EntityManagerRegistryService.h"
+#include "../Util/Morton2D.h"
 
 namespace SectorFW
 {
@@ -33,22 +36,25 @@ namespace SectorFW
 		 * @param policy アウトオブバウンズポリシー
 		 * @return std::optional<SpatialChunk*> チャンクへのポインタ
 		 */
-		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::Reject) noexcept {
+		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept{
 			// 位置に基づいてチャンクを取得するロジックを実装
 			// ここではダミーの実装を返す
-			ChunkSizeType x = static_cast<ChunkSizeType>(floor(location.x / chunkSize));
-			ChunkSizeType y = static_cast<ChunkSizeType>(floor(location.y / chunkSize));
+			using Signed = long long;
+			const Signed xs = static_cast<Signed>(std::floor(static_cast<double>(location.x) / static_cast<double>(chunkSize)));
+			const Signed ys = static_cast<Signed>(std::floor(static_cast<double>(location.y) / static_cast<double>(chunkSize)));
+			const Signed w = static_cast<Signed>(grid.width());
+			const Signed h = static_cast<Signed>(grid.height());
 
 			if (policy == EOutOfBoundsPolicy::ClampToEdge) {
-				x = std::clamp(x, ChunkSizeType(0), grid.width() - 1);
-				y = std::clamp(y, ChunkSizeType(0), grid.height() - 1);
-				return &grid(x, y);
+				const Signed cx = std::clamp<Signed>(xs, 0, w - 1);
+				const Signed cy = std::clamp<Signed>(ys, 0, h - 1);
+				return &grid(static_cast<ChunkSizeType>(cx), static_cast<ChunkSizeType>(cy));
 			}
 
-			if (x < 0 || x >= grid.width() || y < 0 || y >= grid.height())
+			if (xs < 0 || xs >= w || ys < 0 || ys >= h)
 				return std::nullopt;
 
-			return &grid(x, y);
+			return &grid(static_cast<ChunkSizeType>(xs), static_cast<ChunkSizeType>(ys));
 		}
 		/**
 		 * @brief グリッドを取得します。
@@ -63,6 +69,45 @@ namespace SectorFW
 		 */
 		ECS::EntityManager& GetGlobalEntityManager() noexcept {
 			return globalEntityManager;
+		}
+
+		// ===== 初期登録：全セルを Registry に登録し、NodeKey を埋める =====
+		void RegisterAllChunks(EntityManagerRegistry& reg, LevelID level) {
+			const auto w = grid.width();
+			const auto h = grid.height();
+			for (uint32_t y = 0; y < h; ++y) {
+				for (uint32_t x = 0; x < w; ++x) {
+					SpatialChunk& cell = grid(x, y);
+					EntityManagerKey key = MakeGrid2DKey(level, int32_t(x), int32_t(y), /*gen*/0);
+					cell.SetNodeKey(key);
+					reg.RegisterOwner(key, &cell.GetEntityManager());
+
+				}
+			}
+		}
+
+		// ===== セルの再ロード時：旧登録を外し、generationで再登録 =====
+		void ReloadCell(uint32_t cx, uint32_t cy, EntityManagerRegistry& reg) {
+			SpatialChunk& cell = grid(cx, cy);
+			// 旧世代をアンレジスト
+			reg.UnregisterOwner(cell.GetNodeKey());
+			// 世代してキー更新・再登録
+			SpatialChunk newCell = std::move(cell); // 生成し直す流儀でもOK
+			newCell.BumpGeneration();
+			reg.RegisterOwner(newCell.GetNodeKey(), &newCell.GetEntityManager());
+			grid(cx, cy) = std::move(newCell);
+
+		}
+	private:
+		inline EntityManagerKey MakeGrid2DKey(LevelID level, int32_t cx, int32_t cy,
+			uint16_t gen = 0) {
+			EntityManagerKey k;
+			k.level = level;
+			k.scheme = PartitionScheme::Grid2D;
+			k.depth = 0;
+			k.generation = gen;
+			k.code = Morton2D64(ZigZag64(cx), ZigZag64(cy));
+			return k;
 		}
 	private:
 		/**
@@ -90,33 +135,27 @@ namespace SectorFW
 		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(Grid2DPartition& context) const noexcept
 		{
 			std::vector<ArchetypeChunk*> result;
-			{
-				const auto& allChunk = context.GetGlobalEntityManager().GetArchetypeManager().GetAll();
-				for (const auto& [_, arch] : allChunk) {
+			auto collect_from = [&](const ECS::EntityManager& em) {
+				const auto& all = em.GetArchetypeManager().GetAll();
+				for (const auto& [_, arch] : all) {
 					const ComponentMask& mask = arch->GetMask();
 					if ((mask & required) == required && (mask & excluded).none()) {
-						auto& chunks = arch->GetChunks();
+						const auto& chunks = arch->GetChunks();
+						// 先に必要分だけまとめて拡張（平均的に再確保を減らす）
 						result.reserve(result.size() + chunks.size());
-						for (auto& chunk : chunks) {
-							result.push_back(chunk.get());
+						for (const auto& ch : chunks) {
+							result.push_back(ch.get());
 						}
 					}
 				}
-			}
+				};
+
+			// グローバル
+			collect_from(context.GetGlobalEntityManager());
+			// 空間ごと
 			const auto& grid = context.GetGrid();
-			for (const auto& spatial : grid)
-			{
-				const auto& allChunk = spatial.GetEntityManager().GetArchetypeManager().GetAll();
-				for (const auto& [_, arch] : allChunk) {
-					const ComponentMask& mask = arch->GetMask();
-					if ((mask & required) == required && (mask & excluded).none()) {
-						auto& chunks = arch->GetChunks();
-						result.reserve(result.size() + chunks.size());
-						for (auto& chunk : chunks) {
-							result.push_back(chunk.get());
-						}
-					}
-				}
+			for (const auto& spatial : grid) {
+				collect_from(spatial.GetEntityManager());
 			}
 			return result;
 		}

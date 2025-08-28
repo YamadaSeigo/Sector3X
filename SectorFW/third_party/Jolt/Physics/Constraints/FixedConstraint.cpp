@@ -8,7 +8,7 @@
 #include <Jolt/Physics/Body/Body.h>
 #include <Jolt/ObjectStream/TypeDeclarations.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -19,17 +19,17 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(FixedConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(FixedConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(FixedConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAutoDetectPoint)
-	JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mPoint1)
-	JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAxisX1)
-	JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAxisY1)
-	JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mPoint2)
-	JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAxisX2)
-	JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAxisY2)
+		JPH_ADD_ENUM_ATTRIBUTE(FixedConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAutoDetectPoint)
+		JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mPoint1)
+		JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAxisX1)
+		JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAxisY1)
+		JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mPoint2)
+		JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAxisX2)
+		JPH_ADD_ATTRIBUTE(FixedConstraintSettings, mAxisY2)
 }
 
-void FixedConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void FixedConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -43,7 +43,7 @@ void FixedConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mAxisY2);
 }
 
-void FixedConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void FixedConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -57,12 +57,12 @@ void FixedConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mAxisY2);
 }
 
-TwoBodyConstraint *FixedConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* FixedConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new FixedConstraint(inBody1, inBody2, *this);
 }
 
-FixedConstraint::FixedConstraint(Body &inBody1, Body &inBody2, const FixedConstraintSettings &inSettings) :
+FixedConstraint::FixedConstraint(Body& inBody1, Body& inBody2, const FixedConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings)
 {
 	// Store inverse of initial rotation from body 1 to body 2 in body 1 space
@@ -113,7 +113,7 @@ FixedConstraint::FixedConstraint(Body &inBody1, Body &inBody2, const FixedConstr
 	}
 }
 
-void FixedConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaCOM)
+void FixedConstraint::NotifyShapeChanged(const BodyID& inBodyID, Vec3Arg inDeltaCOM)
 {
 	if (mBody1->GetID() == inBodyID)
 		mLocalSpacePosition1 -= inDeltaCOM;
@@ -168,7 +168,7 @@ bool FixedConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumgar
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void FixedConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void FixedConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	RMat44 com1 = mBody1->GetCenterOfMassTransform();
 	RMat44 com2 = mBody2->GetCenterOfMassTransform();
@@ -182,7 +182,7 @@ void FixedConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 }
 #endif // JPH_DEBUG_RENDERER
 
-void FixedConstraint::SaveState(StateRecorder &inStream) const
+void FixedConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
@@ -190,7 +190,7 @@ void FixedConstraint::SaveState(StateRecorder &inStream) const
 	mPointConstraintPart.SaveState(inStream);
 }
 
-void FixedConstraint::RestoreState(StateRecorder &inStream)
+void FixedConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
@@ -200,7 +200,7 @@ void FixedConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> FixedConstraint::GetConstraintSettings() const
 {
-	FixedConstraintSettings *settings = new FixedConstraintSettings;
+	FixedConstraintSettings* settings = new FixedConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mPoint1 = RVec3(mLocalSpacePosition1);

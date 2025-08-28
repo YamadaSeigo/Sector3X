@@ -1,4 +1,10 @@
+
 #include "system/CameraSystem.h"
+#include "system/ModelRenderSystem.h"
+#include "system/PhysicsSystem.h"
+#include "system/BuildBodiesFromIntentsSystem.hpp"
+#include "system/BodyIDWriteBackFromEventSystem.hpp"
+#include "system/ShapeDimsRenderSystem.h"
 #include <string>
 
 //デバッグ用
@@ -23,13 +29,6 @@ struct Position
 	float x = 0, y = 0, z = 0;
 
 	DEFINE_SOA(Position, x, y, z)
-};
-
-struct Player
-{
-	Velocity velocity;
-	Position position;
-	DEFINE_SOA(Player, velocity, position)
 };
 
 struct Health { SPARSE_TAG; int hp = 0; };
@@ -109,103 +108,6 @@ public:
 	}
 };
 
-class AssetService : public IUpdateService
-{
-public:
-	void Update(double deltaTime) override {
-		// AssetServiceの更新処理
-		//LOG_INFO("AssetService Update: %f", deltaTime);
-	}
-
-	STATIC_SERVICE_TAG
-		int assetCount = 0;
-};
-
-template<typename Partition>
-class HealthRegenSystem : public ITypeSystem<
-	Partition,
-	ComponentAccess<Write<Player>>,
-	ServiceContext<AssetService, Graphics::RenderService>>{
-	using Accessor = ComponentAccessor<Write<Player>>;
-public:
-
-	void UpdateImpl(Partition& partition, UndeletablePtr<AssetService> assetService, UndeletablePtr<Graphics::RenderService> renderService) override {
-		/*auto queueView = renderService->GetQueueView("GBuffer");
-
-		Graphics::DrawCommand cmd;
-		queueView.PushCommand(cmd);*/
-
-		this->ForEachChunkWithAccessor([](Accessor& accessor, size_t entityCount)
-			{
-				auto player = accessor.Get<Write<Player>>();
-				auto velocity = player->velocity();
-				auto position = player->position();
-
-				for (size_t i = 0; i < entityCount; ++i) {
-					auto vx = velocity.vx()[i];
-					auto vy = velocity.vy()[i];
-					auto vz = velocity.vz()[i];
-
-					auto x = position.x()[i];
-					auto y = position.y()[i];
-					auto z = position.z()[i];
-				}
-			}, partition);
-
-		//assetService->assetCount++;
-		//LOG_INFO("Asset Count: %d", assetService->assetCount);
-	}
-};
-
-struct CModel
-{
-	Graphics::ModelAssetHandle handle;
-};
-
-template<typename Partition>
-class SampleSystem : public ITypeSystem<
-	Partition,
-	ComponentAccess<Read<TransformSoA>, Read<CModel>>,//アクセスするコンポーネントの指定
-	ServiceContext<Graphics::RenderService>>{//受け取るサービスの指定
-	using Accessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
-public:
-	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService) override {
-		//機能を制限したRenderQueueを取得
-		auto queueLimited = renderService->GetQueueLimited(0);
-		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
-
-		//アクセスを宣言したコンポーネントにマッチするチャンクに指定した関数を適応する
-		this->ForEachChunkWithAccessor([](Accessor& accessor, size_t entityCount, auto modelMgr, auto queue)
-			{
-				//読み取り専用でTransformSoAのアクセサを取得
-				auto transform = accessor.Get<Read<TransformSoA>>();
-				auto model = accessor.Get<Read<CModel>>();
-				for (size_t i = 0; i < entityCount; ++i) {
-					Math::Vec3f pos(transform->px()[i], transform->py()[i], transform->pz()[i]);
-					Math::Quatf rot(transform->qx()[i], transform->qy()[i], transform->qz()[i], transform->qw()[i]);
-					Math::Vec3f scale(transform->sx()[i], transform->sy()[i], transform->sz()[i]);
-					auto transMtx = Math::MakeTranslationMatrix(pos);
-					auto rotMtx = Math::MakeRotationMatrix(rot);
-					auto scaleMtx = Math::MakeScalingMatrix(scale);
-					//ワールド行列を計算
-					auto worldMtx = transMtx * rotMtx * scaleMtx;
-
-					//モデルアセットを取得
-					Graphics::DX11ModelAssetData modelAsset = modelMgr->Get(model.value()[i].handle);
-					for (const auto& mesh : modelAsset.subMeshes) {
-						Graphics::DrawCommand cmd;
-						cmd.mesh = mesh.mesh;
-						cmd.material = mesh.material;
-						cmd.pso = mesh.pso;
-						cmd.instance.worldMtx = worldMtx * mesh.instance.worldMtx;
-						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, mesh.mesh.index);
-						queue.PushCommand(std::move(cmd));
-					}
-				}
-			}, partition, modelManager, queueLimited);
-	}
-};
 
 int main(void)
 {
@@ -217,10 +119,11 @@ int main(void)
 	ComponentTypeRegistry::Register<Transform>();
 	ComponentTypeRegistry::Register<Velocity>();
 	ComponentTypeRegistry::Register<Position>();
-	ComponentTypeRegistry::Register<Health>();
-	ComponentTypeRegistry::Register<Player>();
 	ComponentTypeRegistry::Register<CModel>();
 	ComponentTypeRegistry::Register<TransformSoA>();
+	ComponentTypeRegistry::Register<Physics::BodyComponent>();
+	ComponentTypeRegistry::Register<Physics::PhysicsInterpolation>();
+	ComponentTypeRegistry::Register<Physics::ShapeDims>();
 	//========================================================
 
 	// ウィンドウの作成
@@ -233,7 +136,7 @@ int main(void)
 	Physics::PhysicsDevice::InitParams params;
 	params.maxBodies = 100000;
 	params.maxBodyPairs = 64 * 1024;
-	params.maxContactConstraints = 64 * 1024;
+	params.maxContactConstraints = 1 * 1024;
 	params.workerThreads = -1; // 自動
 
 	Physics::PhysicsDevice physics;
@@ -246,8 +149,6 @@ int main(void)
 	Physics::PhysicsService::Plan physicsPlan = { 1.0f / (float)FPS_LIMIT, 1, false };
 	Physics::PhysicsService physicsService(physics, shapeManager, physicsPlan);
 
-	AssetService assetService;
-
 	Input::WinInput winInput(WindowHandler::GetMouseInput());
 	InputService* inputService = &winInput;
 
@@ -256,7 +157,7 @@ int main(void)
 	Graphics::I3DCameraService* cameraService = &dx11CameraService;
 
 	ECS::ServiceLocator serviceLocator(graphics.GetRenderService(), &physicsService, inputService, cameraService);
-	serviceLocator.InitAndRegisterStaticService<AssetService>();
+	serviceLocator.InitAndRegisterStaticService<EntityManagerRegistry>();
 
 	//デバッグ用の初期化
 	//========================================================================================-
@@ -289,30 +190,65 @@ int main(void)
 	//========================================================================================-
 
 	World<Grid2DPartition> world(std::move(serviceLocator));
+	auto entityManagerReg= world.GetServiceLocator().Get<EntityManagerRegistry>();
 
 	for (int i = 0; i < 1; ++i) {
-		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("Level" + std::to_string(i)));
-
-		// Entity生成
-		for (int j = 0; j < 10; ++j) {
-			for (int k = 0; k < 10; ++k) {
-				auto id = level->AddEntity(
-					/*Player{
-						Velocity{ static_cast<float>(j), static_cast<float>(j), 0.0f },
-						Position{ static_cast<float>(j * 10), static_cast<float>(j * 100), 0.0f }
-					},*/
-					TransformSoA{ float(j),0.0f, float(k) ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
-					CModel{ modelAssetHandle }
-				);
-			}
-		}
+		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("Level" + std::to_string(i), *entityManagerReg));
 
 		// System登録
 		auto& scheduler = level->GetScheduler();
 		//scheduler.AddSystem<MovementSystem>(world.GetServiceLocator());
 
-		scheduler.AddSystem<SampleSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<ModelRenderSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<CameraSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<Physics::BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<Physics::BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<ShapeDimsRenderSystem>(world.GetServiceLocator());
+
+		auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
+		auto sphere = ps->MakeSphere(0.5f);//ps->MakeBox({ 0.5f, 0.5f, 0.5f }); // Box形状を生成
+		auto sphereDims = ps->GetShapeDims(sphere);
+
+		auto box = ps->MakeBox({ 10.0f,0.5f, 10.0f });
+		auto boxDims = ps->GetShapeDims(box);
+
+		// Entity生成
+		for (int j = 0; j < 10; ++j) {
+			for (int k = 0; k < 10; ++k) {
+				Math::Vec3f location = { float(j) * 2.0f,0.0f, float(k) * 2.0f };
+				auto id = level->AddEntity(
+					TransformSoA{ location, Math::Quatf(0.0f,0.0f,0.0f,1.0f),Math::Vec3f(1.0f,1.0f,1.0f) },
+					CModel{ modelAssetHandle },
+					Physics::BodyComponent{},
+					Physics::PhysicsInterpolation(
+						location, // 初期位置
+						Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+					),
+					sphereDims.value()
+				);
+				if (id) {
+					auto chunk = level->GetChunk(location);
+					ps->EnqueueCreateIntent(id.value(), sphere, chunk.value()->GetNodeKey());
+				}
+			}
+		}
+		Physics::BodyComponent staticBody{};
+		staticBody.isStatic = Physics::BodyType::Static; // staticにする
+		auto id = level->AddEntity(
+			TransformSoA{ 10.0f,-10.0f, 10.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
+			CModel{ modelAssetHandle },
+			staticBody,
+			Physics::PhysicsInterpolation(
+				Math::Vec3f{ 10.0f,-10.0f, 10.0f }, // 初期位置
+				Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+			),
+			boxDims.value()
+		);
+		if (id) {
+			auto chunk = level->GetChunk({ 0.0f,-100.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
+			ps->EnqueueCreateIntent(id.value(), box, chunk.value()->GetNodeKey());
+		}
 
 		world.AddLevel(std::move(level));
 	}

@@ -12,14 +12,14 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(VehicleDifferentialSettings)
 {
 	JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mLeftWheel)
-	JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mRightWheel)
-	JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mDifferentialRatio)
-	JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mLeftRightSplit)
-	JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mLimitedSlipRatio)
-	JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mEngineTorqueRatio)
+		JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mRightWheel)
+		JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mDifferentialRatio)
+		JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mLeftRightSplit)
+		JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mLimitedSlipRatio)
+		JPH_ADD_ATTRIBUTE(VehicleDifferentialSettings, mEngineTorqueRatio)
 }
 
-void VehicleDifferentialSettings::SaveBinaryState(StreamOut &inStream) const
+void VehicleDifferentialSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mLeftWheel);
 	inStream.Write(mRightWheel);
@@ -29,7 +29,7 @@ void VehicleDifferentialSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mEngineTorqueRatio);
 }
 
-void VehicleDifferentialSettings::RestoreBinaryState(StreamIn &inStream)
+void VehicleDifferentialSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mLeftWheel);
 	inStream.Read(mRightWheel);
@@ -39,7 +39,7 @@ void VehicleDifferentialSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mEngineTorqueRatio);
 }
 
-void VehicleDifferentialSettings::CalculateTorqueRatio(float inLeftAngularVelocity, float inRightAngularVelocity, float &outLeftTorqueFraction, float &outRightTorqueFraction) const
+void VehicleDifferentialSettings::CalculateTorqueRatio(float inLeftAngularVelocity, float inRightAngularVelocity, float& outLeftTorqueFraction, float& outRightTorqueFraction) const
 {
 	// Start with the default torque ratio
 	outLeftTorqueFraction = 1.0f - mLeftRightSplit;

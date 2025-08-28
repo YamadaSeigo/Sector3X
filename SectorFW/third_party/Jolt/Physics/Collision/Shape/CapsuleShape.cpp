@@ -18,7 +18,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -27,8 +27,8 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(CapsuleShapeSettings)
 {
 	JPH_ADD_BASE_CLASS(CapsuleShapeSettings, ConvexShapeSettings)
 
-	JPH_ADD_ATTRIBUTE(CapsuleShapeSettings, mRadius)
-	JPH_ADD_ATTRIBUTE(CapsuleShapeSettings, mHalfHeightOfCylinder)
+		JPH_ADD_ATTRIBUTE(CapsuleShapeSettings, mRadius)
+		JPH_ADD_ATTRIBUTE(CapsuleShapeSettings, mHalfHeightOfCylinder)
 }
 
 static const int cCapsuleDetailLevel = 2;
@@ -37,19 +37,19 @@ static const StaticArray<Vec3, 192> sCapsuleTopTriangles = []() {
 	StaticArray<Vec3, 192> verts;
 	GetTrianglesContextVertexList::sCreateHalfUnitSphereTop(verts, cCapsuleDetailLevel);
 	return verts;
-}();
+	}();
 
 static const StaticArray<Vec3, 96> sCapsuleMiddleTriangles = []() {
 	StaticArray<Vec3, 96> verts;
 	GetTrianglesContextVertexList::sCreateUnitOpenCylinder(verts, cCapsuleDetailLevel);
 	return verts;
-}();
+	}();
 
 static const StaticArray<Vec3, 192> sCapsuleBottomTriangles = []() {
 	StaticArray<Vec3, 192> verts;
 	GetTrianglesContextVertexList::sCreateHalfUnitSphereBottom(verts, cCapsuleDetailLevel);
 	return verts;
-}();
+	}();
 
 ShapeSettings::ShapeResult CapsuleShapeSettings::Create() const
 {
@@ -68,7 +68,7 @@ ShapeSettings::ShapeResult CapsuleShapeSettings::Create() const
 	return mCachedResult;
 }
 
-CapsuleShape::CapsuleShape(const CapsuleShapeSettings &inSettings, ShapeResult &outResult) :
+CapsuleShape::CapsuleShape(const CapsuleShapeSettings& inSettings, ShapeResult& outResult) :
 	ConvexShape(EShapeSubType::Capsule, inSettings, outResult),
 	mRadius(inSettings.mRadius),
 	mHalfHeightOfCylinder(inSettings.mHalfHeightOfCylinder)
@@ -91,7 +91,7 @@ CapsuleShape::CapsuleShape(const CapsuleShapeSettings &inSettings, ShapeResult &
 class CapsuleShape::CapsuleNoConvex final : public Support
 {
 public:
-					CapsuleNoConvex(Vec3Arg inHalfHeightOfCylinder, float inConvexRadius) :
+	CapsuleNoConvex(Vec3Arg inHalfHeightOfCylinder, float inConvexRadius) :
 		mHalfHeightOfCylinder(inHalfHeightOfCylinder),
 		mConvexRadius(inConvexRadius)
 	{
@@ -120,7 +120,7 @@ private:
 class CapsuleShape::CapsuleWithConvex final : public Support
 {
 public:
-					CapsuleWithConvex(Vec3Arg inHalfHeightOfCylinder, float inRadius) :
+	CapsuleWithConvex(Vec3Arg inHalfHeightOfCylinder, float inRadius) :
 		mHalfHeightOfCylinder(inHalfHeightOfCylinder),
 		mRadius(inRadius)
 	{
@@ -131,7 +131,7 @@ public:
 	virtual Vec3	GetSupport(Vec3Arg inDirection) const override
 	{
 		float len = inDirection.Length();
-		Vec3 radius = len > 0.0f? inDirection * (mRadius / len) : Vec3::sZero();
+		Vec3 radius = len > 0.0f ? inDirection * (mRadius / len) : Vec3::sZero();
 
 		if (inDirection.GetY() > 0)
 			return radius + mHalfHeightOfCylinder;
@@ -149,7 +149,7 @@ private:
 	float			mRadius;
 };
 
-const ConvexShape::Support *CapsuleShape::GetSupportFunction(ESupportMode inMode, SupportBuffer &inBuffer, Vec3Arg inScale) const
+const ConvexShape::Support* CapsuleShape::GetSupportFunction(ESupportMode inMode, SupportBuffer& inBuffer, Vec3Arg inScale) const
 {
 	JPH_ASSERT(IsValidScale(inScale));
 
@@ -173,7 +173,7 @@ const ConvexShape::Support *CapsuleShape::GetSupportFunction(ESupportMode inMode
 	return nullptr;
 }
 
-void CapsuleShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace &outVertices) const
+void CapsuleShape::GetSupportingFace(const SubShapeID& inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace& outVertices) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 	JPH_ASSERT(IsValidScale(inScale));
@@ -245,7 +245,7 @@ MassProperties CapsuleShape::GetMassProperties() const
 	return p;
 }
 
-Vec3 CapsuleShape::GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLocalSurfacePosition) const
+Vec3 CapsuleShape::GetSurfaceNormal(const SubShapeID& inSubShapeID, Vec3Arg inLocalSurfacePosition) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 
@@ -277,14 +277,14 @@ AABox CapsuleShape::GetWorldSpaceBounds(Mat44Arg inCenterOfMassTransform, Vec3Ar
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void CapsuleShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
+void CapsuleShape::Draw(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
 {
-	DebugRenderer::EDrawMode draw_mode = inDrawWireframe? DebugRenderer::EDrawMode::Wireframe : DebugRenderer::EDrawMode::Solid;
-	inRenderer->DrawCapsule(inCenterOfMassTransform * Mat44::sScale(inScale.Abs().GetX()), mHalfHeightOfCylinder, mRadius, inUseMaterialColors? GetMaterial()->GetDebugColor() : inColor, DebugRenderer::ECastShadow::On, draw_mode);
+	DebugRenderer::EDrawMode draw_mode = inDrawWireframe ? DebugRenderer::EDrawMode::Wireframe : DebugRenderer::EDrawMode::Solid;
+	inRenderer->DrawCapsule(inCenterOfMassTransform * Mat44::sScale(inScale.Abs().GetX()), mHalfHeightOfCylinder, mRadius, inUseMaterialColors ? GetMaterial()->GetDebugColor() : inColor, DebugRenderer::ECastShadow::On, draw_mode);
 }
 #endif // JPH_DEBUG_RENDERER
 
-bool CapsuleShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubShapeIDCreator, RayCastResult &ioHit) const
+bool CapsuleShape::CastRay(const RayCast& inRay, const SubShapeIDCreator& inSubShapeIDCreator, RayCastResult& ioHit) const
 {
 	// Test ray against capsule
 	float fraction = RayCapsule(inRay.mOrigin, inRay.mDirection, mHalfHeightOfCylinder, mRadius);
@@ -297,7 +297,7 @@ bool CapsuleShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubS
 	return false;
 }
 
-void CapsuleShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubShapeIDCreator, CollidePointCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void CapsuleShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator& inSubShapeIDCreator, CollidePointCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
@@ -321,7 +321,7 @@ void CapsuleShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubS
 		ioCollector.AddHit({ TransformedShape::sGetBodyID(ioCollector.GetContext()), inSubShapeIDCreator.GetID() });
 }
 
-void CapsuleShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator &inVertices, uint inNumVertices, int inCollidingShapeIndex) const
+void CapsuleShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator& inVertices, uint inNumVertices, int inCollidingShapeIndex) const
 {
 	JPH_ASSERT(IsValidScale(inScale));
 
@@ -347,7 +347,7 @@ void CapsuleShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec
 				if (v.UpdatePenetration(penetration))
 				{
 					// Calculate contact point and normal
-					normal = normal_length > 0.0f? normal / normal_length : Vec3::sAxisX();
+					normal = normal_length > 0.0f ? normal / normal_length : Vec3::sAxisX();
 					Vec3 point = radius * normal;
 
 					// Store collision
@@ -374,14 +374,14 @@ void CapsuleShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec
 		}
 }
 
-void CapsuleShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
+void CapsuleShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox& inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
 {
 	JPH_ASSERT(IsValidScale(inScale));
 
 	Vec3 abs_scale = inScale.Abs();
 	float scale = abs_scale.GetX();
 
-	GetTrianglesContextMultiVertexList *context = new (&ioContext) GetTrianglesContextMultiVertexList(false, GetMaterial());
+	GetTrianglesContextMultiVertexList* context = new (&ioContext) GetTrianglesContextMultiVertexList(false, GetMaterial());
 
 	Mat44 world_matrix = Mat44::sRotationTranslation(inRotation, inPositionCOM) * Mat44::sScale(scale);
 
@@ -395,12 +395,12 @@ void CapsuleShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox
 	context->AddPart(bottom_matrix, sCapsuleBottomTriangles.data(), sCapsuleBottomTriangles.size());
 }
 
-int CapsuleShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials) const
+int CapsuleShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
 {
-	return ((GetTrianglesContextMultiVertexList &)ioContext).GetTrianglesNext(inMaxTrianglesRequested, outTriangleVertices, outMaterials);
+	return ((GetTrianglesContextMultiVertexList&)ioContext).GetTrianglesNext(inMaxTrianglesRequested, outTriangleVertices, outMaterials);
 }
 
-void CapsuleShape::SaveBinaryState(StreamOut &inStream) const
+void CapsuleShape::SaveBinaryState(StreamOut& inStream) const
 {
 	ConvexShape::SaveBinaryState(inStream);
 
@@ -408,7 +408,7 @@ void CapsuleShape::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mHalfHeightOfCylinder);
 }
 
-void CapsuleShape::RestoreBinaryState(StreamIn &inStream)
+void CapsuleShape::RestoreBinaryState(StreamIn& inStream)
 {
 	ConvexShape::RestoreBinaryState(inStream);
 
@@ -430,8 +430,8 @@ Vec3 CapsuleShape::MakeScaleValid(Vec3Arg inScale) const
 
 void CapsuleShape::sRegister()
 {
-	ShapeFunctions &f = ShapeFunctions::sGet(EShapeSubType::Capsule);
-	f.mConstruct = []() -> Shape * { return new CapsuleShape; };
+	ShapeFunctions& f = ShapeFunctions::sGet(EShapeSubType::Capsule);
+	f.mConstruct = []() -> Shape* { return new CapsuleShape; };
 	f.mColor = Color::sGreen;
 }
 

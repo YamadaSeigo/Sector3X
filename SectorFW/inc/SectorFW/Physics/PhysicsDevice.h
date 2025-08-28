@@ -5,6 +5,9 @@
 #include "PhysicsContactListener.h"
 #include "IShapeResolver.h"
 #include <unordered_map>
+#include <optional>
+#include <mutex>
+#include <vector>
 
 // Jolt
 #include <Jolt/Jolt.h>
@@ -13,6 +16,9 @@
 #include <Jolt/Physics/Body/BodyInterface.h>
 #include <Jolt/Core/JobSystemThreadPool.h>
 #include <Jolt/Core/TempAllocator.h>
+
+#include "../Core/ECS/EntityManager.h"
+#include "../Core/RegistryTypes.h"
 
 namespace SectorFW
 {
@@ -36,7 +42,7 @@ namespace SectorFW
 			MyContactListenerOwner(PhysicsDevice* dev) : listener(dev) {}
 		};
 
-		// SoA バッファ（あなたの Archetype チャンクが持つビュー）
+		// SoA バッファ（Archetype チャンクが持つビュー）
 		struct PoseBatchView {
 			// N 個のエンティティ分のポインタ（連続配列）
 			float* posX; float* posY; float* posZ;
@@ -72,6 +78,13 @@ namespace SectorFW
 			};
 
 		public:
+			// Body 作成完了イベント（差し込み用）
+			struct CreatedBody {
+				Entity                          e;
+				EntityManagerKey				 owner;
+				JPH::BodyID                     id;
+			};
+
 			struct InitParams {
 				uint32_t maxBodies = 100000;
 				uint32_t maxBodyPairs = 1024 * 64;
@@ -104,13 +117,28 @@ namespace SectorFW
 			std::optional<JPH::BodyID> FindBody(Entity e) const;
 
 			// ContactListener から使う小さなアクセサ（物理スレッド内のみ呼ぶ想定）
-			void   PushContactEvent(const ContactEvent& ev) { m_pendingContacts.push_back(ev); }
+			void   PushContactEvent(const ContactEvent& ev) {
+				std::scoped_lock lk(m_pendingContactsMutex);
+				m_pendingContacts.push_back(ev); }
 			Entity ResolveEntity(const JPH::BodyID& id) const {
 				auto it = m_b2e.find(id);
 				return (it != m_b2e.end()) ? it->second : Entity{};
 			}
 
 			void SetShapeResolver(const IShapeResolver* r) noexcept { m_shapeResolver = r; }
+
+			// ===== 補助: Entity → BodyID の参照（存在しなければ nullopt）=====
+			std::optional<JPH::BodyID> TryGetBodyID(Entity e) const noexcept {
+				auto it = m_e2b.find(e);
+				if (it == m_e2b.end()) return std::nullopt;
+				return it->second;
+			}
+
+			// ===== 作成完了イベントを取り出す（スレッド安全・O(1) swap）=====
+			void ConsumeCreatedBodies(std::vector<CreatedBody>& out) {
+				std::scoped_lock lk(m_createdMutex);
+				out.swap(m_created);
+			}
 		private:
 			// Jolt本体
 			JPH::PhysicsSystem         m_physics;
@@ -124,8 +152,13 @@ namespace SectorFW
 			std::unordered_map<Entity, JPH::BodyID> m_e2b;
 			std::unordered_map<JPH::BodyID, Entity, BodyIDHash, BodyIDEq> m_b2e;
 
+			// 作成完了イベント
+			std::mutex              m_createdMutex;
+			std::vector<CreatedBody> m_created;
+
 			std::unique_ptr<MyContactListenerOwner> m_contactListener;
 			std::vector<ContactEvent> m_pendingContacts;
+			std::mutex m_pendingContactsMutex;
 			std::vector<PendingRayHit> m_pendingRayHits;
 
 			bool m_initialized = false;

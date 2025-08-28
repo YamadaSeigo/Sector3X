@@ -10,7 +10,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -21,17 +21,17 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(DistanceConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(DistanceConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(DistanceConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(DistanceConstraintSettings, mPoint1)
-	JPH_ADD_ATTRIBUTE(DistanceConstraintSettings, mPoint2)
-	JPH_ADD_ATTRIBUTE(DistanceConstraintSettings, mMinDistance)
-	JPH_ADD_ATTRIBUTE(DistanceConstraintSettings, mMaxDistance)
-	JPH_ADD_ENUM_ATTRIBUTE_WITH_ALIAS(DistanceConstraintSettings, mLimitsSpringSettings.mMode, "mSpringMode")
-	JPH_ADD_ATTRIBUTE_WITH_ALIAS(DistanceConstraintSettings, mLimitsSpringSettings.mFrequency, "mFrequency") // Renaming attributes to stay compatible with old versions of the library
-	JPH_ADD_ATTRIBUTE_WITH_ALIAS(DistanceConstraintSettings, mLimitsSpringSettings.mDamping, "mDamping")
+		JPH_ADD_ENUM_ATTRIBUTE(DistanceConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(DistanceConstraintSettings, mPoint1)
+		JPH_ADD_ATTRIBUTE(DistanceConstraintSettings, mPoint2)
+		JPH_ADD_ATTRIBUTE(DistanceConstraintSettings, mMinDistance)
+		JPH_ADD_ATTRIBUTE(DistanceConstraintSettings, mMaxDistance)
+		JPH_ADD_ENUM_ATTRIBUTE_WITH_ALIAS(DistanceConstraintSettings, mLimitsSpringSettings.mMode, "mSpringMode")
+		JPH_ADD_ATTRIBUTE_WITH_ALIAS(DistanceConstraintSettings, mLimitsSpringSettings.mFrequency, "mFrequency") // Renaming attributes to stay compatible with old versions of the library
+		JPH_ADD_ATTRIBUTE_WITH_ALIAS(DistanceConstraintSettings, mLimitsSpringSettings.mDamping, "mDamping")
 }
 
-void DistanceConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void DistanceConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -43,7 +43,7 @@ void DistanceConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	mLimitsSpringSettings.SaveBinaryState(inStream);
 }
 
-void DistanceConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void DistanceConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -55,12 +55,12 @@ void DistanceConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	mLimitsSpringSettings.RestoreBinaryState(inStream);
 }
 
-TwoBodyConstraint *DistanceConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* DistanceConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new DistanceConstraint(inBody1, inBody2, *this);
 }
 
-DistanceConstraint::DistanceConstraint(Body &inBody1, Body &inBody2, const DistanceConstraintSettings &inSettings) :
+DistanceConstraint::DistanceConstraint(Body& inBody1, Body& inBody2, const DistanceConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings),
 	mMinDistance(inSettings.mMinDistance),
 	mMaxDistance(inSettings.mMaxDistance)
@@ -91,8 +91,8 @@ DistanceConstraint::DistanceConstraint(Body &inBody1, Body &inBody2, const Dista
 	}
 	else
 	{
-		min_distance = mMinDistance < 0.0f? min(distance, mMaxDistance) : mMinDistance;
-		max_distance = mMaxDistance < 0.0f? max(distance, mMinDistance) : mMaxDistance;
+		min_distance = mMinDistance < 0.0f ? min(distance, mMaxDistance) : mMinDistance;
+		max_distance = mMaxDistance < 0.0f ? max(distance, mMinDistance) : mMaxDistance;
 	}
 	SetDistance(min_distance, max_distance);
 
@@ -103,7 +103,7 @@ DistanceConstraint::DistanceConstraint(Body &inBody1, Body &inBody2, const Dista
 	SetLimitsSpringSettings(inSettings.mLimitsSpringSettings);
 }
 
-void DistanceConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaCOM)
+void DistanceConstraint::NotifyShapeChanged(const BodyID& inBodyID, Vec3Arg inDeltaCOM)
 {
 	if (mBody1->GetID() == inBodyID)
 		mLocalSpacePosition1 -= inDeltaCOM;
@@ -205,20 +205,20 @@ bool DistanceConstraint::SolvePositionConstraint(float inDeltaTime, float inBaum
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void DistanceConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void DistanceConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	// Draw constraint
 	Vec3 delta = Vec3(mWorldSpacePosition2 - mWorldSpacePosition1);
 	float len = delta.Length();
 	if (len < mMinDistance)
 	{
-		RVec3 real_end_pos = mWorldSpacePosition1 + (len > 0.0f? delta * mMinDistance / len : Vec3(0, len, 0));
+		RVec3 real_end_pos = mWorldSpacePosition1 + (len > 0.0f ? delta * mMinDistance / len : Vec3(0, len, 0));
 		inRenderer->DrawLine(mWorldSpacePosition1, mWorldSpacePosition2, Color::sGreen);
 		inRenderer->DrawLine(mWorldSpacePosition2, real_end_pos, Color::sYellow);
 	}
 	else if (len > mMaxDistance)
 	{
-		RVec3 real_end_pos = mWorldSpacePosition1 + (len > 0.0f? delta * mMaxDistance / len : Vec3(0, len, 0));
+		RVec3 real_end_pos = mWorldSpacePosition1 + (len > 0.0f ? delta * mMaxDistance / len : Vec3(0, len, 0));
 		inRenderer->DrawLine(mWorldSpacePosition1, real_end_pos, Color::sGreen);
 		inRenderer->DrawLine(real_end_pos, mWorldSpacePosition2, Color::sRed);
 	}
@@ -234,7 +234,7 @@ void DistanceConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 }
 #endif // JPH_DEBUG_RENDERER
 
-void DistanceConstraint::SaveState(StateRecorder &inStream) const
+void DistanceConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
@@ -242,7 +242,7 @@ void DistanceConstraint::SaveState(StateRecorder &inStream) const
 	inStream.Write(mWorldSpaceNormal); // When distance = 0, the normal is used from last frame so we need to store it
 }
 
-void DistanceConstraint::RestoreState(StateRecorder &inStream)
+void DistanceConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
@@ -252,7 +252,7 @@ void DistanceConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> DistanceConstraint::GetConstraintSettings() const
 {
-	DistanceConstraintSettings *settings = new DistanceConstraintSettings;
+	DistanceConstraintSettings* settings = new DistanceConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mPoint1 = RVec3(mLocalSpacePosition1);

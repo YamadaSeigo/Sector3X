@@ -11,7 +11,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -20,16 +20,16 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(PathConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(PathConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPath)
-	JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPathPosition)
-	JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPathRotation)
-	JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPathFraction)
-	JPH_ADD_ATTRIBUTE(PathConstraintSettings, mMaxFrictionForce)
-	JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPositionMotorSettings)
-	JPH_ADD_ENUM_ATTRIBUTE(PathConstraintSettings, mRotationConstraintType)
+		JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPath)
+		JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPathPosition)
+		JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPathRotation)
+		JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPathFraction)
+		JPH_ADD_ATTRIBUTE(PathConstraintSettings, mMaxFrictionForce)
+		JPH_ADD_ATTRIBUTE(PathConstraintSettings, mPositionMotorSettings)
+		JPH_ADD_ENUM_ATTRIBUTE(PathConstraintSettings, mRotationConstraintType)
 }
 
-void PathConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void PathConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -42,7 +42,7 @@ void PathConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	mPositionMotorSettings.SaveBinaryState(inStream);
 }
 
-void PathConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void PathConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -57,12 +57,12 @@ void PathConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	mPositionMotorSettings.RestoreBinaryState(inStream);
 }
 
-TwoBodyConstraint *PathConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* PathConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new PathConstraint(inBody1, inBody2, *this);
 }
 
-PathConstraint::PathConstraint(Body &inBody1, Body &inBody2, const PathConstraintSettings &inSettings) :
+PathConstraint::PathConstraint(Body& inBody1, Body& inBody2, const PathConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings),
 	mRotationConstraintType(inSettings.mRotationConstraintType),
 	mMaxFrictionForce(inSettings.mMaxFrictionForce),
@@ -74,7 +74,7 @@ PathConstraint::PathConstraint(Body &inBody1, Body &inBody2, const PathConstrain
 	SetPath(inSettings.mPath, inSettings.mPathFraction);
 }
 
-void PathConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaCOM)
+void PathConstraint::NotifyShapeChanged(const BodyID& inBodyID, Vec3Arg inDeltaCOM)
 {
 	if (mBody1->GetID() == inBodyID)
 		mPathToBody1.SetTranslation(mPathToBody1.GetTranslation() - inDeltaCOM);
@@ -82,7 +82,7 @@ void PathConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaC
 		mPathToBody2.SetTranslation(mPathToBody2.GetTranslation() - inDeltaCOM);
 }
 
-void PathConstraint::SetPath(const PathConstraintPath *inPath, float inPathFraction)
+void PathConstraint::SetPath(const PathConstraintPath* inPath, float inPathFraction)
 {
 	mPath = inPath;
 	mPathFraction = inPathFraction;
@@ -269,11 +269,11 @@ bool PathConstraint::SolveVelocityConstraint(float inDeltaTime)
 		switch (mPositionMotorState)
 		{
 		case EMotorState::Off:
-			{
-				float max_lambda = mMaxFrictionForce * inDeltaTime;
-				motor = mPositionMotorConstraintPart.SolveVelocityConstraint(*mBody1, *mBody2, mPathTangent, -max_lambda, max_lambda);
-				break;
-			}
+		{
+			float max_lambda = mMaxFrictionForce * inDeltaTime;
+			motor = mPositionMotorConstraintPart.SolveVelocityConstraint(*mBody1, *mBody2, mPathTangent, -max_lambda, max_lambda);
+			break;
+		}
 
 		case EMotorState::Velocity:
 		case EMotorState::Position:
@@ -369,7 +369,7 @@ bool PathConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumgart
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void PathConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void PathConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	if (mPath != nullptr)
 	{
@@ -391,20 +391,20 @@ void PathConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 		switch (mPositionMotorState)
 		{
 		case EMotorState::Position:
-			{
-				// Draw target marker
-				Vec3 position, tangent, normal, binormal;
-				mPath->GetPointOnPath(mTargetPathFraction, position, tangent, normal, binormal);
-				inRenderer->DrawMarker(path_to_world * position, Color::sYellow, 1.0f);
-				break;
-			}
+		{
+			// Draw target marker
+			Vec3 position, tangent, normal, binormal;
+			mPath->GetPointOnPath(mTargetPathFraction, position, tangent, normal, binormal);
+			inRenderer->DrawMarker(path_to_world * position, Color::sYellow, 1.0f);
+			break;
+		}
 
 		case EMotorState::Velocity:
-			{
-				RVec3 position = mBody2->GetCenterOfMassPosition() + mR2;
-				inRenderer->DrawArrow(position, position + mPathTangent * mTargetVelocity, Color::sRed, 0.1f);
-				break;
-			}
+		{
+			RVec3 position = mBody2->GetCenterOfMassPosition() + mR2;
+			inRenderer->DrawArrow(position, position + mPathTangent * mTargetVelocity, Color::sRed, 0.1f);
+			break;
+		}
 
 		case EMotorState::Off:
 			break;
@@ -413,7 +413,7 @@ void PathConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 }
 #endif // JPH_DEBUG_RENDERER
 
-void PathConstraint::SaveState(StateRecorder &inStream) const
+void PathConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
@@ -431,7 +431,7 @@ void PathConstraint::SaveState(StateRecorder &inStream) const
 	inStream.Write(mPathFraction);
 }
 
-void PathConstraint::RestoreState(StateRecorder &inStream)
+void PathConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 

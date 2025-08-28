@@ -275,6 +275,7 @@ namespace SectorFW
 						.mesh = meshHandle,
 						.material = matHandle,
 						.pso = pso,
+						.hasInstanceData = node.has_matrix || flipZ,
 						.instance = {.worldMtx = transform }
 						});
 				}

@@ -9,7 +9,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-CharacterBase::CharacterBase(const CharacterBaseSettings *inSettings, PhysicsSystem *inSystem) :
+CharacterBase::CharacterBase(const CharacterBaseSettings* inSettings, PhysicsSystem* inSystem) :
 	mSystem(inSystem),
 	mShape(inSettings->mShape),
 	mUp(inSettings->mUp),
@@ -19,7 +19,7 @@ CharacterBase::CharacterBase(const CharacterBaseSettings *inSettings, PhysicsSys
 	SetMaxSlopeAngle(inSettings->mMaxSlopeAngle);
 }
 
-const char *CharacterBase::sToString(EGroundState inState)
+const char* CharacterBase::sToString(EGroundState inState)
 {
 	switch (inState)
 	{
@@ -33,7 +33,7 @@ const char *CharacterBase::sToString(EGroundState inState)
 	return "Unknown";
 }
 
-void CharacterBase::SaveState(StateRecorder &inStream) const
+void CharacterBase::SaveState(StateRecorder& inStream) const
 {
 	inStream.Write(mGroundState);
 	inStream.Write(mGroundBodyID);
@@ -44,7 +44,7 @@ void CharacterBase::SaveState(StateRecorder &inStream) const
 	// Can't save user data (may be a pointer) and material
 }
 
-void CharacterBase::RestoreState(StateRecorder &inStream)
+void CharacterBase::RestoreState(StateRecorder& inStream)
 {
 	inStream.Read(mGroundState);
 	inStream.Read(mGroundBodyID);

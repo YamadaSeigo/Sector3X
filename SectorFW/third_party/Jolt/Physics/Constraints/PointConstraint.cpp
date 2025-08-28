@@ -10,7 +10,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -19,12 +19,12 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(PointConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(PointConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(PointConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(PointConstraintSettings, mPoint1)
-	JPH_ADD_ATTRIBUTE(PointConstraintSettings, mPoint2)
+		JPH_ADD_ENUM_ATTRIBUTE(PointConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(PointConstraintSettings, mPoint1)
+		JPH_ADD_ATTRIBUTE(PointConstraintSettings, mPoint2)
 }
 
-void PointConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void PointConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -33,7 +33,7 @@ void PointConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mPoint2);
 }
 
-void PointConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void PointConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -42,12 +42,12 @@ void PointConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mPoint2);
 }
 
-TwoBodyConstraint *PointConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* PointConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new PointConstraint(inBody1, inBody2, *this);
 }
 
-PointConstraint::PointConstraint(Body &inBody1, Body &inBody2, const PointConstraintSettings &inSettings) :
+PointConstraint::PointConstraint(Body& inBody1, Body& inBody2, const PointConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings)
 {
 	if (inSettings.mSpace == EConstraintSpace::WorldSpace)
@@ -63,7 +63,7 @@ PointConstraint::PointConstraint(Body &inBody1, Body &inBody2, const PointConstr
 	}
 }
 
-void PointConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaCOM)
+void PointConstraint::NotifyShapeChanged(const BodyID& inBodyID, Vec3Arg inDeltaCOM)
 {
 	if (mBody1->GetID() == inBodyID)
 		mLocalSpacePosition1 -= inDeltaCOM;
@@ -122,7 +122,7 @@ bool PointConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumgar
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void PointConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void PointConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	// Draw constraint
 	inRenderer->DrawMarker(mBody1->GetCenterOfMassTransform() * mLocalSpacePosition1, Color::sRed, 0.1f);
@@ -130,14 +130,14 @@ void PointConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 }
 #endif // JPH_DEBUG_RENDERER
 
-void PointConstraint::SaveState(StateRecorder &inStream) const
+void PointConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
 	mPointConstraintPart.SaveState(inStream);
 }
 
-void PointConstraint::RestoreState(StateRecorder &inStream)
+void PointConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
@@ -146,7 +146,7 @@ void PointConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> PointConstraint::GetConstraintSettings() const
 {
-	PointConstraintSettings *settings = new PointConstraintSettings;
+	PointConstraintSettings* settings = new PointConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mPoint1 = RVec3(mLocalSpacePosition1);

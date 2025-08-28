@@ -17,7 +17,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -26,8 +26,8 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(BoxShapeSettings)
 {
 	JPH_ADD_BASE_CLASS(BoxShapeSettings, ConvexShapeSettings)
 
-	JPH_ADD_ATTRIBUTE(BoxShapeSettings, mHalfExtent)
-	JPH_ADD_ATTRIBUTE(BoxShapeSettings, mConvexRadius)
+		JPH_ADD_ATTRIBUTE(BoxShapeSettings, mHalfExtent)
+		JPH_ADD_ATTRIBUTE(BoxShapeSettings, mConvexRadius)
 }
 
 static const Vec3 sUnitBoxTriangles[] = {
@@ -52,7 +52,7 @@ ShapeSettings::ShapeResult BoxShapeSettings::Create() const
 	return mCachedResult;
 }
 
-BoxShape::BoxShape(const BoxShapeSettings &inSettings, ShapeResult &outResult) :
+BoxShape::BoxShape(const BoxShapeSettings& inSettings, ShapeResult& outResult) :
 	ConvexShape(EShapeSubType::Box, inSettings, outResult),
 	mHalfExtent(inSettings.mHalfExtent),
 	mConvexRadius(inSettings.mConvexRadius)
@@ -72,7 +72,7 @@ BoxShape::BoxShape(const BoxShapeSettings &inSettings, ShapeResult &outResult) :
 class BoxShape::Box final : public Support
 {
 public:
-					Box(const AABox &inBox, float inConvexRadius) :
+	Box(const AABox& inBox, float inConvexRadius) :
 		mBox(inBox),
 		mConvexRadius(inConvexRadius)
 	{
@@ -95,7 +95,7 @@ private:
 	float			mConvexRadius;
 };
 
-const ConvexShape::Support *BoxShape::GetSupportFunction(ESupportMode inMode, SupportBuffer &inBuffer, Vec3Arg inScale) const
+const ConvexShape::Support* BoxShape::GetSupportFunction(ESupportMode inMode, SupportBuffer& inBuffer, Vec3Arg inScale) const
 {
 	// Scale our half extents
 	Vec3 scaled_half_extent = inScale.Abs() * mHalfExtent;
@@ -104,30 +104,30 @@ const ConvexShape::Support *BoxShape::GetSupportFunction(ESupportMode inMode, Su
 	{
 	case ESupportMode::IncludeConvexRadius:
 	case ESupportMode::Default:
-		{
-			// Make box out of our half extents
-			AABox box = AABox(-scaled_half_extent, scaled_half_extent);
-			JPH_ASSERT(box.IsValid());
-			return new (&inBuffer) Box(box, 0.0f);
-		}
+	{
+		// Make box out of our half extents
+		AABox box = AABox(-scaled_half_extent, scaled_half_extent);
+		JPH_ASSERT(box.IsValid());
+		return new (&inBuffer) Box(box, 0.0f);
+	}
 
 	case ESupportMode::ExcludeConvexRadius:
-		{
-			// Reduce the box by our convex radius
-			float convex_radius = ScaleHelpers::ScaleConvexRadius(mConvexRadius, inScale);
-			Vec3 convex_radius3 = Vec3::sReplicate(convex_radius);
-			Vec3 reduced_half_extent = scaled_half_extent - convex_radius3;
-			AABox box = AABox(-reduced_half_extent, reduced_half_extent);
-			JPH_ASSERT(box.IsValid());
-			return new (&inBuffer) Box(box, convex_radius);
-		}
+	{
+		// Reduce the box by our convex radius
+		float convex_radius = ScaleHelpers::ScaleConvexRadius(mConvexRadius, inScale);
+		Vec3 convex_radius3 = Vec3::sReplicate(convex_radius);
+		Vec3 reduced_half_extent = scaled_half_extent - convex_radius3;
+		AABox box = AABox(-reduced_half_extent, reduced_half_extent);
+		JPH_ASSERT(box.IsValid());
+		return new (&inBuffer) Box(box, convex_radius);
+	}
 	}
 
 	JPH_ASSERT(false);
 	return nullptr;
 }
 
-void BoxShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace &outVertices) const
+void BoxShape::GetSupportingFace(const SubShapeID& inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace& outVertices) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 
@@ -136,7 +136,7 @@ void BoxShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDirec
 	box.GetSupportingFace(inDirection, outVertices);
 
 	// Transform to world space
-	for (Vec3 &v : outVertices)
+	for (Vec3& v : outVertices)
 		v = inCenterOfMassTransform * v;
 }
 
@@ -147,7 +147,7 @@ MassProperties BoxShape::GetMassProperties() const
 	return p;
 }
 
-Vec3 BoxShape::GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLocalSurfacePosition) const
+Vec3 BoxShape::GetSurfaceNormal(const SubShapeID& inSubShapeID, Vec3Arg inLocalSurfacePosition) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 
@@ -156,19 +156,19 @@ Vec3 BoxShape::GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLocalS
 
 	// Calculate normal
 	Vec3 normal = Vec3::sZero();
-	normal.SetComponent(index, inLocalSurfacePosition[index] > 0.0f? 1.0f : -1.0f);
+	normal.SetComponent(index, inLocalSurfacePosition[index] > 0.0f ? 1.0f : -1.0f);
 	return normal;
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void BoxShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
+void BoxShape::Draw(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
 {
-	DebugRenderer::EDrawMode draw_mode = inDrawWireframe? DebugRenderer::EDrawMode::Wireframe : DebugRenderer::EDrawMode::Solid;
-	inRenderer->DrawBox(inCenterOfMassTransform * Mat44::sScale(inScale.Abs()), GetLocalBounds(), inUseMaterialColors? GetMaterial()->GetDebugColor() : inColor, DebugRenderer::ECastShadow::On, draw_mode);
+	DebugRenderer::EDrawMode draw_mode = inDrawWireframe ? DebugRenderer::EDrawMode::Wireframe : DebugRenderer::EDrawMode::Solid;
+	inRenderer->DrawBox(inCenterOfMassTransform * Mat44::sScale(inScale.Abs()), GetLocalBounds(), inUseMaterialColors ? GetMaterial()->GetDebugColor() : inColor, DebugRenderer::ECastShadow::On, draw_mode);
 }
 #endif // JPH_DEBUG_RENDERER
 
-bool BoxShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubShapeIDCreator, RayCastResult &ioHit) const
+bool BoxShape::CastRay(const RayCast& inRay, const SubShapeIDCreator& inSubShapeIDCreator, RayCastResult& ioHit) const
 {
 	// Test hit against box
 	float fraction = max(RayAABox(inRay.mOrigin, RayInvDirection(inRay.mDirection), -mHalfExtent, mHalfExtent), 0.0f);
@@ -181,7 +181,7 @@ bool BoxShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubShape
 	return false;
 }
 
-void BoxShape::CastRay(const RayCast &inRay, const RayCastSettings &inRayCastSettings, const SubShapeIDCreator &inSubShapeIDCreator, CastRayCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void BoxShape::CastRay(const RayCast& inRay, const RayCastSettings& inRayCastSettings, const SubShapeIDCreator& inSubShapeIDCreator, CastRayCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
@@ -215,7 +215,7 @@ void BoxShape::CastRay(const RayCast &inRay, const RayCastSettings &inRayCastSet
 	}
 }
 
-void BoxShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubShapeIDCreator, CollidePointCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void BoxShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator& inSubShapeIDCreator, CollidePointCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
@@ -225,7 +225,7 @@ void BoxShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubShape
 		ioCollector.AddHit({ TransformedShape::sGetBodyID(ioCollector.GetContext()), inSubShapeIDCreator.GetID() });
 }
 
-void BoxShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator &inVertices, uint inNumVertices, int inCollidingShapeIndex) const
+void BoxShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator& inVertices, uint inNumVertices, int inCollidingShapeIndex) const
 {
 	Mat44 inverse_transform = inCenterOfMassTransform.InversedRotationTranslation();
 	Vec3 half_extent = inScale.Abs() * mHalfExtent;
@@ -276,17 +276,17 @@ void BoxShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg
 		}
 }
 
-void BoxShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
+void BoxShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox& inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
 {
 	new (&ioContext) GetTrianglesContextVertexList(inPositionCOM, inRotation, inScale, Mat44::sScale(mHalfExtent), sUnitBoxTriangles, std::size(sUnitBoxTriangles), GetMaterial());
 }
 
-int BoxShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials) const
+int BoxShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
 {
-	return ((GetTrianglesContextVertexList &)ioContext).GetTrianglesNext(inMaxTrianglesRequested, outTriangleVertices, outMaterials);
+	return ((GetTrianglesContextVertexList&)ioContext).GetTrianglesNext(inMaxTrianglesRequested, outTriangleVertices, outMaterials);
 }
 
-void BoxShape::SaveBinaryState(StreamOut &inStream) const
+void BoxShape::SaveBinaryState(StreamOut& inStream) const
 {
 	ConvexShape::SaveBinaryState(inStream);
 
@@ -294,7 +294,7 @@ void BoxShape::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mConvexRadius);
 }
 
-void BoxShape::RestoreBinaryState(StreamIn &inStream)
+void BoxShape::RestoreBinaryState(StreamIn& inStream)
 {
 	ConvexShape::RestoreBinaryState(inStream);
 
@@ -304,8 +304,8 @@ void BoxShape::RestoreBinaryState(StreamIn &inStream)
 
 void BoxShape::sRegister()
 {
-	ShapeFunctions &f = ShapeFunctions::sGet(EShapeSubType::Box);
-	f.mConstruct = []() -> Shape * { return new BoxShape; };
+	ShapeFunctions& f = ShapeFunctions::sGet(EShapeSubType::Box);
+	f.mConstruct = []() -> Shape* { return new BoxShape; };
 	f.mColor = Color::sGreen;
 }
 

@@ -101,7 +101,7 @@ namespace SectorFW::Physics {
 
 	// ---- Create ----
 	void PhysicsDevice::ApplyCreate(const CreateBodyCmd& c) {
-		// 形状解決（あなたの ShapeManager から取得）
+		// 形状解決(ShapeManager から取得）
 		JPH::RefConst<JPH::Shape> shape = ResolveShape(c.shape);
 		if (!shape) return;
 
@@ -126,11 +126,18 @@ namespace SectorFW::Physics {
 			body->SetIsSensor(true);
 		}
 
-		m_bi->AddBody(body->GetID(), JPH::EActivation::Activate);
+		auto id = body->GetID();
+		m_bi->AddBody(id, JPH::EActivation::Activate);
 
 		// 対応表登録
-		m_e2b[c.e] = body->GetID();
-		m_b2e.emplace(body->GetID(), c.e);
+		m_e2b[c.e] = id;
+		m_b2e.emplace(id, c.e);
+
+		// 作成完了イベントを貯める（後段で BodyComponent に差し込み）
+		{
+			std::scoped_lock lk(m_createdMutex);
+			m_created.push_back(CreatedBody{ c.e, c.owner, id });
+		}
 	}
 
 	// ---- Destroy ----
@@ -271,9 +278,12 @@ namespace SectorFW::Physics {
 			}
 		}
 
-		// --- Contacts（ContactListener が溜めたものを吐き出す） ---
-		out.contacts.insert(out.contacts.end(), m_pendingContacts.begin(), m_pendingContacts.end());
-		m_pendingContacts.clear();
+		{
+			// --- Contacts（ContactListener が溜めたものを吐き出す） ---
+			std::scoped_lock lk(m_pendingContactsMutex);
+			out.contacts.insert(out.contacts.end(), m_pendingContacts.begin(), m_pendingContacts.end());
+			m_pendingContacts.clear();
+		}
 
 		// --- RayHits ---
 		for (auto& r : m_pendingRayHits) {
@@ -300,16 +310,18 @@ namespace SectorFW::Physics {
 			BodyLockMultiRead lock(m_physics.GetBodyLockInterface(), ids, (int)n);
 			for (size_t j = 0; j < n; ++j) {
 				const size_t idx = i + j;
+				const BodyID id = ids[j];
 
 				if (v.isStaticMask && v.isStaticMask[idx]) {
 					if (v.updatedMask) v.updatedMask[idx] = 0;
 					continue; // 静的は通常スキップ
 				}
 
-				//if (!lock.Succeeded(j)) { // 取れなかった（破棄中など）
-				//	if (v.updatedMask) v.updatedMask[idx] = 0;
-				//	continue;
-				//}
+				// Pending（未生成）やロック失敗（破棄中など）はスキップ
+				 if (IsPendingBodyID(id)) {
+					if (v.updatedMask) v.updatedMask[idx] = 0;
+					continue;
+				}
 
 				const Body* b = lock.GetBody((int)j);
 				if (b->IsStatic()) { if (v.updatedMask) v.updatedMask[idx] = 0; continue; }
@@ -350,8 +362,12 @@ namespace SectorFW::Physics {
 			BodyLockMultiWrite lock(m_physics.GetBodyLockInterface(), ids, (int)n);
 			for (size_t j = 0; j < n; ++j) {
 				const size_t idx = i + j;
+				const BodyID id = ids[j];
 				if (v.maskKinematic && !v.maskKinematic[idx]) continue;
 				//if (!lock.Succeeded(j)) continue;
+
+				// Pending（未生成）やロック失敗（破棄中など）はスキップ
+				if (IsPendingBodyID(id)) continue;
 
 				Body* b = lock.GetBody((int)j);
 				if (b->GetMotionType() != EMotionType::Kinematic) continue;

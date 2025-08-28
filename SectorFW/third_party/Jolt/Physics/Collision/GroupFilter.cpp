@@ -14,17 +14,17 @@ JPH_IMPLEMENT_SERIALIZABLE_ABSTRACT_BASE(GroupFilter)
 	JPH_ADD_BASE_CLASS(GroupFilter, SerializableObject)
 }
 
-void GroupFilter::SaveBinaryState(StreamOut &inStream) const
+void GroupFilter::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(GetRTTI()->GetHash());
 }
 
-void GroupFilter::RestoreBinaryState(StreamIn &inStream)
+void GroupFilter::RestoreBinaryState(StreamIn& inStream)
 {
 	// RTTI hash is read in sRestoreFromBinaryState
 }
 
-GroupFilter::GroupFilterResult GroupFilter::sRestoreFromBinaryState(StreamIn &inStream)
+GroupFilter::GroupFilterResult GroupFilter::sRestoreFromBinaryState(StreamIn& inStream)
 {
 	return StreamUtils::RestoreObject<GroupFilter>(inStream, &GroupFilter::RestoreBinaryState);
 }

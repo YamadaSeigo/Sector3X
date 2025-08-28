@@ -13,23 +13,23 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(WheelSettings)
 {
 	JPH_ADD_ATTRIBUTE(WheelSettings, mSuspensionForcePoint)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mPosition)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mSuspensionDirection)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mSteeringAxis)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mWheelForward)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mWheelUp)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mSuspensionMinLength)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mSuspensionMaxLength)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mSuspensionPreloadLength)
-	JPH_ADD_ENUM_ATTRIBUTE_WITH_ALIAS(WheelSettings, mSuspensionSpring.mMode, "mSuspensionSpringMode")
-	JPH_ADD_ATTRIBUTE_WITH_ALIAS(WheelSettings, mSuspensionSpring.mFrequency, "mSuspensionFrequency") // Renaming attributes to stay compatible with old versions of the library
-	JPH_ADD_ATTRIBUTE_WITH_ALIAS(WheelSettings, mSuspensionSpring.mDamping, "mSuspensionDamping")
-	JPH_ADD_ATTRIBUTE(WheelSettings, mRadius)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mWidth)
-	JPH_ADD_ATTRIBUTE(WheelSettings, mEnableSuspensionForcePoint)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mPosition)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mSuspensionDirection)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mSteeringAxis)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mWheelForward)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mWheelUp)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mSuspensionMinLength)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mSuspensionMaxLength)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mSuspensionPreloadLength)
+		JPH_ADD_ENUM_ATTRIBUTE_WITH_ALIAS(WheelSettings, mSuspensionSpring.mMode, "mSuspensionSpringMode")
+		JPH_ADD_ATTRIBUTE_WITH_ALIAS(WheelSettings, mSuspensionSpring.mFrequency, "mSuspensionFrequency") // Renaming attributes to stay compatible with old versions of the library
+		JPH_ADD_ATTRIBUTE_WITH_ALIAS(WheelSettings, mSuspensionSpring.mDamping, "mSuspensionDamping")
+		JPH_ADD_ATTRIBUTE(WheelSettings, mRadius)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mWidth)
+		JPH_ADD_ATTRIBUTE(WheelSettings, mEnableSuspensionForcePoint)
 }
 
-void WheelSettings::SaveBinaryState(StreamOut &inStream) const
+void WheelSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mSuspensionForcePoint);
 	inStream.Write(mPosition);
@@ -46,7 +46,7 @@ void WheelSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mEnableSuspensionForcePoint);
 }
 
-void WheelSettings::RestoreBinaryState(StreamIn &inStream)
+void WheelSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mSuspensionForcePoint);
 	inStream.Read(mPosition);
@@ -63,7 +63,7 @@ void WheelSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mEnableSuspensionForcePoint);
 }
 
-Wheel::Wheel(const WheelSettings &inSettings) :
+Wheel::Wheel(const WheelSettings& inSettings) :
 	mSettings(&inSettings),
 	mSuspensionLength(inSettings.mSuspensionMaxLength)
 {
@@ -80,12 +80,12 @@ Wheel::Wheel(const WheelSettings &inSettings) :
 	JPH_ASSERT(inSettings.mWidth >= 0.0f);
 }
 
-bool Wheel::SolveLongitudinalConstraintPart(const VehicleConstraint &inConstraint, float inMinImpulse, float inMaxImpulse)
+bool Wheel::SolveLongitudinalConstraintPart(const VehicleConstraint& inConstraint, float inMinImpulse, float inMaxImpulse)
 {
 	return mLongitudinalPart.SolveVelocityConstraint(*inConstraint.GetVehicleBody(), *mContactBody, -mContactLongitudinal, inMinImpulse, inMaxImpulse);
 }
 
-bool Wheel::SolveLateralConstraintPart(const VehicleConstraint &inConstraint, float inMinImpulse, float inMaxImpulse)
+bool Wheel::SolveLateralConstraintPart(const VehicleConstraint& inConstraint, float inMinImpulse, float inMaxImpulse)
 {
 	return mLateralPart.SolveVelocityConstraint(*inConstraint.GetVehicleBody(), *mContactBody, -mContactLateral, inMinImpulse, inMaxImpulse);
 }

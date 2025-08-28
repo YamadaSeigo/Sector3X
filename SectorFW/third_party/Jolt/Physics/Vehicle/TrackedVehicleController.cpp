@@ -10,7 +10,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -19,20 +19,20 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(TrackedVehicleControllerSettings)
 {
 	JPH_ADD_BASE_CLASS(TrackedVehicleControllerSettings, VehicleControllerSettings)
 
-	JPH_ADD_ATTRIBUTE(TrackedVehicleControllerSettings, mEngine)
-	JPH_ADD_ATTRIBUTE(TrackedVehicleControllerSettings, mTransmission)
-	JPH_ADD_ATTRIBUTE(TrackedVehicleControllerSettings, mTracks)
+		JPH_ADD_ATTRIBUTE(TrackedVehicleControllerSettings, mEngine)
+		JPH_ADD_ATTRIBUTE(TrackedVehicleControllerSettings, mTransmission)
+		JPH_ADD_ATTRIBUTE(TrackedVehicleControllerSettings, mTracks)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(WheelSettingsTV)
 {
 	JPH_ADD_BASE_CLASS(WheelSettingsTV, WheelSettings)
 
-	JPH_ADD_ATTRIBUTE(WheelSettingsTV, mLongitudinalFriction)
-	JPH_ADD_ATTRIBUTE(WheelSettingsTV, mLateralFriction)
+		JPH_ADD_ATTRIBUTE(WheelSettingsTV, mLongitudinalFriction)
+		JPH_ADD_ATTRIBUTE(WheelSettingsTV, mLateralFriction)
 }
 
-void WheelSettingsTV::SaveBinaryState(StreamOut &inStream) const
+void WheelSettingsTV::SaveBinaryState(StreamOut& inStream) const
 {
 	WheelSettings::SaveBinaryState(inStream);
 
@@ -40,7 +40,7 @@ void WheelSettingsTV::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mLateralFriction);
 }
 
-void WheelSettingsTV::RestoreBinaryState(StreamIn &inStream)
+void WheelSettingsTV::RestoreBinaryState(StreamIn& inStream)
 {
 	WheelSettings::RestoreBinaryState(inStream);
 
@@ -48,22 +48,22 @@ void WheelSettingsTV::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mLateralFriction);
 }
 
-WheelTV::WheelTV(const WheelSettingsTV &inSettings) :
+WheelTV::WheelTV(const WheelSettingsTV& inSettings) :
 	Wheel(inSettings)
 {
 }
 
-void WheelTV::CalculateAngularVelocity(const VehicleConstraint &inConstraint)
+void WheelTV::CalculateAngularVelocity(const VehicleConstraint& inConstraint)
 {
-	const WheelSettingsTV *settings = GetSettings();
-	const Wheels &wheels = inConstraint.GetWheels();
-	const VehicleTrack &track = static_cast<const TrackedVehicleController *>(inConstraint.GetController())->GetTracks()[mTrackIndex];
+	const WheelSettingsTV* settings = GetSettings();
+	const Wheels& wheels = inConstraint.GetWheels();
+	const VehicleTrack& track = static_cast<const TrackedVehicleController*>(inConstraint.GetController())->GetTracks()[mTrackIndex];
 
 	// Calculate angular velocity of this wheel
 	mAngularVelocity = track.mAngularVelocity * wheels[track.mDrivenWheel]->GetSettings()->mRadius / settings->mRadius;
 }
 
-void WheelTV::Update(uint inWheelIndex, float inDeltaTime, const VehicleConstraint &inConstraint)
+void WheelTV::Update(uint inWheelIndex, float inDeltaTime, const VehicleConstraint& inConstraint)
 {
 	CalculateAngularVelocity(inConstraint);
 
@@ -76,7 +76,7 @@ void WheelTV::Update(uint inWheelIndex, float inDeltaTime, const VehicleConstrai
 	if (mContactBody != nullptr)
 	{
 		// Friction at the point of this wheel between track and floor
-		const WheelSettingsTV *settings = GetSettings();
+		const WheelSettingsTV* settings = GetSettings();
 		VehicleConstraint::CombineFunction combine_friction = inConstraint.GetCombineFriction();
 		mCombinedLongitudinalFriction = settings->mLongitudinalFriction;
 		mCombinedLateralFriction = settings->mLateralFriction;
@@ -89,7 +89,7 @@ void WheelTV::Update(uint inWheelIndex, float inDeltaTime, const VehicleConstrai
 	}
 }
 
-VehicleController *TrackedVehicleControllerSettings::ConstructController(VehicleConstraint &inConstraint) const
+VehicleController* TrackedVehicleControllerSettings::ConstructController(VehicleConstraint& inConstraint) const
 {
 	return new TrackedVehicleController(*this, inConstraint);
 }
@@ -107,37 +107,37 @@ TrackedVehicleControllerSettings::TrackedVehicleControllerSettings()
 	mTransmission.mReverseGearRatios = { -4.0f, -3.0f };
 }
 
-void TrackedVehicleControllerSettings::SaveBinaryState(StreamOut &inStream) const
+void TrackedVehicleControllerSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	mEngine.SaveBinaryState(inStream);
 
 	mTransmission.SaveBinaryState(inStream);
 
-	for (const VehicleTrackSettings &t : mTracks)
+	for (const VehicleTrackSettings& t : mTracks)
 		t.SaveBinaryState(inStream);
 }
 
-void TrackedVehicleControllerSettings::RestoreBinaryState(StreamIn &inStream)
+void TrackedVehicleControllerSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	mEngine.RestoreBinaryState(inStream);
 
 	mTransmission.RestoreBinaryState(inStream);
 
-	for (VehicleTrackSettings &t : mTracks)
+	for (VehicleTrackSettings& t : mTracks)
 		t.RestoreBinaryState(inStream);
 }
 
-TrackedVehicleController::TrackedVehicleController(const TrackedVehicleControllerSettings &inSettings, VehicleConstraint &inConstraint) :
+TrackedVehicleController::TrackedVehicleController(const TrackedVehicleControllerSettings& inSettings, VehicleConstraint& inConstraint) :
 	VehicleController(inConstraint)
 {
 	// Copy engine settings
-	static_cast<VehicleEngineSettings &>(mEngine) = inSettings.mEngine;
+	static_cast<VehicleEngineSettings&>(mEngine) = inSettings.mEngine;
 	JPH_ASSERT(inSettings.mEngine.mMinRPM >= 0.0f);
 	JPH_ASSERT(inSettings.mEngine.mMinRPM <= inSettings.mEngine.mMaxRPM);
 	mEngine.SetCurrentRPM(mEngine.mMinRPM);
 
 	// Copy transmission settings
-	static_cast<VehicleTransmissionSettings &>(mTransmission) = inSettings.mTransmission;
+	static_cast<VehicleTransmissionSettings&>(mTransmission) = inSettings.mTransmission;
 #ifdef JPH_ENABLE_ASSERTS
 	for (float r : inSettings.mTransmission.mGearRatios)
 		JPH_ASSERT(r > 0.0f);
@@ -152,8 +152,8 @@ TrackedVehicleController::TrackedVehicleController(const TrackedVehicleControlle
 	// Copy track settings
 	for (uint i = 0; i < std::size(mTracks); ++i)
 	{
-		const VehicleTrackSettings &d = inSettings.mTracks[i];
-		static_cast<VehicleTrackSettings &>(mTracks[i]) = d;
+		const VehicleTrackSettings& d = inSettings.mTracks[i];
+		static_cast<VehicleTrackSettings&>(mTracks[i]) = d;
 		JPH_ASSERT(d.mInertia >= 0.0f);
 		JPH_ASSERT(d.mAngularDamping >= 0.0f);
 		JPH_ASSERT(d.mMaxBrakeTorque >= 0.0f);
@@ -168,28 +168,28 @@ bool TrackedVehicleController::AllowSleep() const
 		&& mEngine.AllowSleep();								// Engine is idling
 }
 
-void TrackedVehicleController::PreCollide(float inDeltaTime, PhysicsSystem &inPhysicsSystem)
+void TrackedVehicleController::PreCollide(float inDeltaTime, PhysicsSystem& inPhysicsSystem)
 {
-	Wheels &wheels = mConstraint.GetWheels();
+	Wheels& wheels = mConstraint.GetWheels();
 
 	// Fill in track index
 	for (size_t t = 0; t < std::size(mTracks); ++t)
 		for (uint w : mTracks[t].mWheels)
-			static_cast<WheelTV *>(wheels[w])->mTrackIndex = (uint)t;
+			static_cast<WheelTV*>(wheels[w])->mTrackIndex = (uint)t;
 
 	// Angular damping: dw/dt = -c * w
 	// Solution: w(t) = w(0) * e^(-c * t) or w2 = w1 * e^(-c * dt)
 	// Taylor expansion of e^(-c * dt) = 1 - c * dt + ...
 	// Since dt is usually in the order of 1/60 and c is a low number too this approximation is good enough
-	for (VehicleTrack &t : mTracks)
+	for (VehicleTrack& t : mTracks)
 		t.mAngularVelocity *= max(0.0f, 1.0f - t.mAngularDamping * inDeltaTime);
 }
 
 void TrackedVehicleController::SyncLeftRightTracks()
 {
 	// Apply left to right ratio according to track inertias
-	VehicleTrack &tl = mTracks[(int)ETrackSide::Left];
-	VehicleTrack &tr = mTracks[(int)ETrackSide::Right];
+	VehicleTrack& tl = mTracks[(int)ETrackSide::Left];
+	VehicleTrack& tr = mTracks[(int)ETrackSide::Right];
 
 	if (mLeftRatio * mRightRatio > 0.0f)
 	{
@@ -207,16 +207,16 @@ void TrackedVehicleController::SyncLeftRightTracks()
 	}
 }
 
-void TrackedVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inPhysicsSystem)
+void TrackedVehicleController::PostCollide(float inDeltaTime, PhysicsSystem& inPhysicsSystem)
 {
 	JPH_PROFILE_FUNCTION();
 
-	Wheels &wheels = mConstraint.GetWheels();
+	Wheels& wheels = mConstraint.GetWheels();
 
 	// Update wheel angle, do this before applying torque to the wheels (as friction will slow them down again)
 	for (uint wheel_index = 0, num_wheels = (uint)wheels.size(); wheel_index < num_wheels; ++wheel_index)
 	{
-		WheelTV *w = static_cast<WheelTV *>(wheels[wheel_index]);
+		WheelTV* w = static_cast<WheelTV*>(wheels[wheel_index]);
 		w->Update(wheel_index, inDeltaTime, mConstraint);
 	}
 
@@ -226,8 +226,8 @@ void TrackedVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 	{
 		float transmission_ratio = mTransmission.GetCurrentRatio();
 		bool forward = transmission_ratio >= 0.0f;
-		float fastest_wheel_speed = forward? -FLT_MAX : FLT_MAX;
-		for (const VehicleTrack &t : mTracks)
+		float fastest_wheel_speed = forward ? -FLT_MAX : FLT_MAX;
+		for (const VehicleTrack& t : mTracks)
 		{
 			if (forward)
 				fastest_wheel_speed = max(fastest_wheel_speed, t.mAngularVelocity * t.mDifferentialRatio);
@@ -251,7 +251,7 @@ void TrackedVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 		mEngine.ApplyDamping(inDeltaTime);
 
 		// In auto transmission mode, don't accelerate the engine when switching gears
-		float forward_input = mTransmission.mMode == ETransmissionMode::Manual? abs(mForwardInput) : 0.0f;
+		float forward_input = mTransmission.mMode == ETransmissionMode::Manual ? abs(mForwardInput) : 0.0f;
 
 		// Engine not connected to wheels, update RPM based on engine inertia alone
 		mEngine.ApplyTorque(mEngine.GetTorque(forward_input), inDeltaTime);
@@ -269,10 +269,10 @@ void TrackedVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 		// Apply the transmission torque to the wheels
 		for (uint i = 0; i < std::size(mTracks); ++i)
 		{
-			VehicleTrack &t = mTracks[i];
+			VehicleTrack& t = mTracks[i];
 
 			// Get wheel rotation ratio for this track
-			float ratio = i == 0? mLeftRatio : mRightRatio;
+			float ratio = i == 0 ? mLeftRatio : mRightRatio;
 
 			// Calculate the max angular velocity of the driven wheel of the track given current engine RPM
 			// Note this adds 0.1% slop to avoid numerical accuracy issues
@@ -291,7 +291,7 @@ void TrackedVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 	SyncLeftRightTracks();
 
 	// Braking
-	for (VehicleTrack &t : mTracks)
+	for (VehicleTrack& t : mTracks)
 	{
 		// Calculate brake torque
 		float brake_torque = mBrakeInput * t.mMaxBrakeTorque;
@@ -318,7 +318,7 @@ void TrackedVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 			float total_radius = 0.0f;
 			for (uint wheel_index : t.mWheels)
 			{
-				const WheelTV *w = static_cast<WheelTV *>(wheels[wheel_index]);
+				const WheelTV* w = static_cast<WheelTV*>(wheels[wheel_index]);
 
 				if (w->HasContact())
 					total_radius += w->GetSettings()->mRadius;
@@ -329,7 +329,7 @@ void TrackedVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 				brake_torque /= total_radius;
 				for (uint wheel_index : t.mWheels)
 				{
-					WheelTV *w = static_cast<WheelTV *>(wheels[wheel_index]);
+					WheelTV* w = static_cast<WheelTV*>(wheels[wheel_index]);
 					if (w->HasContact())
 					{
 						// Impulse: p = F * dt = Torque / Wheel_Radius * dt, Torque = Total_Torque * Wheel_Radius / Summed_Radius => p = Total_Torque * dt / Summed_Radius
@@ -341,9 +341,9 @@ void TrackedVehicleController::PostCollide(float inDeltaTime, PhysicsSystem &inP
 	}
 
 	// Update wheel angular velocity based on that of the track
-	for (Wheel *w_base : wheels)
+	for (Wheel* w_base : wheels)
 	{
-		WheelTV *w = static_cast<WheelTV *>(w_base);
+		WheelTV* w = static_cast<WheelTV*>(w_base);
 		w->CalculateAngularVelocity(mConstraint);
 	}
 }
@@ -352,12 +352,12 @@ bool TrackedVehicleController::SolveLongitudinalAndLateralConstraints(float inDe
 {
 	bool impulse = false;
 
-	for (Wheel *w_base : mConstraint.GetWheels())
+	for (Wheel* w_base : mConstraint.GetWheels())
 		if (w_base->HasContact())
 		{
-			WheelTV *w = static_cast<WheelTV *>(w_base);
-			const WheelSettingsTV *settings = w->GetSettings();
-			VehicleTrack &track = mTracks[w->mTrackIndex];
+			WheelTV* w = static_cast<WheelTV*>(w_base);
+			const WheelSettingsTV* settings = w->GetSettings();
+			VehicleTrack& track = mTracks[w->mTrackIndex];
 
 			// Calculate max impulse that we can apply on the ground
 			float max_longitudinal_friction_impulse = w->mCombinedLongitudinalFriction * w->GetSuspensionLambda();
@@ -407,10 +407,10 @@ bool TrackedVehicleController::SolveLongitudinalAndLateralConstraints(float inDe
 			}
 		}
 
-	for (Wheel *w_base : mConstraint.GetWheels())
+	for (Wheel* w_base : mConstraint.GetWheels())
 		if (w_base->HasContact())
 		{
-			WheelTV *w = static_cast<WheelTV *>(w_base);
+			WheelTV* w = static_cast<WheelTV*>(w_base);
 
 			// Update angular velocity of wheel for the next iteration
 			w->CalculateAngularVelocity(mConstraint);
@@ -425,12 +425,12 @@ bool TrackedVehicleController::SolveLongitudinalAndLateralConstraints(float inDe
 
 #ifdef JPH_DEBUG_RENDERER
 
-void TrackedVehicleController::Draw(DebugRenderer *inRenderer) const
+void TrackedVehicleController::Draw(DebugRenderer* inRenderer) const
 {
 	float constraint_size = mConstraint.GetDrawConstraintSize();
 
 	// Draw RPM
-	Body *body = mConstraint.GetVehicleBody();
+	Body* body = mConstraint.GetVehicleBody();
 	Vec3 rpm_meter_up = body->GetRotation() * mConstraint.GetLocalUp();
 	RVec3 rpm_meter_pos = body->GetPosition() + body->GetRotation() * mRPMMeterPosition;
 	Vec3 rpm_meter_fwd = body->GetRotation() * mConstraint.GetLocalForward();
@@ -438,15 +438,15 @@ void TrackedVehicleController::Draw(DebugRenderer *inRenderer) const
 
 	// Draw current vehicle state
 	String status = StringFormat("Forward: %.1f, LRatio: %.1f, RRatio: %.1f, Brake: %.1f\n"
-								 "Gear: %d, Clutch: %.1f, EngineRPM: %.0f, V: %.1f km/h",
-								 (double)mForwardInput, (double)mLeftRatio, (double)mRightRatio, (double)mBrakeInput,
-								 mTransmission.GetCurrentGear(), (double)mTransmission.GetClutchFriction(), (double)mEngine.GetCurrentRPM(), (double)body->GetLinearVelocity().Length() * 3.6);
+		"Gear: %d, Clutch: %.1f, EngineRPM: %.0f, V: %.1f km/h",
+		(double)mForwardInput, (double)mLeftRatio, (double)mRightRatio, (double)mBrakeInput,
+		mTransmission.GetCurrentGear(), (double)mTransmission.GetClutchFriction(), (double)mEngine.GetCurrentRPM(), (double)body->GetLinearVelocity().Length() * 3.6);
 	inRenderer->DrawText3D(body->GetPosition(), status, Color::sWhite, constraint_size);
 
-	for (const VehicleTrack &t : mTracks)
+	for (const VehicleTrack& t : mTracks)
 	{
-		const WheelTV *w = static_cast<const WheelTV *>(mConstraint.GetWheels()[t.mDrivenWheel]);
-		const WheelSettings *settings = w->GetSettings();
+		const WheelTV* w = static_cast<const WheelTV*>(mConstraint.GetWheels()[t.mDrivenWheel]);
+		const WheelSettings* settings = w->GetSettings();
 
 		// Calculate where the suspension attaches to the body in world space
 		RVec3 ws_position = body->GetCenterOfMassPosition() + body->GetRotation() * (settings->mPosition - body->GetShape()->GetCenterOfMass());
@@ -456,10 +456,10 @@ void TrackedVehicleController::Draw(DebugRenderer *inRenderer) const
 
 	RMat44 body_transform = body->GetWorldTransform();
 
-	for (const Wheel *w_base : mConstraint.GetWheels())
+	for (const Wheel* w_base : mConstraint.GetWheels())
 	{
-		const WheelTV *w = static_cast<const WheelTV *>(w_base);
-		const WheelSettings *settings = w->GetSettings();
+		const WheelTV* w = static_cast<const WheelTV*>(w_base);
+		const WheelSettings* settings = w->GetSettings();
 
 		// Calculate where the suspension attaches to the body in world space
 		RVec3 ws_position = body_transform * settings->mPosition;
@@ -473,7 +473,7 @@ void TrackedVehicleController::Draw(DebugRenderer *inRenderer) const
 
 		// Draw current length
 		RVec3 wheel_pos = ws_position + ws_direction * w->GetSuspensionLength();
-		inRenderer->DrawMarker(wheel_pos, w->GetSuspensionLength() < settings->mSuspensionMinLength? Color::sRed : Color::sGreen, constraint_size);
+		inRenderer->DrawMarker(wheel_pos, w->GetSuspensionLength() < settings->mSuspensionMinLength ? Color::sRed : Color::sGreen, constraint_size);
 
 		// Draw wheel basis
 		Vec3 wheel_forward, wheel_up, wheel_right;
@@ -490,7 +490,7 @@ void TrackedVehicleController::Draw(DebugRenderer *inRenderer) const
 		// Draw wheel
 		RMat44 wheel_transform(Vec4(wheel_up, 0.0f), Vec4(wheel_right, 0.0f), Vec4(wheel_forward, 0.0f), wheel_pos);
 		wheel_transform.SetRotation(wheel_transform.GetRotation() * Mat44::sRotationY(-w->GetRotationAngle()));
-		inRenderer->DrawCylinder(wheel_transform, settings->mWidth * 0.5f, settings->mRadius, w->GetSuspensionLength() <= settings->mSuspensionMinLength? Color::sRed : Color::sGreen, DebugRenderer::ECastShadow::Off, DebugRenderer::EDrawMode::Wireframe);
+		inRenderer->DrawCylinder(wheel_transform, settings->mWidth * 0.5f, settings->mRadius, w->GetSuspensionLength() <= settings->mSuspensionMinLength ? Color::sRed : Color::sGreen, DebugRenderer::ECastShadow::Off, DebugRenderer::EDrawMode::Wireframe);
 
 		if (w->HasContact())
 		{
@@ -506,7 +506,7 @@ void TrackedVehicleController::Draw(DebugRenderer *inRenderer) const
 
 #endif // JPH_DEBUG_RENDERER
 
-void TrackedVehicleController::SaveState(StateRecorder &inStream) const
+void TrackedVehicleController::SaveState(StateRecorder& inStream) const
 {
 	inStream.Write(mForwardInput);
 	inStream.Write(mLeftRatio);
@@ -516,11 +516,11 @@ void TrackedVehicleController::SaveState(StateRecorder &inStream) const
 	mEngine.SaveState(inStream);
 	mTransmission.SaveState(inStream);
 
-	for (const VehicleTrack &t : mTracks)
+	for (const VehicleTrack& t : mTracks)
 		t.SaveState(inStream);
 }
 
-void TrackedVehicleController::RestoreState(StateRecorder &inStream)
+void TrackedVehicleController::RestoreState(StateRecorder& inStream)
 {
 	inStream.Read(mForwardInput);
 	inStream.Read(mLeftRatio);
@@ -530,7 +530,7 @@ void TrackedVehicleController::RestoreState(StateRecorder &inStream)
 	mEngine.RestoreState(inStream);
 	mTransmission.RestoreState(inStream);
 
-	for (VehicleTrack &t : mTracks)
+	for (VehicleTrack& t : mTracks)
 		t.RestoreState(inStream);
 }
 

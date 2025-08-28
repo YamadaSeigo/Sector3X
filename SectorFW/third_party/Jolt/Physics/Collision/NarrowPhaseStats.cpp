@@ -13,9 +13,9 @@ JPH_NAMESPACE_BEGIN
 NarrowPhaseStat	NarrowPhaseStat::sCollideShape[NumSubShapeTypes][NumSubShapeTypes];
 NarrowPhaseStat	NarrowPhaseStat::sCastShape[NumSubShapeTypes][NumSubShapeTypes];
 
-thread_local TrackNarrowPhaseStat *TrackNarrowPhaseStat::sRoot = nullptr;
+thread_local TrackNarrowPhaseStat* TrackNarrowPhaseStat::sRoot = nullptr;
 
-void NarrowPhaseStat::ReportStats(const char *inName, EShapeSubType inType1, EShapeSubType inType2, uint64 inTicks100Pct) const
+void NarrowPhaseStat::ReportStats(const char* inName, EShapeSubType inType1, EShapeSubType inType2, uint64 inTicks100Pct) const
 {
 	double total_pct = 100.0 * double(mTotalTicks) / double(inTicks100Pct);
 	double total_pct_excl_children = 100.0 * double(mTotalTicks - mChildTicks) / double(inTicks100Pct);
@@ -33,17 +33,17 @@ void NarrowPhaseStat::sReportStats()
 	for (EShapeSubType t1 : sAllSubShapeTypes)
 		for (EShapeSubType t2 : sAllSubShapeTypes)
 		{
-			const NarrowPhaseStat &collide_stat = sCollideShape[(int)t1][(int)t2];
+			const NarrowPhaseStat& collide_stat = sCollideShape[(int)t1][(int)t2];
 			total_ticks += collide_stat.mTotalTicks - collide_stat.mChildTicks;
 
-			const NarrowPhaseStat &cast_stat = sCastShape[(int)t1][(int)t2];
+			const NarrowPhaseStat& cast_stat = sCastShape[(int)t1][(int)t2];
 			total_ticks += cast_stat.mTotalTicks - cast_stat.mChildTicks;
 		}
 
 	for (EShapeSubType t1 : sAllSubShapeTypes)
 		for (EShapeSubType t2 : sAllSubShapeTypes)
 		{
-			const NarrowPhaseStat &stat = sCollideShape[(int)t1][(int)t2];
+			const NarrowPhaseStat& stat = sCollideShape[(int)t1][(int)t2];
 			if (stat.mNumQueries > 0)
 				stat.ReportStats("CollideShape", t1, t2, total_ticks);
 		}
@@ -51,7 +51,7 @@ void NarrowPhaseStat::sReportStats()
 	for (EShapeSubType t1 : sAllSubShapeTypes)
 		for (EShapeSubType t2 : sAllSubShapeTypes)
 		{
-			const NarrowPhaseStat &stat = sCastShape[(int)t1][(int)t2];
+			const NarrowPhaseStat& stat = sCastShape[(int)t1][(int)t2];
 			if (stat.mNumQueries > 0)
 				stat.ReportStats("CastShape", t1, t2, total_ticks);
 		}

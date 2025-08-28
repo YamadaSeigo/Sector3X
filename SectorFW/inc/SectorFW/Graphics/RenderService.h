@@ -17,28 +17,9 @@ namespace SectorFW
 			template<typename Backend, PointerType RTV, PointerType SRV, PointerType Buffer>
 			friend class RenderGraph;
 
-			struct RenderQueueLimited
-			{
-				explicit RenderQueueLimited(RenderQueue& queue, uint64_t currentFrame) noexcept
-					: queue(queue), currentFrame(currentFrame) {
-				}
-
-				void PushCommand(const DrawCommand& cmd) {
-					queue.Push(cmd);
-				}
-				void PushCommand(DrawCommand&& cmd) {
-					queue.Push(std::move(cmd));
-				}
-
-			public:
-				const uint64_t currentFrame;
-			private:
-				RenderQueue& queue;
-			};
-
 			RenderService() : queueMutex(std::make_unique<std::shared_mutex>()) {}
 
-			RenderQueueLimited GetQueueLimited(const std::string& passName)
+			RenderQueue::ProducerSession GetProducerSession(const std::string& passName)
 			{
 				std::shared_lock lock(*queueMutex);
 
@@ -47,15 +28,15 @@ namespace SectorFW
 					assert(false && "RenderQueue not found for pass name");
 				}
 
-				return RenderQueueLimited(renderQueues[it->second], currentFrame);
+				return renderQueues[it->second]->MakeProducer();
 			}
-			RenderQueueLimited GetQueueLimited(size_t index)
+			RenderQueue::ProducerSession GetProducerSession(size_t index)
 			{
 				std::shared_lock lock(*queueMutex);
 				if (index >= renderQueues.size()) {
 					assert(false && "RenderQueue index out of range");
 				}
-				return RenderQueueLimited(renderQueues[index], currentFrame);
+				return renderQueues[index]->MakeProducer();
 			}
 
 			template<typename ResourceType>
@@ -85,7 +66,7 @@ namespace SectorFW
 			}
 		private:
 			std::unordered_map<std::string, size_t> queueIndex;
-			std::vector<std::reference_wrapper<RenderQueue>> renderQueues; // 全てのレンダークエリを保持する
+			std::vector<std::unique_ptr<RenderQueue>> renderQueues; // 全てのレンダークエリを保持する
 			std::unique_ptr<std::shared_mutex> queueMutex;
 			std::unordered_map<std::type_index, void*> resourceManagers;
 			uint64_t currentFrame = 0; // 現在のフレーム番号

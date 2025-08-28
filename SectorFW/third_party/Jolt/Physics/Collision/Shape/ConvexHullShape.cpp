@@ -26,10 +26,10 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(ConvexHullShapeSettings)
 {
 	JPH_ADD_BASE_CLASS(ConvexHullShapeSettings, ConvexShapeSettings)
 
-	JPH_ADD_ATTRIBUTE(ConvexHullShapeSettings, mPoints)
-	JPH_ADD_ATTRIBUTE(ConvexHullShapeSettings, mMaxConvexRadius)
-	JPH_ADD_ATTRIBUTE(ConvexHullShapeSettings, mMaxErrorConvexRadius)
-	JPH_ADD_ATTRIBUTE(ConvexHullShapeSettings, mHullTolerance)
+		JPH_ADD_ATTRIBUTE(ConvexHullShapeSettings, mPoints)
+		JPH_ADD_ATTRIBUTE(ConvexHullShapeSettings, mMaxConvexRadius)
+		JPH_ADD_ATTRIBUTE(ConvexHullShapeSettings, mMaxErrorConvexRadius)
+		JPH_ADD_ATTRIBUTE(ConvexHullShapeSettings, mHullTolerance)
 }
 
 ShapeSettings::ShapeResult ConvexHullShapeSettings::Create() const
@@ -39,13 +39,13 @@ ShapeSettings::ShapeResult ConvexHullShapeSettings::Create() const
 	return mCachedResult;
 }
 
-ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, ShapeResult &outResult) :
+ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings& inSettings, ShapeResult& outResult) :
 	ConvexShape(EShapeSubType::ConvexHull, inSettings, outResult),
 	mConvexRadius(inSettings.mMaxConvexRadius)
 {
 	using BuilderFace = ConvexHullBuilder::Face;
 	using Edge = ConvexHullBuilder::Edge;
-	using Faces = Array<BuilderFace *>;
+	using Faces = Array<BuilderFace*>;
 
 	// Check convex radius
 	if (mConvexRadius < 0.0f)
@@ -55,7 +55,7 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 	}
 
 	// Build convex hull
-	const char *error = nullptr;
+	const char* error = nullptr;
 	ConvexHullBuilder builder(inSettings.mPoints);
 	ConvexHullBuilder::EResult result = builder.Initialize(cMaxPointsInHull, inSettings.mHullTolerance, error);
 	if (result != ConvexHullBuilder::EResult::Success && result != ConvexHullBuilder::EResult::MaxVerticesReached)
@@ -63,12 +63,12 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 		outResult.SetError(error);
 		return;
 	}
-	const Faces &builder_faces = builder.GetFaces();
+	const Faces& builder_faces = builder.GetFaces();
 
 	// Check the consistency of the resulting hull if we fully built it
 	if (result == ConvexHullBuilder::EResult::Success)
 	{
-		ConvexHullBuilder::Face *max_error_face;
+		ConvexHullBuilder::Face* max_error_face;
 		float max_error_distance, coplanar_distance;
 		int max_error_idx;
 		builder.DetermineMaxError(max_error_face, max_error_distance, max_error_idx, coplanar_distance);
@@ -88,11 +88,11 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 	// - How to find the inertia tensor (or other mass properties) of a 3D solid body represented by a triangle mesh (Draft) - Jonathan Blow, Atman J Binstock (http://number-none.com/blow/inertia/bb_inertia.doc)
 	Mat44 covariance_canonical(Vec4(1.0f / 60.0f, 1.0f / 120.0f, 1.0f / 120.0f, 0), Vec4(1.0f / 120.0f, 1.0f / 60.0f, 1.0f / 120.0f, 0), Vec4(1.0f / 120.0f, 1.0f / 120.0f, 1.0f / 60.0f, 0), Vec4(0, 0, 0, 1));
 	Mat44 covariance_matrix = Mat44::sZero();
-	for (BuilderFace *f : builder_faces)
+	for (BuilderFace* f : builder_faces)
 	{
 		// Fourth point of the tetrahedron is at the center of mass, we subtract it from the other points so we get a tetrahedron with one vertex at zero
 		// The first point on the face will be used to form a triangle fan
-		Edge *e = f->mFirstEdge;
+		Edge* e = f->mFirstEdge;
 		Vec3 v1 = inSettings.mPoints[e->mStartIdx] - mCenterOfMass;
 
 		// Get the 2nd point
@@ -126,7 +126,7 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 	using VtxMap = UnorderedMap<int, uint8>;
 	VtxMap vertex_map;
 	vertex_map.reserve(VtxMap::size_type(inSettings.mPoints.size()));
-	for (BuilderFace *builder_face : builder_faces)
+	for (BuilderFace* builder_face : builder_faces)
 	{
 		// Determine where the vertices go
 		JPH_ASSERT(mVertexIdx.size() <= 0xFFFF);
@@ -134,7 +134,7 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 		uint16 num_vertices = 0;
 
 		// Loop over vertices in face
-		Edge *edge = builder_face->mFirstEdge;
+		Edge* edge = builder_face->mFirstEdge;
 		do
 		{
 			// Remap to new index, not all points in the original input set are required to form the hull
@@ -191,7 +191,7 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 		Array<int> faces;
 		for (int f = 0; f < (int)mFaces.size(); ++f)
 		{
-			const Face &face = mFaces[f];
+			const Face& face = mFaces[f];
 			for (int v = 0; v < face.mNumVertices; ++v)
 				if (mVertexIdx[face.mFirstVertex + v] == p)
 				{
@@ -259,7 +259,7 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 			faces = { faces[0] };
 
 		// Copy the faces to the points buffer
-		Point &point = mPoints[p];
+		Point& point = mPoints[p];
 		point.mNumFaces = (int)faces.size();
 		for (int i = 0; i < (int)faces.size(); ++i)
 			point.mFaces[i] = faces[i];
@@ -270,11 +270,11 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 	{
 		// Find out how thin the hull is by walking over all planes and checking the thickness of the hull in that direction
 		float min_size = FLT_MAX;
-		for (const Plane &plane : mPlanes)
+		for (const Plane& plane : mPlanes)
 		{
 			// Take the point that is furthest away from the plane as thickness of this hull
 			float max_dist = 0.0f;
-			for (const Point &point : mPoints)
+			for (const Point& point : mPoints)
 			{
 				float dist = -plane.SignedDistance(point.mPosition); // Point is always behind plane, so we need to negate
 				if (dist > max_dist)
@@ -290,7 +290,7 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 	// Now walk over all points and see if we have to further reduce the convex radius because of sharp edges
 	if (mConvexRadius > 0.0f)
 	{
-		for (const Point &point : mPoints)
+		for (const Point& point : mPoints)
 			if (point.mNumFaces != 1) // If we have a single face, shifting back is easy and we don't need to reduce the convex radius
 			{
 				// Get first two planes
@@ -342,11 +342,11 @@ ConvexHullShape::ConvexHullShape(const ConvexHullShapeSettings &inSettings, Shap
 				float max_convex_radius = inSettings.mMaxErrorConvexRadius / (offset - 1.0f);
 				mConvexRadius = min(mConvexRadius, max_convex_radius);
 			}
-		}
+	}
 
 	// Calculate the inner radius by getting the minimum distance from the origin to the planes of the hull
 	mInnerRadius = FLT_MAX;
-	for (const Plane &p : mPlanes)
+	for (const Plane& p : mPlanes)
 		mInnerRadius = min(mInnerRadius, -p.GetConstant());
 	mInnerRadius = max(0.0f, mInnerRadius); // Clamp against zero, this should do nothing as the shape is centered around the center of mass but for flat convex hulls there may be numerical round off issues
 
@@ -369,18 +369,18 @@ MassProperties ConvexHullShape::GetMassProperties() const
 	return p;
 }
 
-Vec3 ConvexHullShape::GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLocalSurfacePosition) const
+Vec3 ConvexHullShape::GetSurfaceNormal(const SubShapeID& inSubShapeID, Vec3Arg inLocalSurfacePosition) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 
-	const Plane &first_plane = mPlanes[0];
+	const Plane& first_plane = mPlanes[0];
 	Vec3 best_normal = first_plane.GetNormal();
 	float best_dist = abs(first_plane.SignedDistance(inLocalSurfacePosition));
 
 	// Find the face that has the shortest distance to the surface point
 	for (Array<Face>::size_type i = 1; i < mFaces.size(); ++i)
 	{
-		const Plane &plane = mPlanes[i];
+		const Plane& plane = mPlanes[i];
 		Vec3 plane_normal = plane.GetNormal();
 		float dist = abs(plane.SignedDistance(inLocalSurfacePosition));
 		if (dist < best_dist)
@@ -430,12 +430,12 @@ public:
 
 	using PointsArray = StaticArray<Vec3, cMaxPointsInHull>;
 
-	inline PointsArray &	GetPoints()
+	inline PointsArray& GetPoints()
 	{
 		return mPoints;
 	}
 
-	const PointsArray &		GetPoints() const
+	const PointsArray& GetPoints() const
 	{
 		return mPoints;
 	}
@@ -448,7 +448,7 @@ private:
 class ConvexHullShape::HullWithConvex final : public Support
 {
 public:
-	explicit				HullWithConvex(const ConvexHullShape *inShape) :
+	explicit				HullWithConvex(const ConvexHullShape* inShape) :
 		mShape(inShape)
 	{
 		static_assert(sizeof(HullWithConvex) <= sizeof(SupportBuffer), "Buffer size too small");
@@ -461,7 +461,7 @@ public:
 		float best_dot = -FLT_MAX;
 		Vec3 best_point = Vec3::sZero();
 
-		for (const Point &point : mShape->mPoints)
+		for (const Point& point : mShape->mPoints)
 		{
 			// Check if its support is bigger than the current max
 			float dot = point.mPosition.Dot(inDirection);
@@ -481,13 +481,13 @@ public:
 	}
 
 private:
-	const ConvexHullShape *	mShape;
+	const ConvexHullShape* mShape;
 };
 
 class ConvexHullShape::HullWithConvexScaled final : public Support
 {
 public:
-							HullWithConvexScaled(const ConvexHullShape *inShape, Vec3Arg inScale) :
+	HullWithConvexScaled(const ConvexHullShape* inShape, Vec3Arg inScale) :
 		mShape(inShape),
 		mScale(inScale)
 	{
@@ -501,7 +501,7 @@ public:
 		float best_dot = -FLT_MAX;
 		Vec3 best_point = Vec3::sZero();
 
-		for (const Point &point : mShape->mPoints)
+		for (const Point& point : mShape->mPoints)
 		{
 			// Calculate scaled position
 			Vec3 pos = mScale * point.mPosition;
@@ -524,11 +524,11 @@ public:
 	}
 
 private:
-	const ConvexHullShape *	mShape;
+	const ConvexHullShape* mShape;
 	Vec3					mScale;
 };
 
-const ConvexShape::Support *ConvexHullShape::GetSupportFunction(ESupportMode inMode, SupportBuffer &inBuffer, Vec3Arg inScale) const
+const ConvexShape::Support* ConvexHullShape::GetSupportFunction(ESupportMode inMode, SupportBuffer& inBuffer, Vec3Arg inScale) const
 {
 	// If there's no convex radius, we don't need to shrink the hull
 	if (mConvexRadius == 0.0f)
@@ -552,11 +552,11 @@ const ConvexShape::Support *ConvexHullShape::GetSupportFunction(ESupportMode inM
 		if (ScaleHelpers::IsNotScaled(inScale))
 		{
 			// Create support function
-			HullNoConvex *hull = new (&inBuffer) HullNoConvex(mConvexRadius);
-			HullNoConvex::PointsArray &transformed_points = hull->GetPoints();
+			HullNoConvex* hull = new (&inBuffer) HullNoConvex(mConvexRadius);
+			HullNoConvex::PointsArray& transformed_points = hull->GetPoints();
 			JPH_ASSERT(mPoints.size() <= cMaxPointsInHull, "Not enough space, this should have been caught during shape creation!");
 
-			for (const Point &point : mPoints)
+			for (const Point& point : mPoints)
 			{
 				Vec3 new_point;
 
@@ -604,14 +604,14 @@ const ConvexShape::Support *ConvexHullShape::GetSupportFunction(ESupportMode inM
 			float convex_radius = ScaleHelpers::ScaleConvexRadius(mConvexRadius, inScale);
 
 			// Create new support function
-			HullNoConvex *hull = new (&inBuffer) HullNoConvex(convex_radius);
-			HullNoConvex::PointsArray &transformed_points = hull->GetPoints();
+			HullNoConvex* hull = new (&inBuffer) HullNoConvex(convex_radius);
+			HullNoConvex::PointsArray& transformed_points = hull->GetPoints();
 			JPH_ASSERT(mPoints.size() <= cMaxPointsInHull, "Not enough space, this should have been caught during shape creation!");
 
 			// Precalculate inverse scale
 			Vec3 inv_scale = inScale.Reciprocal();
 
-			for (const Point &point : mPoints)
+			for (const Point& point : mPoints)
 			{
 				// Calculate scaled position
 				Vec3 pos = inScale * point.mPosition;
@@ -671,7 +671,7 @@ const ConvexShape::Support *ConvexHullShape::GetSupportFunction(ESupportMode inM
 	return nullptr;
 }
 
-void ConvexHullShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace &outVertices) const
+void ConvexHullShape::GetSupportingFace(const SubShapeID& inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace& outVertices) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 
@@ -696,9 +696,9 @@ void ConvexHullShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg 
 	}
 
 	// Get vertices
-	const Face &best_face = mFaces[best_face_idx];
-	const uint8 *first_vtx = mVertexIdx.data() + best_face.mFirstVertex;
-	const uint8 *end_vtx = first_vtx + best_face.mNumVertices;
+	const Face& best_face = mFaces[best_face_idx];
+	const uint8* first_vtx = mVertexIdx.data() + best_face.mFirstVertex;
+	const uint8* end_vtx = first_vtx + best_face.mNumVertices;
 
 	// If we have more than 1/2 the capacity of outVertices worth of vertices, we start skipping vertices (note we can't fill the buffer completely since extra edges will be generated by clipping).
 	// TODO: This really needs a better algorithm to determine which vertices are important!
@@ -711,18 +711,18 @@ void ConvexHullShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg 
 	if (ScaleHelpers::IsInsideOut(inScale))
 	{
 		// Flip winding of supporting face
-		for (const uint8 *v = end_vtx - 1; v >= first_vtx; v -= delta_vtx)
+		for (const uint8* v = end_vtx - 1; v >= first_vtx; v -= delta_vtx)
 			outVertices.push_back(transform * mPoints[*v].mPosition);
 	}
 	else
 	{
 		// Normal winding of supporting face
-		for (const uint8 *v = first_vtx; v < end_vtx; v += delta_vtx)
+		for (const uint8* v = first_vtx; v < end_vtx; v += delta_vtx)
 			outVertices.push_back(transform * mPoints[*v].mPosition);
 	}
 }
 
-void ConvexHullShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const Plane &inSurface, float &outTotalVolume, float &outSubmergedVolume, Vec3 &outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, RVec3Arg inBaseOffset)) const
+void ConvexHullShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const Plane& inSurface, float& outTotalVolume, float& outSubmergedVolume, Vec3& outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, RVec3Arg inBaseOffset)) const
 {
 	// Trivially calculate total volume
 	Vec3 abs_scale = inScale.Abs();
@@ -733,7 +733,7 @@ void ConvexHullShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3A
 
 	// Convert the points to world space and determine the distance to the surface
 	int num_points = int(mPoints.size());
-	PolyhedronSubmergedVolumeCalculator::Point *buffer = (PolyhedronSubmergedVolumeCalculator::Point *)JPH_STACK_ALLOC(num_points * sizeof(PolyhedronSubmergedVolumeCalculator::Point));
+	PolyhedronSubmergedVolumeCalculator::Point* buffer = (PolyhedronSubmergedVolumeCalculator::Point*)JPH_STACK_ALLOC(num_points * sizeof(PolyhedronSubmergedVolumeCalculator::Point));
 	PolyhedronSubmergedVolumeCalculator submerged_vol_calc(inCenterOfMassTransform * Mat44::sScale(inScale), &mPoints[0].mPosition, sizeof(Point), num_points, inSurface, buffer JPH_IF_DEBUG_RENDERER(, inBaseOffset));
 
 	if (submerged_vol_calc.AreAllAbove())
@@ -752,14 +752,14 @@ void ConvexHullShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3A
 	{
 		// Calculate submerged volume
 		int reference_point_idx = submerged_vol_calc.GetReferencePointIdx();
-		for (const Face &f : mFaces)
+		for (const Face& f : mFaces)
 		{
-			const uint8 *first_vtx = mVertexIdx.data() + f.mFirstVertex;
-			const uint8 *end_vtx = first_vtx + f.mNumVertices;
+			const uint8* first_vtx = mVertexIdx.data() + f.mFirstVertex;
+			const uint8* end_vtx = first_vtx + f.mNumVertices;
 
 			// If any of the vertices of this face are the reference point, the volume will be zero so we can skip this face
 			bool degenerate = false;
-			for (const uint8 *v = first_vtx; v < end_vtx; ++v)
+			for (const uint8* v = first_vtx; v < end_vtx; ++v)
 				if (*v == reference_point_idx)
 				{
 					degenerate = true;
@@ -773,7 +773,7 @@ void ConvexHullShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3A
 			if (is_inside_out)
 			{
 				// Reverse winding
-				for (const uint8 *v = first_vtx + 2; v < end_vtx; ++v)
+				for (const uint8* v = first_vtx + 2; v < end_vtx; ++v)
 				{
 					int i2 = *(v - 1);
 					int i3 = *v;
@@ -783,7 +783,7 @@ void ConvexHullShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3A
 			else
 			{
 				// Normal winding
-				for (const uint8 *v = first_vtx + 2; v < end_vtx; ++v)
+				for (const uint8* v = first_vtx + 2; v < end_vtx; ++v)
 				{
 					int i2 = *(v - 1);
 					int i3 = *v;
@@ -804,15 +804,15 @@ void ConvexHullShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3A
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void ConvexHullShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
+void ConvexHullShape::Draw(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
 {
 	if (mGeometry == nullptr)
 	{
 		Array<DebugRenderer::Triangle> triangles;
-		for (const Face &f : mFaces)
+		for (const Face& f : mFaces)
 		{
-			const uint8 *first_vtx = mVertexIdx.data() + f.mFirstVertex;
-			const uint8 *end_vtx = first_vtx + f.mNumVertices;
+			const uint8* first_vtx = mVertexIdx.data() + f.mFirstVertex;
+			const uint8* end_vtx = first_vtx + f.mNumVertices;
 
 			// Draw first triangle of polygon
 			Vec3 v0 = mPoints[first_vtx[0]].mPosition;
@@ -822,50 +822,50 @@ void ConvexHullShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTr
 			triangles.push_back({ v0, v1, v2, Color::sWhite, v0, uv_direction });
 
 			// Draw any other triangles in this polygon
-			for (const uint8 *v = first_vtx + 3; v < end_vtx; ++v)
+			for (const uint8* v = first_vtx + 3; v < end_vtx; ++v)
 				triangles.push_back({ v0, mPoints[*(v - 1)].mPosition, mPoints[*v].mPosition, Color::sWhite, v0, uv_direction });
 		}
 		mGeometry = new DebugRenderer::Geometry(inRenderer->CreateTriangleBatch(triangles), GetLocalBounds());
 	}
 
 	// Test if the shape is scaled inside out
-	DebugRenderer::ECullMode cull_mode = ScaleHelpers::IsInsideOut(inScale)? DebugRenderer::ECullMode::CullFrontFace : DebugRenderer::ECullMode::CullBackFace;
+	DebugRenderer::ECullMode cull_mode = ScaleHelpers::IsInsideOut(inScale) ? DebugRenderer::ECullMode::CullFrontFace : DebugRenderer::ECullMode::CullBackFace;
 
 	// Determine the draw mode
-	DebugRenderer::EDrawMode draw_mode = inDrawWireframe? DebugRenderer::EDrawMode::Wireframe : DebugRenderer::EDrawMode::Solid;
+	DebugRenderer::EDrawMode draw_mode = inDrawWireframe ? DebugRenderer::EDrawMode::Wireframe : DebugRenderer::EDrawMode::Solid;
 
 	// Draw the geometry
-	Color color = inUseMaterialColors? GetMaterial()->GetDebugColor() : inColor;
+	Color color = inUseMaterialColors ? GetMaterial()->GetDebugColor() : inColor;
 	RMat44 transform = inCenterOfMassTransform.PreScaled(inScale);
 	inRenderer->DrawGeometry(transform, color, mGeometry, cull_mode, DebugRenderer::ECastShadow::On, draw_mode);
 
 	// Draw the outline if requested
 	if (sDrawFaceOutlines)
-		for (const Face &f : mFaces)
+		for (const Face& f : mFaces)
 		{
-			const uint8 *first_vtx = mVertexIdx.data() + f.mFirstVertex;
-			const uint8 *end_vtx = first_vtx + f.mNumVertices;
+			const uint8* first_vtx = mVertexIdx.data() + f.mFirstVertex;
+			const uint8* end_vtx = first_vtx + f.mNumVertices;
 
 			// Draw edges of face
 			inRenderer->DrawLine(transform * mPoints[*(end_vtx - 1)].mPosition, transform * mPoints[*first_vtx].mPosition, Color::sGrey);
-			for (const uint8 *v = first_vtx + 1; v < end_vtx; ++v)
+			for (const uint8* v = first_vtx + 1; v < end_vtx; ++v)
 				inRenderer->DrawLine(transform * mPoints[*(v - 1)].mPosition, transform * mPoints[*v].mPosition, Color::sGrey);
 		}
 }
 
-void ConvexHullShape::DrawShrunkShape(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale) const
+void ConvexHullShape::DrawShrunkShape(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale) const
 {
 	// Get the shrunk points
 	SupportBuffer buffer;
-	const HullNoConvex *support = mConvexRadius > 0.0f? static_cast<const HullNoConvex *>(GetSupportFunction(ESupportMode::ExcludeConvexRadius, buffer, inScale)) : nullptr;
+	const HullNoConvex* support = mConvexRadius > 0.0f ? static_cast<const HullNoConvex*>(GetSupportFunction(ESupportMode::ExcludeConvexRadius, buffer, inScale)) : nullptr;
 
 	RMat44 transform = inCenterOfMassTransform * Mat44::sScale(inScale);
 
 	for (int p = 0; p < (int)mPoints.size(); ++p)
 	{
-		const Point &point = mPoints[p];
+		const Point& point = mPoints[p];
 		RVec3 position = transform * point.mPosition;
-		RVec3 shrunk_point = support != nullptr? transform * support->GetPoints()[p] : position;
+		RVec3 shrunk_point = support != nullptr ? transform * support->GetPoints()[p] : position;
 
 		// Draw difference between shrunk position and position
 		inRenderer->DrawLine(position, shrunk_point, Color::sGreen);
@@ -880,14 +880,14 @@ void ConvexHullShape::DrawShrunkShape(DebugRenderer *inRenderer, RMat44Arg inCen
 }
 #endif // JPH_DEBUG_RENDERER
 
-bool ConvexHullShape::CastRayHelper(const RayCast &inRay, float &outMinFraction, float &outMaxFraction) const
+bool ConvexHullShape::CastRayHelper(const RayCast& inRay, float& outMinFraction, float& outMaxFraction) const
 {
 	if (mFaces.size() == 2)
 	{
 		// If we have only 2 faces, we're a flat convex hull and we need to test edges instead of planes
 
 		// Check if plane is parallel to ray
-		const Plane &p = mPlanes.front();
+		const Plane& p = mPlanes.front();
 		Vec3 plane_normal = p.GetNormal();
 		float direction_projection = inRay.mDirection.Dot(plane_normal);
 		if (abs(direction_projection) >= 1.0e-12f)
@@ -905,11 +905,11 @@ bool ConvexHullShape::CastRayHelper(const RayCast &inRay, float &outMinFraction,
 			Vec3 intersection_point = inRay.mOrigin + fraction * inRay.mDirection;
 
 			// Test all edges to see if point is inside polygon
-			const Face &f = mFaces.front();
-			const uint8 *first_vtx = mVertexIdx.data() + f.mFirstVertex;
-			const uint8 *end_vtx = first_vtx + f.mNumVertices;
+			const Face& f = mFaces.front();
+			const uint8* first_vtx = mVertexIdx.data() + f.mFirstVertex;
+			const uint8* end_vtx = first_vtx + f.mNumVertices;
 			Vec3 p1 = mPoints[*end_vtx].mPosition;
-			for (const uint8 *v = first_vtx; v < end_vtx; ++v)
+			for (const uint8* v = first_vtx; v < end_vtx; ++v)
 			{
 				Vec3 p2 = mPoints[*v].mPosition;
 				if ((p2 - p1).Cross(intersection_point - p1).Dot(plane_normal) < 0.0f)
@@ -941,7 +941,7 @@ bool ConvexHullShape::CastRayHelper(const RayCast &inRay, float &outMinFraction,
 		int fractions_set = 0;
 		bool all_inside = true;
 		float min_fraction = 0.0f, max_fraction = 1.0f + FLT_EPSILON;
-		for (const Plane &p : mPlanes)
+		for (const Plane& p : mPlanes)
 		{
 			// Check if the ray origin is behind this plane
 			Vec3 plane_normal = p.GetNormal();
@@ -994,7 +994,7 @@ bool ConvexHullShape::CastRayHelper(const RayCast &inRay, float &outMinFraction,
 	}
 }
 
-bool ConvexHullShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubShapeIDCreator, RayCastResult &ioHit) const
+bool ConvexHullShape::CastRay(const RayCast& inRay, const SubShapeIDCreator& inSubShapeIDCreator, RayCastResult& ioHit) const
 {
 	// Determine if ray hits the shape
 	float min_fraction, max_fraction;
@@ -1009,7 +1009,7 @@ bool ConvexHullShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inS
 	return false;
 }
 
-void ConvexHullShape::CastRay(const RayCast &inRay, const RayCastSettings &inRayCastSettings, const SubShapeIDCreator &inSubShapeIDCreator, CastRayCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void ConvexHullShape::CastRay(const RayCast& inRay, const RayCastSettings& inRayCastSettings, const SubShapeIDCreator& inSubShapeIDCreator, CastRayCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
@@ -1042,14 +1042,14 @@ void ConvexHullShape::CastRay(const RayCast &inRay, const RayCastSettings &inRay
 	}
 }
 
-void ConvexHullShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubShapeIDCreator, CollidePointCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void ConvexHullShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator& inSubShapeIDCreator, CollidePointCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
 		return;
 
 	// Check if point is behind all planes
-	for (const Plane &p : mPlanes)
+	for (const Plane& p : mPlanes)
 		if (p.SignedDistance(inPoint) > 0.0f)
 			return;
 
@@ -1057,13 +1057,13 @@ void ConvexHullShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inS
 	ioCollector.AddHit({ TransformedShape::sGetBodyID(ioCollector.GetContext()), inSubShapeIDCreator.GetID() });
 }
 
-void ConvexHullShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator &inVertices, uint inNumVertices, int inCollidingShapeIndex) const
+void ConvexHullShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator& inVertices, uint inNumVertices, int inCollidingShapeIndex) const
 {
 	Mat44 inverse_transform = inCenterOfMassTransform.InversedRotationTranslation();
 
 	Vec3 inv_scale = inScale.Reciprocal();
 	bool is_not_scaled = ScaleHelpers::IsNotScaled(inScale);
-	float scale_flip = ScaleHelpers::IsInsideOut(inScale)? -1.0f : 1.0f;
+	float scale_flip = ScaleHelpers::IsInsideOut(inScale) ? -1.0f : 1.0f;
 
 	for (CollideSoftBodyVertexIterator v = inVertices, sbv_end = inVertices + inNumVertices; v != sbv_end; ++v)
 		if (v.GetInvMass() > 0.0f)
@@ -1077,7 +1077,7 @@ void ConvexHullShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, 
 			if (is_not_scaled)
 			{
 				// Without scale, it is trivial to calculate the distance to the hull
-				for (const Plane &p : mPlanes)
+				for (const Plane& p : mPlanes)
 				{
 					float distance = p.SignedDistance(local_pos);
 					if (distance > max_distance)
@@ -1116,11 +1116,11 @@ void ConvexHullShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, 
 			{
 				// Loop over edges
 				float closest_point_dist_sq = FLT_MAX;
-				const Face &face = mFaces[max_plane_idx];
-				for (const uint8 *v_start = &mVertexIdx[face.mFirstVertex], *v1 = v_start, *v_end = v_start + face.mNumVertices; v1 < v_end; ++v1)
+				const Face& face = mFaces[max_plane_idx];
+				for (const uint8* v_start = &mVertexIdx[face.mFirstVertex], *v1 = v_start, *v_end = v_start + face.mNumVertices; v1 < v_end; ++v1)
 				{
 					// Find second point
-					const uint8 *v2 = v1 + 1;
+					const uint8* v2 = v1 + 1;
 					if (v2 == v_end)
 						v2 = v_start;
 
@@ -1156,7 +1156,7 @@ void ConvexHullShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, 
 			if (v.UpdatePenetration(penetration))
 			{
 				// Calculate contact plane
-				normal = normal_length > 1.0e-12f? normal / normal_length : max_plane_normal;
+				normal = normal_length > 1.0e-12f ? normal / normal_length : max_plane_normal;
 				Plane plane = Plane::sFromPointAndNormal(local_pos + closest_point, normal);
 
 				// Store collision
@@ -1168,14 +1168,14 @@ void ConvexHullShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, 
 class ConvexHullShape::CHSGetTrianglesContext
 {
 public:
-				CHSGetTrianglesContext(Mat44Arg inTransform, bool inIsInsideOut) : mTransform(inTransform), mIsInsideOut(inIsInsideOut) { }
+	CHSGetTrianglesContext(Mat44Arg inTransform, bool inIsInsideOut) : mTransform(inTransform), mIsInsideOut(inIsInsideOut) {}
 
 	Mat44		mTransform;
 	bool		mIsInsideOut;
 	size_t		mCurrentFace = 0;
 };
 
-void ConvexHullShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
+void ConvexHullShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox& inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
 {
 	static_assert(sizeof(CHSGetTrianglesContext) <= sizeof(GetTrianglesContext), "GetTrianglesContext too small");
 	JPH_ASSERT(IsAligned(&ioContext, alignof(CHSGetTrianglesContext)));
@@ -1183,20 +1183,20 @@ void ConvexHullShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AA
 	new (&ioContext) CHSGetTrianglesContext(Mat44::sRotationTranslation(inRotation, inPositionCOM) * Mat44::sScale(inScale), ScaleHelpers::IsInsideOut(inScale));
 }
 
-int ConvexHullShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials) const
+int ConvexHullShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
 {
 	static_assert(cGetTrianglesMinTrianglesRequested >= 12, "cGetTrianglesMinTrianglesRequested is too small");
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
 
-	CHSGetTrianglesContext &context = (CHSGetTrianglesContext &)ioContext;
+	CHSGetTrianglesContext& context = (CHSGetTrianglesContext&)ioContext;
 
 	int total_num_triangles = 0;
 	for (; context.mCurrentFace < mFaces.size(); ++context.mCurrentFace)
 	{
-		const Face &f = mFaces[context.mCurrentFace];
+		const Face& f = mFaces[context.mCurrentFace];
 
-		const uint8 *first_vtx = mVertexIdx.data() + f.mFirstVertex;
-		const uint8 *end_vtx = first_vtx + f.mNumVertices;
+		const uint8* first_vtx = mVertexIdx.data() + f.mFirstVertex;
+		const uint8* end_vtx = first_vtx + f.mNumVertices;
 
 		// Check if there is still room in the output buffer for this face
 		int num_triangles = f.mNumVertices - 2;
@@ -1217,7 +1217,7 @@ int ConvexHullShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxT
 			v1.StoreFloat3(outTriangleVertices++);
 
 			// Store other triangles in this polygon flipped
-			for (const uint8 *v = first_vtx + 3; v < end_vtx; ++v)
+			for (const uint8* v = first_vtx + 3; v < end_vtx; ++v)
 			{
 				v0.StoreFloat3(outTriangleVertices++);
 				(context.mTransform * mPoints[*v].mPosition).StoreFloat3(outTriangleVertices++);
@@ -1231,7 +1231,7 @@ int ConvexHullShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxT
 			v2.StoreFloat3(outTriangleVertices++);
 
 			// Store other triangles in this polygon
-			for (const uint8 *v = first_vtx + 3; v < end_vtx; ++v)
+			for (const uint8* v = first_vtx + 3; v < end_vtx; ++v)
 			{
 				v0.StoreFloat3(outTriangleVertices++);
 				(context.mTransform * mPoints[*(v - 1)].mPosition).StoreFloat3(outTriangleVertices++);
@@ -1243,15 +1243,15 @@ int ConvexHullShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxT
 	// Store materials
 	if (outMaterials != nullptr)
 	{
-		const PhysicsMaterial *material = GetMaterial();
-		for (const PhysicsMaterial **m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
+		const PhysicsMaterial* material = GetMaterial();
+		for (const PhysicsMaterial** m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
 			*m = material;
 	}
 
 	return total_num_triangles;
 }
 
-void ConvexHullShape::SaveBinaryState(StreamOut &inStream) const
+void ConvexHullShape::SaveBinaryState(StreamOut& inStream) const
 {
 	ConvexShape::SaveBinaryState(inStream);
 
@@ -1268,7 +1268,7 @@ void ConvexHullShape::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mInnerRadius);
 }
 
-void ConvexHullShape::RestoreBinaryState(StreamIn &inStream)
+void ConvexHullShape::RestoreBinaryState(StreamIn& inStream)
 {
 	ConvexShape::RestoreBinaryState(inStream);
 
@@ -1289,22 +1289,22 @@ Shape::Stats ConvexHullShape::GetStats() const
 {
 	// Count number of triangles
 	uint triangle_count = 0;
-	for (const Face &f : mFaces)
+	for (const Face& f : mFaces)
 		triangle_count += f.mNumVertices - 2;
 
 	return Stats(
 		sizeof(*this)
-			+ mPoints.size() * sizeof(Point)
-			+ mFaces.size() * sizeof(Face)
-			+ mPlanes.size() * sizeof(Plane)
-			+ mVertexIdx.size() * sizeof(uint8),
+		+ mPoints.size() * sizeof(Point)
+		+ mFaces.size() * sizeof(Face)
+		+ mPlanes.size() * sizeof(Plane)
+		+ mVertexIdx.size() * sizeof(uint8),
 		triangle_count);
 }
 
 void ConvexHullShape::sRegister()
 {
-	ShapeFunctions &f = ShapeFunctions::sGet(EShapeSubType::ConvexHull);
-	f.mConstruct = []() -> Shape * { return new ConvexHullShape; };
+	ShapeFunctions& f = ShapeFunctions::sGet(EShapeSubType::ConvexHull);
+	f.mConstruct = []() -> Shape* { return new ConvexHullShape; };
 	f.mColor = Color::sGreen;
 }
 

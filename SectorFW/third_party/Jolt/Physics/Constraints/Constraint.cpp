@@ -15,15 +15,15 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(ConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(ConstraintSettings, SerializableObject)
 
-	JPH_ADD_ATTRIBUTE(ConstraintSettings, mEnabled)
-	JPH_ADD_ATTRIBUTE(ConstraintSettings, mDrawConstraintSize)
-	JPH_ADD_ATTRIBUTE(ConstraintSettings, mConstraintPriority)
-	JPH_ADD_ATTRIBUTE(ConstraintSettings, mNumVelocityStepsOverride)
-	JPH_ADD_ATTRIBUTE(ConstraintSettings, mNumPositionStepsOverride)
-	JPH_ADD_ATTRIBUTE(ConstraintSettings, mUserData)
+		JPH_ADD_ATTRIBUTE(ConstraintSettings, mEnabled)
+		JPH_ADD_ATTRIBUTE(ConstraintSettings, mDrawConstraintSize)
+		JPH_ADD_ATTRIBUTE(ConstraintSettings, mConstraintPriority)
+		JPH_ADD_ATTRIBUTE(ConstraintSettings, mNumVelocityStepsOverride)
+		JPH_ADD_ATTRIBUTE(ConstraintSettings, mNumPositionStepsOverride)
+		JPH_ADD_ATTRIBUTE(ConstraintSettings, mUserData)
 }
 
-void ConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void ConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(GetRTTI()->GetHash());
 	inStream.Write(mEnabled);
@@ -33,7 +33,7 @@ void ConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mNumPositionStepsOverride);
 }
 
-void ConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void ConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	// Type hash read by sRestoreFromBinaryState
 	inStream.Read(mEnabled);
@@ -43,22 +43,22 @@ void ConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mNumPositionStepsOverride);
 }
 
-ConstraintSettings::ConstraintResult ConstraintSettings::sRestoreFromBinaryState(StreamIn &inStream)
+ConstraintSettings::ConstraintResult ConstraintSettings::sRestoreFromBinaryState(StreamIn& inStream)
 {
 	return StreamUtils::RestoreObject<ConstraintSettings>(inStream, &ConstraintSettings::RestoreBinaryState);
 }
 
-void Constraint::SaveState(StateRecorder &inStream) const
+void Constraint::SaveState(StateRecorder& inStream) const
 {
 	inStream.Write(mEnabled);
 }
 
-void Constraint::RestoreState(StateRecorder &inStream)
+void Constraint::RestoreState(StateRecorder& inStream)
 {
 	inStream.Read(mEnabled);
 }
 
-void Constraint::ToConstraintSettings(ConstraintSettings &outSettings) const
+void Constraint::ToConstraintSettings(ConstraintSettings& outSettings) const
 {
 	outSettings.mEnabled = mEnabled;
 	outSettings.mConstraintPriority = mConstraintPriority;

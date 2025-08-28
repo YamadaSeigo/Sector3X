@@ -59,6 +59,12 @@ namespace SectorFW
 			 * @brief ムーブ代入演算子
 			 */
 			ServiceLocator& operator=(ServiceLocator&&) noexcept = default;
+			/**
+			 * @brief デストラクタ
+			 */
+			~ServiceLocator() {
+				created = false;
+			}
 
 			/**
 			 * @brief 初期化処理(必ず呼び出す必要がある、複数回呼び出し禁止)

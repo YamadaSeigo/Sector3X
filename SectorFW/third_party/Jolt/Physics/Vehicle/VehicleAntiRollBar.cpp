@@ -12,18 +12,18 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(VehicleAntiRollBar)
 {
 	JPH_ADD_ATTRIBUTE(VehicleAntiRollBar, mLeftWheel)
-	JPH_ADD_ATTRIBUTE(VehicleAntiRollBar, mRightWheel)
-	JPH_ADD_ATTRIBUTE(VehicleAntiRollBar, mStiffness)
+		JPH_ADD_ATTRIBUTE(VehicleAntiRollBar, mRightWheel)
+		JPH_ADD_ATTRIBUTE(VehicleAntiRollBar, mStiffness)
 }
 
-void VehicleAntiRollBar::SaveBinaryState(StreamOut &inStream) const
+void VehicleAntiRollBar::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mLeftWheel);
 	inStream.Write(mRightWheel);
 	inStream.Write(mStiffness);
 }
 
-void VehicleAntiRollBar::RestoreBinaryState(StreamIn &inStream)
+void VehicleAntiRollBar::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mLeftWheel);
 	inStream.Read(mRightWheel);

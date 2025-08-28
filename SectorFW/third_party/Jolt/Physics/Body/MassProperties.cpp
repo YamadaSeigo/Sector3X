@@ -18,10 +18,10 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(MassProperties)
 {
 	JPH_ADD_ATTRIBUTE(MassProperties, mMass)
-	JPH_ADD_ATTRIBUTE(MassProperties, mInertia)
+		JPH_ADD_ATTRIBUTE(MassProperties, mInertia)
 }
 
-bool MassProperties::DecomposePrincipalMomentsOfInertia(Mat44 &outRotation, Vec3 &outDiagonal) const
+bool MassProperties::DecomposePrincipalMomentsOfInertia(Mat44& outRotation, Vec3& outDiagonal) const
 {
 	// Using eigendecomposition to get the principal components of the inertia tensor
 	// See: https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix
@@ -40,7 +40,7 @@ bool MassProperties::DecomposePrincipalMomentsOfInertia(Mat44 &outRotation, Vec3
 	outRotation = Mat44::sIdentity();
 	for (int i = 0; i < 3; ++i)
 	{
-		outRotation.SetColumn3(i, Vec3(reinterpret_cast<Float3 &>(eigen_vec.GetColumn(indices[i]))));
+		outRotation.SetColumn3(i, Vec3(reinterpret_cast<Float3&>(eigen_vec.GetColumn(indices[i]))));
 		outDiagonal.SetComponent(i, eigen_val[indices[i]]);
 	}
 
@@ -170,13 +170,13 @@ void MassProperties::Translate(Vec3Arg inTranslation)
 	mInertia.SetColumn4(3, Vec4(0, 0, 0, 1));
 }
 
-void MassProperties::SaveBinaryState(StreamOut &inStream) const
+void MassProperties::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mMass);
 	inStream.Write(mInertia);
 }
 
-void MassProperties::RestoreBinaryState(StreamIn &inStream)
+void MassProperties::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mMass);
 	inStream.Read(mInertia);

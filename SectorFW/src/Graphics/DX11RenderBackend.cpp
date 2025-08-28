@@ -1,4 +1,5 @@
 #include "Graphics/DX11/DX11RenderBackend.h"
+#include "Graphics/RenderQueue.hpp"
 #include "Util/logger.h"
 
 namespace SectorFW
@@ -93,9 +94,9 @@ namespace SectorFW
 
 		void DX11Backend::ExecuteDrawImpl(const DrawCommand& cmd, bool usePSORasterizer)
 		{
-			const auto& mesh = meshManager->Get(cmd.mesh);
-			const auto& mat = materialManager->Get(cmd.material);
-			const auto& pso = psoManager->Get(cmd.pso);
+			const auto& mesh = meshManager->GetDirect(cmd.mesh);
+			const auto& mat = materialManager->GetDirect(cmd.material);
+			const auto& pso = psoManager->GetDirect(cmd.pso);
 			const auto& shader = shaderManager->Get(pso.shader);
 
 			if (usePSORasterizer) {
@@ -125,28 +126,57 @@ namespace SectorFW
 
 		void DX11Backend::ExecuteDrawInstancedImpl(const std::vector<DrawCommand>& cmds, bool usePSORasterizer)
 		{
+			struct DrawBatch {
+				uint32_t mesh;
+				uint32_t material;
+				uint32_t pso;
+				uint32_t base;
+				uint32_t instanceCount; // instances[idx]
+			};
+
+			BeginIndexStream();
+
 			size_t i = 0;
 			size_t cmdCount = cmds.size();
+			std::vector<DrawBatch> batches;
 			while (i < cmdCount) {
 				auto currentPSO = cmds[i].pso;
 				auto currentMat = cmds[i].material;
 
-				std::vector<InstanceData> instanceData;
-				MeshHandle currentMesh = cmds[i].mesh;
+				uint32_t currentMesh = cmds[i].mesh;
 				uint32_t instanceCount = 0;
+
+				const uint32_t base = m_idxHead;        // このドローの index 先頭
+
+				// 1) 同PSO/Mat/Mesh を束ねつつ、index を SRV に“直接”書く
+				auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
 
 				// 同じPSO + Material + Meshをまとめる
 				while (i < cmdCount &&
-					cmds[i].pso.index == currentPSO.index &&
-					cmds[i].material.index == currentMat.index &&
-					cmds[i].mesh.index == currentMesh.index &&
+					cmds[i].pso == currentPSO &&
+					cmds[i].material == currentMat &&
+					cmds[i].mesh == currentMesh &&
 					instanceCount < MAX_INSTANCES) {
-					instanceData.push_back(cmds[i].instance);
+					dst[instanceCount++] = cmds[i].instanceIndex.index; // ← 直接書く = instances[idx];
 					++i;
-					++instanceCount;
 				}
+				m_idxHead += instanceCount;
 
-				DrawInstanced(currentMesh, currentMat, currentPSO, instanceData, usePSORasterizer);
+				batches.emplace_back(currentMesh, currentMat, currentPSO, base, instanceCount);
+			}
+
+			EndIndexStream();
+
+			for (const auto& b : batches) {
+				// PerDraw CB に base と count を設定
+				struct { uint32_t base, count, pad0, pad1; } perDraw{ b.base, b.instanceCount, 0, 0 };
+				D3D11_MAPPED_SUBRESOURCE m{};
+				context->Map(m_perDrawCB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
+				memcpy(m.pData, &perDraw, sizeof(perDraw));
+				context->Unmap(m_perDrawCB.Get(), 0);
+				context->VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); // b1
+
+				DrawInstanced(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer);
 			}
 		}
 
@@ -162,12 +192,11 @@ namespace SectorFW
 			modelAssetManager->ProcessDeferredDeletes(currentFrame);
 		}
 
-		void DX11Backend::DrawInstanced(MeshHandle meshHandle, MaterialHandle matHandle, PSOHandle psoHandle,
-			const std::vector<InstanceData>& instances, bool usePSORasterizer)
+		void DX11Backend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer)
 		{
-			const auto& mesh = meshManager->Get(meshHandle);
-			const auto& mat = materialManager->Get(matHandle);
-			const auto& pso = psoManager->Get(psoHandle);
+			const auto& mesh = meshManager->GetDirect(meshIdx);
+			const auto& mat = materialManager->GetDirect(matIdx);
+			const auto& pso = psoManager->GetDirect(psoIdx);
 			const auto& shader = shaderManager->Get(pso.shader);
 
 			if (usePSORasterizer) {
@@ -195,48 +224,109 @@ namespace SectorFW
 			DX11MaterialManager::BindMaterialSamplers(context, mat.samplerCache);
 
 			// インスタンスデータ更新
-			UpdateInstanceBuffer(instances);
+			//UpdateInstanceBuffer(pInstancesData, (size_t)dataSize);
 
-			UINT strides[2] = { mesh.stride, sizeof(InstanceData) };
-			UINT offsets[2] = { 0, 0 };
-			ID3D11Buffer* buffers[2] = { mesh.vb.Get(), instanceBuffer.Get() };
+			UINT strides[1] = { mesh.stride};
+			UINT offsets[1] = { 0 };
+			ID3D11Buffer* buffers[1] = { mesh.vb.Get() };
 			context->IASetIndexBuffer(mesh.ib.Get(), DXGI_FORMAT_R32_UINT, 0);
-			context->IASetVertexBuffers(0, 2, buffers, strides, offsets);
+			context->IASetVertexBuffers(0, 1, buffers, strides, offsets);
 
-			context->DrawIndexedInstanced(mesh.indexCount, (UINT)instances.size(), 0, 0, 0);
+			context->DrawIndexedInstanced(mesh.indexCount, (UINT)count, 0, 0, 0);
 		}
 
 		HRESULT DX11Backend::CreateInstanceBuffer()
 		{
-			assert(device && "Device is not Valid!");
+			HRESULT hr;
+			auto createStructuredSRV = [&](UINT elemStride, UINT elemCount,
+				ID3D11Buffer** pBuf, ID3D11ShaderResourceView** pSRV)
+				{
+					HRESULT res;
+					D3D11_BUFFER_DESC bd{};
+					bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+					bd.Usage = D3D11_USAGE_DYNAMIC;
+					bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+					bd.ByteWidth = elemStride * elemCount;
+					bd.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+					bd.StructureByteStride = elemStride;
+					res = device->CreateBuffer(&bd, nullptr, pBuf);
+					if (FAILED(res)) {
+						LOG_ERROR("Failed to create structured buffer for instance data: %d", res);
+						return res;
+					}
 
-			D3D11_BUFFER_DESC desc = {};
-			desc.Usage = D3D11_USAGE_DYNAMIC;
-			desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-			desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-			desc.ByteWidth = sizeof(InstanceData) * MAX_INSTANCES;
-			return device->CreateBuffer(&desc, nullptr, &instanceBuffer);
+					D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
+					sd.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+					sd.Format = DXGI_FORMAT_UNKNOWN;  // structured
+					sd.Buffer.ElementOffset = 0;
+					sd.Buffer.ElementWidth = elemCount;
+					res = device->CreateShaderResourceView(*pBuf, &sd, pSRV);
+					if (FAILED(res)) {
+						LOG_ERROR("Failed to create SRV for instance data buffer: %d", res);
+						(*pBuf)->Release();
+						*pBuf = nullptr;
+						return res;
+					}
+
+					return S_OK;
+				};
+
+			// 例：最大 65k インスタンス／フレーム、最大 1M インデックス／パス
+			hr = createStructuredSRV(sizeof(InstanceData), MAX_INSTANCES_PER_FRAME, &m_instanceSB, &m_instanceSRV);
+			if (FAILED(hr)) {
+				LOG_ERROR("Failed to create structured SRV for instance data: %d", hr);
+				return hr;
+			}
+
+			hr = createStructuredSRV(sizeof(uint32_t), MAX_INDICES_PER_PASS, &m_instIndexSB, &m_instIndexSRV);
+			if (FAILED(hr)) {
+				LOG_ERROR("Failed to create structured SRV for instance index data: %d", hr);
+				return hr;
+			}
+
+			// PerDraw CB（16B アライン）
+			D3D11_BUFFER_DESC cbd{};
+			cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			cbd.Usage = D3D11_USAGE_DYNAMIC;
+			cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			cbd.ByteWidth = 16;
+			hr = device->CreateBuffer(&cbd, nullptr, &m_perDrawCB);
+			if (FAILED(hr)) {
+				LOG_ERROR("Failed to create per-draw constant buffer: %d", hr);
+				return hr;
+			}
+
+			return S_OK;
 		}
 
 		HRESULT DX11Backend::CreateRasterizerStates()
 		{
 			//--- カリング設定
 			D3D11_RASTERIZER_DESC rasterizer = {};
-			D3D11_CULL_MODE cull[] = {
-				D3D11_CULL_NONE,
-				D3D11_CULL_FRONT,
-				D3D11_CULL_BACK
+
+			D3D11_FILL_MODE fill[] = {
+				D3D11_FILL_SOLID,
+				D3D11_FILL_WIREFRAME,
 			};
-			rasterizer.FillMode = D3D11_FILL_SOLID;
+			D3D11_CULL_MODE cull[] = {
+				D3D11_CULL_BACK,
+				D3D11_CULL_FRONT,
+				D3D11_CULL_NONE,
+			};
 			rasterizer.FrontCounterClockwise = true;
 
 			HRESULT hr;
-			for (int i = 0; i < 3; ++i)
-			{
-				rasterizer.CullMode = cull[i];
-				hr = device->CreateRasterizerState(&rasterizer, rasterizerStates[i].GetAddressOf());
-				if (FAILED(hr)) { return hr; }
+			for (int i = 0; i < 2; ++i) {
+				for (int j = 0; j < 3; ++j)
+				{
+					rasterizer.FillMode = fill[i];
+					rasterizer.CullMode = cull[j];
+					hr = device->CreateRasterizerState(&rasterizer, rasterizerStates[i * 3 + j].GetAddressOf());
+					if (FAILED(hr)) { return hr; }
+				}
 			}
+
+			SetRasterizerStateImpl(RasterizerStateID::SolidCullBack); // デフォルト
 
 			return S_OK;
 		}
@@ -328,12 +418,12 @@ namespace SectorFW
 			return S_OK;
 		}
 
-		void DX11Backend::UpdateInstanceBuffer(const std::vector<InstanceData>& instances)
+		/*void DX11Backend::UpdateInstanceBuffer(const void* pInstancesData, size_t dataSize)
 		{
 			D3D11_MAPPED_SUBRESOURCE mapped;
 			context->Map(instanceBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
-			memcpy(mapped.pData, instances.data(), instances.size() * sizeof(InstanceData));
+			memcpy(mapped.pData, pInstancesData, dataSize * sizeof(InstanceData));
 			context->Unmap(instanceBuffer.Get(), 0);
-		}
+		}*/
 	}
 }

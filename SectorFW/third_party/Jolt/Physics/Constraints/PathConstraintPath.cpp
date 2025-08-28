@@ -7,7 +7,7 @@
 #include <Jolt/Physics/Constraints/PathConstraintPath.h>
 #include <Jolt/Core/StreamUtils.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -19,7 +19,7 @@ JPH_IMPLEMENT_SERIALIZABLE_ABSTRACT(PathConstraintPath)
 
 #ifdef JPH_DEBUG_RENDERER
 // Helper function to transform the results of GetPointOnPath to world space
-static inline void sTransformPathPoint(RMat44Arg inTransform, Vec3Arg inPosition, RVec3 &outPosition, Vec3 &ioNormal, Vec3 &ioBinormal)
+static inline void sTransformPathPoint(RMat44Arg inTransform, Vec3Arg inPosition, RVec3& outPosition, Vec3& ioNormal, Vec3& ioBinormal)
 {
 	outPosition = inTransform * inPosition;
 	ioNormal = inTransform.Multiply3x3(ioNormal);
@@ -27,14 +27,14 @@ static inline void sTransformPathPoint(RMat44Arg inTransform, Vec3Arg inPosition
 }
 
 // Helper function to draw a path segment
-static inline void sDrawPathSegment(DebugRenderer *inRenderer, RVec3Arg inPrevPosition, RVec3Arg inPosition, Vec3Arg inNormal, Vec3Arg inBinormal)
+static inline void sDrawPathSegment(DebugRenderer* inRenderer, RVec3Arg inPrevPosition, RVec3Arg inPosition, Vec3Arg inNormal, Vec3Arg inBinormal)
 {
 	inRenderer->DrawLine(inPrevPosition, inPosition, Color::sWhite);
 	inRenderer->DrawArrow(inPosition, inPosition + 0.1f * inNormal, Color::sRed, 0.02f);
 	inRenderer->DrawArrow(inPosition, inPosition + 0.1f * inBinormal, Color::sGreen, 0.02f);
 }
 
-void PathConstraintPath::DrawPath(DebugRenderer *inRenderer, RMat44Arg inBaseTransform) const
+void PathConstraintPath::DrawPath(DebugRenderer* inRenderer, RMat44Arg inBaseTransform) const
 {
 	// Calculate first point
 	Vec3 lfirst_pos, first_tangent, first_normal, first_binormal;
@@ -65,19 +65,19 @@ void PathConstraintPath::DrawPath(DebugRenderer *inRenderer, RMat44Arg inBaseTra
 }
 #endif // JPH_DEBUG_RENDERER
 
-void PathConstraintPath::SaveBinaryState(StreamOut &inStream) const
+void PathConstraintPath::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(GetRTTI()->GetHash());
 	inStream.Write(mIsLooping);
 }
 
-void PathConstraintPath::RestoreBinaryState(StreamIn &inStream)
+void PathConstraintPath::RestoreBinaryState(StreamIn& inStream)
 {
 	// Type hash read by sRestoreFromBinaryState
 	inStream.Read(mIsLooping);
 }
 
-PathConstraintPath::PathResult PathConstraintPath::sRestoreFromBinaryState(StreamIn &inStream)
+PathConstraintPath::PathResult PathConstraintPath::sRestoreFromBinaryState(StreamIn& inStream)
 {
 	return StreamUtils::RestoreObject<PathConstraintPath>(inStream, &PathConstraintPath::RestoreBinaryState);
 }

@@ -13,7 +13,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-CastConvexVsTriangles::CastConvexVsTriangles(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, CastShapeCollector &ioCollector) :
+CastConvexVsTriangles::CastConvexVsTriangles(const ShapeCast& inShapeCast, const ShapeCastSettings& inShapeCastSettings, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, CastShapeCollector& ioCollector) :
 	mShapeCast(inShapeCast),
 	mShapeCastSettings(inShapeCastSettings),
 	mCenterOfMassTransform2(inCenterOfMassTransform2),
@@ -24,10 +24,10 @@ CastConvexVsTriangles::CastConvexVsTriangles(const ShapeCast &inShapeCast, const
 	JPH_ASSERT(inShapeCast.mShape->GetType() == EShapeType::Convex);
 
 	// Determine if shape is inside out or not
-	mScaleSign = ScaleHelpers::IsInsideOut(inScale)? -1.0f : 1.0f;
+	mScaleSign = ScaleHelpers::IsInsideOut(inScale) ? -1.0f : 1.0f;
 }
 
-void CastConvexVsTriangles::Cast(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8 inActiveEdges, const SubShapeID &inSubShapeID2)
+void CastConvexVsTriangles::Cast(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8 inActiveEdges, const SubShapeID& inSubShapeID2)
 {
 	// Scale triangle
 	Vec3 v0 = mScale * inV0;
@@ -43,16 +43,16 @@ void CastConvexVsTriangles::Cast(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8
 		return;
 
 	// Create triangle support function
-	TriangleConvexSupport triangle { v0, v1, v2 };
+	TriangleConvexSupport triangle{ v0, v1, v2 };
 
 	// Check if we already created the cast shape support function
 	if (mSupport == nullptr)
 	{
 		// Determine if we want to use the actual shape or a shrunken shape with convex radius
-		ConvexShape::ESupportMode support_mode = mShapeCastSettings.mUseShrunkenShapeAndConvexRadius? ConvexShape::ESupportMode::ExcludeConvexRadius : ConvexShape::ESupportMode::Default;
+		ConvexShape::ESupportMode support_mode = mShapeCastSettings.mUseShrunkenShapeAndConvexRadius ? ConvexShape::ESupportMode::ExcludeConvexRadius : ConvexShape::ESupportMode::Default;
 
 		// Create support function
-		mSupport = static_cast<const ConvexShape *>(mShapeCast.mShape)->GetSupportFunction(support_mode, mSupportBuffer, mShapeCast.mScale);
+		mSupport = static_cast<const ConvexShape*>(mShapeCast.mShape)->GetSupportFunction(support_mode, mSupportBuffer, mShapeCast.mScale);
 	}
 
 	EPAPenetrationDepth epa;
@@ -68,7 +68,7 @@ void CastConvexVsTriangles::Cast(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8
 
 			// Update the contact normal to account for active edges
 			// Note that we flip the triangle normal as the penetration axis is pointing towards the triangle instead of away
-			contact_normal = ActiveEdges::FixNormal(v0, v1, v2, back_facing? triangle_normal : -triangle_normal, inActiveEdges, contact_point_b, contact_normal, active_edge_movement_direction);
+			contact_normal = ActiveEdges::FixNormal(v0, v1, v2, back_facing ? triangle_normal : -triangle_normal, inActiveEdges, contact_point_b, contact_normal, active_edge_movement_direction);
 		}
 
 		// Convert to world space
@@ -89,18 +89,18 @@ void CastConvexVsTriangles::Cast(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8
 			// Get supporting face of shape 1
 			Mat44 transform_1_to_2 = mShapeCast.mCenterOfMassStart;
 			transform_1_to_2.SetTranslation(transform_1_to_2.GetTranslation() + fraction * mShapeCast.mDirection);
-			static_cast<const ConvexShape *>(mShapeCast.mShape)->GetSupportingFace(SubShapeID(), transform_1_to_2.Multiply3x3Transposed(-contact_normal), mShapeCast.mScale, mCenterOfMassTransform2 * transform_1_to_2, result.mShape1Face);
+			static_cast<const ConvexShape*>(mShapeCast.mShape)->GetSupportingFace(SubShapeID(), transform_1_to_2.Multiply3x3Transposed(-contact_normal), mShapeCast.mScale, mCenterOfMassTransform2 * transform_1_to_2, result.mShape1Face);
 
 			// Get face of the triangle
 			triangle.GetSupportingFace(contact_normal, result.mShape2Face);
 
 			// Convert to world space
-			for (Vec3 &p : result.mShape2Face)
+			for (Vec3& p : result.mShape2Face)
 				p = mCenterOfMassTransform2 * p;
 		}
 
 		JPH_IF_TRACK_NARROWPHASE_STATS(TrackNarrowPhaseCollector track;)
-		mCollector.AddHit(result);
+			mCollector.AddHit(result);
 	}
 }
 

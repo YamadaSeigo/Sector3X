@@ -9,7 +9,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-bool OrientedBox::Overlaps(const AABox &inBox, float inEpsilon) const
+bool OrientedBox::Overlaps(const AABox& inBox, float inEpsilon) const
 {
 	// Taken from: Real Time Collision Detection - Christer Ericson
 	// Chapter 4.4.1, page 103-105.
@@ -26,7 +26,7 @@ bool OrientedBox::Overlaps(const AABox &inBox, float inEpsilon) const
 	// counteract arithmetic errors when two edges are parallel and
 	// their cross product is (near) null (see text for details)
 	Vec3 epsilon = Vec3::sReplicate(inEpsilon);
-	Vec3 abs_r[3] { rot.GetAxisX().Abs() + epsilon, rot.GetAxisY().Abs() + epsilon, rot.GetAxisZ().Abs() + epsilon };
+	Vec3 abs_r[3]{ rot.GetAxisX().Abs() + epsilon, rot.GetAxisY().Abs() + epsilon, rot.GetAxisZ().Abs() + epsilon };
 
 	// Test axes L = A0, L = A1, L = A2
 	float ra, rb;
@@ -94,7 +94,7 @@ bool OrientedBox::Overlaps(const AABox &inBox, float inEpsilon) const
 	return true;
 }
 
-bool OrientedBox::Overlaps(const OrientedBox &inBox, float inEpsilon) const
+bool OrientedBox::Overlaps(const OrientedBox& inBox, float inEpsilon) const
 {
 	// Taken from: Real Time Collision Detection - Christer Ericson
 	// Chapter 4.4.1, page 103-105.
@@ -107,7 +107,7 @@ bool OrientedBox::Overlaps(const OrientedBox &inBox, float inEpsilon) const
 	// counteract arithmetic errors when two edges are parallel and
 	// their cross product is (near) null (see text for details)
 	Vec3 epsilon = Vec3::sReplicate(inEpsilon);
-	Vec3 abs_r[3] { rot.GetAxisX().Abs() + epsilon, rot.GetAxisY().Abs() + epsilon, rot.GetAxisZ().Abs() + epsilon };
+	Vec3 abs_r[3]{ rot.GetAxisX().Abs() + epsilon, rot.GetAxisY().Abs() + epsilon, rot.GetAxisZ().Abs() + epsilon };
 
 	// Test axes L = A0, L = A1, L = A2
 	float ra, rb;

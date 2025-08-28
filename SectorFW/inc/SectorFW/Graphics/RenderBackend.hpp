@@ -48,6 +48,10 @@ namespace SectorFW
 				static_cast<Derived*>(this)->BindGlobalCBVsImpl(cbvs);
 			}
 
+			void BeginFrameUpload(const InstanceData* framePool, uint32_t instCount) {
+				static_cast<Derived*>(this)->BeginFrameUploadImpl(framePool, instCount);
+			}
+
 			void ExecuteDraw(const DrawCommand& cmd, bool usePSORastarizer) {
 				static_cast<Derived*>(this)->ExecuteDrawImpl(cmd, usePSORastarizer);
 			}

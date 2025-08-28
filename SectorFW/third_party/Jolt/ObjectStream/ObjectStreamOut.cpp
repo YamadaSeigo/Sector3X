@@ -13,15 +13,15 @@
 
 JPH_NAMESPACE_BEGIN
 
-ObjectStreamOut::ObjectStreamOut(ostream &inStream) :
+ObjectStreamOut::ObjectStreamOut(ostream& inStream) :
 	mStream(inStream)
 {
-// Add all primitives to the class set
+	// Add all primitives to the class set
 #define JPH_DECLARE_PRIMITIVE(name)	mClassSet.insert(JPH_RTTI(name));
 #include <Jolt/ObjectStream/ObjectStreamTypes.h>
 }
 
-ObjectStreamOut *ObjectStreamOut::Open(EStreamType inType, ostream &inStream)
+ObjectStreamOut* ObjectStreamOut::Open(EStreamType inType, ostream& inStream)
 {
 	switch (inType)
 	{
@@ -32,7 +32,7 @@ ObjectStreamOut *ObjectStreamOut::Open(EStreamType inType, ostream &inStream)
 	return nullptr;
 }
 
-bool ObjectStreamOut::Write(const void *inObject, const RTTI *inRTTI)
+bool ObjectStreamOut::Write(const void* inObject, const RTTI* inRTTI)
 {
 	// Assign a new identifier to the object and write it
 	mIdentifierMap.try_emplace(inObject, mNextIdentifier, inRTTI);
@@ -48,7 +48,7 @@ bool ObjectStreamOut::Write(const void *inObject, const RTTI *inRTTI)
 	return !mStream.fail();
 }
 
-void ObjectStreamOut::WriteObject(const void *inObject)
+void ObjectStreamOut::WriteObject(const void* inObject)
 {
 	// Find object identifier
 	IdentifierMap::iterator i = mIdentifierMap.find(inObject);
@@ -73,7 +73,7 @@ void ObjectStreamOut::WriteObject(const void *inObject)
 	WriteClassData(i->second.mRTTI, inObject);
 }
 
-void ObjectStreamOut::QueueRTTI(const RTTI *inRTTI)
+void ObjectStreamOut::QueueRTTI(const RTTI* inRTTI)
 {
 	ClassSet::const_iterator i = mClassSet.find(inRTTI);
 	if (i == mClassSet.end())
@@ -83,7 +83,7 @@ void ObjectStreamOut::QueueRTTI(const RTTI *inRTTI)
 	}
 }
 
-void ObjectStreamOut::WriteRTTI(const RTTI *inRTTI)
+void ObjectStreamOut::WriteRTTI(const RTTI* inRTTI)
 {
 	HintNextItem();
 	HintNextItem();
@@ -98,10 +98,10 @@ void ObjectStreamOut::WriteRTTI(const RTTI *inRTTI)
 	for (int attr_index = 0; attr_index < inRTTI->GetAttributeCount(); ++attr_index)
 	{
 		// Get attribute
-		const SerializableAttribute &attr = inRTTI->GetAttribute(attr_index);
+		const SerializableAttribute& attr = inRTTI->GetAttribute(attr_index);
 
 		// Write definition of attribute class if undefined
-		const RTTI *rtti = attr.GetMemberPrimitiveType();
+		const RTTI* rtti = attr.GetMemberPrimitiveType();
 		if (rtti != nullptr)
 			QueueRTTI(rtti);
 
@@ -114,7 +114,7 @@ void ObjectStreamOut::WriteRTTI(const RTTI *inRTTI)
 	HintIndentDown();
 }
 
-void ObjectStreamOut::WriteClassData(const RTTI *inRTTI, const void *inInstance)
+void ObjectStreamOut::WriteClassData(const RTTI* inRTTI, const void* inInstance)
 {
 	JPH_ASSERT(inInstance);
 
@@ -123,13 +123,13 @@ void ObjectStreamOut::WriteClassData(const RTTI *inRTTI, const void *inInstance)
 	for (int attr_index = 0; attr_index < inRTTI->GetAttributeCount(); ++attr_index)
 	{
 		// Get attribute
-		const SerializableAttribute &attr = inRTTI->GetAttribute(attr_index);
+		const SerializableAttribute& attr = inRTTI->GetAttribute(attr_index);
 		attr.WriteData(*this, inInstance);
 	}
 	HintIndentDown();
 }
 
-void ObjectStreamOut::WritePointerData(const RTTI *inRTTI, const void *inPointer)
+void ObjectStreamOut::WritePointerData(const RTTI* inRTTI, const void* inPointer)
 {
 	Identifier identifier;
 

@@ -18,32 +18,32 @@ void CollisionDispatch::sInit()
 		for (uint j = 0; j < NumSubShapeTypes; ++j)
 		{
 			if (sCollideShape[i][j] == nullptr)
-				sCollideShape[i][j] = [](const Shape *, const Shape *, Vec3Arg, Vec3Arg, Mat44Arg, Mat44Arg, const SubShapeIDCreator &, const SubShapeIDCreator &, const CollideShapeSettings &, CollideShapeCollector &, const ShapeFilter &)
+				sCollideShape[i][j] = [](const Shape*, const Shape*, Vec3Arg, Vec3Arg, Mat44Arg, Mat44Arg, const SubShapeIDCreator&, const SubShapeIDCreator&, const CollideShapeSettings&, CollideShapeCollector&, const ShapeFilter&)
 				{
 					JPH_ASSERT(false, "Unsupported shape pair");
 				};
 
 			if (sCastShape[i][j] == nullptr)
-				sCastShape[i][j] = [](const ShapeCast &, const ShapeCastSettings &, const Shape *, Vec3Arg, const ShapeFilter &, Mat44Arg, const SubShapeIDCreator &, const SubShapeIDCreator &, CastShapeCollector &)
+				sCastShape[i][j] = [](const ShapeCast&, const ShapeCastSettings&, const Shape*, Vec3Arg, const ShapeFilter&, Mat44Arg, const SubShapeIDCreator&, const SubShapeIDCreator&, CastShapeCollector&)
 				{
 					JPH_ASSERT(false, "Unsupported shape pair");
 				};
 		}
 }
 
-void CollisionDispatch::sReversedCollideShape(const Shape *inShape1, const Shape *inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, const CollideShapeSettings &inCollideShapeSettings, CollideShapeCollector &ioCollector, const ShapeFilter &inShapeFilter)
+void CollisionDispatch::sReversedCollideShape(const Shape* inShape1, const Shape* inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, const CollideShapeSettings& inCollideShapeSettings, CollideShapeCollector& ioCollector, const ShapeFilter& inShapeFilter)
 {
 	// A collision collector that flips the collision results
 	class ReversedCollector : public CollideShapeCollector
 	{
 	public:
-		explicit				ReversedCollector(CollideShapeCollector &ioCollector) :
+		explicit				ReversedCollector(CollideShapeCollector& ioCollector) :
 			CollideShapeCollector(ioCollector),
 			mCollector(ioCollector)
 		{
 		}
 
-		virtual void			AddHit(const CollideShapeResult &inResult) override
+		virtual void			AddHit(const CollideShapeResult& inResult) override
 		{
 			// Add the reversed hit
 			mCollector.AddHit(inResult.Reversed());
@@ -53,7 +53,7 @@ void CollisionDispatch::sReversedCollideShape(const Shape *inShape1, const Shape
 		}
 
 	private:
-		CollideShapeCollector &	mCollector;
+		CollideShapeCollector& mCollector;
 	};
 
 	ReversedShapeFilter shape_filter(inShapeFilter);
@@ -61,20 +61,20 @@ void CollisionDispatch::sReversedCollideShape(const Shape *inShape1, const Shape
 	sCollideShapeVsShape(inShape2, inShape1, inScale2, inScale1, inCenterOfMassTransform2, inCenterOfMassTransform1, inSubShapeIDCreator2, inSubShapeIDCreator1, inCollideShapeSettings, collector, shape_filter);
 }
 
-void CollisionDispatch::sReversedCastShape(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, const Shape *inShape, Vec3Arg inScale, const ShapeFilter &inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, CastShapeCollector &ioCollector)
+void CollisionDispatch::sReversedCastShape(const ShapeCast& inShapeCast, const ShapeCastSettings& inShapeCastSettings, const Shape* inShape, Vec3Arg inScale, const ShapeFilter& inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, CastShapeCollector& ioCollector)
 {
 	// A collision collector that flips the collision results
 	class ReversedCollector : public CastShapeCollector
 	{
 	public:
-		explicit				ReversedCollector(CastShapeCollector &ioCollector, Vec3Arg inWorldDirection) :
+		explicit				ReversedCollector(CastShapeCollector& ioCollector, Vec3Arg inWorldDirection) :
 			CastShapeCollector(ioCollector),
 			mCollector(ioCollector),
 			mWorldDirection(inWorldDirection)
 		{
 		}
 
-		virtual void			AddHit(const ShapeCastResult &inResult) override
+		virtual void			AddHit(const ShapeCastResult& inResult) override
 		{
 			// Add the reversed hit
 			mCollector.AddHit(inResult.Reversed(mWorldDirection));
@@ -84,7 +84,7 @@ void CollisionDispatch::sReversedCastShape(const ShapeCast &inShapeCast, const S
 		}
 
 	private:
-		CastShapeCollector &	mCollector;
+		CastShapeCollector& mCollector;
 		Vec3					mWorldDirection;
 	};
 

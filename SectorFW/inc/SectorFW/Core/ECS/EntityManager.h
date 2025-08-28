@@ -18,6 +18,10 @@
 
 #include "EntityIDAllocator.h"
 
+#include <type_traits>
+#include <new>
+#include <shared_mutex>
+
 namespace SectorFW
 {
 	namespace ECS
@@ -71,6 +75,8 @@ namespace SectorFW
 				size_t index = chunk->AddEntity(id);
 
 				(..., StoreComponent(chunk, id, index, components));
+
+				locations[id] = EntityLocation{ chunk, index };
 				return id;
 			}
 			/**
@@ -90,7 +96,7 @@ namespace SectorFW
 					const ComponentMask& mask = GetMask(id);
 					return mask.test(typeID);
 				}
-				if (ComponentTypeRegistry::IsSparse<T>()) {
+				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
 					return GetSparseStore<T>().Has(id);
 				}
 
@@ -104,15 +110,22 @@ namespace SectorFW
 			 */
 			template<typename T>
 			T* GetComponent(EntityID id) noexcept {
-				if (ComponentTypeRegistry::IsSparse<T>()) {
+				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
 					return GetSparseStore<T>().Get(id);
 				}
 
 				ComponentTypeID typeID = ComponentTypeRegistry::GetID<T>();
 
-				if (!locations.contains(id)) return nullptr;
-				auto& loc = locations.at(id);
-				return &loc.chunk->GetColumn<T>()[loc.index];
+				// locations は共有ロックで読み取り可能
+				{
+					std::shared_lock<std::shared_mutex> lock(locationsMutex);
+					if (!locations.contains(id)) return nullptr;
+					const auto it = locations.find(id);
+					const auto loc = it->second; // スナップショット
+					auto col = loc.chunk->GetColumn<T>();
+					if (!col) return nullptr;
+					return &col.value()[loc.index];
+				}
 			}
 			/**
 			 * @brief エンティティにコンポーネントを追加する関数
@@ -122,7 +135,7 @@ namespace SectorFW
 			 */
 			template<typename T>
 			void AddComponent(EntityID id, const T& value) {
-				if (ComponentTypeRegistry::IsSparse<T>()) {
+				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
 					GetSparseStore<T>().Add(id, value);
 					return;
 				}
@@ -134,7 +147,12 @@ namespace SectorFW
 				Archetype* newArch = archetypeManager.GetOrCreate(currentMask);
 				ArchetypeChunk* newChunk = newArch->GetOrCreateChunk();
 
-				EntityLocation oldLoc = locations.at(id);
+				// 旧ロケーションは共有ロックで取得（重い移動処理はロック外で実行）
+				EntityLocation oldLoc;
+				{
+					std::shared_lock<std::shared_mutex> rlock(locationsMutex);
+					oldLoc = locations.at(id);
+				}
 				ArchetypeChunk* oldChunk = oldLoc.chunk;
 				size_t oldIndex = oldLoc.index;
 
@@ -149,9 +167,18 @@ namespace SectorFW
 					{
 						auto src = ArchetypeChunk::Accessor::GetBuffer(oldChunk) + i.offset;
 						auto dst = ArchetypeChunk::Accessor::GetBuffer(newChunk) + newChunkLayout.at(comp).get(index).offset;
-						std::memcpy(static_cast<uint8_t*>(dst) + newIndex * i.stride,
-							static_cast<const uint8_t*>(src) + oldIndex * i.stride,
-							i.stride);
+						auto* dstElem = static_cast<uint8_t*>(dst) + newIndex * i.stride;
+						auto* srcElem = static_cast<const uint8_t*>(src) + oldIndex * i.stride;
+						// i.stride 単位=1要素のサイズという前提
+							// メタに「列の element_size / trivial フラグ」が持てるならそれを使う。
+						if (/* element is trivially copyable */ true) {
+							std::memcpy(dstElem, srcElem, i.stride);
+						}
+						else {
+							// 要素型が分からない場合は、列側に「ムーブ/コピー関数ポインタ」を持たせる設計に寄せると安全
+								// new (dstElem) ElemType(*reinterpret_cast<const ElemType*>(srcElem));
+								// reinterpret_cast<const ElemType*>(srcElem)->~ElemType(); // swap-pop側が破棄するなら不要
+						}
 
 						index++;
 					}
@@ -159,8 +186,18 @@ namespace SectorFW
 
 				newChunk->GetColumn<T>()[newIndex] = value;
 
-				oldChunk->RemoveEntitySwapPop(oldIndex);
-				locations[id] = { newChunk, newIndex };
+				// スワップ相手のロケーション更新と自分の更新は「排他ロック」下で一気に
+				{
+					const size_t lastIndexBefore = oldChunk->GetEntityCount() - 1;
+					std::unique_lock<std::shared_mutex> wlock(locationsMutex);
+					if (oldIndex < lastIndexBefore) {
+						EntityID swappedId = ArchetypeChunk::Accessor::GetEntities(oldChunk)[lastIndexBefore];
+						auto it = locations.find(swappedId);
+						if (it != locations.end()) it->second = { oldChunk, oldIndex };
+					}
+					oldChunk->RemoveEntitySwapPop(oldIndex);
+					locations[id] = { newChunk, newIndex };
+				}
 			}
 
 			/**
@@ -182,7 +219,12 @@ namespace SectorFW
 					return;
 				}
 
-				EntityLocation oldLoc = locations.at(id);
+				// 旧ロケーションは共有ロックで取得
+				EntityLocation oldLoc;
+				{
+					std::shared_lock<std::shared_mutex> rlock(locationsMutex);
+					oldLoc = locations.at(id);
+				}
 				ArchetypeChunk* oldChunk = oldLoc.chunk;
 				size_t oldIndex = oldLoc.index;
 
@@ -209,8 +251,17 @@ namespace SectorFW
 					}
 				}
 
-				oldChunk->RemoveEntitySwapPop(oldIndex);
-				locations[id] = { newChunk, newIndex };
+				{
+					const size_t lastIndexBefore = oldChunk->GetEntityCount() - 1;
+					std::unique_lock<std::shared_mutex> wlock(locationsMutex);
+					if (oldIndex < lastIndexBefore) {
+						EntityID swappedId = ArchetypeChunk::Accessor::GetEntities(oldChunk)[lastIndexBefore];
+						auto it = locations.find(swappedId);
+						if (it != locations.end()) it->second = { oldChunk, oldIndex };
+					}
+					oldChunk->RemoveEntitySwapPop(oldIndex);
+					locations[id] = { newChunk, newIndex };
+				}
 			}
 			/**
 			 * @brief まばらなコンポーネントを取得する関数
@@ -238,6 +289,15 @@ namespace SectorFW
 			 * @return const EntityIDAllocator& エンティティIDアロケータへの参照
 			 */
 			static const EntityIDAllocator& GetEntityAllocator() noexcept { return entityAllocator; }
+			/**
+			 * @brief エンティティの現在位置（Chunk と行）を O(1) で取得（共有ロック）
+			 */
+			std::optional<EntityLocation> TryGetLocation(EntityID id) const noexcept {
+				std::shared_lock<std::shared_mutex> rlock(locationsMutex);
+				auto it = locations.find(id);
+				if (it == locations.end()) return std::nullopt;
+				return it->second;
+			}
 		private:
 			/**
 			 * @brief メモリ上のチャンクに値を設定する関数(SoAコンポーネントではない場合)
@@ -251,7 +311,18 @@ namespace SectorFW
 				auto column = chunk->GetColumn<T>();
 				if (!column) return;
 
-				std::memcpy(&column.value()[index], &value, sizeof(T));
+				if constexpr (std::is_trivially_copyable_v<T>) {
+					std::memcpy(&column.value()[index], &value, sizeof(T));
+				}
+				else if constexpr (std::is_move_constructible_v<T>) {
+					// 既存オブジェクトがある想定なら明示破棄 → プレースメントnew
+					column.value()[index].~T();
+					new (&column.value()[index]) T(value);
+				}
+				else {
+					static_assert(std::is_trivially_copyable_v<T>,
+						"Non-trivial T must be move/copy constructible for in-place placement.");
+				}
 			}
 			/**
 			 * @brief メモリ上のチャンクに値を設定する関数(SoAコンポーネントの場合)
@@ -349,7 +420,7 @@ namespace SectorFW
 			 */
 			template<typename T>
 			void StoreComponent(ArchetypeChunk* chunk, EntityID id, size_t index, const T& value) {
-				if (ComponentTypeRegistry::IsSparse<T>()) {
+				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
 					GetSparseStore<T>().Add(id, value);
 				}
 				else {
@@ -369,6 +440,10 @@ namespace SectorFW
 			 * @detail EntityIDをキーに、EntityLocationを値とするマップ
 			 */
 			std::unordered_map<EntityID, EntityLocation> locations;
+			/**
+			 * @brief locations の並行アクセスを守るロック（読取多数・書込少数を想定）
+			 */
+			mutable std::shared_mutex locationsMutex;
 			/**
 			 * @brief まばらなコンポーネントストアを取得するためのインターフェース
 			 */

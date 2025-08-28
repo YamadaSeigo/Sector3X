@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Math/Matrix.hpp"
+#include "../Math/Matrix.hpp"
 
 namespace SectorFW
 {
 	namespace Graphics
 	{
-		static inline constexpr uint16_t RENDER_QUEUE_BUFFER_COUNT = 2;
+		static inline constexpr uint16_t RENDER_QUEUE_BUFFER_COUNT = 3;
 
 		struct MeshHandle { uint32_t index; uint32_t generation; };
 		struct MaterialHandle { uint32_t index; uint32_t generation; };
@@ -17,10 +17,12 @@ namespace SectorFW
 		struct SamplerHandle { uint32_t index; uint32_t generation; };
 		struct ModelAssetHandle { uint32_t index; uint32_t generation; };
 
-		struct InstanceData
+		struct alignas(16) InstanceData
 		{
 			Math::Matrix4x4f worldMtx;
 		};
+
+		struct InstanceIndex { uint32_t index = 0; };
 
 		inline uint64_t MakeSortKey(uint32_t psoIndex, uint32_t materialIndex, uint32_t meshIndex) {
 			return (static_cast<uint64_t>(psoIndex) << 40) |
@@ -28,22 +30,40 @@ namespace SectorFW
 				static_cast<uint64_t>(meshIndex);
 		}
 
+		//DrawCommand は index のみでOK（軽量・32B化しやすい）。
+		//条件：フレーム短命 + Pin / Unpin + in - flight 制御 + 投入時の generation 検証。
 		struct DrawCommand {
-			uint64_t sortKey = {};
-			MeshHandle mesh = {};
-			MaterialHandle material = {};
-			PSOHandle pso = {};
-			InstanceData instance = {};
+			uint64_t sortKey;          // 0..63: ソートキー（PSO/材質/メッシュ/深度バケツ等をパック）
 
-			DrawCommand() = default;
-			explicit DrawCommand(
-				MeshHandle meshHandle,
-				MaterialHandle materialHandle,
-				PSOHandle psoHandle,
-				InstanceData instanceData) noexcept :
-				mesh(meshHandle), material(materialHandle), pso(psoHandle), instance(instanceData) {
-				sortKey = MakeSortKey(pso.index, material.index, mesh.index);
+			uint32_t mesh;             // 24Bまで：ハンドル/ID（32bit想定）
+			uint32_t material;
+			uint32_t pso;
+			InstanceIndex instanceIndex;    // InstanceData プールへのインデックス
+
+			// ここが“空白の活用”パート（合計 8B）
+			uint32_t cbOffsetDiv256;   // 動的CBリングの 256B 単位オフセット（DX12/11.1 等で使える）
+			uint16_t viewMask;         // 例: 16 ビュー/パス（影カスケード / ステレオ / MRT パスの選別）
+			uint8_t  flags;            // 小さなフラグ群（下に定義）
+			uint8_t  userTag;          // 任意のラベル/デバッグ/可視化タグ
+
+			DrawCommand() : sortKey(0), mesh(0), material(0), pso(0), instanceIndex{ 0 },
+				cbOffsetDiv256(0), viewMask(0xFFFF), flags(0), userTag(0) {
 			}
+
+			// 便利ヘルパ
+			void setCBOffsetBytes(uint32_t byteOffset) noexcept { cbOffsetDiv256 = byteOffset >> 8; }
+			uint32_t getCBOffsetBytes() const noexcept { return cbOffsetDiv256 << 8; }
+		};
+
+		enum DrawFlags : uint8_t {
+			DF_BindPSONeeded = 1u << 0, // 前のコマンドから PSO を切り替える必要あり
+			DF_BindMaterial = 1u << 1, // マテリアルバインドが必要
+			DF_BindMesh = 1u << 2, // VB/IB 再バインドが必要
+			DF_AlphaTest = 1u << 3, // αテスト有無（ソートキーにも入れて良い）
+			DF_ShadowCaster = 1u << 4, // 影を落とす
+			DF_DoubleSided = 1u << 5, // 両面
+			DF_Skinned = 1u << 6, // スキンあり（シェーダバリアント切替のヒント）
+			// 1bit 余り
 		};
 
 		enum class MaterialTemplateID : uint32_t {
@@ -73,8 +93,11 @@ namespace SectorFW
 
 		enum class RasterizerStateID {
 			SolidCullBack,
+			SolidCullFront,
 			SolidCullNone,
-			Wireframe,
+			WireCullBack,
+			WireCullFront,
+			WireCullNone,
 			// ...
 			MAX_COUNT, // 有効なラスタライザーステートの数
 		};

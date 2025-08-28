@@ -38,11 +38,16 @@ namespace SectorFW
 	template <typename T, template <typename, typename...> class CRTP>
 	constexpr bool is_crtp_base_of_v = is_crtp_base_of<T, CRTP>::value;
 
+	// ユーザー拡張点：デフォルトは false
+	template<class T> struct user_primitive : std::false_type {};
+	template<class T>
+	inline constexpr bool user_primitive_v = user_primitive<std::remove_cv_t<T>>::value;
+
 	/**
 	 * @brief プリミティブ型をチェックするコンセプト
 	 */
 	template<typename T>
-	concept IsPrimitive = std::is_arithmetic_v<T> || std::is_enum_v<T>;
+	concept IsPrimitive = std::is_arithmetic_v<T> || std::is_enum_v<T> || user_primitive_v<T>;
 	/**
 	 * @brief 型 T が AllowedTypes... のいずれかと一致するかをチェックするコンセプト
 	 */

@@ -18,15 +18,15 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(VehicleConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(VehicleConstraintSettings, ConstraintSettings)
 
-	JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mUp)
-	JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mForward)
-	JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mMaxPitchRollAngle)
-	JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mWheels)
-	JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mAntiRollBars)
-	JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mController)
+		JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mUp)
+		JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mForward)
+		JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mMaxPitchRollAngle)
+		JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mWheels)
+		JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mAntiRollBars)
+		JPH_ADD_ATTRIBUTE(VehicleConstraintSettings, mController)
 }
 
-void VehicleConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void VehicleConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -36,19 +36,19 @@ void VehicleConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 
 	uint32 num_anti_rollbars = (uint32)mAntiRollBars.size();
 	inStream.Write(num_anti_rollbars);
-	for (const VehicleAntiRollBar &r : mAntiRollBars)
+	for (const VehicleAntiRollBar& r : mAntiRollBars)
 		r.SaveBinaryState(inStream);
 
 	uint32 num_wheels = (uint32)mWheels.size();
 	inStream.Write(num_wheels);
-	for (const WheelSettings *w : mWheels)
+	for (const WheelSettings* w : mWheels)
 		w->SaveBinaryState(inStream);
 
 	inStream.Write(mController->GetRTTI()->GetHash());
 	mController->SaveBinaryState(inStream);
 }
 
-void VehicleConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void VehicleConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -59,23 +59,23 @@ void VehicleConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	uint32 num_anti_rollbars = 0;
 	inStream.Read(num_anti_rollbars);
 	mAntiRollBars.resize(num_anti_rollbars);
-	for (VehicleAntiRollBar &r : mAntiRollBars)
+	for (VehicleAntiRollBar& r : mAntiRollBars)
 		r.RestoreBinaryState(inStream);
 
 	uint32 num_wheels = 0;
 	inStream.Read(num_wheels);
 	mWheels.resize(num_wheels);
-	for (WheelSettings *w : mWheels)
+	for (WheelSettings* w : mWheels)
 		w->RestoreBinaryState(inStream);
 
 	uint32 hash = 0;
 	inStream.Read(hash);
-	const RTTI *rtti = Factory::sInstance->Find(hash);
-	mController = reinterpret_cast<VehicleControllerSettings *>(rtti->CreateObject());
+	const RTTI* rtti = Factory::sInstance->Find(hash);
+	mController = reinterpret_cast<VehicleControllerSettings*>(rtti->CreateObject());
 	mController->RestoreBinaryState(inStream);
 }
 
-VehicleConstraint::VehicleConstraint(Body &inVehicleBody, const VehicleConstraintSettings &inSettings) :
+VehicleConstraint::VehicleConstraint(Body& inVehicleBody, const VehicleConstraintSettings& inSettings) :
 	Constraint(inSettings),
 	mBody(&inVehicleBody),
 	mForward(inSettings.mForward),
@@ -109,13 +109,13 @@ VehicleConstraint::~VehicleConstraint()
 	delete mController;
 
 	// Destroy our wheels
-	for (Wheel *w : mWheels)
+	for (Wheel* w : mWheels)
 		delete w;
 }
 
-void VehicleConstraint::GetWheelLocalBasis(const Wheel *inWheel, Vec3 &outForward, Vec3 &outUp, Vec3 &outRight) const
+void VehicleConstraint::GetWheelLocalBasis(const Wheel* inWheel, Vec3& outForward, Vec3& outUp, Vec3& outRight) const
 {
-	const WheelSettings *settings = inWheel->mSettings;
+	const WheelSettings* settings = inWheel->mSettings;
 
 	Quat steer_rotation = Quat::sRotation(settings->mSteeringAxis, inWheel->mSteerAngle);
 	outUp = steer_rotation * settings->mWheelUp;
@@ -128,8 +128,8 @@ Mat44 VehicleConstraint::GetWheelLocalTransform(uint inWheelIndex, Vec3Arg inWhe
 {
 	JPH_ASSERT(inWheelIndex < mWheels.size());
 
-	const Wheel *wheel = mWheels[inWheelIndex];
-	const WheelSettings *settings = wheel->mSettings;
+	const Wheel* wheel = mWheels[inWheelIndex];
+	const WheelSettings* settings = wheel->mSettings;
 
 	// Use the two vectors provided to calculate a matrix that takes us from wheel model space to X = right, Y = up, Z = forward (the space where we will rotate the wheel)
 	Mat44 wheel_to_rotational = Mat44(Vec4(inWheelRight, 0), Vec4(inWheelUp, 0), Vec4(inWheelUp.Cross(inWheelRight), 0), Vec4(0, 0, 0, 1)).Transposed();
@@ -149,7 +149,7 @@ RMat44 VehicleConstraint::GetWheelWorldTransform(uint inWheelIndex, Vec3Arg inWh
 	return mBody->GetWorldTransform() * GetWheelLocalTransform(inWheelIndex, inWheelRight, inWheelUp);
 }
 
-void VehicleConstraint::OnStep(const PhysicsStepListenerContext &inContext)
+void VehicleConstraint::OnStep(const PhysicsStepListenerContext& inContext)
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -162,7 +162,7 @@ void VehicleConstraint::OnStep(const PhysicsStepListenerContext &inContext)
 		// If gravity is overridden, we replace the normal gravity calculations
 		if (mBody->IsActive())
 		{
-			MotionProperties *mp = mBody->GetMotionProperties();
+			MotionProperties* mp = mBody->GetMotionProperties();
 			mp->SetGravityFactor(0.0f);
 			mBody->AddForce(mGravityOverride / mp->GetInverseMass());
 		}
@@ -183,15 +183,15 @@ void VehicleConstraint::OnStep(const PhysicsStepListenerContext &inContext)
 	mIsActive = mBody->IsActive();
 
 	// Test how often we need to update the wheels
-	uint num_steps_between_collisions = mIsActive? mNumStepsBetweenCollisionTestActive : mNumStepsBetweenCollisionTestInactive;
+	uint num_steps_between_collisions = mIsActive ? mNumStepsBetweenCollisionTestActive : mNumStepsBetweenCollisionTestInactive;
 
 	RMat44 body_transform = mBody->GetWorldTransform();
 
 	// Test collision for wheels
 	for (uint wheel_index = 0; wheel_index < mWheels.size(); ++wheel_index)
 	{
-		Wheel *w = mWheels[wheel_index];
-		const WheelSettings *settings = w->mSettings;
+		Wheel* w = mWheels[wheel_index];
+		const WheelSettings* settings = w->mSettings;
 
 		// Calculate suspension origin and direction
 		RVec3 ws_origin = body_transform * settings->mPosition;
@@ -273,12 +273,12 @@ void VehicleConstraint::OnStep(const PhysicsStepListenerContext &inContext)
 		mPostCollideCallback(*this, inContext);
 
 	// Calculate anti-rollbar impulses
-	for (const VehicleAntiRollBar &r : mAntiRollBars)
+	for (const VehicleAntiRollBar& r : mAntiRollBars)
 	{
 		JPH_ASSERT(r.mStiffness >= 0.0f);
 
-		Wheel *lw = mWheels[r.mLeftWheel];
-		Wheel *rw = mWheels[r.mRightWheel];
+		Wheel* lw = mWheels[r.mLeftWheel];
+		Wheel* rw = mWheels[r.mRightWheel];
 
 		if (lw->mContactBody != nullptr && rw->mContactBody != nullptr)
 		{
@@ -307,7 +307,7 @@ void VehicleConstraint::OnStep(const PhysicsStepListenerContext &inContext)
 	{
 		bool allow_sleep = mController->AllowSleep();
 		if (allow_sleep)
-			for (const Wheel *w : mWheels)
+			for (const Wheel* w : mWheels)
 				if (abs(w->mAngularVelocity) > DegreesToRadians(10.0f))
 				{
 					allow_sleep = false;
@@ -321,13 +321,13 @@ void VehicleConstraint::OnStep(const PhysicsStepListenerContext &inContext)
 	++mCurrentStep;
 }
 
-void VehicleConstraint::BuildIslands(uint32 inConstraintIndex, IslandBuilder &ioBuilder, BodyManager &inBodyManager)
+void VehicleConstraint::BuildIslands(uint32 inConstraintIndex, IslandBuilder& ioBuilder, BodyManager& inBodyManager)
 {
 	// Find dynamic bodies that our wheels are touching
-	BodyID *body_ids = (BodyID *)JPH_STACK_ALLOC((mWheels.size() + 1) * sizeof(BodyID));
+	BodyID* body_ids = (BodyID*)JPH_STACK_ALLOC((mWheels.size() + 1) * sizeof(BodyID));
 	int num_bodies = 0;
 	bool needs_to_activate = false;
-	for (const Wheel *w : mWheels)
+	for (const Wheel* w : mWheels)
 		if (w->mContactBody != nullptr)
 		{
 			// Avoid adding duplicates
@@ -366,7 +366,7 @@ void VehicleConstraint::BuildIslands(uint32 inConstraintIndex, IslandBuilder &io
 	uint32 min_active_index = Body::cInactiveIndex;
 	for (int i = 0; i < num_bodies; ++i)
 	{
-		const Body &body = inBodyManager.GetBody(body_ids[i]);
+		const Body& body = inBodyManager.GetBody(body_ids[i]);
 		min_active_index = min(min_active_index, body.GetIndexInActiveBodiesInternal());
 		ioBuilder.LinkBodies(mBody->GetIndexInActiveBodiesInternal(), body.GetIndexInActiveBodiesInternal());
 	}
@@ -375,12 +375,12 @@ void VehicleConstraint::BuildIslands(uint32 inConstraintIndex, IslandBuilder &io
 	ioBuilder.LinkConstraint(inConstraintIndex, mBody->GetIndexInActiveBodiesInternal(), min_active_index);
 }
 
-uint VehicleConstraint::BuildIslandSplits(LargeIslandSplitter &ioSplitter) const
+uint VehicleConstraint::BuildIslandSplits(LargeIslandSplitter& ioSplitter) const
 {
 	return ioSplitter.AssignToNonParallelSplit(mBody);
 }
 
-void VehicleConstraint::CalculateSuspensionForcePoint(const Wheel &inWheel, Vec3 &outR1PlusU, Vec3 &outR2) const
+void VehicleConstraint::CalculateSuspensionForcePoint(const Wheel& inWheel, Vec3& outR1PlusU, Vec3& outR2) const
 {
 	// Determine point to apply force to
 	RVec3 force_point;
@@ -423,10 +423,10 @@ void VehicleConstraint::SetupVelocityConstraint(float inDeltaTime)
 {
 	RMat44 body_transform = mBody->GetWorldTransform();
 
-	for (Wheel *w : mWheels)
+	for (Wheel* w : mWheels)
 		if (w->mContactBody != nullptr)
 		{
-			const WheelSettings *settings = w->mSettings;
+			const WheelSettings* settings = w->mSettings;
 
 			Vec3 neg_contact_normal = -w->mContactNormal;
 
@@ -441,9 +441,9 @@ void VehicleConstraint::SetupVelocityConstraint(float inDeltaTime)
 				{
 					// Calculate effective mass based on vehicle configuration (the stiffness of the spring should not be affected by the dynamics of the vehicle): K = 1 / (J M^-1 J^T)
 					// Note that if no suspension force point is supplied we don't know where the force is applied so we assume it is applied at average suspension length
-					Vec3 force_point = settings->mEnableSuspensionForcePoint? settings->mSuspensionForcePoint : settings->mPosition + 0.5f * (settings->mSuspensionMinLength + settings->mSuspensionMaxLength) * settings->mSuspensionDirection;
+					Vec3 force_point = settings->mEnableSuspensionForcePoint ? settings->mSuspensionForcePoint : settings->mPosition + 0.5f * (settings->mSuspensionMinLength + settings->mSuspensionMaxLength) * settings->mSuspensionDirection;
 					Vec3 force_point_x_neg_up = force_point.Cross(-mUp);
-					const MotionProperties *mp = mBody->GetMotionProperties();
+					const MotionProperties* mp = mBody->GetMotionProperties();
 					float effective_mass = 1.0f / (mp->GetInverseMass() + force_point_x_neg_up.Dot(mp->GetLocalSpaceInverseInertia().Multiply3x3(force_point_x_neg_up)));
 
 					// Convert frequency and damping to stiffness and damping
@@ -521,7 +521,7 @@ void VehicleConstraint::SetupVelocityConstraint(float inDeltaTime)
 
 void VehicleConstraint::ResetWarmStart()
 {
-	for (Wheel *w : mWheels)
+	for (Wheel* w : mWheels)
 	{
 		w->mSuspensionPart.Deactivate();
 		w->mSuspensionMaxUpPart.Deactivate();
@@ -534,7 +534,7 @@ void VehicleConstraint::ResetWarmStart()
 
 void VehicleConstraint::WarmStartVelocityConstraint(float inWarmStartImpulseRatio)
 {
-	for (Wheel *w : mWheels)
+	for (Wheel* w : mWheels)
 		if (w->mContactBody != nullptr)
 		{
 			Vec3 neg_contact_normal = -w->mContactNormal;
@@ -553,7 +553,7 @@ bool VehicleConstraint::SolveVelocityConstraint(float inDeltaTime)
 	bool impulse = false;
 
 	// Solve suspension
-	for (Wheel *w : mWheels)
+	for (Wheel* w : mWheels)
 		if (w->mContactBody != nullptr)
 		{
 			Vec3 neg_contact_normal = -w->mContactNormal;
@@ -583,10 +583,10 @@ bool VehicleConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumg
 
 	RMat44 body_transform = mBody->GetWorldTransform();
 
-	for (Wheel *w : mWheels)
+	for (Wheel* w : mWheels)
 		if (w->mContactBody != nullptr)
 		{
-			const WheelSettings *settings = w->mSettings;
+			const WheelSettings* settings = w->mSettings;
 
 			// Check if we reached the 'max up' position now that the body has possibly moved
 			// We do this by calculating the axle position at minimum suspension length and making sure it does not go through the
@@ -619,24 +619,24 @@ bool VehicleConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumg
 
 #ifdef JPH_DEBUG_RENDERER
 
-void VehicleConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void VehicleConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	mController->Draw(inRenderer);
 }
 
-void VehicleConstraint::DrawConstraintLimits(DebugRenderer *inRenderer) const
+void VehicleConstraint::DrawConstraintLimits(DebugRenderer* inRenderer) const
 {
 }
 
 #endif // JPH_DEBUG_RENDERER
 
-void VehicleConstraint::SaveState(StateRecorder &inStream) const
+void VehicleConstraint::SaveState(StateRecorder& inStream) const
 {
 	Constraint::SaveState(inStream);
 
 	mController->SaveState(inStream);
 
-	for (const Wheel *w : mWheels)
+	for (const Wheel* w : mWheels)
 	{
 		inStream.Write(w->mAngularVelocity);
 		inStream.Write(w->mAngle);
@@ -657,13 +657,13 @@ void VehicleConstraint::SaveState(StateRecorder &inStream) const
 	inStream.Write(mCurrentStep);
 }
 
-void VehicleConstraint::RestoreState(StateRecorder &inStream)
+void VehicleConstraint::RestoreState(StateRecorder& inStream)
 {
 	Constraint::RestoreState(inStream);
 
 	mController->RestoreState(inStream);
 
-	for (Wheel *w : mWheels)
+	for (Wheel* w : mWheels)
 	{
 		inStream.Read(w->mAngularVelocity);
 		inStream.Read(w->mAngle);

@@ -7,17 +7,17 @@
 #include <Jolt/Core/Semaphore.h>
 
 #ifdef JPH_PLATFORM_WINDOWS
-	JPH_SUPPRESS_WARNING_PUSH
-	JPH_MSVC_SUPPRESS_WARNING(5039) // winbase.h(13179): warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc. Undefined behavior may occur if this function throws an exception.
-	#ifndef WIN32_LEAN_AND_MEAN
-		#define WIN32_LEAN_AND_MEAN
-	#endif
-#ifndef JPH_COMPILER_MINGW
-	#include <Windows.h>
-#else
-	#include <windows.h>
+JPH_SUPPRESS_WARNING_PUSH
+JPH_MSVC_SUPPRESS_WARNING(5039) // winbase.h(13179): warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc. Undefined behavior may occur if this function throws an exception.
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
 #endif
-	JPH_SUPPRESS_WARNING_POP
+#ifndef JPH_COMPILER_MINGW
+#include <Windows.h>
+#else
+#include <windows.h>
+#endif
+JPH_SUPPRESS_WARNING_POP
 #endif
 
 JPH_NAMESPACE_BEGIN
@@ -77,17 +77,17 @@ void Semaphore::Release(uint inNumber)
 	{
 		int new_value = old_value + (int)inNumber;
 		int num_to_release = min(new_value, 0) - old_value;
-	#ifdef JPH_PLATFORM_WINDOWS
+#ifdef JPH_PLATFORM_WINDOWS
 		::ReleaseSemaphore(mSemaphore, num_to_release, nullptr);
-	#elif defined(JPH_USE_PTHREADS)
+#elif defined(JPH_USE_PTHREADS)
 		for (int i = 0; i < num_to_release; ++i)
 			sem_post(&mSemaphore);
-	#elif defined(JPH_USE_GRAND_CENTRAL_DISPATCH)
+#elif defined(JPH_USE_GRAND_CENTRAL_DISPATCH)
 		for (int i = 0; i < num_to_release; ++i)
 			dispatch_semaphore_signal(mSemaphore);
-	#elif defined(JPH_PLATFORM_BLUE)
+#elif defined(JPH_PLATFORM_BLUE)
 		JPH_PLATFORM_BLUE_SEMAPHORE_SIGNAL(mSemaphore, num_to_release);
-	#endif
+#endif
 	}
 #else
 	std::lock_guard lock(mLock);
@@ -109,24 +109,24 @@ void Semaphore::Acquire(uint inNumber)
 	if (new_value < 0)
 	{
 		int num_to_acquire = min(old_value, 0) - new_value;
-	#ifdef JPH_PLATFORM_WINDOWS
+#ifdef JPH_PLATFORM_WINDOWS
 		for (int i = 0; i < num_to_acquire; ++i)
 			WaitForSingleObject(mSemaphore, INFINITE);
-	#elif defined(JPH_USE_PTHREADS)
+#elif defined(JPH_USE_PTHREADS)
 		for (int i = 0; i < num_to_acquire; ++i)
 			sem_wait(&mSemaphore);
-	#elif defined(JPH_USE_GRAND_CENTRAL_DISPATCH)
+#elif defined(JPH_USE_GRAND_CENTRAL_DISPATCH)
 		for (int i = 0; i < num_to_acquire; ++i)
 			dispatch_semaphore_wait(mSemaphore, DISPATCH_TIME_FOREVER);
-	#elif defined(JPH_PLATFORM_BLUE)
+#elif defined(JPH_PLATFORM_BLUE)
 		JPH_PLATFORM_BLUE_SEMAPHORE_WAIT(mSemaphore, num_to_acquire);
-	#endif
+#endif
 	}
 #else
 	std::unique_lock lock(mLock);
 	mWaitVariable.wait(lock, [this, inNumber]() {
 		return mCount.load(std::memory_order_relaxed) >= int(inNumber);
-	});
+		});
 	mCount.fetch_sub(inNumber, std::memory_order_relaxed);
 #endif
 }

@@ -12,7 +12,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -21,13 +21,13 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(RackAndPinionConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(RackAndPinionConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(RackAndPinionConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(RackAndPinionConstraintSettings, mHingeAxis)
-	JPH_ADD_ATTRIBUTE(RackAndPinionConstraintSettings, mSliderAxis)
-	JPH_ADD_ATTRIBUTE(RackAndPinionConstraintSettings, mRatio)
+		JPH_ADD_ENUM_ATTRIBUTE(RackAndPinionConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(RackAndPinionConstraintSettings, mHingeAxis)
+		JPH_ADD_ATTRIBUTE(RackAndPinionConstraintSettings, mSliderAxis)
+		JPH_ADD_ATTRIBUTE(RackAndPinionConstraintSettings, mRatio)
 }
 
-void RackAndPinionConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void RackAndPinionConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -37,7 +37,7 @@ void RackAndPinionConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mRatio);
 }
 
-void RackAndPinionConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void RackAndPinionConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -47,12 +47,12 @@ void RackAndPinionConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mRatio);
 }
 
-TwoBodyConstraint *RackAndPinionConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* RackAndPinionConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new RackAndPinionConstraint(inBody1, inBody2, *this);
 }
 
-RackAndPinionConstraint::RackAndPinionConstraint(Body &inBody1, Body &inBody2, const RackAndPinionConstraintSettings &inSettings) :
+RackAndPinionConstraint::RackAndPinionConstraint(Body& inBody1, Body& inBody2, const RackAndPinionConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings),
 	mLocalSpaceHingeAxis(inSettings.mHingeAxis),
 	mLocalSpaceSliderAxis(inSettings.mSliderAxis),
@@ -137,7 +137,7 @@ bool RackAndPinionConstraint::SolvePositionConstraint(float inDeltaTime, float i
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void RackAndPinionConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void RackAndPinionConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	RMat44 transform1 = mBody1->GetCenterOfMassTransform();
 	RMat44 transform2 = mBody2->GetCenterOfMassTransform();
@@ -149,14 +149,14 @@ void RackAndPinionConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 
 #endif // JPH_DEBUG_RENDERER
 
-void RackAndPinionConstraint::SaveState(StateRecorder &inStream) const
+void RackAndPinionConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
 	mRackAndPinionConstraintPart.SaveState(inStream);
 }
 
-void RackAndPinionConstraint::RestoreState(StateRecorder &inStream)
+void RackAndPinionConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
@@ -165,7 +165,7 @@ void RackAndPinionConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> RackAndPinionConstraint::GetConstraintSettings() const
 {
-	RackAndPinionConstraintSettings *settings = new RackAndPinionConstraintSettings;
+	RackAndPinionConstraintSettings* settings = new RackAndPinionConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mHingeAxis = mLocalSpaceHingeAxis;

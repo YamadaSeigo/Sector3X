@@ -108,6 +108,13 @@ namespace SectorFW
 				};
 			}
 
+			Quat& operator=(const Quat& other) noexcept {
+				if (this != &other) {
+					x = other.x; y = other.y; z = other.z; w = other.w;
+				}
+				return *this;
+			}
+
 			// --- Š|‚¯Zi‰ñ“]‚Ì‡¬j---
 			Quat operator*(const Quat& q) const noexcept {
 				return Quat(

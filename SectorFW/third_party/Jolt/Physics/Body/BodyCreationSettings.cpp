@@ -14,38 +14,38 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(BodyCreationSettings)
 {
 	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mPosition)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mRotation)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mLinearVelocity)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mAngularVelocity)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mUserData)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mShape)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mCollisionGroup)
-	JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mObjectLayer)
-	JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mMotionType)
-	JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mAllowedDOFs)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mAllowDynamicOrKinematic)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mIsSensor)
-	JPH_ADD_ATTRIBUTE_WITH_ALIAS(BodyCreationSettings, mCollideKinematicVsNonDynamic, "mSensorDetectsStatic") // This is the old name to keep backwards compatibility
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mUseManifoldReduction)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mApplyGyroscopicForce)
-	JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mMotionQuality)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mEnhancedInternalEdgeRemoval)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mAllowSleeping)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mFriction)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mRestitution)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mLinearDamping)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mAngularDamping)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mMaxLinearVelocity)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mMaxAngularVelocity)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mGravityFactor)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mNumVelocityStepsOverride)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mNumPositionStepsOverride)
-	JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mOverrideMassProperties)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mInertiaMultiplier)
-	JPH_ADD_ATTRIBUTE(BodyCreationSettings, mMassPropertiesOverride)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mRotation)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mLinearVelocity)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mAngularVelocity)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mUserData)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mShape)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mCollisionGroup)
+		JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mObjectLayer)
+		JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mMotionType)
+		JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mAllowedDOFs)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mAllowDynamicOrKinematic)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mIsSensor)
+		JPH_ADD_ATTRIBUTE_WITH_ALIAS(BodyCreationSettings, mCollideKinematicVsNonDynamic, "mSensorDetectsStatic") // This is the old name to keep backwards compatibility
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mUseManifoldReduction)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mApplyGyroscopicForce)
+		JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mMotionQuality)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mEnhancedInternalEdgeRemoval)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mAllowSleeping)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mFriction)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mRestitution)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mLinearDamping)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mAngularDamping)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mMaxLinearVelocity)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mMaxAngularVelocity)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mGravityFactor)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mNumVelocityStepsOverride)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mNumPositionStepsOverride)
+		JPH_ADD_ENUM_ATTRIBUTE(BodyCreationSettings, mOverrideMassProperties)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mInertiaMultiplier)
+		JPH_ADD_ATTRIBUTE(BodyCreationSettings, mMassPropertiesOverride)
 }
 
-void BodyCreationSettings::SaveBinaryState(StreamOut &inStream) const
+void BodyCreationSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mPosition);
 	inStream.Write(mRotation);
@@ -77,7 +77,7 @@ void BodyCreationSettings::SaveBinaryState(StreamOut &inStream) const
 	mMassPropertiesOverride.SaveBinaryState(inStream);
 }
 
-void BodyCreationSettings::RestoreBinaryState(StreamIn &inStream)
+void BodyCreationSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mPosition);
 	inStream.Read(mRotation);
@@ -117,7 +117,7 @@ Shape::ShapeResult BodyCreationSettings::ConvertShapeSettings()
 		mShape = nullptr;
 
 		Shape::ShapeResult result;
-		result.Set(const_cast<Shape *>(mShapePtr.GetPtr()));
+		result.Set(const_cast<Shape*>(mShapePtr.GetPtr()));
 		return result;
 	}
 
@@ -137,7 +137,7 @@ Shape::ShapeResult BodyCreationSettings::ConvertShapeSettings()
 	return result;
 }
 
-const Shape *BodyCreationSettings::GetShape() const
+const Shape* BodyCreationSettings::GetShape() const
 {
 	// If we already have a shape, return it
 	if (mShapePtr != nullptr)
@@ -181,7 +181,7 @@ MassProperties BodyCreationSettings::GetMassProperties() const
 	return mass_properties;
 }
 
-void BodyCreationSettings::SaveWithChildren(StreamOut &inStream, ShapeToIDMap *ioShapeMap, MaterialToIDMap *ioMaterialMap, GroupFilterToIDMap *ioGroupFilterMap) const
+void BodyCreationSettings::SaveWithChildren(StreamOut& inStream, ShapeToIDMap* ioShapeMap, MaterialToIDMap* ioMaterialMap, GroupFilterToIDMap* ioGroupFilterMap) const
 {
 	// Save creation settings
 	SaveBinaryState(inStream);
@@ -196,7 +196,7 @@ void BodyCreationSettings::SaveWithChildren(StreamOut &inStream, ShapeToIDMap *i
 	StreamUtils::SaveObjectReference(inStream, mCollisionGroup.GetGroupFilter(), ioGroupFilterMap);
 }
 
-BodyCreationSettings::BCSResult BodyCreationSettings::sRestoreWithChildren(StreamIn &inStream, IDToShapeMap &ioShapeMap, IDToMaterialMap &ioMaterialMap, IDToGroupFilterMap &ioGroupFilterMap)
+BodyCreationSettings::BCSResult BodyCreationSettings::sRestoreWithChildren(StreamIn& inStream, IDToShapeMap& ioShapeMap, IDToMaterialMap& ioMaterialMap, IDToGroupFilterMap& ioGroupFilterMap)
 {
 	BCSResult result;
 

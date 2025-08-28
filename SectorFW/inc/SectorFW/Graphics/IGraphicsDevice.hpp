@@ -73,6 +73,21 @@ namespace SectorFW
 				static_cast<Impl*>(this)->PresentImpl();
 			}
 			/**
+			 * @brief フレームの提出
+			 * @param clearColor クリアカラー
+			* @param frameIdx フレームインデックス
+			*/
+			void SubmitFrame(const FLOAT clearColor[4], uint64_t frameIdx) {
+				static_cast<Impl*>(this)->SubmitFrameImpl(clearColor, frameIdx);
+			}
+			/**
+			 * @brief 提出済みフレームの完了待ち
+			 * @param uptoFrame フレームインデックス
+			 */
+			void WaitSubmittedFrames(uint64_t uptoFrame) {
+				static_cast<Impl*>(this)->WaitSubmittedFramesImpl(uptoFrame);
+			}
+			/**
 			 * @brief デストラクタ
 			 */
 			~IGraphicsDevice() = default;

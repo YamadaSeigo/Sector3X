@@ -6,12 +6,12 @@
 
 #include <Jolt/Skeleton/SkeletonPose.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
 
-void SkeletonPose::SetSkeleton(const Skeleton *inSkeleton)
+void SkeletonPose::SetSkeleton(const Skeleton* inSkeleton)
 {
 	mSkeleton = inSkeleton;
 
@@ -45,24 +45,24 @@ void SkeletonPose::CalculateJointStates()
 		else
 			local_transform = mJointMatrices[i];
 
-		JointState &joint = mJoints[i];
+		JointState& joint = mJoints[i];
 		joint.mTranslation = local_transform.GetTranslation();
 		joint.mRotation = local_transform.GetQuaternion();
 	}
 }
 
-void SkeletonPose::CalculateLocalSpaceJointMatrices(Mat44 *outMatrices) const
+void SkeletonPose::CalculateLocalSpaceJointMatrices(Mat44* outMatrices) const
 {
 	for (int i = 0; i < (int)mJoints.size(); ++i)
 		outMatrices[i] = mJoints[i].ToMatrix();
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void SkeletonPose::Draw(const DrawSettings &inDrawSettings, DebugRenderer *inRenderer, RMat44Arg inOffset) const
+void SkeletonPose::Draw(const DrawSettings& inDrawSettings, DebugRenderer* inRenderer, RMat44Arg inOffset) const
 {
 	RMat44 offset = inOffset * RMat44::sTranslation(mRootOffset);
 
-	const Skeleton::JointVector &joints = mSkeleton->GetJoints();
+	const Skeleton::JointVector& joints = mSkeleton->GetJoints();
 
 	for (int b = 0; b < mSkeleton->GetJointCount(); ++b)
 	{

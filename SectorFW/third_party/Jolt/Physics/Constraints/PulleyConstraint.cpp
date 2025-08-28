@@ -10,7 +10,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -21,17 +21,17 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(PulleyConstraintSettings)
 {
 	JPH_ADD_BASE_CLASS(PulleyConstraintSettings, TwoBodyConstraintSettings)
 
-	JPH_ADD_ENUM_ATTRIBUTE(PulleyConstraintSettings, mSpace)
-	JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mBodyPoint1)
-	JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mFixedPoint1)
-	JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mBodyPoint2)
-	JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mFixedPoint2)
-	JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mRatio)
-	JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mMinLength)
-	JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mMaxLength)
+		JPH_ADD_ENUM_ATTRIBUTE(PulleyConstraintSettings, mSpace)
+		JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mBodyPoint1)
+		JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mFixedPoint1)
+		JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mBodyPoint2)
+		JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mFixedPoint2)
+		JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mRatio)
+		JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mMinLength)
+		JPH_ADD_ATTRIBUTE(PulleyConstraintSettings, mMaxLength)
 }
 
-void PulleyConstraintSettings::SaveBinaryState(StreamOut &inStream) const
+void PulleyConstraintSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	ConstraintSettings::SaveBinaryState(inStream);
 
@@ -45,7 +45,7 @@ void PulleyConstraintSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mMaxLength);
 }
 
-void PulleyConstraintSettings::RestoreBinaryState(StreamIn &inStream)
+void PulleyConstraintSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	ConstraintSettings::RestoreBinaryState(inStream);
 
@@ -59,12 +59,12 @@ void PulleyConstraintSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mMaxLength);
 }
 
-TwoBodyConstraint *PulleyConstraintSettings::Create(Body &inBody1, Body &inBody2) const
+TwoBodyConstraint* PulleyConstraintSettings::Create(Body& inBody1, Body& inBody2) const
 {
 	return new PulleyConstraint(inBody1, inBody2, *this);
 }
 
-PulleyConstraint::PulleyConstraint(Body &inBody1, Body &inBody2, const PulleyConstraintSettings &inSettings) :
+PulleyConstraint::PulleyConstraint(Body& inBody1, Body& inBody2, const PulleyConstraintSettings& inSettings) :
 	TwoBodyConstraint(inBody1, inBody2, inSettings),
 	mFixedPosition1(inSettings.mFixedPoint1),
 	mFixedPosition2(inSettings.mFixedPoint2),
@@ -100,7 +100,7 @@ PulleyConstraint::PulleyConstraint(Body &inBody1, Body &inBody2, const PulleyCon
 	mWorldSpaceNormal1 = mWorldSpaceNormal2 = -Vec3::sAxisY();
 }
 
-void PulleyConstraint::NotifyShapeChanged(const BodyID &inBodyID, Vec3Arg inDeltaCOM)
+void PulleyConstraint::NotifyShapeChanged(const BodyID& inBodyID, Vec3Arg inDeltaCOM)
 {
 	if (mBody1->GetID() == inBodyID)
 		mLocalSpacePosition1 -= inDeltaCOM;
@@ -147,8 +147,8 @@ void PulleyConstraint::SetupVelocityConstraint(float inDeltaTime)
 	if (min_length_violation || max_length_violation)
 	{
 		// Determine max lambda based on if the length is too big or small
-		mMinLambda = max_length_violation? -FLT_MAX : 0.0f;
-		mMaxLambda = min_length_violation? FLT_MAX : 0.0f;
+		mMinLambda = max_length_violation ? -FLT_MAX : 0.0f;
+		mMaxLambda = min_length_violation ? FLT_MAX : 0.0f;
 
 		CalculateConstraintProperties();
 	}
@@ -197,7 +197,7 @@ bool PulleyConstraint::SolvePositionConstraint(float inDeltaTime, float inBaumga
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void PulleyConstraint::DrawConstraint(DebugRenderer *inRenderer) const
+void PulleyConstraint::DrawConstraint(DebugRenderer* inRenderer) const
 {
 	// Color according to length vs min/max length
 	float current_length = GetCurrentLength();
@@ -217,7 +217,7 @@ void PulleyConstraint::DrawConstraint(DebugRenderer *inRenderer) const
 }
 #endif // JPH_DEBUG_RENDERER
 
-void PulleyConstraint::SaveState(StateRecorder &inStream) const
+void PulleyConstraint::SaveState(StateRecorder& inStream) const
 {
 	TwoBodyConstraint::SaveState(inStream);
 
@@ -226,7 +226,7 @@ void PulleyConstraint::SaveState(StateRecorder &inStream) const
 	inStream.Write(mWorldSpaceNormal2);
 }
 
-void PulleyConstraint::RestoreState(StateRecorder &inStream)
+void PulleyConstraint::RestoreState(StateRecorder& inStream)
 {
 	TwoBodyConstraint::RestoreState(inStream);
 
@@ -237,7 +237,7 @@ void PulleyConstraint::RestoreState(StateRecorder &inStream)
 
 Ref<ConstraintSettings> PulleyConstraint::GetConstraintSettings() const
 {
-	PulleyConstraintSettings *settings = new PulleyConstraintSettings;
+	PulleyConstraintSettings* settings = new PulleyConstraintSettings;
 	ToConstraintSettings(*settings);
 	settings->mSpace = EConstraintSpace::LocalToBodyCOM;
 	settings->mBodyPoint1 = RVec3(mLocalSpacePosition1);

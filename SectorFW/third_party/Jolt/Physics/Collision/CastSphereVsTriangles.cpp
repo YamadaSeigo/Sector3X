@@ -16,7 +16,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-CastSphereVsTriangles::CastSphereVsTriangles(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, CastShapeCollector &ioCollector) :
+CastSphereVsTriangles::CastSphereVsTriangles(const ShapeCast& inShapeCast, const ShapeCastSettings& inShapeCastSettings, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, CastShapeCollector& ioCollector) :
 	mStart(inShapeCast.mCenterOfMassStart.GetTranslation()),
 	mDirection(inShapeCast.mDirection),
 	mShapeCastSettings(inShapeCastSettings),
@@ -27,16 +27,16 @@ CastSphereVsTriangles::CastSphereVsTriangles(const ShapeCast &inShapeCast, const
 {
 	// Cast to sphere shape
 	JPH_ASSERT(inShapeCast.mShape->GetSubType() == EShapeSubType::Sphere);
-	const SphereShape *sphere = static_cast<const SphereShape *>(inShapeCast.mShape);
+	const SphereShape* sphere = static_cast<const SphereShape*>(inShapeCast.mShape);
 
 	// Scale the radius
 	mRadius = sphere->GetRadius() * abs(inShapeCast.mScale.GetX());
 
 	// Determine if shape is inside out or not
-	mScaleSign = ScaleHelpers::IsInsideOut(inScale)? -1.0f : 1.0f;
+	mScaleSign = ScaleHelpers::IsInsideOut(inScale) ? -1.0f : 1.0f;
 }
 
-void CastSphereVsTriangles::AddHit(bool inBackFacing, const SubShapeID &inSubShapeID2, float inFraction, Vec3Arg inContactPointA, Vec3Arg inContactPointB, Vec3Arg inContactNormal)
+void CastSphereVsTriangles::AddHit(bool inBackFacing, const SubShapeID& inSubShapeID2, float inFraction, Vec3Arg inContactPointA, Vec3Arg inContactPointB, Vec3Arg inContactNormal)
 {
 	// Convert to world space
 	Vec3 contact_point_a = mCenterOfMassTransform2 * (mStart + inContactPointA);
@@ -49,10 +49,10 @@ void CastSphereVsTriangles::AddHit(bool inBackFacing, const SubShapeID &inSubSha
 	// Note: We don't gather faces here because that's only useful if both shapes have a face. Since the sphere always has only 1 contact point, the manifold is always a point.
 
 	JPH_IF_TRACK_NARROWPHASE_STATS(TrackNarrowPhaseCollector track;)
-	mCollector.AddHit(result);
+		mCollector.AddHit(result);
 }
 
-void CastSphereVsTriangles::AddHitWithActiveEdgeDetection(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, bool inBackFacing, Vec3Arg inTriangleNormal, uint8 inActiveEdges, const SubShapeID &inSubShapeID2, float inFraction, Vec3Arg inContactPointA, Vec3Arg inContactPointB, Vec3Arg inContactNormal)
+void CastSphereVsTriangles::AddHitWithActiveEdgeDetection(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, bool inBackFacing, Vec3Arg inTriangleNormal, uint8 inActiveEdges, const SubShapeID& inSubShapeID2, float inFraction, Vec3Arg inContactPointA, Vec3Arg inContactPointB, Vec3Arg inContactNormal)
 {
 	// Check if we have enabled active edge detection
 	Vec3 contact_normal = inContactNormal;
@@ -63,7 +63,7 @@ void CastSphereVsTriangles::AddHitWithActiveEdgeDetection(Vec3Arg inV0, Vec3Arg 
 
 		// Update the contact normal to account for active edges
 		// Note that we flip the triangle normal as the penetration axis is pointing towards the triangle instead of away
-		contact_normal = ActiveEdges::FixNormal(inV0, inV1, inV2, inBackFacing? inTriangleNormal : -inTriangleNormal, inActiveEdges, inContactPointB, inContactNormal, active_edge_movement_direction);
+		contact_normal = ActiveEdges::FixNormal(inV0, inV1, inV2, inBackFacing ? inTriangleNormal : -inTriangleNormal, inActiveEdges, inContactPointB, inContactNormal, active_edge_movement_direction);
 	}
 
 	AddHit(inBackFacing, inSubShapeID2, inFraction, inContactPointA, inContactPointB, contact_normal);
@@ -115,7 +115,7 @@ float CastSphereVsTriangles::RayCylinder(Vec3Arg inRayDirection, Vec3Arg inCylin
 	return t;
 }
 
-void CastSphereVsTriangles::Cast(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8 inActiveEdges, const SubShapeID &inSubShapeID2)
+void CastSphereVsTriangles::Cast(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8 inActiveEdges, const SubShapeID& inSubShapeID2)
 {
 	// Scale triangle and make it relative to the start of the cast
 	Vec3 v0 = mScale * inV0 - mStart;
@@ -151,7 +151,7 @@ void CastSphereVsTriangles::Cast(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8
 				return;
 
 			// Generate contact point
-			Vec3 contact_normal = q_len > 0.0f? q / q_len : Vec3::sAxisY();
+			Vec3 contact_normal = q_len > 0.0f ? q / q_len : Vec3::sAxisY();
 			Vec3 contact_point_a = q + contact_normal * penetration_depth;
 			Vec3 contact_point_b = q;
 			AddHitWithActiveEdgeDetection(v0, v1, v2, back_facing, triangle_normal, inActiveEdges, inSubShapeID2, 0.0f, contact_point_a, contact_point_b, contact_normal);
@@ -185,7 +185,7 @@ void CastSphereVsTriangles::Cast(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8
 					&& u >= 0.0f && v >= 0.0f && w >= 0.0f)
 				{
 					// Interior point, we found the collision point. We don't need to check active edges.
-					AddHit(back_facing, inSubShapeID2, plane_intersection, p, p, back_facing? triangle_normal : -triangle_normal);
+					AddHit(back_facing, inSubShapeID2, plane_intersection, p, p, back_facing ? triangle_normal : -triangle_normal);
 					return;
 				}
 			}

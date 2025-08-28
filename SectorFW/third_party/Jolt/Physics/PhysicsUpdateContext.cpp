@@ -8,7 +8,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-PhysicsUpdateContext::PhysicsUpdateContext(TempAllocator &inTempAllocator) :
+PhysicsUpdateContext::PhysicsUpdateContext(TempAllocator& inTempAllocator) :
 	mTempAllocator(&inTempAllocator),
 	mSteps(inTempAllocator)
 {

@@ -53,6 +53,23 @@ namespace SectorFW
 					func(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
 				}
 			}
+			template<typename F, typename... Args>
+			void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, Args... args)
+			{
+				Query query;
+				query.With<typename AccessPolicy<AccessTypes>::ComponentType...>();
+				std::vector<ArchetypeChunk*> chunks = query.MatchingChunks<Partition&>(partition);
+#ifdef _DEBUG
+				if (chunks.empty()) {
+					LOG_WARNING("No matching chunks found for the specified access types.");
+				}
+#endif
+				for (auto& chunk : chunks)
+				{
+					ComponentAccessor<AccessTypes...> accessor(chunk);
+					func(accessor, chunk->GetEntityCount(), chunk->GetEntities(), std::forward<Args>(args)...);
+				}
+			}
 			/**
 			 * @brief システムの更新を実装する純粋仮想関数
 			 * @param partition パーティションの参照

@@ -12,7 +12,7 @@ namespace SectorFW
 		public:
 			constexpr static inline char BUFFER_NAME[] = "DX113DCamera";
 
-			struct CameraBuffer {
+			struct alignas(16) CameraBuffer {
 				Math::Matrix4x4f viewProj;
 			};
 			/*I3DCameraService(bufferMgr->Add(DX11BufferCreateDesc(BUFFER_NAME, sizeof(CameraBuffer)))),*/

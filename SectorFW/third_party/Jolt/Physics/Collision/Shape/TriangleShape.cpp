@@ -25,7 +25,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -34,10 +34,10 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(TriangleShapeSettings)
 {
 	JPH_ADD_BASE_CLASS(TriangleShapeSettings, ConvexShapeSettings)
 
-	JPH_ADD_ATTRIBUTE(TriangleShapeSettings, mV1)
-	JPH_ADD_ATTRIBUTE(TriangleShapeSettings, mV2)
-	JPH_ADD_ATTRIBUTE(TriangleShapeSettings, mV3)
-	JPH_ADD_ATTRIBUTE(TriangleShapeSettings, mConvexRadius)
+		JPH_ADD_ATTRIBUTE(TriangleShapeSettings, mV1)
+		JPH_ADD_ATTRIBUTE(TriangleShapeSettings, mV2)
+		JPH_ADD_ATTRIBUTE(TriangleShapeSettings, mV3)
+		JPH_ADD_ATTRIBUTE(TriangleShapeSettings, mConvexRadius)
 }
 
 ShapeSettings::ShapeResult TriangleShapeSettings::Create() const
@@ -47,7 +47,7 @@ ShapeSettings::ShapeResult TriangleShapeSettings::Create() const
 	return mCachedResult;
 }
 
-TriangleShape::TriangleShape(const TriangleShapeSettings &inSettings, ShapeResult &outResult) :
+TriangleShape::TriangleShape(const TriangleShapeSettings& inSettings, ShapeResult& outResult) :
 	ConvexShape(EShapeSubType::Triangle, inSettings, outResult),
 	mV1(inSettings.mV1),
 	mV2(inSettings.mV2),
@@ -90,7 +90,7 @@ AABox TriangleShape::GetWorldSpaceBounds(Mat44Arg inCenterOfMassTransform, Vec3A
 class TriangleShape::TriangleNoConvex final : public Support
 {
 public:
-							TriangleNoConvex(Vec3Arg inV1, Vec3Arg inV2, Vec3Arg inV3) :
+	TriangleNoConvex(Vec3Arg inV1, Vec3Arg inV2, Vec3Arg inV3) :
 		mTriangleSupport(inV1, inV2, inV3)
 	{
 		static_assert(sizeof(TriangleNoConvex) <= sizeof(SupportBuffer), "Buffer size too small");
@@ -114,7 +114,7 @@ private:
 class TriangleShape::TriangleWithConvex final : public Support
 {
 public:
-							TriangleWithConvex(Vec3Arg inV1, Vec3Arg inV2, Vec3Arg inV3, float inConvexRadius) :
+	TriangleWithConvex(Vec3Arg inV1, Vec3Arg inV2, Vec3Arg inV3, float inConvexRadius) :
 		mConvexRadius(inConvexRadius),
 		mTriangleSupport(inV1, inV2, inV3)
 	{
@@ -141,7 +141,7 @@ private:
 	TriangleConvexSupport	mTriangleSupport;
 };
 
-const ConvexShape::Support *TriangleShape::GetSupportFunction(ESupportMode inMode, SupportBuffer &inBuffer, Vec3Arg inScale) const
+const ConvexShape::Support* TriangleShape::GetSupportFunction(ESupportMode inMode, SupportBuffer& inBuffer, Vec3Arg inScale) const
 {
 	switch (inMode)
 	{
@@ -159,7 +159,7 @@ const ConvexShape::Support *TriangleShape::GetSupportFunction(ESupportMode inMod
 	return nullptr;
 }
 
-void TriangleShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace &outVertices) const
+void TriangleShape::GetSupportingFace(const SubShapeID& inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace& outVertices) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 
@@ -196,16 +196,16 @@ MassProperties TriangleShape::GetMassProperties() const
 	return MassProperties();
 }
 
-Vec3 TriangleShape::GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLocalSurfacePosition) const
+Vec3 TriangleShape::GetSurfaceNormal(const SubShapeID& inSubShapeID, Vec3Arg inLocalSurfacePosition) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 
 	Vec3 cross = (mV2 - mV1).Cross(mV3 - mV1);
 	float len = cross.Length();
-	return len != 0.0f? cross / len : Vec3::sAxisY();
+	return len != 0.0f ? cross / len : Vec3::sAxisY();
 }
 
-void TriangleShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const Plane &inSurface, float &outTotalVolume, float &outSubmergedVolume, Vec3 &outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, RVec3Arg inBaseOffset)) const
+void TriangleShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const Plane& inSurface, float& outTotalVolume, float& outSubmergedVolume, Vec3& outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, RVec3Arg inBaseOffset)) const
 {
 	// A triangle has no volume
 	outTotalVolume = outSubmergedVolume = 0.0f;
@@ -213,7 +213,7 @@ void TriangleShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void TriangleShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
+void TriangleShape::Draw(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
 {
 	RVec3 v1 = inCenterOfMassTransform * (inScale * mV1);
 	RVec3 v2 = inCenterOfMassTransform * (inScale * mV2);
@@ -223,13 +223,13 @@ void TriangleShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTran
 		std::swap(v1, v2);
 
 	if (inDrawWireframe)
-		inRenderer->DrawWireTriangle(v1, v2, v3, inUseMaterialColors? GetMaterial()->GetDebugColor() : inColor);
+		inRenderer->DrawWireTriangle(v1, v2, v3, inUseMaterialColors ? GetMaterial()->GetDebugColor() : inColor);
 	else
-		inRenderer->DrawTriangle(v1, v2, v3, inUseMaterialColors? GetMaterial()->GetDebugColor() : inColor);
+		inRenderer->DrawTriangle(v1, v2, v3, inUseMaterialColors ? GetMaterial()->GetDebugColor() : inColor);
 }
 #endif // JPH_DEBUG_RENDERER
 
-bool TriangleShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubShapeIDCreator, RayCastResult &ioHit) const
+bool TriangleShape::CastRay(const RayCast& inRay, const SubShapeIDCreator& inSubShapeIDCreator, RayCastResult& ioHit) const
 {
 	float fraction = RayTriangle(inRay.mOrigin, inRay.mDirection, mV1, mV2, mV3);
 	if (fraction < ioHit.mFraction)
@@ -241,7 +241,7 @@ bool TriangleShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSub
 	return false;
 }
 
-void TriangleShape::CastRay(const RayCast &inRay, const RayCastSettings &inRayCastSettings, const SubShapeIDCreator &inSubShapeIDCreator, CastRayCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void TriangleShape::CastRay(const RayCast& inRay, const RayCastSettings& inRayCastSettings, const SubShapeIDCreator& inSubShapeIDCreator, CastRayCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
@@ -264,12 +264,12 @@ void TriangleShape::CastRay(const RayCast &inRay, const RayCastSettings &inRayCa
 	}
 }
 
-void TriangleShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubShapeIDCreator, CollidePointCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void TriangleShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator& inSubShapeIDCreator, CollidePointCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Can't be inside a triangle
 }
 
-void TriangleShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator &inVertices, uint inNumVertices, int inCollidingShapeIndex) const
+void TriangleShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator& inVertices, uint inNumVertices, int inCollidingShapeIndex) const
 {
 	CollideSoftBodyVerticesVsTriangles collider(inCenterOfMassTransform, inScale);
 
@@ -282,41 +282,41 @@ void TriangleShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Ve
 		}
 }
 
-void TriangleShape::sCollideConvexVsTriangle(const Shape *inShape1, const Shape *inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, const CollideShapeSettings &inCollideShapeSettings, CollideShapeCollector &ioCollector, [[maybe_unused]] const ShapeFilter &inShapeFilter)
+void TriangleShape::sCollideConvexVsTriangle(const Shape* inShape1, const Shape* inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, const CollideShapeSettings& inCollideShapeSettings, CollideShapeCollector& ioCollector, [[maybe_unused]] const ShapeFilter& inShapeFilter)
 {
 	JPH_ASSERT(inShape1->GetType() == EShapeType::Convex);
-	const ConvexShape *shape1 = static_cast<const ConvexShape *>(inShape1);
+	const ConvexShape* shape1 = static_cast<const ConvexShape*>(inShape1);
 	JPH_ASSERT(inShape2->GetSubType() == EShapeSubType::Triangle);
-	const TriangleShape *shape2 = static_cast<const TriangleShape *>(inShape2);
+	const TriangleShape* shape2 = static_cast<const TriangleShape*>(inShape2);
 
 	CollideConvexVsTriangles collider(shape1, inScale1, inScale2, inCenterOfMassTransform1, inCenterOfMassTransform2, inSubShapeIDCreator1.GetID(), inCollideShapeSettings, ioCollector);
 	collider.Collide(shape2->mV1, shape2->mV2, shape2->mV3, 0b111, inSubShapeIDCreator2.GetID());
 }
 
-void TriangleShape::sCollideSphereVsTriangle(const Shape *inShape1, const Shape *inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, const CollideShapeSettings &inCollideShapeSettings, CollideShapeCollector &ioCollector, [[maybe_unused]] const ShapeFilter &inShapeFilter)
+void TriangleShape::sCollideSphereVsTriangle(const Shape* inShape1, const Shape* inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, const CollideShapeSettings& inCollideShapeSettings, CollideShapeCollector& ioCollector, [[maybe_unused]] const ShapeFilter& inShapeFilter)
 {
 	JPH_ASSERT(inShape1->GetSubType() == EShapeSubType::Sphere);
-	const SphereShape *shape1 = static_cast<const SphereShape *>(inShape1);
+	const SphereShape* shape1 = static_cast<const SphereShape*>(inShape1);
 	JPH_ASSERT(inShape2->GetSubType() == EShapeSubType::Triangle);
-	const TriangleShape *shape2 = static_cast<const TriangleShape *>(inShape2);
+	const TriangleShape* shape2 = static_cast<const TriangleShape*>(inShape2);
 
 	CollideSphereVsTriangles collider(shape1, inScale1, inScale2, inCenterOfMassTransform1, inCenterOfMassTransform2, inSubShapeIDCreator1.GetID(), inCollideShapeSettings, ioCollector);
 	collider.Collide(shape2->mV1, shape2->mV2, shape2->mV3, 0b111, inSubShapeIDCreator2.GetID());
 }
 
-void TriangleShape::sCastConvexVsTriangle(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, const Shape *inShape, Vec3Arg inScale, [[maybe_unused]] const ShapeFilter &inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, CastShapeCollector &ioCollector)
+void TriangleShape::sCastConvexVsTriangle(const ShapeCast& inShapeCast, const ShapeCastSettings& inShapeCastSettings, const Shape* inShape, Vec3Arg inScale, [[maybe_unused]] const ShapeFilter& inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, CastShapeCollector& ioCollector)
 {
 	JPH_ASSERT(inShape->GetSubType() == EShapeSubType::Triangle);
-	const TriangleShape *shape = static_cast<const TriangleShape *>(inShape);
+	const TriangleShape* shape = static_cast<const TriangleShape*>(inShape);
 
 	CastConvexVsTriangles caster(inShapeCast, inShapeCastSettings, inScale, inCenterOfMassTransform2, inSubShapeIDCreator1, ioCollector);
 	caster.Cast(shape->mV1, shape->mV2, shape->mV3, 0b111, inSubShapeIDCreator2.GetID());
 }
 
-void TriangleShape::sCastSphereVsTriangle(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, const Shape *inShape, Vec3Arg inScale, [[maybe_unused]] const ShapeFilter &inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, CastShapeCollector &ioCollector)
+void TriangleShape::sCastSphereVsTriangle(const ShapeCast& inShapeCast, const ShapeCastSettings& inShapeCastSettings, const Shape* inShape, Vec3Arg inScale, [[maybe_unused]] const ShapeFilter& inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, CastShapeCollector& ioCollector)
 {
 	JPH_ASSERT(inShape->GetSubType() == EShapeSubType::Triangle);
-	const TriangleShape *shape = static_cast<const TriangleShape *>(inShape);
+	const TriangleShape* shape = static_cast<const TriangleShape*>(inShape);
 
 	CastSphereVsTriangles caster(inShapeCast, inShapeCastSettings, inScale, inCenterOfMassTransform2, inSubShapeIDCreator1, ioCollector);
 	caster.Cast(shape->mV1, shape->mV2, shape->mV3, 0b111, inSubShapeIDCreator2.GetID());
@@ -325,7 +325,7 @@ void TriangleShape::sCastSphereVsTriangle(const ShapeCast &inShapeCast, const Sh
 class TriangleShape::TSGetTrianglesContext
 {
 public:
-					TSGetTrianglesContext(Vec3Arg inV1, Vec3Arg inV2, Vec3Arg inV3) : mV1(inV1), mV2(inV2), mV3(inV3) { }
+	TSGetTrianglesContext(Vec3Arg inV1, Vec3Arg inV2, Vec3Arg inV3) : mV1(inV1), mV2(inV2), mV3(inV3) {}
 
 	Vec3			mV1;
 	Vec3			mV2;
@@ -334,7 +334,7 @@ public:
 	bool			mIsDone = false;
 };
 
-void TriangleShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
+void TriangleShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox& inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
 {
 	static_assert(sizeof(TSGetTrianglesContext) <= sizeof(GetTrianglesContext), "GetTrianglesContext too small");
 	JPH_ASSERT(IsAligned(&ioContext, alignof(TSGetTrianglesContext)));
@@ -344,12 +344,12 @@ void TriangleShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABo
 	new (&ioContext) TSGetTrianglesContext(m * mV1, m * mV2, m * mV3);
 }
 
-int TriangleShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials) const
+int TriangleShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
 {
 	static_assert(cGetTrianglesMinTrianglesRequested >= 3, "cGetTrianglesMinTrianglesRequested is too small");
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
 
-	TSGetTrianglesContext &context = (TSGetTrianglesContext &)ioContext;
+	TSGetTrianglesContext& context = (TSGetTrianglesContext&)ioContext;
 
 	// Only return the triangle the 1st time
 	if (context.mIsDone)
@@ -368,7 +368,7 @@ int TriangleShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTri
 	return 1;
 }
 
-void TriangleShape::SaveBinaryState(StreamOut &inStream) const
+void TriangleShape::SaveBinaryState(StreamOut& inStream) const
 {
 	ConvexShape::SaveBinaryState(inStream);
 
@@ -378,7 +378,7 @@ void TriangleShape::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mConvexRadius);
 }
 
-void TriangleShape::RestoreBinaryState(StreamIn &inStream)
+void TriangleShape::RestoreBinaryState(StreamIn& inStream)
 {
 	ConvexShape::RestoreBinaryState(inStream);
 
@@ -405,8 +405,8 @@ Vec3 TriangleShape::MakeScaleValid(Vec3Arg inScale) const
 
 void TriangleShape::sRegister()
 {
-	ShapeFunctions &f = ShapeFunctions::sGet(EShapeSubType::Triangle);
-	f.mConstruct = []() -> Shape * { return new TriangleShape; };
+	ShapeFunctions& f = ShapeFunctions::sGet(EShapeSubType::Triangle);
+	f.mConstruct = []() -> Shape* { return new TriangleShape; };
 	f.mColor = Color::sGreen;
 
 	for (EShapeSubType s : sConvexSubShapeTypes)

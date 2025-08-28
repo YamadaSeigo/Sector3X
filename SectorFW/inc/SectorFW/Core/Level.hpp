@@ -11,6 +11,7 @@
 #include "ECS/SystemScheduler.hpp"
 #include "Math/Transform.hpp"
 #include "partition.hpp"
+#include "RegistryTypes.h"
 
 #include "Util/logger.h"
 #include "Util/extract_type.hpp"
@@ -54,12 +55,18 @@ namespace SectorFW
 		 * @param _chunkHeight チャンクの高さ
 		 * @param _chunkCellSize チャンクのセルサイズ
 		 */
-		explicit Level(const std::string& name, ELevelState state = ELevelState::Main,
+		explicit Level(const std::string& name, EntityManagerRegistry& reg, ELevelState state = ELevelState::Main,
 			ChunkSizeType _chunkWidth = DefaultChunkWidth, ChunkSizeType _chunkHeight = DefaultChunkHeight,
 			ChunkSizeType _chunkCellSize = DefaultChunkCellSize) noexcept
 			: name(name), state(state), chunkCellSize(_chunkCellSize),
 			partition(_chunkWidth, _chunkHeight, _chunkCellSize) {
+			id = LevelID(nextID.fetch_add(1, std::memory_order_relaxed));
+			partition.RegisterAllChunks(reg, id);
 		}
+		/**
+		 * @brief LevelIDの取得関数
+		 */
+		LevelID GetID() const noexcept { return id; }
 		/**
 		 * @brief 更新処理
 		 */
@@ -111,7 +118,7 @@ namespace SectorFW
 				auto transform = extract_first_of_type<TransformType>(components...);
 				if (transform)
 				{
-					auto chunk = partition.GetChunk(transform->location); // Transformの位置に基づいてチャンクを取得
+					auto chunk = partition.GetChunk(transform->location, EOutOfBoundsPolicy::ClampToEdge); // Transformの位置に基づいてチャンクを取得
 					if (chunk)
 					{
 						id = (*chunk)->GetEntityManager().AddEntity<Components...>(mask, components...);
@@ -157,7 +164,20 @@ namespace SectorFW
 		 * @return ELevelState レベルの状態
 		 */
 		ELevelState GetState() const noexcept { return state; }
+		
+		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept {
+			return partition.GetChunk(location, policy);
+		}
 	private:
+		/**
+		 * @brief レベルの世代を生成するための静的なアトミック変数
+		 * @detail レベルごとに一意な世代を生成するために使用されます。
+		 */
+		static inline std::atomic<LevelID> nextID;
+		/**
+		 * @brief レベルの一意なID
+		 */
+		LevelID id = 0; // レベルの一意なID（必要に応じて使用）
 		/**
 		 * @brief レベルの名前
 		 */

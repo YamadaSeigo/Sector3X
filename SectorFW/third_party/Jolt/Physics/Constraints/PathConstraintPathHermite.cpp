@@ -15,19 +15,19 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(PathConstraintPathHermite::Point)
 {
 	JPH_ADD_ATTRIBUTE(PathConstraintPathHermite::Point, mPosition)
-	JPH_ADD_ATTRIBUTE(PathConstraintPathHermite::Point, mTangent)
-	JPH_ADD_ATTRIBUTE(PathConstraintPathHermite::Point, mNormal)
+		JPH_ADD_ATTRIBUTE(PathConstraintPathHermite::Point, mTangent)
+		JPH_ADD_ATTRIBUTE(PathConstraintPathHermite::Point, mNormal)
 }
 
 JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(PathConstraintPathHermite)
 {
 	JPH_ADD_BASE_CLASS(PathConstraintPathHermite, PathConstraintPath)
 
-	JPH_ADD_ATTRIBUTE(PathConstraintPathHermite, mPoints)
+		JPH_ADD_ATTRIBUTE(PathConstraintPathHermite, mPoints)
 }
 
 // Calculate position and tangent for a Cubic Hermite Spline segment
-static inline void sCalculatePositionAndTangent(Vec3Arg inP1, Vec3Arg inM1, Vec3Arg inP2, Vec3Arg inM2, float inT, Vec3 &outPosition, Vec3 &outTangent)
+static inline void sCalculatePositionAndTangent(Vec3Arg inP1, Vec3Arg inM1, Vec3Arg inP2, Vec3Arg inM2, float inT, Vec3& outPosition, Vec3& outTangent)
 {
 	// Calculate factors for Cubic Hermite Spline
 	// See: https://en.wikipedia.org/wiki/Cubic_Hermite_spline
@@ -53,7 +53,7 @@ static inline void sCalculatePositionAndTangent(Vec3Arg inP1, Vec3Arg inM1, Vec3
 // the interval [0, 1] is too big for Newton Raphson to work on because it is solving a 5th degree polynomial which may
 // have multiple local minima that are not the root. This happens especially when the path is straight (tangents aligned with inP2 - inP1).
 // Based on the bisection method: https://en.wikipedia.org/wiki/Bisection_method
-static inline void sCalculateClosestPointThroughBisection(Vec3Arg inP1, Vec3Arg inM1, Vec3Arg inP2, Vec3Arg inM2, float &outTMin, float &outTMax)
+static inline void sCalculateClosestPointThroughBisection(Vec3Arg inP1, Vec3Arg inM1, Vec3Arg inP2, Vec3Arg inM2, float& outTMin, float& outTMax)
 {
 	outTMin = 0.0f;
 	outTMax = 1.0f;
@@ -113,7 +113,7 @@ static inline void sCalculateClosestPointThroughBisection(Vec3Arg inP1, Vec3Arg 
 
 // Calculate the closest point to the origin for a Cubic Hermite Spline segment
 // Only considers the range t e [inTMin, inTMax] and will stop as soon as the closest point falls outside of that range
-static inline float sCalculateClosestPointThroughNewtonRaphson(Vec3Arg inP1, Vec3Arg inM1, Vec3Arg inP2, Vec3Arg inM2, float inTMin, float inTMax, float &outDistanceSq)
+static inline float sCalculateClosestPointThroughNewtonRaphson(Vec3Arg inP1, Vec3Arg inM1, Vec3Arg inP2, Vec3Arg inM2, float inTMin, float inTMax, float& outDistanceSq)
 {
 	// This is the closest position on the curve to the origin that we found
 	Vec3 position;
@@ -165,7 +165,7 @@ static inline float sCalculateClosestPointThroughNewtonRaphson(Vec3Arg inP1, Vec
 	return t;
 }
 
-void PathConstraintPathHermite::GetIndexAndT(float inFraction, int &outIndex, float &outT) const
+void PathConstraintPathHermite::GetIndexAndT(float inFraction, int& outIndex, float& outT) const
 {
 	int num_points = int(mPoints.size());
 
@@ -214,10 +214,10 @@ float PathConstraintPathHermite::GetClosestPoint(Vec3Arg inPosition, float inFra
 	float best_t = float(num_points - 1);
 
 	// Loop over all points
-	for (int i = 0, max_i = IsLooping()? num_points : num_points - 1; i < max_i; ++i)
+	for (int i = 0, max_i = IsLooping() ? num_points : num_points - 1; i < max_i; ++i)
 	{
-		const Point &p1 = mPoints[i];
-		const Point &p2 = mPoints[(i + 1) % num_points];
+		const Point& p1 = mPoints[i];
+		const Point& p2 = mPoints[(i + 1) % num_points];
 
 		// Make the curve relative to inPosition
 		Vec3 p1_pos = p1.mPosition - inPosition;
@@ -262,7 +262,7 @@ float PathConstraintPathHermite::GetClosestPoint(Vec3Arg inPosition, float inFra
 	return best_t;
 }
 
-void PathConstraintPathHermite::GetPointOnPath(float inFraction, Vec3 &outPathPosition, Vec3 &outPathTangent, Vec3 &outPathNormal, Vec3 &outPathBinormal) const
+void PathConstraintPathHermite::GetPointOnPath(float inFraction, Vec3& outPathPosition, Vec3& outPathTangent, Vec3& outPathNormal, Vec3& outPathBinormal) const
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -272,8 +272,8 @@ void PathConstraintPathHermite::GetPointOnPath(float inFraction, Vec3 &outPathPo
 	GetIndexAndT(inFraction, index, t);
 
 	// Get the points on the segment
-	const Point &p1 = mPoints[index];
-	const Point &p2 = mPoints[(index + 1) % int(mPoints.size())];
+	const Point& p1 = mPoints[index];
+	const Point& p2 = mPoints[(index + 1) % int(mPoints.size())];
 
 	// Calculate the position and tangent on the path
 	Vec3 tangent;
@@ -291,14 +291,14 @@ void PathConstraintPathHermite::GetPointOnPath(float inFraction, Vec3 &outPathPo
 	JPH_ASSERT(outPathNormal.IsNormalized());
 }
 
-void PathConstraintPathHermite::SaveBinaryState(StreamOut &inStream) const
+void PathConstraintPathHermite::SaveBinaryState(StreamOut& inStream) const
 {
 	PathConstraintPath::SaveBinaryState(inStream);
 
 	inStream.Write(mPoints);
 }
 
-void PathConstraintPathHermite::RestoreBinaryState(StreamIn &inStream)
+void PathConstraintPathHermite::RestoreBinaryState(StreamIn& inStream)
 {
 	PathConstraintPath::RestoreBinaryState(inStream);
 

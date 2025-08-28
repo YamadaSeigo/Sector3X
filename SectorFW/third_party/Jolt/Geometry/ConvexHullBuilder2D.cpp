@@ -7,12 +7,12 @@
 #include <Jolt/Geometry/ConvexHullBuilder2D.h>
 
 #ifdef JPH_CONVEX_BUILDER_2D_DEBUG
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif
 
 JPH_NAMESPACE_BEGIN
 
-void ConvexHullBuilder2D::Edge::CalculateNormalAndCenter(const Vec3 *inPositions)
+void ConvexHullBuilder2D::Edge::CalculateNormalAndCenter(const Vec3* inPositions)
 {
 	Vec3 p1 = inPositions[mStartIdx];
 	Vec3 p2 = inPositions[mNextEdge->mStartIdx];
@@ -29,7 +29,7 @@ void ConvexHullBuilder2D::Edge::CalculateNormalAndCenter(const Vec3 *inPositions
 	mNormal = Vec3(edge.GetY(), -edge.GetX(), 0);
 }
 
-ConvexHullBuilder2D::ConvexHullBuilder2D(const Positions &inPositions) :
+ConvexHullBuilder2D::ConvexHullBuilder2D(const Positions& inPositions) :
 	mPositions(inPositions)
 {
 #ifdef JPH_CONVEX_BUILDER_2D_DEBUG
@@ -66,10 +66,10 @@ void ConvexHullBuilder2D::FreeEdges()
 	if (mFirstEdge == nullptr)
 		return;
 
-	Edge *edge = mFirstEdge;
+	Edge* edge = mFirstEdge;
 	do
 	{
-		Edge *next = edge->mNextEdge;
+		Edge* next = edge->mNextEdge;
 		delete edge;
 		edge = next;
 	} while (edge != mFirstEdge);
@@ -90,7 +90,7 @@ void ConvexHullBuilder2D::ValidateEdges() const
 
 	int count = 0;
 
-	Edge *edge = mFirstEdge;
+	Edge* edge = mFirstEdge;
 	do
 	{
 		// Validate connectivity
@@ -107,15 +107,15 @@ void ConvexHullBuilder2D::ValidateEdges() const
 
 #endif // JPH_ENABLE_ASSERTS
 
-void ConvexHullBuilder2D::AssignPointToEdge(int inPositionIdx, const Array<Edge *> &inEdges) const
+void ConvexHullBuilder2D::AssignPointToEdge(int inPositionIdx, const Array<Edge*>& inEdges) const
 {
 	Vec3 point = mPositions[inPositionIdx];
 
-	Edge *best_edge = nullptr;
+	Edge* best_edge = nullptr;
 	float best_dist_sq = 0.0f;
 
 	// Test against all edges
-	for (Edge *edge : inEdges)
+	for (Edge* edge : inEdges)
 	{
 		// Determine distance to edge
 		float dot = edge->mNormal.Dot(point - edge->mCenter);
@@ -147,7 +147,7 @@ void ConvexHullBuilder2D::AssignPointToEdge(int inPositionIdx, const Array<Edge 
 	}
 }
 
-ConvexHullBuilder2D::EResult ConvexHullBuilder2D::Initialize(int inIdx1, int inIdx2, int inIdx3, int inMaxVertices, float inTolerance, Edges &outEdges)
+ConvexHullBuilder2D::EResult ConvexHullBuilder2D::Initialize(int inIdx1, int inIdx2, int inIdx3, int inMaxVertices, float inTolerance, Edges& outEdges)
 {
 	// Clear any leftovers
 	FreeEdges();
@@ -172,9 +172,9 @@ ConvexHullBuilder2D::EResult ConvexHullBuilder2D::Initialize(int inIdx1, int inI
 		std::swap(inIdx1, inIdx2);
 
 	// Create and link edges
-	Edge *e1 = new Edge(inIdx1);
-	Edge *e2 = new Edge(inIdx2);
-	Edge *e3 = new Edge(inIdx3);
+	Edge* e1 = new Edge(inIdx1);
+	Edge* e2 = new Edge(inIdx2);
+	Edge* e3 = new Edge(inIdx3);
 	e1->mNextEdge = e2;
 	e1->mPrevEdge = e3;
 	e2->mNextEdge = e3;
@@ -185,8 +185,8 @@ ConvexHullBuilder2D::EResult ConvexHullBuilder2D::Initialize(int inIdx1, int inI
 	mNumEdges = 3;
 
 	// Build the initial conflict lists
-	Array<Edge *> edges { e1, e2, e3 };
-	for (Edge *edge : edges)
+	Array<Edge*> edges{ e1, e2, e3 };
+	for (Edge* edge : edges)
 		edge->CalculateNormalAndCenter(mPositions.data());
 	for (int idx = 0; idx < (int)mPositions.size(); ++idx)
 		if (idx != inIdx1 && idx != inIdx2 && idx != inIdx3)
@@ -194,7 +194,7 @@ ConvexHullBuilder2D::EResult ConvexHullBuilder2D::Initialize(int inIdx1, int inI
 
 	JPH_IF_ENABLE_ASSERTS(ValidateEdges();)
 #ifdef JPH_CONVEX_BUILDER_2D_DEBUG
-	DrawState();
+		DrawState();
 #endif
 
 	// Add the remaining points to the hull
@@ -208,9 +208,9 @@ ConvexHullBuilder2D::EResult ConvexHullBuilder2D::Initialize(int inIdx1, int inI
 		}
 
 		// Find the edge with the furthest point on it
-		Edge *edge_with_furthest_point = nullptr;
+		Edge* edge_with_furthest_point = nullptr;
 		float furthest_dist_sq = 0.0f;
-		Edge *edge = mFirstEdge;
+		Edge* edge = mFirstEdge;
 		do
 		{
 			if (edge->mFurthestPointDistanceSq > furthest_dist_sq)
@@ -231,19 +231,19 @@ ConvexHullBuilder2D::EResult ConvexHullBuilder2D::Initialize(int inIdx1, int inI
 		Vec3 furthest_point = mPositions[furthest_point_idx];
 
 		// Find the horizon of edges that need to be removed
-		Edge *first_edge = edge_with_furthest_point;
+		Edge* first_edge = edge_with_furthest_point;
 		do
 		{
-			Edge *prev = first_edge->mPrevEdge;
+			Edge* prev = first_edge->mPrevEdge;
 			if (!prev->IsFacing(furthest_point))
 				break;
 			first_edge = prev;
 		} while (first_edge != edge_with_furthest_point);
 
-		Edge *last_edge = edge_with_furthest_point;
+		Edge* last_edge = edge_with_furthest_point;
 		do
 		{
-			Edge *next = last_edge->mNextEdge;
+			Edge* next = last_edge->mNextEdge;
 			if (!next->IsFacing(furthest_point))
 				break;
 			last_edge = next;
@@ -262,14 +262,14 @@ ConvexHullBuilder2D::EResult ConvexHullBuilder2D::Initialize(int inIdx1, int inI
 		mNumEdges += 2;
 
 		// Calculate normals
-		Array<Edge *> new_edges { e1, e2 };
-		for (Edge *new_edge : new_edges)
+		Array<Edge*> new_edges{ e1, e2 };
+		for (Edge* new_edge : new_edges)
 			new_edge->CalculateNormalAndCenter(mPositions.data());
 
 		// Delete the old edges
 		for (;;)
 		{
-			Edge *next = first_edge->mNextEdge;
+			Edge* next = first_edge->mNextEdge;
 
 			// Redistribute points in conflict list
 			for (int idx : first_edge->mConflictList)
@@ -285,14 +285,14 @@ ConvexHullBuilder2D::EResult ConvexHullBuilder2D::Initialize(int inIdx1, int inI
 		}
 
 		JPH_IF_ENABLE_ASSERTS(ValidateEdges();)
-	#ifdef JPH_CONVEX_BUILDER_2D_DEBUG
-		DrawState();
-	#endif
+#ifdef JPH_CONVEX_BUILDER_2D_DEBUG
+			DrawState();
+#endif
 	}
 
 	// Convert the edge list to a list of indices
 	outEdges.reserve(mNumEdges);
-	Edge *edge = mFirstEdge;
+	Edge* edge = mFirstEdge;
 	do
 	{
 		outEdges.push_back(edge->mStartIdx);
@@ -308,10 +308,10 @@ void ConvexHullBuilder2D::DrawState()
 {
 	int color_idx = 0;
 
-	const Edge *edge = mFirstEdge;
+	const Edge* edge = mFirstEdge;
 	do
 	{
-		const Edge *next = edge->mNextEdge;
+		const Edge* next = edge->mNextEdge;
 
 		// Get unique color per edge
 		Color color = Color::sGetDistinctColor(color_idx++);

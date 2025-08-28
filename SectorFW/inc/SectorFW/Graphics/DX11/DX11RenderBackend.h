@@ -67,6 +67,16 @@ namespace SectorFW
 				context->VSSetConstantBuffers(0, (UINT)buffers.size(), buffers.data());
 			}
 
+			void BeginFrameUploadImpl(const InstanceData* framePool, uint32_t instCount)
+			{
+				D3D11_MAPPED_SUBRESOURCE m{};
+				context->Map(m_instanceSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
+				memcpy(m.pData, framePool, instCount * sizeof(InstanceData));
+				context->Unmap(m_instanceSB.Get(), 0);
+
+				context->VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); // t0 バインド
+			}
+
 			void ExecuteDrawImpl(const DrawCommand& cmd, bool usePSORastarizer);
 
 			void ExecuteDrawInstancedImpl(const std::vector<DrawCommand>& cmds, bool usePSORasterizer);
@@ -74,15 +84,31 @@ namespace SectorFW
 			void ProcessDeferredDeletesImpl(uint64_t currentFrame);
 
 		private:
-			void DrawInstanced(MeshHandle meshHandle, MaterialHandle matHandle, PSOHandle psoHandle,
-				const std::vector<InstanceData>& instances, bool usePSORasterizer);
+			void DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer);
 
 			HRESULT CreateInstanceBuffer();
 			HRESULT CreateRasterizerStates();
 			HRESULT CreateBlendStates();
 			HRESULT CreateDepthStencilStates();
 
-			void UpdateInstanceBuffer(const std::vector<InstanceData>& instances);
+			//void UpdateInstanceBuffer(const void* pInstancesData, size_t dataSize);
+
+			void BeginIndexStream()
+			{
+				D3D11_MAPPED_SUBRESOURCE m{};
+				context->Map(m_instIndexSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
+				m_idxMapped = static_cast<std::byte*>(m.pData);
+				m_idxHead = 0;
+
+				ID3D11ShaderResourceView* srvs[] = { m_instanceSRV.Get(), m_instIndexSRV.Get() };
+				context->VSSetShaderResources(0, 2, srvs); // t0,t1 を VS にセット
+			}
+
+			void EndIndexStream()
+			{
+				context->Unmap(m_instIndexSB.Get(), 0);
+				m_idxMapped = nullptr;
+			}
 
 		private:
 			ID3D11Device* device;
@@ -96,7 +122,20 @@ namespace SectorFW
 			DX11SamplerManager* samplerManager;
 			DX11ModelAssetManager* modelAssetManager;
 
-			Microsoft::WRL::ComPtr<ID3D11Buffer> instanceBuffer;
+			// フレーム行列用 StructuredBuffer (SRV)
+			ComPtr<ID3D11Buffer>            m_instanceSB;
+			ComPtr<ID3D11ShaderResourceView> m_instanceSRV;
+
+			// インデックス列用 StructuredBuffer (SRV)  ※uint（4B/要素）
+			ComPtr<ID3D11Buffer>            m_instIndexSB;
+			ComPtr<ID3D11ShaderResourceView> m_instIndexSRV;
+
+			// PerDraw 定数バッファ（gIndexBase, gIndexCount）
+			ComPtr<ID3D11Buffer>            m_perDrawCB;
+
+			// CPU書き込み用ポインタ（Mapした間だけ有効）
+			std::byte* m_idxMapped = nullptr;
+			uint32_t    m_idxHead = 0;  // 書き込みカーソル
 
 			ComPtr<ID3D11RasterizerState> rasterizerStates[(size_t)RasterizerStateID::MAX_COUNT];
 			ComPtr<ID3D11BlendState> blendStates[(size_t)BlendStateID::MAX_COUNT];

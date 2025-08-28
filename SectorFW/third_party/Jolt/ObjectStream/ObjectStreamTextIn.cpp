@@ -10,12 +10,12 @@
 
 JPH_NAMESPACE_BEGIN
 
-ObjectStreamTextIn::ObjectStreamTextIn(istream &inStream) :
+ObjectStreamTextIn::ObjectStreamTextIn(istream& inStream) :
 	ObjectStreamIn(inStream)
 {
 }
 
-bool ObjectStreamTextIn::ReadDataType(EOSDataType &outType)
+bool ObjectStreamTextIn::ReadDataType(EOSDataType& outType)
 {
 	String token;
 	if (ReadWord(token))
@@ -75,12 +75,12 @@ bool ObjectStreamTextIn::ReadDataType(EOSDataType &outType)
 	return false;
 }
 
-bool ObjectStreamTextIn::ReadName(String &outName)
+bool ObjectStreamTextIn::ReadName(String& outName)
 {
 	return ReadWord(outName);
 }
 
-bool ObjectStreamTextIn::ReadIdentifier(Identifier &outIdentifier)
+bool ObjectStreamTextIn::ReadIdentifier(Identifier& outIdentifier)
 {
 	String token;
 	if (!ReadWord(token))
@@ -94,12 +94,12 @@ bool ObjectStreamTextIn::ReadIdentifier(Identifier &outIdentifier)
 	return true;
 }
 
-bool ObjectStreamTextIn::ReadCount(uint32 &outCount)
+bool ObjectStreamTextIn::ReadCount(uint32& outCount)
 {
 	return ReadPrimitiveData(outCount);
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(uint8 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(uint8& outPrimitive)
 {
 	String token;
 	if (!ReadWord(token))
@@ -115,7 +115,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(uint8 &outPrimitive)
 	return false;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(uint16 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(uint16& outPrimitive)
 {
 	String token;
 	if (!ReadWord(token))
@@ -131,7 +131,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(uint16 &outPrimitive)
 	return false;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(int &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(int& outPrimitive)
 {
 	String token;
 	if (!ReadWord(token))
@@ -141,7 +141,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(int &outPrimitive)
 	return !stream.fail();
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(uint32 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(uint32& outPrimitive)
 {
 	String token;
 	if (!ReadWord(token))
@@ -151,7 +151,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(uint32 &outPrimitive)
 	return !stream.fail();
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(uint64 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(uint64& outPrimitive)
 {
 	String token;
 	if (!ReadWord(token))
@@ -161,7 +161,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(uint64 &outPrimitive)
 	return !stream.fail();
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(float &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(float& outPrimitive)
 {
 	String token;
 	if (!ReadWord(token))
@@ -171,7 +171,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(float &outPrimitive)
 	return !stream.fail();
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(double &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(double& outPrimitive)
 {
 	String token;
 	if (!ReadWord(token))
@@ -181,7 +181,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(double &outPrimitive)
 	return !stream.fail();
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(bool &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(bool& outPrimitive)
 {
 	String token;
 	if (!ReadWord(token))
@@ -191,7 +191,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(bool &outPrimitive)
 	return outPrimitive || token == "false";
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(String &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(String& outPrimitive)
 {
 	outPrimitive.clear();
 
@@ -281,7 +281,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(String &outPrimitive)
 	return false;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(Float3 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(Float3& outPrimitive)
 {
 	float x, y, z;
 	if (!ReadPrimitiveData(x) || !ReadPrimitiveData(y) || !ReadPrimitiveData(z))
@@ -290,7 +290,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(Float3 &outPrimitive)
 	return true;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(Double3 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(Double3& outPrimitive)
 {
 	double x, y, z;
 	if (!ReadPrimitiveData(x) || !ReadPrimitiveData(y) || !ReadPrimitiveData(z))
@@ -299,7 +299,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(Double3 &outPrimitive)
 	return true;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(Vec3 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(Vec3& outPrimitive)
 {
 	float x, y, z;
 	if (!ReadPrimitiveData(x) || !ReadPrimitiveData(y) || !ReadPrimitiveData(z))
@@ -308,7 +308,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(Vec3 &outPrimitive)
 	return true;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(DVec3 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(DVec3& outPrimitive)
 {
 	double x, y, z;
 	if (!ReadPrimitiveData(x) || !ReadPrimitiveData(y) || !ReadPrimitiveData(z))
@@ -317,7 +317,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(DVec3 &outPrimitive)
 	return true;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(Vec4 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(Vec4& outPrimitive)
 {
 	float x, y, z, w;
 	if (!ReadPrimitiveData(x) || !ReadPrimitiveData(y) || !ReadPrimitiveData(z) || !ReadPrimitiveData(w))
@@ -326,7 +326,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(Vec4 &outPrimitive)
 	return true;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(Quat &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(Quat& outPrimitive)
 {
 	float x, y, z, w;
 	if (!ReadPrimitiveData(x) || !ReadPrimitiveData(y) || !ReadPrimitiveData(z) || !ReadPrimitiveData(w))
@@ -335,7 +335,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(Quat &outPrimitive)
 	return true;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(Mat44 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(Mat44& outPrimitive)
 {
 	Vec4 c0, c1, c2, c3;
 	if (!ReadPrimitiveData(c0) || !ReadPrimitiveData(c1) || !ReadPrimitiveData(c2) || !ReadPrimitiveData(c3))
@@ -344,7 +344,7 @@ bool ObjectStreamTextIn::ReadPrimitiveData(Mat44 &outPrimitive)
 	return true;
 }
 
-bool ObjectStreamTextIn::ReadPrimitiveData(DMat44 &outPrimitive)
+bool ObjectStreamTextIn::ReadPrimitiveData(DMat44& outPrimitive)
 {
 	Vec4 c0, c1, c2;
 	DVec3 c3;
@@ -354,13 +354,13 @@ bool ObjectStreamTextIn::ReadPrimitiveData(DMat44 &outPrimitive)
 	return true;
 }
 
-bool ObjectStreamTextIn::ReadChar(char &outChar)
+bool ObjectStreamTextIn::ReadChar(char& outChar)
 {
 	mStream.get(outChar);
 	return !mStream.eof();
 }
 
-bool ObjectStreamTextIn::ReadWord(String &outWord)
+bool ObjectStreamTextIn::ReadWord(String& outWord)
 {
 	outWord.clear();
 

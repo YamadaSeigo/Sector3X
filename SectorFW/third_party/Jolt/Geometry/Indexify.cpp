@@ -9,27 +9,27 @@
 
 JPH_NAMESPACE_BEGIN
 
-static JPH_INLINE const Float3 &sIndexifyGetFloat3(const TriangleList &inTriangles, uint32 inVertexIndex)
+static JPH_INLINE const Float3& sIndexifyGetFloat3(const TriangleList& inTriangles, uint32 inVertexIndex)
 {
 	return inTriangles[inVertexIndex / 3].mV[inVertexIndex % 3];
 }
 
-static JPH_INLINE Vec3 sIndexifyGetVec3(const TriangleList &inTriangles, uint32 inVertexIndex)
+static JPH_INLINE Vec3 sIndexifyGetVec3(const TriangleList& inTriangles, uint32 inVertexIndex)
 {
 	return Vec3::sLoadFloat3Unsafe(sIndexifyGetFloat3(inTriangles, inVertexIndex));
 }
 
-static void sIndexifyVerticesBruteForce(const TriangleList &inTriangles, const uint32 *inVertexIndices, const uint32 *inVertexIndicesEnd, Array<uint32> &ioWeldedVertices, float inVertexWeldDistance)
+static void sIndexifyVerticesBruteForce(const TriangleList& inTriangles, const uint32* inVertexIndices, const uint32* inVertexIndicesEnd, Array<uint32>& ioWeldedVertices, float inVertexWeldDistance)
 {
 	float weld_dist_sq = Square(inVertexWeldDistance);
 
 	// Compare every vertex
-	for (const uint32 *v1_idx = inVertexIndices; v1_idx < inVertexIndicesEnd; ++v1_idx)
+	for (const uint32* v1_idx = inVertexIndices; v1_idx < inVertexIndicesEnd; ++v1_idx)
 	{
 		Vec3 v1 = sIndexifyGetVec3(inTriangles, *v1_idx);
 
 		// with every other vertex...
-		for (const uint32 *v2_idx = v1_idx + 1; v2_idx < inVertexIndicesEnd; ++v2_idx)
+		for (const uint32* v2_idx = v1_idx + 1; v2_idx < inVertexIndicesEnd; ++v2_idx)
 		{
 			Vec3 v2 = sIndexifyGetVec3(inTriangles, *v2_idx);
 
@@ -70,7 +70,7 @@ static void sIndexifyVerticesBruteForce(const TriangleList &inTriangles, const u
 	}
 }
 
-static void sIndexifyVerticesRecursively(const TriangleList &inTriangles, uint32 *ioVertexIndices, uint inNumVertices, uint32 *ioScratch, Array<uint32> &ioWeldedVertices, float inVertexWeldDistance, uint inMaxRecursion)
+static void sIndexifyVerticesRecursively(const TriangleList& inTriangles, uint32* ioVertexIndices, uint inNumVertices, uint32* ioScratch, Array<uint32>& ioWeldedVertices, float inVertexWeldDistance, uint inMaxRecursion)
 {
 	// Check if we have few enough vertices to do a brute force search
 	// Or if we've recursed too deep (this means we chipped off a few vertices each iteration because all points are very close)
@@ -82,7 +82,7 @@ static void sIndexifyVerticesRecursively(const TriangleList &inTriangles, uint32
 
 	// Calculate bounds
 	AABox bounds;
-	for (const uint32 *v = ioVertexIndices, *v_end = ioVertexIndices + inNumVertices; v < v_end; ++v)
+	for (const uint32* v = ioVertexIndices, *v_end = ioVertexIndices + inNumVertices; v < v_end; ++v)
 		bounds.Encapsulate(sIndexifyGetVec3(inTriangles, *v));
 
 	// Determine split plane
@@ -90,8 +90,8 @@ static void sIndexifyVerticesRecursively(const TriangleList &inTriangles, uint32
 	float split_value = bounds.GetCenter()[split_axis];
 
 	// Partition vertices
-	uint32 *v_read = ioVertexIndices, *v_write = ioVertexIndices, *v_end = ioVertexIndices + inNumVertices;
-	uint32 *scratch = ioScratch;
+	uint32* v_read = ioVertexIndices, * v_write = ioVertexIndices, * v_end = ioVertexIndices + inNumVertices;
+	uint32* scratch = ioScratch;
 	while (v_read < v_end)
 	{
 		// Calculate distance to plane
@@ -136,7 +136,7 @@ static void sIndexifyVerticesRecursively(const TriangleList &inTriangles, uint32
 	sIndexifyVerticesRecursively(inTriangles, ioVertexIndices + num_vertices_left, num_vertices_right + num_vertices_on_both_sides, ioScratch, ioWeldedVertices, inVertexWeldDistance, max_recursion);
 }
 
-void Indexify(const TriangleList &inTriangles, VertexList &outVertices, IndexedTriangleList &outTriangles, float inVertexWeldDistance)
+void Indexify(const TriangleList& inTriangles, VertexList& outVertices, IndexedTriangleList& outTriangles, float inVertexWeldDistance)
 {
 	uint num_triangles = (uint)inTriangles.size();
 	uint num_vertices = num_triangles * 3;
@@ -205,13 +205,13 @@ void Indexify(const TriangleList &inTriangles, VertexList &outVertices, IndexedT
 	}
 }
 
-void Deindexify(const VertexList &inVertices, const IndexedTriangleList &inTriangles, TriangleList &outTriangles)
+void Deindexify(const VertexList& inVertices, const IndexedTriangleList& inTriangles, TriangleList& outTriangles)
 {
 	outTriangles.resize(inTriangles.size());
 	for (size_t t = 0; t < inTriangles.size(); ++t)
 	{
-		const IndexedTriangle &in = inTriangles[t];
-		Triangle &out = outTriangles[t];
+		const IndexedTriangle& in = inTriangles[t];
+		Triangle& out = outTriangles[t];
 		out.mMaterialIndex = in.mMaterialIndex;
 		out.mUserData = in.mUserData;
 		for (int v = 0; v < 3; ++v)

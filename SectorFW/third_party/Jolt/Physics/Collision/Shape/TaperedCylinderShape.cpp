@@ -14,7 +14,7 @@
 #include <Jolt/Core/StreamIn.h>
 #include <Jolt/Core/StreamOut.h>
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -36,10 +36,10 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(TaperedCylinderShapeSettings)
 {
 	JPH_ADD_BASE_CLASS(TaperedCylinderShapeSettings, ConvexShapeSettings)
 
-	JPH_ADD_ATTRIBUTE(TaperedCylinderShapeSettings, mHalfHeight)
-	JPH_ADD_ATTRIBUTE(TaperedCylinderShapeSettings, mTopRadius)
-	JPH_ADD_ATTRIBUTE(TaperedCylinderShapeSettings, mBottomRadius)
-	JPH_ADD_ATTRIBUTE(TaperedCylinderShapeSettings, mConvexRadius)
+		JPH_ADD_ATTRIBUTE(TaperedCylinderShapeSettings, mHalfHeight)
+		JPH_ADD_ATTRIBUTE(TaperedCylinderShapeSettings, mTopRadius)
+		JPH_ADD_ATTRIBUTE(TaperedCylinderShapeSettings, mBottomRadius)
+		JPH_ADD_ATTRIBUTE(TaperedCylinderShapeSettings, mConvexRadius)
 }
 
 ShapeSettings::ShapeResult TaperedCylinderShapeSettings::Create() const
@@ -66,7 +66,7 @@ ShapeSettings::ShapeResult TaperedCylinderShapeSettings::Create() const
 	return mCachedResult;
 }
 
-TaperedCylinderShapeSettings::TaperedCylinderShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, float inConvexRadius, const PhysicsMaterial *inMaterial) :
+TaperedCylinderShapeSettings::TaperedCylinderShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, float inConvexRadius, const PhysicsMaterial* inMaterial) :
 	ConvexShapeSettings(inMaterial),
 	mHalfHeight(inHalfHeightOfTaperedCylinder),
 	mTopRadius(inTopRadius),
@@ -75,7 +75,7 @@ TaperedCylinderShapeSettings::TaperedCylinderShapeSettings(float inHalfHeightOfT
 {
 }
 
-TaperedCylinderShape::TaperedCylinderShape(const TaperedCylinderShapeSettings &inSettings, ShapeResult &outResult) :
+TaperedCylinderShape::TaperedCylinderShape(const TaperedCylinderShapeSettings& inSettings, ShapeResult& outResult) :
 	ConvexShape(EShapeSubType::TaperedCylinder, inSettings, outResult),
 	mTopRadius(inSettings.mTopRadius),
 	mBottomRadius(inSettings.mBottomRadius),
@@ -147,7 +147,7 @@ TaperedCylinderShape::TaperedCylinderShape(const TaperedCylinderShapeSettings &i
 class TaperedCylinderShape::TaperedCylinder final : public Support
 {
 public:
-					TaperedCylinder(float inTop, float inBottom, float inTopRadius, float inBottomRadius, float inConvexRadius) :
+	TaperedCylinder(float inTop, float inBottom, float inTopRadius, float inBottomRadius, float inConvexRadius) :
 		mTop(inTop),
 		mBottom(inBottom),
 		mTopRadius(inTopRadius),
@@ -166,7 +166,7 @@ public:
 		{
 			Vec3 top_support((mTopRadius * x) / o, mTop, (mTopRadius * z) / o);
 			Vec3 bottom_support((mBottomRadius * x) / o, mBottom, (mBottomRadius * z) / o);
-			return inDirection.Dot(top_support) > inDirection.Dot(bottom_support)? top_support : bottom_support;
+			return inDirection.Dot(top_support) > inDirection.Dot(bottom_support) ? top_support : bottom_support;
 		}
 		else
 		{
@@ -190,7 +190,7 @@ private:
 	float			mConvexRadius;
 };
 
-JPH_INLINE void TaperedCylinderShape::GetScaled(Vec3Arg inScale, float &outTop, float &outBottom, float &outTopRadius, float &outBottomRadius, float &outConvexRadius) const
+JPH_INLINE void TaperedCylinderShape::GetScaled(Vec3Arg inScale, float& outTop, float& outBottom, float& outTopRadius, float& outBottomRadius, float& outConvexRadius) const
 {
 	Vec3 abs_scale = inScale.Abs();
 	float scale_xz = abs_scale.GetX();
@@ -210,7 +210,7 @@ JPH_INLINE void TaperedCylinderShape::GetScaled(Vec3Arg inScale, float &outTop, 
 	}
 }
 
-const ConvexShape::Support *TaperedCylinderShape::GetSupportFunction(ESupportMode inMode, SupportBuffer &inBuffer, Vec3Arg inScale) const
+const ConvexShape::Support* TaperedCylinderShape::GetSupportFunction(ESupportMode inMode, SupportBuffer& inBuffer, Vec3Arg inScale) const
 {
 	JPH_ASSERT(IsValidScale(inScale));
 
@@ -243,7 +243,7 @@ JPH_INLINE static Vec3 sCalculateSideNormal(Vec3Arg inNormalXZ, float inTop, flo
 	return Vec3(inNormalXZ.GetX(), tan_alpha, inNormalXZ.GetZ()).Normalized();
 }
 
-void TaperedCylinderShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace &outVertices) const
+void TaperedCylinderShape::GetSupportingFace(const SubShapeID& inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace& outVertices) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 	JPH_ASSERT(IsValidScale(inScale));
@@ -276,7 +276,7 @@ void TaperedCylinderShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec
 		if (xz_sq > 0.00765427f * y_sq)
 		{
 			base_x /= sqrt(xz_sq);
-			Vec4 base_z = base_x.Swizzle<SWIZZLE_Z, SWIZZLE_Y, SWIZZLE_X, SWIZZLE_W>() * Vec4(-1, 0, 1, 0);
+			Vec4 base_z = base_x.Swizzle<SWIZZLE_Z, SWIZZLE_Y, SWIZZLE_X, SWIZZLE_W>()* Vec4(-1, 0, 1, 0);
 			transform = transform * Mat44(base_x, Vec4(0, 1, 0, 0), base_z, Vec4(0, 0, 0, 1));
 		}
 
@@ -296,7 +296,7 @@ void TaperedCylinderShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec
 			if (bottom_radius > cMinRadius)
 			{
 				Vec3 bottom_3d(0, bottom, 0);
-				for (const Vec3 *v = cTaperedCylinderFace + std::size(cTaperedCylinderFace) - 1; v >= cTaperedCylinderFace; --v)
+				for (const Vec3* v = cTaperedCylinderFace + std::size(cTaperedCylinderFace) - 1; v >= cTaperedCylinderFace; --v)
 					outVertices.push_back(transform * (bottom_radius * *v + bottom_3d));
 			}
 		}
@@ -367,7 +367,7 @@ MassProperties TaperedCylinderShape::GetMassProperties() const
 	return p;
 }
 
-Vec3 TaperedCylinderShape::GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLocalSurfacePosition) const
+Vec3 TaperedCylinderShape::GetSurfaceNormal(const SubShapeID& inSubShapeID, Vec3Arg inLocalSurfacePosition) const
 {
 	JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID");
 
@@ -387,7 +387,7 @@ AABox TaperedCylinderShape::GetLocalBounds() const
 	return AABox(Vec3(-max_radius, mBottom, -max_radius), Vec3(max_radius, mTop, max_radius));
 }
 
-void TaperedCylinderShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubShapeIDCreator, CollidePointCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void TaperedCylinderShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator& inSubShapeIDCreator, CollidePointCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
@@ -399,7 +399,7 @@ void TaperedCylinderShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator
 		ioCollector.AddHit({ TransformedShape::sGetBodyID(ioCollector.GetContext()), inSubShapeIDCreator.GetID() });
 }
 
-void TaperedCylinderShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator &inVertices, uint inNumVertices, int inCollidingShapeIndex) const
+void TaperedCylinderShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator& inVertices, uint inNumVertices, int inCollidingShapeIndex) const
 {
 	JPH_ASSERT(IsValidScale(inScale));
 
@@ -524,22 +524,22 @@ void TaperedCylinderShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransf
 class TaperedCylinderShape::TCSGetTrianglesContext
 {
 public:
-	explicit	TCSGetTrianglesContext(Mat44Arg inTransform) : mTransform(inTransform) { }
+	explicit	TCSGetTrianglesContext(Mat44Arg inTransform) : mTransform(inTransform) {}
 
 	Mat44		mTransform;
 	uint		mProcessed = 0; // Which elements we processed, bit 0 = top, bit 1 = bottom, bit 2 = side
 };
 
-void TaperedCylinderShape::GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
+void TaperedCylinderShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox& inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const
 {
 	static_assert(sizeof(TCSGetTrianglesContext) <= sizeof(GetTrianglesContext), "GetTrianglesContext too small");
 	JPH_ASSERT(IsAligned(&ioContext, alignof(TCSGetTrianglesContext)));
 
 	// Make sure the scale is not inside out
-	Vec3 scale = ScaleHelpers::IsInsideOut(inScale)? inScale.FlipSign<-1, 1, 1>() : inScale;
+	Vec3 scale = ScaleHelpers::IsInsideOut(inScale) ? inScale.FlipSign<-1, 1, 1>() : inScale;
 
 	// Mark top and bottom processed if their radius is too small
-	TCSGetTrianglesContext *context = new (&ioContext) TCSGetTrianglesContext(Mat44::sRotationTranslation(inRotation, inPositionCOM) * Mat44::sScale(scale));
+	TCSGetTrianglesContext* context = new (&ioContext) TCSGetTrianglesContext(Mat44::sRotationTranslation(inRotation, inPositionCOM) * Mat44::sScale(scale));
 	constexpr float cMinRadius = 1.0e-3f;
 	if (mTopRadius < cMinRadius)
 		context->mProcessed |= 0b001;
@@ -547,14 +547,14 @@ void TaperedCylinderShape::GetTrianglesStart(GetTrianglesContext &ioContext, con
 		context->mProcessed |= 0b010;
 }
 
-int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials) const
+int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
 {
 	constexpr int cNumVertices = int(std::size(cTaperedCylinderFace));
 
 	static_assert(cGetTrianglesMinTrianglesRequested >= 2 * cNumVertices);
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
 
-	TCSGetTrianglesContext &context = (TCSGetTrianglesContext &)ioContext;
+	TCSGetTrianglesContext& context = (TCSGetTrianglesContext&)ioContext;
 
 	int total_num_triangles = 0;
 
@@ -565,7 +565,7 @@ int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext &ioContext, int i
 		Vec3 v0 = context.mTransform * (top_3d + mTopRadius * cTaperedCylinderFace[0]);
 		Vec3 v1 = context.mTransform * (top_3d + mTopRadius * cTaperedCylinderFace[1]);
 
-		for (const Vec3 *v = cTaperedCylinderFace + 2, *v_end = cTaperedCylinderFace + cNumVertices; v < v_end; ++v)
+		for (const Vec3* v = cTaperedCylinderFace + 2, *v_end = cTaperedCylinderFace + cNumVertices; v < v_end; ++v)
 		{
 			Vec3 v2 = context.mTransform * (top_3d + mTopRadius * *v);
 
@@ -588,7 +588,7 @@ int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext &ioContext, int i
 		Vec3 v0 = context.mTransform * (bottom_3d + mBottomRadius * cTaperedCylinderFace[0]);
 		Vec3 v1 = context.mTransform * (bottom_3d + mBottomRadius * cTaperedCylinderFace[1]);
 
-		for (const Vec3 *v = cTaperedCylinderFace + 2, *v_end = cTaperedCylinderFace + cNumVertices; v < v_end; ++v)
+		for (const Vec3* v = cTaperedCylinderFace + 2, *v_end = cTaperedCylinderFace + cNumVertices; v < v_end; ++v)
 		{
 			Vec3 v2 = context.mTransform * (bottom_3d + mBottomRadius * *v);
 
@@ -610,7 +610,7 @@ int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext &ioContext, int i
 		Vec3 v0t = context.mTransform * (top_3d + mTopRadius * cTaperedCylinderFace[cNumVertices - 1]);
 		Vec3 v0b = context.mTransform * (bottom_3d + mBottomRadius * cTaperedCylinderFace[cNumVertices - 1]);
 
-		for (const Vec3 *v = cTaperedCylinderFace, *v_end = cTaperedCylinderFace + cNumVertices; v < v_end; ++v)
+		for (const Vec3* v = cTaperedCylinderFace, *v_end = cTaperedCylinderFace + cNumVertices; v < v_end; ++v)
 		{
 			Vec3 v1t = context.mTransform * (top_3d + mTopRadius * *v);
 			v0t.StoreFloat3(outTriangleVertices++);
@@ -633,8 +633,8 @@ int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext &ioContext, int i
 	// Store materials
 	if (outMaterials != nullptr)
 	{
-		const PhysicsMaterial *material = GetMaterial();
-		for (const PhysicsMaterial **m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
+		const PhysicsMaterial* material = GetMaterial();
+		for (const PhysicsMaterial** m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
 			*m = material;
 	}
 
@@ -642,18 +642,18 @@ int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext &ioContext, int i
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void TaperedCylinderShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
+void TaperedCylinderShape::Draw(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
 {
 	// Preserve flip along y axis but make sure we're not inside out
-	Vec3 scale = ScaleHelpers::IsInsideOut(inScale)? inScale.FlipSign<-1, 1, 1>() : inScale;
+	Vec3 scale = ScaleHelpers::IsInsideOut(inScale) ? inScale.FlipSign<-1, 1, 1>() : inScale;
 	RMat44 world_transform = inCenterOfMassTransform * Mat44::sScale(scale);
 
-	DebugRenderer::EDrawMode draw_mode = inDrawWireframe? DebugRenderer::EDrawMode::Wireframe : DebugRenderer::EDrawMode::Solid;
-	inRenderer->DrawTaperedCylinder(world_transform, mTop, mBottom, mTopRadius, mBottomRadius, inUseMaterialColors? GetMaterial()->GetDebugColor() : inColor, DebugRenderer::ECastShadow::On, draw_mode);
+	DebugRenderer::EDrawMode draw_mode = inDrawWireframe ? DebugRenderer::EDrawMode::Wireframe : DebugRenderer::EDrawMode::Solid;
+	inRenderer->DrawTaperedCylinder(world_transform, mTop, mBottom, mTopRadius, mBottomRadius, inUseMaterialColors ? GetMaterial()->GetDebugColor() : inColor, DebugRenderer::ECastShadow::On, draw_mode);
 }
 #endif // JPH_DEBUG_RENDERER
 
-void TaperedCylinderShape::SaveBinaryState(StreamOut &inStream) const
+void TaperedCylinderShape::SaveBinaryState(StreamOut& inStream) const
 {
 	ConvexShape::SaveBinaryState(inStream);
 
@@ -664,7 +664,7 @@ void TaperedCylinderShape::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mConvexRadius);
 }
 
-void TaperedCylinderShape::RestoreBinaryState(StreamIn &inStream)
+void TaperedCylinderShape::RestoreBinaryState(StreamIn& inStream)
 {
 	ConvexShape::RestoreBinaryState(inStream);
 
@@ -695,8 +695,8 @@ Vec3 TaperedCylinderShape::MakeScaleValid(Vec3Arg inScale) const
 
 void TaperedCylinderShape::sRegister()
 {
-	ShapeFunctions &f = ShapeFunctions::sGet(EShapeSubType::TaperedCylinder);
-	f.mConstruct = []() -> Shape * { return new TaperedCylinderShape; };
+	ShapeFunctions& f = ShapeFunctions::sGet(EShapeSubType::TaperedCylinder);
+	f.mConstruct = []() -> Shape* { return new TaperedCylinderShape; };
 	f.mColor = Color::sGreen;
 }
 

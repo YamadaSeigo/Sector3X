@@ -10,7 +10,7 @@
 #include <Jolt/Physics/Body/BodyManager.h>
 
 #ifdef JPH_DEBUG_RENDERER
-	#include <Jolt/Renderer/DebugRenderer.h>
+#include <Jolt/Renderer/DebugRenderer.h>
 #endif // JPH_DEBUG_RENDERER
 
 JPH_NAMESPACE_BEGIN
@@ -20,7 +20,7 @@ JPH_IMPLEMENT_SERIALIZABLE_ABSTRACT(TwoBodyConstraintSettings)
 	JPH_ADD_BASE_CLASS(TwoBodyConstraintSettings, ConstraintSettings)
 }
 
-void TwoBodyConstraint::BuildIslands(uint32 inConstraintIndex, IslandBuilder &ioBuilder, BodyManager &inBodyManager)
+void TwoBodyConstraint::BuildIslands(uint32 inConstraintIndex, IslandBuilder& ioBuilder, BodyManager& inBodyManager)
 {
 	// Activate bodies
 	BodyID body_ids[2];
@@ -36,14 +36,14 @@ void TwoBodyConstraint::BuildIslands(uint32 inConstraintIndex, IslandBuilder &io
 	ioBuilder.LinkConstraint(inConstraintIndex, mBody1->GetIndexInActiveBodiesInternal(), mBody2->GetIndexInActiveBodiesInternal());
 }
 
-uint TwoBodyConstraint::BuildIslandSplits(LargeIslandSplitter &ioSplitter) const
+uint TwoBodyConstraint::BuildIslandSplits(LargeIslandSplitter& ioSplitter) const
 {
 	return ioSplitter.AssignSplit(mBody1, mBody2);
 }
 
 #ifdef JPH_DEBUG_RENDERER
 
-void TwoBodyConstraint::DrawConstraintReferenceFrame(DebugRenderer *inRenderer) const
+void TwoBodyConstraint::DrawConstraintReferenceFrame(DebugRenderer* inRenderer) const
 {
 	RMat44 transform1 = mBody1->GetCenterOfMassTransform() * GetConstraintToBody1Matrix();
 	RMat44 transform2 = mBody2->GetCenterOfMassTransform() * GetConstraintToBody2Matrix();

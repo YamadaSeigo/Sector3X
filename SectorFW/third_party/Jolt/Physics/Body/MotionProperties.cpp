@@ -9,7 +9,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-void MotionProperties::SetMassProperties(EAllowedDOFs inAllowedDOFs, const MassProperties &inMassProperties)
+void MotionProperties::SetMassProperties(EAllowedDOFs inAllowedDOFs, const MassProperties& inMassProperties)
 {
 	// Store allowed DOFs
 	mAllowedDOFs = inAllowedDOFs;
@@ -60,7 +60,7 @@ void MotionProperties::SetMassProperties(EAllowedDOFs inAllowedDOFs, const MassP
 	JPH_ASSERT(mInvMass != 0.0f || mInvInertiaDiagonal != Vec3::sZero(), "Can't lock all axes, use a static body for this. This will crash with a division by zero later!");
 }
 
-void MotionProperties::SaveState(StateRecorder &inStream) const
+void MotionProperties::SaveState(StateRecorder& inStream) const
 {
 	// Only write properties that can change at runtime
 	inStream.Write(mLinearVelocity);
@@ -75,7 +75,7 @@ void MotionProperties::SaveState(StateRecorder &inStream) const
 	inStream.Write(mAllowSleeping);
 }
 
-void MotionProperties::RestoreState(StateRecorder &inStream)
+void MotionProperties::RestoreState(StateRecorder& inStream)
 {
 	inStream.Read(mLinearVelocity);
 	inStream.Read(mAngularVelocity);

@@ -8,10 +8,10 @@
 
 JPH_NAMESPACE_BEGIN
 
-static void sAddVertex(StaticArray<Vec3, 1026> &ioVertices, Vec3Arg inVertex)
+static void sAddVertex(StaticArray<Vec3, 1026>& ioVertices, Vec3Arg inVertex)
 {
 	bool found = false;
-	for (const Vec3 &v : ioVertices)
+	for (const Vec3& v : ioVertices)
 		if (v.IsClose(inVertex, 1.0e-6f))
 		{
 			found = true;
@@ -21,7 +21,7 @@ static void sAddVertex(StaticArray<Vec3, 1026> &ioVertices, Vec3Arg inVertex)
 		ioVertices.push_back(inVertex);
 }
 
-static void sCreateVertices(StaticArray<Vec3, 1026> &ioVertices, Vec3Arg inDir1, Vec3Arg inDir2, Vec3Arg inDir3, int inLevel)
+static void sCreateVertices(StaticArray<Vec3, 1026>& ioVertices, Vec3Arg inDir1, Vec3Arg inDir2, Vec3Arg inDir3, int inLevel)
 {
 	Vec3 center1 = (inDir1 + inDir2).Normalized();
 	Vec3 center2 = (inDir2 + inDir3).Normalized();
@@ -42,7 +42,6 @@ static void sCreateVertices(StaticArray<Vec3, 1026> &ioVertices, Vec3Arg inDir1,
 }
 
 const StaticArray<Vec3, 1026> Vec3::sUnitSphere = []() {
-
 	const int level = 3;
 
 	StaticArray<Vec3, 1026> verts;
@@ -66,6 +65,6 @@ const StaticArray<Vec3, 1026> Vec3::sUnitSphere = []() {
 	sCreateVertices(verts, -Vec3::sAxisX(), -Vec3::sAxisY(), -Vec3::sAxisZ(), level);
 
 	return verts;
-}();
+	}();
 
 JPH_NAMESPACE_END

@@ -12,31 +12,31 @@ JPH_SUPPRESS_WARNINGS_STD_END
 JPH_NAMESPACE_BEGIN
 
 #ifdef JPH_DISABLE_CUSTOM_ALLOCATOR
-	#define JPH_ALLOC_FN(x)	x
-	#define JPH_ALLOC_SCOPE
+#define JPH_ALLOC_FN(x)	x
+#define JPH_ALLOC_SCOPE
 #else
-	#define JPH_ALLOC_FN(x)	x##Impl
-	#define JPH_ALLOC_SCOPE static
+#define JPH_ALLOC_FN(x)	x##Impl
+#define JPH_ALLOC_SCOPE static
 #endif
 
-JPH_ALLOC_SCOPE void *JPH_ALLOC_FN(Allocate)(size_t inSize)
+JPH_ALLOC_SCOPE void* JPH_ALLOC_FN(Allocate)(size_t inSize)
 {
 	JPH_ASSERT(inSize > 0);
 	return malloc(inSize);
 }
 
-JPH_ALLOC_SCOPE void *JPH_ALLOC_FN(Reallocate)(void *inBlock, [[maybe_unused]] size_t inOldSize, size_t inNewSize)
+JPH_ALLOC_SCOPE void* JPH_ALLOC_FN(Reallocate)(void* inBlock, [[maybe_unused]] size_t inOldSize, size_t inNewSize)
 {
 	JPH_ASSERT(inNewSize > 0);
 	return realloc(inBlock, inNewSize);
 }
 
-JPH_ALLOC_SCOPE void JPH_ALLOC_FN(Free)(void *inBlock)
+JPH_ALLOC_SCOPE void JPH_ALLOC_FN(Free)(void* inBlock)
 {
 	free(inBlock);
 }
 
-JPH_ALLOC_SCOPE void *JPH_ALLOC_FN(AlignedAllocate)(size_t inSize, size_t inAlignment)
+JPH_ALLOC_SCOPE void* JPH_ALLOC_FN(AlignedAllocate)(size_t inSize, size_t inAlignment)
 {
 	JPH_ASSERT(inSize > 0 && inAlignment > 0);
 
@@ -44,17 +44,17 @@ JPH_ALLOC_SCOPE void *JPH_ALLOC_FN(AlignedAllocate)(size_t inSize, size_t inAlig
 	// Microsoft doesn't implement posix_memalign
 	return _aligned_malloc(inSize, inAlignment);
 #else
-	void *block = nullptr;
+	void* block = nullptr;
 	JPH_SUPPRESS_WARNING_PUSH
-	JPH_GCC_SUPPRESS_WARNING("-Wunused-result")
-	JPH_CLANG_SUPPRESS_WARNING("-Wunused-result")
-	posix_memalign(&block, inAlignment, inSize);
+		JPH_GCC_SUPPRESS_WARNING("-Wunused-result")
+		JPH_CLANG_SUPPRESS_WARNING("-Wunused-result")
+		posix_memalign(&block, inAlignment, inSize);
 	JPH_SUPPRESS_WARNING_POP
-	return block;
+		return block;
 #endif
 }
 
-JPH_ALLOC_SCOPE void JPH_ALLOC_FN(AlignedFree)(void *inBlock)
+JPH_ALLOC_SCOPE void JPH_ALLOC_FN(AlignedFree)(void* inBlock)
 {
 #if defined(JPH_PLATFORM_WINDOWS)
 	_aligned_free(inBlock);

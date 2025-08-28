@@ -14,26 +14,26 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(SoftBodyCreationSettings)
 {
 	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mSettings)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mPosition)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mRotation)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mUserData)
-	JPH_ADD_ENUM_ATTRIBUTE(SoftBodyCreationSettings, mObjectLayer)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mCollisionGroup)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mNumIterations)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mLinearDamping)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mMaxLinearVelocity)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mRestitution)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mFriction)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mPressure)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mGravityFactor)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mVertexRadius)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mUpdatePosition)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mMakeRotationIdentity)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mAllowSleeping)
-	JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mFacesDoubleSided)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mPosition)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mRotation)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mUserData)
+		JPH_ADD_ENUM_ATTRIBUTE(SoftBodyCreationSettings, mObjectLayer)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mCollisionGroup)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mNumIterations)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mLinearDamping)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mMaxLinearVelocity)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mRestitution)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mFriction)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mPressure)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mGravityFactor)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mVertexRadius)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mUpdatePosition)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mMakeRotationIdentity)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mAllowSleeping)
+		JPH_ADD_ATTRIBUTE(SoftBodyCreationSettings, mFacesDoubleSided)
 }
 
-void SoftBodyCreationSettings::SaveBinaryState(StreamOut &inStream) const
+void SoftBodyCreationSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(mPosition);
 	inStream.Write(mRotation);
@@ -54,7 +54,7 @@ void SoftBodyCreationSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mFacesDoubleSided);
 }
 
-void SoftBodyCreationSettings::RestoreBinaryState(StreamIn &inStream)
+void SoftBodyCreationSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	inStream.Read(mPosition);
 	inStream.Read(mRotation);
@@ -75,7 +75,7 @@ void SoftBodyCreationSettings::RestoreBinaryState(StreamIn &inStream)
 	inStream.Read(mFacesDoubleSided);
 }
 
-void SoftBodyCreationSettings::SaveWithChildren(StreamOut &inStream, SharedSettingsToIDMap *ioSharedSettingsMap, MaterialToIDMap *ioMaterialMap, GroupFilterToIDMap *ioGroupFilterMap) const
+void SoftBodyCreationSettings::SaveWithChildren(StreamOut& inStream, SharedSettingsToIDMap* ioSharedSettingsMap, MaterialToIDMap* ioMaterialMap, GroupFilterToIDMap* ioGroupFilterMap) const
 {
 	// Save creation settings
 	SaveBinaryState(inStream);
@@ -90,7 +90,7 @@ void SoftBodyCreationSettings::SaveWithChildren(StreamOut &inStream, SharedSetti
 	StreamUtils::SaveObjectReference(inStream, mCollisionGroup.GetGroupFilter(), ioGroupFilterMap);
 }
 
-SoftBodyCreationSettings::SBCSResult SoftBodyCreationSettings::sRestoreWithChildren(StreamIn &inStream, IDToSharedSettingsMap &ioSharedSettingsMap, IDToMaterialMap &ioMaterialMap, IDToGroupFilterMap &ioGroupFilterMap)
+SoftBodyCreationSettings::SBCSResult SoftBodyCreationSettings::sRestoreWithChildren(StreamIn& inStream, IDToSharedSettingsMap& ioSharedSettingsMap, IDToMaterialMap& ioMaterialMap, IDToGroupFilterMap& ioGroupFilterMap)
 {
 	SBCSResult result;
 

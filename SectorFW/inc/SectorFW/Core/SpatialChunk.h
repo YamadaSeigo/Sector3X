@@ -9,6 +9,7 @@
 
 #include "../Math/AABB.hpp"
 #include "ECS/EntityManager.h"
+#include "RegistryTypes.h"
 
 namespace SectorFW
 {
@@ -32,7 +33,13 @@ namespace SectorFW
 		 * @brief エンティティマネージャーの取得関数
 		 * @return ECS::EntityManager& エンティティマネージャーへの参照
 		 */
-		ECS::EntityManager& GetEntityManager() const noexcept { return *entityManager; }
+		ECS::EntityManager& GetEntityManager() noexcept { return *entityManager; }
+		const ECS::EntityManager& GetEntityManager() const noexcept { return *entityManager; }
+
+		// --- NodeKey (space / code / depth / generation) をチャンク単位で保持 ---
+		const EntityManagerKey& GetNodeKey() const noexcept { return nodeKey; }
+		void SetNodeKey(const EntityManagerKey& k) noexcept { nodeKey = k; }
+		void BumpGeneration() noexcept { ++nodeKey.generation; }
 	private:
 		Math::AABB3f aabb;
 		/**
@@ -40,6 +47,10 @@ namespace SectorFW
 		 * @detail 空間チャンク内のエンティティを管理する
 		 */
 		std::unique_ptr<ECS::EntityManager> entityManager;
+		/**
+		 * @brief このチャンクを特定するキー。現在世代を含む
+		 */
+		EntityManagerKey nodeKey{};
 	};
 	/**
 	 * @brief 空間チャンクのサイズ型を定義する

@@ -9,7 +9,7 @@
 
 JPH_NAMESPACE_BEGIN
 
-void EstimateCollisionResponse(const Body &inBody1, const Body &inBody2, const ContactManifold &inManifold, CollisionEstimationResult &outResult, float inCombinedFriction, float inCombinedRestitution, float inMinVelocityForRestitution, uint inNumIterations)
+void EstimateCollisionResponse(const Body& inBody1, const Body& inBody2, const ContactManifold& inManifold, CollisionEstimationResult& outResult, float inCombinedFriction, float inCombinedRestitution, float inMinVelocityForRestitution, uint inNumIterations)
 {
 	// Note this code is based on AxisConstraintPart, see that class for more comments on the math
 
@@ -26,7 +26,7 @@ void EstimateCollisionResponse(const Body &inBody1, const Body &inBody2, const C
 
 	// Get body velocities
 	EMotionType motion_type1 = inBody1.GetMotionType();
-	const MotionProperties *motion_properties1 = inBody1.GetMotionPropertiesUnchecked();
+	const MotionProperties* motion_properties1 = inBody1.GetMotionPropertiesUnchecked();
 	if (motion_type1 != EMotionType::Static)
 	{
 		outResult.mLinearVelocity1 = motion_properties1->GetLinearVelocity();
@@ -36,7 +36,7 @@ void EstimateCollisionResponse(const Body &inBody1, const Body &inBody2, const C
 		outResult.mLinearVelocity1 = outResult.mAngularVelocity1 = Vec3::sZero();
 
 	EMotionType motion_type2 = inBody2.GetMotionType();
-	const MotionProperties *motion_properties2 = inBody2.GetMotionPropertiesUnchecked();
+	const MotionProperties* motion_properties2 = inBody2.GetMotionPropertiesUnchecked();
 	if (motion_type2 != EMotionType::Static)
 	{
 		outResult.mLinearVelocity2 = motion_properties2->GetLinearVelocity();
@@ -87,7 +87,7 @@ void EstimateCollisionResponse(const Body &inBody1, const Body &inBody2, const C
 			mBias = 0.0f;
 		}
 
-		inline float	SolveGetLambda(Vec3Arg inWorldSpaceNormal, const CollisionEstimationResult &inResult) const
+		inline float	SolveGetLambda(Vec3Arg inWorldSpaceNormal, const CollisionEstimationResult& inResult) const
 		{
 			// Calculate jacobian multiplied by linear/angular velocity
 			float jv = inWorldSpaceNormal.Dot(inResult.mLinearVelocity1 - inResult.mLinearVelocity2) + mR1PlusUxAxis.Dot(inResult.mAngularVelocity1) - mR2xAxis.Dot(inResult.mAngularVelocity2);
@@ -98,7 +98,7 @@ void EstimateCollisionResponse(const Body &inBody1, const Body &inBody2, const C
 			return mEffectiveMass * (jv - mBias);
 		}
 
-		inline void		SolveApplyLambda(Vec3Arg inWorldSpaceNormal, float inInvM1, float inInvM2, float inLambda, CollisionEstimationResult &ioResult) const
+		inline void		SolveApplyLambda(Vec3Arg inWorldSpaceNormal, float inInvM1, float inInvM2, float inLambda, CollisionEstimationResult& ioResult) const
 		{
 			// Apply impulse to body velocities
 			ioResult.mLinearVelocity1 -= (inLambda * inInvM1) * inWorldSpaceNormal;
@@ -107,7 +107,7 @@ void EstimateCollisionResponse(const Body &inBody1, const Body &inBody2, const C
 			ioResult.mAngularVelocity2 += inLambda * mInvI2_R2xAxis;
 		}
 
-		inline void		Solve(Vec3Arg inWorldSpaceNormal, float inInvM1, float inInvM2, float inMinLambda, float inMaxLambda, float &ioTotalLambda, CollisionEstimationResult &ioResult) const
+		inline void		Solve(Vec3Arg inWorldSpaceNormal, float inInvM1, float inInvM2, float inMinLambda, float inMaxLambda, float& ioTotalLambda, CollisionEstimationResult& ioResult) const
 		{
 			// Calculate new total lambda
 			float total_lambda = ioTotalLambda + SolveGetLambda(inWorldSpaceNormal, ioResult);
@@ -139,7 +139,7 @@ void EstimateCollisionResponse(const Body &inBody1, const Body &inBody2, const C
 	Constraint constraints[ContactPoints::Capacity];
 	for (uint c = 0; c < num_points; ++c)
 	{
-		Constraint &constraint = constraints[c];
+		Constraint& constraint = constraints[c];
 
 		// Calculate contact points relative to body 1 and 2
 		Vec3 p = 0.5f * (inManifold.mRelativeContactPointsOn1[c] + inManifold.mRelativeContactPointsOn2[c]);
@@ -170,7 +170,7 @@ void EstimateCollisionResponse(const Body &inBody1, const Body &inBody2, const C
 	}
 
 	// If there's only 1 contact point, we only need 1 iteration
-	int num_iterations = inCombinedFriction <= 0.0f && num_points == 1? 1 : inNumIterations;
+	int num_iterations = inCombinedFriction <= 0.0f && num_points == 1 ? 1 : inNumIterations;
 
 	// Solve iteratively
 	for (int iteration = 0; iteration < num_iterations; ++iteration)
@@ -179,8 +179,8 @@ void EstimateCollisionResponse(const Body &inBody1, const Body &inBody2, const C
 		if (inCombinedFriction > 0.0f && iteration > 0) // For first iteration the contact impulse is zero so there's no point in applying friction
 			for (uint c = 0; c < num_points; ++c)
 			{
-				const Constraint &constraint = constraints[c];
-				CollisionEstimationResult::Impulse &impulse = outResult.mImpulses[c];
+				const Constraint& constraint = constraints[c];
+				CollisionEstimationResult::Impulse& impulse = outResult.mImpulses[c];
 
 				float lambda1 = impulse.mFrictionImpulse1 + constraint.mFriction1.SolveGetLambda(outResult.mTangent1, outResult);
 				float lambda2 = impulse.mFrictionImpulse2 + constraint.mFriction2.SolveGetLambda(outResult.mTangent2, outResult);

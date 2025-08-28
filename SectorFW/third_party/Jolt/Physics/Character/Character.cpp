@@ -13,22 +13,22 @@
 
 JPH_NAMESPACE_BEGIN
 
-static inline const BodyLockInterface &sCharacterGetBodyLockInterface(const PhysicsSystem *inSystem, bool inLockBodies)
+static inline const BodyLockInterface& sCharacterGetBodyLockInterface(const PhysicsSystem* inSystem, bool inLockBodies)
 {
-	return inLockBodies? static_cast<const BodyLockInterface &>(inSystem->GetBodyLockInterface()) : static_cast<const BodyLockInterface &>(inSystem->GetBodyLockInterfaceNoLock());
+	return inLockBodies ? static_cast<const BodyLockInterface&>(inSystem->GetBodyLockInterface()) : static_cast<const BodyLockInterface&>(inSystem->GetBodyLockInterfaceNoLock());
 }
 
-static inline BodyInterface &sCharacterGetBodyInterface(PhysicsSystem *inSystem, bool inLockBodies)
+static inline BodyInterface& sCharacterGetBodyInterface(PhysicsSystem* inSystem, bool inLockBodies)
 {
-	return inLockBodies? inSystem->GetBodyInterface() : inSystem->GetBodyInterfaceNoLock();
+	return inLockBodies ? inSystem->GetBodyInterface() : inSystem->GetBodyInterfaceNoLock();
 }
 
-static inline const NarrowPhaseQuery &sCharacterGetNarrowPhaseQuery(const PhysicsSystem *inSystem, bool inLockBodies)
+static inline const NarrowPhaseQuery& sCharacterGetNarrowPhaseQuery(const PhysicsSystem* inSystem, bool inLockBodies)
 {
-	return inLockBodies? inSystem->GetNarrowPhaseQuery() : inSystem->GetNarrowPhaseQueryNoLock();
+	return inLockBodies ? inSystem->GetNarrowPhaseQuery() : inSystem->GetNarrowPhaseQueryNoLock();
 }
 
-Character::Character(const CharacterSettings *inSettings, RVec3Arg inPosition, QuatArg inRotation, uint64 inUserData, PhysicsSystem *inSystem) :
+Character::Character(const CharacterSettings* inSettings, RVec3Arg inPosition, QuatArg inRotation, uint64 inUserData, PhysicsSystem* inSystem) :
 	CharacterBase(inSettings, inSystem),
 	mLayer(inSettings->mLayer)
 {
@@ -41,7 +41,7 @@ Character::Character(const CharacterSettings *inSettings, RVec3Arg inPosition, Q
 	settings.mFriction = inSettings->mFriction;
 	settings.mGravityFactor = inSettings->mGravityFactor;
 	settings.mUserData = inUserData;
-	const Body *body = mSystem->GetBodyInterface().CreateBody(settings);
+	const Body* body = mSystem->GetBodyInterface().CreateBody(settings);
 	if (body != nullptr)
 		mBodyID = body->GetID();
 }
@@ -67,7 +67,7 @@ void Character::Activate(bool inLockBodies)
 	sCharacterGetBodyInterface(mSystem, inLockBodies).ActivateBody(mBodyID);
 }
 
-void Character::CheckCollision(RMat44Arg inCenterOfMassTransform, Vec3Arg inMovementDirection, float inMaxSeparationDistance, const Shape *inShape, RVec3Arg inBaseOffset, CollideShapeCollector &ioCollector, bool inLockBodies) const
+void Character::CheckCollision(RMat44Arg inCenterOfMassTransform, Vec3Arg inMovementDirection, float inMaxSeparationDistance, const Shape* inShape, RVec3Arg inBaseOffset, CollideShapeCollector& ioCollector, bool inLockBodies) const
 {
 	// Create query broadphase layer filter
 	DefaultBroadPhaseLayerFilter broadphase_layer_filter = mSystem->GetDefaultBroadPhaseLayerFilter(mLayer);
@@ -81,7 +81,7 @@ void Character::CheckCollision(RMat44Arg inCenterOfMassTransform, Vec3Arg inMove
 	public:
 		using			IgnoreSingleBodyFilter::IgnoreSingleBodyFilter;
 
-		virtual bool	ShouldCollideLocked(const Body &inBody) const override
+		virtual bool	ShouldCollideLocked(const Body& inBody) const override
 		{
 			return !inBody.IsSensor();
 		}
@@ -98,7 +98,7 @@ void Character::CheckCollision(RMat44Arg inCenterOfMassTransform, Vec3Arg inMove
 	sCharacterGetNarrowPhaseQuery(mSystem, inLockBodies).CollideShape(inShape, Vec3::sOne(), inCenterOfMassTransform, settings, inBaseOffset, ioCollector, broadphase_layer_filter, object_layer_filter, body_filter);
 }
 
-void Character::CheckCollision(RVec3Arg inPosition, QuatArg inRotation, Vec3Arg inMovementDirection, float inMaxSeparationDistance, const Shape *inShape, RVec3Arg inBaseOffset, CollideShapeCollector &ioCollector, bool inLockBodies) const
+void Character::CheckCollision(RVec3Arg inPosition, QuatArg inRotation, Vec3Arg inMovementDirection, float inMaxSeparationDistance, const Shape* inShape, RVec3Arg inBaseOffset, CollideShapeCollector& ioCollector, bool inLockBodies) const
 {
 	// Calculate center of mass transform
 	RMat44 center_of_mass = RMat44::sRotationTranslation(inRotation, inPosition).PreTranslated(inShape->GetCenterOfMass());
@@ -106,7 +106,7 @@ void Character::CheckCollision(RVec3Arg inPosition, QuatArg inRotation, Vec3Arg 
 	CheckCollision(center_of_mass, inMovementDirection, inMaxSeparationDistance, inShape, inBaseOffset, ioCollector, inLockBodies);
 }
 
-void Character::CheckCollision(const Shape *inShape, float inMaxSeparationDistance, RVec3Arg inBaseOffset, CollideShapeCollector &ioCollector, bool inLockBodies) const
+void Character::CheckCollision(const Shape* inShape, float inMaxSeparationDistance, RVec3Arg inBaseOffset, CollideShapeCollector& ioCollector, bool inLockBodies) const
 {
 	// Determine position and velocity of body
 	RMat44 query_transform;
@@ -116,7 +116,7 @@ void Character::CheckCollision(const Shape *inShape, float inMaxSeparationDistan
 		if (!lock.Succeeded())
 			return;
 
-		const Body &body = lock.GetBody();
+		const Body& body = lock.GetBody();
 
 		// Correct the center of mass transform for the difference between the old and new center of mass shape
 		query_transform = body.GetCenterOfMassTransform().PreTranslated(inShape->GetCenterOfMass() - mShape->GetCenterOfMass());
@@ -136,7 +136,7 @@ void Character::PostSimulation(float inMaxSeparationDistance, bool inLockBodies)
 		BodyLockRead lock(sCharacterGetBodyLockInterface(mSystem, inLockBodies), mBodyID);
 		if (!lock.Succeeded())
 			return;
-		const Body &body = lock.GetBody();
+		const Body& body = lock.GetBody();
 		char_pos = body.GetPosition();
 		char_rot = body.GetRotation();
 		char_vel = body.GetLinearVelocity();
@@ -147,10 +147,10 @@ void Character::PostSimulation(float inMaxSeparationDistance, bool inLockBodies)
 	{
 	public:
 		// Constructor
-		explicit			MyCollector(Vec3Arg inUp, RVec3 inBaseOffset) : mBaseOffset(inBaseOffset), mUp(inUp) { }
+		explicit			MyCollector(Vec3Arg inUp, RVec3 inBaseOffset) : mBaseOffset(inBaseOffset), mUp(inUp) {}
 
 		// See: CollectorType::AddHit
-		virtual void		AddHit(const CollideShapeResult &inResult) override
+		virtual void		AddHit(const CollideShapeResult& inResult) override
 		{
 			Vec3 normal = -inResult.mPenetrationAxis.Normalized();
 			float dot = normal.Dot(mUp);
@@ -189,7 +189,7 @@ void Character::PostSimulation(float inMaxSeparationDistance, bool inLockBodies)
 	BodyLockRead lock(sCharacterGetBodyLockInterface(mSystem, inLockBodies), mGroundBodyID);
 	if (lock.Succeeded())
 	{
-		const Body &body = lock.GetBody();
+		const Body& body = lock.GetBody();
 
 		// Update ground state
 		RMat44 inv_transform = RMat44::sInverseRotationTranslation(char_rot, char_pos);
@@ -239,7 +239,7 @@ void Character::AddImpulse(Vec3Arg inImpulse, bool inLockBodies)
 	sCharacterGetBodyInterface(mSystem, inLockBodies).AddImpulse(mBodyID, inImpulse);
 }
 
-void Character::GetPositionAndRotation(RVec3 &outPosition, Quat &outRotation, bool inLockBodies) const
+void Character::GetPositionAndRotation(RVec3& outPosition, Quat& outRotation, bool inLockBodies) const
 {
 	sCharacterGetBodyInterface(mSystem, inLockBodies).GetPositionAndRotation(mBodyID, outPosition, outRotation);
 }
@@ -286,7 +286,7 @@ void Character::SetLayer(ObjectLayer inLayer, bool inLockBodies)
 	sCharacterGetBodyInterface(mSystem, inLockBodies).SetObjectLayer(mBodyID, inLayer);
 }
 
-bool Character::SetShape(const Shape *inShape, float inMaxPenetrationDepth, bool inLockBodies)
+bool Character::SetShape(const Shape* inShape, float inMaxPenetrationDepth, bool inLockBodies)
 {
 	if (inMaxPenetrationDepth < FLT_MAX)
 	{
@@ -295,10 +295,10 @@ bool Character::SetShape(const Shape *inShape, float inMaxPenetrationDepth, bool
 		{
 		public:
 			// Constructor
-			explicit			MyCollector(float inMaxPenetrationDepth) : mMaxPenetrationDepth(inMaxPenetrationDepth) { }
+			explicit			MyCollector(float inMaxPenetrationDepth) : mMaxPenetrationDepth(inMaxPenetrationDepth) {}
 
 			// See: CollectorType::AddHit
-			virtual void		AddHit(const CollideShapeResult &inResult) override
+			virtual void		AddHit(const CollideShapeResult& inResult) override
 			{
 				if (inResult.mPenetrationDepth > mMaxPenetrationDepth)
 				{
@@ -334,7 +334,7 @@ CharacterSettings Character::GetCharacterSettings(bool inLockBodies) const
 {
 	BodyLockRead lock(sCharacterGetBodyLockInterface(mSystem, inLockBodies), mBodyID);
 	JPH_ASSERT(lock.Succeeded());
-	const Body &body = lock.GetBody();
+	const Body& body = lock.GetBody();
 
 	CharacterSettings settings;
 	settings.mUp = mUp;
@@ -343,7 +343,7 @@ CharacterSettings Character::GetCharacterSettings(bool inLockBodies) const
 	settings.mEnhancedInternalEdgeRemoval = body.GetEnhancedInternalEdgeRemoval();
 	settings.mShape = mShape;
 	settings.mLayer = mLayer;
-	const MotionProperties *mp = body.GetMotionProperties();
+	const MotionProperties* mp = body.GetMotionProperties();
 	settings.mMass = 1.0f / mp->GetInverseMass();
 	settings.mFriction = body.GetFriction();
 	settings.mGravityFactor = mp->GetGravityFactor();

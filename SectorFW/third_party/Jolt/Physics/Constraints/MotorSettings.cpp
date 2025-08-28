@@ -14,15 +14,15 @@ JPH_NAMESPACE_BEGIN
 JPH_IMPLEMENT_SERIALIZABLE_NON_VIRTUAL(MotorSettings)
 {
 	JPH_ADD_ENUM_ATTRIBUTE_WITH_ALIAS(MotorSettings, mSpringSettings.mMode, "mSpringMode")
-	JPH_ADD_ATTRIBUTE_WITH_ALIAS(MotorSettings, mSpringSettings.mFrequency, "mFrequency") // Renaming attributes to stay compatible with old versions of the library
-	JPH_ADD_ATTRIBUTE_WITH_ALIAS(MotorSettings, mSpringSettings.mDamping, "mDamping")
-	JPH_ADD_ATTRIBUTE(MotorSettings, mMinForceLimit)
-	JPH_ADD_ATTRIBUTE(MotorSettings, mMaxForceLimit)
-	JPH_ADD_ATTRIBUTE(MotorSettings, mMinTorqueLimit)
-	JPH_ADD_ATTRIBUTE(MotorSettings, mMaxTorqueLimit)
+		JPH_ADD_ATTRIBUTE_WITH_ALIAS(MotorSettings, mSpringSettings.mFrequency, "mFrequency") // Renaming attributes to stay compatible with old versions of the library
+		JPH_ADD_ATTRIBUTE_WITH_ALIAS(MotorSettings, mSpringSettings.mDamping, "mDamping")
+		JPH_ADD_ATTRIBUTE(MotorSettings, mMinForceLimit)
+		JPH_ADD_ATTRIBUTE(MotorSettings, mMaxForceLimit)
+		JPH_ADD_ATTRIBUTE(MotorSettings, mMinTorqueLimit)
+		JPH_ADD_ATTRIBUTE(MotorSettings, mMaxTorqueLimit)
 }
 
-void MotorSettings::SaveBinaryState(StreamOut &inStream) const
+void MotorSettings::SaveBinaryState(StreamOut& inStream) const
 {
 	mSpringSettings.SaveBinaryState(inStream);
 	inStream.Write(mMinForceLimit);
@@ -31,7 +31,7 @@ void MotorSettings::SaveBinaryState(StreamOut &inStream) const
 	inStream.Write(mMaxTorqueLimit);
 }
 
-void MotorSettings::RestoreBinaryState(StreamIn &inStream)
+void MotorSettings::RestoreBinaryState(StreamIn& inStream)
 {
 	mSpringSettings.RestoreBinaryState(inStream);
 	inStream.Read(mMinForceLimit);

@@ -13,6 +13,7 @@
 #include "Math/AABB.hpp"
 
 #include "SpatialChunk.h"
+#include "EntityManagerRegistryService.h"
 
 namespace SectorFW
 {
@@ -20,16 +21,19 @@ namespace SectorFW
 	 * @brief チャンクを検索する際のポリシーを定義する列挙型
 	 */
 	enum class EOutOfBoundsPolicy {
-		Reject,
-		ClampToEdge
+		Reject, // 範囲外のチャンクを拒否
+		ClampToEdge, // 範囲外のチャンクをエッジにクランプ
 	};
 	/**
 	 * @brief Partitionが実装する必要のあるインターフェースを定義するコンセプト
 	 */
 	template <typename Derived>
-	concept PartitionConcept = requires(Derived t, Math::Vec3f v, ChunkSizeType size, EOutOfBoundsPolicy policy) {
+	concept PartitionConcept = requires(Derived t, Math::Vec3f v, ChunkSizeType size, EOutOfBoundsPolicy policy,
+		EntityManagerRegistry& reg, LevelID level) 
+	{
 		Derived{ size,size,size };
-		{ t.GetChunk(v, policy) } -> std::same_as< std::optional<SpatialChunk*>>;
+		{ t.GetChunk(v, policy) } -> std::same_as<std::optional<SpatialChunk*>>;
 		{ t.GetGlobalEntityManager() } -> std::same_as<ECS::EntityManager&>;
+		{ t.RegisterAllChunks(reg, level) } -> std::same_as<void>;
 	};
 }

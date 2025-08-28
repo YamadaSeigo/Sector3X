@@ -14,15 +14,15 @@
 
 JPH_NAMESPACE_BEGIN
 
-void ConstraintManager::Add(Constraint **inConstraints, int inNumber)
+void ConstraintManager::Add(Constraint** inConstraints, int inNumber)
 {
 	UniqueLock lock(mConstraintsMutex JPH_IF_ENABLE_ASSERTS(, mLockContext, EPhysicsLockTypes::ConstraintsList));
 
 	mConstraints.reserve(mConstraints.size() + inNumber);
 
-	for (Constraint **c = inConstraints, **c_end = inConstraints + inNumber; c < c_end; ++c)
+	for (Constraint** c = inConstraints, **c_end = inConstraints + inNumber; c < c_end; ++c)
 	{
-		Constraint *constraint = *c;
+		Constraint* constraint = *c;
 
 		// Assume this constraint has not been added yet
 		JPH_ASSERT(constraint->mConstraintIndex == Constraint::cInvalidConstraintIndex);
@@ -33,13 +33,13 @@ void ConstraintManager::Add(Constraint **inConstraints, int inNumber)
 	}
 }
 
-void ConstraintManager::Remove(Constraint **inConstraints, int inNumber)
+void ConstraintManager::Remove(Constraint** inConstraints, int inNumber)
 {
 	UniqueLock lock(mConstraintsMutex JPH_IF_ENABLE_ASSERTS(, mLockContext, EPhysicsLockTypes::ConstraintsList));
 
-	for (Constraint **c = inConstraints, **c_end = inConstraints + inNumber; c < c_end; ++c)
+	for (Constraint** c = inConstraints, **c_end = inConstraints + inNumber; c < c_end; ++c)
 	{
-		Constraint *constraint = *c;
+		Constraint* constraint = *c;
 
 		// Reset constraint index for this constraint
 		uint32 this_constraint_idx = constraint->mConstraintIndex;
@@ -50,7 +50,7 @@ void ConstraintManager::Remove(Constraint **inConstraints, int inNumber)
 		uint32 last_constraint_idx = uint32(mConstraints.size() - 1);
 		if (this_constraint_idx < last_constraint_idx)
 		{
-			Constraint *last_constraint = mConstraints[last_constraint_idx];
+			Constraint* last_constraint = mConstraints[last_constraint_idx];
 			last_constraint->mConstraintIndex = this_constraint_idx;
 			mConstraints[this_constraint_idx] = last_constraint;
 		}
@@ -68,7 +68,7 @@ Constraints ConstraintManager::GetConstraints() const
 	return copy;
 }
 
-void ConstraintManager::GetActiveConstraints(uint32 inStartConstraintIdx, uint32 inEndConstraintIdx, Constraint **outActiveConstraints, uint32 &outNumActiveConstraints) const
+void ConstraintManager::GetActiveConstraints(uint32 inStartConstraintIdx, uint32 inEndConstraintIdx, Constraint** outActiveConstraints, uint32& outNumActiveConstraints) const
 {
 	JPH_PROFILE_FUNCTION();
 
@@ -77,7 +77,7 @@ void ConstraintManager::GetActiveConstraints(uint32 inStartConstraintIdx, uint32
 	uint32 num_active_constraints = 0;
 	for (uint32 constraint_idx = inStartConstraintIdx; constraint_idx < inEndConstraintIdx; ++constraint_idx)
 	{
-		Constraint *c = mConstraints[constraint_idx];
+		Constraint* c = mConstraints[constraint_idx];
 		JPH_ASSERT(c->mConstraintIndex == constraint_idx);
 		if (c->IsActive())
 		{
@@ -89,81 +89,81 @@ void ConstraintManager::GetActiveConstraints(uint32 inStartConstraintIdx, uint32
 	outNumActiveConstraints = num_active_constraints;
 }
 
-void ConstraintManager::sBuildIslands(Constraint **inActiveConstraints, uint32 inNumActiveConstraints, IslandBuilder &ioBuilder, BodyManager &inBodyManager)
+void ConstraintManager::sBuildIslands(Constraint** inActiveConstraints, uint32 inNumActiveConstraints, IslandBuilder& ioBuilder, BodyManager& inBodyManager)
 {
 	JPH_PROFILE_FUNCTION();
 
 	for (uint32 constraint_idx = 0; constraint_idx < inNumActiveConstraints; ++constraint_idx)
 	{
-		Constraint *c = inActiveConstraints[constraint_idx];
+		Constraint* c = inActiveConstraints[constraint_idx];
 		c->BuildIslands(constraint_idx, ioBuilder, inBodyManager);
 	}
 }
 
-void ConstraintManager::sSortConstraints(Constraint **inActiveConstraints, uint32 *inConstraintIdxBegin, uint32 *inConstraintIdxEnd)
+void ConstraintManager::sSortConstraints(Constraint** inActiveConstraints, uint32* inConstraintIdxBegin, uint32* inConstraintIdxEnd)
 {
 	JPH_PROFILE_FUNCTION();
 
 	QuickSort(inConstraintIdxBegin, inConstraintIdxEnd, [inActiveConstraints](uint32 inLHS, uint32 inRHS) {
-		const Constraint *lhs = inActiveConstraints[inLHS];
-		const Constraint *rhs = inActiveConstraints[inRHS];
+		const Constraint* lhs = inActiveConstraints[inLHS];
+		const Constraint* rhs = inActiveConstraints[inRHS];
 
 		if (lhs->GetConstraintPriority() != rhs->GetConstraintPriority())
 			return lhs->GetConstraintPriority() < rhs->GetConstraintPriority();
 
 		return lhs->mConstraintIndex < rhs->mConstraintIndex;
-	});
+		});
 }
 
-void ConstraintManager::sSetupVelocityConstraints(Constraint **inActiveConstraints, uint32 inNumActiveConstraints, float inDeltaTime)
+void ConstraintManager::sSetupVelocityConstraints(Constraint** inActiveConstraints, uint32 inNumActiveConstraints, float inDeltaTime)
 {
 	JPH_PROFILE_FUNCTION();
 
-	for (Constraint **c = inActiveConstraints, **c_end = inActiveConstraints + inNumActiveConstraints; c < c_end; ++c)
+	for (Constraint** c = inActiveConstraints, **c_end = inActiveConstraints + inNumActiveConstraints; c < c_end; ++c)
 		(*c)->SetupVelocityConstraint(inDeltaTime);
 }
 
 template <class ConstraintCallback>
-void ConstraintManager::sWarmStartVelocityConstraints(Constraint **inActiveConstraints, const uint32 *inConstraintIdxBegin, const uint32 *inConstraintIdxEnd, float inWarmStartImpulseRatio, ConstraintCallback &ioCallback)
+void ConstraintManager::sWarmStartVelocityConstraints(Constraint** inActiveConstraints, const uint32* inConstraintIdxBegin, const uint32* inConstraintIdxEnd, float inWarmStartImpulseRatio, ConstraintCallback& ioCallback)
 {
 	JPH_PROFILE_FUNCTION();
 
-	for (const uint32 *constraint_idx = inConstraintIdxBegin; constraint_idx < inConstraintIdxEnd; ++constraint_idx)
+	for (const uint32* constraint_idx = inConstraintIdxBegin; constraint_idx < inConstraintIdxEnd; ++constraint_idx)
 	{
-		Constraint *c = inActiveConstraints[*constraint_idx];
+		Constraint* c = inActiveConstraints[*constraint_idx];
 		ioCallback(c);
 		c->WarmStartVelocityConstraint(inWarmStartImpulseRatio);
 	}
 }
 
 // Specialize for the two constraint callback types
-template void ConstraintManager::sWarmStartVelocityConstraints<CalculateSolverSteps>(Constraint **inActiveConstraints, const uint32 *inConstraintIdxBegin, const uint32 *inConstraintIdxEnd, float inWarmStartImpulseRatio, CalculateSolverSteps &ioCallback);
-template void ConstraintManager::sWarmStartVelocityConstraints<DummyCalculateSolverSteps>(Constraint **inActiveConstraints, const uint32 *inConstraintIdxBegin, const uint32 *inConstraintIdxEnd, float inWarmStartImpulseRatio, DummyCalculateSolverSteps &ioCallback);
+template void ConstraintManager::sWarmStartVelocityConstraints<CalculateSolverSteps>(Constraint** inActiveConstraints, const uint32* inConstraintIdxBegin, const uint32* inConstraintIdxEnd, float inWarmStartImpulseRatio, CalculateSolverSteps& ioCallback);
+template void ConstraintManager::sWarmStartVelocityConstraints<DummyCalculateSolverSteps>(Constraint** inActiveConstraints, const uint32* inConstraintIdxBegin, const uint32* inConstraintIdxEnd, float inWarmStartImpulseRatio, DummyCalculateSolverSteps& ioCallback);
 
-bool ConstraintManager::sSolveVelocityConstraints(Constraint **inActiveConstraints, const uint32 *inConstraintIdxBegin, const uint32 *inConstraintIdxEnd, float inDeltaTime)
+bool ConstraintManager::sSolveVelocityConstraints(Constraint** inActiveConstraints, const uint32* inConstraintIdxBegin, const uint32* inConstraintIdxEnd, float inDeltaTime)
 {
 	JPH_PROFILE_FUNCTION();
 
 	bool any_impulse_applied = false;
 
-	for (const uint32 *constraint_idx = inConstraintIdxBegin; constraint_idx < inConstraintIdxEnd; ++constraint_idx)
+	for (const uint32* constraint_idx = inConstraintIdxBegin; constraint_idx < inConstraintIdxEnd; ++constraint_idx)
 	{
-		Constraint *c = inActiveConstraints[*constraint_idx];
+		Constraint* c = inActiveConstraints[*constraint_idx];
 		any_impulse_applied |= c->SolveVelocityConstraint(inDeltaTime);
 	}
 
 	return any_impulse_applied;
 }
 
-bool ConstraintManager::sSolvePositionConstraints(Constraint **inActiveConstraints, const uint32 *inConstraintIdxBegin, const uint32 *inConstraintIdxEnd, float inDeltaTime, float inBaumgarte)
+bool ConstraintManager::sSolvePositionConstraints(Constraint** inActiveConstraints, const uint32* inConstraintIdxBegin, const uint32* inConstraintIdxEnd, float inDeltaTime, float inBaumgarte)
 {
 	JPH_PROFILE_FUNCTION();
 
 	bool any_impulse_applied = false;
 
-	for (const uint32 *constraint_idx = inConstraintIdxBegin; constraint_idx < inConstraintIdxEnd; ++constraint_idx)
+	for (const uint32* constraint_idx = inConstraintIdxBegin; constraint_idx < inConstraintIdxEnd; ++constraint_idx)
 	{
-		Constraint *c = inActiveConstraints[*constraint_idx];
+		Constraint* c = inActiveConstraints[*constraint_idx];
 		any_impulse_applied |= c->SolvePositionConstraint(inDeltaTime, inBaumgarte);
 	}
 
@@ -171,38 +171,38 @@ bool ConstraintManager::sSolvePositionConstraints(Constraint **inActiveConstrain
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void ConstraintManager::DrawConstraints(DebugRenderer *inRenderer) const
+void ConstraintManager::DrawConstraints(DebugRenderer* inRenderer) const
 {
 	JPH_PROFILE_FUNCTION();
 
 	UniqueLock lock(mConstraintsMutex JPH_IF_ENABLE_ASSERTS(, mLockContext, EPhysicsLockTypes::ConstraintsList));
 
-	for (const Ref<Constraint> &c : mConstraints)
+	for (const Ref<Constraint>& c : mConstraints)
 		c->DrawConstraint(inRenderer);
 }
 
-void ConstraintManager::DrawConstraintLimits(DebugRenderer *inRenderer) const
+void ConstraintManager::DrawConstraintLimits(DebugRenderer* inRenderer) const
 {
 	JPH_PROFILE_FUNCTION();
 
 	UniqueLock lock(mConstraintsMutex JPH_IF_ENABLE_ASSERTS(, mLockContext, EPhysicsLockTypes::ConstraintsList));
 
-	for (const Ref<Constraint> &c : mConstraints)
+	for (const Ref<Constraint>& c : mConstraints)
 		c->DrawConstraintLimits(inRenderer);
 }
 
-void ConstraintManager::DrawConstraintReferenceFrame(DebugRenderer *inRenderer) const
+void ConstraintManager::DrawConstraintReferenceFrame(DebugRenderer* inRenderer) const
 {
 	JPH_PROFILE_FUNCTION();
 
 	UniqueLock lock(mConstraintsMutex JPH_IF_ENABLE_ASSERTS(, mLockContext, EPhysicsLockTypes::ConstraintsList));
 
-	for (const Ref<Constraint> &c : mConstraints)
+	for (const Ref<Constraint>& c : mConstraints)
 		c->DrawConstraintReferenceFrame(inRenderer);
 }
 #endif // JPH_DEBUG_RENDERER
 
-void ConstraintManager::SaveState(StateRecorder &inStream, const StateRecorderFilter *inFilter) const
+void ConstraintManager::SaveState(StateRecorder& inStream, const StateRecorderFilter* inFilter) const
 {
 	UniqueLock lock(mConstraintsMutex JPH_IF_ENABLE_ASSERTS(, mLockContext, EPhysicsLockTypes::ConstraintsList));
 
@@ -210,16 +210,16 @@ void ConstraintManager::SaveState(StateRecorder &inStream, const StateRecorderFi
 	if (inFilter != nullptr)
 	{
 		// Determine which constraints to save
-		Array<Constraint *> constraints;
+		Array<Constraint*> constraints;
 		constraints.reserve(mConstraints.size());
-		for (const Ref<Constraint> &c : mConstraints)
+		for (const Ref<Constraint>& c : mConstraints)
 			if (inFilter->ShouldSaveConstraint(*c))
 				constraints.push_back(c);
 
 		// Save them
 		uint32 num_constraints = (uint32)constraints.size();
 		inStream.Write(num_constraints);
-		for (const Constraint *c : constraints)
+		for (const Constraint* c : constraints)
 		{
 			inStream.Write(c->mConstraintIndex);
 			c->SaveState(inStream);
@@ -230,7 +230,7 @@ void ConstraintManager::SaveState(StateRecorder &inStream, const StateRecorderFi
 		// Save all constraints
 		uint32 num_constraints = (uint32)mConstraints.size();
 		inStream.Write(num_constraints);
-		for (const Ref<Constraint> &c : mConstraints)
+		for (const Ref<Constraint>& c : mConstraints)
 		{
 			inStream.Write(c->mConstraintIndex);
 			c->SaveState(inStream);
@@ -238,7 +238,7 @@ void ConstraintManager::SaveState(StateRecorder &inStream, const StateRecorderFi
 	}
 }
 
-bool ConstraintManager::RestoreState(StateRecorder &inStream)
+bool ConstraintManager::RestoreState(StateRecorder& inStream)
 {
 	UniqueLock lock(mConstraintsMutex JPH_IF_ENABLE_ASSERTS(, mLockContext, EPhysicsLockTypes::ConstraintsList));
 
@@ -252,7 +252,7 @@ bool ConstraintManager::RestoreState(StateRecorder &inStream)
 			JPH_ASSERT(false, "Cannot handle adding/removing constraints");
 			return false;
 		}
-		for (const Ref<Constraint> &c : mConstraints)
+		for (const Ref<Constraint>& c : mConstraints)
 		{
 			uint32 constraint_index = c->mConstraintIndex;
 			inStream.Read(constraint_index);

@@ -76,6 +76,8 @@ namespace SectorFW
 		 */
 		void Update(double delta_time)
 		{
+			LOG_INFO("%f", m_frameTimer.GetFPS());
+
 			m_world.UpdateServiceLocator(delta_time);
 
 			m_world.UpdateAllLevels();
@@ -89,13 +91,8 @@ namespace SectorFW
 		{
 			// 画面をクリア
 			float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-			m_graphicsDevice.Clear(clearColor);
-
-			//描画命令発行
-			m_graphicsDevice.Draw();
-
-			// 描画処理を送る
-			m_graphicsDevice.Present();
+			m_graphicsDevice.SubmitFrame(clearColor, m_frameCounter++); // 非同期提出
+			// 計測やスクショ等で必要なら: m_graphicsDevice.WaitSubmittedFrames(m_frameCounter - 1);
 		}
 	private:
 		// FPS制御クラス
@@ -104,5 +101,7 @@ namespace SectorFW
 		Graphics m_graphicsDevice;
 		//ワールド管理
 		WorldType m_world;
+		// フレームカウンタ
+		uint64_t m_frameCounter = 0;
 	};
 }

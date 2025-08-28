@@ -17,8 +17,8 @@ JPH_NAMESPACE_BEGIN
 
 #if defined(JPH_EXTERNAL_PROFILE) && defined(JPH_SHARED_LIBRARY)
 
-ProfileStartMeasurementFunction ProfileStartMeasurement = [](const char *, uint32, uint8 *) { };
-ProfileEndMeasurementFunction ProfileEndMeasurement = [](uint8 *) { };
+ProfileStartMeasurementFunction ProfileStartMeasurement = [](const char*, uint32, uint8*) {};
+ProfileEndMeasurementFunction ProfileEndMeasurement = [](uint8*) {};
 
 #elif defined(JPH_PROFILE_ENABLED)
 
@@ -26,22 +26,22 @@ ProfileEndMeasurementFunction ProfileEndMeasurement = [](uint8 *) { };
 // Profiler
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Profiler *Profiler::sInstance = nullptr;
+Profiler* Profiler::sInstance = nullptr;
 
 #ifdef JPH_SHARED_LIBRARY
-	static thread_local ProfileThread *sInstance = nullptr;
+static thread_local ProfileThread* sInstance = nullptr;
 
-	ProfileThread *ProfileThread::sGetInstance()
-	{
-		return sInstance;
-	}
+ProfileThread* ProfileThread::sGetInstance()
+{
+	return sInstance;
+}
 
-	void ProfileThread::sSetInstance(ProfileThread *inInstance)
-	{
-		sInstance = inInstance;
-	}
+void ProfileThread::sSetInstance(ProfileThread* inInstance)
+{
+	sInstance = inInstance;
+}
 #else
-	thread_local ProfileThread *ProfileThread::sInstance = nullptr;
+thread_local ProfileThread* ProfileThread::sInstance = nullptr;
 #endif
 
 bool ProfileMeasurement::sOutOfSamplesReported = false;
@@ -73,35 +73,35 @@ void Profiler::NextFrame()
 		mDump = false;
 	}
 
-	for (ProfileThread *t : mThreads)
+	for (ProfileThread* t : mThreads)
 		t->mCurrentSample = 0;
 
 	UpdateReferenceTime();
 }
 
-void Profiler::Dump(const string_view &inTag)
+void Profiler::Dump(const string_view& inTag)
 {
 	mDump = true;
 	mDumpTag = inTag;
 }
 
-void Profiler::AddThread(ProfileThread *inThread)
+void Profiler::AddThread(ProfileThread* inThread)
 {
 	std::lock_guard lock(mLock);
 
 	mThreads.push_back(inThread);
 }
 
-void Profiler::RemoveThread(ProfileThread *inThread)
+void Profiler::RemoveThread(ProfileThread* inThread)
 {
 	std::lock_guard lock(mLock);
 
-	Array<ProfileThread *>::iterator i = std::find(mThreads.begin(), mThreads.end(), inThread);
+	Array<ProfileThread*>::iterator i = std::find(mThreads.begin(), mThreads.end(), inThread);
 	JPH_ASSERT(i != mThreads.end());
 	mThreads.erase(i);
 }
 
-void Profiler::sAggregate(int inDepth, uint32 inColor, ProfileSample *&ioSample, const ProfileSample *inEnd, Aggregators &ioAggregators, KeyToAggregator &ioKeyToAggregator)
+void Profiler::sAggregate(int inDepth, uint32 inColor, ProfileSample*& ioSample, const ProfileSample* inEnd, Aggregators& ioAggregators, KeyToAggregator& ioKeyToAggregator)
 {
 	// Store depth
 	ioSample->mDepth = uint8(min(255, inDepth));
@@ -116,7 +116,7 @@ void Profiler::sAggregate(int inDepth, uint32 inColor, ProfileSample *&ioSample,
 	uint64 cycles_this_with_children = ioSample->mEndCycle - ioSample->mStartCycle;
 
 	// Loop over following samples until we find a sample that starts on or after our end
-	ProfileSample *sample;
+	ProfileSample* sample;
 	for (sample = ioSample + 1; sample < inEnd && sample->mStartCycle < ioSample->mEndCycle; ++sample)
 	{
 		JPH_ASSERT(sample[-1].mStartCycle <= sample->mStartCycle);
@@ -128,7 +128,7 @@ void Profiler::sAggregate(int inDepth, uint32 inColor, ProfileSample *&ioSample,
 	}
 
 	// Find the aggregator for this name / filename pair
-	Aggregator *aggregator;
+	Aggregator* aggregator;
 	KeyToAggregator::iterator aggregator_idx = ioKeyToAggregator.find(ioSample->mName);
 	if (aggregator_idx == ioKeyToAggregator.end())
 	{
@@ -159,16 +159,16 @@ void Profiler::DumpInternal()
 	// but the data is not written until the sample finishes. So if we dump the profile information while
 	// some other thread is running, we may get some garbage information from the previous frame
 	Threads threads;
-	for (ProfileThread *t : mThreads)
+	for (ProfileThread* t : mThreads)
 		threads.push_back({ t->mThreadName, t->mSamples, t->mSamples + t->mCurrentSample });
 
 	// Shift all samples so that the first sample is at zero
 	uint64 min_cycle = 0xffffffffffffffffUL;
-	for (const ThreadSamples &t : threads)
+	for (const ThreadSamples& t : threads)
 		if (t.mSamplesBegin < t.mSamplesEnd)
 			min_cycle = min(min_cycle, t.mSamplesBegin[0].mStartCycle);
-	for (const ThreadSamples &t : threads)
-		for (ProfileSample *s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
+	for (const ThreadSamples& t : threads)
+		for (ProfileSample* s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
 		{
 			s->mStartCycle -= min_cycle;
 			s->mEndCycle -= min_cycle;
@@ -193,15 +193,15 @@ void Profiler::DumpInternal()
 	// Aggregate data across threads
 	Aggregators aggregators;
 	KeyToAggregator key_to_aggregators;
-	for (const ThreadSamples &t : threads)
-		for (ProfileSample *s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
+	for (const ThreadSamples& t : threads)
+		for (ProfileSample* s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
 			sAggregate(0, Color::sGetDistinctColor(0).GetUInt32(), s, end, aggregators, key_to_aggregators);
 
 	// Dump as chart
 	DumpChart(tag.c_str(), threads, key_to_aggregators, aggregators);
 }
 
-static String sHTMLEncode(const char *inString)
+static String sHTMLEncode(const char* inString)
 {
 	String str(inString);
 	StringReplace(str, "<", "&lt;");
@@ -209,7 +209,7 @@ static String sHTMLEncode(const char *inString)
 	return str;
 }
 
-void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyToAggregator &inKeyToAggregators, const Aggregators &inAggregators)
+void Profiler::DumpChart(const char* inTag, const Threads& inThreads, const KeyToAggregator& inKeyToAggregators, const Aggregators& inAggregators)
 {
 	// Open file
 	std::ofstream f;
@@ -559,7 +559,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 	// Dump samples
 	f << "var threads = [\n";
 	bool first_thread = true;
-	for (const ThreadSamples &t : inThreads)
+	for (const ThreadSamples& t : inThreads)
 	{
 		if (!first_thread)
 			f << ",\n";
@@ -567,7 +567,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 
 		f << "{\nthread_name: \"" << t.mThreadName << "\",\naggregator: [";
 		bool first = true;
-		for (const ProfileSample *s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
+		for (const ProfileSample* s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
 		{
 			if (!first)
 				f << ",";
@@ -576,7 +576,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 		}
 		f << "],\ncolor: [";
 		first = true;
-		for (const ProfileSample *s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
+		for (const ProfileSample* s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
 		{
 			if (!first)
 				f << ",";
@@ -586,7 +586,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 		}
 		f << "],\nstart: [";
 		first = true;
-		for (const ProfileSample *s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
+		for (const ProfileSample* s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
 		{
 			if (!first)
 				f << ",";
@@ -595,7 +595,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 		}
 		f << "],\ncycles: [";
 		first = true;
-		for (const ProfileSample *s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
+		for (const ProfileSample* s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
 		{
 			if (!first)
 				f << ",";
@@ -604,7 +604,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 		}
 		f << "],\ndepth: [";
 		first = true;
-		for (const ProfileSample *s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
+		for (const ProfileSample* s = t.mSamplesBegin, *end = t.mSamplesEnd; s < end; ++s)
 		{
 			if (!first)
 				f << ",";
@@ -617,7 +617,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 	// Dump aggregated data
 	f << "];\nvar aggregated = {\nname: [";
 	bool first = true;
-	for (const Aggregator &a : inAggregators)
+	for (const Aggregator& a : inAggregators)
 	{
 		if (!first)
 			f << ",";
@@ -627,7 +627,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 	}
 	f << "],\ncalls: [";
 	first = true;
-	for (const Aggregator &a : inAggregators)
+	for (const Aggregator& a : inAggregators)
 	{
 		if (!first)
 			f << ",";
@@ -636,7 +636,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 	}
 	f << "],\nmin_cycles: [";
 	first = true;
-	for (const Aggregator &a : inAggregators)
+	for (const Aggregator& a : inAggregators)
 	{
 		if (!first)
 			f << ",";
@@ -645,7 +645,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 	}
 	f << "],\nmax_cycles: [";
 	first = true;
-	for (const Aggregator &a : inAggregators)
+	for (const Aggregator& a : inAggregators)
 	{
 		if (!first)
 			f << ",";
@@ -654,7 +654,7 @@ void Profiler::DumpChart(const char *inTag, const Threads &inThreads, const KeyT
 	}
 	f << "],\ncycles_per_frame: [";
 	first = true;
-	for (const Aggregator &a : inAggregators)
+	for (const Aggregator& a : inAggregators)
 	{
 		if (!first)
 			f << ",";

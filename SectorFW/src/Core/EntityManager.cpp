@@ -7,10 +7,27 @@ namespace SectorFW
 	{
 		void EntityManager::DestroyEntity(EntityID id)
 		{
-			if (locations.contains(id)) {
-				EntityLocation loc = locations[id];
-				loc.chunk->RemoveEntitySwapPop(loc.index);
-				locations.erase(id);
+			// 事前にスワップ相手候補を把握（ロック不要：chunk 側は別同期レイヤ）
+			if (true) {
+				std::unique_lock<std::shared_mutex> wlock(locationsMutex);
+				auto it = locations.find(id);
+				if (it != locations.end()) {
+					EntityLocation loc = it->second;
+					ArchetypeChunk* chunk = loc.chunk;
+					const size_t idx = loc.index;
+					const size_t lastIndexBefore = chunk->GetEntityCount() - 1;
+					// 先に Remove してから locations を更新
+					chunk->RemoveEntitySwapPop(idx);
+					// スワップで詰められた場合、末尾ID → idx に移動するので更新
+					if (idx < lastIndexBefore) {
+						EntityID swappedId = ArchetypeChunk::Accessor::GetEntities(chunk)[idx]; // Remove 後は idx に来ている
+						auto its = locations.find(swappedId);
+						if (its != locations.end()) {
+							its->second = { chunk, idx };
+						}
+					}
+					locations.erase(it);
+				}
 			}
 			for (auto& [_, store] : sparseStores) {
 				store->Remove(id);
@@ -22,6 +39,7 @@ namespace SectorFW
 		ComponentMask EntityManager::GetMask(EntityID id) const noexcept
 		{
 			//idのチャンクが存在する場合はそのマスクを返す
+			std::shared_lock<std::shared_mutex> rlock(locationsMutex);
 			auto iter = locations.find(id);
 			if (iter != locations.end())
 			{
@@ -36,7 +54,7 @@ namespace SectorFW
 					const auto& entities = ArchetypeChunk::Accessor::GetEntities(chunk.get());
 					for (size_t i = 0; i < entityCount; ++i) {
 						if (entities[i] == id)
-							componentMask = mask;
+							return mask; // マスクが見つかったら返す
 					}
 				}
 			}

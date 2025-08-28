@@ -20,7 +20,7 @@ JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(ScaledShapeSettings)
 {
 	JPH_ADD_BASE_CLASS(ScaledShapeSettings, DecoratedShapeSettings)
 
-	JPH_ADD_ATTRIBUTE(ScaledShapeSettings, mScale)
+		JPH_ADD_ATTRIBUTE(ScaledShapeSettings, mScale)
 }
 
 ShapeSettings::ShapeResult ScaledShapeSettings::Create() const
@@ -30,7 +30,7 @@ ShapeSettings::ShapeResult ScaledShapeSettings::Create() const
 	return mCachedResult;
 }
 
-ScaledShape::ScaledShape(const ScaledShapeSettings &inSettings, ShapeResult &outResult) :
+ScaledShape::ScaledShape(const ScaledShapeSettings& inSettings, ShapeResult& outResult) :
 	DecoratedShape(EShapeSubType::Scaled, inSettings, outResult),
 	mScale(inSettings.mScale)
 {
@@ -63,7 +63,7 @@ AABox ScaledShape::GetWorldSpaceBounds(Mat44Arg inCenterOfMassTransform, Vec3Arg
 	return mInnerShape->GetWorldSpaceBounds(inCenterOfMassTransform, inScale * mScale);
 }
 
-TransformedShape ScaledShape::GetSubShapeTransformedShape(const SubShapeID &inSubShapeID, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, SubShapeID &outRemainder) const
+TransformedShape ScaledShape::GetSubShapeTransformedShape(const SubShapeID& inSubShapeID, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, SubShapeID& outRemainder) const
 {
 	// We don't use any bits in the sub shape ID
 	outRemainder = inSubShapeID;
@@ -73,7 +73,7 @@ TransformedShape ScaledShape::GetSubShapeTransformedShape(const SubShapeID &inSu
 	return ts;
 }
 
-Vec3 ScaledShape::GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLocalSurfacePosition) const
+Vec3 ScaledShape::GetSurfaceNormal(const SubShapeID& inSubShapeID, Vec3Arg inLocalSurfacePosition) const
 {
 	// Transform the surface point to local space and pass the query on
 	Vec3 normal = mInnerShape->GetSurfaceNormal(inSubShapeID, inLocalSurfacePosition / mScale);
@@ -84,52 +84,52 @@ Vec3 ScaledShape::GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLoc
 	return (normal / mScale).Normalized();
 }
 
-void ScaledShape::GetSupportingFace(const SubShapeID &inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace &outVertices) const
+void ScaledShape::GetSupportingFace(const SubShapeID& inSubShapeID, Vec3Arg inDirection, Vec3Arg inScale, Mat44Arg inCenterOfMassTransform, SupportingFace& outVertices) const
 {
 	mInnerShape->GetSupportingFace(inSubShapeID, inDirection, inScale * mScale, inCenterOfMassTransform, outVertices);
 }
 
-void ScaledShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const Plane &inSurface, float &outTotalVolume, float &outSubmergedVolume, Vec3 &outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, RVec3Arg inBaseOffset)) const
+void ScaledShape::GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const Plane& inSurface, float& outTotalVolume, float& outSubmergedVolume, Vec3& outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, RVec3Arg inBaseOffset)) const
 {
 	mInnerShape->GetSubmergedVolume(inCenterOfMassTransform, inScale * mScale, inSurface, outTotalVolume, outSubmergedVolume, outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, inBaseOffset));
 }
 
 #ifdef JPH_DEBUG_RENDERER
-void ScaledShape::Draw(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
+void ScaledShape::Draw(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inUseMaterialColors, bool inDrawWireframe) const
 {
 	mInnerShape->Draw(inRenderer, inCenterOfMassTransform, inScale * mScale, inColor, inUseMaterialColors, inDrawWireframe);
 }
 
-void ScaledShape::DrawGetSupportFunction(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inDrawSupportDirection) const
+void ScaledShape::DrawGetSupportFunction(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale, ColorArg inColor, bool inDrawSupportDirection) const
 {
 	mInnerShape->DrawGetSupportFunction(inRenderer, inCenterOfMassTransform, inScale * mScale, inColor, inDrawSupportDirection);
 }
 
-void ScaledShape::DrawGetSupportingFace(DebugRenderer *inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale) const
+void ScaledShape::DrawGetSupportingFace(DebugRenderer* inRenderer, RMat44Arg inCenterOfMassTransform, Vec3Arg inScale) const
 {
 	mInnerShape->DrawGetSupportingFace(inRenderer, inCenterOfMassTransform, inScale * mScale);
 }
 #endif // JPH_DEBUG_RENDERER
 
-bool ScaledShape::CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubShapeIDCreator, RayCastResult &ioHit) const
+bool ScaledShape::CastRay(const RayCast& inRay, const SubShapeIDCreator& inSubShapeIDCreator, RayCastResult& ioHit) const
 {
 	Vec3 inv_scale = mScale.Reciprocal();
-	RayCast scaled_ray { inv_scale * inRay.mOrigin, inv_scale * inRay.mDirection };
+	RayCast scaled_ray{ inv_scale * inRay.mOrigin, inv_scale * inRay.mDirection };
 	return mInnerShape->CastRay(scaled_ray, inSubShapeIDCreator, ioHit);
 }
 
-void ScaledShape::CastRay(const RayCast &inRay, const RayCastSettings &inRayCastSettings, const SubShapeIDCreator &inSubShapeIDCreator, CastRayCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void ScaledShape::CastRay(const RayCast& inRay, const RayCastSettings& inRayCastSettings, const SubShapeIDCreator& inSubShapeIDCreator, CastRayCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
 		return;
 
 	Vec3 inv_scale = mScale.Reciprocal();
-	RayCast scaled_ray { inv_scale * inRay.mOrigin, inv_scale * inRay.mDirection };
+	RayCast scaled_ray{ inv_scale * inRay.mOrigin, inv_scale * inRay.mDirection };
 	return mInnerShape->CastRay(scaled_ray, inRayCastSettings, inSubShapeIDCreator, ioCollector, inShapeFilter);
 }
 
-void ScaledShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubShapeIDCreator, CollidePointCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void ScaledShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator& inSubShapeIDCreator, CollidePointCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
@@ -139,12 +139,12 @@ void ScaledShape::CollidePoint(Vec3Arg inPoint, const SubShapeIDCreator &inSubSh
 	mInnerShape->CollidePoint(inv_scale * inPoint, inSubShapeIDCreator, ioCollector, inShapeFilter);
 }
 
-void ScaledShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator &inVertices, uint inNumVertices, int inCollidingShapeIndex) const
+void ScaledShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const CollideSoftBodyVertexIterator& inVertices, uint inNumVertices, int inCollidingShapeIndex) const
 {
 	mInnerShape->CollideSoftBodyVertices(inCenterOfMassTransform, inScale * mScale, inVertices, inNumVertices, inCollidingShapeIndex);
 }
 
-void ScaledShape::CollectTransformedShapes(const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, const SubShapeIDCreator &inSubShapeIDCreator, TransformedShapeCollector &ioCollector, const ShapeFilter &inShapeFilter) const
+void ScaledShape::CollectTransformedShapes(const AABox& inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, const SubShapeIDCreator& inSubShapeIDCreator, TransformedShapeCollector& ioCollector, const ShapeFilter& inShapeFilter) const
 {
 	// Test shape filter
 	if (!inShapeFilter.ShouldCollide(this, inSubShapeIDCreator.GetID()))
@@ -153,19 +153,19 @@ void ScaledShape::CollectTransformedShapes(const AABox &inBox, Vec3Arg inPositio
 	mInnerShape->CollectTransformedShapes(inBox, inPositionCOM, inRotation, inScale * mScale, inSubShapeIDCreator, ioCollector, inShapeFilter);
 }
 
-void ScaledShape::TransformShape(Mat44Arg inCenterOfMassTransform, TransformedShapeCollector &ioCollector) const
+void ScaledShape::TransformShape(Mat44Arg inCenterOfMassTransform, TransformedShapeCollector& ioCollector) const
 {
 	mInnerShape->TransformShape(inCenterOfMassTransform * Mat44::sScale(mScale), ioCollector);
 }
 
-void ScaledShape::SaveBinaryState(StreamOut &inStream) const
+void ScaledShape::SaveBinaryState(StreamOut& inStream) const
 {
 	DecoratedShape::SaveBinaryState(inStream);
 
 	inStream.Write(mScale);
 }
 
-void ScaledShape::RestoreBinaryState(StreamIn &inStream)
+void ScaledShape::RestoreBinaryState(StreamIn& inStream)
 {
 	DecoratedShape::RestoreBinaryState(inStream);
 
@@ -187,43 +187,43 @@ Vec3 ScaledShape::MakeScaleValid(Vec3Arg inScale) const
 	return mInnerShape->MakeScaleValid(mScale * inScale) / mScale;
 }
 
-void ScaledShape::sCollideScaledVsShape(const Shape *inShape1, const Shape *inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, const CollideShapeSettings &inCollideShapeSettings, CollideShapeCollector &ioCollector, const ShapeFilter &inShapeFilter)
+void ScaledShape::sCollideScaledVsShape(const Shape* inShape1, const Shape* inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, const CollideShapeSettings& inCollideShapeSettings, CollideShapeCollector& ioCollector, const ShapeFilter& inShapeFilter)
 {
 	JPH_ASSERT(inShape1->GetSubType() == EShapeSubType::Scaled);
-	const ScaledShape *shape1 = static_cast<const ScaledShape *>(inShape1);
+	const ScaledShape* shape1 = static_cast<const ScaledShape*>(inShape1);
 
 	CollisionDispatch::sCollideShapeVsShape(shape1->GetInnerShape(), inShape2, inScale1 * shape1->GetScale(), inScale2, inCenterOfMassTransform1, inCenterOfMassTransform2, inSubShapeIDCreator1, inSubShapeIDCreator2, inCollideShapeSettings, ioCollector, inShapeFilter);
 }
 
-void ScaledShape::sCollideShapeVsScaled(const Shape *inShape1, const Shape *inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, const CollideShapeSettings &inCollideShapeSettings, CollideShapeCollector &ioCollector, const ShapeFilter &inShapeFilter)
+void ScaledShape::sCollideShapeVsScaled(const Shape* inShape1, const Shape* inShape2, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, const CollideShapeSettings& inCollideShapeSettings, CollideShapeCollector& ioCollector, const ShapeFilter& inShapeFilter)
 {
 	JPH_ASSERT(inShape2->GetSubType() == EShapeSubType::Scaled);
-	const ScaledShape *shape2 = static_cast<const ScaledShape *>(inShape2);
+	const ScaledShape* shape2 = static_cast<const ScaledShape*>(inShape2);
 
 	CollisionDispatch::sCollideShapeVsShape(inShape1, shape2->GetInnerShape(), inScale1, inScale2 * shape2->GetScale(), inCenterOfMassTransform1, inCenterOfMassTransform2, inSubShapeIDCreator1, inSubShapeIDCreator2, inCollideShapeSettings, ioCollector, inShapeFilter);
 }
 
-void ScaledShape::sCastScaledVsShape(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, const Shape *inShape, Vec3Arg inScale, const ShapeFilter &inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, CastShapeCollector &ioCollector)
+void ScaledShape::sCastScaledVsShape(const ShapeCast& inShapeCast, const ShapeCastSettings& inShapeCastSettings, const Shape* inShape, Vec3Arg inScale, const ShapeFilter& inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, CastShapeCollector& ioCollector)
 {
 	JPH_ASSERT(inShapeCast.mShape->GetSubType() == EShapeSubType::Scaled);
-	const ScaledShape *shape = static_cast<const ScaledShape *>(inShapeCast.mShape);
+	const ScaledShape* shape = static_cast<const ScaledShape*>(inShapeCast.mShape);
 
 	ShapeCast scaled_cast(shape->GetInnerShape(), inShapeCast.mScale * shape->GetScale(), inShapeCast.mCenterOfMassStart, inShapeCast.mDirection);
 	CollisionDispatch::sCastShapeVsShapeLocalSpace(scaled_cast, inShapeCastSettings, inShape, inScale, inShapeFilter, inCenterOfMassTransform2, inSubShapeIDCreator1, inSubShapeIDCreator2, ioCollector);
 }
 
-void ScaledShape::sCastShapeVsScaled(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, const Shape *inShape, Vec3Arg inScale, const ShapeFilter &inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, CastShapeCollector &ioCollector)
+void ScaledShape::sCastShapeVsScaled(const ShapeCast& inShapeCast, const ShapeCastSettings& inShapeCastSettings, const Shape* inShape, Vec3Arg inScale, const ShapeFilter& inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator& inSubShapeIDCreator1, const SubShapeIDCreator& inSubShapeIDCreator2, CastShapeCollector& ioCollector)
 {
 	JPH_ASSERT(inShape->GetSubType() == EShapeSubType::Scaled);
-	const ScaledShape *shape = static_cast<const ScaledShape *>(inShape);
+	const ScaledShape* shape = static_cast<const ScaledShape*>(inShape);
 
 	CollisionDispatch::sCastShapeVsShapeLocalSpace(inShapeCast, inShapeCastSettings, shape->mInnerShape, inScale * shape->mScale, inShapeFilter, inCenterOfMassTransform2, inSubShapeIDCreator1, inSubShapeIDCreator2, ioCollector);
 }
 
 void ScaledShape::sRegister()
 {
-	ShapeFunctions &f = ShapeFunctions::sGet(EShapeSubType::Scaled);
-	f.mConstruct = []() -> Shape * { return new ScaledShape; };
+	ShapeFunctions& f = ShapeFunctions::sGet(EShapeSubType::Scaled);
+	f.mConstruct = []() -> Shape* { return new ScaledShape; };
 	f.mColor = Color::sYellow;
 
 	for (EShapeSubType s : sAllSubShapeTypes)

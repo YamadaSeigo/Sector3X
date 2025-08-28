@@ -25,7 +25,7 @@ static constexpr uint8 sClosestFeatureToActiveEdgesMask[] = {
 	// 0b111: Vertex 1, 2 & 3 -> interior, guarded by an if
 };
 
-CollideSphereVsTriangles::CollideSphereVsTriangles(const SphereShape *inShape1, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeID &inSubShapeID1, const CollideShapeSettings &inCollideShapeSettings, CollideShapeCollector &ioCollector) :
+CollideSphereVsTriangles::CollideSphereVsTriangles(const SphereShape* inShape1, Vec3Arg inScale1, Vec3Arg inScale2, Mat44Arg inCenterOfMassTransform1, Mat44Arg inCenterOfMassTransform2, const SubShapeID& inSubShapeID1, const CollideShapeSettings& inCollideShapeSettings, CollideShapeCollector& ioCollector) :
 	mCollideShapeSettings(inCollideShapeSettings),
 	mCollector(ioCollector),
 	mShape1(inShape1),
@@ -37,7 +37,7 @@ CollideSphereVsTriangles::CollideSphereVsTriangles(const SphereShape *inShape1, 
 	mSphereCenterIn2 = inCenterOfMassTransform2.Multiply3x3Transposed(inCenterOfMassTransform1.GetTranslation() - inCenterOfMassTransform2.GetTranslation());
 
 	// Determine if shape 2 is inside out or not
-	mScaleSign2 = ScaleHelpers::IsInsideOut(inScale2)? -1.0f : 1.0f;
+	mScaleSign2 = ScaleHelpers::IsInsideOut(inScale2) ? -1.0f : 1.0f;
 
 	// Check that the sphere is uniformly scaled
 	JPH_ASSERT(ScaleHelpers::IsUniformScale(inScale1.Abs()));
@@ -45,7 +45,7 @@ CollideSphereVsTriangles::CollideSphereVsTriangles(const SphereShape *inShape1, 
 	mRadiusPlusMaxSeparationSq = Square(mRadius + inCollideShapeSettings.mMaxSeparationDistance);
 }
 
-void CollideSphereVsTriangles::Collide(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8 inActiveEdges, const SubShapeID &inSubShapeID2)
+void CollideSphereVsTriangles::Collide(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2, uint8 inActiveEdges, const SubShapeID& inSubShapeID2)
 {
 	// Scale triangle and make it relative to the center of the sphere
 	Vec3 v0 = mScale2 * inV0 - mSphereCenterIn2;
@@ -88,7 +88,7 @@ void CollideSphereVsTriangles::Collide(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2,
 		Vec3 active_edge_movement_direction = mTransform2.Multiply3x3Transposed(mCollideShapeSettings.mActiveEdgeMovementDirection);
 
 		// See ActiveEdges::FixNormal. If penetration_axis affects the movement less than the triangle normal we keep penetration_axis.
-		Vec3 new_penetration_axis = back_facing? triangle_normal : -triangle_normal;
+		Vec3 new_penetration_axis = back_facing ? triangle_normal : -triangle_normal;
 		if (active_edge_movement_direction.Dot(penetration_axis) * new_penetration_axis.Length() >= active_edge_movement_direction.Dot(new_penetration_axis))
 			penetration_axis = new_penetration_axis;
 	}
@@ -115,7 +115,7 @@ void CollideSphereVsTriangles::Collide(Vec3Arg inV0, Vec3Arg inV1, Vec3Arg inV2,
 
 	// Notify the collector
 	JPH_IF_TRACK_NARROWPHASE_STATS(TrackNarrowPhaseCollector track;)
-	mCollector.AddHit(result);
+		mCollector.AddHit(result);
 }
 
 JPH_NAMESPACE_END

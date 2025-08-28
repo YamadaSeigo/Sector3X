@@ -88,11 +88,7 @@ namespace SectorFW
 			 * @return uint32_t 最大エンティティ数
 			 */
 			uint32_t Capacity() const noexcept { return maxEntities; }
-			/**
-			 * @brief 次のエンティティIDのインデックスを取得する関数
-			 * @return uint32_t 次のエンティティIDのインデックス
-			 */
-			uint32_t NextIndex() const noexcept { return nextIndex.load(std::memory_order_acquire); }
+
 		private:
 			/**
 			 * @brief 最大エンティティ数

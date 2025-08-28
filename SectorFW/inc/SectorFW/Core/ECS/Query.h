@@ -37,15 +37,6 @@ namespace SectorFW
 		{
 		public:
 			/**
-			 * @brief まばらなコンポーネントを除外するためのテンプレート
-			 * @return Query& クエリ自身の参照
-			 */
-			template<typename... Ts>
-			Query& With() noexcept {
-				static_assert(AllDense<Ts...>, "All types in With must be dense components (not sparse)");
-				return *this;
-			}
-			/**
 			 * @brief クエリに含めるコンポーネントを指定するテンプレート
 			 * @return Query& クエリ自身の参照
 			 */
