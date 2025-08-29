@@ -75,12 +75,14 @@ namespace SectorFW
 			void SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx);
 			void WaitSubmittedFramesImpl(uint64_t uptoFrame);
 
-
 			RenderService* GetRenderService() noexcept {
 				return GetRenderGraph().GetRenderService();
 			}
 
 			void TestInitialize();
+
+			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }
+			ID3D11DeviceContext* GetDeviceContext() const noexcept { return m_context.Get(); }
 		private:
 			/**
 			 * @brief RenderGraph‚ğæ“¾‚·‚éŠÖ”

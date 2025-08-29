@@ -27,7 +27,7 @@ namespace SectorFW
 				void Sort(std::vector<DrawCommand>& cmds) {
 					const size_t N = cmds.size();
 
-					if (N < 500000) 
+					if (N < 500000)
 					{
 						std::sort(cmds.begin(), cmds.end(), [](const auto& a, const auto& b) {
 							return a.sortKey < b.sortKey;
@@ -151,115 +151,115 @@ namespace SectorFW
 				}
 			};
 
+		public:
+			// ---------- 生産者セッション（thread_localを使わない） ----------
+			class ProducerSession {
 			public:
-				// ---------- 生産者セッション（thread_localを使わない） ----------
-				class ProducerSession {
-				public:
-					explicit ProducerSession(RenderQueue& owner) noexcept
-						: rq(&owner) {
-					}
+				explicit ProducerSession(RenderQueue& owner) noexcept
+					: rq(&owner) {
+				}
 
-					// コピー禁止
-					ProducerSession(const ProducerSession&) = delete;
+				// コピー禁止
+				ProducerSession(const ProducerSession&) = delete;
 
-					ProducerSession& operator=(const ProducerSession&) = delete;
-					// ムーブは可
-					ProducerSession(ProducerSession&& other) noexcept
-						: rq(other.rq), boundQueue(other.boundQueue), token(std::move(other.token)), buf(std::move(other.buf)) {
+				ProducerSession& operator=(const ProducerSession&) = delete;
+				// ムーブは可
+				ProducerSession(ProducerSession&& other) noexcept
+					: rq(other.rq), boundQueue(other.boundQueue), token(std::move(other.token)), buf(std::move(other.buf)) {
+					other.rq = nullptr;
+					other.boundQueue = nullptr;
+					other.token.reset();
+					other.buf.clear();
+				}
+
+				ProducerSession& operator=(ProducerSession&& other) noexcept {
+					if (this != &other) {
+						FlushAll();
+						rq = other.rq;
+						boundQueue = other.boundQueue;
+						token = std::move(other.token);
+						buf = std::move(other.buf);
 						other.rq = nullptr;
 						other.boundQueue = nullptr;
 						other.token.reset();
 						other.buf.clear();
 					}
+					return *this;
+				}
 
-					ProducerSession& operator=(ProducerSession&& other) noexcept {
-						if (this != &other) {
-							FlushAll();
-							rq = other.rq;
-							boundQueue = other.boundQueue;
-							token = std::move(other.token);
-							buf = std::move(other.buf);
-							other.rq = nullptr;
-							other.boundQueue = nullptr;
-							other.token.reset();
-							other.buf.clear();
-						}
-						return *this;
+				~ProducerSession() { FlushAll(); }
+
+				// まとめ用固定長バッファ（ヒープなし）
+				static constexpr size_t kChunk = 128;
+				struct SmallBuf {
+					DrawCommand data[kChunk];
+					size_t size = 0;
+					void push_back(const DrawCommand& c) noexcept { data[size++] = c; }
+					void push_back(DrawCommand&& c) noexcept { data[size++] = std::move(c); }
+					bool full() const noexcept { return size >= kChunk; }
+					void clear() noexcept { size = 0; }
+				};
+
+				void Push(const DrawCommand& cmd) {
+					RebindIfNeeded();
+					buf.push_back(cmd);
+					if (buf.full()) flushChunk();
+				}
+				void Push(DrawCommand&& cmd) {
+					RebindIfNeeded();
+					buf.push_back(std::move(cmd));
+					if (buf.full()) flushChunk();
+				}
+
+				// インスタンスを 1 件プールへ書き込み、Index を返す
+				[[nodiscard]] InstanceIndex AllocInstance(const InstanceData& inst) {
+					RebindIfNeeded();
+					// 現在のフレームスロット
+					const int slot = rq->current.load(std::memory_order_acquire);
+					auto& pos = rq->instWritePos[slot];
+					uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
+					// 簡易チェック（必要なら LOG + clamp / 失敗扱いにする）
+					if (idx >= MAX_INSTANCES_PER_FRAME) {
+						// 飽和させるか、エラー処理
+						idx = MAX_INSTANCES_PER_FRAME - 1;
 					}
+					rq->instancePools[slot][idx] = inst;
+					return InstanceIndex{ idx };
+				}
 
-					~ProducerSession() { FlushAll(); }
-
-					// まとめ用固定長バッファ（ヒープなし）
-					static constexpr size_t kChunk = 128;
-					struct SmallBuf {
-						DrawCommand data[kChunk];
-						size_t size = 0;
-						void push_back(const DrawCommand& c) noexcept { data[size++] = c; }
-						void push_back(DrawCommand&& c) noexcept { data[size++] = std::move(c); }
-						bool full() const noexcept { return size >= kChunk; }
-						void clear() noexcept { size = 0; }
-					};
-
-					void Push(const DrawCommand& cmd) {
-						RebindIfNeeded();
-						buf.push_back(cmd);
-						if (buf.full()) flushChunk();
+				void FlushAll() {
+					// “現在バインドされているキュー” に吐く（フレーム切替後でも取りこぼさない）
+					if (boundQueue && token && buf.size) {
+						boundQueue->enqueue_bulk(*token, buf.data, buf.size);
+						buf.clear();
 					}
-					void Push(DrawCommand&& cmd) {
-						RebindIfNeeded();
-						buf.push_back(std::move(cmd));
-						if (buf.full()) flushChunk();
-					}
+				}
 
-					// インスタンスを 1 件プールへ書き込み、Index を返す
-					[[nodiscard]] InstanceIndex AllocInstance(const InstanceData& inst) {
-						RebindIfNeeded();
-						// 現在のフレームスロット
-						const int slot = rq->current.load(std::memory_order_acquire);
-						auto& pos = rq->instWritePos[slot];
-						uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
-						// 簡易チェック（必要なら LOG + clamp / 失敗扱いにする）
-						if (idx >= MAX_INSTANCES_PER_FRAME) {
-							// 飽和させるか、エラー処理
-							idx = MAX_INSTANCES_PER_FRAME - 1;
-						}
-						rq->instancePools[slot][idx] = inst;
-						return InstanceIndex{ idx };
-					}
+			private:
+				RenderQueue* rq = nullptr;
+				moodycamel::ConcurrentQueue<DrawCommand>* boundQueue = nullptr;
+				std::optional<moodycamel::ProducerToken> token; // インライン保持（ヒープなし）
+				SmallBuf buf;
 
-					void FlushAll() {
-						// “現在バインドされているキュー” に吐く（フレーム切替後でも取りこぼさない）
+				void flushChunk() {
+					boundQueue->enqueue_bulk(*token, buf.data, buf.size);
+					buf.clear();
+				}
+
+				void RebindIfNeeded() {
+					auto* cur = &rq->CurQ(); // 現在の生産キュー
+					if (boundQueue != cur) {
+						// 旧キューへ残りを吐き出してからバインド切替（安全）
 						if (boundQueue && token && buf.size) {
 							boundQueue->enqueue_bulk(*token, buf.data, buf.size);
 							buf.clear();
 						}
+						token.reset();
+						token.emplace(*cur);
+						boundQueue = cur;
 					}
-
-				private:
-					RenderQueue* rq = nullptr;
-					moodycamel::ConcurrentQueue<DrawCommand>* boundQueue = nullptr;
-					std::optional<moodycamel::ProducerToken> token; // インライン保持（ヒープなし）
-					SmallBuf buf;
-
-					void flushChunk() {
-						boundQueue->enqueue_bulk(*token, buf.data, buf.size);
-						buf.clear();
-					}
-
-					void RebindIfNeeded() {
-						auto* cur = &rq->CurQ(); // 現在の生産キュー
-						if (boundQueue != cur) {
-							// 旧キューへ残りを吐き出してからバインド切替（安全）
-							if (boundQueue && token && buf.size) {
-								boundQueue->enqueue_bulk(*token, buf.data, buf.size);
-								buf.clear();
-							}
-							token.reset();
-							token.emplace(*cur);
-							boundQueue = cur;
-						}
-					}
-				};
+				}
+			};
 
 		public:
 			RenderQueue() {

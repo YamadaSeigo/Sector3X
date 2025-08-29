@@ -39,6 +39,8 @@ namespace SectorFW
 				auto typeSys = new SystemType<Partition>();
 				typeSys->SetContext(serviceLocator);
 
+				typeSys->Start(serviceLocator); // 空のパーティションでStartを呼ぶ
+
 				accessList.push_back(typeSys->GetAccessInfo());
 				systems.emplace_back(typeSys);
 			}

@@ -1,4 +1,5 @@
 
+#include <SectorFW/GUI/ImGuiBackendDX11Win32.h>
 #include "system/CameraSystem.h"
 #include "system/ModelRenderSystem.h"
 #include "system/PhysicsSystem.h"
@@ -35,13 +36,14 @@ struct Health { SPARSE_TAG; int hp = 0; };
 
 template<typename Partition>
 class MovementSystem : public ITypeSystem<
+	MovementSystem<Partition>,
 	Partition,
 	ComponentAccess<Read<Velocity>, Write<Position>>,
 	ServiceContext<>>{
 	using Accessor = ComponentAccessor<Read<Velocity>, Write<Position>>;
 
 public:
-	void UpdateImpl(Partition& partition) override {
+	void UpdateImpl(Partition& partition) {
 		this->ForEachChunkWithAccessor([](Accessor& accessor, size_t entityCount)
 			{
 				auto velocityPtr = accessor.Get<Read<Velocity>>();
@@ -130,7 +132,7 @@ int main(void)
 	WindowHandler::Create(_T(WINDOW_NAME), WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	Graphics::DX11GraphicsDevice graphics;
-	graphics.Configure(WindowHandler::GetMainHandle(), WINDOW_WIDTH, WINDOW_HEIGHT);
+	graphics.Configure<GUI::ImGuiBackendDX11Win32>(WindowHandler::GetMainHandle(), WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// デバイス & サービス（Worldコンテナ）
 	Physics::PhysicsDevice::InitParams params;

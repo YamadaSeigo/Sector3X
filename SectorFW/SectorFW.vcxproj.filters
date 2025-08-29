@@ -79,6 +79,15 @@
     <Filter Include="Inc\Physics\Jolt\TriangleSplitter">
       <UniqueIdentifier>{eb6c466b-285b-4720-9c89-f99614f0d455}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\GUI">
+      <UniqueIdentifier>{cd2cc6f7-e936-43e6-9df1-303dbd59d9a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\GUI\imgui">
+      <UniqueIdentifier>{ecf351c4-1b61-4d18-b61d-cfc62fa3b99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\GUI">
+      <UniqueIdentifier>{5f5624a5-82dd-44cb-8295-eb4708cf0fcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utility\doxygen_sample.h">
@@ -362,6 +371,18 @@
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Util\Morton2D.h">
       <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\GUI\ImGuiBackend.h">
+      <Filter>Inc\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\GUI\ImGuiLayer.h">
+      <Filter>Inc\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\GUI\ImGuiBackendDX11Win32.h">
+      <Filter>Inc\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\GUI\UIBus.h">
+      <Filter>Inc\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -814,6 +835,33 @@
     </ClCompile>
     <ClCompile Include="third_party\Jolt\TriangleSplitter\TriangleSplitter.cpp">
       <Filter>Inc\Physics\Jolt\TriangleSplitter</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\ImGuiLayer.cpp">
+      <Filter>Src\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_impl_win32.cpp">
+      <Filter>Inc\GUI\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_impl_dx11.cpp">
+      <Filter>Inc\GUI\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_widgets.cpp">
+      <Filter>Inc\GUI\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_tables.cpp">
+      <Filter>Inc\GUI\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_draw.cpp">
+      <Filter>Inc\GUI\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_demo.cpp">
+      <Filter>Inc\GUI\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui.cpp">
+      <Filter>Inc\GUI\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\UIBus.cpp">
+      <Filter>Src\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

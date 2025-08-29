@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "Graphics/IGraphicsDevice.hpp"
+
 #include "Util/FrameTimer.h"
 #include "Util/NonCopyable.h"
 

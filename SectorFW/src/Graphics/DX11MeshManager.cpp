@@ -19,26 +19,42 @@ namespace SectorFW
 			std::vector<VertexPNUV>& outVerts,
 			std::vector<uint32_t>& outIndices);
 
+		static void MakeBoxLines(float w, float h, float d,
+			std::vector<Math::Vec3f>& outVerts,
+			std::vector<uint32_t>& outIndices);
+
 		// 頂点/インデックス生成（UV 球）
-		//  - radius: 半径
-		//  - slices: 経度分割数（最小 3）
-		//  - stacks: 緯度分割数（最小 2）
+		//  radius: 半径
+		//  slices: 経度分割数（最小 3）
+		//  stacks: 緯度分割数（最小 2）
 		// 生成結果は CW（時計回り）で表面になるインデックス
 		static void MakeSphere(float radius, uint32_t slices, uint32_t stacks,
 			std::vector<VertexPNUV>& outVerts,
 			std::vector<uint32_t>& outIndices);
 
+		enum class CirclePlane { XY, XZ, YZ };
+
+		// segments: 8 以上推奨。LINELIST なので閉ループは (i, i+1), (last, first) を張る
+		static void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
+			std::vector<Math::Vec3f>& verts, std::vector<uint32_t>& idx,
+			float yOffset = 0.0f, float rotY = 0.0f);
+
+		// 十字（3 本）のみ
+		static void MakeSphereCrossLines(float radius, uint32_t segments,
+			std::vector<Math::Vec3f>& outVerts,
+			std::vector<uint32_t>& outIndices,
+			bool addXY = true, bool addYZ = true, bool addXZ = true);
 
 		DX11MeshManager::DX11MeshManager(ID3D11Device* dev)
 			: device(dev) {
-			std::vector<VertexPNUV> boxVerts;
+			std::vector<Math::Vec3f> boxVerts;
 			std::vector<uint32_t> boxIndices;
 
-			MakeBox(1.0f, 1.0f, 1.0f, boxVerts, boxIndices);
+			MakeBoxLines(1.0f, 1.0f, 1.0f, boxVerts, boxIndices);
 			DX11MeshCreateDesc boxDesc{
 				.vertices = boxVerts.data(),
-				.vSize = boxVerts.size() * sizeof(VertexPNUV),
-				.stride = sizeof(VertexPNUV),
+				.vSize = boxVerts.size() * sizeof(Math::Vec3f),
+				.stride = sizeof(Math::Vec3f),
 				.indices = boxIndices.data(),
 				.iSize = boxIndices.size() * sizeof(uint32_t),
 				.sourcePath = L"__internal__/Box"
@@ -46,14 +62,15 @@ namespace SectorFW
 
 			Add(boxDesc, boxHandle);
 
-			std::vector<VertexPNUV> sphereVerts;
+			std::vector<Math::Vec3f> sphereVerts;
 			std::vector<uint32_t> sphereIndices;
 
-			MakeSphere(0.5f, 8, 8, sphereVerts, sphereIndices);
+			//MakeSphere(0.5f, 8, 8, sphereVerts, sphereIndices);
+			MakeSphereCrossLines(0.5f, 16, sphereVerts, sphereIndices, true, true, true);
 			DX11MeshCreateDesc sphereDesc{
 				.vertices = sphereVerts.data(),
-				.vSize = sphereVerts.size() * sizeof(VertexPNUV),
-				.stride = sizeof(VertexPNUV),
+				.vSize = sphereVerts.size() * sizeof(Math::Vec3f),
+				.stride = sizeof(Math::Vec3f),
 				.indices = sphereIndices.data(),
 				.iSize = sphereIndices.size() * sizeof(uint32_t),
 				.sourcePath = L"__internal__/Sphere"
@@ -186,6 +203,34 @@ namespace SectorFW
 			addFaceCW(20);  // -Y
 		}
 
+		static void MakeBoxLines(float w, float h, float d,
+			std::vector<Math::Vec3f>& outVerts,
+			std::vector<uint32_t>& outIndices)
+		{
+			const float hx = w * 0.5f;
+			const float hy = h * 0.5f;
+			const float hz = d * 0.5f;
+
+			// 8 corners: (x,y,z)
+			outVerts = {
+				{-hx,-hy,-hz}, // 0
+				{-hx,+hy,-hz}, // 1
+				{+hx,+hy,-hz}, // 2
+				{+hx,-hy,-hz}, // 3
+				{-hx,-hy,+hz}, // 4
+				{-hx,+hy,+hz}, // 5
+				{+hx,+hy,+hz}, // 6
+				{+hx,-hy,+hz}, // 7
+			};
+
+			// 12 edges (pairs)
+			outIndices = {
+				0,1, 1,2, 2,3, 3,0, // back (-Z)
+				4,5, 5,6, 6,7, 7,4, // front (+Z)
+				0,4, 1,5, 2,6, 3,7  // side connectors
+			};
+		}
+
 		static void MakeSphere(float radius, uint32_t slices, uint32_t stacks,
 			std::vector<VertexPNUV>& outVerts,
 			std::vector<uint32_t>& outIndices)
@@ -234,6 +279,68 @@ namespace SectorFW
 					outIndices.push_back(k0); outIndices.push_back(k3); outIndices.push_back(k2);
 				}
 			}
+		}
+
+		// segments: 8 以上推奨。LINELIST なので閉ループは (i, i+1), (last, first) を張る
+		static void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
+			std::vector<Math::Vec3f>& verts, std::vector<uint32_t>& idx,
+			float yOffset, float rotY) // rotY は Y 軸回り回転（YZ->任意子午線用）
+		{
+			segments = std::max<uint32_t>(segments, 4u);
+			const uint16_t base = static_cast<uint16_t>(verts.size());
+			verts.reserve(verts.size() + segments);
+			idx.reserve(idx.size() + segments * 2);
+
+			const float sY = sinf(rotY), cY = cosf(rotY);
+
+			for (uint32_t i = 0; i < segments; ++i) {
+				const float t = (i / float(segments)) * std::numbers::pi_v<float> *2.0f;
+				const float ct = cosf(t), st = sinf(t);
+				float x = 0, y = 0, z = 0;
+
+				switch (plane) {
+				case CirclePlane::XZ: // 赤道（XZ）- y=一定
+					x = radius * ct;
+					y = yOffset;
+					z = radius * st;
+					break;
+				case CirclePlane::XY: // 子午線（XY）- z=0
+					x = radius * ct;
+					y = radius * st;
+					z = 0.0f;
+					break;
+				case CirclePlane::YZ: // 子午線（YZ）- x=0 を rotY で Y 回転して任意経度へ
+				{
+					// まず YZ 円 (x=0, y=r*cos t, z=r*sin t) を Y 回転
+					const float x0 = 0.0f;
+					const float y0 = radius * ct;
+					const float z0 = radius * st;
+					x = x0 * cY + z0 * sY;         // =  r * st * sY
+					y = y0;                         // =  r * ct
+					z = -x0 * sY + z0 * cY;         // =  r * st * cY
+					break;
+				}
+				}
+				verts.push_back({ x, y, z });
+			}
+
+			for (uint32_t i = 0; i < segments; ++i) {
+				const uint32_t a = base + uint32_t(i);
+				const uint32_t b = base + uint32_t((i + 1) % segments);
+				idx.push_back(a); idx.push_back(b);
+			}
+		}
+
+		// 十字（3 本）のみ
+		static void MakeSphereCrossLines(float radius, uint32_t segments,
+			std::vector<Math::Vec3f>& outVerts,
+			std::vector<uint32_t>& outIndices,
+			bool addXY , bool addYZ , bool addXZ)
+		{
+			outVerts.clear(); outIndices.clear();
+			if (addXZ) AppendCircle(radius, segments, CirclePlane::XZ, outVerts, outIndices);             // 赤道
+			if (addYZ) AppendCircle(radius, segments, CirclePlane::YZ, outVerts, outIndices, 0.0f, 0.0f); // 子午線
+			if (addXY) AppendCircle(radius, segments, CirclePlane::XY, outVerts, outIndices);             // 直交子午線
 		}
 	}
 }

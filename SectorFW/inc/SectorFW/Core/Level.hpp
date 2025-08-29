@@ -164,7 +164,7 @@ namespace SectorFW
 		 * @return ELevelState ƒŒƒxƒ‹‚Ìó‘Ô
 		 */
 		ELevelState GetState() const noexcept { return state; }
-		
+
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept {
 			return partition.GetChunk(location, policy);
 		}

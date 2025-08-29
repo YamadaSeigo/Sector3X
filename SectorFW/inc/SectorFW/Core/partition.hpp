@@ -29,7 +29,7 @@ namespace SectorFW
 	 */
 	template <typename Derived>
 	concept PartitionConcept = requires(Derived t, Math::Vec3f v, ChunkSizeType size, EOutOfBoundsPolicy policy,
-		EntityManagerRegistry& reg, LevelID level) 
+		EntityManagerRegistry & reg, LevelID level)
 	{
 		Derived{ size,size,size };
 		{ t.GetChunk(v, policy) } -> std::same_as<std::optional<SpatialChunk*>>;

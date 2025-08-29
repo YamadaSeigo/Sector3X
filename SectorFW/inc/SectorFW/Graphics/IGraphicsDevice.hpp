@@ -11,6 +11,9 @@
 #include <variant>
 #include <string>
 #include <memory>
+#include <type_traits>
+
+#include "../GUI/ImGuiLayer.h"
 
 using namespace Microsoft::WRL;
 
@@ -50,11 +53,63 @@ namespace SectorFW
 			 * @param width ウィンドウ幅
 			 * @param height ウィンドウ高さ
 			 */
+			template<GUI::ImGuiBackendType ImGuiBackend>
 			void Configure(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height)
 			{
 				assert(!m_isInitialized && "IGraphicsDevice is already initialized.");
 
 				m_isInitialized = Initialize(nativeWindowHandle, width, height);
+
+#ifdef _ENABLE_IMGUI
+				m_imguiLayer = std::make_unique<GUI::ImGuiLayer>(std::make_unique<ImGuiBackend>());
+				GUI::ImGuiInitInfo info{};
+				void* windowPtr = std::visit([&](auto& handle)->void*{
+					using T = std::decay_t<decltype(handle)>;
+					if (typeid(T) != m_imguiLayer->GetWindowType()) {
+						assert(false && "Incompatible window handle type for ImGui initialization.");
+						return nullptr;
+					}
+
+					if constexpr (std::is_pointer_v<T>) {
+						// 例: HWND / GLFWwindow* / SDL_Window* など
+						return handle;                 // T* → void* へ暗黙変換（OK）
+					}
+					else {
+						// 例: X11 Window のように整数ハンドルを持たせているならここは再検討
+						return static_cast<void*>(std::addressof(handle)); // T* → void*（OK）
+					}
+					}, nativeWindowHandle);
+
+				if (!windowPtr) {
+					assert(false && "Failed to get window handle for ImGui initialization.");
+					return;
+				}
+				info.platform_window = windowPtr;
+
+				//info.platform_window = ;            // SDL3 なら SDL_Window*
+				auto device = static_cast<Impl*>(this)->GetDevice();
+				if (!device) {
+					assert(false && "Failed to get graphics device for ImGui initialization.");
+					return;
+				}
+				if (typeid(device) != m_imguiLayer->GetDeviceType()) {
+					assert(false && "Incompatible graphics device type for ImGui initialization.");
+					return;
+				}
+
+				info.device = device;
+				auto deviceContext = static_cast<Impl*>(this)->GetDeviceContext();
+				if (!deviceContext) {
+					assert(false && "Failed to get graphics device context for ImGui initialization.");
+					return;
+				}
+				info.device_context = deviceContext;
+				info.display_w = (int)width;
+				info.display_h = (int)height;
+				info.dpi_scale = 1.0f; // 必要なら取得して入れる
+
+				m_imguiLayer->Init(info);
+#endif // _D3D11_IMGUI
 			}
 			/**
 			 * @brief 画面をクリア
@@ -65,6 +120,17 @@ namespace SectorFW
 			}
 			void Draw() {
 				static_cast<Impl*>(this)->DrawImpl();
+
+#ifdef _ENABLE_IMGUI
+				if (m_imguiLayer) {
+					m_imguiLayer->BeginFrame();
+
+					m_imguiLayer->DrawUI();
+
+					m_imguiLayer->EndFrame();
+					m_imguiLayer->Render();
+				}
+#endif // _D3D11_IMGUI
 			}
 			/**
 			 * @brief 描画
@@ -99,6 +165,10 @@ namespace SectorFW
 		private:
 			// 初期化フラグ
 			static inline bool m_isInitialized = false;
+
+#ifdef _ENABLE_IMGUI
+			std::unique_ptr<GUI::ImGuiLayer> m_imguiLayer = nullptr;
+#endif // _D3D11_IMGUI
 		};
 	}
 }

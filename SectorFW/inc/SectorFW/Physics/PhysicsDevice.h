@@ -119,7 +119,8 @@ namespace SectorFW
 			// ContactListener から使う小さなアクセサ（物理スレッド内のみ呼ぶ想定）
 			void   PushContactEvent(const ContactEvent& ev) {
 				std::scoped_lock lk(m_pendingContactsMutex);
-				m_pendingContacts.push_back(ev); }
+				m_pendingContacts.push_back(ev);
+			}
 			Entity ResolveEntity(const JPH::BodyID& id) const {
 				auto it = m_b2e.find(id);
 				return (it != m_b2e.end()) ? it->second : Entity{};

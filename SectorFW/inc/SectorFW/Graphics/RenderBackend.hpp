@@ -36,11 +36,11 @@ namespace SectorFW
 				static_cast<Derived*>(this)->SetRenderTargetsImpl(rtvs, dsv);
 			}
 
-			void BindSRVs(const std::vector<SRV>& srvs, UINT startSlot = 0) {
+			void BindSRVs(const std::vector<SRV>& srvs, uint32_t startSlot = 0) {
 				static_cast<Derived*>(this)->BindSRVsImpl(srvs, startSlot);
 			}
 
-			void BindCBVs(const std::vector<Buffer>& cbvs, UINT startSlot = 0) {
+			void BindCBVs(const std::vector<Buffer>& cbvs, uint32_t startSlot = 0) {
 				static_cast<Derived*>(this)->BindCBVsImpl(cbvs, startSlot);
 			}
 

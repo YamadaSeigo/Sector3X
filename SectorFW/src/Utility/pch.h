@@ -28,5 +28,3 @@
  //#include <unordered_set>
 
 #include "Math/Vector.hpp"
-
-#include "Graphics/IGraphicsDevice.hpp"

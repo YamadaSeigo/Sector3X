@@ -17,8 +17,20 @@ namespace SectorFW
 	namespace ECS
 	{
 		//前方宣言
-		template<typename Partition, typename AccessSpec, typename ContextSpec>
+		template<typename Derived, typename Partition, typename AccessSpec, typename ContextSpec>
 		class ITypeSystem;
+
+		template<typename Derived, typename... Services>
+		concept HasStartImpl =
+			requires (Derived & t, UndeletablePtr<Services>... services) {
+				{ t.StartImpl(services...) } -> std::same_as<void>;
+		};
+
+		template<typename Derived, typename Partition, typename... Services>
+		concept HasUpdateImpl =
+			requires (Derived& t, Partition & partition, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(partition, services...) } -> std::same_as<void>;
+		};
 
 		/**
 		 * @brief ECSシステムのインターフェース
@@ -26,8 +38,8 @@ namespace SectorFW
 		 * @tparam AccessTypes アクセスするコンポーネントの型
 		 * @tparam Services サービスの型
 		 */
-		template<typename Partition, typename... AccessTypes, typename... Services>
-		class ITypeSystem<Partition, ComponentAccess<AccessTypes...>, ServiceContext<Services...>> : public ISystem<Partition> {
+		template<typename Derived, typename Partition, typename... AccessTypes, typename... Services>
+		class ITypeSystem<Derived, Partition, ComponentAccess<AccessTypes...>, ServiceContext<Services...>> : public ISystem<Partition> {
 		protected:
 			using AccessorTuple = ComponentAccess<AccessTypes...>::Tuple;
 			using ContextTuple = ServiceContext<Services...>::Tuple;
@@ -70,12 +82,6 @@ namespace SectorFW
 					func(accessor, chunk->GetEntityCount(), chunk->GetEntities(), std::forward<Args>(args)...);
 				}
 			}
-			/**
-			 * @brief システムの更新を実装する純粋仮想関数
-			 * @param partition パーティションの参照
-			 * @param ...services サービスのポインタ
-			 */
-			virtual void UpdateImpl(Partition& partition, UndeletablePtr<Services>... services) = 0;
 		public:
 			/**
 			 * @brief コンテキストを設定する関数
@@ -88,29 +94,61 @@ namespace SectorFW
 			}
 
 			/**
+			 * @brief システムの開始関数
+			 * @param partition パーティションの参照
+			 * @detail 自身のコンテキストを使用して、StartImplを呼び出す
+			 */
+			void Start(const ServiceLocator& serviceLocator) override {
+				if constexpr (HasStartImpl<Derived, Services...>) {
+
+					if constexpr (AllStaticServices<Services...>) {
+						// 静的サービスを使用する場合、サービスロケーターから直接取得
+						std::apply(
+							[&](Services*... unpacked) {
+								static_cast<Derived*>(this)->StartImpl(UndeletablePtr<Services>(unpacked)...);
+							},
+							context
+						);
+						return;
+					}
+
+					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
+					std::apply(
+						[&](Services*... unpacked) {
+							static_cast<Derived*>(this)->StartImpl(UndeletablePtr<Services>(unpacked)...);
+						},
+						serviceTuple
+					);
+				}
+			}
+
+			/**
 			 * @brief システムの更新関数
 			 * @param partition パーティションの参照
 			 * @detail 自身のコンテキストを使用して、UpdateImplを呼び出す
 			 */
 			void Update(Partition& partition, const ServiceLocator& serviceLocator) override {
-				if constexpr (AllStaticServices<Services...>) {
-					// 静的サービスを使用する場合、サービスロケーターから直接取得
+				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
+
+					if constexpr (AllStaticServices<Services...>) {
+						// 静的サービスを使用する場合、サービスロケーターから直接取得
+						std::apply(
+							[&](Services*... unpacked) {
+								static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
+							},
+							context
+						);
+						return;
+					}
+
+					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
 					std::apply(
 						[&](Services*... unpacked) {
-							this->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
+							static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
 						},
-						context
+						serviceTuple
 					);
-					return;
 				}
-
-				auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
-				std::apply(
-					[&](Services*... unpacked) {
-						this->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
-					},
-					serviceTuple
-				);
 			}
 			/**
 			 * @brief システムのアクセス情報を取得する関数

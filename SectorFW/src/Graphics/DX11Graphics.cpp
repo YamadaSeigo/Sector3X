@@ -252,6 +252,7 @@ namespace SectorFW
 			graph.AddPass(passDesc);
 
 			passDesc.name = "DrawLine";
+			passDesc.topology = PrimitiveTopology::LineList;
 			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
 			graph.AddPass(passDesc);
@@ -291,9 +292,9 @@ namespace SectorFW
 				}
 
 				// é¿çs
-				if (job.doClear) ClearImpl(job.clearColor);
-				DrawImpl();
-				PresentImpl();
+				if (job.doClear) Clear(job.clearColor);
+				Draw();
+				Present();
 
 				// äÆóπÇãLò^ÇµÇƒí ím
 				{

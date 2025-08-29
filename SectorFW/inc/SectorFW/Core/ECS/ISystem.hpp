@@ -28,8 +28,15 @@ namespace SectorFW
 		class ISystem {
 		public:
 			/**
+			 * @brief システムの開始関数
+			 * @param partition 対象のパーティション
+			 * @param serviceLocator サービスロケーター
+			 */
+			virtual void Start(const ServiceLocator& serviceLocator) {}
+			/**
 			 * @brief システムの更新関数
 			 * @param partition 対象のパーティション
+			 * @param serviceLocator サービズロケーター
 			 */
 			virtual void Update(Partition& partition, const ServiceLocator& serviceLocator) = 0;
 			/**

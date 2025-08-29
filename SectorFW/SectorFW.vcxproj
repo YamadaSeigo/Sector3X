@@ -68,6 +68,10 @@
     <ClInclude Include="inc\SectorFW\Graphics\RenderQueue.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderTypes.h" />
+    <ClInclude Include="inc\SectorFW\GUI\ImGuiBackend.h" />
+    <ClInclude Include="inc\SectorFW\GUI\ImGuiBackendDX11Win32.h" />
+    <ClInclude Include="inc\SectorFW\GUI\ImGuiLayer.h" />
+    <ClInclude Include="inc\SectorFW\GUI\UIBus.h" />
     <ClInclude Include="inc\SectorFW\Input\InputDevice.hpp" />
     <ClInclude Include="inc\SectorFW\Input\WinInput.h" />
     <ClInclude Include="inc\SectorFW\Input\WinMouseInput.h" />
@@ -115,6 +119,13 @@
     <ClInclude Include="src\Utility\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="external\imgui\imgui.cpp" />
+    <ClCompile Include="external\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="external\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="external\imgui\imgui_tables.cpp" />
+    <ClCompile Include="external\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Core\ArchetypeManager.cpp" />
     <ClCompile Include="src\Core\ArchetypeChunk.cpp" />
     <ClCompile Include="src\Core\ComponentLayoutRegistry.cpp" />
@@ -131,6 +142,8 @@
     <ClCompile Include="src\Graphics\DX11ShaderManager.cpp" />
     <ClCompile Include="src\Graphics\DX11TextureManager.cpp" />
     <ClCompile Include="src\Graphics\DX12Graphics.cpp" />
+    <ClCompile Include="src\GUI\ImGuiLayer.cpp" />
+    <ClCompile Include="src\GUI\UIBus.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />
     <ClCompile Include="src\Physics\PhysicsDevice.cpp" />
     <ClCompile Include="src\Utility\message.cpp" />

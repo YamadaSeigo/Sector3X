@@ -36,7 +36,7 @@ namespace SectorFW
 		 * @param policy アウトオブバウンズポリシー
 		 * @return std::optional<SpatialChunk*> チャンクへのポインタ
 		 */
-		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept{
+		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept {
 			// 位置に基づいてチャンクを取得するロジックを実装
 			// ここではダミーの実装を返す
 			using Signed = long long;
@@ -81,7 +81,6 @@ namespace SectorFW
 					EntityManagerKey key = MakeGrid2DKey(level, int32_t(x), int32_t(y), /*gen*/0);
 					cell.SetNodeKey(key);
 					reg.RegisterOwner(key, &cell.GetEntityManager());
-
 				}
 			}
 		}
@@ -96,7 +95,6 @@ namespace SectorFW
 			newCell.BumpGeneration();
 			reg.RegisterOwner(newCell.GetNodeKey(), &newCell.GetEntityManager());
 			grid(cx, cy) = std::move(newCell);
-
 		}
 	private:
 		inline EntityManagerKey MakeGrid2DKey(LevelID level, int32_t cx, int32_t cy,

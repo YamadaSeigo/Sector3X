@@ -5,13 +5,14 @@
 
 template<typename Partition>
 class PhysicsSystem : public ITypeSystem<
+	PhysicsSystem<Partition>,
 	Partition,
 	ComponentAccess<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>,Read<Physics::BodyComponent>>,//アクセスするコンポーネントの指定
 	ServiceContext<Physics::PhysicsService>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>, Read<Physics::BodyComponent>>;
 public:
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, UndeletablePtr<Physics::PhysicsService> physicsService) override {
+	void UpdateImpl(Partition& partition, UndeletablePtr<Physics::PhysicsService> physicsService) {
 
 		this->ForEachChunkWithAccessor([](Accessor& accessor, size_t entityCount, Physics::PhysicsService* physics)
 			{

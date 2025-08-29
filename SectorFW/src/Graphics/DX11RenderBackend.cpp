@@ -226,7 +226,7 @@ namespace SectorFW
 			// インスタンスデータ更新
 			//UpdateInstanceBuffer(pInstancesData, (size_t)dataSize);
 
-			UINT strides[1] = { mesh.stride};
+			UINT strides[1] = { mesh.stride };
 			UINT offsets[1] = { 0 };
 			ID3D11Buffer* buffers[1] = { mesh.vb.Get() };
 			context->IASetIndexBuffer(mesh.ib.Get(), DXGI_FORMAT_R32_UINT, 0);

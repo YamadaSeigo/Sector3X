@@ -7,13 +7,14 @@ struct CModel
 
 template<typename Partition>
 class ModelRenderSystem : public ITypeSystem<
+	ModelRenderSystem<Partition>,
 	Partition,
 	ComponentAccess<Read<TransformSoA>, Read<CModel>>,//アクセスするコンポーネントの指定
 	ServiceContext<Graphics::RenderService>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
 public:
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService) override {
+	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService) {
 		//機能を制限したRenderQueueを取得
 		auto producerSession = renderService->GetProducerSession("Default");
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();

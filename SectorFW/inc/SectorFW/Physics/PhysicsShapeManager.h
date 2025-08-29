@@ -259,7 +259,7 @@ namespace SectorFW
 				case JPH::EShapeSubType::Box: {
 					auto bs = static_cast<const JPH::BoxShape*>(s);
 					JPH::Vec3 he = bs->GetHalfExtent();
-					return ShapeDims{ .dims = Math::Vec3f(he.GetX(),he.GetY(),he.GetZ()) * 2.0f, .type = ShapeDims::Type::Box};
+					return ShapeDims{ .dims = Math::Vec3f(he.GetX(),he.GetY(),he.GetZ()) * 2.0f, .type = ShapeDims::Type::Box };
 				}
 				case JPH::EShapeSubType::Sphere: {
 					// SphereShape ‚Í”¼Œa‚ªŽæ‚ê‚é
@@ -267,7 +267,7 @@ namespace SectorFW
 					// ‚±‚±‚Å‚Í AABB ‚©‚ç’¼Œa‚ðŽZo
 					JPH::AABox b = s->GetLocalBounds();
 					JPH::Vec3 d = b.GetSize();
-					return ShapeDims{ .dims = Math::Vec3f(d.GetX(),d.GetY(),d.GetZ()), .r = 0.5f * d.GetX() , .type = ShapeDims::Type::Sphere}; // “™•û
+					return ShapeDims{ .dims = Math::Vec3f(d.GetX(),d.GetY(),d.GetZ()), .r = 0.5f * d.GetX() , .type = ShapeDims::Type::Sphere }; // “™•û
 				}
 				case JPH::EShapeSubType::Capsule: {
 					auto cs = static_cast<const JPH::CapsuleShape*>(s);
@@ -284,7 +284,7 @@ namespace SectorFW
 					// AABB ‚©‚ç‚àŽæ“¾‰Â
 					JPH::AABox b = s->GetLocalBounds();
 					auto s = b.GetSize();
-					return ShapeDims{ .dims = Math::Vec3f(s.GetX(),s.GetY(),s.GetZ()), .type = ShapeDims::Type::Cylinder};
+					return ShapeDims{ .dims = Math::Vec3f(s.GetX(),s.GetY(),s.GetZ()), .type = ShapeDims::Type::Cylinder };
 				}
 				case JPH::EShapeSubType::TaperedCapsule:
 				case JPH::EShapeSubType::TaperedCylinder: {

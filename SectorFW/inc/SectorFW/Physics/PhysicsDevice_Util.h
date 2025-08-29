@@ -44,13 +44,11 @@ namespace SectorFW
 		};
 
 		// ===== Pending 判定／生成（センチネルは 0xFFFFFFFF） =====
-		inline bool IsPendingBodyID(const JPH::BodyID & id) noexcept {
+		inline bool IsPendingBodyID(const JPH::BodyID& id) noexcept {
 			return id.GetIndexAndSequenceNumber() == (std::numeric_limits<uint32_t>::max)();
-			
 		}
-		 inline JPH::BodyID PendingBodyID() noexcept {
+		inline JPH::BodyID PendingBodyID() noexcept {
 			return JPH::BodyID((std::numeric_limits<uint32_t>::max)());
-			
 		}
 	}
 }

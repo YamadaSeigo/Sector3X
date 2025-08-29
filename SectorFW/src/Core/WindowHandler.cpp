@@ -4,6 +4,16 @@
 
 #include "WindowHandler.h"
 
+#include "GUI/ImGuiLayer.h"
+
+#ifdef _ENABLE_IMGUI
+#include "../external/imgui/imgui.h"
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+#include "../../external/imgui/imgui_impl_win32.h"
+#endif // _D3D11_IMGUI
+
 namespace SectorFW
 {
 	// ウィンドウが作成されたかどうかのフラグ
@@ -45,62 +55,78 @@ namespace SectorFW
 
 	LRESULT WindowHandler::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
-		switch (uMsg) {
-		case WM_CREATE:
-		{
-			static Input::WinMouseInput mouseInput(hwnd);
-			m_mouseInput = &mouseInput;
-			m_mouseInput->RegisterRawInput(false);
-			return 0;
-		}
+#ifdef _ENABLE_IMGUI
+        if (ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam))
+            return 0; // ImGui が処理したらここで完了
+#endif
 
-		case WM_LBUTTONDOWN:
-		case WM_RBUTTONDOWN:
-			if (!m_mouseInput->IsCaptured())
-				m_mouseInput->ToggleCapture(true);
-			return 0;
+        switch (uMsg) {
+        case WM_CREATE:
+        {
+            static Input::WinMouseInput mouseInput(hwnd);
+            m_mouseInput = &mouseInput;
+            m_mouseInput->RegisterRawInput(false);
+            return 0; // 自前で完了
+        }
 
-		case WM_KEYDOWN:
-			if (wParam == VK_ESCAPE && m_mouseInput->IsCaptured()) {
-				m_mouseInput->ToggleCapture(false);
-				return 0;
-			}
-			break;
+        // 左クリックは ImGui に任せるとして、右クリックで“捕捉ON”
+        case WM_RBUTTONDOWN:
+            if (!m_mouseInput->IsCaptured())
+                m_mouseInput->ToggleCapture(true);
+            return 0; // 自前で完了
 
-		case WM_INPUT:
-			m_mouseInput->HandleRawInput(lParam);
-			return 0;
-		case WM_KILLFOCUS:
-			m_mouseInput->OnFocusLost();
-			return 0;
+        case WM_KEYDOWN:
+            if (wParam == VK_ESCAPE && m_mouseInput->IsCaptured()) {
+                m_mouseInput->ToggleCapture(false);
+                return 0; // 自前で完了
+            }
+            break; // 既定処理に回す
 
-		case WM_ACTIVATE:
-			m_mouseInput->OnFocusLost();      // 必要なら再キャプチャ
-			break;
+        case WM_INPUT:
+            m_mouseInput->HandleRawInput(lParam);
+            return 0; // 自前で完了（RawInputは自分で消費）
 
-		case WM_MOVE:
-		case WM_SIZE:
-			m_mouseInput->Reclip();
-			return 0;
+        case WM_SETFOCUS:
+            // 必要ならここで RawInput の登録を通常モードへ戻すなど
+            break; // 既定処理へ
 
-		case WM_DESTROY:
-			PostQuitMessage(0);
-			return 0;
+        case WM_KILLFOCUS:
+            m_mouseInput->OnFocusLost();
+            return 0; // 自前で完了（状態クリア）
 
-		case WM_CLOSE:  // 「x」ボタンが押されたら
-		{
-			int res = MessageBoxA(NULL, "終了しますか？", "確認", MB_OKCANCEL);
-			if (res == IDOK)
-			{
-				DestroyWindow(m_hWnd);  // 「WM_DESTROY」メッセージを送る
-			}
-		}
-		break;
-		default:
-			return DefWindowProc(hwnd, uMsg, wParam, lParam);
-		}
+        case WM_ACTIVATE:
+            if (LOWORD(wParam) == WA_INACTIVE) {
+                m_mouseInput->OnFocusLost();
+                // ここは「既定処理も必要」なので return せず break
+            }
+            break; // 既定処理へ
 
-		return 0;
+        case WM_MOUSEACTIVATE:
+            // 既定処理に回すのが安全（クリックでアクティブ化の挙動）
+            break;
+
+        case WM_MOVE:
+        case WM_SIZE:
+            m_mouseInput->Reclip();
+            return 0; // 自前で完了
+
+        case WM_CLOSE:
+        {
+            int res = MessageBoxA(hwnd, "終了しますか？", "確認", MB_OKCANCEL | MB_ICONQUESTION);
+            if (res == IDOK) {
+                DestroyWindow(hwnd); // → WM_DESTROY へ
+            }
+            return 0; // 自前で完了（キャンセル時も既定破棄はさせない）
+        }
+
+        case WM_DESTROY:
+            m_mouseInput->OnFocusLost(); // 念のため状態クリア
+            PostQuitMessage(0);
+            return 0; // 自前で完了
+        }
+
+        // ここが超重要：処理していないメッセージは既定処理へ
+        return DefWindowProc(hwnd, uMsg, wParam, lParam);
 	}
 
 	void WindowHandler::CreateConsoleWindow()

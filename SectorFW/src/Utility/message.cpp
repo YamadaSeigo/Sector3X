@@ -1,6 +1,8 @@
 #include "message.h"
 
 #ifdef _WIN32
+#include <wrl/client.h>
+
 void assert_with_msg(bool expr, const char* file, int line, const char* func, const char* format, ...) {
 	if (!expr) {
 		constexpr size_t BUFFER_SIZE = 2048;

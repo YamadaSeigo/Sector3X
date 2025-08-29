@@ -1,5 +1,7 @@
 #pragma once
 
+#include <wrl/client.h>
+
 #include "../RenderBackend.hpp"
 
 #include "DX11MeshManager.h"
@@ -50,11 +52,11 @@ namespace SectorFW
 				context->OMSetRenderTargets((UINT)rtvs.size(), rtvs.data(), (ID3D11DepthStencilView*)dsv);
 			}
 
-			void BindSRVsImpl(const std::vector<ID3D11ShaderResourceView*>& srvs, UINT startSlot = 0) {
+			void BindSRVsImpl(const std::vector<ID3D11ShaderResourceView*>& srvs, uint32_t startSlot = 0) {
 				context->PSSetShaderResources(startSlot, (UINT)srvs.size(), srvs.data());
 			}
 
-			void BindCBVsImpl(const std::vector<ID3D11Buffer*>& cbvs, UINT startSlot = 0) {
+			void BindCBVsImpl(const std::vector<ID3D11Buffer*>& cbvs, uint32_t startSlot = 0) {
 				context->VSSetConstantBuffers(startSlot, (UINT)cbvs.size(), cbvs.data());
 			}
 

@@ -318,7 +318,7 @@ namespace SectorFW::Physics {
 				}
 
 				// Pending（未生成）やロック失敗（破棄中など）はスキップ
-				 if (IsPendingBodyID(id)) {
+				if (IsPendingBodyID(id)) {
 					if (v.updatedMask) v.updatedMask[idx] = 0;
 					continue;
 				}

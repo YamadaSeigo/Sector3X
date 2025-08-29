@@ -2,6 +2,7 @@
 
 template<typename Partition>
 class CameraSystem : public ITypeSystem<
+	CameraSystem<Partition>,
 	Partition,
 	ComponentAccess<>,//アクセスするコンポーネントの指定
 	ServiceContext<InputService, Graphics::I3DCameraService>>{//受け取るサービスの指定
@@ -12,7 +13,7 @@ public:
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
 		UndeletablePtr<InputService> inputService,
-		UndeletablePtr<Graphics::I3DCameraService> cameraService) override {
+		UndeletablePtr<Graphics::I3DCameraService> cameraService) {
 		int mouseWheelV, mouseWheelH;
 		inputService->GetMouseWheel(mouseWheelV, mouseWheelH);
 
