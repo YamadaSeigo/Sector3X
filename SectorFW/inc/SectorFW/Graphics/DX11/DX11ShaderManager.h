@@ -49,13 +49,6 @@ namespace SectorFW
 
 			DX11ShaderData CreateResource(const DX11ShaderCreateDesc& desc, ShaderHandle h);
 
-			const std::vector<ShaderResourceBinding>& GetPSBindings(ShaderHandle handle) const {
-				return Get(handle).psBindings;
-			}
-			const std::vector<ShaderResourceBinding>& GetVSBindings(ShaderHandle handle) const {
-				return Get(handle).vsBindings;
-			}
-
 		private:
 			void ReflectInputLayout(ID3DBlob* vsBlob,
 				std::vector<D3D11_INPUT_ELEMENT_DESC>& outDesc,

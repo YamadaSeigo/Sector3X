@@ -251,7 +251,8 @@ namespace SectorFW
 			// ---- 追加ユーティリティ ----
 			// 外部から Shape を取り出すヘルパ（薄い糖衣）
 			JPH::RefConst<JPH::Shape> Resolve(ShapeHandle h) const {
-				return this->Get(h);
+				auto d = this->Get(h);
+				return d.ref();
 			}
 
 			std::optional<ShapeDims> GetShapeDims(const JPH::Shape* s) const {

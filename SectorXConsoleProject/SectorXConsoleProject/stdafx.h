@@ -8,4 +8,3 @@ using namespace SectorFW;
 using namespace SectorFW::ECS;
 
 using InputService = Input::InputDevice<Input::WinInput>;
-

@@ -8,6 +8,8 @@
 #pragma once
 
 #include <cmath>
+#include <limits>
+#include <algorithm>
 #include "Vector.hpp"
 
 namespace SectorFW
@@ -18,26 +20,29 @@ namespace SectorFW
 		struct alignas(sizeof(T) == 8 ? 32 : 16) Quat {
 			T x, y, z, w;
 
-			Quat() noexcept :x(0), y(0), z(0), w(1) {}
-			explicit Quat(T x, T y, T z, T w) noexcept : x(x), y(y), z(z), w(w) {}
+			Quat() noexcept : x(0), y(0), z(0), w(1) {}
+			Quat(T x, T y, T z, T w) noexcept : x(x), y(y), z(z), w(w) {}
 
-			// --- クォータニオンの正規化 ---
+			// 長さ/正規化
+			T LengthSq() const noexcept { return x * x + y * y + z * z + w * w; }
+
 			void Normalize() noexcept {
-				T len = std::sqrt(x * x + y * y + z * z + w * w);
-				if (len > 0.0f) {
-					x /= len; y /= len; z /= len; w /= len;
-				}
+				const T len2 = LengthSq();
+				const T eps = std::numeric_limits<T>::epsilon();
+				if (len2 <= eps) { x = 0; y = 0; z = 0; w = 1; return; }
+				const T inv = T(1) / std::sqrt(len2);
+				x *= inv; y *= inv; z *= inv; w *= inv;
 			}
+			Quat Normalized() const noexcept { Quat q = *this; q.Normalize(); return q; }
 
-			// --- オイラー角から作成（ラジアン）---
+			// オイラー（ピッチ= X, ヨー= Y, ロール= Z : 適用順は Yaw→Pitch→Roll を想定）
 			static Quat FromEuler(T pitch, T yaw, T roll) noexcept {
-				T cy = cos(yaw * 0.5f);
-				T sy = sin(yaw * 0.5f);
-				T cp = cos(pitch * 0.5f);
-				T sp = sin(pitch * 0.5f);
-				T cr = cos(roll * 0.5f);
-				T sr = sin(roll * 0.5f);
+				const T h = T(0.5);
+				const T cy = std::cos(yaw * h), sy = std::sin(yaw * h);
+				const T cp = std::cos(pitch * h), sp = std::sin(pitch * h);
+				const T cr = std::cos(roll * h), sr = std::sin(roll * h);
 
+				// （注）この式は Y->X->Z の順（右掛け適用）を想定
 				return Quat(
 					sr * cp * cy - cr * sp * sy,
 					cr * sp * cy + sr * cp * sy,
@@ -47,75 +52,51 @@ namespace SectorFW
 			}
 
 			static Quat FromAxisAngle(const Vec3<T>& axis, T angleRad) noexcept {
-				Vec3<T> normAxis = axis.normalized();
-				T halfAngle = angleRad * T(0.5);
-				T sinHalf = sin(halfAngle);
-				T cosHalf = cos(halfAngle);
-
-				return Quat(
-					normAxis.x * sinHalf,
-					normAxis.y * sinHalf,
-					normAxis.z * sinHalf,
-					cosHalf
-				);
+				const T len = std::sqrt(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
+				if (len <= std::numeric_limits<T>::epsilon()) return Quat(); // identity
+				const T inv = T(1) / len;
+				const T half = angleRad * T(0.5);
+				const T s = std::sin(half), c = std::cos(half);
+				return Quat(axis.x * inv * s, axis.y * inv * s, axis.z * inv * s, c);
 			}
 
-			// --- ベクトルを回転させる ---
+			// ベクトル回転（単位 Q 前提）
 			Vec3<T> RotateVector(const Vec3<T>& v) const noexcept {
-				// this は単位クォータニオンを想定
-				Vec3<T> qv{ x, y, z };
-				Vec3<T> t = qv.cross(v) * T(2);              // t = 2 * (qv × v)
-				return v + t * w + qv.cross(t);              // v' = v + w*t + (qv × t)
+				const Vec3<T> qv{ x,y,z };
+				const Vec3<T> t = qv.cross(v) * T(2);
+				return v + t * w + qv.cross(t);
 			}
 
-			// --- 逆クォータニオン ---
-			Quat Inverse() const noexcept {
-				return Quat(-x, -y, -z, w); // 単位クォータニオン前提
-			}
+			Quat Inverse() const noexcept { return Quat(-x, -y, -z, w); } // unit 前提
 
-			// --- SLERP 補間 ---
 			static Quat Slerp(const Quat& a, const Quat& b, T t) noexcept {
 				T dot = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
 				Quat b2 = b;
+				if (dot < T(0)) { dot = -dot; b2 = Quat(-b.x, -b.y, -b.z, -b.w); }
 
-				if (dot < 0.0f) { dot = -dot; b2 = { -b.x, -b.y, -b.z, -b.w }; }
+				// 丸め誤差対策
+				dot = std::clamp(dot, T(-1), T(1));
 
-				if (dot > 0.9995f) {
-					// 線形補間で近似
-					Quat result = {
-						a.x + t * (b2.x - a.x),
-						a.y + t * (b2.y - a.y),
-						a.z + t * (b2.z - a.z),
-						a.w + t * (b2.w - a.w)
-					};
-					result.Normalize();
-					return result;
+				if (dot > T(0.9995)) {
+					Quat r{ a.x + t * (b2.x - a.x),
+							a.y + t * (b2.y - a.y),
+							a.z + t * (b2.z - a.z),
+							a.w + t * (b2.w - a.w) };
+					r.Normalize();
+					return r;
 				}
 
-				T theta0 = acos(dot);
-				T theta = theta0 * t;
-				T sin_theta = sin(theta);
-				T sin_theta0 = sin(theta0);
-
-				T s0 = cos(theta) - dot * sin_theta / sin_theta0;
-				T s1 = sin_theta / sin_theta0;
-
-				return {
-					s0 * a.x + s1 * b2.x,
+				const T theta0 = std::acos(dot);
+				const T theta = theta0 * t;
+				const T s0 = std::cos(theta) - dot * std::sin(theta) / std::sin(theta0);
+				const T s1 = std::sin(theta) / std::sin(theta0);
+				return Quat(s0 * a.x + s1 * b2.x,
 					s0 * a.y + s1 * b2.y,
 					s0 * a.z + s1 * b2.z,
-					s0 * a.w + s1 * b2.w
-				};
+					s0 * a.w + s1 * b2.w);
 			}
 
-			Quat& operator=(const Quat& other) noexcept {
-				if (this != &other) {
-					x = other.x; y = other.y; z = other.z; w = other.w;
-				}
-				return *this;
-			}
-
-			// --- 掛け算（回転の合成）---
+			// （右掛け合成）「this の後に q を適用」
 			Quat operator*(const Quat& q) const noexcept {
 				return Quat(
 					w * q.x + x * q.w + y * q.z - z * q.y,

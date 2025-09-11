@@ -9,6 +9,7 @@
 
 #include <queue>
 #include <atomic>
+#include <functional>
 
 #include "ArchetypeManager.h"
 #include "SparseComponentStore.hpp"
@@ -264,6 +265,43 @@ namespace SectorFW
 				}
 			}
 			/**
+			 * @brief すべての Sparse を this->dst に一括 move（型消去で処理）
+			 */
+			void MoveAllSparseTo(EntityManager& dst);
+			/**
+			 * @brief 指定 ID 群の Sparse を this->dst に一括 move（型消去で処理）
+			 */
+			void MoveSparseIDsTo(EntityManager& dst, const std::vector<EntityID>& ids);
+
+			// src の全エンティティを this へ統合。戻り値: 移送件数
+						// 手順: 1) Sparse 全型を一括 move  2) 非スパースをチャンク列 memcpy で移送  3) src をローカル除去
+			size_t MergeFromAll(EntityManager& src);
+
+			// ルータ: router(EntityID id, const ComponentMask& mask) -> EntityManager&
+			// 返された宛先ごとに分割。戻り値: 移送件数
+			template<typename Router>
+			size_t SplitByAll(Router&& router) {
+				// 1) 宛先ごとに ID をバケットしつつ、非スパースだけ先に移送
+				std::unordered_map<EntityManager*, std::vector<EntityID>> buckets;
+				const auto ids = GetAllEntityIDs(); // スナップショット
+				size_t moved = 0;
+				for (EntityID id : ids) {
+					auto locOpt = TryGetLocation(id);
+					if (!locOpt) continue;
+					EntityManager* dst = router(id, locOpt->chunk->GetComponentMask());
+					assert(dst != nullptr && "Router must return a valid EntityManager reference");
+					if (dst == this) continue;
+					if (InsertWithID_ForManagerMove(id, *this, *dst)) { buckets[dst].push_back(id); ++moved; }
+				}
+				// 2) Sparse は宛先ごとに + ID バケットを使って一括 move
+				for (auto& [dst, idvec] : buckets) { MoveSparseIDsTo(*dst, idvec); }
+				return moved;
+			}
+
+			// すべてのエンティティIDを列挙（locations  全チャンクを補完）
+			std::vector<EntityID> GetAllEntityIDs() const;
+
+			/**
 			 * @brief まばらなコンポーネントを取得する関数
 			 * @return ReadWriteView<std::unordered_map<EntityID, T>> まばらなコンポーネントのビュー
 			 */
@@ -297,6 +335,11 @@ namespace SectorFW
 				auto it = locations.find(id);
 				if (it == locations.end()) return std::nullopt;
 				return it->second;
+			}
+
+			size_t GetEntityCount() const noexcept {
+				std::shared_lock<std::shared_mutex> rlock(locationsMutex);
+				return locations.size();
 			}
 		private:
 			/**
@@ -428,6 +471,25 @@ namespace SectorFW
 				}
 			}
 			/**
+			 * @brief スパースを触らずにローカルから除去（ID破棄しない）
+			 * @param id 除去するエンティティのID
+			 * @return bool 除去に成功した場合はtrue、失敗した場合はfalse
+			 */
+			bool EraseEntityLocalNoSparse(EntityID id);
+			/**
+			 * @brief 非スパース列（チャンク列）を src->dst にコピー
+			 */
+			void CopyEntityColumns(ArchetypeChunk* srcChunk, size_t srcIndex,
+				ArchetypeChunk* dstChunk, size_t dstIndex);
+			/**
+			 * @brief IDを保持したまま dst 側に1行確保し、非スパースをコピー（manager間移送用）
+			 * @param id エンティティID
+			 * @param src 元のエンティティマネージャー
+			 * @param dst 移動先のエンティティマネージャー
+			 * @return bool 移動に成功した場合はtrue、失敗した場合はfalse
+			 */
+			bool InsertWithID_ForManagerMove(EntityID id, EntityManager& src, EntityManager& dst);
+			/**
 			 * @brief エンティティIDアロケータ
 			 */
 			static inline EntityIDAllocator entityAllocator = EntityIDAllocator(MAX_ENTITY_NUM);
@@ -449,6 +511,8 @@ namespace SectorFW
 			 */
 			struct ISparseWrapper {
 				virtual void Remove(EntityID id) = 0;
+				virtual void MoveAllTo(EntityManager& dst) = 0;
+				virtual void MoveManyTo(EntityManager& dst, const EntityID* ids, size_t n) = 0;
 				virtual ~ISparseWrapper() = default;
 			};
 			/**
@@ -462,6 +526,24 @@ namespace SectorFW
 			struct SparseWrapper : ISparseWrapper {
 				SparseComponentStore<T> store;
 				void Remove(EntityID id) override { store.Remove(id); }
+
+				void MoveAllTo(EntityManager& dst) override {
+					auto& srcMap = store.GetComponents();
+					auto& dstMap = dst.GetSparseStore<T>().GetComponents();
+					dstMap.reserve(dstMap.size() + srcMap.size());
+					for (auto it = srcMap.begin(); it != srcMap.end(); ++it)
+						dstMap.emplace(it->first, std::move(it->second));
+					srcMap.clear();
+				}
+				void MoveManyTo(EntityManager& dst, const EntityID* ids, size_t n) override {
+					auto& srcMap = store.GetComponents();
+					auto& dstMap = dst.GetSparseStore<T>().GetComponents();
+					dstMap.reserve(dstMap.size() + n);
+					for (size_t i = 0; i < n; ++i) {
+						auto it = srcMap.find(ids[i]);
+						if (it != srcMap.end()) { dstMap.emplace(it->first, std::move(it->second)); srcMap.erase(it); }
+					}
+				}
 			};
 			/**
 			 * @brief まばらなコンポーネントストアを取得する関数

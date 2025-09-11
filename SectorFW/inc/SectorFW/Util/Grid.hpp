@@ -90,4 +90,79 @@ namespace SectorFW
 		 */
 		std::vector<T> m_data;
 	};
+
+	/**
+	* @brief 3Dグリッドを表すクラス
+	* @tparam T   グリッドの要素の型
+	* @tparam Size サイズの型（デフォルトはsize_t）
+	*/
+	template<typename T, typename Size = size_t>
+	class Grid3D {
+	public:
+		/**
+		 * @brief コンストラクタ
+		 * @param width  グリッドの幅 (x)
+		 * @param height グリッドの高さ (y)
+		 * @param depth  グリッドの奥行 (z)
+		 */
+		explicit Grid3D(Size width, Size height, Size depth) noexcept
+			: m_width(width), m_height(height), m_depth(depth),
+			m_data(static_cast<size_t>(width)* static_cast<size_t>(height)* static_cast<size_t>(depth)) {
+		}
+
+		/**
+		 * @brief 要素アクセス（非const）
+		 * @param x x座標
+		 * @param y y座標
+		 * @param z z座標
+		 * @return 要素への参照
+		 */
+		T& operator()(Size x, Size y, Size z) {
+			return m_data[indexOf(x, y, z)];
+		}
+
+		/**
+		 * @brief 要素アクセス（const）
+		 * @param x x座標
+		 * @param y y座標
+		 * @param z z座標
+		 * @return 要素への参照
+		 */
+		const T& operator()(Size x, Size y, Size z) const {
+			return m_data[indexOf(x, y, z)];
+		}
+
+		/// 幅 (x)
+		Size width()  const noexcept { return m_width; }
+		/// 高さ (y)
+		Size height() const noexcept { return m_height; }
+		/// 奥行 (z)
+		Size depth()  const noexcept { return m_depth; }
+
+		/// 総要素数 = width * height * depth
+		Size size() const noexcept { return m_width * m_height * m_depth; }
+
+		/// イテレータ（非const）
+		auto begin() noexcept { return m_data.begin(); }
+		auto end()   noexcept { return m_data.end(); }
+
+		/// イテレータ（const）
+		auto begin() const noexcept { return m_data.begin(); }
+		auto end()   const noexcept { return m_data.end(); }
+
+		/// データ先頭ポインタ（必要なら）
+		T* data() noexcept { return m_data.data(); }
+		const T* data() const noexcept { return m_data.data(); }
+
+	private:
+		// 一次元インデックス計算：z*(w*h) + y*w + x
+		size_t indexOf(Size x, Size y, Size z) const noexcept {
+			return static_cast<size_t>(z) * static_cast<size_t>(m_width) * static_cast<size_t>(m_height)
+				+ static_cast<size_t>(y) * static_cast<size_t>(m_width)
+				+ static_cast<size_t>(x);
+		}
+
+		Size m_width, m_height, m_depth;
+		std::vector<T> m_data;
+	};
 }

@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "../Math/AABB.hpp"
 #include "ECS/EntityManager.h"
 #include "RegistryTypes.h"
 
@@ -41,7 +40,6 @@ namespace SectorFW
 		void SetNodeKey(const EntityManagerKey& k) noexcept { nodeKey = k; }
 		void BumpGeneration() noexcept { ++nodeKey.generation; }
 	private:
-		Math::AABB3f aabb;
 		/**
 		 * @brief エンティティマネージャー
 		 * @detail 空間チャンク内のエンティティを管理する
@@ -56,4 +54,33 @@ namespace SectorFW
 	 * @brief 空間チャンクのサイズ型を定義する
 	 */
 	using ChunkSizeType = SpatialChunk::SizeType;
+
+	namespace ECS
+	{
+		template<>
+		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(std::vector<SectorFW::SpatialChunk*>& context) const noexcept
+		{
+			std::vector<ArchetypeChunk*> result;
+			auto collect_from = [&](const ECS::EntityManager& em) {
+				const auto& all = em.GetArchetypeManager().GetAll();
+				for (const auto& [_, arch] : all) {
+					const ComponentMask& mask = arch->GetMask();
+					if ((mask & required) == required && (mask & excluded).none()) {
+						const auto& chunks = arch->GetChunks();
+						// 先に必要分だけまとめて拡張（平均的に再確保を減らす）
+						result.reserve(result.size() + chunks.size());
+						for (const auto& ch : chunks) {
+							result.push_back(ch.get());
+						}
+					}
+				}
+				};
+
+			// 空間ごと
+			for (auto spatial : context) {
+				collect_from(spatial->GetEntityManager());
+			}
+			return result;
+		}
+	}
 }

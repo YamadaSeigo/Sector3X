@@ -12,7 +12,13 @@ namespace SectorFW
 	{
 		struct DX11BufferCreateDesc {
 			std::string name;
-			size_t size = {};
+			uint32_t size = {};
+			uint32_t structureByteStride = 0; // StructuredBuffer 用（CBV では無視される）
+			void* initialData = nullptr; // 初期データ（nullptr ならゼロクリア）
+			D3D11_USAGE usage = D3D11_USAGE_DYNAMIC;
+			D3D11_BIND_FLAG bindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			D3D11_RESOURCE_MISC_FLAG miscFlags = {};
+			D3D11_CPU_ACCESS_FLAG cpuAccessFlags = D3D11_CPU_ACCESS_WRITE; // D3D11_USAGE_STAGING用
 		};
 
 		struct DX11BufferData {
@@ -36,13 +42,13 @@ namespace SectorFW
 		};
 
 		struct DX11BufferUpdateDesc {
-			BufferHandle handle = {};
+			ComPtr<ID3D11Buffer> buffer;
 			const void* data = nullptr;
 			size_t size = {};
 			bool isDelete = true;
 
 			bool operator==(const DX11BufferUpdateDesc& other) const {
-				return handle.index == other.handle.index;
+				return buffer.Get() == other.buffer.Get();
 			}
 		};
 
@@ -52,6 +58,12 @@ namespace SectorFW
 		public:
 			DX11BufferManager(ID3D11Device* device, ID3D11DeviceContext* context)
 				: device(device), context(context) {
+			}
+
+			~DX11BufferManager() {
+				for (auto& update : pendingUpdates) {
+					if (update.data && update.isDelete) delete update.data;
+				}
 			}
 
 			// 既存検索（名前ベース）
@@ -70,12 +82,34 @@ namespace SectorFW
 				DX11BufferData cb{};
 
 				D3D11_BUFFER_DESC bd = {};
-				bd.Usage = D3D11_USAGE_DYNAMIC;
-				bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-				bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+				bd.Usage = desc.usage;
+				bd.BindFlags = desc.bindFlags;
+				if (desc.usage == D3D11_USAGE_DYNAMIC) {
+					bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+				}
+				else if (desc.usage == D3D11_USAGE_STAGING) {
+					bd.CPUAccessFlags = desc.cpuAccessFlags; // CPU アクセスフラグを指定
+				}
 				bd.ByteWidth = static_cast<UINT>(desc.size);
+				bd.MiscFlags = desc.miscFlags;
+				if (bd.MiscFlags & D3D11_RESOURCE_MISC_BUFFER_STRUCTURED) {
+					bd.StructureByteStride = desc.structureByteStride;
+				}
 
-				HRESULT hr = device->CreateBuffer(&bd, nullptr, &cb.buffer);
+				HRESULT hr;
+				if (desc.initialData == nullptr) {
+					if (bd.Usage == D3D11_USAGE_IMMUTABLE) {
+						assert(false && "Immutable buffer must have initial data.");
+					}
+
+					hr = device->CreateBuffer(&bd, nullptr, &cb.buffer);
+				}
+				else {
+					D3D11_SUBRESOURCE_DATA initData = {};
+					initData.pSysMem = desc.initialData;
+					hr = device->CreateBuffer(&bd, &initData, &cb.buffer);
+				}
+
 				if (FAILED(hr)) {
 					assert(false && "Failed to create constant buffer");
 				}
@@ -91,7 +125,7 @@ namespace SectorFW
 			}
 
 			// 自動CB(内容キャッシュ)は AcquireAPI で
-			BufferHandle AcquireWithContent(const void* data, size_t size) {
+			BufferHandle AcquireWithContent(const void* data, uint32_t size) {
 				assert(data && size > 0);
 
 				DX11BufferCacheKey key{ HashBufferContent(data, size), size };
@@ -104,34 +138,37 @@ namespace SectorFW
 				Add({ .name = "auto_cb_" + std::to_string(key.hash), .size = size }, h);
 
 				// 中身コピー
-				auto& d = Get(h);
-				D3D11_MAPPED_SUBRESOURCE m{};
-				context->Map(d.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
-				memcpy(m.pData, data, size);
-				context->Unmap(d.buffer.Get(), 0);
+				{
+					auto d = Get(h);
+					D3D11_MAPPED_SUBRESOURCE m{};
+					context->Map(d.ref().buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
+					memcpy(m.pData, data, size);
+					context->Unmap(d.ref().buffer.Get(), 0);
+				}
 
 				cbvCache[key] = h;
 				handleToCacheKey[h.index] = key;
 				return h;
 			}
 
-			void UpdateConstantBuffer(const DX11BufferUpdateDesc& desc) {
+			void UpdateBuffer(const DX11BufferUpdateDesc& desc) {
 				std::lock_guard<std::mutex> lock(updateMutex);
 				pendingUpdates.push_back(desc);
 			}
 
 			void PendingUpdates() {
 				if (!pendingUpdates.empty()) {
+					std::lock_guard<std::mutex> lock(updateMutex);
+
 					auto it = std::unique(pendingUpdates.begin(), pendingUpdates.end());
 					pendingUpdates.erase(it, pendingUpdates.end());
 
 					for (const auto& update : pendingUpdates) {
-						auto& data = Get(update.handle);
 						D3D11_MAPPED_SUBRESOURCE mapped;
-						HRESULT hr = context->Map(data.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+						HRESULT hr = context->Map(update.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 						if (SUCCEEDED(hr)) {
 							memcpy(mapped.pData, update.data, update.size);
-							context->Unmap(data.buffer.Get(), 0);
+							context->Unmap(update.buffer.Get(), 0);
 						}
 						else {
 							assert(false && "Failed to map constant buffer for update");

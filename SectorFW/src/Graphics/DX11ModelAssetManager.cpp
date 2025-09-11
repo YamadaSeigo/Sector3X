@@ -4,7 +4,7 @@
 
 #include "cgltf/cgltf.h"
 
-#include "Util/logger.h"
+#include "Debug/logger.h"
 
 #include <numbers>
 
@@ -142,10 +142,10 @@ namespace SectorFW
 
 					DX11MeshCreateDesc meshDesc{
 						.vertices = vertexBuffer.data(),
-						.vSize = vertexBuffer.size() * sizeof(float),
+						.vSize = (uint32_t)vertexBuffer.size() * sizeof(float),
 						.stride = sizeof(float) * 8,
 						.indices = indices.data(),
-						.iSize = indices.size() * sizeof(uint32_t),
+						.iSize = (uint32_t)indices.size() * sizeof(uint32_t),
 						.sourcePath = canonicalPath.wstring() + L"#" + std::to_wstring(meshIndex++) // optional submesh ID
 					};
 					MeshHandle meshHandle;
@@ -179,13 +179,16 @@ namespace SectorFW
 					std::unordered_map<UINT, BufferHandle>  vsCBVMap;
 					std::unordered_map<UINT, SamplerHandle> samplerMap;
 
-					const auto& psBindings = shaderMgr.GetPSBindings(shader);
+					auto psShader = shaderMgr.Get(shader);
+					const auto& psBindings = psShader.ref().psBindings;
 					for (const auto& b : psBindings) {
 						if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
 							psCBVMap[b.bindPoint] = matCB;
 						}
 					}
-					const auto& vsBindings = shaderMgr.GetVSBindings(shader);
+
+					auto vsShader = shaderMgr.Get(shader);
+					const auto& vsBindings = vsShader.ref().vsBindings;
 					for (const auto& b : vsBindings) {
 						if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
 							vsCBVMap[b.bindPoint] = matCB;

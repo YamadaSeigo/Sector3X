@@ -24,16 +24,17 @@ namespace SectorFW
 				rid.hwndTarget = nullptr;
 			}
 			else {
-				if (noLegacy) rid.dwFlags |= RIDEV_NOLEGACY;     // WM_* を止める
-				if (capture)  rid.dwFlags |= RIDEV_CAPTUREMOUSE; // フォーカス外でも WM_INPUT
-				// 必要なら rid.dwFlags |= RIDEV_INPUTSINK;
+				if (noLegacy) rid.dwFlags |= RIDEV_NOLEGACY;     // ← 捕捉中だけ
+				if (capture)  rid.dwFlags |= RIDEV_CAPTUREMOUSE; // ← 必要に応じて
+				// rid.dwFlags |= RIDEV_INPUTSINK;  // フォーカス外で RawInput が欲しいなら
 			}
 			RegisterRawInputDevices(&rid, 1, sizeof(rid));
 		}
 
 		void WinMouseInput::HandleRawInput(LPARAM lParam) {
-			UINT size = 0;
-			GetRawInputData((HRAWINPUT)lParam, RID_INPUT, nullptr, &size, sizeof(RAWINPUTHEADER));
+			RAWINPUT ri; UINT size = 0;
+			GetRawInputData((HRAWINPUT)lParam, RID_INPUT, &ri, &size, sizeof(RAWINPUTHEADER));
+
 			if (!size) return;
 
 			if (rawBuffer.size() < size) rawBuffer.resize(size);
@@ -73,7 +74,7 @@ namespace SectorFW
 			if (captured) ToggleCapture(false);
 
 			// レガシー系WM_*を復活させる or RawInputを通常モードで再登録
-			RegisterRawInput(true, /*noLegacy=*/false, /*capture=*/false);
+			RegisterRawInput(false, /*noLegacy=*/false, /*capture=*/false);
 
 			ClipCursor(nullptr);
 			while (ShowCursor(TRUE) < 0) {}
@@ -93,13 +94,24 @@ namespace SectorFW
 		}
 
 		void WinMouseInput::Reclip() {
-			if (!captured) return;
+			if (!captured) { ClipCursor(nullptr); return; }
+
+#ifdef _ENABLE_IMGUI
+			ImGuiIO& io = ImGui::GetIO();
+			// マルチビューポート or UI操作中はマウスをクリップしない
+			if ((io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) &&
+				(io.WantCaptureMouse || ImGui::IsMouseDragging(0)))
+			{
+				ClipCursor(nullptr);
+				return;
+			}
+#endif
+
 			RECT rc; GetClientRect(hwnd, &rc);
-			POINT lt{ rc.left, rc.top }, rb{ rc.right, rc.bottom };
-			ClientToScreen(hwnd, &lt);
-			ClientToScreen(hwnd, &rb);
-			RECT clip{ lt.x, lt.y, rb.x, rb.y };
-			ClipCursor(&clip);
+			POINT tl{ rc.left, rc.top }, br{ rc.right, rc.bottom };
+			ClientToScreen(hwnd, &tl); ClientToScreen(hwnd, &br);
+			RECT srect{ tl.x, tl.y, br.x, br.y };
+			ClipCursor(&srect);
 		}
 
 		void WinMouseInput::ConsumeDelta(LONG& outDx, LONG& outDy) noexcept {
@@ -107,6 +119,20 @@ namespace SectorFW
 			outDy = dy;
 			dx = 0; dy = 0;
 			wheelH = 0; wheelV = 0;
+		}
+
+		void WinMouseInput::Cleanup() {
+			// キャプチャ中ならまず通常経路で戻す
+			ToggleCapture(false);
+
+			// RawInput の登録を明示的に解除（RIDEV_REMOVE）
+			RegisterRawInput(false, false, false);
+			// 完全に安全を期すなら“通常モード再登録”でも OK:
+			// RegisterRawInput(true, /*noLegacy=*/false, /*capture=*/false);
+
+			ClipCursor(nullptr);
+			while (ShowCursor(TRUE) < 0) {}
+			ReleaseCapture();
 		}
 
 		void WinMouseInput::ToggleCapture(bool on) {
@@ -121,6 +147,14 @@ namespace SectorFW
 				SetFocus(hwnd);
 			}
 			else {
+				// ---- レガシー復活（ImGui が WM_* を再び受け取れる）----
+				RegisterRawInput(false, /*noLegacy=*/false, /*capture=*/false);
+				// あるいは RegisterRawInput(false); でも良いが、明示再登録がより確実
+
+				ClipCursor(nullptr);
+				while (ShowCursor(TRUE) < 0) {}
+				ReleaseCapture();
+
 #ifdef _ENABLE_IMGUI
 				// ---- ImGui の押下状態が残っている可能性をクリア ----
 				ImGuiIO& io = ImGui::GetIO();
@@ -129,14 +163,6 @@ namespace SectorFW
 				io.AddMouseButtonEvent(2, false);
 				io.AddMousePosEvent(-FLT_MAX, -FLT_MAX); // “マウス不在”を通知（任意）
 #endif // _ENABLE_IMGUI
-
-				// ---- レガシー復活（ImGui が WM_* を再び受け取れる）----
-				RegisterRawInput(true, /*noLegacy=*/false, /*capture=*/false);
-				// あるいは RegisterRawInput(false); でも良いが、明示再登録がより確実
-
-				ClipCursor(nullptr);
-				while (ShowCursor(TRUE) < 0) {}
-				ReleaseCapture();
 			}
 		}
 	}

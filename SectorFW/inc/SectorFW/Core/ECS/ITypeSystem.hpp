@@ -7,15 +7,23 @@
 
 #pragma once
 
+#include <limits>
+
 #include "ISystem.hpp"
 #include "ComponentTypeRegistry.h"
 #include "Query.h"
-#include "Util/UndeletablePtr.hpp"
+#include "../../Math/Frustum.hpp"
+#include "../../Util/UndeletablePtr.hpp"
 
 namespace SectorFW
 {
 	namespace ECS
 	{
+		struct ForEachFrustumDesc {
+			Math::Frustumf fru;
+			float ymin = std::numeric_limits<float>::lowest(), ymax = (std::numeric_limits<float>::max)();
+		};
+
 		//前方宣言
 		template<typename Derived, typename Partition, typename AccessSpec, typename ContextSpec>
 		class ITypeSystem;
@@ -28,7 +36,7 @@ namespace SectorFW
 
 		template<typename Derived, typename Partition, typename... Services>
 		concept HasUpdateImpl =
-			requires (Derived& t, Partition & partition, UndeletablePtr<Services>... services) {
+			requires (Derived & t, Partition & partition, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, services...) } -> std::same_as<void>;
 		};
 
@@ -55,8 +63,13 @@ namespace SectorFW
 				query.With<typename AccessPolicy<AccessTypes>::ComponentType...>();
 				std::vector<ArchetypeChunk*> chunks = query.MatchingChunks<Partition&>(partition);
 #ifdef _DEBUG
-				if (chunks.empty()) {
-					LOG_WARNING("No matching chunks found for the specified access types.");
+				if (chunks.empty() && matchingChunk) {
+					matchingChunk = false;
+					std::string log = std::string("No matching chunks : ") + this->derived_name();
+					LOG_WARNING(log.c_str());
+				}
+				else {
+					matchingChunk = true;
 				}
 #endif
 				for (auto& chunk : chunks)
@@ -65,6 +78,34 @@ namespace SectorFW
 					func(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
 				}
 			}
+
+			template<typename F, typename... Args>
+			void ForEachFrustumChunkWithAccessor(F&& func, Partition& partition, ForEachFrustumDesc& desc, Args... args)
+			{
+				auto cullChunks = partition.CullChunks(desc.fru, desc.ymin, desc.ymax);
+
+				if (cullChunks.empty()) return;
+
+				Query query;
+				query.With<typename AccessPolicy<AccessTypes>::ComponentType...>();
+				std::vector<ArchetypeChunk*> chunks = query.MatchingChunks<decltype(cullChunks)&>(cullChunks);
+#ifdef _DEBUG
+				if (chunks.empty() && matchingChunk) {
+					matchingChunk = false;
+					std::string log = std::string("No matching chunks : ") + this->derived_name();
+					LOG_WARNING(log.c_str());
+				}
+				else if (!chunks.empty()) {
+					matchingChunk = true;
+				}
+#endif
+				for (auto& chunk : chunks)
+				{
+					ComponentAccessor<AccessTypes...> accessor(chunk);
+					func(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
+				}
+			}
+
 			template<typename F, typename... Args>
 			void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, Args... args)
 			{
@@ -72,8 +113,13 @@ namespace SectorFW
 				query.With<typename AccessPolicy<AccessTypes>::ComponentType...>();
 				std::vector<ArchetypeChunk*> chunks = query.MatchingChunks<Partition&>(partition);
 #ifdef _DEBUG
-				if (chunks.empty()) {
-					LOG_WARNING("No matching chunks found for the specified access types.");
+				if (chunks.empty() && matchingChunk) {
+					matchingChunk = false;
+					std::string log = std::string("No matching chunks : ") + this->derived_name();
+					LOG_WARNING(log.c_str());
+				}
+				else {
+					matchingChunk = true;
 				}
 #endif
 				for (auto& chunk : chunks)
@@ -100,7 +146,6 @@ namespace SectorFW
 			 */
 			void Start(const ServiceLocator& serviceLocator) override {
 				if constexpr (HasStartImpl<Derived, Services...>) {
-
 					if constexpr (AllStaticServices<Services...>) {
 						// 静的サービスを使用する場合、サービスロケーターから直接取得
 						std::apply(
@@ -129,7 +174,6 @@ namespace SectorFW
 			 */
 			void Update(Partition& partition, const ServiceLocator& serviceLocator) override {
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
-
 					if constexpr (AllStaticServices<Services...>) {
 						// 静的サービスを使用する場合、サービスロケーターから直接取得
 						std::apply(
@@ -194,6 +238,10 @@ namespace SectorFW
 			 * @brief 必要なコンポーネントマスクを定義する
 			 */
 			static inline ComponentMask required = BuildMaskFromTuple<AccessorTuple>();
+
+#ifdef _DEBUG
+			bool matchingChunk = true;
+#endif //_DEBUG
 		};
 	}
 }

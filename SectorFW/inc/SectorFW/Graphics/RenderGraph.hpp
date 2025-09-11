@@ -3,8 +3,13 @@
 #include <functional>
 #include <optional>
 
-#include "RenderQueue.hpp"
+#include "RenderQueue.h"
 #include "RenderService.h"
+
+#include "Debug/ImGuiLayer.h"
+#ifdef _ENABLE_IMGUI
+#include "Debug/UIBus.h"
+#endif
 
 namespace SectorFW
 {
@@ -93,6 +98,7 @@ namespace SectorFW
 			BlendStateID blendState = BlendStateID::Opaque; // ブレンドステートID
 			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // 深度ステンシルステートID
 			std::vector<BufferHandle> cbvs; // 定数バッファハンドルのリスト
+			uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME; // フレーム当たりの最大インスタンス数
 			std::function<void()> customExecute; // FullscreenQuadなど
 		};
 
@@ -109,7 +115,7 @@ namespace SectorFW
 			void AddPass(RenderPassDesc<RTV>& desc) {
 				std::unique_lock lock(*renderService.queueMutex);
 
-				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>());
+				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(desc.maxInstancesPerFrame));
 				renderService.queueIndex[desc.name] = renderService.renderQueues.size() - 1; // レンダーサービスにキューを登録
 
 				passes.emplace_back(
@@ -137,6 +143,16 @@ namespace SectorFW
 				//フレームのインクリメントとリソースの破棄処理
 				backend.ProcessDeferredDeletes(++renderService.currentFrame);
 
+#ifdef _ENABLE_IMGUI
+				{
+					auto g = Debug::BeginTreeWrite(); // lock & back buffer
+					auto& frame = g.data();
+
+					// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
+					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::RenderGraph, /*leaf=*/false, "RenderGraph" });
+				} // guard のデストラクトで unlock。swap は UI スレッドで。
+#endif
+
 				for (auto& pass : passes) {
 					backend.SetPrimitiveTopology(pass.topology);
 
@@ -157,8 +173,20 @@ namespace SectorFW
 					uint32_t instCount = 0;
 
 					pass.queue->Submit(cmds, instances, instCount);
+
+#ifdef _ENABLE_IMGUI
+					{
+						auto g = Debug::BeginTreeWrite(); // lock & back buffer
+						auto& frame = g.data();
+
+						// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
+						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Pass, /*leaf=*/false, "Pass : " + pass.name });
+						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::DrawCommand, /*leaf=*/true, "DrawCommand : " + std::to_string(cmds.size()) });
+					} // guard のデストラクトで unlock。swap は UI スレッドで。
+#endif
+
 					backend.BeginFrameUpload(instances, instCount);
-					backend.ExecuteDrawInstanced(cmds, !useRasterizer); // インスタンシング対応
+					backend.ExecuteDrawIndexedInstanced(cmds, !useRasterizer); // インスタンシング対応
 
 					if (pass.customExecute) pass.customExecute();
 				}

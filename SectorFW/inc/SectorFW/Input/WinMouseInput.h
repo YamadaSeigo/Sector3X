@@ -22,6 +22,8 @@ namespace SectorFW
 			void Reclip();
 
 			void ConsumeDelta(LONG& outDx, LONG& outDy) noexcept;
+
+			void Cleanup();
 		public:
 			void ToggleCapture(bool on);
 			void GetDelta(LONG& outDx, LONG& outDy) const noexcept { outDx = dx; outDy = dy; }

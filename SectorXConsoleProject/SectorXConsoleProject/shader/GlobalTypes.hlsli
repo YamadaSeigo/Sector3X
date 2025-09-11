@@ -22,6 +22,17 @@ cbuffer MaterialCB : register(b2)
     float3 _pad_; // 16B境界合わせ
 };
 
+cbuffer LightCB : register(b3)
+{
+    float4 lightDir; // ワールド空間、正規化済み
+    float4 lightColor; // 0～1
+    float4 ambientColor; // 環境光
+};
+
+//======================================================
+//コンスタントバッファのスロット４以降は、個別にセットしてもオケ!
+//======================================================
+
 // フレーム単位：全インスタンスのワールド行列（64B/個）
 StructuredBuffer<float4x4> gInstanceMats : register(t0);
 

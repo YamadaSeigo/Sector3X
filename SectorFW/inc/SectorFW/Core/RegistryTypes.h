@@ -5,7 +5,7 @@ namespace SectorFW
 	// レベルごとに一意なインスタンスID（レベル再ロードのたびに新規値を割り当て）
 	using LevelID = std::uint32_t;
 
-	enum class PartitionScheme : uint8_t { Grid2D, Quadtree2D, Octree3D };
+	enum class PartitionScheme : uint8_t { Grid2D, Grid3D, Quadtree2D, Octree3D, BVH, SAP };
 
 	// ManagerKey: どの EntityManager を指すか（Level  区画  世代）
 	struct EntityManagerKey {

@@ -13,8 +13,12 @@
 #include "partition.hpp"
 #include "RegistryTypes.h"
 
-#include "Util/logger.h"
+#include "Debug/logger.h"
 #include "Util/extract_type.hpp"
+
+#ifdef _ENABLE_IMGUI
+#include "Debug/UIBus.h"
+#endif // _ENABLE_IMGUI
 
 namespace SectorFW
 {
@@ -34,7 +38,7 @@ namespace SectorFW
 	 */
 	static constexpr ChunkSizeType DefaultChunkWidth = 64; // デフォルトのチャンクカラムサイズ
 
-	static constexpr float DefaultChunkCellSize = 128.0f; // デフォルトのチャンクサイズ
+	static constexpr float DefaultChunkCellSize = 64.0f; // デフォルトのチャンクサイズ
 	/**
 	 * @brief レベルを定義するクラス
 	 * @tparam Partition パーティションの型
@@ -55,13 +59,26 @@ namespace SectorFW
 		 * @param _chunkHeight チャンクの高さ
 		 * @param _chunkCellSize チャンクのセルサイズ
 		 */
-		explicit Level(const std::string& name, EntityManagerRegistry& reg, ELevelState state = ELevelState::Main,
+		explicit Level(const std::string& name, ELevelState state = ELevelState::Main,
 			ChunkSizeType _chunkWidth = DefaultChunkWidth, ChunkSizeType _chunkHeight = DefaultChunkHeight,
-			ChunkSizeType _chunkCellSize = DefaultChunkCellSize) noexcept
-			: name(name), state(state), chunkCellSize(_chunkCellSize),
+			float _chunkCellSize = DefaultChunkCellSize
+		) noexcept
+			: name(name), state(state),
 			partition(_chunkWidth, _chunkHeight, _chunkCellSize) {
 			id = LevelID(nextID.fetch_add(1, std::memory_order_relaxed));
-			partition.RegisterAllChunks(reg, id);
+		}
+		/**
+		 * @brief T が Args... で構築可能なときだけ、このコンストラクタを有効化
+		 * @
+		 */
+		template<class... Args>
+			requires std::constructible_from<Partition, Args...> &&
+		(!(std::same_as<std::remove_cvref_t<Args>, Level> || ...)) // 自分自身のコピー/ムーブと衝突しないようガード
+			explicit(sizeof...(Args) == 1) // 引数1個のときだけ explicit、などの好み調整も可
+			Level(const std::string& name, ELevelState state = ELevelState::Main, Args&&... args) noexcept
+			: name(name), state(state),
+			partition(std::forward<Args>(args)...) {
+			id = LevelID(nextID.fetch_add(1, std::memory_order_relaxed));
 		}
 		/**
 		 * @brief LevelIDの取得関数
@@ -70,13 +87,41 @@ namespace SectorFW
 		/**
 		 * @brief 更新処理
 		 */
-		void Update(const ECS::ServiceLocator& serviceLocator) {
+		void Update(const ECS::ServiceLocator& serviceLocator, double deltaTime) {
+#ifdef _ENABLE_IMGUI
+			{
+				auto g = Debug::BeginTreeWrite(); // lock & back buffer
+				auto& frame = g.data();
+
+				// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Level, /*leaf=*/false, "Level : " + std::to_string(id) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/true, "Partition : " + std::string(typeid(Partition).name()).substr(6) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/false, "System" });
+			} // guard のデストラクトで unlock。swap は UI スレッドで。
+#endif
+
+			if constexpr (HasPartitionUpdate<Partition>) {
+				partition.Update(deltaTime);
+			}
+
 			scheduler.UpdateAll(partition, serviceLocator);
 		}
 		/**
 		 * @brief 限定的な更新処理
 		 */
-		void UpdateLimited(const ECS::ServiceLocator& serviceLocator) {
+		void UpdateLimited(const ECS::ServiceLocator& serviceLocator, double deltaTime) {
+#ifdef _ENABLE_IMGUI
+			{
+				auto g = Debug::BeginTreeWrite(); // lock & back buffer
+				auto& frame = g.data();
+
+				// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Level, /*leaf=*/true, "Limited Level : " + std::to_string(id) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
+			} // guard のデストラクトで unlock。swap は UI スレッドで。
+#endif
+
 			// 限定的なSystemだけを実行（例：位置補間やフェードアウト処理）
 			for (auto& sys : limitedSystems) {
 				sys->Update(partition, serviceLocator);
@@ -139,6 +184,15 @@ namespace SectorFW
 
 			return id;
 		}
+
+		/**
+		 * @brief すべてのチャンクのEntityManagerをレジスターに登録する
+		 * @param reg
+		 */
+		void RegisterAllChunks(EntityManagerRegistry& reg) {
+			partition.RegisterAllChunks(reg, id);
+		}
+
 		/**
 		 * @brief グローバルなエンティティマネージャーを取得する関数
 		 * @return const ECS::EntityManager& グローバルエンティティマネージャーへの参照
@@ -199,9 +253,5 @@ namespace SectorFW
 		 * @brief パーティション
 		 */
 		Partition partition;
-		/**
-		 * @brief チャンクのセルサイズ
-		 */
-		ChunkSizeType chunkCellSize;
 	};
 }

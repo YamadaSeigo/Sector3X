@@ -11,7 +11,7 @@
 #include <cmath>
 #include "partition.hpp"
 #include "EntityManagerRegistryService.h"
-#include "../Util/Morton2D.h"
+#include "../Util/Morton.h"
 
 namespace SectorFW
 {
@@ -27,7 +27,7 @@ namespace SectorFW
 		 * @param chunkHeight チャンクの高さ
 		 * @param chunkSize チャンクのサイズ
 		 */
-		explicit Grid2DPartition(ChunkSizeType chunkWidth, ChunkSizeType chunkHeight, ChunkSizeType chunkSize) noexcept :
+		explicit Grid2DPartition(ChunkSizeType chunkWidth, ChunkSizeType chunkHeight, float chunkSize) noexcept :
 			grid(chunkWidth, chunkHeight), chunkSize(chunkSize) {
 		}
 		/**
@@ -36,25 +36,23 @@ namespace SectorFW
 		 * @param policy アウトオブバウンズポリシー
 		 * @return std::optional<SpatialChunk*> チャンクへのポインタ
 		 */
-		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept {
-			// 位置に基づいてチャンクを取得するロジックを実装
-			// ここではダミーの実装を返す
+		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location,
+			EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept
+		{
 			using Signed = long long;
-			const Signed xs = static_cast<Signed>(std::floor(static_cast<double>(location.x) / static_cast<double>(chunkSize)));
-			const Signed ys = static_cast<Signed>(std::floor(static_cast<double>(location.y) / static_cast<double>(chunkSize)));
-			const Signed w = static_cast<Signed>(grid.width());
-			const Signed h = static_cast<Signed>(grid.height());
+			const Signed cx = static_cast<Signed>(std::floor(double(location.x) / double(chunkSize)));
+			const Signed cz = static_cast<Signed>(std::floor(double(location.z) / double(chunkSize)));
+			const Signed w = static_cast<Signed>(grid.width());   // X方向セル数
+			const Signed d = static_cast<Signed>(grid.height());  // Z方向セル数（名はheightでも意味はDepth）
 
 			if (policy == EOutOfBoundsPolicy::ClampToEdge) {
-				const Signed cx = std::clamp<Signed>(xs, 0, w - 1);
-				const Signed cy = std::clamp<Signed>(ys, 0, h - 1);
-				return &grid(static_cast<ChunkSizeType>(cx), static_cast<ChunkSizeType>(cy));
+				const Signed ix = std::clamp<Signed>(cx, 0, w - 1);
+				const Signed iz = std::clamp<Signed>(cz, 0, d - 1);
+				return &grid(static_cast<ChunkSizeType>(ix), static_cast<ChunkSizeType>(iz));
 			}
+			if (cx < 0 || cx >= w || cz < 0 || cz >= d) return std::nullopt;
 
-			if (xs < 0 || xs >= w || ys < 0 || ys >= h)
-				return std::nullopt;
-
-			return &grid(static_cast<ChunkSizeType>(xs), static_cast<ChunkSizeType>(ys));
+			return &grid(static_cast<ChunkSizeType>(cx), static_cast<ChunkSizeType>(cz));
 		}
 		/**
 		 * @brief グリッドを取得します。
@@ -85,6 +83,128 @@ namespace SectorFW
 			}
 		}
 
+		size_t GetEntityNum() {
+			size_t num = globalEntityManager.GetEntityCount();
+			const auto w = grid.width();
+			const auto h = grid.height();
+			for (uint32_t y = 0; y < h; ++y) {
+				for (uint32_t x = 0; x < w; ++x) {
+					SpatialChunk& cell = grid(x, y);
+					num += cell.GetEntityManager().GetEntityCount();
+				}
+			}
+
+			return num;
+		}
+
+		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr,
+			float ymin, float ymax) const noexcept
+		{
+			std::vector<SpatialChunk*> out;
+			const uint32_t w = grid.width(), d = grid.height();
+			const float cell = float(chunkSize);
+			const float exz = 0.5f * cell; // x,z は各セルの半径
+
+			for (uint32_t z = 0; z < d; ++z) {
+				for (uint32_t x = 0; x < w; ++x) {
+					const float cx = (x + 0.5f) * cell;
+					const float cz = (z + 0.5f) * cell;
+
+					float cyEff, eyEff;
+					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, ymin, ymax, cyEff, eyEff)) {
+						continue; // 縦に一切重ならない → 可視になり得ない
+					}
+
+					const Math::Vec3f center{ cx,  cyEff, cz };
+					const Math::Vec3f extent{ exz, eyEff, exz };
+
+					if (fr.IntersectsAABB(center, extent)) {
+						out.push_back(const_cast<SpatialChunk*>(&grid(x, z)));
+					}
+				}
+			}
+			return out;
+		}
+
+		// （任意）アロケーション回避のコールバック版
+		template<class F>
+		void CullChunks(const Math::Frustumf& fr, float ymin, float ymax, F&& f) const noexcept
+		{
+			const uint32_t w = grid.width(), d = grid.height();
+			const float cell = float(chunkSize);
+			const float exz = 0.5f * cell;
+
+			for (uint32_t z = 0; z < d; ++z) {
+				for (uint32_t x = 0; x < w; ++x) {
+					const float cx = (x + 0.5f) * cell;
+					const float cz = (z + 0.5f) * cell;
+
+					float cyEff, eyEff;
+					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, ymin, ymax, cyEff, eyEff)) {
+						continue;
+					}
+
+					const Math::Vec3f center{ cx,  cyEff, cz };
+					const Math::Vec3f extent{ exz, eyEff, exz };
+
+					if (fr.IntersectsAABB(center, extent)) {
+						f(const_cast<SpatialChunk&>(grid(x, z)));
+					}
+				}
+			}
+		}
+
+		uint32_t CullChunkLine(const Math::Frustumf& fr,
+			Math::Vec3f cp, float hy, Debug::LineVertex* outLine,
+			uint32_t capacity, uint32_t displayCount) const noexcept
+		{
+			const uint32_t w = grid.width(), d = grid.height();
+			const float cell = float(chunkSize);
+			const float exz = 0.5f * cell; // x,z は各セルの半径
+
+			uint32_t validCount = 0;
+			float maxLength = displayCount * chunkSize;
+
+			for (uint32_t z = 0; z < d; ++z) {
+				for (uint32_t x = 0; x < w; ++x) {
+					const float cx = (x + 0.5f) * cell;
+					const float cz = (z + 0.5f) * cell;
+
+					Math::Vec2 vec = { cx - cp.x, cz - cp.z };
+					float len = vec.length();
+
+					if (len > maxLength) continue; // 表示距離外
+
+					if (capacity - validCount < 6) break;
+
+					float cyEff, eyEff;
+					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz,
+						std::numeric_limits<float>::lowest(), (std::numeric_limits<float>::max)(), cyEff, eyEff)) {
+						continue; // 縦に一切重ならない → 可視になり得ない
+					}
+
+					const Math::Vec3f center{ cx, cp.y, cz };
+					const Math::Vec3f extent{ exz, hy, exz };
+
+					if (fr.IntersectsAABB(center, extent))
+					{
+						uint32_t rgb = Math::LerpColor(0xFFFFFFFF, 0x000000FF, len / maxLength);
+
+						outLine[validCount + 0] = { Math::Vec3f(center.x - extent.x, center.y - extent.y, center.z - extent.z), rgb };
+						outLine[validCount + 1] = { Math::Vec3f(center.x - extent.x, center.y + extent.y, center.z - extent.z), rgb };
+						outLine[validCount + 2] = { Math::Vec3f(center.x + extent.x, center.y - extent.y, center.z - extent.z), rgb };
+						outLine[validCount + 3] = { Math::Vec3f(center.x + extent.x, center.y + extent.y, center.z - extent.z), rgb };
+						outLine[validCount + 4] = { Math::Vec3f(center.x - extent.x, center.y - extent.y, center.z + extent.z), rgb };
+						outLine[validCount + 5] = { Math::Vec3f(center.x - extent.x, center.y + extent.y, center.z + extent.z), rgb };
+					}
+
+					validCount += 6;
+				}
+			}
+
+			return validCount;
+		}
+
 		// ===== セルの再ロード時：旧登録を外し、generationで再登録 =====
 		void ReloadCell(uint32_t cx, uint32_t cy, EntityManagerRegistry& reg) {
 			SpatialChunk& cell = grid(cx, cy);
@@ -97,16 +217,16 @@ namespace SectorFW
 			grid(cx, cy) = std::move(newCell);
 		}
 	private:
-		inline EntityManagerKey MakeGrid2DKey(LevelID level, int32_t cx, int32_t cy,
-			uint16_t gen = 0) {
-			EntityManagerKey k;
+		inline EntityManagerKey MakeGrid2DKey(LevelID level, int32_t gx, int32_t gz, uint16_t gen = 0) {
+			EntityManagerKey k{};
 			k.level = level;
 			k.scheme = PartitionScheme::Grid2D;
 			k.depth = 0;
 			k.generation = gen;
-			k.code = Morton2D64(ZigZag64(cx), ZigZag64(cy));
+			k.code = Morton2D64(ZigZag64(gx), ZigZag64(gz)); // ← X,Z
 			return k;
 		}
+
 	private:
 		/**
 		 * @brief グローバルエンティティマネージャー
@@ -119,7 +239,7 @@ namespace SectorFW
 		/**
 		 * @brief チャンクのサイズ
 		 */
-		ChunkSizeType chunkSize;
+		float chunkSize;
 	};
 
 	namespace ECS

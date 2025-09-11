@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SectorFW/Debug/UIBus.h>
+
 struct CModel
 {
 	Graphics::ModelAssetHandle handle;
@@ -10,11 +12,12 @@ class ModelRenderSystem : public ITypeSystem<
 	ModelRenderSystem<Partition>,
 	Partition,
 	ComponentAccess<Read<TransformSoA>, Read<CModel>>,//アクセスするコンポーネントの指定
-	ServiceContext<Graphics::RenderService>>{//受け取るサービスの指定
+	ServiceContext<Graphics::RenderService, Graphics::I3DCameraService>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
 public:
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService) {
+	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService,
+		UndeletablePtr<Graphics::I3DCameraService> cameraService) {
 		//機能を制限したRenderQueueを取得
 		auto producerSession = renderService->GetProducerSession("Default");
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
@@ -22,9 +25,12 @@ public:
 		auto materialManager = renderService->GetResourceManager<Graphics::DX11MaterialManager>();
 		auto psoManager = renderService->GetResourceManager<Graphics::DX11PSOManager>();
 
+		ForEachFrustumDesc desc;
+		desc.fru = cameraService->MakeFrustum();
+
 		//アクセスを宣言したコンポーネントにマッチするチャンクに指定した関数を適応する
-		this->ForEachChunkWithAccessor([](Accessor& accessor, size_t entityCount,
-			auto modelMgr,auto meshMgr, auto materialMgr, auto psoMgr,
+		this->ForEachFrustumChunkWithAccessor([](Accessor& accessor, size_t entityCount,
+			auto modelMgr, auto meshMgr, auto materialMgr, auto psoMgr,
 			auto queue)
 			{
 				//読み取り専用でTransformSoAのアクセサを取得
@@ -41,12 +47,11 @@ public:
 					auto worldMtx = transMtx * rotMtx * scaleMtx;
 
 					//モデルアセットを取得
-					static Graphics::DX11ModelAssetData modelAsset;
-					modelAsset = modelMgr->Get(model.value()[i].handle);
+					auto modelAsset = modelMgr->Get(model.value()[i].handle);
 
 					auto modelIdx = queue->AllocInstance({ worldMtx });
 
-					for (const auto& mesh : modelAsset.subMeshes) {
+					for (const auto& mesh : modelAsset.ref().subMeshes) {
 						Graphics::DrawCommand cmd;
 						if (meshMgr->IsValid(mesh.mesh) == false) continue;
 						if (materialMgr->IsValid(mesh.material) == false) continue;
@@ -68,6 +73,7 @@ public:
 						queue->Push(std::move(cmd));
 					}
 				}
-			}, partition, modelManager, meshManager, materialManager, psoManager, &producerSession);
+			}, partition, desc, modelManager, meshManager, materialManager, psoManager, &producerSession
+		);
 	}
 };

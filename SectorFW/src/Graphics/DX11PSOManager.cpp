@@ -1,5 +1,5 @@
 #include "Graphics/DX11/DX11PSOManager.h"
-#include "Util/logger.h"
+#include "Debug/logger.h"
 
 namespace SectorFW
 {
@@ -18,17 +18,19 @@ namespace SectorFW
 		DX11PSOData DX11PSOManager::CreateResource(const DX11PSOCreateDesc& desc, PSOHandle h)
 		{
 			DX11PSOData pso{};
-			auto& shaderData = shaderManager->Get(desc.shader);
+			{
+				auto shaderData = shaderManager->Get(desc.shader);
 
-			HRESULT hr = device->CreateInputLayout(shaderData.inputLayoutDesc.data(),
-				(UINT)shaderData.inputLayoutDesc.size(),
-				shaderData.vsBlob->GetBufferPointer(),
-				shaderData.vsBlob->GetBufferSize(),
-				&pso.inputLayout);
+				HRESULT hr = device->CreateInputLayout(shaderData.ref().inputLayoutDesc.data(),
+					(UINT)shaderData.ref().inputLayoutDesc.size(),
+					shaderData.ref().vsBlob->GetBufferPointer(),
+					shaderData.ref().vsBlob->GetBufferSize(),
+					&pso.inputLayout);
 
-			if (FAILED(hr)) {
-				LOG_ERROR("Failed to create input layout for PSO: %d", desc.shader);
-				assert(false && "Failed to create input layout for PSO");
+				if (FAILED(hr)) {
+					LOG_ERROR("Failed to create input layout for PSO: %d", desc.shader);
+					assert(false && "Failed to create input layout for PSO");
+				}
 			}
 
 			pso.shader = desc.shader;

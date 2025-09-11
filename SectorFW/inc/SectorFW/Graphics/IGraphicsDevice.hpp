@@ -13,7 +13,7 @@
 #include <memory>
 #include <type_traits>
 
-#include "../GUI/ImGuiLayer.h"
+#include "../Debug/ImGuiLayer.h"
 
 using namespace Microsoft::WRL;
 
@@ -39,8 +39,8 @@ namespace SectorFW
 			 * @param width ウィンドウ幅
 			 * @param height ウィンドウ高さ
 			 */
-			bool Initialize(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height) {
-				return static_cast<Impl*>(this)->InitializeImpl(nativeWindowHandle, width, height);
+			bool Initialize(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps) {
+				return static_cast<Impl*>(this)->InitializeImpl(nativeWindowHandle, width, height, fps);
 			}
 		public:
 			/**
@@ -53,17 +53,17 @@ namespace SectorFW
 			 * @param width ウィンドウ幅
 			 * @param height ウィンドウ高さ
 			 */
-			template<GUI::ImGuiBackendType ImGuiBackend>
-			void Configure(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height)
+			template<Debug::ImGuiBackendType ImGuiBackend>
+			void Configure(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps)
 			{
 				assert(!m_isInitialized && "IGraphicsDevice is already initialized.");
 
-				m_isInitialized = Initialize(nativeWindowHandle, width, height);
+				m_isInitialized = Initialize(nativeWindowHandle, width, height, fps);
 
 #ifdef _ENABLE_IMGUI
-				m_imguiLayer = std::make_unique<GUI::ImGuiLayer>(std::make_unique<ImGuiBackend>());
-				GUI::ImGuiInitInfo info{};
-				void* windowPtr = std::visit([&](auto& handle)->void*{
+				m_imguiLayer = std::make_unique<Debug::ImGuiLayer>(std::make_unique<ImGuiBackend>());
+				Debug::ImGuiInitInfo info{};
+				void* windowPtr = std::visit([&](auto& handle)->void* {
 					using T = std::decay_t<decltype(handle)>;
 					if (typeid(T) != m_imguiLayer->GetWindowType()) {
 						assert(false && "Incompatible window handle type for ImGui initialization.");
@@ -109,6 +109,7 @@ namespace SectorFW
 				info.dpi_scale = 1.0f; // 必要なら取得して入れる
 
 				m_imguiLayer->Init(info);
+				frameSec = 1.0f / (float)fps;
 #endif // _D3D11_IMGUI
 			}
 			/**
@@ -125,7 +126,7 @@ namespace SectorFW
 				if (m_imguiLayer) {
 					m_imguiLayer->BeginFrame();
 
-					m_imguiLayer->DrawUI();
+					m_imguiLayer->DrawUI(frameSec);
 
 					m_imguiLayer->EndFrame();
 					m_imguiLayer->Render();
@@ -167,7 +168,8 @@ namespace SectorFW
 			static inline bool m_isInitialized = false;
 
 #ifdef _ENABLE_IMGUI
-			std::unique_ptr<GUI::ImGuiLayer> m_imguiLayer = nullptr;
+			std::unique_ptr<Debug::ImGuiLayer> m_imguiLayer = nullptr;
+			float frameSec = 1.0f / 60.0f;
 #endif // _D3D11_IMGUI
 		};
 	}

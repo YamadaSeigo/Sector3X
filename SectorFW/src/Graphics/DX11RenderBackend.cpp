@@ -1,6 +1,6 @@
 #include "Graphics/DX11/DX11RenderBackend.h"
-#include "Graphics/RenderQueue.hpp"
-#include "Util/logger.h"
+#include "Graphics/RenderQueue.h"
+#include "Debug/logger.h"
 
 namespace SectorFW
 {
@@ -92,39 +92,7 @@ namespace SectorFW
 			}
 		}
 
-		void DX11Backend::ExecuteDrawImpl(const DrawCommand& cmd, bool usePSORasterizer)
-		{
-			const auto& mesh = meshManager->GetDirect(cmd.mesh);
-			const auto& mat = materialManager->GetDirect(cmd.material);
-			const auto& pso = psoManager->GetDirect(cmd.pso);
-			const auto& shader = shaderManager->Get(pso.shader);
-
-			if (usePSORasterizer) {
-				SetRasterizerStateImpl(pso.rasterizerState);
-			}
-
-			context->IASetInputLayout(pso.inputLayout.Get());
-			context->VSSetShader(shader.vs.Get(), nullptr, 0);
-			context->PSSetShader(shader.ps.Get(), nullptr, 0);
-
-			// SRVバインド
-			DX11MaterialManager::BindMaterialPSSRVs(context, mat.psSRV);
-			DX11MaterialManager::BindMaterialVSSRVs(context, mat.vsSRV);
-			// CBVバインド
-			DX11MaterialManager::BindMaterialPSCBVs(context, mat.psCBV);
-			DX11MaterialManager::BindMaterialVSCBVs(context, mat.vsCBV);
-			// サンプラーバインド
-			DX11MaterialManager::BindMaterialSamplers(context, mat.samplerCache);
-
-			UINT stride = mesh.stride;
-			UINT offset = 0;
-			context->IASetVertexBuffers(0, 1, mesh.vb.GetAddressOf(), &stride, &offset);
-			context->IASetIndexBuffer(mesh.ib.Get(), DXGI_FORMAT_R32_UINT, 0);
-
-			context->DrawIndexed(mesh.indexCount, 0, 0);
-		}
-
-		void DX11Backend::ExecuteDrawInstancedImpl(const std::vector<DrawCommand>& cmds, bool usePSORasterizer)
+		void DX11Backend::ExecuteDrawIndexedInstancedImpl(const std::vector<DrawCommand>& cmds, bool usePSORasterizer)
 		{
 			struct DrawBatch {
 				uint32_t mesh;
@@ -167,14 +135,15 @@ namespace SectorFW
 
 			EndIndexStream();
 
+			context->VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); // b1
 			for (const auto& b : batches) {
 				// PerDraw CB に base と count を設定
-				struct { uint32_t base, count, pad0, pad1; } perDraw{ b.base, b.instanceCount, 0, 0 };
+				struct { uint32_t base, count, pad0, pad1; }
+				perDraw{ b.base, b.instanceCount, 0, 0 };
 				D3D11_MAPPED_SUBRESOURCE m{};
 				context->Map(m_perDrawCB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
 				memcpy(m.pData, &perDraw, sizeof(perDraw));
 				context->Unmap(m_perDrawCB.Get(), 0);
-				context->VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); // b1
 
 				DrawInstanced(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer);
 			}
@@ -194,58 +163,66 @@ namespace SectorFW
 
 		void DX11Backend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer)
 		{
-			const auto& mesh = meshManager->GetDirect(meshIdx);
-			const auto& mat = materialManager->GetDirect(matIdx);
-			const auto& pso = psoManager->GetDirect(psoIdx);
-			const auto& shader = shaderManager->Get(pso.shader);
+			MaterialTemplateID templateID = MaterialTemplateID::MAX_COUNT;
+			{
+				auto pso = psoManager->GetDirect(psoIdx);
 
-			if (usePSORasterizer) {
-				SetRasterizerStateImpl(pso.rasterizerState);
+				if (usePSORasterizer) {
+					SetRasterizerStateImpl(pso.ref().rasterizerState);
+				}
+
+				// PSOバインド
+				context->IASetInputLayout(pso.ref().inputLayout.Get());
+
+				auto shader = shaderManager->Get(pso.ref().shader);
+				context->VSSetShader(shader.ref().vs.Get(), nullptr, 0);
+				context->PSSetShader(shader.ref().ps.Get(), nullptr, 0);
+
+				templateID = shader.ref().templateID;
 			}
+			{
+				auto mat = materialManager->GetDirect(matIdx);
 
-			// PSOバインド
-			context->IASetInputLayout(pso.inputLayout.Get());
-			context->VSSetShader(shader.vs.Get(), nullptr, 0);
-			context->PSSetShader(shader.ps.Get(), nullptr, 0);
+				// マテリアルバインド
+				if (mat.ref().templateID != templateID) {
+					LOG_ERROR("Incompatible Material-Shader: Template mismatch.");
+					return;
+				}
 
-			// マテリアルバインド
-			if (mat.templateID != shader.templateID) {
-				LOG_ERROR("Incompatible Material-Shader: Template mismatch.");
-				return;
+				// テクスチャSRVバインド
+				DX11MaterialManager::BindMaterialPSSRVs(context, mat.ref().psSRV);
+				DX11MaterialManager::BindMaterialVSSRVs(context, mat.ref().vsSRV);
+				// CBVバインド
+				DX11MaterialManager::BindMaterialPSCBVs(context, mat.ref().psCBV);
+				DX11MaterialManager::BindMaterialVSCBVs(context, mat.ref().vsCBV);
+				// サンプラーバインド
+				DX11MaterialManager::BindMaterialSamplers(context, mat.ref().samplerCache);
 			}
+			{
+				auto mesh = meshManager->GetDirect(meshIdx);
 
-			// テクスチャSRVバインド
-			DX11MaterialManager::BindMaterialPSSRVs(context, mat.psSRV);
-			DX11MaterialManager::BindMaterialVSSRVs(context, mat.vsSRV);
-			// CBVバインド
-			DX11MaterialManager::BindMaterialPSCBVs(context, mat.psCBV);
-			DX11MaterialManager::BindMaterialVSCBVs(context, mat.vsCBV);
-			// サンプラーバインド
-			DX11MaterialManager::BindMaterialSamplers(context, mat.samplerCache);
+				UINT strides[1] = { mesh.ref().stride };
+				UINT offsets[1] = { 0 };
+				ID3D11Buffer* buffers[1] = { mesh.ref().vb.Get() };
+				context->IASetIndexBuffer(mesh.ref().ib.Get(), DXGI_FORMAT_R32_UINT, 0);
+				context->IASetVertexBuffers(0, 1, buffers, strides, offsets);
 
-			// インスタンスデータ更新
-			//UpdateInstanceBuffer(pInstancesData, (size_t)dataSize);
-
-			UINT strides[1] = { mesh.stride };
-			UINT offsets[1] = { 0 };
-			ID3D11Buffer* buffers[1] = { mesh.vb.Get() };
-			context->IASetIndexBuffer(mesh.ib.Get(), DXGI_FORMAT_R32_UINT, 0);
-			context->IASetVertexBuffers(0, 1, buffers, strides, offsets);
-
-			context->DrawIndexedInstanced(mesh.indexCount, (UINT)count, 0, 0, 0);
+				context->DrawIndexedInstanced(mesh.ref().indexCount, (UINT)count, 0, 0, 0);
+			}
 		}
 
 		HRESULT DX11Backend::CreateInstanceBuffer()
 		{
 			HRESULT hr;
 			auto createStructuredSRV = [&](UINT elemStride, UINT elemCount,
-				ID3D11Buffer** pBuf, ID3D11ShaderResourceView** pSRV)
+				ID3D11Buffer** pBuf, ID3D11ShaderResourceView** pSRV, D3D11_USAGE usage = D3D11_USAGE_DYNAMIC)
 				{
 					HRESULT res;
 					D3D11_BUFFER_DESC bd{};
 					bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-					bd.Usage = D3D11_USAGE_DYNAMIC;
-					bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+					bd.Usage = usage;
+					if (usage == D3D11_USAGE_DYNAMIC)
+						bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 					bd.ByteWidth = elemStride * elemCount;
 					bd.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
 					bd.StructureByteStride = elemStride;

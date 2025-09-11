@@ -1,5 +1,4 @@
-
-#include <SectorFW/GUI/ImGuiBackendDX11Win32.h>
+#include <SectorFW/Debug/ImGuiBackendDX11Win32.h>
 #include "system/CameraSystem.h"
 #include "system/ModelRenderSystem.h"
 #include "system/PhysicsSystem.h"
@@ -13,8 +12,8 @@
 
 #define WINDOW_NAME "SectorX Console Project"
 
-constexpr uint32_t WINDOW_WIDTH = 720;	// ウィンドウの幅
-constexpr uint32_t WINDOW_HEIGHT = 540;	// ウィンドウの高さ
+constexpr uint32_t WINDOW_WIDTH = 960;	// ウィンドウの幅
+constexpr uint32_t WINDOW_HEIGHT = 720;	// ウィンドウの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
@@ -110,7 +109,6 @@ public:
 	}
 };
 
-
 int main(void)
 {
 	LOG_INFO("SectorX Console Project started");
@@ -132,7 +130,7 @@ int main(void)
 	WindowHandler::Create(_T(WINDOW_NAME), WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	Graphics::DX11GraphicsDevice graphics;
-	graphics.Configure<GUI::ImGuiBackendDX11Win32>(WindowHandler::GetMainHandle(), WINDOW_WIDTH, WINDOW_HEIGHT);
+	graphics.Configure<Debug::ImGuiBackendDX11Win32>(WindowHandler::GetMainHandle(), WINDOW_WIDTH, WINDOW_HEIGHT, FPS_LIMIT);
 
 	// デバイス & サービス（Worldコンテナ）
 	Physics::PhysicsDevice::InitParams params;
@@ -191,11 +189,12 @@ int main(void)
 
 	//========================================================================================-
 
-	World<Grid2DPartition> world(std::move(serviceLocator));
-	auto entityManagerReg= world.GetServiceLocator().Get<EntityManagerRegistry>();
+	World<Grid2DPartition, Grid3DPartition, QuadTreePartition, OctreePartition> world(std::move(serviceLocator));
+	auto entityManagerReg = world.GetServiceLocator().Get<EntityManagerRegistry>();
 
 	for (int i = 0; i < 1; ++i) {
-		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("Level" + std::to_string(i), *entityManagerReg));
+		auto level = std::unique_ptr<Level<Grid3DPartition>>(new Level<Grid3DPartition>("Level" + std::to_string(i), ELevelState::Main,
+			(ChunkSizeType)4, (ChunkSizeType)4,(ChunkSizeType)4, 64.0f));
 
 		// System登録
 		auto& scheduler = level->GetScheduler();
@@ -204,8 +203,8 @@ int main(void)
 		scheduler.AddSystem<ModelRenderSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<CameraSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<Physics::BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<Physics::BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<ShapeDimsRenderSystem>(world.GetServiceLocator());
 
 		auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
@@ -218,20 +217,22 @@ int main(void)
 		// Entity生成
 		for (int j = 0; j < 10; ++j) {
 			for (int k = 0; k < 10; ++k) {
-				Math::Vec3f location = { float(j) * 2.0f,0.0f, float(k) * 2.0f };
-				auto id = level->AddEntity(
-					TransformSoA{ location, Math::Quatf(0.0f,0.0f,0.0f,1.0f),Math::Vec3f(1.0f,1.0f,1.0f) },
-					CModel{ modelAssetHandle },
-					Physics::BodyComponent{},
-					Physics::PhysicsInterpolation(
-						location, // 初期位置
-						Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-					),
-					sphereDims.value()
-				);
-				if (id) {
-					auto chunk = level->GetChunk(location);
-					ps->EnqueueCreateIntent(id.value(), sphere, chunk.value()->GetNodeKey());
+				for (int n = 0; n < 1; ++n) {
+					Math::Vec3f location = { powf(float(j),3), float(n) * 2.0f, powf(float(k),3) };
+					auto id = level->AddEntity(
+						TransformSoA{ location, Math::Quatf(0.0f,0.0f,0.0f,1.0f),Math::Vec3f(1.0f,1.0f,1.0f) },
+						CModel{ modelAssetHandle },
+						Physics::BodyComponent{},
+						Physics::PhysicsInterpolation(
+							location, // 初期位置
+							Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+						),
+						sphereDims.value()
+					);
+					/*if (id) {
+						auto chunk = level->GetChunk(location);
+						ps->EnqueueCreateIntent(id.value(), sphere, chunk.value()->GetNodeKey());
+					}*/
 				}
 			}
 		}
@@ -252,7 +253,7 @@ int main(void)
 			ps->EnqueueCreateIntent(id.value(), box, chunk.value()->GetNodeKey());
 		}
 
-		world.AddLevel(std::move(level));
+		world.AddLevel(std::move(level), *entityManagerReg);
 	}
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);

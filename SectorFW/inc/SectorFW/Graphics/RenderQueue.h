@@ -6,6 +6,7 @@
 #include <vector>
 #include <thread>
 #include <barrier>
+#include <optional>
 
 #include "RenderTypes.h"
 
@@ -14,8 +15,10 @@ namespace SectorFW
 	namespace Graphics
 	{
 		//フレーム当たりの最大インスタンス数
-		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = 65536 * 2;
+		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = 65536;
 		static inline constexpr uint32_t MAX_INDICES_PER_PASS = 1024 * 1024;
+
+		static inline constexpr size_t DRAWCOMMAND_TMPBUF_SIZE = 1024;
 
 		class RenderQueue {
 			class SortContext {
@@ -212,20 +215,7 @@ namespace SectorFW
 				}
 
 				// インスタンスを 1 件プールへ書き込み、Index を返す
-				[[nodiscard]] InstanceIndex AllocInstance(const InstanceData& inst) {
-					RebindIfNeeded();
-					// 現在のフレームスロット
-					const int slot = rq->current.load(std::memory_order_acquire);
-					auto& pos = rq->instWritePos[slot];
-					uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
-					// 簡易チェック（必要なら LOG + clamp / 失敗扱いにする）
-					if (idx >= MAX_INSTANCES_PER_FRAME) {
-						// 飽和させるか、エラー処理
-						idx = MAX_INSTANCES_PER_FRAME - 1;
-					}
-					rq->instancePools[slot][idx] = inst;
-					return InstanceIndex{ idx };
-				}
+				[[nodiscard]] InstanceIndex AllocInstance(const InstanceData& inst);
 
 				void FlushAll() {
 					// “現在バインドされているキュー” に吐く（フレーム切替後でも取りこぼさない）
@@ -262,17 +252,23 @@ namespace SectorFW
 			};
 
 		public:
-			RenderQueue() {
+			RenderQueue(uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME) :
+				maxInstancesPerFrame(maxInstancesPerFrame) {
+				assert(maxInstancesPerFrame > 0 && maxInstancesPerFrame <= MAX_INSTANCES_PER_FRAME);
+
 				for (int i = 0; i < RENDER_QUEUE_BUFFER_COUNT; ++i) {
 					queues[i] = std::make_unique<moodycamel::ConcurrentQueue<DrawCommand>>();
-					instancePools[i] = std::unique_ptr<InstanceData[]>(new InstanceData[MAX_INSTANCES_PER_FRAME]);
+					instancePools[i] = std::unique_ptr<InstanceData[]>(new InstanceData[maxInstancesPerFrame]);
 					instWritePos[i].store(0, std::memory_order_relaxed);
 				}
 			}
 
 			// ムーブコンストラクタ
 			RenderQueue(RenderQueue&& other) noexcept
-				: current(other.current.load()), sortContext(std::move(other.sortContext)) {
+				: maxInstancesPerFrame(other.maxInstancesPerFrame),
+				current(other.current.load()), sortContext(std::move(other.sortContext)) {
+				assert(maxInstancesPerFrame > 0 && maxInstancesPerFrame <= MAX_INSTANCES_PER_FRAME);
+
 				for (int i = 0; i < RENDER_QUEUE_BUFFER_COUNT; ++i) {
 					queues[i] = std::move(other.queues[i]);
 					instancePools[i] = std::move(other.instancePools[i]);
@@ -309,10 +305,11 @@ namespace SectorFW
 				auto& q = *queues[prev];
 				if (!ctoken[prev]) ctoken[prev].emplace(q); // 初回だけ生成して再利用
 
-				DrawCommand tmp[1024];
+				auto pTmp = tmp.data();
+
 				size_t n;
-				while ((n = q.try_dequeue_bulk(*ctoken[prev], tmp, std::size(tmp))) != 0) {
-					out.insert(out.end(), tmp, tmp + n);
+				while ((n = q.try_dequeue_bulk(*ctoken[prev], pTmp, DRAWCOMMAND_TMPBUF_SIZE)) != 0) {
+					out.insert(out.end(), pTmp, pTmp + n);
 				}
 				sortContext.Sort(out);
 
@@ -329,6 +326,8 @@ namespace SectorFW
 				return *queues[current.load(std::memory_order_acquire)];
 			}
 		private:
+			const uint32_t maxInstancesPerFrame;
+
 			std::unique_ptr<moodycamel::ConcurrentQueue<DrawCommand>> queues[RENDER_QUEUE_BUFFER_COUNT];
 			std::optional<moodycamel::ConsumerToken> ctoken[RENDER_QUEUE_BUFFER_COUNT];
 			std::atomic<int> current = 0;
@@ -336,6 +335,8 @@ namespace SectorFW
 			// フレーム別インスタンスプール（固定長配列）
 			std::unique_ptr<InstanceData[]> instancePools[RENDER_QUEUE_BUFFER_COUNT];
 			std::atomic<uint32_t> instWritePos[RENDER_QUEUE_BUFFER_COUNT];
+
+			std::vector<DrawCommand> tmp = std::vector<DrawCommand>(DRAWCOMMAND_TMPBUF_SIZE);
 
 			SortContext sortContext;
 		};

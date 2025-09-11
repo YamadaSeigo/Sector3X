@@ -3,11 +3,13 @@
 struct VSPosInput
 {
     float3 position : POSITION;
+    uint rgba : COLOR;
 };
 
 struct VSOutput
 {
     float4 posH : SV_POSITION;
+    float4 col : COLOR;
 };
 
 VSOutput main(VSPosInput input, uint instId : SV_InstanceID)
@@ -19,5 +21,10 @@ VSOutput main(VSPosInput input, uint instId : SV_InstanceID)
     float4 worldPos = mul(float4(input.position, 1.0f), model);
     VSOutput output;
     output.posH = mul(worldPos, uViewProj);
+    
+    uint rgba = input.rgba;
+    float4 c = float4(((rgba >> 24) & 0xFF) / 255.0, ((rgba >> 16) & 0xFF) / 255.0, ((rgba >> 8) & 0xFF) / 255.0, (rgba & 0xFF) / 255.0);
+    output.col = c;
+    
     return output;
 }

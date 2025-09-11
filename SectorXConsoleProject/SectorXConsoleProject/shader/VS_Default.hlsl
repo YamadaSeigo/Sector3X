@@ -17,6 +17,6 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     VSOutput output;
     output.posH = mul(worldPos, uViewProj);
     output.uv = input.uv;
-    output.normal = normalize(mul((float3x3)model, input.normal));
+    output.normal = normalize(mul(input.normal, (float3x3) model));
     return output;
 }

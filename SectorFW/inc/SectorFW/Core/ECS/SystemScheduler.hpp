@@ -14,6 +14,12 @@
 #include "EntityManager.h"
 #include "ITypeSystem.hpp"
 
+#include "Debug/ImGuiLayer.h"
+
+#ifdef _ENABLE_IMGUI
+#include "Debug/UIBus.h"
+#endif
+
 namespace SectorFW
 {
 	namespace ECS
@@ -71,6 +77,20 @@ namespace SectorFW
 
 				// ビルド：System依存グラフ
 				size_t n = systems.size();
+
+#ifdef _ENABLE_IMGUI
+				for (size_t i = 0; i < n; ++i)
+				{
+					auto g = Debug::BeginTreeWrite(); // lock & back buffer
+					auto& frame = g.data();
+
+					// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
+					std::string systemName = systems[i]->derived_name();
+					std::string partitionName = typeid(Partition).name();
+					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::System, /*leaf=*/true, std::string(systemName.begin() + 6, systemName.end() - (partitionName.size() + 2)) });
+				} // guard のデストラクトで unlock。swap は UI スレッドで。
+#endif
+
 				std::vector<std::vector<size_t>> adjacency(n);
 				std::vector<size_t> indegree(n, 0);
 

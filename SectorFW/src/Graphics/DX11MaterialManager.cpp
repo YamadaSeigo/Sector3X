@@ -1,6 +1,6 @@
 #include "Graphics/DX11/DX11MaterialManager.h"
 
-#include "Util/logger.h"
+#include "Debug/logger.h"
 
 namespace SectorFW
 {
@@ -51,53 +51,53 @@ namespace SectorFW
 
 		DX11MaterialData DX11MaterialManager::CreateResource(const DX11MaterialCreateDesc& desc, MaterialHandle h)
 		{
-			auto& shader = shaderManager->Get(desc.shader);
+			auto shader = shaderManager->Get(desc.shader);
 
 			DX11MaterialData mat{};
-			mat.templateID = shader.templateID;
+			mat.templateID = shader.ref().templateID;
 			mat.shader = desc.shader;
 			mat.usedTextures.reserve(desc.psSRV.size());
 
 			// === リフレクション情報取得 ===
-			const auto& psBindings = shader.psBindings;
-			const auto& vsBindings = shader.vsBindings;
+			const auto& psBindings = shader.ref().psBindings;
+			const auto& vsBindings = shader.ref().vsBindings;
 
 			std::unordered_map<UINT, ID3D11ShaderResourceView*> psSRVMap;
 			for (const auto& [slot, texHandle] : desc.psSRV) {
-				const auto& texData = textureManager->Get(texHandle);
-				psSRVMap[slot] = texData.srv.Get();
+				auto texData = textureManager->Get(texHandle);
+				psSRVMap[slot] = texData.ref().srv.Get();
 				mat.usedTextures.push_back(texHandle);
 				textureManager->AddRef(texHandle); // 所有権追跡開始
 			}
 
 			std::unordered_map<UINT, ID3D11ShaderResourceView*> vsSRVMap;
 			for (const auto& [slot, texHandle] : desc.vsSRV) {
-				const auto& texData = textureManager->Get(texHandle);
-				psSRVMap[slot] = texData.srv.Get();
+				auto texData = textureManager->Get(texHandle);
+				psSRVMap[slot] = texData.ref().srv.Get();
 				mat.usedTextures.push_back(texHandle);
 				textureManager->AddRef(texHandle); // 所有権追跡開始
 			}
 
 			std::unordered_map<UINT, ID3D11Buffer*> psCBVMap;
 			for (const auto& [slot, cbHandle] : desc.psCBV) {
-				const auto& cbData = cbManager->Get(cbHandle);
-				psCBVMap[slot] = cbData.buffer.Get();
+				auto cbData = cbManager->Get(cbHandle);
+				psCBVMap[slot] = cbData.ref().buffer.Get();
 				mat.usedCBBuffers.push_back(cbHandle);
 				cbManager->AddRef(cbHandle);  // 所有権追跡開始
 			}
 
 			std::unordered_map<UINT, ID3D11Buffer*> vsCBVMap;
 			for (const auto& [slot, cbHandle] : desc.vsCBV) {
-				const auto& cbData = cbManager->Get(cbHandle);
-				vsCBVMap[slot] = cbData.buffer.Get();
+				auto cbData = cbManager->Get(cbHandle);
+				vsCBVMap[slot] = cbData.ref().buffer.Get();
 				mat.usedCBBuffers.push_back(cbHandle);
 				cbManager->AddRef(cbHandle);  // 所有権追跡開始
 			}
 
 			std::unordered_map<UINT, ID3D11SamplerState*> samplerMap;
 			for (const auto& [slot, samplerHandle] : desc.samplerMap) {
-				const auto& samplerData = samplerManager->Get(samplerHandle);
-				samplerMap[slot] = samplerData.state.Get();
+				auto samplerData = samplerManager->Get(samplerHandle);
+				samplerMap[slot] = samplerData.ref().state.Get();
 				mat.usedSamplers.push_back(samplerHandle);
 				samplerManager->AddRef(samplerHandle); // 所有権追跡開始
 			}

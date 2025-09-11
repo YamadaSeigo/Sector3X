@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdint>
 #include <bit>
+#include <algorithm>
 
 namespace SectorFW::Math {
 	//-------------------------------------
@@ -244,5 +245,35 @@ namespace SectorFW::Math {
 	template<std::floating_point T>
 	[[nodiscard]] inline T rsqrt(T x) noexcept {
 		return T(1) / std::sqrt(x);
+	}
+
+	static inline uint32_t LerpColor(uint32_t nearColor, uint32_t farColor, float t)
+	{
+		t = std::clamp(t, 0.0f, 1.0f);
+
+		auto extract = [](uint32_t c, int shift) -> uint8_t {
+			return (c >> shift) & 0xFF;
+			};
+
+		uint8_t nr = extract(nearColor, 24);
+		uint8_t ng = extract(nearColor, 16);
+		uint8_t nb = extract(nearColor, 8);
+		uint8_t na = extract(nearColor, 0);
+
+		uint8_t fr = extract(farColor, 24);
+		uint8_t fg = extract(farColor, 16);
+		uint8_t fb = extract(farColor, 8);
+		uint8_t fa = extract(farColor, 0);
+
+		auto lerp = [t](uint8_t a, uint8_t b) -> uint8_t {
+			return static_cast<uint8_t>(a + (b - a) * t);
+			};
+
+		uint8_t r = lerp(nr, fr);
+		uint8_t g = lerp(ng, fg);
+		uint8_t b = lerp(nb, fb);
+		uint8_t a = lerp(na, fa);
+
+		return (r << 24) | (g << 16) | (b << 8) | a;
 	}
 } // namespace sx::math

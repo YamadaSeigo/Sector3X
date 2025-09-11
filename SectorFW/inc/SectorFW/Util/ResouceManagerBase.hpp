@@ -12,6 +12,36 @@ namespace SectorFW
 	template<typename Derived, typename HandleType, typename CreateDescType, typename ResourceType>
 	class ResourceManagerBase {
 	public:
+		/**
+		 * @brief リソースをShared Lock付きで取得するためのラッパー
+		 */
+		struct Resource {
+			Resource(const ResourceType& resource, std::shared_mutex& mutex) : data(resource), lock(mutex) {}
+
+			Resource(Resource&& other) : data(other.data), lock(std::move(other.lock)) {}
+
+			// コピー禁止
+			Resource(const Resource&) = delete;
+			Resource& operator=(const Resource&) = delete;
+
+			Resource& operator=(Resource&& other) noexcept {
+				if (this != &other) {
+					data = other.data;
+					lock = std::move(other.lock);
+				}
+				return *this;
+			}
+
+			inline const ResourceType& operator*() const& noexcept { return data; } // lvalueを許可
+			const ResourceType& operator*() const&& = delete;		// rvalueは不可
+
+			inline const ResourceType& ref() const& noexcept { return data; } // lvalueを許可
+			const ResourceType& ref() const&& = delete;  	// rvalueは不可
+		private:
+			const ResourceType& data;
+			std::shared_lock<std::shared_mutex> lock;
+		};
+
 		struct Slot {
 			ResourceType data;
 			uint32_t generation = 0;
@@ -94,17 +124,13 @@ namespace SectorFW
 			}
 		}
 
-		const ResourceType& Get(HandleType h) const {
-			std::shared_lock<std::shared_mutex> lock(mapMutex);
-
+		[[nodiscard]] Resource Get(HandleType h) const {
 			assert(IsValid(h));
-			return slots[h.index].data;
+			return { slots[h.index].data, mapMutex };
 		}
 
-		const ResourceType& GetDirect(uint32_t idx) const {
-			std::shared_lock<std::shared_mutex> lock(mapMutex);
-
-			return slots[idx].data;
+		[[nodiscard]] Resource GetDirect(uint32_t idx) const {
+			return { slots[idx].data, mapMutex };
 		}
 
 		// 期限到達で最終判断：ref==0 なら破棄、>0 なら削除キャンセル
@@ -117,7 +143,7 @@ namespace SectorFW
 
 				const uint32_t idx = req.index;
 				if (refCount[idx].load(std::memory_order_acquire) == 0) {
-					// ★ ここで初めて alive=false。以降は Derived の責務。
+					// ここで初めて alive=false。以降は Derived の責務。
 					slots[idx].alive = false;
 
 					// 登録済みキーや名前→handleなどを掃除
@@ -155,9 +181,10 @@ namespace SectorFW
 		std::vector<CopyableAtomic<uint32_t>> refCount;
 		std::vector<uint32_t> freeList;
 
-	private:
+	protected:
 		//Get関数のconstを無効にするのmutable
 		mutable std::shared_mutex mapMutex;
+	private:
 		// 削除要求キュー
 		struct PendingDelete { uint32_t index; uint64_t deleteSync; };
 

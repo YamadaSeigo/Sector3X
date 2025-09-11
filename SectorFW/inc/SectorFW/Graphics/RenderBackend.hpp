@@ -52,12 +52,8 @@ namespace SectorFW
 				static_cast<Derived*>(this)->BeginFrameUploadImpl(framePool, instCount);
 			}
 
-			void ExecuteDraw(const DrawCommand& cmd, bool usePSORastarizer) {
-				static_cast<Derived*>(this)->ExecuteDrawImpl(cmd, usePSORastarizer);
-			}
-
-			void ExecuteDrawInstanced(const std::vector<DrawCommand>& cmds, bool usePSORastarizer) {
-				static_cast<Derived*>(this)->ExecuteDrawInstancedImpl(cmds, usePSORastarizer);
+			void ExecuteDrawIndexedInstanced(const std::vector<DrawCommand>& cmds, bool usePSORastarizer) {
+				static_cast<Derived*>(this)->ExecuteDrawIndexedInstancedImpl(cmds, usePSORastarizer);
 			}
 
 			void ProcessDeferredDeletes(uint64_t currentFrame) {

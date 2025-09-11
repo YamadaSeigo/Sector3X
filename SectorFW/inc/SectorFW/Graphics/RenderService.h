@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "../Core/ECS/ServiceContext.hpp"
-#include "RenderQueue.hpp"
+#include "RenderQueue.h"
 #include "../Util/TypeChecker.hpp"
 
 namespace SectorFW

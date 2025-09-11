@@ -78,11 +78,9 @@ namespace SectorFW
 		 */
 		void Update(double delta_time)
 		{
-			LOG_INFO("%f", m_frameTimer.GetFPS());
-
 			m_world.UpdateServiceLocator(delta_time);
 
-			m_world.UpdateAllLevels();
+			m_world.UpdateAllLevels(delta_time);
 		}
 		/**
 		 * @brief •`‰æˆ—

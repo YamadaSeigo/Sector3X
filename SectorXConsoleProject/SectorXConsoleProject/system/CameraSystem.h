@@ -19,11 +19,11 @@ public:
 
 		if (inputService->IsRButtonPressed()) {
 			if (inputService->IsKeyPressed(Input::Key::E)) {
-				cameraService->Move(cameraService->GetUp() * moveSpeed);
+				cameraService->Move(Math::LFAxes::up() * moveSpeed);
 			}
 
 			if (inputService->IsKeyPressed(Input::Key::Q)) {
-				cameraService->Move(cameraService->GetUp() * -moveSpeed);
+				cameraService->Move(Math::LFAxes::down() * moveSpeed);
 			}
 
 			if (inputService->IsKeyPressed(Input::Key::W)) {
@@ -47,7 +47,7 @@ public:
 				inputService->GetMouseDelta(dx, dy);
 				cameraService->SetMouseDelta(static_cast<float>(dx), static_cast<float>(dy));
 
-				moveSpeed = std::clamp(moveSpeed + (float)mouseWheelV * MOVE_SPEED_WHEEL_RATE, 0.1f, 10.0f);
+				moveSpeed = std::clamp(moveSpeed + (float)mouseWheelV * MOVE_SPEED_WHEEL_RATE * (std::max)(1.0f, moveSpeed / 20.0f), 0.1f, 200.0f);
 			}
 		}
 		else if (mouseWheelV != 0) {

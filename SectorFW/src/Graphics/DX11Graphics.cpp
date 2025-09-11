@@ -1,8 +1,12 @@
 #include "DX11Graphics.h"
 
-#include "Util/logger.h"
+#include "Debug/logger.h"
 
 #include "Math/convert.hpp"
+
+#ifdef _ENABLE_IMGUI
+#include "Debug/UIBus.h"
+#endif
 
 namespace SectorFW
 {
@@ -50,7 +54,7 @@ namespace SectorFW
 			return *this;
 		}
 
-		bool DX11GraphicsDevice::InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height)
+		bool DX11GraphicsDevice::InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps)
 		{
 			if (!std::holds_alternative<HWND>(nativeWindowHandle)) return false;
 			HWND hWnd = std::get<HWND>(nativeWindowHandle);
@@ -151,6 +155,11 @@ namespace SectorFW
 			// ここでレンダースレッドを起動
 			StartRenderThread();
 
+#ifdef _ENABLE_IMGUI
+			m_gpuTimer.init(m_device.Get(), RENDER_QUEUE_BUFFER_COUNT);
+			m_gpuTimeBudget = 1.0f / fps;
+#endif
+
 			return true;
 		}
 
@@ -162,8 +171,22 @@ namespace SectorFW
 
 		void DX11GraphicsDevice::DrawImpl()
 		{
+#ifdef _ENABLE_IMGUI
+			m_gpuTimer.begin(m_context.Get());
+#endif
+
 			auto& renderGraph = GetRenderGraph();
 			renderGraph.Execute();
+
+#ifdef _ENABLE_IMGUI
+			m_gpuTimer.end(m_context.Get());
+			// GPU負荷をUIに送る
+			double gpuSec = m_gpuTimer.tryResolve(m_context.Get());
+			if (gpuSec >= 0.0) {
+				double gpuScore = (std::min)(1.0, gpuSec / m_gpuTimeBudget); // 0..1
+				Debug::PublishGpu(float(gpuScore));             // UIBusへ
+			}
+#endif
 		}
 
 		void DX11GraphicsDevice::PresentImpl()

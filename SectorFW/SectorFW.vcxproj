@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\SectorFW\Core\BVHPartition.h" />
     <ClInclude Include="inc\SectorFW\Core\ECS\AccessInfo.h" />
     <ClInclude Include="inc\SectorFW\Core\ECS\Accessor.hpp" />
     <ClInclude Include="inc\SectorFW\Core\ECS\Archetype.h" />
@@ -40,11 +41,24 @@
     <ClInclude Include="inc\SectorFW\Core\EntityManagerRegistryService.h" />
     <ClInclude Include="inc\SectorFW\Core\GameEngine.h" />
     <ClInclude Include="inc\SectorFW\Core\Grid2DPartition.h" />
+    <ClInclude Include="inc\SectorFW\Core\Grid3DPartition.h" />
     <ClInclude Include="inc\SectorFW\Core\Level.hpp" />
+    <ClInclude Include="inc\SectorFW\Core\OctreePartition.h" />
     <ClInclude Include="inc\SectorFW\Core\partition.hpp" />
+    <ClInclude Include="inc\SectorFW\Core\QuadTreePartition.h" />
     <ClInclude Include="inc\SectorFW\Core\RegistryTypes.h" />
+    <ClInclude Include="inc\SectorFW\Core\SAPPartitionh.h" />
     <ClInclude Include="inc\SectorFW\Core\SpatialChunk.h" />
     <ClInclude Include="inc\SectorFW\Core\World.hpp" />
+    <ClInclude Include="inc\SectorFW\Debug\DebugType.h" />
+    <ClInclude Include="inc\SectorFW\Debug\GPUTimerD3D11.h" />
+    <ClInclude Include="inc\SectorFW\Debug\ImGuiBackend.h" />
+    <ClInclude Include="inc\SectorFW\Debug\ImGuiBackendDX11Win32.h" />
+    <ClInclude Include="inc\SectorFW\Debug\ImGuiLayer.h" />
+    <ClInclude Include="inc\SectorFW\Debug\logger.h" />
+    <ClInclude Include="inc\SectorFW\Debug\PerfHUD.h" />
+    <ClInclude Include="inc\SectorFW\Debug\ProcessCpuUsageWin32.h" />
+    <ClInclude Include="inc\SectorFW\Debug\UIBus.h" />
     <ClInclude Include="inc\SectorFW\DX11Graphics.h" />
     <ClInclude Include="inc\SectorFW\DX12Graphics.h" />
     <ClInclude Include="inc\SectorFW\Graphics\convert_directX.hpp" />
@@ -65,18 +79,15 @@
     <ClInclude Include="inc\SectorFW\Graphics\IGraphicsDevice.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderBackend.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderGraph.hpp" />
-    <ClInclude Include="inc\SectorFW\Graphics\RenderQueue.hpp" />
+    <ClInclude Include="inc\SectorFW\Graphics\RenderQueue.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderTypes.h" />
-    <ClInclude Include="inc\SectorFW\GUI\ImGuiBackend.h" />
-    <ClInclude Include="inc\SectorFW\GUI\ImGuiBackendDX11Win32.h" />
-    <ClInclude Include="inc\SectorFW\GUI\ImGuiLayer.h" />
-    <ClInclude Include="inc\SectorFW\GUI\UIBus.h" />
     <ClInclude Include="inc\SectorFW\Input\InputDevice.hpp" />
     <ClInclude Include="inc\SectorFW\Input\WinInput.h" />
     <ClInclude Include="inc\SectorFW\Input\WinMouseInput.h" />
     <ClInclude Include="inc\SectorFW\Math\AABB.hpp" />
     <ClInclude Include="inc\SectorFW\Math\convert.hpp" />
+    <ClInclude Include="inc\SectorFW\Math\Frustum.hpp" />
     <ClInclude Include="inc\SectorFW\Math\Matrix.hpp" />
     <ClInclude Include="inc\SectorFW\Math\Quaternion.hpp" />
     <ClInclude Include="inc\SectorFW\Math\sx_math.h" />
@@ -102,8 +113,7 @@
     <ClInclude Include="inc\SectorFW\Util\for_each_macro.hpp" />
     <ClInclude Include="inc\SectorFW\Util\FrameTimer.h" />
     <ClInclude Include="inc\SectorFW\Util\Grid.hpp" />
-    <ClInclude Include="inc\SectorFW\Util\logger.h" />
-    <ClInclude Include="inc\SectorFW\Util\Morton2D.h" />
+    <ClInclude Include="inc\SectorFW\Util\Morton.h" />
     <ClInclude Include="inc\SectorFW\Util\NonCopyable.h" />
     <ClInclude Include="inc\SectorFW\Util\OneOrMore.hpp" />
     <ClInclude Include="inc\SectorFW\Util\PathView.hpp" />
@@ -133,6 +143,9 @@
     <ClCompile Include="src\Core\EntityManager.cpp" />
     <ClCompile Include="src\Core\GameEngine.cpp" />
     <ClCompile Include="src\Core\WindowHandler.cpp" />
+    <ClCompile Include="src\Debug\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Debug\PerfHUD.cpp" />
+    <ClCompile Include="src\Debug\UIBus.cpp" />
     <ClCompile Include="src\Graphics\DX11Graphics.cpp" />
     <ClCompile Include="src\Graphics\DX11MaterialManager.cpp" />
     <ClCompile Include="src\Graphics\DX11MeshManager.cpp" />
@@ -142,8 +155,7 @@
     <ClCompile Include="src\Graphics\DX11ShaderManager.cpp" />
     <ClCompile Include="src\Graphics\DX11TextureManager.cpp" />
     <ClCompile Include="src\Graphics\DX12Graphics.cpp" />
-    <ClCompile Include="src\GUI\ImGuiLayer.cpp" />
-    <ClCompile Include="src\GUI\UIBus.cpp" />
+    <ClCompile Include="src\Graphics\RenderQueue.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />
     <ClCompile Include="src\Physics\PhysicsDevice.cpp" />
     <ClCompile Include="src\Utility\message.cpp" />
@@ -313,14 +325,14 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

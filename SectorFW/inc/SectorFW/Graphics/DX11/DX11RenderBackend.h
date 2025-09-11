@@ -64,7 +64,8 @@ namespace SectorFW
 				std::vector<ID3D11Buffer*> buffers;
 				buffers.reserve(cbvs.size());
 				for (const auto& cb : cbvs) {
-					buffers.push_back(cbManager->Get(cb).buffer.Get());
+					auto d = cbManager->Get(cb);
+					buffers.push_back(d.ref().buffer.Get());
 				}
 				context->VSSetConstantBuffers(0, (UINT)buffers.size(), buffers.data());
 			}
@@ -79,9 +80,7 @@ namespace SectorFW
 				context->VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); // t0 バインド
 			}
 
-			void ExecuteDrawImpl(const DrawCommand& cmd, bool usePSORastarizer);
-
-			void ExecuteDrawInstancedImpl(const std::vector<DrawCommand>& cmds, bool usePSORasterizer);
+			void ExecuteDrawIndexedInstancedImpl(const std::vector<DrawCommand>& cmds, bool usePSORasterizer);
 
 			void ProcessDeferredDeletesImpl(uint64_t currentFrame);
 
@@ -101,15 +100,14 @@ namespace SectorFW
 				context->Map(m_instIndexSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
 				m_idxMapped = static_cast<std::byte*>(m.pData);
 				m_idxHead = 0;
-
-				ID3D11ShaderResourceView* srvs[] = { m_instanceSRV.Get(), m_instIndexSRV.Get() };
-				context->VSSetShaderResources(0, 2, srvs); // t0,t1 を VS にセット
 			}
 
 			void EndIndexStream()
 			{
 				context->Unmap(m_instIndexSB.Get(), 0);
 				m_idxMapped = nullptr;
+
+				context->VSSetShaderResources(1, 1, m_instIndexSRV.GetAddressOf()); // t0 を VS にセット
 			}
 
 		private:

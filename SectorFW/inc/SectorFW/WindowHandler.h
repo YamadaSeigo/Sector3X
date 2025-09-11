@@ -194,6 +194,9 @@ namespace SectorFW
 			// ウィンドウが作成されていなければ、何もしない
 			if (!m_isCreated) return 0;
 
+			if (m_mouseInput)
+				m_mouseInput->Cleanup();
+
 #ifndef CONSOLE_TRUE
 #ifdef _DEBUG
 			//コンソール画面閉じる

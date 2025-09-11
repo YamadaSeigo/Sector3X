@@ -1,10 +1,11 @@
 #pragma once
 
 #include "RenderTypes.h"
-#include "Core/ECS/ServiceContext.hpp"
-#include "Math/Vector.hpp"
-#include "Math/Quaternion.hpp"
-#include "Math/convert.hpp"
+#include "../Core/ECS/ServiceContext.hpp"
+#include "../Math/Vector.hpp"
+#include "../Math/Quaternion.hpp"
+#include "../Math/convert.hpp"
+#include "../Math/Frustum.hpp"
 
 #include <shared_mutex>
 
@@ -15,6 +16,10 @@ namespace SectorFW
 		class I3DCameraService : public ECS::IUpdateService {
 			friend class ECS::ServiceLocator;
 		public:
+			struct alignas(16) CameraBuffer {
+				Math::Matrix4x4f viewProj;
+			};
+
 			explicit I3DCameraService(BufferHandle bufferHandle) noexcept : cameraBufferHandle(bufferHandle) {};
 			virtual ~I3DCameraService() = default;
 
@@ -49,13 +54,6 @@ namespace SectorFW
 				isUpdateBuffer = true;
 			}
 
-			void SetUp(const Math::Vec3f& upVector) noexcept {
-				std::unique_lock lock(sharedMutex);
-
-				up = upVector;
-				isUpdateBuffer = true;
-			}
-
 			void SetFOV(float fovRad) noexcept {
 				std::unique_lock lock(sharedMutex);
 
@@ -82,6 +80,10 @@ namespace SectorFW
 
 				this->farClip = farClip;
 				isUpdateBuffer = true;
+			}
+
+			void SetFocusDistance(float distance) noexcept {
+				focusDist = distance;
 			}
 
 			void SetMouseDelta(float deltaX, float deltaY) noexcept {
@@ -112,7 +114,7 @@ namespace SectorFW
 			Math::Vec3f GetUp() const noexcept {
 				std::shared_lock lock(sharedMutex);
 
-				return up;
+				return Math::QuatUp<float, Math::LH_ZForward>(rot);
 			}
 
 			float GetFOV() const noexcept {
@@ -149,6 +151,15 @@ namespace SectorFW
 				Math::Vec3f forward = GetForward();
 				return Math::RFAxes::makeRight(Math::RFAxes::up(), forward);
 			}
+
+			Math::Frustumf MakeFrustum() const {
+				auto fru = Math::Frustumf::FromColMajor(cameraBuffer.viewProj.data());
+				Math::Frustumf::FaceInward(fru, pos, GetForward(), nearClip);
+
+				return fru;
+			}
+
+			const CameraBuffer& GetCameraBufferData() const noexcept { return cameraBuffer; }
 		private:
 			virtual void Update(double deltaTime) override {
 				if (!isUpdateBuffer) return; // 更新が必要ない場合は何もしない
@@ -156,51 +167,53 @@ namespace SectorFW
 				std::unique_lock lock(sharedMutex);
 
 				moveVec = Math::Vec3f{ 0.0f, 0.0f, 0.0f }; // 移動ベクトルをリセット
-				UpdateCameraFromMouse(static_cast<float>(deltaTime));
+				UpdateCameraFromMouse();
 				isUpdateBuffer = false;
 			}
 
 		protected:
-			void UpdateCameraFromMouse(float dt)
+			void UpdateCameraFromMouse()
 			{
 				// マウス → 角度（1pxあたり何ラジアン回すかを sens* で決める）
-				float yaw = dx * sensX_rad_per_px * dt; // 右に動かすと右旋回にしたい等で符号調整
-				float pitch = dy * sensY_rad_per_px * dt;
+				float yaw = dx * sensX_rad_per_px; // 右に動かすと右旋回にしたい等で符号調整
+				float pitch = dy * sensY_rad_per_px;
 
 				// ピッチ制限（オススメ：累積角で管理）
 				float newPitch = std::clamp(pitchAccum + pitch, Math::Deg2Rad(-89.0f), Math::Deg2Rad(89.0f));
 				pitch = newPitch - pitchAccum;
 				pitchAccum = newPitch;
 
-				// まず Yaw（ワールドUpで回す）
+				// 1) Yaw をワールドUpで適用
 				const Math::Vec3f worldUp{ 0,1,0 };
 				Math::Quatf qYaw = Math::Quatf::FromAxisAngle(worldUp, yaw);
+				rot = qYaw * rot;
+				rot.Normalize();
 
-				// 次に Pitch（カメラのローカルRight軸で回す）
-				// Right軸は現在姿勢から(1,0,0)を回して得る
+				// 2) Yaw 後の Right を取り直して Pitch
 				Math::Vec3f right = rot.RotateVector(Math::Vec3f{ 1,0,0 });
 				Math::Quatf qPitch = Math::Quatf::FromAxisAngle(right, pitch);
-
-				rot = qPitch * qYaw * rot;
+				rot = qPitch * rot;
 				rot.Normalize();
 			}
 		protected:
 			BufferHandle cameraBufferHandle;
+			CameraBuffer cameraBuffer;
 
 			Math::Vec3f pos = { 0.0f, 0.0f, -5.0f };
 			Math::Vec3f eye = { 0.0f, 0.0f, 0.0f };
-			Math::Vec3f up = { 0.0f, 1.0f, 0.0f };
 			float fovRad = Math::Deg2Rad(90.0f); // 垂直FOV
 			float aspectRatio = 16.0f / 9.0f; // アスペクト比
 			float nearClip = 0.1f; // ニアクリップ
 			float farClip = 1000.0f; // ファークリップ
+
+			float focusDist = 5.0f;
 
 			Math::Vec3f moveVec = { 0.0f, 0.0f, 0.0f }; // 移動ベクトル
 			Math::Quatf rot = Math::Quatf::FromEuler(0.0f, 0.0f, 0.0f); // 初期回転
 			float pitchAccum = 0.0f; // ピッチの累積角度（制限用）
 
 			float dx = 0.0f, dy = 0.0f;
-			float sensX_rad_per_px = std::numbers::pi_v<float> / 10.0f, sensY_rad_per_px = std::numbers::pi_v<float> / 10.0f;
+			float sensX_rad_per_px = std::numbers::pi_v<float> / 600.0f, sensY_rad_per_px = std::numbers::pi_v<float> / 600.0f;
 
 			mutable std::shared_mutex sharedMutex;
 

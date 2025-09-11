@@ -16,46 +16,68 @@ namespace SectorFW
 	{
 		template<typename T, typename VecT>
 		struct AABB {
-			VecT lower_bound;  // 最小点（左下 / 前）
-			VecT upper_bound;  // 最大点（右上 / 奥）
+			VecT lb;  // 最小点
+			VecT ub;  // 最大点
 
-			AABB() : lower_bound(T(0)), upper_bound(T(0)) {}
-			AABB(const VecT& lower_bound_, const VecT& upper_bound_) : lower_bound(lower_bound_), upper_bound(upper_bound_) {}
+			AABB() : lb(T(0)), ub(T(0)) {}
+			AABB(const VecT& lower_bound_, const VecT& upper_bound_) : lb(lower_bound_), ub(upper_bound_) {}
 
-			// サイズ（幅や高さ）
+			// 幅・高さ・奥行き（フルサイズ）
 			VecT size() const {
-				return upper_bound - lower_bound;
+				return ub - lb;
 			}
 
 			// 中心
 			VecT center() const {
-				return (lower_bound + upper_bound) * T(0.5);
+				return (lb + ub) * T(0.5);
 			}
 
-			// 点がこのAABB内に含まれているか
+			// 半サイズ（half-extent）
+			VecT extent() const {
+				return (ub - lb) * T(0.5);
+			}
+
+			// 点を内包？
 			bool contains(const VecT& point) const {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
-					if (point[i] < lower_bound[i] || point[i] > upper_bound[i])
-						return false;
+					if (point[i] < lb[i] || point[i] > ub[i]) return false;
 				}
 				return true;
 			}
 
-			// AABBが別のAABBと交差しているか
+			// 交差？
 			bool intersects(const AABB& other) const {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
-					if (upper_bound[i] < other.lower_bound[i] || lower_bound[i] > other.upper_bound[i])
-						return false;
+					if (ub[i] < other.lb[i] || lb[i] > other.ub[i]) return false;
 				}
 				return true;
 			}
 
-			// AABBを拡張して点を包むようにする
+			// 点で拡張
 			void expandToInclude(const VecT& point) {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
-					if (point[i] < lower_bound[i]) lower_bound[i] = point[i];
-					if (point[i] > upper_bound[i]) upper_bound[i] = point[i];
+					if (point[i] < lb[i]) lb[i] = point[i];
+					if (point[i] > ub[i]) ub[i] = point[i];
 				}
+			}
+
+			// AABBで拡張
+			void expandToInclude(const AABB& other) {
+				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
+					if (other.lb[i] < lb[i]) lb[i] = other.lb[i];
+					if (other.ub[i] > ub[i]) ub[i] = other.ub[i];
+				}
+			}
+
+			// 2つのAABBの和（外接最小AABB）を返すユーティリティ
+			template<typename T, typename VecT>
+			static AABB<T, VecT> Union(const AABB<T, VecT>& a, const AABB<T, VecT>& b) {
+				AABB<T, VecT> out;
+				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
+					out.lb[i] = (std::min)(a.lb[i], b.lb[i]);
+					out.ub[i] = (std::max)(a.ub[i], b.ub[i]);
+				}
+				return out;
 			}
 		};
 

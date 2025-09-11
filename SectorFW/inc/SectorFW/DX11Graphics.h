@@ -13,6 +13,10 @@
 #include "Graphics/DX11/DX11RenderBackend.h"
 #include "Graphics/DX11/DX113DCameraService.h"
 
+#ifdef _ENABLE_IMGUI
+#include "Debug/GPUTimerD3D11.h"
+#endif // _ENABLE_IMGUI
+
 #include <thread>
 #include <atomic>
 #include <mutex>
@@ -52,7 +56,7 @@ namespace SectorFW
 			 * @param height ウィンドウ高さ
 			 * @return bool 初期化に成功したかどうか
 			 */
-			bool InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height);
+			bool InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps);
 			/**
 			 * @brief 画面をクリアする関数
 			 * @param clearColor クリアカラー（RGBA）
@@ -135,6 +139,11 @@ namespace SectorFW
 			ComPtr<ID3D11DepthStencilView> m_depthStencilView;
 
 			std::shared_ptr<RTState> m_rt;
+
+#ifdef _ENABLE_IMGUI
+			Debug::GpuTimerD3D11 m_gpuTimer;
+			double m_gpuTimeBudget = 0.f;
+#endif // _ENABLE_IMGUI
 		};
 	}
 }

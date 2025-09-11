@@ -79,14 +79,14 @@
     <Filter Include="Inc\Physics\Jolt\TriangleSplitter">
       <UniqueIdentifier>{eb6c466b-285b-4720-9c89-f99614f0d455}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Inc\GUI">
-      <UniqueIdentifier>{cd2cc6f7-e936-43e6-9df1-303dbd59d9a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\GUI\imgui">
-      <UniqueIdentifier>{ecf351c4-1b61-4d18-b61d-cfc62fa3b99a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\GUI">
       <UniqueIdentifier>{5f5624a5-82dd-44cb-8295-eb4708cf0fcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Debug">
+      <UniqueIdentifier>{cd2cc6f7-e936-43e6-9df1-303dbd59d9a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Debug\imgui">
+      <UniqueIdentifier>{ecf351c4-1b61-4d18-b61d-cfc62fa3b99a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,7 +186,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\RenderGraph.hpp">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Graphics\RenderQueue.hpp">
+    <ClInclude Include="inc\SectorFW\Graphics\RenderQueue.h">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Graphics\RenderService.h">
@@ -330,9 +330,6 @@
     <ClInclude Include="inc\SectorFW\Util\Grid.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Util\logger.h">
-      <Filter>Inc\Util</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SectorFW\Util\NonCopyable.h">
       <Filter>Inc\Util</Filter>
     </ClInclude>
@@ -369,20 +366,53 @@
     <ClInclude Include="inc\SectorFW\Core\RegistryTypes.h">
       <Filter>Inc\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Util\Morton2D.h">
+    <ClInclude Include="inc\SectorFW\Util\Morton.h">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\GUI\ImGuiBackend.h">
-      <Filter>Inc\GUI</Filter>
+    <ClInclude Include="inc\SectorFW\Core\QuadTreePartition.h">
+      <Filter>Inc\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\GUI\ImGuiLayer.h">
-      <Filter>Inc\GUI</Filter>
+    <ClInclude Include="inc\SectorFW\Math\Frustum.hpp">
+      <Filter>Inc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\GUI\ImGuiBackendDX11Win32.h">
-      <Filter>Inc\GUI</Filter>
+    <ClInclude Include="inc\SectorFW\Debug\GPUTimerD3D11.h">
+      <Filter>Inc\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\GUI\UIBus.h">
-      <Filter>Inc\GUI</Filter>
+    <ClInclude Include="inc\SectorFW\Debug\ImGuiBackend.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Debug\ImGuiBackendDX11Win32.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Debug\ImGuiLayer.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Debug\PerfHUD.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Debug\ProcessCpuUsageWin32.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Debug\UIBus.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Debug\DebugType.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\OctreePartition.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\Grid3DPartition.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Debug\logger.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\BVHPartition.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\SAPPartitionh.h">
+      <Filter>Inc\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -836,31 +866,37 @@
     <ClCompile Include="third_party\Jolt\TriangleSplitter\TriangleSplitter.cpp">
       <Filter>Inc\Physics\Jolt\TriangleSplitter</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\ImGuiLayer.cpp">
-      <Filter>Src\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="external\imgui\imgui_impl_win32.cpp">
-      <Filter>Inc\GUI\imgui</Filter>
+      <Filter>Inc\Debug\imgui</Filter>
     </ClCompile>
     <ClCompile Include="external\imgui\imgui_impl_dx11.cpp">
-      <Filter>Inc\GUI\imgui</Filter>
+      <Filter>Inc\Debug\imgui</Filter>
     </ClCompile>
     <ClCompile Include="external\imgui\imgui_widgets.cpp">
-      <Filter>Inc\GUI\imgui</Filter>
+      <Filter>Inc\Debug\imgui</Filter>
     </ClCompile>
     <ClCompile Include="external\imgui\imgui_tables.cpp">
-      <Filter>Inc\GUI\imgui</Filter>
+      <Filter>Inc\Debug\imgui</Filter>
     </ClCompile>
     <ClCompile Include="external\imgui\imgui_draw.cpp">
-      <Filter>Inc\GUI\imgui</Filter>
+      <Filter>Inc\Debug\imgui</Filter>
     </ClCompile>
     <ClCompile Include="external\imgui\imgui_demo.cpp">
-      <Filter>Inc\GUI\imgui</Filter>
+      <Filter>Inc\Debug\imgui</Filter>
     </ClCompile>
     <ClCompile Include="external\imgui\imgui.cpp">
-      <Filter>Inc\GUI\imgui</Filter>
+      <Filter>Inc\Debug\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\UIBus.cpp">
+    <ClCompile Include="src\Graphics\RenderQueue.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\ImGuiLayer.cpp">
+      <Filter>Src\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\PerfHUD.cpp">
+      <Filter>Src\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\UIBus.cpp">
       <Filter>Src\GUI</Filter>
     </ClCompile>
   </ItemGroup>

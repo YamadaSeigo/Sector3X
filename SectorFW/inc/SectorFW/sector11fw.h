@@ -19,6 +19,9 @@
 #include "Core/ECS/Query.h"
 
 #include "Core/Grid2DPartition.h"
+#include "Core/Grid3DPartition.h"
+#include "Core/QuadTreePartition.h"
+#include "Core/OctreePartition.h"
 
 #include "Physics/PhysicsService.h"
 

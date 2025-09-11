@@ -10,11 +10,14 @@ namespace SectorFW
 	namespace Graphics
 	{
 		struct DX11MeshCreateDesc {
-			const void* vertices;
-			size_t vSize;
-			size_t stride;
-			const uint32_t* indices;
-			size_t iSize;
+			const void* vertices = nullptr;
+			uint32_t vSize = {};
+			uint32_t stride = {};
+			const uint32_t* indices = nullptr;
+			uint32_t iSize = {};
+			D3D11_USAGE vUsage = D3D11_USAGE_IMMUTABLE;
+			D3D11_USAGE iUsage = D3D11_USAGE_IMMUTABLE;
+			D3D11_CPU_ACCESS_FLAG cpuAccessFlags = D3D11_CPU_ACCESS_WRITE; // D3D11_USAGE_STAGING用
 			std::wstring sourcePath;
 		};
 
@@ -31,7 +34,7 @@ namespace SectorFW
 
 		class DX11MeshManager : public ResourceManagerBase<DX11MeshManager, MeshHandle, DX11MeshCreateDesc, DX11MeshData> {
 		public:
-			explicit DX11MeshManager(ID3D11Device* dev);
+			explicit DX11MeshManager(ID3D11Device* dev) : device(dev) {}
 
 			std::optional<MeshHandle> FindExisting(const DX11MeshCreateDesc& d) {
 				if (!d.sourcePath.empty()) {
@@ -49,15 +52,18 @@ namespace SectorFW
 			void RemoveFromCaches(uint32_t idx);
 			void DestroyResource(uint32_t idx, uint64_t currentFrame);
 
-			MeshHandle GetBoxMesh() const noexcept { return boxHandle; }
-			MeshHandle GetSphereMesh() const noexcept { return sphereHandle; }
+			void SetIndexCount(MeshHandle h, uint32_t count) {
+				if (!IsValid(h)) {
+					assert(false && "Invalid MeshHandle in SetIndexCount");
+					return;
+				}
+				std::unique_lock lock(mapMutex);
+				slots[h.index].data.indexCount = count;
+			}
 		private:
 			ID3D11Device* device;
 
 			std::unordered_map<std::wstring, MeshHandle> pathToHandle;
-
-			MeshHandle boxHandle; // デフォルトメッシュ（立方体）
-			MeshHandle sphereHandle; // デフォルトメッシュ（球）
 		};
 	}
 }

@@ -27,28 +27,39 @@ namespace SectorFW
 		}
 
 		template<typename T>
-		void AddLevel(std::unique_ptr<Level<T>>&& level) {
+		void AddLevel(std::unique_ptr<Level<T>>&& level, EntityManagerRegistry& reg) {
+			level->RegisterAllChunks(reg);
 			std::get<std::vector<std::unique_ptr<Level<T>>>>(levelSets).push_back(std::move(level));
 		}
 
-		void UpdateAllLevels() {
+		void UpdateAllLevels(double deltaTime) {
+#ifdef _ENABLE_IMGUI
+			{
+				auto g = Debug::BeginTreeWrite(); // lock & back buffer
+				auto& frame = g.data();
+				frame.items.clear();
+
+				// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::World, /*leaf=*/false, "World" });
+			} // guard のデストラクトで unlock。swap は UI スレッドで。
+#endif
 			static std::vector<std::future<void>> futures;
 			std::apply([&](auto&... levelVecs)
 				{
-					(..., [](decltype(levelVecs)& vecs, const ECS::ServiceLocator& locator) {
+					(..., [](decltype(levelVecs)& vecs, const ECS::ServiceLocator& locator, double delta) {
 						for (auto& level : vecs) {
 							if (level->GetState() == ELevelState::Main) {
-								futures.emplace_back(std::async(std::launch::async, [&]() {
-									level->Update(locator);
+								futures.emplace_back(std::async(std::launch::async, [&level, &locator, delta]() {
+									level->Update(locator, delta);
 									}));
 							}
 							else if (level->GetState() == ELevelState::Sub) {
-								futures.emplace_back(std::async(std::launch::async, [&]() {
-									level->UpdateLimited(locator);
+								futures.emplace_back(std::async(std::launch::async, [&level, &locator, delta]() {
+									level->UpdateLimited(locator, delta);
 									}));
 							}
 						}
-						}(levelVecs, serviceLocator));
+						}(levelVecs, serviceLocator, deltaTime));
 				}, levelSets);
 
 			for (auto& f : futures) f.get();

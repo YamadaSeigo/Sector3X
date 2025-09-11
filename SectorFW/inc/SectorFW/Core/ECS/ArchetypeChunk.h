@@ -18,7 +18,7 @@
 #include "ComponentLayoutRegistry.h"
 
 #include "Util/alignment.h"
-#include "Util/logger.h"
+#include "Debug/logger.h"
 
 namespace SectorFW
 {
@@ -148,6 +148,7 @@ namespace SectorFW
 				static const decltype(ComponentLayout::info)& GetLayoutInfo(ArchetypeChunk* chunk) noexcept { return chunk->layout.info; }
 
 				friend class EntityManager;
+				friend class QuadTreePartitionDyn;
 			};
 		};
 	}
