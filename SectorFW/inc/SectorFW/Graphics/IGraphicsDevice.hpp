@@ -110,7 +110,7 @@ namespace SectorFW
 
 				m_imguiLayer->Init(info);
 				frameSec = 1.0f / (float)fps;
-#endif // _D3D11_IMGUI
+#endif // _ENABLE_IMGUI
 			}
 			/**
 			 * @brief ‰æ–Ê‚ðƒNƒŠƒA
@@ -131,7 +131,7 @@ namespace SectorFW
 					m_imguiLayer->EndFrame();
 					m_imguiLayer->Render();
 				}
-#endif // _D3D11_IMGUI
+#endif // _ENABLE_IMGUI
 			}
 			/**
 			 * @brief •`‰æ
@@ -170,7 +170,7 @@ namespace SectorFW
 #ifdef _ENABLE_IMGUI
 			std::unique_ptr<Debug::ImGuiLayer> m_imguiLayer = nullptr;
 			float frameSec = 1.0f / 60.0f;
-#endif // _D3D11_IMGUI
+#endif // _ENABLE_IMGUI
 		};
 	}
 }

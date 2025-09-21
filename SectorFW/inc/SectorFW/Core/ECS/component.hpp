@@ -24,7 +24,14 @@ namespace SectorFW
 		/**
 		 * @brief 最大コンポーネント数を定義する定数
 		 */
+#ifdef MAX_COMPONENTS_NUM
+		constexpr size_t MaxComponents = MAX_COMPONENTS_NUM;
+#else
+		 /**
+		  * @brief 最大コンポーネント数を定義する定数
+		  */
 		constexpr size_t MaxComponents = 64;
+#endif
 		/**
 		 * @brief コンポーネントの型IDを定義する型
 		 */
@@ -116,7 +123,7 @@ namespace SectorFW
 		>;
 
 		//まばらなコンポーネントを識別するためのタグを定義するマクロ
-#define SPARSE_TAG using sparse_tag = SparseComponentTag;
+#define SPARSE_TAG using sparse_tag = SectorFW::ECS::SparseComponentTag;
 		//メンバ変数を定義するマクロ
 #define WRAP_MEMBER(var,name) &name::var
 		//メンバ変数のポインタを定義するマクロ

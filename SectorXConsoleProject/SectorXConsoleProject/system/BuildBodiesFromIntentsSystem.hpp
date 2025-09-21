@@ -6,7 +6,7 @@
 #include <SectorFW/Physics/PhysicsService.h>
 #include <SectorFW/Physics/PhysicsTypes.h>
 #include <SectorFW/Physics/PhysicsLayers.h>
-#include <SectorFW/Core/EntityManagerRegistryService.h>
+#include <SectorFW/Core/SpatialChunkRegistryService.h>
 
 /**
 * @brief 生成インテント（Entity  所有 EntityManager）だけを処理して
@@ -25,7 +25,7 @@ public:
 		: resolveShape(std::move(resolver)) {
 	}
 
-	void Update(Partition& partition, const ECS::ServiceLocator& services) override {
+	void Update(Partition& partition, SectorFW::LevelContext& levelCtx, const ECS::ServiceLocator& services) override {
 		using namespace SectorFW::Physics;
 
 		std::vector<PhysicsService::CreateIntent> intents;
@@ -33,11 +33,19 @@ public:
 		if (intents.empty()) return;
 
 		for (const auto& in : intents) {
-			ECS::EntityManager* owner = reg->ResolveOwner(in.owner);
-			if (owner == nullptr) continue;
+			auto chunk = reg->ResolveOwner(in.owner);
+			if (chunk == nullptr) {
+				LOG_WARNING("Not find SpatialChunk");
+				continue;
+			}
 
-			auto locOpt = owner->TryGetLocation(in.e);
-			if (!locOpt) continue; // 既に消えているなど
+			auto& entityMgr = chunk->GetEntityManager();
+
+			auto locOpt = entityMgr.TryGetLocation(in.e);
+			if (!locOpt) {
+				LOG_WARNING("Not Get ChunkLocation");
+				continue; // 既に消えているなど
+			}
 
 			ECS::ArchetypeChunk* ch = locOpt->chunk;
 			const size_t row = locOpt->index;
@@ -86,7 +94,7 @@ public:
 			LOG_ERROR("PhysicsService not found in BuildBodiesFromIntentsSystem");
 			return;
 		}
-		reg = serviceLocator.Get<EntityManagerRegistry>();
+		reg = serviceLocator.Get<SpatialChunkRegistry>();
 		if (!reg) {
 			LOG_ERROR("EntityManagerRegistry not found in BuildBodiesFromIntentsSystem");
 			return;
@@ -101,5 +109,5 @@ public:
 private:
 	ShapeResolverFn resolveShape;
 	Physics::PhysicsService* ps = nullptr; // PhysicsService へのポインタ（サービスロケーターから取得）
-	EntityManagerRegistry* reg = nullptr; // EntityManagerRegistry へのポインタ（サービスロケーターから取得）
+	SpatialChunkRegistry* reg = nullptr; // EntityManagerRegistry へのポインタ（サービスロケーターから取得）
 };

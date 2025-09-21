@@ -10,6 +10,7 @@
 #include <mutex>
 #include <typeindex>
 #include <future>
+#include <execution>
 
 #include "EntityManager.h"
 #include "ITypeSystem.hpp"
@@ -30,7 +31,7 @@ namespace SectorFW
 		template<typename T, typename...Deps>
 		concept SystemDerived = std::is_base_of_v<ITypeSystem<Deps...>, T>;
 		/**
-		 * @brief システムスケジューラを定義するクラス
+		 * @brief システムを管理し、競合がないようにスケジューリングするクラス
 		 * @tparam Partition パーティションの型
 		 */
 		template<typename Partition>
@@ -47,38 +48,48 @@ namespace SectorFW
 
 				typeSys->Start(serviceLocator); // 空のパーティションでStartを呼ぶ
 
-				accessList.push_back(typeSys->GetAccessInfo());
-				systems.emplace_back(typeSys);
-			}
-			/**
-			 * @brief システムをキューに追加する関数
-			 */
-			 // TODO
-			template<typename SystemType>
-			void QueueSystem() {
-				/*auto sys = std::make_unique<SystemType>();
-
 				std::scoped_lock lock(pendingMutex);
-				pendingSystems.push_back(std::move(system));*/
+				pendingSystems.emplace_back(typeSys);
 			}
 			/**
 			 * @brief すべてのシステムを更新する関数
 			 * @param partition 対象のパーティション
 			 */
-			void UpdateAll(Partition& partition, const ServiceLocator& serviceLocator) {
-				if (!pendingSystems.empty())
-				{
-					std::scoped_lock lock(pendingMutex);
-					systems.reserve(systems.size() + pendingSystems.size());
-					for (auto& sys : pendingSystems)
-						systems.emplace_back(std::move(sys));
-					pendingSystems.clear();
+			void UpdateAll(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) {
+				// --- pending の取り込み（ロック最小化） ---
+				std::vector<std::unique_ptr<ISystem<Partition>>> newly; // ローカル退避
+				newly.reserve(16);
+
+				if (!pendingSystems.empty()) {
+					std::scoped_lock lk(pendingMutex);
+					// 一旦 swap で持ち出し → ロック解放後に反映
+					newly.swap(pendingSystems);
+				}
+				if (!newly.empty()) {
+					// まとめて systems と accessList に移動/push（reserve で再配置削減）
+					systems.reserve(systems.size() + newly.size());
+					accessList.reserve(accessList.size() + newly.size());
+
+					for (auto& uptr : newly) {
+						// ここで必要ならコンテキスト注入（AddSystem時に済なら不要）
+						// uptr->SetContext(serviceLocator);
+
+						systems.emplace_back(std::move(uptr));
+
+						// AccessInfo を取得してキャッシュ
+						// ※ 実装に合わせてメソッド名を調整してください
+						accessList.emplace_back(systems.back()->GetAccessInfo());
+					}
+					scheduleDirty = true; // 追加があれば再構築フラグ
 				}
 
-				// ビルド：System依存グラフ
-				size_t n = systems.size();
+				// --- 並列実行プランの再構築（必要時のみ） ---
+				if (scheduleDirty) {
+					RebuildBatches();
+				}
 
 #ifdef _ENABLE_IMGUI
+				size_t n = systems.size();
 				for (size_t i = 0; i < n; ++i)
 				{
 					auto g = Debug::BeginTreeWrite(); // lock & back buffer
@@ -91,56 +102,39 @@ namespace SectorFW
 				} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
 
-				std::vector<std::vector<size_t>> adjacency(n);
-				std::vector<size_t> indegree(n, 0);
-
-				for (size_t i = 0; i < n; ++i) {
-					for (size_t j = i + 1; j < n; ++j) {
-						if (i == j) continue;
-						if (HasConflict(accessList[i], accessList[j])) {
-							adjacency[i].push_back(j);
-							indegree[j]++;
+				// --- バッチごとに並列実行 ---
+				// 例外は各システム内で握り潰さず、ここで個別捕捉するのも可
+				for (const auto& group : batches) {
+					// par_unseq: 並列+ベクタライズ許可（MSVCの実装でPPL/並列アルゴ適用）
+					std::for_each(std::execution::par_unseq, group.begin(), group.end(),
+						[&](size_t idx) noexcept {
+							// 可能なら no-throw Update を用意、あるいはここでtry/catch
+							systems[idx]->Update(partition, levelCtx, serviceLocator);
 						}
-					}
-				}
-
-				// トポロジカルソート + 同時実行グループごとに実行
-				std::vector<bool> done(n, false);
-				while (true) {
-					std::vector<size_t> parallelGroup;
-					for (size_t i = 0; i < n; ++i) {
-						if (!done[i] && indegree[i] == 0) {
-							parallelGroup.push_back(i);
-							done[i] = true;
-						}
-					}
-					if (parallelGroup.empty()) break;
-
-					std::vector<std::future<void>> futures;
-					for (size_t i : parallelGroup) {
-						futures.emplace_back(std::async(std::launch::async, [&partition, this, i, &serviceLocator]()
-							{
-								systems[i]->Update(partition, serviceLocator);
-							}
-						));
-					}
-					for (auto& f : futures) f.get();
-
-					for (size_t i : parallelGroup) {
-						for (size_t j : adjacency[i]) {
-							indegree[j]--;
-						}
-					}
+					);
+					// 同バッチ内は並列、次バッチは暗黙にバリア
 				}
 			}
 		private:
+			//システムのリスト
+			std::vector<std::unique_ptr<ISystem<Partition>>> systems;
+			//アクセス情報のリスト
+			std::vector<AccessInfo> accessList;
+			//保留中のシステムのリスト
+			std::vector<std::unique_ptr<ISystem<Partition>>> pendingSystems;
+			//保留中のシステムを管理するためのミューテックス
+			std::mutex pendingMutex;
+			//競合のない並列実行グループ（インデックス集合）
+			std::vector<std::vector<size_t>> batches;
+			//追加入替時のみ再構築
+			bool scheduleDirty = true;
 			/**
 			 * @brief アクセス情報が競合しているかどうかを確認する関数
 			 * @param a アクセス情報A
 			 * @param b アクセス情報B
 			 * @return bool 競合している場合はtrue、そうでない場合はfalse
 			 */
-			bool HasConflict(const AccessInfo& a, const AccessInfo& b) noexcept {
+			static inline bool Conflicts(const AccessInfo& a, const AccessInfo& b) noexcept {
 				for (ComponentTypeID id : a.write) {
 					if (b.read.count(id) || b.write.count(id)) return true;
 				}
@@ -150,21 +144,34 @@ namespace SectorFW
 				return false;
 			}
 			/**
-			 * @brief システムのリスト
+			 * @brief バッチを再構築（競合しないグループに分割）
 			 */
-			std::vector<std::unique_ptr<ISystem<Partition>>> systems;
-			/**
-			 * @brief アクセス情報のリスト
-			 */
-			std::vector<AccessInfo> accessList;
-			/**
-			 * @brief 保留中のシステムのリスト
-			 */
-			std::vector<std::unique_ptr<ISystem<Partition>>> pendingSystems;
-			/**
-			 * @brief 保留中のシステムを管理するためのミューテックス
-			 */
-			std::mutex pendingMutex;
+			void RebuildBatches() {
+				batches.clear();
+				batches.reserve(systems.size() / 2 + 1);
+
+				// Greedy coloring 的に最初に入れられるバッチへ突っ込む
+				for (size_t i = 0; i < systems.size(); ++i) {
+					const auto& ai = accessList[i];
+					bool placed = false;
+					for (auto& group : batches) {
+						bool ok = true;
+						// そのバッチ内と競合しないか確認（早期break）
+						for (size_t j : group) {
+							const auto& aj = accessList[j];
+							if (Conflicts(ai, aj) || Conflicts(aj, ai)) {
+								ok = false; break;
+							}
+						}
+						if (ok) { group.push_back(i); placed = true; break; }
+					}
+					if (!placed) {
+						batches.emplace_back();
+						batches.back().push_back(i);
+					}
+				}
+				scheduleDirty = false;
+			}
 		};
-	}
-}
+	}// namespace ECS
+}// namespace SectorFW

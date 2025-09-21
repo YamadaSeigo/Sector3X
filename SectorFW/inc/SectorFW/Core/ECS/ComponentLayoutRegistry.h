@@ -18,16 +18,17 @@ namespace SectorFW
 	namespace ECS
 	{
 		/**
-		 * @brief コンポーネントレイアウトを定義する構造体
-		 * @detail コンポーネントの型IDとその情報を格納します。
+		 * @brief コンポーネントのデータにアクセスするためのレイアウトを定義する構造体
+		 * @detail コンポーネントの型IDとインデックス、コンポーネントのoffsetとstrideを格納します。
 		 */
 		struct ComponentLayout
 		{
-			std::unordered_map<ComponentTypeID, OneOrMore<ComponentInfo>> info;
+			std::unordered_map<ComponentTypeID, uint32_t> infoIdx;
+			std::vector<OneOrMore<ComponentInfo>> info;
 			size_t capacity = 0; // チャンクの容量
 		};
 		/**
-		 * @brief コンポーネントレイアウトレジストリを管理するクラス
+		 * @brief コンポーネントレイアウトを一元的に管理するクラス（ComponentMaskごとに共通!）
 		 */
 		class ComponentLayoutRegistry
 		{
@@ -45,13 +46,9 @@ namespace SectorFW
 			 * @detail マスクに含まれるコンポーネントのメタ情報を基にレイアウトを計算します。
 			 */
 			static void AddNewComponentLayout(const ComponentMask& mask);
-			/**
-			 * @brief コンポーネントレイアウトを格納するマップ
-			 */
+			//コンポーネントレイアウトを格納するマップ
 			static inline std::unordered_map<ComponentMask, ComponentLayout> componentLayout;
-			/**
-			 * @brief コンポーネントレイアウトのマップへのアクセスを保護するミューテックス
-			 */
+			//コンポーネントレイアウトのマップへのアクセスを保護するミューテックス
 			static inline std::mutex map_mutex;
 		};
 	}

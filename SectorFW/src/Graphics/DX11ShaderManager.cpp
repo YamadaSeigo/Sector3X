@@ -31,7 +31,7 @@ namespace SectorFW
 			return seed;
 		}
 
-		std::optional<ShaderHandle> DX11ShaderManager::FindExisting(const DX11ShaderCreateDesc& desc) {
+		std::optional<ShaderHandle> DX11ShaderManager::FindExisting(const DX11ShaderCreateDesc& desc) noexcept {
 			const size_t k = MakeKey(desc);
 			if (auto it = keyToHandle.find(k); it != keyToHandle.end())
 				return it->second;

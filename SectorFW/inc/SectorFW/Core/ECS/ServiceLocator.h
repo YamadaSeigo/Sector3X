@@ -1,3 +1,9 @@
+/*****************************************************************//**
+ * @file   ServiceLocator.h
+ * @brief サービスロケータークラス
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
 #pragma once
 
 #include <unordered_map>
@@ -5,16 +11,16 @@
 #include <shared_mutex>
 #include <memory>
 
-#include "Graphics/RenderService.h"
-#include "Util/TypeChecker.hpp"
-//#include "Input/InputService.h"
+#include "../../Graphics/RenderService.h"
+#include "../../Util/TypeChecker.hpp"
+ //#include "Input/InputService.h"
 
 namespace SectorFW
 {
 	namespace ECS
 	{
 		/**
-		 * @brief サービスロケータークラス
+		 * @brief Systemが依存するサービスを管理するクラス
 		 * @detail 内部でshared_mutexを使用しているのでムーブのみ許可する
 		 */
 		class ServiceLocator {
@@ -131,7 +137,7 @@ namespace SectorFW
 
 				std::shared_lock<std::shared_mutex> lock(*mapMutex);
 				auto it = services.find(typeid(T));
-				if (it == services.end()) {
+				if (it == services.end()) [[unlikely]] {
 					assert(!T::isStatic && "Static service not registered!");
 					return nullptr;
 				}
@@ -154,6 +160,10 @@ namespace SectorFW
 				}
 			}
 		private:
+			/**
+			 * @brief サービスを登録する(静的なサービス限定、引数あり)
+			 * @param service サービスのポインタ
+			 */
 			template<typename T>
 			void AllRegisterStaticServiceWithArg(T* service) noexcept {
 				static_assert(T::isStatic, "Cannot register dynamic service with argument.");
@@ -237,11 +247,9 @@ namespace SectorFW
 			 * @brief 初期化されているかのフラグ
 			 */
 			bool initialized = false;
-			/**
-			 * @brief サービスマップへのアクセス同期
-			 */
+			//サービスマップへのアクセス同期
 			std::unique_ptr<std::shared_mutex> mapMutex;
-
+			// 更新サービスのリスト
 			std::vector<IUpdateService*> updateServices;
 		};
 	}

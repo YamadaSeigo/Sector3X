@@ -18,8 +18,14 @@
 
 #include "Accessor.hpp"
 #include "ServiceLocator.h"
-#include "Util/Grid.hpp"
+#include "../../Util/Grid.hpp"
 
+#ifdef _WIN32
+ /**
+  * @brief MSVCのデコレートされた名前をデマングルする関数
+  * @param decorated デコレートされた名前
+  * @return デマングルされた名前
+  */
 inline std::string demangle_msvc(const char* decorated) {
 	char buf[1024];
 	if (UnDecorateSymbolName(decorated, buf, sizeof(buf),
@@ -28,9 +34,13 @@ inline std::string demangle_msvc(const char* decorated) {
 	}
 	return decorated; // 失敗時はそのまま
 }
+#endif
 
 namespace SectorFW
 {
+	//前方定義
+	struct LevelContext;
+
 	namespace ECS
 	{
 		//前方定義
@@ -56,7 +66,7 @@ namespace SectorFW
 			 * @param partition 対象のパーティション
 			 * @param serviceLocator サービズロケーター
 			 */
-			virtual void Update(Partition& partition, const ServiceLocator& serviceLocator) = 0;
+			virtual void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) = 0;
 			/**
 			 * @brief アクセス情報の取得関数
 			 * @return AccessInfo アクセス情報
@@ -75,7 +85,7 @@ namespace SectorFW
 				return demangle_msvc(typeid(*this).name());
 #else
 				return typeid(*this).name();
-#endif
+#endif // _WIN32
 			}
 		};
 	}

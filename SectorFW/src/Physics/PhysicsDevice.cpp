@@ -324,6 +324,12 @@ namespace SectorFW::Physics {
 				}
 
 				const Body* b = lock.GetBody((int)j);
+
+				if (b == nullptr) [[unlikely]] {
+					LOG_ERROR("PhysicsDevice::ReadPosesBatch: BodyLockMultiRead failed");
+					if (v.updatedMask) v.updatedMask[idx] = 0;
+					continue;
+				}
 				if (b->IsStatic()) { if (v.updatedMask) v.updatedMask[idx] = 0; continue; }
 
 #if defined(JPH_DOUBLE_PRECISION) && JPH_DOUBLE_PRECISION

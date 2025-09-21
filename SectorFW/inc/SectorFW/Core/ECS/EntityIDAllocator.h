@@ -50,7 +50,7 @@ namespace SectorFW
 
 				// 新しいインデックスを割り当て
 				index = nextIndex.fetch_add(1, std::memory_order_relaxed);
-				if (index >= maxEntities) {
+				if (index >= maxEntities) [[unlikely]] {
 					return EntityID::Invalid(); // Exhausted
 				}
 
@@ -63,15 +63,16 @@ namespace SectorFW
 			 * @param id 破棄するエンティティID
 			 */
 			void Destroy(EntityID id) {
-				if (id.index >= maxEntities) return;
+				if (id.index >= maxEntities) [[unlikely]] return;
 
 				// Invalidate old ID
 				generations[id.index].fetch_add(1, std::memory_order_acq_rel);
 
 				// Reuse the index
 				bool success = freeQueue.try_enqueue(id.index);
-				if (!success) {
+				if (!success) [[unlikely]] {
 					// Free queue full → ID leak（無視してもよい or ログ出力）
+					assert(false && "EntityIDAllocator: Free queue is full, ID leak occurred.");
 				}
 			}
 			/**
@@ -80,7 +81,7 @@ namespace SectorFW
 			 * @return bool 有効な場合はtrue、無効な場合はfalse
 			 */
 			bool IsAlive(EntityID id) const noexcept {
-				if (id.index >= maxEntities) return false;
+				if (id.index >= maxEntities) [[unlikely]] return false;
 				return generations[id.index].load(std::memory_order_acquire) == id.generation;
 			}
 			/**
@@ -88,23 +89,14 @@ namespace SectorFW
 			 * @return uint32_t 最大エンティティ数
 			 */
 			uint32_t Capacity() const noexcept { return maxEntities; }
-
 		private:
-			/**
-			 * @brief 最大エンティティ数
-			 */
+			//最大エンティティ数
 			const uint32_t maxEntities;
-			/**
-			 * @brief 次のエンティティIDのインデックス
-			 */
+			//次のエンティティIDのインデックス
 			std::atomic<uint32_t> nextIndex;
-			/**
-			 * @brief 世代管理のための配列
-			 */
+			//世代管理のための配列
 			std::vector<std::atomic<uint32_t>> generations;
-			/**
-			 * @brief 未使用のエンティティIDを管理するキュー
-			 */
+			//未使用のエンティティIDを管理するキュー
 			moodycamel::ConcurrentQueue<uint32_t> freeQueue;
 		};
 	}

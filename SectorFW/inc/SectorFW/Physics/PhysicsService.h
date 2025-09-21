@@ -1,4 +1,9 @@
-// PhysicsService.h
+/*****************************************************************//**
+ * @file   PhysicsService.h
+ * @brief 物理サービスを定義するクラス
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
 #pragma once
 #include "PhysicsTypes.h"
 #include "PhysicsSnapshot.h"
@@ -12,6 +17,9 @@ namespace SectorFW
 {
 	namespace Physics
 	{
+		/**
+		 * @brief 物理サービスを提供するクラス。systemから物理Deviceを操作するためのAPIを提供する
+		 */
 		class PhysicsService : public ECS::IUpdateService {
 		public:
 			struct Plan {
@@ -20,19 +28,26 @@ namespace SectorFW
 				bool  collect_debug = false; // 後でデバッグライン等を拾う用
 			};
 
-			// ====== 生成インテント：発生源で「この Entity を作って」と積んでおく ======
+			/**
+			 * @brief 生成インテント：発生源で「この Entity を作って」と積んでおく
+			 */
 			struct CreateIntent {
 				Entity     e;
 				ShapeHandle h;
-				EntityManagerKey owner;
+				SpatialChunkKey owner;
 			};
-
+			/**
+			 * @brief コンストラクタ
+			 * @param device 物理デバイス
+			 * @param shapeMgr 形状マネージャー
+			 * @param plan 物理シミュレーションの計画（固定時間ステップ等）
+			 * @param queueCapacityPow2 コマンドキューの容量（2の累乗、デフォルトは4096）
+			 */
 			explicit PhysicsService(PhysicsDevice& device, PhysicsShapeManager& shapeMgr,
 				Plan plan = { 1.0f / 60.0f, 1, false }, size_t queueCapacityPow2 = 4096)
 				: m_device(device), m_mgr(&shapeMgr), plan(plan), m_queue(queueCapacityPow2) {
 				m_device.SetShapeResolver(m_mgr);
 			}
-
 			/**
 			 * @brief Box 形状を生成する
 			 * @param he ボックスサイズの半分の長さ（Vec3f）
@@ -42,35 +57,108 @@ namespace SectorFW
 			[[nodiscard]] ShapeHandle MakeBox(Vec3f he, ShapeScale s = { {1,1,1} }) {
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ BoxDesc{he }, s }, h); return h;
 			}
+			/**
+			 * @brief 球形状を生成する
+			 * @param radius 球の半径
+			 * @param s スケール（デフォルトは {1,1,1}）
+			 * @return ShapeHandle 生成された球形状のハンドル
+			 */
 			[[nodiscard]] ShapeHandle MakeSphere(float radius, ShapeScale s = { {1,1,1} }) {
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ SphereDesc{radius}, s }, h); return h;
 			}
+			/**
+			 * @brief カプセル形状を生成する
+			 * @param pts カプセルの両端の位置（Vec3f[2]）
+			 * @param r カプセルの半径
+			 * @param tol 許容誤差（デフォルトは 0.005f）
+			 * @return ShapeHandle 生成されたカプセル形状のハンドル
+			 */
 			[[nodiscard]] ShapeHandle MakeConvex(const std::vector<Vec3f>& pts, float r = 0.05f, float tol = 0.005f) {
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ ConvexHullDesc{pts, r, tol}, {{1,1,1}} }, h); return h;
 			}
+			/**
+			 * @brief 形状を解放する
+			 * @param h 解放する形状のハンドル
+			 * @param sync 同期用のシグナル（デフォルトは0、未使用
+			 */
 			void ReleaseShape(ShapeHandle h, uint64_t sync = 0) { m_mgr->Release(h, sync); }
 
 			// ====== ゲーム側 API（コマンドを積むだけ）======
+			/**
+			 * @brief 物理ボディを作成するコマンドをキューに追加する
+			 * @param c 作成コマンド
+			 */
 			void CreateBody(const CreateBodyCmd& c) { Enqueue(c); }
+			/**
+			 * @brief 物理ボディを破棄するコマンドをキューに追加する
+			 * @param e 破棄するエンティティ
+			 */
 			void DestroyBody(Entity e) { Enqueue(DestroyBodyCmd{ e }); }
+			/**
+			 * @brief 物理ボディをテレポートするコマンドをキューに追加する
+			 * @param e テレポートするエンティティ
+			 * @param tm テレポート先の変換行列
+			 * @param wake テレポート後に起こすかどうか（デフォルトは true）
+			 */
 			void Teleport(Entity e, const Mat34f& tm, bool wake = true) { Enqueue(TeleportCmd{ e, wake, tm }); }
+			/**
+			 * @brief 物理ボディの線形速度を設定するコマンドをキューに追加する
+			 * @param e 設定するエンティティ
+			 * @param v 設定する線形速度（Vec3f）
+			 */
 			void SetLinearVelocity(Entity e, Vec3f v) { Enqueue(SetLinearVelocityCmd{ e, v }); }
+			/**
+			 * @brief 物理ボディの角速度を設定するコマンドをキューに追加する
+			 * @param e 設定するエンティティ
+			 * @param w 設定する角速度（Vec3f）
+			 */
 			void SetAngularVelocity(Entity e, Vec3f w) { Enqueue(SetAngularVelocityCmd{ e, w }); }
+			/**
+			 * @brief 物理ボディにインパルスを加えるコマンドをキューに追加する
+			 * @param e インパルスを加えるエンティティ
+			 * @param p 加えるインパルス（Vec3f）
+			 * @param at インパルスを加える位置（ワールド座標、デフォルトはボディ中心）
+			 */
 			void AddImpulse(Entity e, Vec3f p, std::optional<Vec3f> at = std::nullopt) {
 				AddImpulseCmd cmd{ e, p, {}, false };
 				if (at) { cmd.atWorldPos = *at; cmd.useAtPos = true; }
 				Enqueue(cmd);
 			}
+			/**
+			 * @brief 物理ボディにトルクを加えるコマンドをキューに追加する
+			 * @param e トルクを加えるエンティティ
+			 * @param tm 加えるトルク（Vec3f）
+			 */
 			void SetKinematicTarget(Entity e, const Mat34f& tm) { Enqueue(SetKinematicTargetCmd{ e, tm }); }
+			/**
+			 * @brief 物理ボディの衝突マスクを設定するコマンドをキューに追加する
+			 * @param e 設定するエンティティ
+			 * @param mask 設定する衝突マスク
+			 */
 			void SetCollisionMask(Entity e, uint32_t mask) { Enqueue(SetCollisionMaskCmd{ e, mask }); }
+			/**
+			 * @brief 物理ボディのレイヤーを設定するコマンドをキューに追加する
+			 * @param e 設定するエンティティ
+			 * @param layer レイヤー
+			 * @param broad ブロードフェーズレイヤー
+			 */
 			void SetObjectLayer(Entity e, uint16_t layer, uint16_t broad) { Enqueue(SetObjectLayerCmd{ e, layer, broad }); }
+			/**
+			 * @brief レイキャストを実行するコマンドをキューに追加する
+			 * @param reqId リクエストID（応答時に返される）
+			 * @param o 開始位置（Vec3f）
+			 * @param dir 方向ベクトル（正規化されていること、Vec3f）
+			 * @param maxDist 最大距離
+			 */
 			void RayCast(uint32_t reqId, Vec3f o, Vec3f dir, float maxDist) { Enqueue(RayCastCmd{ reqId, o, dir, maxDist }); }
-
+			/**
+			 * @brief 物理シミュレーションを更新する（IUpdateService 実装）
+			 * @param dt 可変フレーム時間（ゲームループから呼ぶ）
+			 */
 			void Update(double dt) override {
 				// 物理は固定時間ステップで進める
 				Tick(static_cast<float>(dt));
 			}
-
 			// ====== フレーム進行 ======
 			// dt: 可変フレーム時間（ゲームループから呼ぶ）
 			void Tick(float dt) {
@@ -81,19 +169,24 @@ namespace SectorFW
 					m_device.Step(plan.fixed_dt, plan.substeps);
 
 					// スナップショットを組み立てる
-					m_device.BuildSnapshot(m_snapshot);
-					m_prevSnapshot = std::move(m_currSnapshot); // 前フレームのスナップショットを保存
-					m_currSnapshot = std::move(m_snapshot);      // 今回のスナップショットを更新
+					//m_device.BuildSnapshot(m_snapshot);
+					//m_prevSnapshot = std::move(m_currSnapshot); // 前フレームのスナップショットを保存
+					//m_currSnapshot = std::move(m_snapshot);      // 今回のスナップショットを更新
 
 					m_accum -= plan.fixed_dt;
 				}
 			}
-
+			/**
+			 * @brief ポーズバッチを構築する（描画フレームで呼ぶ）
+			 * @param v ポーズバッチビューの参照
+			 */
 			void BuildPoseBatch(PoseBatchView& v) const {
 				m_device.ReadPosesBatch(v);
 			}
-
-			// 補間に使うための α を取得（描画フレームで使う）
+			/**
+			 * @brief 補間に使うための α を取得（描画フレームで使う）
+			 * @return float 補間係数 α (0.0 ～ 1.0)
+			 */
 			float GetAlpha() const {
 				return (plan.fixed_dt > 0.0f) ? (m_accum / plan.fixed_dt) : 0.0f;
 			}
@@ -102,36 +195,60 @@ namespace SectorFW
 			const PhysicsSnapshot& CurrentSnapshot() const { return m_currSnapshot; }
 			const PhysicsSnapshot& PreviousSnapshot() const { return m_prevSnapshot; }
 
-			// ====== 生成済み BodyID の参照（差し込み用）======
+			/**
+			 * @brief 生成済み BodyID の参照（差し込み用
+			 * @param e エンティティ
+			 * @return std::optional<JPH::BodyID> 生成済み BodyID（存在しない場合は std::nullopt
+			 */
 			std::optional<JPH::BodyID> TryGetBodyID(Entity e) const noexcept {
 				return m_device.TryGetBodyID(e);
 			}
-
-			void EnqueueCreateIntent(Entity e, ShapeHandle h, const EntityManagerKey& owner) {
+			/**
+			 * @brief 生成インテントをキューに追加する（Body 作成要求用
+			 * @param e 対象のエンティティ
+			 * @param h 形状ハンドル
+			 * @param owner 所有チャンクキー
+			 */
+			void EnqueueCreateIntent(Entity e, ShapeHandle h, const SpatialChunkKey& owner) {
 				std::scoped_lock lk(m_intentMutex);
 				m_createIntents.push_back({ e, h, owner });
 			}
+			/**
+			 * @brief 生成インテントを取り出す（Body 作成要求用
+			 * @param out 取り出し先のベクター
+			 */
 			void ConsumeCreateIntents(std::vector<CreateIntent>& out) {
 				std::scoped_lock lk(m_intentMutex);
 				out.swap(m_createIntents); // O(1)
 			}
-
-			// Body 作成完了イベントの取り出し（WriteBack用）
-			struct CreatedBody { Entity e; EntityManagerKey owner; JPH::BodyID id; };
+			/**
+			 * @brief Body 作成完了イベントの取り出し（WriteBack用）
+			 */
+			struct CreatedBody { Entity e; SpatialChunkKey owner; JPH::BodyID id; };
+			/**
+			 * @brief 生成済み Body イベントを取り出す
+			 * @param out 取り出し先のベクター
+			 */
 			void ConsumeCreatedBodies(std::vector<CreatedBody>& out) {
 				std::vector<PhysicsDevice::CreatedBody> tmp;
 				m_device.ConsumeCreatedBodies(tmp);
 				out.clear(); out.reserve(tmp.size());
 				for (auto& x : tmp) out.push_back(CreatedBody{ x.e, x.owner, x.id });
 			}
-
+			/**
+			 * @brief 形状マネージャーの参照を取得する
+			 * @return const PhysicsShapeManager* 形状マネージャーの参照
+			 */
 			const PhysicsShapeManager* GetShapeManager() const noexcept { return m_mgr; }
-
+			/**
+			 * @brief 形状の寸法を取得する
+			 * @param h 形状ハンドル
+			 * @return std::optional<ShapeDims> 形状の寸法（存在しない場合は std::nullopt
+			 */
 			std::optional<ShapeDims> GetShapeDims(ShapeHandle h) const {
 				auto shape = m_mgr->Resolve(h);
 				return m_mgr->GetShapeDims(shape);
 			}
-
 		private:
 			template<class T>
 			void Enqueue(const T& c) {

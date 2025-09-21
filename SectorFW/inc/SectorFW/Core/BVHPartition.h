@@ -50,7 +50,6 @@ namespace SectorFW
 
 	public:
 		BVHPartition() noexcept = default;
-
 		/**
 		 * @brief 葉ノード(SpatialChunk)を追加し、その参照を返す
 		 * @details 追加後は Build() または IncrementalInsert() を呼んで木に反映
@@ -263,12 +262,12 @@ namespace SectorFW
 			}
 
 			// 分割軸 = 最長軸
-			Math::Vec3f ext = bounds.Extent();
+			Math::Vec3f ext = bounds.extent();
 			int axis = (ext.x >= ext.y && ext.x >= ext.z) ? 0 : (ext.y >= ext.z ? 1 : 2);
 			auto mid = first + count / 2;
 			std::nth_element(first, mid, last, [&](int32_t a, int32_t b) {
-				const float ca = leaves[a].box.Center()[axis];
-				const float cb = leaves[b].box.Center()[axis];
+				const float ca = leaves[a].box.center()[axis];
+				const float cb = leaves[b].box.center()[axis];
 				return ca < cb;
 				});
 
@@ -306,7 +305,7 @@ namespace SectorFW
 		void CullDFS(int32_t n, const Math::Frustumf& fr, F&& f) const noexcept
 		{
 			const Node& node = nodes[n];
-			if (!fr.IntersectsAABB(node.box.Center(), node.box.Extent())) return;
+			if (!fr.IntersectsAABB(node.box.center(), node.box.extent())) return;
 			if (node.IsLeaf()) { f(const_cast<SpatialChunk&>(leaves[node.leaf].chunk)); return; }
 			CullDFS(node.left, fr, f);
 			CullDFS(node.right, fr, f);

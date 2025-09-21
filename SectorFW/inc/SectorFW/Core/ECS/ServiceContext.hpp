@@ -36,7 +36,7 @@ namespace SectorFW {
 #define DYNAMIC_SERVICE_TAG static constexpr bool isStatic = false;
 
 		  /**
-		   * @brief サービスコンテキストを定義するテンプレート
+		   * @brief Systemに注入されるサービスのコンテキストを定義するテンプレート
 		   * @detail サービスの型をタプルとして保持します。
 		   * @tparam Services... サービスの型リスト
 		   */
@@ -47,16 +47,20 @@ namespace SectorFW {
 
 			using Tuple = std::tuple<Services*...>;
 		};
-
+		/**
+		 * @brief 更新サービスのインターフェース
+		 * @detail 使用する場合は対象のサービスに継承させる
+		 */
 		class IUpdateService {
 			virtual void Update(double deltaTime) = 0;
-
 		private:
 			std::type_index typeIndex = typeid(IUpdateService);
 
 			friend class ServiceLocator;
 		};
-
+		/**
+		 * @brief 指定した型がIUpdateServiceを継承しているかを判定するテンプレート
+		 */
 		template<typename T>
 		static constexpr bool isUpdateService = std::is_base_of_v<IUpdateService, T>;
 	}

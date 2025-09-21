@@ -1,4 +1,9 @@
-// gltf_to_shape.h
+/*****************************************************************//**
+ * @file   gltf_to_shape.h
+ * @brief cgltf のメッシュデータから Physics::ShapeCreateDesc を構築するユーティリティ
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
 #pragma once
 #include "PhysicsTypes.h"
 #include "../external/cgltf/cgltf.h" // 事前に cgltf を組み込み済みであること
@@ -11,7 +16,12 @@ namespace SectorFW
 {
 	namespace Physics
 	{
-		// アクセサから float3 を読み出す（位置専用、型はFLOAT/COUNT=3を想定）
+		/**
+		 * @brief アクセサから float3 を読み出す（位置専用、型はFLOAT / COUNT = 3を想定）
+		 * @param acc cgltf_accessor
+		 * @param out 出力先ベクター
+		 * @return 成功/失敗
+		 */
 		inline bool ReadPositions(const cgltf_accessor* acc, std::vector<Vec3f>& out) {
 			if (!acc || acc->type != cgltf_type_vec3) return false;
 			out.resize((size_t)acc->count);
@@ -23,7 +33,13 @@ namespace SectorFW
 			return true;
 		}
 
-		// インデックス（U16/U32）を取り出す（トライアングル前提）
+		/**
+		 * @brief インデックス（U16 / U32）を取り出す（トライアングル前提）
+		 * @param acc cgltf_accessor
+		 * @param out 出力先ベクター
+		 * @param baseVertex baseVertex 分を加算して格納
+		 * @return 成功/失敗
+		 */
 		inline bool ReadIndices(const cgltf_accessor* acc, std::vector<uint32_t>& out, uint32_t baseVertex) {
 			if (!acc) return false;
 			out.reserve(out.size() + (size_t)acc->count);
@@ -34,8 +50,12 @@ namespace SectorFW
 			return true;
 		}
 
-		// 一つの cgltf_mesh から MeshDesc を構築（すべての primitive を結合）
-		// return: 成功/失敗
+		/**
+		 * @brief 一つの cgltf_mesh から MeshDesc を構築（すべての primitive を結合）
+		 * @param mesh cgltf_mesh
+		 * @param out 出力先 MeshDesc
+		 * @return 成功/失敗
+		 */
 		inline bool BuildMeshDescFromGLTFMesh(const cgltf_mesh* mesh, MeshDesc& out) {
 			if (!mesh) return false;
 
@@ -84,10 +104,15 @@ namespace SectorFW
 			return true;
 		}
 
-		// GLTF → ShapeCreateDesc（メッシュ or 凸包）
-		//   - asConvex==false: MeshDesc を使う（トライメッシュ）
-		//   - asConvex==true : ConvexHullDesc を使う（凸包）
-		//   meshIndex: cgltf の meshes[] の何番目を使うか
+		/**
+		 * @brief GLTF → ShapeCreateDesc（メッシュ or 凸包）
+		 * @param data cgltf_data （cgltf_parse などで取得したもの）
+		 * @param meshIndex data->meshes[] の何番目を使うか
+		 * @param asConvex false: MeshDesc を使う（トライメッシュ） true : ConvexHullDesc を使う（凸包）
+		 * @param scale スケール
+		 * @param out 出力先 ShapeCreateDesc
+		 * @return 成功/失敗
+		 */
 		inline bool BuildShapeCreateDescFromGLTF(
 			const cgltf_data* data,
 			size_t meshIndex,

@@ -15,7 +15,7 @@ namespace SectorFW
 	namespace ECS
 	{
 		/**
-		 * @brief アーキタイプマネージャーを表すクラス
+		 * @brief 各コンポーネントマスクごとのアーキタイプチャンクを管理するクラス
 		 */
 		class ArchetypeManager {
 		public:
@@ -34,9 +34,7 @@ namespace SectorFW
 				return archetypes;
 			}
 		private:
-			/**
-			 * @brief アーキタイプマネージャーのアーキタイプを格納するマップ
-			 */
+			//アーキタイプマネージャーのアーキタイプを格納するマップ
 			std::unordered_map<ComponentMask, std::unique_ptr<Archetype>> archetypes;
 		};
 

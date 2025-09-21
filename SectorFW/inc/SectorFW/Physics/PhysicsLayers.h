@@ -1,4 +1,9 @@
-// PhysicsLayers.h
+/*****************************************************************//**
+ * @file   PhysicsLayers.h
+ * @brief 物理レイヤーの定義ヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
 #pragma once
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Collision/BroadPhase/BroadPhaseLayer.h>

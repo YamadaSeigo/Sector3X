@@ -11,17 +11,17 @@ namespace SectorFW
 {
 	namespace ECS
 	{
-		// 最大エンティティ数
+		/**
+		 * @brief 最大エンティティ数
+		 */
 		static inline constexpr size_t MAX_ENTITY_NUM = 100000;
 
-		// EntityIDは通常uint32_t
-		//using EntityID = uint32_t;
-
-		// Entity ID structure
+		/**
+		 * @brief EntityのIDを表す構造体
+		 */
 		struct EntityID {
 			uint32_t index = 0;
 			uint32_t generation = 0;
-
 			/**
 			 * @brief コンストラクタ
 			 * @param other EntityIDをコピーする

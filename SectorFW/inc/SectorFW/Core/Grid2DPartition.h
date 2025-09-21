@@ -10,13 +10,15 @@
 #include <algorithm>
 #include <cmath>
 #include "partition.hpp"
-#include "EntityManagerRegistryService.h"
+#include "SpatialChunkRegistryService.h"
+#include "../Math/sx_math.h"
 #include "../Util/Morton.h"
+#include "../Util/Grid.hpp"
 
 namespace SectorFW
 {
 	/**
-	 * @brief 2Dグリッドパーティションを表すクラス
+	 * @brief 2D(x-z)グリッドパーティションを表すクラス
 	 */
 	class Grid2DPartition
 	{
@@ -37,6 +39,7 @@ namespace SectorFW
 		 * @return std::optional<SpatialChunk*> チャンクへのポインタ
 		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location,
+			SpatialChunkRegistry& reg, LevelID level,
 			EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept
 		{
 			using Signed = long long;
@@ -69,20 +72,30 @@ namespace SectorFW
 			return globalEntityManager;
 		}
 
-		// ===== 初期登録：全セルを Registry に登録し、NodeKey を埋める =====
-		void RegisterAllChunks(EntityManagerRegistry& reg, LevelID level) {
+		/**
+		 * @brief 初期登録：全セルを Registry に登録し、NodeKey を埋める
+		 * @param reg 登録先のレジストリ
+		 * @param level レベルID
+		 */
+		void RegisterAllChunks(SpatialChunkRegistry& reg, LevelID level) {
+			if (isRegistryChunk) return;
+			isRegistryChunk = true;
+
 			const auto w = grid.width();
 			const auto h = grid.height();
 			for (uint32_t y = 0; y < h; ++y) {
 				for (uint32_t x = 0; x < w; ++x) {
 					SpatialChunk& cell = grid(x, y);
-					EntityManagerKey key = MakeGrid2DKey(level, int32_t(x), int32_t(y), /*gen*/0);
+					SpatialChunkKey key = MakeGrid2DKey(level, int32_t(x), int32_t(y), /*gen*/0);
 					cell.SetNodeKey(key);
-					reg.RegisterOwner(key, &cell.GetEntityManager());
+					reg.RegisterOwner(key, &cell);
 				}
 			}
 		}
-
+		/**
+		 * @brief 全エンティティ数を取得します。
+		 * @return size_t 全エンティティ数
+		 */
 		size_t GetEntityNum() {
 			size_t num = globalEntityManager.GetEntityCount();
 			const auto w = grid.width();
@@ -96,9 +109,15 @@ namespace SectorFW
 
 			return num;
 		}
-
+		/**
+		 * @brief フラスタムカリングを行い、可視なチャンクのリストを取得します。
+		 * @param fr フラスタム
+		 * @param ymin 最小Y値
+		 * @param ymax 最大Y値
+		 * @return std::vector<SpatialChunk*> 可視なチャンクのリスト
+		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr,
-			float ymin, float ymax) const noexcept
+			float ymin = std::numeric_limits<float>::lowest(), float ymax = (std::numeric_limits<float>::max)()) const noexcept
 		{
 			std::vector<SpatialChunk*> out;
 			const uint32_t w = grid.width(), d = grid.height();
@@ -125,7 +144,6 @@ namespace SectorFW
 			}
 			return out;
 		}
-
 		// （任意）アロケーション回避のコールバック版
 		template<class F>
 		void CullChunks(const Math::Frustumf& fr, float ymin, float ymax, F&& f) const noexcept
@@ -153,7 +171,16 @@ namespace SectorFW
 				}
 			}
 		}
-
+		/**
+		 * @brief フラスタムカリングを行い、可視なチャンクのワイヤーフレームラインを取得します。
+		 * @param fr フラスタム
+		 * @param cp カメラ位置
+		 * @param hy チャンクの高さの半分
+		 * @param outLine 出力先のラインバッファ
+		 * @param capacity ラインバッファの容量（頂点数）
+		 * @param displayCount 表示距離（チャンク数）
+		 * @return uint32_t 有効なライン頂点数
+		 */
 		uint32_t CullChunkLine(const Math::Frustumf& fr,
 			Math::Vec3f cp, float hy, Debug::LineVertex* outLine,
 			uint32_t capacity, uint32_t displayCount) const noexcept
@@ -205,20 +232,33 @@ namespace SectorFW
 			return validCount;
 		}
 
-		// ===== セルの再ロード時：旧登録を外し、generationで再登録 =====
-		void ReloadCell(uint32_t cx, uint32_t cy, EntityManagerRegistry& reg) {
+		/**
+		 * @brief セルの再ロード時：旧登録を外し、generationで再登録
+		 * @param cx Xセル座標
+		 * @param cy Zセル座標
+		 * @param reg 登録先のレジストリ
+		 */
+		void ReloadCell(uint32_t cx, uint32_t cy, SpatialChunkRegistry& reg) {
 			SpatialChunk& cell = grid(cx, cy);
 			// 旧世代をアンレジスト
 			reg.UnregisterOwner(cell.GetNodeKey());
 			// 世代してキー更新・再登録
 			SpatialChunk newCell = std::move(cell); // 生成し直す流儀でもOK
 			newCell.BumpGeneration();
-			reg.RegisterOwner(newCell.GetNodeKey(), &newCell.GetEntityManager());
+			reg.RegisterOwner(newCell.GetNodeKey(), &newCell);
 			grid(cx, cy) = std::move(newCell);
 		}
 	private:
-		inline EntityManagerKey MakeGrid2DKey(LevelID level, int32_t gx, int32_t gz, uint16_t gen = 0) {
-			EntityManagerKey k{};
+		/**
+		 * @brief 2Dグリッドのチャンクキーを作成します。
+		 * @param level レベルID
+		 * @param gx Xグリッド座標
+		 * @param gz Zグリッド座標
+		 * @param gen 世代（デフォルトは0）
+		 * @return SpatialChunkKey チャンクキー
+		 */
+		inline SpatialChunkKey MakeGrid2DKey(LevelID level, int32_t gx, int32_t gz, uint16_t gen = 0) {
+			SpatialChunkKey k{};
 			k.level = level;
 			k.scheme = PartitionScheme::Grid2D;
 			k.depth = 0;
@@ -228,18 +268,14 @@ namespace SectorFW
 		}
 
 	private:
-		/**
-		 * @brief グローバルエンティティマネージャー
-		 */
+		//グローバルエンティティマネージャー
 		ECS::EntityManager globalEntityManager;
-		/**
-		 * @brief 2Dグリッド分割チャンクリスト
-		 */
+		//2Dグリッド分割チャンクリスト
 		Grid2D<SpatialChunk, ChunkSizeType> grid;
-		/**
-		 * @brief チャンクのサイズ
-		 */
+		//チャンクのサイズ
 		float chunkSize;
+		//チャンクを登録したか
+		bool isRegistryChunk = false;
 	};
 
 	namespace ECS

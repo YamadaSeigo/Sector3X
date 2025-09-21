@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   convert_directX.hpp
+ * @brief DirectXMathとSectorFWの数学ライブラリ間の変換を提供するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <DirectXMath.h>
@@ -8,23 +15,39 @@ namespace SectorFW
 {
 	namespace Math
 	{
-		// Vector2 → XMFLOAT2
+		/**
+		 * @brief Vector2 → XMFLOAT2
+		 * @param v 変換するVec2f
+		 * @return XMFLOAT2 変換後のXMFLOAT2
+		 */
 		template<>
 		inline DirectX::XMFLOAT2 Convert<DirectX::XMFLOAT2, Vec2f>(const Vec2f& v) {
 			return BitCast<DirectX::XMFLOAT2>(v);
 		}
-
+		/**
+		 * @brief XMFLOAT2 → Vec2f
+		 * @param v 変換するXMFLOAT2
+		 * @return Vec2f 変換後のVec2f
+		 */
 		template<>
 		inline Vec2f Convert<Vec2f, DirectX::XMFLOAT2>(const DirectX::XMFLOAT2& v) {
 			return BitCast<Vec2f>(v);
 		}
 
-		// Vec3f → XMVECTOR
+		/**
+		 * @brief Vec3f → XMVECTOR
+		 * @param v 変換するVec3f
+		 * @return XMVECTOR 変換後のXMVECTOR
+		 */
 		template<>
 		inline DirectX::XMVECTOR Convert<DirectX::XMVECTOR, Vec3f>(const Vec3f& v) {
 			return DirectX::XMVectorSet(v.x, v.y, v.z, 0.0f);
 		}
-
+		/**
+		 * @brief XMVECTOR → Vec3f
+		 * @param v 変換するXMVECTOR
+		 * @return Vec3f 変換後のVec3f
+		 */
 		template<>
 		inline Vec3f Convert<Vec3f, DirectX::XMVECTOR>(const DirectX::XMVECTOR& v) {
 			DirectX::XMFLOAT3 temp;
@@ -32,7 +55,11 @@ namespace SectorFW
 			return Vec3f{ temp.x, temp.y, temp.z };
 		}
 
-		// Quatf → XMVECTOR
+		/**
+		 * @brief Quatf → XMVECTOR
+		 * @param q 変換するQuatf
+		 * @return XMVECTOR 変換後のXMVECTOR
+		 */
 		template<>
 		inline DirectX::XMVECTOR Convert<DirectX::XMVECTOR, Quatf>(const Quatf& q) {
 			return DirectX::XMVectorSet(q.x, q.y, q.z, q.w);
@@ -44,7 +71,11 @@ namespace SectorFW
 			DirectX::XMStoreFloat4(&temp, v);
 			return Quatf{ temp.x, temp.y, temp.z, temp.w };
 		}
-
+		/**
+		 * @brief Matrix4x4f → XMMATRIX
+		 * @param mat 変換するMatrix4x4f
+		 * @return XMMATRIX 変換後のXMMATRIX
+		 */
 		template<>
 		inline DirectX::XMMATRIX Convert<DirectX::XMMATRIX, Matrix4x4f>(const Matrix4x4f& mat) {
 			using namespace DirectX;
@@ -56,7 +87,11 @@ namespace SectorFW
 				XMVectorSet(mat.m[0][3], mat.m[1][3], mat.m[2][3], mat.m[3][3])
 			);
 		}
-
+		/**
+		 * @brief XMMATRIX → Matrix4x4f
+		 * @param mat 変換するXMMATRIX
+		 * @return Matrix4x4f 変換後のMatrix4x4f
+		 */
 		template<>
 		inline Matrix4x4f Convert<Matrix4x4f, DirectX::XMMATRIX>(const DirectX::XMMATRIX& mat) {
 			using namespace DirectX;

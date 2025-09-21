@@ -60,7 +60,7 @@ namespace SectorFW
 			size_t moved = 0;
 			for (EntityID id : ids) {
 				if (!src.TryGetLocation(id)) continue;
-				if (src.InsertWithID_ForManagerMove(id, src, *this)) ++moved;
+				if (InsertWithID_ForManagerMove(id, src, *this)) ++moved;
 			}
 			return moved;
 		}
@@ -112,6 +112,31 @@ namespace SectorFW
 
 			return componentMask;
 		}
+		bool EntityManager::InsertWithID_ForManagerMove(EntityID id, EntityManager& src, EntityManager& dst)
+		{
+			if (&src == &dst) return false;
+
+			// src の位置情報を得る（無ければ失敗）
+			auto locOpt = src.TryGetLocation(id);
+			if (!locOpt) return false;
+			ArchetypeChunk* srcChunk = locOpt->chunk;
+			const size_t     srcIndex = locOpt->index;
+			const ComponentMask mask = srcChunk->GetComponentMask();
+			// 宛先側に1行確保
+			Archetype* dstArch = dst.archetypeManager.GetOrCreate(mask);
+			ArchetypeChunk* dstChunk = dstArch->GetOrCreateChunk();
+			const size_t dstIndex = dstChunk->AddEntity(id);
+			// 非スパース列をコピー
+			CopyEntityColumns(srcChunk, srcIndex, dstChunk, dstIndex);
+			// src からローカル除去（スパースは後で一括移送するため触らない）
+			src.EraseEntityLocalNoSparse(id);
+			// 宛先の locations を登録
+			{
+				std::unique_lock<std::shared_mutex> wlock(dst.locationsMutex);
+				dst.locations[id] = { dstChunk, dstIndex };
+			}
+			return true;
+		}
 		bool EntityManager::EraseEntityLocalNoSparse(EntityID id)
 		{
 			std::unique_lock<std::shared_mutex> wlock(locationsMutex);
@@ -133,42 +158,24 @@ namespace SectorFW
 		}
 		void EntityManager::CopyEntityColumns(ArchetypeChunk* srcChunk, size_t srcIndex, ArchetypeChunk* dstChunk, size_t dstIndex)
 		{
+			if (srcChunk->GetComponentMask() != dstChunk->GetComponentMask()) {
+				LOG_ERROR("Source and destination chunks have different component masks.");
+				return;
+			}
+
+			//※高速化のためLayoutが同じである前提でsrcのLayoutをdstの方でも使用する
 			const auto& srcLayout = ArchetypeChunk::Accessor::GetLayoutInfo(srcChunk);
-			const auto& dstLayout = ArchetypeChunk::Accessor::GetLayoutInfo(dstChunk);
-			for (const auto& [comp, infos] : srcLayout) {
+			for (const auto& infos : srcLayout) {
 				size_t k = 0;
 				for (const auto& col : infos) {
 					auto srcBase = ArchetypeChunk::Accessor::GetBuffer(srcChunk) + col.offset;
-					auto dstBase = ArchetypeChunk::Accessor::GetBuffer(dstChunk) + dstLayout.at(comp).get(k).value().get().offset;
+					auto dstBase = ArchetypeChunk::Accessor::GetBuffer(dstChunk) + col.offset;
 					const auto* srcElem = static_cast<const uint8_t*>(srcBase) + srcIndex * col.stride;
 					uint8_t* dstElem = static_cast<uint8_t*>(dstBase) + dstIndex * col.stride;
 					std::memcpy(dstElem, srcElem, col.stride);
 					++k;
 				}
 			}
-		}
-		bool EntityManager::InsertWithID_ForManagerMove(EntityID id, EntityManager& src, EntityManager& dst)
-		{
-			// src の位置情報を得る（無ければ失敗）
-			auto locOpt = src.TryGetLocation(id);
-			if (!locOpt) return false;
-			ArchetypeChunk* srcChunk = locOpt->chunk;
-			const size_t     srcIndex = locOpt->index;
-			const ComponentMask mask = srcChunk->GetComponentMask();
-			// 宛先側に1行確保
-			Archetype* dstArch = dst.archetypeManager.GetOrCreate(mask);
-			ArchetypeChunk* dstChunk = dstArch->GetOrCreateChunk();
-			const size_t dstIndex = dstChunk->AddEntity(id);
-			// 非スパース列をコピー
-			dst.CopyEntityColumns(srcChunk, srcIndex, dstChunk, dstIndex);
-			// src からローカル除去（スパースは後で一括移送するため触らない）
-			src.EraseEntityLocalNoSparse(id);
-			// 宛先の locations を登録
-			{
-				std::unique_lock<std::shared_mutex> wlock(dst.locationsMutex);
-				dst.locations[id] = { dstChunk, dstIndex };
-			}
-			return true;
 		}
 	}
 }

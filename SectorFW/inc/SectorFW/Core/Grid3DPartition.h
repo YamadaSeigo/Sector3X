@@ -12,13 +12,16 @@
 #include <vector>
 
 #include "partition.hpp"                   // PartitionConcept / SpatialChunk / ChunkSizeType / EOutOfBoundsPolicy など
-#include "EntityManagerRegistryService.h"  // EntityManagerRegistry / EntityManagerKey / LevelID
+#include "SpatialChunkRegistryService.h"  // EntityManagerRegistry / EntityManagerKey / LevelID
 #include "../Util/Grid.hpp"                // Grid3D<T, N>
 #include "../Util/Morton.h"              // Morton3D64, ZigZag64
 #include "../Math/sx_math.h"
 
 namespace SectorFW
 {
+	/**
+	 * @brief 3Dグリッドパーティションを定義するクラス（PartitionConcept 準拠）
+	 */
 	class Grid3DPartition
 	{
 	public:
@@ -54,6 +57,7 @@ namespace SectorFW
 		 * @brief 指定位置が属するセル（SpatialChunk）を取得
 		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location,
+			SpatialChunkRegistry& reg, LevelID level,
 			EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept
 		{
 			using Signed = long long;
@@ -83,8 +87,11 @@ namespace SectorFW
 		/**
 		 * @brief すべてのセルをRegistryに登録し NodeKey を埋める
 		 */
-		void RegisterAllChunks(EntityManagerRegistry& reg, LevelID level)
+		void RegisterAllChunks(SpatialChunkRegistry& reg, LevelID level)
 		{
+			if (isRegistryChunk) return;
+			isRegistryChunk = true;
+
 			const auto w = grid.width();
 			const auto h = grid.height();
 			const auto d = grid.depth();
@@ -92,9 +99,9 @@ namespace SectorFW
 				for (uint32_t y = 0; y < h; ++y) {
 					for (uint32_t x = 0; x < w; ++x) {
 						SpatialChunk& cell = grid(x, y, z);
-						EntityManagerKey key = MakeGrid3DKey(level, int32_t(x), int32_t(y), int32_t(z), /*gen*/0);
+						SpatialChunkKey key = MakeGrid3DKey(level, int32_t(x), int32_t(y), int32_t(z), /*gen*/0);
 						cell.SetNodeKey(key);
-						reg.RegisterOwner(key, &cell.GetEntityManager());
+						reg.RegisterOwner(key, &cell);
 					}
 				}
 			}
@@ -122,7 +129,7 @@ namespace SectorFW
 		/**
 		 * @brief 視錐台カリング（各セルを立方AABBで判定）
 		 */
-		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr, float, float) const noexcept
+		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
 		{
 			std::vector<SpatialChunk*> out;
 			const uint32_t w = grid.width(), h = grid.height(), d = grid.depth();
@@ -244,21 +251,21 @@ namespace SectorFW
 		/**
 		 * @brief セルの再ロード（世代を進めて再登録）
 		 */
-		void ReloadCell(uint32_t cx, uint32_t cy, uint32_t cz, EntityManagerRegistry& reg)
+		void ReloadCell(uint32_t cx, uint32_t cy, uint32_t cz, SpatialChunkRegistry& reg)
 		{
 			SpatialChunk& cell = grid(cx, cy, cz);
 			reg.UnregisterOwner(cell.GetNodeKey());
 
 			SpatialChunk newCell = std::move(cell);
 			newCell.BumpGeneration();
-			reg.RegisterOwner(newCell.GetNodeKey(), &newCell.GetEntityManager());
+			reg.RegisterOwner(newCell.GetNodeKey(), &newCell);
 			grid(cx, cy, cz) = std::move(newCell);
 		}
 
 	private:
-		inline EntityManagerKey MakeGrid3DKey(LevelID level, int32_t gx, int32_t gy, int32_t gz, uint16_t gen = 0)
+		inline SpatialChunkKey MakeGrid3DKey(LevelID level, int32_t gx, int32_t gy, int32_t gz, uint16_t gen = 0)
 		{
-			EntityManagerKey k{};
+			SpatialChunkKey k{};
 			k.level = level;
 			k.scheme = PartitionScheme::Grid3D;
 			k.depth = 0;
@@ -271,6 +278,7 @@ namespace SectorFW
 		ECS::EntityManager globalEntityManager;                 ///< グローバルEM
 		Grid3D<SpatialChunk, ChunkSizeType> grid;               ///< 3Dグリッド
 		float chunkSize;                                       ///< セル一辺
+		bool isRegistryChunk = false;
 	};
 
 	namespace ECS

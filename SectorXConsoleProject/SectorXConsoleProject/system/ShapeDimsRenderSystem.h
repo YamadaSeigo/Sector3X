@@ -128,12 +128,11 @@ public:
 			return;
 		}
 
-		ForEachFrustumDesc frustumDesc = {};
-		frustumDesc.fru = cameraService->MakeFrustum();
+		auto fru = cameraService->MakeFrustum();
 
 		auto cameraPos = cameraService->GetPosition();
 
-		auto lineCount = partition.CullChunkLine(frustumDesc.fru, cameraPos, 200.0f,
+		auto lineCount = partition.CullChunkLine(fru, cameraPos, 200.0f,
 			lineVertices.get(), MAX_CAPACITY_LINE, DRAW_LINE_CHUNK_COUNT);
 
 		Graphics::DX11BufferUpdateDesc vbUpdateDesc;

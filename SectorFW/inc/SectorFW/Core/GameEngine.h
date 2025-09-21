@@ -17,11 +17,19 @@
 
 namespace SectorFW
 {
+	/**
+	 * @brief Graphics::IGraphicsDeviceをCRTPで継承している型をチェックするコンセプト
+	 */
 	template<typename T>
 	concept GraphicsType = is_crtp_base_of_1arg<T, Graphics::IGraphicsDevice>;
 
+	/**
+	 * @brief ゲームエンジンの初期化
+	 */
 	void InitializeGameEngine(bool initialize);
-
+	/**
+	 * @brief ゲームエンジンの終了処理
+	 */
 	void UnInitializeGameEngine();
 
 	/**

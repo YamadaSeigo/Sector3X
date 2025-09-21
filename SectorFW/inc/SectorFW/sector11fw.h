@@ -25,4 +25,7 @@
 
 #include "Physics/PhysicsService.h"
 
+#include "SIMD/simd_api.h"
+#include "SIMD/simd_detect.h"
+
 #endif // A_SECTOR11FW_H_

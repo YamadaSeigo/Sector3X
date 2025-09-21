@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   DX113DCameraService.h
+ * @brief DirectX11用の3Dカメラサービス
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include "../I3DCameraService.h"
@@ -8,12 +15,19 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
+		/**
+		 * @brief DirectX11用の3Dカメラサービス。カメラの定数バッファを管理し、更新する。
+		 */
 		class DX113DCameraService : public I3DCameraService {
 		public:
+			/**
+			 * @brief カメラの定数バッファの名前
+			 */
 			constexpr static inline char BUFFER_NAME[] = "DX113DCamera";
-
-			/*I3DCameraService(bufferMgr->Add(DX11BufferCreateDesc(BUFFER_NAME, sizeof(CameraBuffer)))),*/
-
+			/**
+			 * @brief コンストラクタ
+			 * @param bufferMgr DX11BufferManagerのポインタ
+			 */
 			explicit DX113DCameraService(DX11BufferManager* bufferMgr)
 				: I3DCameraService([&] {
 				BufferHandle h;
@@ -22,6 +36,10 @@ namespace SectorFW
 					}()), bufferManager(bufferMgr) {
 			}
 
+					/**
+					 * @brief カメラの更新関数
+					 * @param deltaTime 前のフレームからの経過時間（秒）
+					 */
 					void Update(double deltaTime) override {
 						if (!isUpdateBuffer) return;
 

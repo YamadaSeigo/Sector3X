@@ -51,7 +51,7 @@ namespace SectorFW
 
 			if (hasSoA)
 			{
-				static const auto getTotalSize = [](const std::vector<Entry>& layout, size_t count)->size_t {
+				const auto getTotalSize = [](const std::vector<Entry>& layout, size_t count)->size_t {
 					size_t offset = 0;
 
 					for (const auto& entry : layout) {
@@ -80,14 +80,16 @@ namespace SectorFW
 
 				size_t offset = 0;
 				for (auto& c : component) {
-					auto& info = layout.info[c.id];
-					info.reserve(c.meta.structure.size());
+					OneOrMore<ComponentInfo> infoData;
+					infoData.reserve(c.meta.structure.size());
 					for (auto& structure : c.meta.structure)
 					{
 						offset = AlignTo(offset, structure.align);
-						info.add({ offset, structure.size });
+						infoData.add({ offset, structure.size });
 						offset += structure.size * low;
 					}
+					layout.info.push_back(std::move(infoData));
+					layout.infoIdx[c.id] = static_cast<uint32_t>(layout.info.size() - 1);
 				}
 			}
 			else //!hasSoA
@@ -116,16 +118,18 @@ namespace SectorFW
 								fits = false;
 								break;
 							}
-							layout.info[c.id].add({ offset, structure.size });
+							OneOrMore<ComponentInfo> infoData;
+							infoData.add({ offset, structure.size });
+							layout.info.push_back(std::move(infoData));
+							layout.infoIdx[c.id] = static_cast<uint32_t>(layout.info.size() - 1);
 							offset += structure.size * layout.capacity;
 						}
 					}
-					if (fits) break;
-
-					if (layout.capacity == 0) break;
+					if (fits || layout.capacity == 0)break;
 
 					--layout.capacity;
 					layout.info.clear();
+					layout.infoIdx.clear();
 				}
 			}// !hasSoA
 

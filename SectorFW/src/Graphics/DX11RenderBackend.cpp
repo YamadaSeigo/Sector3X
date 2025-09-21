@@ -92,63 +92,6 @@ namespace SectorFW
 			}
 		}
 
-		void DX11Backend::ExecuteDrawIndexedInstancedImpl(const std::vector<DrawCommand>& cmds, bool usePSORasterizer)
-		{
-			struct DrawBatch {
-				uint32_t mesh;
-				uint32_t material;
-				uint32_t pso;
-				uint32_t base;
-				uint32_t instanceCount; // instances[idx]
-			};
-
-			BeginIndexStream();
-
-			size_t i = 0;
-			size_t cmdCount = cmds.size();
-			std::vector<DrawBatch> batches;
-			while (i < cmdCount) {
-				auto currentPSO = cmds[i].pso;
-				auto currentMat = cmds[i].material;
-
-				uint32_t currentMesh = cmds[i].mesh;
-				uint32_t instanceCount = 0;
-
-				const uint32_t base = m_idxHead;        // ‚±‚Ìƒhƒ[‚Ì index æ“ª
-
-				// 1) “¯PSO/Mat/Mesh ‚ð‘©‚Ë‚Â‚ÂAindex ‚ð SRV ‚Ég’¼Úh‘‚­
-				auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
-
-				// “¯‚¶PSO + Material + Mesh‚ð‚Ü‚Æ‚ß‚é
-				while (i < cmdCount &&
-					cmds[i].pso == currentPSO &&
-					cmds[i].material == currentMat &&
-					cmds[i].mesh == currentMesh &&
-					instanceCount < MAX_INSTANCES) {
-					dst[instanceCount++] = cmds[i].instanceIndex.index; // © ’¼Ú‘‚­ = instances[idx];
-					++i;
-				}
-				m_idxHead += instanceCount;
-
-				batches.emplace_back(currentMesh, currentMat, currentPSO, base, instanceCount);
-			}
-
-			EndIndexStream();
-
-			context->VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); // b1
-			for (const auto& b : batches) {
-				// PerDraw CB ‚É base ‚Æ count ‚ðÝ’è
-				struct { uint32_t base, count, pad0, pad1; }
-				perDraw{ b.base, b.instanceCount, 0, 0 };
-				D3D11_MAPPED_SUBRESOURCE m{};
-				context->Map(m_perDrawCB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
-				memcpy(m.pData, &perDraw, sizeof(perDraw));
-				context->Unmap(m_perDrawCB.Get(), 0);
-
-				DrawInstanced(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer);
-			}
-		}
-
 		void DX11Backend::ProcessDeferredDeletesImpl(uint64_t currentFrame)
 		{
 			cbManager->PendingUpdates();
@@ -290,7 +233,7 @@ namespace SectorFW
 				D3D11_CULL_FRONT,
 				D3D11_CULL_NONE,
 			};
-			rasterizer.FrontCounterClockwise = true;
+			rasterizer.FrontCounterClockwise = TRUE;
 
 			HRESULT hr;
 			for (int i = 0; i < 2; ++i) {

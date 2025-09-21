@@ -54,13 +54,9 @@ namespace SectorFW
 				return chunks;
 			}
 		private:
-			/**
-			 * @brief アーキタイプのコンポーネントマスク
-			 */
+			//アーキタイプのコンポーネントマスク
 			ComponentMask mask;
-			/**
-			 * @brief アーキタイプのチャンクのベクター
-			 */
+			//アーキタイプのチャンクのコンテナ
 			std::vector<std::unique_ptr<ArchetypeChunk>> chunks;
 		};
 	}

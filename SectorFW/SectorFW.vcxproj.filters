@@ -88,6 +88,12 @@
     <Filter Include="Inc\Debug\imgui">
       <UniqueIdentifier>{ecf351c4-1b61-4d18-b61d-cfc62fa3b99a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\SIMD">
+      <UniqueIdentifier>{24bd197e-9ac7-4cf0-85fa-2368363ae487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\SIMD">
+      <UniqueIdentifier>{4e55244a-1d2c-4a4e-be0a-5c19334220de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utility\doxygen_sample.h">
@@ -345,9 +351,6 @@
     <ClInclude Include="inc\SectorFW\Util\SpscRing.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Util\TextureLoader.h">
-      <Filter>Inc\Util</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SectorFW\Util\TypeChecker.hpp">
       <Filter>Inc\Util</Filter>
     </ClInclude>
@@ -360,7 +363,7 @@
     <ClInclude Include="inc\SectorFW\Math\sx_math.h">
       <Filter>Inc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Core\EntityManagerRegistryService.h">
+    <ClInclude Include="inc\SectorFW\Core\SpatialChunkRegistryService.h">
       <Filter>Inc\Core</Filter>
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Core\RegistryTypes.h">
@@ -408,11 +411,23 @@
     <ClInclude Include="inc\SectorFW\Debug\logger.h">
       <Filter>Inc\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Core\BVHPartition.h">
+    <ClInclude Include="inc\SectorFW\SIMD\simd_detect.h">
+      <Filter>Inc\SIMD</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\SIMD\simd_api.h">
+      <Filter>Inc\SIMD</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\RenderPass.hpp">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\function_trait.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ChunkCrossingMove.hpp">
       <Filter>Inc\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Core\SAPPartitionh.h">
-      <Filter>Inc\Core</Filter>
+    <ClInclude Include="inc\SectorFW\Core\ECS\SparseMarge.hpp">
+      <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -898,6 +913,15 @@
     </ClCompile>
     <ClCompile Include="src\Debug\UIBus.cpp">
       <Filter>Src\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SIMD\simd_base.cpp">
+      <Filter>Src\SIMD</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SIMD\simd_avx2.cpp">
+      <Filter>Src\SIMD</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SIMD\simd_init.cpp">
+      <Filter>Src\SIMD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

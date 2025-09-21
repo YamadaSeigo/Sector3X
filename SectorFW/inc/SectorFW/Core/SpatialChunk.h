@@ -13,7 +13,7 @@
 namespace SectorFW
 {
 	/**
-	 * @brief 空間チャンクを表すクラス
+	 * @brief　空間で分割したチャンクを表すクラス
 	 */
 	class SpatialChunk
 	{
@@ -36,19 +36,14 @@ namespace SectorFW
 		const ECS::EntityManager& GetEntityManager() const noexcept { return *entityManager; }
 
 		// --- NodeKey (space / code / depth / generation) をチャンク単位で保持 ---
-		const EntityManagerKey& GetNodeKey() const noexcept { return nodeKey; }
-		void SetNodeKey(const EntityManagerKey& k) noexcept { nodeKey = k; }
+		const SpatialChunkKey& GetNodeKey() const noexcept { return nodeKey; }
+		void SetNodeKey(const SpatialChunkKey& k) noexcept { nodeKey = k; }
 		void BumpGeneration() noexcept { ++nodeKey.generation; }
 	private:
-		/**
-		 * @brief エンティティマネージャー
-		 * @detail 空間チャンク内のエンティティを管理する
-		 */
+		//エンティティマネージャー.空間チャンク内のエンティティを管理する
 		std::unique_ptr<ECS::EntityManager> entityManager;
-		/**
-		 * @brief このチャンクを特定するキー。現在世代を含む
-		 */
-		EntityManagerKey nodeKey{};
+		//このチャンクを特定するキー。現在世代を含む
+		SpatialChunkKey nodeKey{};
 	};
 	/**
 	 * @brief 空間チャンクのサイズ型を定義する

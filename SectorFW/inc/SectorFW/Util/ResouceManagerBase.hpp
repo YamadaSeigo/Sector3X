@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   ResouceManagerBase.hpp
+ * @brief リソースマネージャーの基底クラス
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <vector>
@@ -9,6 +16,9 @@
 
 namespace SectorFW
 {
+	/**
+	 * @brief リソースマネージャーの基底クラス。主にRenderer系で使用する。
+	 */
 	template<typename Derived, typename HandleType, typename CreateDescType, typename ResourceType>
 	class ResourceManagerBase {
 	public:
@@ -41,14 +51,21 @@ namespace SectorFW
 			const ResourceType& data;
 			std::shared_lock<std::shared_mutex> lock;
 		};
-
+		/**
+		 * @brief リソースが有効かどうかをチェックする関数
+		 */
 		struct Slot {
 			ResourceType data;
 			uint32_t generation = 0;
 			bool alive = false;
 		};
 
-		// Add: 既存があれば再利用(+1)＆削除要求が入っていればキャンセル
+		/**
+		 * @brief Add: 既存があれば再利用(+1)＆削除要求が入っていればキャンセル
+		 * @param desc 作成情報
+		 * @param out 取得したハンドル
+		 * @return 既存を再利用した場合 true、新規作成なら false
+		 */
 		bool Add(const CreateDescType& desc, HandleType& out) {
 			if (auto h = static_cast<Derived*>(this)->FindExisting(desc)) {
 				// 既存を +1
@@ -86,21 +103,30 @@ namespace SectorFW
 			out = h;
 			return false;
 		}
-
+		/**
+		 * @brief AddRef: 参照カウント +1
+		 * @param h 有効なハンドル
+		 */
 		void AddRef(HandleType h) {
 			assert(IsValid(h));
 			refCount[h.index].fetch_add(1, std::memory_order_relaxed);
 		}
-
-		// Release: 0 になったら削除要求を積む（alive はここでは落とさない）
+		/**
+		 * @brief Release: 0 になったら削除要求を積む（alive はここでは落とさない）
+		 * @param h 有効なハンドル
+		 * @param deleteSync 削除要求の期限（フレームカウンタなど）。0 なら即時。
+		 */
 		void Release(HandleType h, uint64_t deleteSync = 0) {
 			assert(IsValid(h));
 			auto prev = refCount[h.index].fetch_sub(1, std::memory_order_acq_rel);
 			assert(prev > 0 && "Release underflow");
 			if (prev == 1) EnqueueDelete(h.index, deleteSync);
 		}
-
-		// 削除要求の登録（重複を防いで期限更新）
+		/**
+		 * @brief 削除要求の登録（重複を防いで期限更新）
+		 * @param index スロットインデックス
+		 * @param deleteSync 削除要求の期限（フレームカウンタなど）。0 なら即時。
+		 */
 		void EnqueueDelete(uint32_t index, uint64_t deleteSync) {
 			std::lock_guard lk(pendingMutex_);
 			if (auto it = pendingByIndex.find(index); it == pendingByIndex.end()) {
@@ -111,8 +137,10 @@ namespace SectorFW
 				pendingDelete[it->second].deleteSync = deleteSync; // 後ろへ延ばす
 			}
 		}
-
-		// 削除要求のキャンセル（Add での復活時など）
+		/**
+		 * @brief 削除要求のキャンセル（Add での復活時など）
+		 * @param index スロットインデックス
+		 */
 		void CancelPending(uint32_t index) {
 			std::lock_guard lk(pendingMutex_);
 			auto it = pendingByIndex.find(index);
@@ -123,17 +151,27 @@ namespace SectorFW
 				// pos 以降の位置がずれるので、必要なら詰め替え最適化を入れてもよい
 			}
 		}
-
+		/**
+		 * @brief Get: 有効なハンドルなら Shared Lock 付きでリソースを返す
+		 * @param h 有効なハンドル
+		 * @return Resource リソースのラッパー
+		 */
 		[[nodiscard]] Resource Get(HandleType h) const {
 			assert(IsValid(h));
 			return { slots[h.index].data, mapMutex };
 		}
-
+		/**
+		 * @brief GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）
+		 * @param idx スロットインデックス
+		 * @return Resource リソースのラッパー
+		 */
 		[[nodiscard]] Resource GetDirect(uint32_t idx) const {
 			return { slots[idx].data, mapMutex };
 		}
-
-		// 期限到達で最終判断：ref==0 なら破棄、>0 なら削除キャンセル
+		/**
+		 * @brief 期限到達で最終判断：ref == 0 なら破棄、>0 なら削除キャンセル
+		 * @param currentFrame 現在のフレームカウンタなど
+		 */
 		void ProcessDeferredDeletes(uint64_t currentFrame) {
 			std::lock_guard lk(pendingMutex_);
 			size_t i = 0;
@@ -160,25 +198,46 @@ namespace SectorFW
 				pendingDelete.erase(pendingDelete.begin() + i);
 			}
 		}
-
+		/**
+		 * @brief ハンドルが有効かどうかをチェックする関数
+		 * @param h チェックするハンドル
+		 * @return bool 有効な場合はtrue、そうでない場合はfalse
+		 */
 		bool IsValid(HandleType h) const {
 			return h.index < slots.size() &&
 				slots[h.index].generation == h.generation &&
 				slots[h.index].alive;
 		}
 	protected:
-		// 派生が使うユーティリティ
+		/**
+		 * @brief 派生が使うユーティリティ
+		 * @detail 指定したインデックスのスロットを死んでいる状態にする（ProcessDeferredDeletes での最終破棄までの間に使う）
+		 * @param index スロットインデックス
+		 */
 		void MarkDead(uint32_t index) {
 			std::unique_lock lock(mapMutex);
 			slots[index].alive = false;
 		}
+		/**
+		 * @brief 派生が使うユーティリティ
+		 * @detail 指定したインデックスのスロットを即時に解放する（ProcessDeferredDeletes での最終破棄までの間に使う）
+		 * @param index スロットインデックス
+		 */
 		void FreeIndex(uint32_t index) {
 			std::unique_lock lock(mapMutex);
 			freeList.push_back(index);
 		}
-
+		/**
+		 * @brief スロット情報のリスト
+		 */
 		std::vector<Slot> slots;
+		/**
+		 * @brief 参照カウントのリスト
+		 */
 		std::vector<CopyableAtomic<uint32_t>> refCount;
+		/**
+		 * @brief 空きスロットインデックスのリスト
+		 */
 		std::vector<uint32_t> freeList;
 
 	protected:

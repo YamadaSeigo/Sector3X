@@ -271,6 +271,7 @@ namespace SectorFW
 			passDesc.rtvs = rtvs;
 			passDesc.dsv = m_depthStencilView.Get();
 			passDesc.cbvs = { cameraHandle };
+			passDesc.rasterizerState = RasterizerStateID::SolidCullBack;
 
 			graph.AddPass(passDesc);
 

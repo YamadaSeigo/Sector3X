@@ -1,4 +1,9 @@
-// PhysicsContactListener.h
+/*****************************************************************//**
+ * @file   PhysicsContactListener.h
+ * @brief 物理エンジンの接触イベントリスナーの実装
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
 #pragma once
 #include "PhysicsSnapshot.h"
 #include "PhysicsDevice_Util.h"
@@ -10,6 +15,9 @@ namespace SectorFW
 	{
 		class PhysicsDevice; // 前方
 
+		/**
+		 * @brief 接触イベントの種類を表す名前空間
+		 */
 		class ContactListenerImpl final : public JPH::ContactListener {
 		public:
 			explicit ContactListenerImpl(PhysicsDevice* dev) : m_dev(dev) {}

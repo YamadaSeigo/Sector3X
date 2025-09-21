@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   WinInput.h
+ * @brief Windows向けの入力デバイスを定義するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include "InputDevice.hpp"
@@ -9,8 +16,13 @@ namespace SectorFW
 {
 	namespace Input
 	{
+		/**
+		 * @brief Windows向けの入力デバイス
+		 */
 		class WinInput : public InputDevice<WinInput> {
-			// --- Windows VK Key Mapping ---
+			/**
+			 * @brief Windows VK Key Mapping
+			 */
 			constexpr static inline std::array<Key, 256> keyToCommandKey = [] {
 				std::array<Key, 256> map{};
 				map[0x00] = Key::Unknown; // No key
@@ -72,7 +84,9 @@ namespace SectorFW
 				return map;
 				}();
 
-			// --- Key to WinAPI VK Mapping ---
+			/**
+			 * @brief Key to WinAPI VK Mapping
+			 */
 			constexpr static inline std::array<int, static_cast<size_t>(Key::Count)> KeyToVKMap = [] {
 				std::array<int, static_cast<size_t>(Key::Count)> map{};
 				map[static_cast<size_t>(Key::Unknown)] = 0;
@@ -134,16 +148,24 @@ namespace SectorFW
 				return map;
 				}();
 
-			// --- Lookup Function ---
+			/**
+			 * @brief Lookup Function
+			 */
 			inline int GetVKFromKey(Key key) const noexcept {
 				return KeyToVKMap[static_cast<size_t>(key)];
 			}
 
 		public:
+			/**
+			 * @brief コンストラクタ
+			 * @param mouseInput マウス入力デバイスのポインタ
+			 */
 			explicit WinInput(WinMouseInput* mouseInput) noexcept
 				: mouseInput(mouseInput) {
 			}
-
+			/**
+			 * @brief 入力状態を更新する関数
+			 */
 			void UpdateImpl() {
 				memcpy(oldKeyStates, keyStates, sizeof(keyStates));
 
@@ -152,37 +174,66 @@ namespace SectorFW
 					assert(false && "Failed to get keyboard state");
 				}
 			}
-
+			/**
+			 * @brief キーが押されているかを確認する関数
+			 * @param key 確認するキー
+			 * @return bool 押されている場合はtrue、押されていない場合はfalse
+			 */
 			bool IsKeyPressedImpl(Key key) const noexcept {
 				return keyStates[GetVKFromKey(key)] & 0x80;
 			}
-
+			/**
+			 * @brief キーが離されたかを確認する関数
+			 * @param key 確認するキー
+			 * @return bool 離された場合はtrue、離されていない場合はfalse
+			 */
 			bool IsKeyReleasedImpl(Key key) const noexcept {
 				auto keyIndex = GetVKFromKey(key);
 				return !(keyStates[keyIndex] & 0x80) && (oldKeyStates[keyIndex] & 0x80);
 			}
-
+			/**
+			 * @brief キーがトリガーされたかを確認する関数
+			 * @param key 確認するキー
+			 * @return bool トリガーされた場合はtrue、トリガーされていない場合はfalse
+			 */
 			bool IsKeyTriggerImpl(Key key) const noexcept {
 				auto keyIndex = GetVKFromKey(key);
 				return (keyStates[keyIndex] & 0x80) && !(oldKeyStates[keyIndex] & 0x80);
 			}
-
+			/**
+			 * @brief 左ボタンが押されているかを確認する関数
+			 * @return bool 押されている場合はtrue、押されていない場合はfalse
+			 */
 			bool IsLButtonPressedImpl() const noexcept {
 				return mouseInput->IsLeftDown();
 			}
-
+			/**
+			 * @brief 右ボタンが押されているかを確認する関数
+			 * @return bool 押されている場合はtrue、押されていない場合はfalse
+			 */
 			bool IsRButtonPressedImpl() const noexcept {
 				return mouseInput->IsRightDown();
 			}
-
+			/**
+			 * @brief ミドルボタンが押されているかを確認する関数
+			 * @return bool 押されている場合はtrue、押されていない場合はfalse
+			 */
 			bool IsMouseCapturedImpl() const noexcept {
 				return mouseInput->IsCaptured();
 			}
-
+			/**
+			 * @brief マウスの移動量を取得する関数
+			 * @param outDx マウスの移動量X
+			 * @param outDy　マウスの移動量Y
+			 */
 			void GetMouseDeltaImpl(long& outDx, long& outDy) const noexcept {
 				mouseInput->GetDelta(outDx, outDy);
 			}
-
+			/**
+			 * @brief マウスのホイールの回転量を取得する関数
+			 * @param outWheelV マウスのホイールの回転量垂直
+			 * @param outWheelH マウスのホイールの回転量水平
+			 */
 			void GetMouseWheelImpl(int& outWheelV, int& outWheelH) const noexcept {
 				mouseInput->GetMouseWheel(outWheelV, outWheelH);
 			}

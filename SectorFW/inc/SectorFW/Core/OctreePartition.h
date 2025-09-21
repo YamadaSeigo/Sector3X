@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   OctreePartition.h
+ * @brief 3D 八分木（Octree）による空間分割を定義するクラス
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 #include <vector>
 #include <array>
@@ -11,7 +18,7 @@
 
 #include "ECS/component.hpp"
 #include "partition.hpp"
-#include "EntityManagerRegistryService.h"
+#include "SpatialChunkRegistryService.h"
 #include "../Math/AABB.hpp"
 #include "../Math/Frustum.hpp"
 #include "../Math/sx_math.h"
@@ -36,14 +43,23 @@ namespace SectorFW
 
 		// 統合を実行する周期（秒）
 		static inline constexpr double coalesceInterval = 10.0;
-
+		/**
+		 * @brief コンストラクタ
+		 * @detail PartitionConceptに合わせるためにworldBlockZを指定しない場合はXと同じになる
+		 * @param worldBlocksX X方向のブロックサイズ
+		 * @param worldBlocksY Y方向のブロックサイズ
+		 * @param minLeafSize 葉チャンク（SpatialChunk）の最小サイズ（ワールド単位）
+		 * @param maxEntitiesPerLeaf 葉チャンク（SpatialChunk）あたりの最大エンティティ数
+		 * @param worldBlocksZ Z方向のブロックサイズ（省略時はXと同じ）
+		 */
 		explicit OctreePartition(ChunkSizeType worldBlocksX /*ignored for symmetry*/,
 			ChunkSizeType worldBlocksY /*ignored for symmetry*/,
 			float minLeafSize,
+			ChunkSizeType worldBlocksZ = 0 /*ignored for symmetry*/,
 			uint32_t maxEntitiesPerLeaf = 1024) noexcept
 			: m_worldX(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksX* minLeafSize)))
-			, m_worldY(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksX* minLeafSize))) // 立方体に合わせる
-			, m_worldZ(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksX* minLeafSize)))
+			, m_worldY(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksY* minLeafSize))) // 立方体に合わせる
+			, m_worldZ(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksZ == 0 ? worldBlocksX : worldBlocksZ * minLeafSize)))
 			, m_minLeaf(std::max<float>(1.f, minLeafSize))
 			, m_maxPerLeafCount(std::max<uint32_t>(1, maxEntitiesPerLeaf))
 		{
@@ -54,7 +70,10 @@ namespace SectorFW
 			m_leafCount = 1; // 葉として開始
 		}
 
-		// 定期的に過小利用の下位葉を親へ統合して木を縮約
+		/**
+		 * @brief 定期的に過小利用の下位葉を親へ統合して木を縮約
+		 * @param deltaTime 前回呼び出しからの経過時間（秒）
+		 */
 		void Update(double deltaTime)
 		{
 			m_coalesceTimer += deltaTime;
@@ -63,9 +82,16 @@ namespace SectorFW
 				CoalesceUnderutilized();
 			}
 		}
-
-		// 点 p を含む葉チャンク（SpatialChunk）を取得
+		/**
+		 * @brief 点 p を含む葉チャンク（SpatialChunk）を取得
+		 * @param p ワールド座標系の点
+		 * @param reg チャンクレジストリ
+		 * @param level レベルID
+		 * @param policy 範囲外ポリシー
+		 * @return 点 p を含む葉チャンク（SpatialChunk）。範囲外でポリシーが Reject の場合は std::nullopt
+		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f p,
+			SpatialChunkRegistry& reg, LevelID level,
 			EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept
 		{
 			if (!inBounds(p.x, p.y, p.z)) {
@@ -75,22 +101,32 @@ namespace SectorFW
 				p.z = std::clamp(p.z, 0.f, float(m_worldZ) - 1e-6f);
 			}
 			Node* leaf = descendToLeaf(*m_root, p.x, p.y, p.z, /*createIfMissing=*/true);
+			EnsureKeyRegisteredForLeaf(*leaf, reg, level);
 			return &leaf->chunk;
 		}
-
+		/**
+		 * @brief 分割に依存しないグローバルな EntityManager を取得
+		 * @return グローバルな EntityManager
+		 */
 		ECS::EntityManager& GetGlobalEntityManager() noexcept { return m_global; }
-
-		// すべての葉をレジストリへ登録
-		void RegisterAllChunks(EntityManagerRegistry& reg, LevelID level)
+		/**
+		 * @brief すべての葉をレジストリへ登録
+		 * @param reg チャンクレジストリ
+		 * @param level レベルID
+		 */
+		void RegisterAllChunks(SpatialChunkRegistry& reg, LevelID level)
 		{
 			forEachLeaf([&](Node& lf) {
 				const auto [ix, iy, iz] = leafIndex(lf);
-				EntityManagerKey key = MakeOctKey(level, lf.depth, ix, iy, iz, /*gen=*/lf.generation);
+				SpatialChunkKey key = MakeOctKey(level, lf.depth, ix, iy, iz, /*gen=*/lf.generation);
 				lf.chunk.SetNodeKey(key);
-				reg.RegisterOwner(key, &lf.chunk.GetEntityManager());
+				reg.RegisterOwner(key, &lf.chunk);
 				});
 		}
-
+		/**
+		 * @brief すべてのエンティティ数を取得（グローバル + 全葉チャンク）
+		 * @return エンティティ数
+		 */
 		size_t GetEntityNum() const noexcept
 		{
 			size_t n = m_global.GetEntityCount();
@@ -100,6 +136,44 @@ namespace SectorFW
 			return n;
 		}
 
+		/**
+		 * @brief 3D フラスタム専用カリング（高さは八分木AABBからそのまま利用
+		 * @param fr フラスタム
+		 * @return 可視チャンクの配列
+		 */
+		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) noexcept
+		{
+			std::vector<SpatialChunk*> out; out.reserve(128);
+			if (!m_root) return out;
+			cullRecursive3D(*m_root, fr, out);
+			return out;
+		}
+		/**
+		 * @brief 3D フラスタム専用カリング（高さは八分木AABBからそのまま利用
+		 * @param fr フラスタム
+		 * @return 可視チャンクの配列
+		 */
+		std::vector<const SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
+		{
+			std::vector<const SpatialChunk*> out; out.reserve(128);
+			if (!m_root) return out;
+			cullRecursive3D(*m_root, fr, out);
+			return out;
+		}
+		// フラスタムカリングコールバック（高さ補助なし・八分木AABBを直接使用)）
+		template<class F>
+		void CullChunks(const Math::Frustumf& fr, F&& f) noexcept
+		{
+			if (!m_root) return;
+			cullRecursive3D(*m_root, fr, std::forward<F>(f));
+		}
+		// フラスタムカリングコールバック（高さ補助なし・八分木AABBを直接使用）
+		template<class F>
+		void CullChunks(const Math::Frustumf& fr, F&& f) const noexcept
+		{
+			if (!m_root) return;
+			cullRecursive3D(*m_root, fr, std::forward<F>(f));
+		}
 		// フラスタムカリング（可変高さ）
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr, float ymin, float ymax) noexcept
 		{
@@ -108,6 +182,7 @@ namespace SectorFW
 			cullRecursive(*m_root, fr, ymin, ymax, out);
 			return out;
 		}
+		// フラスタムカリング（可変高さ）
 		std::vector<const SpatialChunk*> CullChunks(const Math::Frustumf& fr, float ymin, float ymax) const noexcept
 		{
 			std::vector<const SpatialChunk*> out; out.reserve(128);
@@ -128,65 +203,19 @@ namespace SectorFW
 			cullRecursive(*m_root, fr, ymin, ymax, std::forward<F>(f));
 		}
 
-		// ワイヤーフレーム表示など用に、可視チャンクのバウンディングエッジを生成
-		// outLine は 2 頂点 = 1 線分。1 立方体あたり 12 線分 = 24 頂点出力。
-		uint32_t CullChunkLine(const Math::Frustumf& fr,
-			Math::Vec3f cp, float hy, Debug::LineVertex* outLine,
-			uint32_t capacity, uint32_t displayCount) const noexcept
-		{
-			if (!m_root || capacity < 24 || displayCount == 0) return 0;
-
-			std::vector<AABB> boxes; boxes.reserve(128);
-			cullRecursive(*m_root, fr, cp.y - hy, cp.y + hy, boxes);
-
-			const float maxLength = m_minLeaf * displayCount;
-			if (maxLength <= 0.f) return 0;
-
-			auto pushEdge = [&](uint32_t& w, const Math::Vec3f& a, const Math::Vec3f& b, uint32_t rgba) {
-				if (w + 2 > capacity) return false;
-				outLine[w++] = { a, rgba };
-				outLine[w++] = { b, rgba };
-				return true;
-				};
-
-			uint32_t written = 0;
-			for (const auto& box : boxes) {
-				const Math::Vec3f c = box.center();
-				const Math::Vec3f e = box.size() * 0.5f;
-
-				const Math::Vec3f d = c - Math::Vec3f{ cp.x, std::clamp(cp.y, box.lb.y, box.ub.y), cp.z };
-				const float len = d.length();
-				if (len > maxLength) continue;
-
-				const uint32_t rgba = Math::LerpColor(0xFFFFFFFFu, 0x00000000u, len / maxLength);
-
-				// 8 頂点
-				Math::Vec3f v[8]{
-					{c.x - e.x, c.y - e.y, c.z - e.z},
-					{c.x + e.x, c.y - e.y, c.z - e.z},
-					{c.x + e.x, c.y + e.y, c.z - e.z},
-					{c.x - e.x, c.y + e.y, c.z - e.z},
-					{c.x - e.x, c.y - e.y, c.z + e.z},
-					{c.x + e.x, c.y - e.y, c.z + e.z},
-					{c.x + e.x, c.y + e.y, c.z + e.z},
-					{c.x - e.x, c.y + e.y, c.z + e.z},
-				};
-				// 12 エッジ
-				const int edge[12][2] = {
-					{0,1},{1,2},{2,3},{3,0}, // 下面
-					{4,5},{5,6},{6,7},{7,4}, // 上面
-					{0,4},{1,5},{2,6},{3,7}  // 側面
-				};
-				for (int i = 0; i < 12; ++i) {
-					if (!pushEdge(written, v[edge[i][0]], v[edge[i][1]], rgba)) return written;
-				}
-			}
-			return written;
-		}
-
-		// === 3Dカリング専用ライン出力（高さ補助なし・八分木AABBを直接使用） ===
+		/**
+		 * @brief チャンクのワイヤーフレームをフラスタムカリング付きで取得
+		 * @param fr フラスタム
+		 * @param eye 目線位置
+		 * @param dummy 未使用（QuadTreePartition と同じシグネチャにするためのダミー）
+		 * @param outLine ワイヤーフレーム頂点列の出力先
+		 * @param capacity outLine の頂点容量
+		 * @param displayCount 最大表示チャンク数
+		 * @return ワイヤーフレーム頂点列
+		 */
 		uint32_t CullChunkLine(const Math::Frustumf& fr,
 			const Math::Vec3f& eye,
+			float, //dummy
 			Debug::LineVertex* outLine,
 			uint32_t capacity,
 			uint32_t displayCount) const noexcept
@@ -258,8 +287,11 @@ namespace SectorFW
 			}
 			return written;
 		}
-
-		// 指定点を含む葉を（必要なら分割しながら）必ず返す
+		/**
+		 * @brief 指定点を含む葉を（必要なら分割しながら）必ず返す
+		 * @param p ワールド座標系の点
+		 * @return 点 p を含む葉チャンク（SpatialChunk）
+		 */
 		SpatialChunk* EnsureLeafForPoint(Math::Vec3f p)
 		{
 			if (!inBounds(p.x, p.y, p.z)) {
@@ -275,8 +307,11 @@ namespace SectorFW
 			}
 			return &n->chunk;
 		}
-
-		// predicate を満たす葉を分割＆再割り当て
+		/**
+		 * @brief predicate を満たす葉を分割＆再割り当て
+		 * @param predicate 分割条件
+		 * @param posFn エンティティの位置を取得する関数
+		 */
 		void SubdivideIf(std::function<bool(const SpatialChunk&)> predicate,
 			std::function<Math::Vec3f(ECS::EntityID, ECS::EntityManager&)> posFn)
 		{
@@ -286,18 +321,25 @@ namespace SectorFW
 				});
 			for (Node* leaf : targets) subdivideAndReassign(*leaf, posFn);
 		}
-
+		/**
+		 * @brief 過大利用の葉を分割＆再割り当て
+		 * @param posFn エンティティの位置を取得する関数
+		 */
 		void SubdivideIfOverCapacity(std::function<Math::Vec3f(ECS::EntityID, ECS::EntityManager&)> posFn)
 		{
 			SubdivideIf([&](const SpatialChunk& sc) {
 				return sc.GetEntityManager().GetEntityCount() > m_maxPerLeafCount;
 				}, std::move(posFn));
 		}
-
-		// 指定座標の葉のキーを再発行してレジストリ更新（デバッグ用）
-		void ReloadLeafByPoint(Math::Vec3f p, EntityManagerRegistry& reg)
+		/**
+		 * @brief 指定座標の葉のキーを再発行してレジストリ更新（デバッグ用）
+		 * @param p ワールド座標系の点
+		 * @param reg チャンクレジストリ
+		 * @param level レベルID
+		 */
+		void ReloadLeafByPoint(Math::Vec3f p, SpatialChunkRegistry& reg, LevelID level)
 		{
-			auto opt = GetChunk(p, EOutOfBoundsPolicy::ClampToEdge);
+			auto opt = GetChunk(p, reg, level, EOutOfBoundsPolicy::ClampToEdge);
 			if (!opt) return;
 			SpatialChunk* leafSC = *opt;
 
@@ -310,17 +352,25 @@ namespace SectorFW
 
 			const auto oldKey = target->chunk.GetNodeKey();
 			const auto [ix, iy, iz] = leafIndex(*target);
-			EntityManagerKey newKey = MakeOctKey(oldKey.level, target->depth, ix, iy, iz, target->generation);
+			SpatialChunkKey newKey = MakeOctKey(oldKey.level, target->depth, ix, iy, iz, target->generation);
 
 			target->chunk.SetNodeKey(newKey);
-			reg.RegisterOwner(newKey, &target->chunk.GetEntityManager());
+			reg.RegisterOwner(newKey, &target->chunk);
 		}
-
-		// AABB / 交差検索
+		/**
+		 * @brief AABB / 交差検索
+		 * @param aabb 検索するAABB
+		 * @return 交差するチャンクの配列
+		 */
 		std::vector<SpatialChunk*> GetChunksAABB(const AABB& aabb)
 		{
 			std::vector<SpatialChunk*> out; if (!m_root) return out; queryAABB(*m_root, aabb, out); return out;
 		}
+		/**
+		 * @brief AABB / 交差検索
+		 * @param aabb 検索するAABB
+		 * @return 交差するチャンクの配列
+		 */
 		std::vector<const SpatialChunk*> GetChunksAABB(const AABB& aabb) const
 		{
 			std::vector<const SpatialChunk*> out; if (!m_root) return out; queryAABB(*m_root, aabb, out); return out;
@@ -341,35 +391,10 @@ namespace SectorFW
 		void SetMinPerLeafCount(uint32_t v) noexcept { m_minPerLeafCount = v; }
 		uint32_t GetMinPerLeafCount() const noexcept { return m_minPerLeafCount; }
 
-		// === 3D フラスタム専用カリング（高さは八分木AABBからそのまま利用） ===
-		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) noexcept
-		{
-			std::vector<SpatialChunk*> out; out.reserve(128);
-			if (!m_root) return out;
-			cullRecursive3D(*m_root, fr, out);
-			return out;
-		}
-		std::vector<const SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
-		{
-			std::vector<const SpatialChunk*> out; out.reserve(128);
-			if (!m_root) return out;
-			cullRecursive3D(*m_root, fr, out);
-			return out;
-		}
-		template<class F>
-		void CullChunks(const Math::Frustumf& fr, F&& f) noexcept
-		{
-			if (!m_root) return;
-			cullRecursive3D(*m_root, fr, std::forward<F>(f));
-		}
-		template<class F>
-		void CullChunks(const Math::Frustumf& fr, F&& f) const noexcept
-		{
-			if (!m_root) return;
-			cullRecursive3D(*m_root, fr, std::forward<F>(f));
-		}
-
 	private:
+		/**
+		 * @brief 葉のノード構造体を定義
+		 */
 		struct Node {
 			AABB bounds{};
 			uint16_t generation = 0;
@@ -381,6 +406,23 @@ namespace SectorFW
 				for (int i = 0; i < 8; ++i) if (child[i]) return false; return true;
 			}
 		};
+
+		// ユーティリティ：葉のキーが未発行/未登録なら発行して登録
+		inline void EnsureKeyRegisteredForLeaf(Node& leafNode,
+			SpatialChunkRegistry& reg,
+			LevelID level)
+		{
+			SpatialChunk& sc = leafNode.chunk;
+
+			// 既に登録済みかを軽く判定：ResolveOwner が取れるか / code==0 等で簡易チェック
+			const SpatialChunkKey cur = sc.GetNodeKey();
+			if (reg.ResolveOwner(cur) != nullptr && cur.code != 0) return; // 既登録
+
+			const auto [ix, iy, iz] = leafIndex(leafNode);
+			SpatialChunkKey key = MakeOctKey(level, leafNode.depth, ix, iy, iz, /*gen*/leafNode.generation);
+			sc.SetNodeKey(key);
+			reg.RegisterOwner(key, &sc);
+		}
 
 		// --- 3D版 AABB 収集 ---
 		void cullRecursive3D(const Node& n, const Math::Frustumf& fr, std::vector<AABB>& out) const
@@ -685,11 +727,11 @@ namespace SectorFW
 			return (ExpandBits3(x) << 0) | (ExpandBits3(y) << 1) | (ExpandBits3(z) << 2);
 		}
 
-		inline EntityManagerKey MakeOctKey(LevelID level, uint8_t depth,
+		inline SpatialChunkKey MakeOctKey(LevelID level, uint8_t depth,
 			uint32_t ix, uint32_t iy, uint32_t iz,
 			uint16_t gen = 0)
 		{
-			EntityManagerKey k{};
+			SpatialChunkKey k{};
 			k.level = level;
 			k.scheme = PartitionScheme::Octree3D; // ※ 定義が無い場合は追加/変更してください
 			k.depth = depth;
@@ -721,6 +763,7 @@ namespace SectorFW
 		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(SectorFW::OctreePartition& ctx) const noexcept
 		{
 			std::vector<ArchetypeChunk*> result;
+			result.reserve(ctx.LeafCount());
 
 			auto collect_from = [&](const ECS::EntityManager& em) {
 				const auto& all = em.GetArchetypeManager().GetAll();

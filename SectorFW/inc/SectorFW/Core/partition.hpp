@@ -14,7 +14,8 @@
 #include "Math/Frustum.hpp"
 
 #include "SpatialChunk.h"
-#include "EntityManagerRegistryService.h"
+#include "RegistryTypes.h"
+#include "SpatialChunkRegistryService.h"
 
 #include "Debug/DebugType.h"
 
@@ -33,20 +34,29 @@ namespace SectorFW
 	template <typename Derived>
 	concept PartitionConcept = requires(Derived t, Math::Vec3f v, ChunkSizeType size, float chunkSize,
 		EOutOfBoundsPolicy policy,
-		EntityManagerRegistry & reg, LevelID level,
-		const Math::Frustumf & fr, float ymin, float ymax, Math::Vec3f cp, float hy,
+		SpatialChunkRegistry & reg, LevelID level,
+		const Math::Frustumf & fr, Math::Vec3f cp, float hy,
 		Debug::LineVertex * outLine, uint32_t lineCapacity, uint32_t displayCount
 		)
 	{
+		//コンストラクタ
 		Derived{ size,size,chunkSize };
-		{ t.GetChunk(v, policy) } -> std::same_as<std::optional<SpatialChunk*>>;
+		//ポイントからチャンクを取得
+		{ t.GetChunk(v, reg, level, policy) } -> std::same_as<std::optional<SpatialChunk*>>;
+		//分割に依存しないグローバルなエンティティマネージャーを取得
 		{ t.GetGlobalEntityManager() } -> std::same_as<ECS::EntityManager&>;
+		//チャンクの登録
 		{ t.RegisterAllChunks(reg, level) } -> std::same_as<void>;
+		//エンティティの総数を取得
 		{ t.GetEntityNum() } -> std::same_as<size_t>;
-		{ t.CullChunks(fr, ymin, ymax) } -> std::same_as<std::vector<SpatialChunk*>>;
+		//フラスタムカリング
+		{ t.CullChunks(fr) } -> std::same_as<std::vector<SpatialChunk*>>;
+		//チャンクのワイヤーフレームを取得
 		{ t.CullChunkLine(fr, cp, hy, outLine, lineCapacity, displayCount) } -> std::same_as<uint32_t>;
 	};
-
+	/**
+	 * @brief 更新可能なパーティションを識別するコンセプト
+	 */
 	template <typename Derived>
 	concept HasPartitionUpdate = requires(Derived t, double deltaTime)
 	{

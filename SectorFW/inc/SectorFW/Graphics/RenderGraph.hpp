@@ -1,8 +1,15 @@
+ï»¿/*****************************************************************//**
+ * @file   RenderGraph.hpp
+ * @brief ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚°ãƒ©ãƒ•ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
-#include <functional>
 #include <optional>
 
+#include "RenderPass.hpp"
 #include "RenderQueue.h"
 #include "RenderService.h"
 
@@ -11,112 +18,42 @@
 #include "Debug/UIBus.h"
 #endif
 
+#ifndef NO_USE_PMR_RENDER_QUEUE
+#include <memory_resource>
+#endif
+#include <memory>
+
 namespace SectorFW
 {
 	namespace Graphics
 	{
-		template<typename RTV, typename SRV, typename Buffer>
-		struct RenderPass {
-			std::string name;
-			std::vector<RTV> rtvs; // RenderTargetViewƒnƒ“ƒhƒ‹
-			void* dsv = nullptr; // DepthStencilViewƒnƒ“ƒhƒ‹
-			RenderQueue* queue;
-			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW
-			std::optional<RasterizerStateID> rasterizerState = std::nullopt; // ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒgID
-			BlendStateID blendState = BlendStateID::Opaque; // ƒuƒŒƒ“ƒhƒXƒe[ƒgID
-			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // [“xƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒgID
-			std::vector<BufferHandle> cbvs; // ’è”ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹‚ÌƒŠƒXƒg
-			std::function<void()> customExecute; // FullscreenQuad‚È‚Ç
-
-			// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			RenderPass() = default;
-
-			RenderPass(
-				const std::string& name,
-				const std::vector<RTV>& rtvs,
-				void* dsv,
-				RenderQueue* queue,
-				PrimitiveTopology topology = PrimitiveTopology::TriangleList,
-				std::optional<RasterizerStateID> rasterizerState = std::nullopt,
-				BlendStateID blendState = BlendStateID::Opaque,
-				DepthStencilStateID depthStencilState = DepthStencilStateID::Default,
-				const std::vector<BufferHandle>& cbvs = {},
-				std::function<void()> customExecute = nullptr)
-				: name(name)
-				, rtvs(rtvs)
-				, dsv(dsv)
-				, queue(queue)
-				, topology(topology)
-				, rasterizerState(rasterizerState)
-				, blendState(blendState)
-				, depthStencilState(depthStencilState)
-				, cbvs(cbvs)
-				, customExecute(customExecute) {
-			}
-
-			// ƒ€[ƒuƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			RenderPass(RenderPass&& other) noexcept
-				: name(std::move(other.name))
-				, rtvs(std::move(other.rtvs))
-				, dsv(other.dsv)
-				, queue(std::move(other.queue))
-				, topology(other.topology)
-				, cbvs(std::move(other.cbvs))
-				, customExecute(std::move(other.customExecute)) {
-				other.dsv = nullptr; // ˆÀ‘S‚Ì‚½‚ßƒkƒ‹ƒNƒŠƒA
-				queue = other.queue;
-			}
-
-			// ƒ€[ƒu‘ã“ü‰‰Zq
-			RenderPass& operator=(RenderPass&& other) noexcept {
-				if (this != &other) {
-					name = std::move(other.name);
-					rtvs = std::move(other.rtvs);
-					dsv = other.dsv;
-					queue = other.queue;
-					queue = std::move(other.queue);
-					topology = other.topology;
-					cbvs = std::move(other.cbvs);
-					customExecute = std::move(other.customExecute);
-					other.dsv = nullptr;
-				}
-				return *this;
-			}
-
-			// ƒRƒs[‹Ö~‚É‚µ‚½‚¢ê‡i•K—v‚É‰‚¶‚Äj
-			RenderPass(const RenderPass&) = delete;
-			RenderPass& operator=(const RenderPass&) = delete;
-		};
-
-		template<typename RTV>
-		struct RenderPassDesc {
-			std::string name;
-			std::vector<RTV> rtvs; // RenderTargetViewƒnƒ“ƒhƒ‹
-			void* dsv = nullptr; // DepthStencilViewƒnƒ“ƒhƒ‹
-			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW
-			std::optional<RasterizerStateID> rasterizerState = std::nullopt; // ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒgID
-			BlendStateID blendState = BlendStateID::Opaque; // ƒuƒŒƒ“ƒhƒXƒe[ƒgID
-			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // [“xƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒgID
-			std::vector<BufferHandle> cbvs; // ’è”ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹‚ÌƒŠƒXƒg
-			uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME; // ƒtƒŒ[ƒ€“–‚½‚è‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”
-			std::function<void()> customExecute; // FullscreenQuad‚È‚Ç
-		};
-
+		/**
+		 * @brief RenderPassã”ã¨ã«ç®¡ç†ã—ã¦æç”»ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹
+		 */
 		template<typename Backend, PointerType RTV, PointerType SRV, PointerType Buffer>
 		class RenderGraph {
 		public:
 			using PassType = RenderPass<RTV, SRV, Buffer>;
+			static constexpr uint32_t kFlights = RENDER_QUEUE_BUFFER_COUNT; // ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¤ãƒ³ãƒ•ãƒ©ã‚¤ãƒˆæ•°
 
+			/**
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @detail RenderGraphã«ResouceManagerã®è¿½åŠ ã‚’è¡Œã†
+			 * @param backend ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰
+			 */
 			RenderGraph(Backend& backend) : backend(backend) {
-				// ƒŒƒ“ƒ_[ƒoƒbƒNƒGƒ“ƒh‚ÅRenderService‚ÉƒŠƒ\[ƒXƒ}ƒl[ƒWƒƒ[‚ğ“o˜^
+				// ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã§RenderServiceã«ãƒªã‚½ãƒ¼ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’ç™»éŒ²
 				backend.AddResourceManagerToRenderService(*this);
 			}
-
+			/**
+			 * @brief RenderPassã®è¿½åŠ 
+			 * @param desc ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ‘ã‚¹ã®è©³ç´°
+			 */
 			void AddPass(RenderPassDesc<RTV>& desc) {
 				std::unique_lock lock(*renderService.queueMutex);
 
 				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(desc.maxInstancesPerFrame));
-				renderService.queueIndex[desc.name] = renderService.renderQueues.size() - 1; // ƒŒƒ“ƒ_[ƒT[ƒrƒX‚ÉƒLƒ…[‚ğ“o˜^
+				renderService.queueIndex[desc.name] = renderService.renderQueues.size() - 1; // ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚µãƒ¼ãƒ“ã‚¹ã«ã‚­ãƒ¥ãƒ¼ã‚’ç™»éŒ²
 
 				passes.emplace_back(
 					desc.name,
@@ -129,8 +66,23 @@ namespace SectorFW
 					desc.depthStencilState,
 					desc.cbvs,
 					desc.customExecute);
-			}
 
+#ifndef NO_USE_PMR_RENDER_QUEUE
+				// ãƒ‘ã‚¹ã”ã¨ã®ãƒ©ãƒ³ã‚¿ã‚¤ãƒ ã‚’åˆæœŸåŒ–ï¼ˆå¸¸é§ã‚¢ãƒªãƒ¼ãƒŠã‚’ä½œã£ã¦ãŠãï¼‰
+				PassRuntime rt{};
+				rt.name = desc.name;
+				rt.hint = std::max<size_t>(128 * 1024, desc.maxInstancesPerFrame * sizeof(DrawCommand) / 2);
+				for (uint32_t i = 0; i < kFlights; ++i) {
+					rt.perFlight[i].init(rt.hint);
+				}
+				runtimes.emplace_back(std::move(rt));
+#endif //NO_USE_PMR_RENDER_QUEUE
+			}
+			/**
+			 * @brief ãƒ‘ã‚¹ã®å–å¾—
+			 * @param name ãƒ‘ã‚¹ã®åå‰
+			 * @return PassType& ãƒ‘ã‚¹ã®å‚ç…§
+			 */
 			PassType& GetPass(const std::string& name) {
 				for (auto& p : passes) {
 					if (p.name == name) return p;
@@ -138,9 +90,11 @@ namespace SectorFW
 				assert(false && "Pass not found");
 				return passes[0];
 			}
-
+			/**
+			 * @brief æç”»ã®å®Ÿè¡Œ
+			 */
 			void Execute() {
-				//ƒtƒŒ[ƒ€‚ÌƒCƒ“ƒNƒŠƒƒ“ƒg‚ÆƒŠƒ\[ƒX‚Ì”jŠüˆ—
+				//ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã¨ãƒªã‚½ãƒ¼ã‚¹ã®ç ´æ£„å‡¦ç†
 				backend.ProcessDeferredDeletes(++renderService.currentFrame);
 
 #ifdef _ENABLE_IMGUI
@@ -148,10 +102,10 @@ namespace SectorFW
 					auto g = Debug::BeginTreeWrite(); // lock & back buffer
 					auto& frame = g.data();
 
-					// —á‚¦‚ÎƒvƒŠƒI[ƒ_{depth w’è‚Å•½’R‰»‚µ‚½ƒcƒŠ[‚ğ‹l‚ß‚é
+					// ä¾‹ãˆã°ãƒ—ãƒªã‚ªãƒ¼ãƒ€ï¼‹depth æŒ‡å®šã§å¹³å¦åŒ–ã—ãŸãƒ„ãƒªãƒ¼ã‚’è©°ã‚ã‚‹
 					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::RenderGraph, /*leaf=*/false, "RenderGraph" });
-				} // guard ‚ÌƒfƒXƒgƒ‰ƒNƒg‚Å unlockBswap ‚Í UI ƒXƒŒƒbƒh‚ÅB
-#endif
+				} // guard ã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã§ unlockã€‚swap ã¯ UI ã‚¹ãƒ¬ãƒƒãƒ‰ã§ã€‚
+#endif // _ENABLE_IMGUI
 
 				for (auto& pass : passes) {
 					backend.SetPrimitiveTopology(pass.topology);
@@ -160,7 +114,7 @@ namespace SectorFW
 					if (useRasterizer)
 						backend.SetRasterizerState(*pass.rasterizerState);
 
-					backend.SetBlendState(pass.blendState); // ƒfƒtƒHƒ‹ƒg‚ÌƒuƒŒƒ“ƒhƒXƒe[ƒg‚ğg—p
+					backend.SetBlendState(pass.blendState); // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½¿ç”¨
 
 					backend.SetDepthStencilState(pass.depthStencilState);
 
@@ -168,7 +122,17 @@ namespace SectorFW
 
 					backend.BindGlobalCBVs(pass.cbvs);
 
+#ifndef NO_USE_PMR_RENDER_QUEUE
+					// å¸¸é§ã‚¢ãƒªãƒ¼ãƒŠï¼†cmdsã‚’å–å¾—ï¼ˆå†æ§‹ç¯‰ã—ãªã„ï¼‰
+					PassRuntime* rt = getRuntime(pass.name);
+					const uint32_t flight = renderService.currentFrame % kFlights;
+					auto& pf = rt->perFlight[flight];
+					pf.release();              // ãƒ¡ãƒ¢ãƒªã¯è§£æ”¾ã›ãšã€ãƒã‚¤ãƒ³ã‚¿ã ã‘å·»ãæˆ»ã™
+					auto& cmds = pf.cmds;      // å®¹é‡ã¯ä¿æŒã€‚clear()ã®ã¿
+					cmds.clear();
+#else
 					std::vector<DrawCommand> cmds;
+#endif //NO_USE_PMR_RENDER_QUEUE
 					const InstanceData* instances = nullptr;
 					uint32_t instCount = 0;
 
@@ -179,23 +143,48 @@ namespace SectorFW
 						auto g = Debug::BeginTreeWrite(); // lock & back buffer
 						auto& frame = g.data();
 
-						// —á‚¦‚ÎƒvƒŠƒI[ƒ_{depth w’è‚Å•½’R‰»‚µ‚½ƒcƒŠ[‚ğ‹l‚ß‚é
+						// ä¾‹ãˆã°ãƒ—ãƒªã‚ªãƒ¼ãƒ€ï¼‹depth æŒ‡å®šã§å¹³å¦åŒ–ã—ãŸãƒ„ãƒªãƒ¼ã‚’è©°ã‚ã‚‹
 						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Pass, /*leaf=*/false, "Pass : " + pass.name });
 						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::DrawCommand, /*leaf=*/true, "DrawCommand : " + std::to_string(cmds.size()) });
-					} // guard ‚ÌƒfƒXƒgƒ‰ƒNƒg‚Å unlockBswap ‚Í UI ƒXƒŒƒbƒh‚ÅB
-#endif
+					} // guard ã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã§ unlockã€‚swap ã¯ UI ã‚¹ãƒ¬ãƒƒãƒ‰ã§ã€‚
+#endif // _ENABLE_IMGUI
 
 					backend.BeginFrameUpload(instances, instCount);
-					backend.ExecuteDrawIndexedInstanced(cmds, !useRasterizer); // ƒCƒ“ƒXƒ^ƒ“ƒVƒ“ƒO‘Î‰
+					backend.ExecuteDrawIndexedInstanced(cmds, !useRasterizer); // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚·ãƒ³ã‚°å¯¾å¿œ
 
 					if (pass.customExecute) pass.customExecute();
+
+#ifndef NO_USE_PMR_RENDER_QUEUE
+					// ä½¿ç”¨é‡ã‹ã‚‰ãƒ’ãƒ³ãƒˆæ›´æ–° & å¿…è¦æ™‚ã®ã¿æ‹¡å¼µ
+					auto round_up = [](size_t x, size_t a) { return (x + (a - 1)) & ~(a - 1); };
+					size_t used = rt->perFlight[renderService.currentFrame % kFlights].tracker.used;
+					size_t next = round_up(static_cast<size_t>(used * 5 / 4), 64 * 1024); // 1.25x
+					constexpr size_t kMin = 128 * 1024, kMax = 32ull * 1024 * 1024;
+					next = (std::min)((std::max)(next, kMin), kMax);
+					size_t prev = rt->hint;
+					if (prev == 0 || next >= prev / 2) rt->hint = next; else rt->hint = prev / 2;
+
+					// ãƒ’ãƒ³ãƒˆãŒç¾åœ¨ã®åˆæœŸãƒãƒƒãƒ•ã‚¡ã‚ˆã‚Šå¤§ãããªã£ãŸã‚‰â€œã¾ã‚Œã«â€æ‹¡å¼µ
+					const uint32_t f0 = (renderService.currentFrame % kFlights);
+					if (rt->needs_grow()) {
+						for (uint32_t i = 0; i < kFlights; ++i) {
+							rt->perFlight[i].maybe_grow(rt->hint);
+						}
+					}
+#endif //NO_USE_PMR_RENDER_QUEUE
 				}
 			}
-
+			/**
+			 * @brief ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚µãƒ¼ãƒ“ã‚¹ã®å–å¾—
+			 * @return RenderService* ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚µãƒ¼ãƒ“ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
+			 */
 			RenderService* GetRenderService() {
 				return &renderService;
 			}
-
+			/**
+			 * @brief ãƒªã‚½ãƒ¼ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ç™»éŒ²
+			 * @param manager ãƒªã‚½ãƒ¼ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
+			 */
 			template<typename ResourceType>
 			void RegisterResourceManager(ResourceType* manager) {
 				renderService.RegisterResourceManager(manager);
@@ -204,7 +193,96 @@ namespace SectorFW
 		private:
 			Backend& backend;
 			std::vector<PassType> passes;
-			RenderService renderService; // ƒŒƒ“ƒ_[ƒT[ƒrƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+			RenderService renderService; // ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚µãƒ¼ãƒ“ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+
+#ifndef NO_USE_PMR_RENDER_QUEUE
+			struct PassRuntime {
+				struct TrackingResource : std::pmr::memory_resource {
+					std::pmr::memory_resource* upstream{};
+					size_t used = 0;
+					explicit TrackingResource(std::pmr::memory_resource* up = std::pmr::get_default_resource()) : upstream(up) {}
+				private:
+					void* do_allocate(size_t bytes, size_t align) override {
+						used += ((bytes + align - 1) / align) * align;
+						return upstream->allocate(bytes, align);
+					}
+					void do_deallocate(void* p, size_t bytes, size_t align) override {
+						upstream->deallocate(p, bytes, align);
+					}
+					bool do_is_equal(const std::pmr::memory_resource& other) const noexcept override {
+						return this == &other;
+					}
+				};
+
+				static constexpr size_t kStackBuf = 256 * 1024;
+				struct PerFlight {
+					// åˆæœŸãƒãƒƒãƒ•ã‚¡ï¼ˆstack ã‹ heap ã®ã©ã¡ã‚‰ã‹ã‚’ä½¿ç”¨ï¼‰
+					alignas(64) std::byte stack[kStackBuf];
+					std::unique_ptr<std::byte[]> heap{};
+					size_t heapSize{ 0 };
+					TrackingResource tracker{ std::pmr::get_default_resource() };
+					// arena ã¯ã€ŒåˆæœŸãƒãƒƒãƒ•ã‚¡ã€ã‚’å‚ç…§ã™ã‚‹ã€‚åŸºæœ¬ã¯å†æ§‹ç¯‰ã›ãš release() ã§ãƒªã‚»ãƒƒãƒˆ
+					std::pmr::monotonic_buffer_resource* arena{ nullptr };
+					// cmds ã¯ arena å¸¸é§ã® pmr::vector
+					std::pmr::vector<DrawCommand> cmds{ std::pmr::get_default_resource() };
+
+					void init(size_t hint) {
+						void* initialBuf = stack;
+						size_t initialSize = kStackBuf;
+						if (hint > kStackBuf) {
+							heapSize = hint;
+							heap = std::make_unique<std::byte[]>(heapSize);
+							initialBuf = heap.get();
+							initialSize = heapSize;
+						}
+						// arena ã‚’é…ç½®newï¼ˆä»¥å¾Œã¯ release ã§ãƒªã‚»ãƒƒãƒˆï¼‰
+						arenaStorage = std::make_unique<std::pmr::monotonic_buffer_resource>(initialBuf, initialSize, &tracker);
+						arena = arenaStorage.get();
+						cmds = std::pmr::vector<DrawCommand>{ arena };
+						tracker.used = 0;
+					}
+
+					void release() {
+						tracker.used = 0;
+						arena->release(); // å®Ÿãƒ¡ãƒ¢ãƒªã¯ä¿æŒã€‚æ¬¡ã® allocate ã¯O(1)
+						cmds.clear();
+					}
+
+					void maybe_grow(size_t newHint) {
+						if (newHint <= kStackBuf || newHint <= heapSize) return;
+						heapSize = newHint;
+						heap = std::make_unique<std::byte[]>(heapSize);
+						// arena ã‚’ä½œã‚Šç›´ã™ï¼ˆæˆé•·æ™‚ã ã‘ãƒ»ã¾ã‚Œï¼‰
+						arenaStorage = std::make_unique<std::pmr::monotonic_buffer_resource>(heap.get(), heapSize, &tracker);
+						arena = arenaStorage.get();
+						cmds = std::pmr::vector<DrawCommand>{ arena };
+						tracker.used = 0;
+					}
+				private:
+					std::unique_ptr<std::pmr::monotonic_buffer_resource> arenaStorage{};
+				};
+
+				std::string name;
+				size_t hint{ 0 };
+				PerFlight perFlight[kFlights];
+
+				bool needs_grow() const {
+					for (uint32_t i = 0; i < kFlights; ++i) {
+						// ç›´è¿‘ used ãŒ hint ã«è¿‘ã„ or è¶…ãˆãŸãƒ•ãƒ©ã‚¤ãƒˆãŒã‚ã‚‹ãªã‚‰æ‹¡å¼µå€™è£œ
+						if (perFlight[i].tracker.used > hint) return true;
+					}
+					return false;
+				}
+			};
+
+			std::vector<PassRuntime> runtimes;
+
+			PassRuntime* getRuntime(const std::string& name) {
+				for (auto& r : runtimes) if (r.name == name) return &r;
+				assert(false && "runtime not found");
+				return &runtimes.front();
+			}
+#endif //NO_USE_PMR_RENDER_QUEUE
 		};
 	}
 }

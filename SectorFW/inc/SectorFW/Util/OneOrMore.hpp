@@ -1,35 +1,47 @@
 /*****************************************************************//**
  * @file   OneOrMore.hpp
- * @brief 一つか複数の要素を保持するクラス
+ * @brief 1個以上の要素を格納するコンテナクラス
  * @author seigo_t03b63m
- * @date   June 2025
+ * @date   September 2025
  *********************************************************************/
 
 #pragma once
-
 #include <variant>
 #include <vector>
-#include <iterator>
-#include <stdexcept>
 #include <optional>
+#include <iterator>
+#include <utility>
+#include <type_traits>
+#include <cassert>
 
  /**
-  * @brief 一つか複数の要素を保持するクラス
-  * @tparam T 要素の型
-  * @details このクラスは、要素が一つだけの場合と複数ある場合の両方を効率的に扱うことができます。
+  * @brief 1個以上の要素を格納するコンテナクラス
   */
-template<typename T>
+template <class T>
 class OneOrMore {
 	std::variant<std::monostate, T, std::vector<T>> data_;
 
-public:
 	/**
-	 * @brief デフォルトコンストラクタ
+	 * @brief helper: 現在の先頭と終端ポインタを取り出す（分岐は一度だけ）
 	 */
+	static std::pair<const T*, const T*> ptr_range(const std::variant<std::monostate, T, std::vector<T>>& v) noexcept {
+		if (std::holds_alternative<T>(v)) {
+			const T& s = std::get<T>(v);
+			return { std::addressof(s), std::addressof(s) + 1 };
+		}
+		if (std::holds_alternative<std::vector<T>>(v)) {
+			const auto& vec = std::get<std::vector<T>>(v);
+			return { vec.data(), vec.data() + vec.size() };
+		}
+		return { nullptr, nullptr };
+	}
+
+public:
 	OneOrMore() = default;
+
 	/**
-	 * @brief 要素の追加
-	 * @param value 追加する要素
+	 * @brief 追加（コピー）
+	 * @param value 追加する値
 	 */
 	void add(const T& value) {
 		if (std::holds_alternative<std::monostate>(data_)) {
@@ -37,6 +49,7 @@ public:
 		}
 		else if (std::holds_alternative<T>(data_)) {
 			std::vector<T> vec;
+			vec.reserve(2);                    // ★ single→multi 変換時の再確保を避ける
 			vec.push_back(std::get<T>(data_));
 			vec.push_back(value);
 			data_ = std::move(vec);
@@ -46,20 +59,66 @@ public:
 		}
 	}
 	/**
-	 * @brief 要素の数を取得
-	 * @return 要素の数
+	 * @brief 追加（ムーブ）
+	 * @param value 追加する値（右辺値参照）
 	 */
-	size_t size() const noexcept {
+	void add(T&& value) {
+		if (std::holds_alternative<std::monostate>(data_)) {
+			data_ = std::move(value);
+		}
+		else if (std::holds_alternative<T>(data_)) {
+			std::vector<T> vec;
+			vec.reserve(2);
+			vec.push_back(std::move(std::get<T>(data_)));
+			vec.push_back(std::move(value));
+			data_ = std::move(vec);
+		}
+		else {
+			std::get<std::vector<T>>(data_).push_back(std::move(value));
+		}
+	}
+	/**
+	 * @brief emplace（余計な一時を避ける）
+	 * @param ...args コンストラクタ引数
+	 * @return T& 追加された要素への参照
+	 */
+	template <class... Args>
+	T& emplace(Args&&... args) {
+		if (std::holds_alternative<std::monostate>(data_)) {
+			data_.template emplace<T>(std::forward<Args>(args)...);
+			return std::get<T>(data_);
+		}
+		else if (std::holds_alternative<T>(data_)) {
+			std::vector<T> vec;
+			vec.reserve(2);
+			vec.push_back(std::move(std::get<T>(data_)));
+			vec.emplace_back(std::forward<Args>(args)...);
+			data_ = std::move(vec);
+			return std::get<std::vector<T>>(data_).back();
+		}
+		else {
+			auto& v = std::get<std::vector<T>>(data_);
+			v.emplace_back(std::forward<Args>(args)...);
+			return v.back();
+		}
+	}
+
+	/**
+	 * @brief サイズ / 空判定
+	 */
+	[[nodiscard]] size_t size() const noexcept {
 		if (std::holds_alternative<std::monostate>(data_)) return 0;
 		if (std::holds_alternative<T>(data_)) return 1;
 		return std::get<std::vector<T>>(data_).size();
 	}
+	[[nodiscard]] bool empty() const noexcept { return size() == 0; }
+
 	/**
-	 * @brief 要素を取得
-	 * @param index インデックス
-	 * @return 指定されたインデックスの要素
+	 * @brief 安全取得（optional<ref>）
+	 * @param index 取得する要素のインデックス
+	 * @return optional<ref> 取得できなければ nullopt
 	 */
-	std::optional<std::reference_wrapper<const T>> get(size_t index) const {
+	[[nodiscard]] std::optional<std::reference_wrapper<const T>> get(size_t index) const {
 		if (std::holds_alternative<T>(data_)) {
 			if (index == 0) return std::cref(std::get<T>(data_));
 		}
@@ -69,151 +128,191 @@ public:
 		}
 		return std::nullopt;
 	}
+
 	/**
-	 * @brief 追加される要素のためにメモリを予約
-	 * @param n　予約する要素数
+	 * @brief 直接参照（高速だが自己責任）
+	 * @param i インデックス
+	 * @return const T& 参照
+	 */
+	const T& operator[](size_t i) const {
+		if (std::holds_alternative<T>(data_)) { assert(i == 0); return std::get<T>(data_); }
+		const auto& v = std::get<std::vector<T>>(data_);
+		return v[i];
+	}
+
+	/**
+	 * @brief reserve
 	 */
 	void reserve(size_t n) {
-		if (std::holds_alternative<std::monostate>(data_)) {
-			data_ = std::vector<T>();
+		if (n <= 1) return; // single で十分
+		if (std::holds_alternative<std::vector<T>>(data_)) {
 			std::get<std::vector<T>>(data_).reserve(n);
 		}
 		else if (std::holds_alternative<T>(data_)) {
-			std::vector<T> vec;
-			vec.reserve((std::max)(n, size_t(2))); // 元の1要素+将来の追加を考慮
-			vec.push_back(std::get<T>(data_));
-			data_ = std::move(vec);
+			auto s = std::move(std::get<T>(data_));
+			std::vector<T> v; v.reserve(n); v.push_back(std::move(s));
+			data_ = std::move(v);
 		}
 		else {
-			std::get<std::vector<T>>(data_).reserve(n);
+			std::vector<T> v; v.reserve(n);
+			data_ = std::move(v);
 		}
 	}
 	/**
-	 * @brief 要素をリサイズ
-	 * @param n 新しいサイズ
-	 * @param value リサイズ時に使用する値（デフォルトはTのデフォルトコンストラクタ）
+	 * @brief clear
 	 */
-	void resize(size_t n, const T& value = T{}) {
-		if (n == 0) {
-			data_ = std::monostate{};
-		}
-		else if (n == 1) {
-			data_ = value;
-		}
-		else {
-			std::vector<T> vec(n, value);
-			data_ = std::move(vec);
-		}
-	}
+	void clear() noexcept { data_.emplace<std::monostate>(); }
+
 	/**
-	 * @brief イテレータクラス
-	 * @details このクラスは、OneOrMoreの要素をイテレートするためのクラスです。
-	 * @tparam T 要素の型
+	 * @brief 反復：分岐なしの軽量イテレータ（ポインタ対）
 	 */
 	struct iterator {
-		using IterType = typename std::vector<T>::const_iterator;
-		enum class Mode { Empty, Single, Multi };
-
-	private:
-		Mode mode = Mode::Empty;
-		T const* single = nullptr;
-		IterType begin_, end_;
-	public:
-		/**
-		 * @brief デフォルトコンストラクタ
-		 */
-		iterator() = default;
-		/**
-		 * @brief シングル要素のイテレータを初期化
-		 * @param ptr シングル要素のポインタ
-		 */
-		iterator(const T* ptr) : mode(Mode::Single), single(ptr) {}
-		/**
-		 * @brief 複数要素のイテレータを初期化
-		 * @param b 開始イテレータ
-		 * @param e 終了イテレータ
-		 */
-		iterator(IterType b, IterType e) : mode(Mode::Multi), begin_(b), end_(e) {}
-		/**
-		 * @brief イテレータのデリファレンス
-		 * @return 現在の要素の参照
-		 */
-		const T& operator*() const noexcept {
-			if (mode == Mode::Single) return *single;
-			return *begin_;
-		}
-		/**
-		 * @brief イテレータのポインタ演算子
-		 * @return 現在の要素のポインタ
-		 */
-		const T& operator->() const noexcept {
-			if (mode == Mode::Single) return *single;
-			return *begin_;
-		}
-		/**
-		 * @brief イテレータのインクリメント
-		 * @return 自身の参照
-		 */
-		iterator& operator++() noexcept {
-			if (mode == Mode::Single) {
-				mode = Mode::Empty;
-			}
-			else if (mode == Mode::Multi) {
-				++begin_;
-				if (begin_ == end_) mode = Mode::Empty;
-			}
-			return *this;
-		}
-		/**
-		 * @brief イテレータの比較
-		 * @param other 比較対象のイテレータ
-		 * @return 比較結果（等しい場合はtrue、異なる場合はfalse）
-		 */
-		bool operator==(const iterator& other) const noexcept {
-			return !(*this != other);
-		}
-		/**
-		 * @brief イテレータの比較
-		 * @param other 比較対象のイテレータ
-		 * @return 比較結果（等しい場合はfalse、異なる場合はtrue）
-		 */
-		bool operator!=(const iterator& other) const noexcept {
-			if (mode != other.mode) return true;
-			if (mode == Mode::Empty) return false;
-			if (mode == Mode::Single) return single != other.single;
-			return begin_ != other.begin_;
-		}
+		const T* cur = nullptr;
+		const T* end = nullptr;
+		using iterator_category = std::forward_iterator_tag;
+		using value_type = T; using difference_type = std::ptrdiff_t; using pointer = const T*; using reference = const T&;
+		reference operator*() const noexcept { return *cur; }
+		pointer   operator->() const noexcept { return cur; }
+		iterator& operator++() noexcept { ++cur; return *this; }
+		bool operator==(const iterator& rhs) const noexcept { return cur == rhs.cur; }
+		bool operator!=(const iterator& rhs) const noexcept { return cur != rhs.cur; }
 	};
 	/**
-	 * @brief イテレータの取得
-	 * @return イテレータの開始位置
+	 * @brief begin
+	 * @return iterator 先頭イテレータ
 	 */
-	iterator begin() const noexcept {
+	[[nodiscard]] iterator begin() const noexcept {
+		auto [b, e] = ptr_range(data_);
+		return { b, e };
+	}
+	/**
+	 * @brief end
+	 * @return iterator 終端イテレータ
+	 */
+	[[nodiscard]] iterator end() const noexcept {
+		auto [b, e] = ptr_range(data_);
+		(void)b; return { e, e };
+	}
+	/**
+	 * @brief 高速 for_each（分岐1回で全要素処理）
+	 */
+	template <class F>
+	void for_each(F&& f) const {
 		if (std::holds_alternative<T>(data_)) {
-			return iterator(&std::get<T>(data_));
+			f(std::get<T>(data_));
 		}
 		else if (std::holds_alternative<std::vector<T>>(data_)) {
-			const auto& vec = std::get<std::vector<T>>(data_);
-			return iterator(vec.begin(), vec.end());
+			const auto& v = std::get<std::vector<T>>(data_);
+			for (const auto& x : v) f(x);
+		}
+	}
+};
+
+/**
+ * @brief 1個から4個程度の要素を格納すると効率がいいコンテナクラス（Small Buffer Optimization版）
+ */
+template <class T, size_t SmallN = 4>
+class OneOrMoreSBO {
+	enum class Kind : unsigned char { Empty, Inline, Heap };
+	Kind kind_ = Kind::Empty;
+	size_t sz_ = 0;
+	std::array<T, SmallN> inline_;
+	std::vector<T> heap_;
+
+public:
+	OneOrMoreSBO() = default;
+
+	/**
+	 * @brief サイズ / 空判定
+	 * @return size_t サイズ
+	 */
+	size_t size() const noexcept { return sz_; }
+	/**
+	 * @brief 空判定
+	 * @return bool 空なら true
+	 */
+	bool   empty() const noexcept { return sz_ == 0; }
+	/**
+	 * @brief clear
+	 */
+	void clear() noexcept {
+		if (kind_ == Kind::Heap) heap_.clear();
+		kind_ = Kind::Empty; sz_ = 0;
+	}
+	/**
+	 * @brief 追加（コピー）
+	 * @param ...args コンストラクタ引数
+	 * @return T& 追加された要素への参照
+	 */
+	template <class... Args>
+	T& emplace(Args&&... args) {
+		if (kind_ != Kind::Heap && sz_ < SmallN) {
+			kind_ = Kind::Inline;
+			T& r = inline_[sz_++];
+			::new (static_cast<void*>(std::addressof(r))) T(std::forward<Args>(args)...);
+			return r;
+		}
+		if (kind_ != Kind::Heap) {
+			// migrate inline -> heap
+			heap_.reserve(SmallN + 1);
+			for (size_t i = 0; i < sz_; ++i) heap_.push_back(std::move(inline_[i]));
+			kind_ = Kind::Heap;
+		}
+		heap_.emplace_back(std::forward<Args>(args)...);
+		++sz_;
+		return heap_.back();
+	}
+	/**
+	 * @brief reserve
+	 * @param n 予約する要素数
+	 */
+	void reserve(size_t n) {
+		if (n <= SmallN) return;
+		if (kind_ != Kind::Heap) {
+			heap_.reserve(n);
+			for (size_t i = 0; i < sz_; ++i) heap_.push_back(std::move(inline_[i]));
+			kind_ = Kind::Heap;
 		}
 		else {
-			return iterator();
+			heap_.reserve(n);
 		}
 	}
 	/**
-	 * @brief イテレータの取得
-	 * @return イテレータの終了位置
+	 * @brief 直接参照（高速だが自己責任）
+	 * @param i インデックス
+	 * @return const T& 参照
+	 */
+	const T& operator[](size_t i) const {
+		if (kind_ == Kind::Inline) { assert(i < sz_); return inline_[i]; }
+		return heap_[i];
+	}
+	/**
+	 * @brief 反復イテレータ（分岐なし
+	 */
+	struct iterator {
+		const T* cur{}, * end{};
+		const T& operator*() const noexcept { return *cur; }
+		const T* operator->() const noexcept { return cur; }
+		iterator& operator++() noexcept { ++cur; return *this; }
+		bool operator==(const iterator& o) const noexcept { return cur == o.cur; }
+		bool operator!=(const iterator& o) const noexcept { return cur != o.cur; }
+	};
+	/**
+	 * @brief begin
+	 * @return iterator 先頭イテレータ
+	 */
+	iterator begin() const noexcept {
+		if (kind_ == Kind::Inline) return { inline_.data(), inline_.data() + sz_ };
+		if (kind_ == Kind::Heap)   return { heap_.data(),   heap_.data() + heap_.size() };
+		return { nullptr, nullptr };
+	}
+	/**
+	 * @brief end
+	 * @return iterator 終端イテレータ
 	 */
 	iterator end() const noexcept {
-		if (std::holds_alternative<T>(data_)) {
-			return iterator(); // mode = Empty, which acts as end for Single
-		}
-		else if (std::holds_alternative<std::vector<T>>(data_)) {
-			const auto& vec = std::get<std::vector<T>>(data_);
-			return iterator(vec.end(), vec.end());
-		}
-		else {
-			return iterator(); // Empty
-		}
+		if (kind_ == Kind::Inline) return { inline_.data() + sz_, inline_.data() + sz_ };
+		if (kind_ == Kind::Heap)   return { heap_.data() + heap_.size(), heap_.data() + heap_.size() };
+		return { nullptr, nullptr };
 	}
 };

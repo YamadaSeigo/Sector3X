@@ -1,4 +1,4 @@
-#include "Graphics/DX11/DX11ModelAssetManager.h"
+ï»¿#include "Graphics/DX11/DX11ModelAssetManager.h"
 
 #define CGLTF_IMPLEMENTATION
 
@@ -65,7 +65,7 @@ namespace SectorFW
 			TMatrix m;
 			for (size_t row = 0; row < 4; ++row)
 				for (size_t col = 0; col < 4; ++col)
-					m[row][col] = matrixValues[col + row * 4]; // glTF ‚Í column-major
+					m[row][col] = matrixValues[col + row * 4]; // glTF ã¯ column-major
 			return m;
 		}
 
@@ -77,7 +77,7 @@ namespace SectorFW
 		{
 			std::filesystem::path canonicalPath = std::filesystem::weakly_canonical(path);
 
-			// “Ç‚İ‚İ & ƒAƒZƒbƒg\’z
+			// èª­ã¿è¾¼ã¿ & ã‚¢ã‚»ãƒƒãƒˆæ§‹ç¯‰
 			DX11ModelAssetData asset;
 			asset.name = canonicalPath.stem().string();
 
@@ -107,27 +107,34 @@ namespace SectorFW
 					memcpy(&transform.m[0][0], node.matrix, sizeof(float) * 16);
 				}
 
-				//‰EèÀ•WŒn‚ÌGLTF‚Ìê‡AZ²‚ğ”½“]‚·‚é
-				if (flipZ) {
-					Math::Quatf rot = Math::Quatf::FromAxisAngle(Math::Vec3f(0, 1, 0), std::numbers::pi_v<float>);
-					transform = transform * Math::MakeScalingMatrix(Math::Vec3f(1, 1, -1)) * Math::MakeRotationMatrix(rot);
-				}
-
 				cgltf_mesh& mesh = *node.mesh;
 				for (size_t pi = 0; pi < mesh.primitives_count; ++pi) {
 					cgltf_primitive& prim = mesh.primitives[pi];
 
 					size_t vertexCount = prim.attributes[0].data->count;
 					std::vector<float> vertexBuffer(vertexCount * 8, 0.0f);
+					const auto flip_vec3z = [&](float* v) { v[0] = -v[0]; };
+					const auto flip_tangent = [&](float* t) { t[2] = -t[2]; t[3] = -t[3]; }; // z ã¨ w ã‚’åè»¢
 					for (size_t i = 0; i < prim.attributes_count; ++i) {
 						cgltf_attribute& attr = prim.attributes[i];
 						for (size_t vi = 0; vi < vertexCount; ++vi) {
 							float v[4] = {};
 							cgltf_accessor_read_float(attr.data, vi, v, 4);
-							if (attr.type == cgltf_attribute_type_position)
+							if (attr.type == cgltf_attribute_type_position) {
+								if (flipZ) flip_vec3z(v);
 								memcpy(&vertexBuffer[vi * 8 + 0], v, sizeof(float) * 3);
-							else if (attr.type == cgltf_attribute_type_normal)
+							}
+							else if (attr.type == cgltf_attribute_type_normal) {
+								if (flipZ) flip_vec3z(v);
 								memcpy(&vertexBuffer[vi * 8 + 3], v, sizeof(float) * 3);
+							}
+							else if (attr.type == cgltf_attribute_type_tangent) {
+								// glTF TANGENT ã¯ (x,y,z,w)ã€‚é¡æ˜ æ™‚ã¯ z ã¨ w ã®ç¬¦å·ã‚’åè»¢
+								if (flipZ) flip_tangent(v);
+								// â€» é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã¯ tan ã‚’æŒã£ã¦ã„ãªã„ã®ã§ï¼ˆ8è¦ç´ =pos3+nor3+uv2ï¼‰ã€
+								//   ã“ã“ã§ã¯æ›¸ãå‡ºã—å…ˆãŒãªã„ã€‚å¿…è¦ãªã‚‰ stride ã‚’ 12 ã«æ‹¡å¼µã—ã¦æ ¼ç´ã—ã¦ãã ã•ã„ã€‚
+								//   æ—¢å­˜ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆç¶­æŒã®ãŸã‚ä»Šå›ã¯ç„¡è¦–ï¼ˆæ³•ç·šãƒãƒƒãƒ—ä½¿ç”¨æ™‚ã¯ã‚·ã‚§ãƒ¼ãƒ€å´TBNå†æ§‹æˆæ¨å¥¨ï¼‰ã€‚
+							}
 							else if (attr.type == cgltf_attribute_type_texcoord)
 								memcpy(&vertexBuffer[vi * 8 + 6], v, sizeof(float) * 2);
 						}
@@ -136,8 +143,16 @@ namespace SectorFW
 					std::vector<uint32_t> indices;
 					if (prim.indices) {
 						indices.resize(prim.indices->count);
-						for (size_t i = 0; i < prim.indices->count; ++i)
+						for (size_t i = 0; i < prim.indices->count; ++i) {
 							indices[i] = static_cast<uint32_t>(cgltf_accessor_read_index(prim.indices, i));
+						}
+						//if (flipZ) {
+						//	// å·»ãé †åè»¢: (i0, i1, i2) â†’ (i0, i2, i1)
+						//	const size_t triCount = indices.size() / 3;
+						//	for (size_t t = 0; t < triCount; ++t) {
+						//		std::swap(indices[t * 3 + 1], indices[t * 3 + 2]);
+						//	}
+						//}
 					}
 
 					DX11MeshCreateDesc meshDesc{
@@ -151,7 +166,7 @@ namespace SectorFW
 					MeshHandle meshHandle;
 					meshMgr.Add(meshDesc, meshHandle);
 
-					// 1) glTF ‚Ì PBR î•ñ‚ğ’Šo
+					// 1) glTF ã® PBR æƒ…å ±ã‚’æŠ½å‡º
 					PBRMaterialCB pbrCB{};
 					if (prim.material) {
 						const auto* m = prim.material;
@@ -164,13 +179,13 @@ namespace SectorFW
 						pbrCB.metallicFactor = (float)m->pbr_metallic_roughness.metallic_factor;
 						pbrCB.roughnessFactor = (float)m->pbr_metallic_roughness.roughness_factor;
 
-						// ƒeƒNƒXƒ`ƒƒ—L–³ƒtƒ‰ƒO
+						// ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ‰ç„¡ãƒ•ãƒ©ã‚°
 						pbrCB.hasBaseColorTex = (m->pbr_metallic_roughness.base_color_texture.texture) ? 1.0f : 0.0f;
 						pbrCB.hasNormalTex = (m->normal_texture.texture) ? 1.0f : 0.0f;
 						pbrCB.hasMRRTex = (m->pbr_metallic_roughness.metallic_roughness_texture.texture) ? 1.0f : 0.0f;
 					}
 
-					// 2) ƒ}ƒeƒŠƒAƒ‹CB‚ğì¬i“à—eƒLƒƒƒbƒVƒ…‚Å©“®d•¡”rœj
+					// 2) ãƒãƒ†ãƒªã‚¢ãƒ«CBã‚’ä½œæˆï¼ˆå†…å®¹ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã§è‡ªå‹•é‡è¤‡æ’é™¤ï¼‰
 					BufferHandle matCB = cbManager.AcquireWithContent(&pbrCB, sizeof(PBRMaterialCB));
 
 					std::unordered_map<UINT, TextureHandle> psSRVMap;
@@ -195,7 +210,7 @@ namespace SectorFW
 						}
 					}
 
-					// 4) ƒeƒNƒXƒ`ƒƒ‚Ì©“®Š„‚è“–‚ÄiŠù‘¶‚ÌBaseColor‚É‰Á‚¦‚Ä Normal / MRR ‚É‚à‘Î‰j
+					// 4) ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è‡ªå‹•å‰²ã‚Šå½“ã¦ï¼ˆæ—¢å­˜ã®BaseColorã«åŠ ãˆã¦ Normal / MRR ã«ã‚‚å¯¾å¿œï¼‰
 					auto bindTex = [&](const char* name, TextureHandle h,
 						const std::vector<ShaderResourceBinding>& binding,
 						std::unordered_map<UINT, TextureHandle>& map) {
@@ -222,7 +237,7 @@ namespace SectorFW
 							bindTex("gNormalTex", tex, psBindings, psSRVMap);
 							bindTex("gNormalTex", tex, vsBindings, vsSRVMap);
 						}
-						// MetallicRoughness (’Êí R=Occlusion, G=Roughness, B=Metallic “™‚Ì—¬‹V‚ª‚ ‚é‚Ì‚ÅƒVƒF[ƒ_‘¤‚Åæ‚èŒˆ‚ß)
+						// MetallicRoughness (é€šå¸¸ R=Occlusion, G=Roughness, B=Metallic ç­‰ã®æµå„€ãŒã‚ã‚‹ã®ã§ã‚·ã‚§ãƒ¼ãƒ€å´ã§å–ã‚Šæ±ºã‚)
 						if (auto* t = m->pbr_metallic_roughness.metallic_roughness_texture.texture) {
 							std::filesystem::path texPath = baseDir / t->image->uri;
 							TextureHandle tex;
@@ -232,7 +247,7 @@ namespace SectorFW
 						}
 					}
 
-					// 5) ƒTƒ“ƒvƒ‰iƒfƒtƒHƒ‹ƒg1ŒÂ‚ğ‘SƒeƒNƒXƒ`ƒƒ‚É‹¤—L‚Å‚àOKj
+					// 5) ã‚µãƒ³ãƒ—ãƒ©ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ1å€‹ã‚’å…¨ãƒ†ã‚¯ã‚¹ãƒãƒ£ã«å…±æœ‰ã§ã‚‚OKï¼‰
 					D3D11_SAMPLER_DESC sampDesc = {};
 					sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 					sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -242,7 +257,7 @@ namespace SectorFW
 						if (b.type == D3D_SIT_SAMPLER && b.name == "gSampler")
 							samplerMap[b.bindPoint] = samp;
 
-					// 6) Material ‚ğì‚éidesc ‚É cbvMap ‚ğ’Ç‰ÁIj
+					// 6) Material ã‚’ä½œã‚‹ï¼ˆdesc ã« cbvMap ã‚’è¿½åŠ ï¼ï¼‰
 					DX11MaterialCreateDesc matDesc{
 						.shader = shader,
 						.psSRV = psSRVMap,
@@ -254,22 +269,22 @@ namespace SectorFW
 					MaterialHandle matHandle;
 					bool find = matMgr.Add(matDesc, matHandle);
 
-					//Ä—˜—p‚Å‚Í‚È‚¢ê‡ŒÄ‚Ño‚µ‘¤‚ÌˆêQÆ‚ğ•Ô‚·
+					//å†åˆ©ç”¨ã§ã¯ãªã„å ´åˆå‘¼ã³å‡ºã—å´ã®ä¸€æ™‚å‚ç…§ã‚’è¿”ã™
 					if (!find) {
 						for (auto& [slot, th] : psSRVMap) {
-							texMgr.Release(th, 0);         // Material‘¤‚ª AddRef Ï‚İ‚È‚Ì‚Å‚±‚±‚Å•Ô‚·
+							texMgr.Release(th, 0);         // Materialå´ãŒ AddRef æ¸ˆã¿ãªã®ã§ã“ã“ã§è¿”ã™
 						}
 						for (auto& [slot, th] : vsSRVMap) {
-							texMgr.Release(th, 0);         // “¯ã
+							texMgr.Release(th, 0);         // åŒä¸Š
 						}
 						for (auto& [slot, cb] : psCBVMap) {
-							cbManager.Release(cb, 0);         // “¯ã
+							cbManager.Release(cb, 0);         // åŒä¸Š
 						}
 						for (auto& [slot, cb] : vsCBVMap) {
-							cbManager.Release(cb, 0);         // “¯ã
+							cbManager.Release(cb, 0);         // åŒä¸Š
 						}
 						for (auto& [slot, sp] : samplerMap) {
-							samplerManager.Release(sp, 0);         // “¯ã
+							samplerManager.Release(sp, 0);         // åŒä¸Š
 						}
 					}
 					// -----------------------------------------------
@@ -278,7 +293,7 @@ namespace SectorFW
 						.mesh = meshHandle,
 						.material = matHandle,
 						.pso = pso,
-						.hasInstanceData = node.has_matrix || flipZ,
+						.hasInstanceData = node.has_matrix != 0,
 						.instance = {.worldMtx = transform }
 						});
 				}
@@ -296,6 +311,12 @@ namespace SectorFW
 					j.name = joint->name ? joint->name : "";
 					j.parentIndex = FindParentIndex(joint, skin.joints, skin.joints_count);
 					j.inverseBindMatrix = ExtractMatrixFromAccessor<decltype(j.inverseBindMatrix)>(skin.inverse_bind_matrices, i);
+					j.inverseBindMatrix = ExtractMatrixFromAccessor<decltype(j.inverseBindMatrix)>(skin.inverse_bind_matrices, i);
+					if (flipZ) {
+						// IBM' = S Â· IBM Â· S, S=diag(1,1,-1)
+						const auto S = Math::MakeScalingMatrix(Math::Vec3f(1.f, 1.f, -1.f));
+						j.inverseBindMatrix = S * j.inverseBindMatrix * S;
+					}
 
 					skeleton.joints.push_back(std::move(j));
 				}

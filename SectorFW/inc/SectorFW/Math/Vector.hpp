@@ -75,12 +75,8 @@ namespace SectorFW
 			T& operator[](size_t i) noexcept { return data[i]; }
 			const T& operator[](size_t i) const noexcept { return data[i]; }
 
-			Vec3& operator=(const Vec3& rhs) noexcept {
-				if (this != &rhs) {
-					x = rhs.x; y = rhs.y; z = rhs.z;
-				}
-				return *this;
-			}
+			Vec3& operator=(const Vec3& rhs) noexcept = default;
+
 			Vec3& operator=(const T& val) noexcept {
 				x = val; y = val; z = val;
 				return *this;

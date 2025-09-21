@@ -5,7 +5,7 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
-		std::optional<PSOHandle> DX11PSOManager::FindExisting(const DX11PSOCreateDesc& desc) {
+		std::optional<PSOHandle> DX11PSOManager::FindExisting(const DX11PSOCreateDesc& desc) noexcept {
 			auto it = shaderToPSO_.find(desc.shader.index);
 			if (it != shaderToPSO_.end()) return it->second;
 			return std::nullopt;

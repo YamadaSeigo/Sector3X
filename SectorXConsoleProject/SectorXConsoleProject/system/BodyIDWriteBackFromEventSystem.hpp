@@ -5,13 +5,13 @@
 #include <SectorFW/Core/ECS/ISystem.hpp>
 #include <SectorFW/Physics/PhysicsComponent.h>
 #include <SectorFW/Physics/PhysicsService.h>
-#include <SectorFW/Core/EntityManagerRegistryService.h>
+#include <SectorFW/Core/SpatialChunkRegistryService.h>
 
 // PhysicsDevice が溜めた「作成完了イベント」だけをドレインして BodyID を差し込む。
 template<class Partition>
 class BodyIDWriteBackFromEventsSystem final : public ECS::ISystem<Partition> {
 public:
-	void Update(Partition& /*p*/, const ECS::ServiceLocator& S) override {
+	void Update(Partition& partition, SectorFW::LevelContext& levelCtx, const ECS::ServiceLocator& S) override {
 		using namespace SectorFW::Physics;
 
 		std::vector<PhysicsService::CreatedBody> evs;
@@ -19,10 +19,18 @@ public:
 		if (evs.empty()) return;
 
 		for (const auto& ev : evs) {
-			ECS::EntityManager* owner = reg->ResolveOwner(ev.owner);
-			if (!owner) continue;
-			auto loc = owner->TryGetLocation(ev.e);
-			if (!loc) continue; // 既に消滅 or 移籍
+			auto owner = reg->ResolveOwner(ev.owner);
+			if (!owner) {
+				LOG_WARNING("Not find SpatialChunk");
+				continue;
+			}
+			auto& entityMgr = owner->GetEntityManager();
+
+			auto loc = entityMgr.TryGetLocation(ev.e);
+			if (!loc) {
+				LOG_WARNING("Not Get ChunkLocation");
+				continue; // 既に消滅 or 移籍
+			}
 
 			ECS::ArchetypeChunk* ch = loc->chunk;
 			size_t row = loc->index;
@@ -46,7 +54,7 @@ public:
 			LOG_ERROR("PhysicsService not found in BodyIDWriteBackFromEventsSystem");
 			return;
 		}
-		reg = serviceLocator.Get<EntityManagerRegistry>(); if (!reg) {
+		reg = serviceLocator.Get<SpatialChunkRegistry>(); if (!reg) {
 			LOG_ERROR("EntityManagerRegistry not found in BodyIDWriteBackFromEventsSystem");
 			return;
 		}
@@ -57,5 +65,5 @@ public:
 	}
 private:
 	Physics::PhysicsService* ps = nullptr;
-	EntityManagerRegistry* reg = nullptr;
+	SpatialChunkRegistry* reg = nullptr;
 };

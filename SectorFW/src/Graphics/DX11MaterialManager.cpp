@@ -36,7 +36,7 @@ namespace SectorFW
 		}
 
 		std::optional<MaterialHandle>
-			DX11MaterialManager::FindExisting(const DX11MaterialCreateDesc& desc) {
+			DX11MaterialManager::FindExisting(const DX11MaterialCreateDesc& desc) noexcept {
 			auto key = MakeKey(desc);
 			if (auto it = matCache.find(key); it != matCache.end()) {
 				return it->second;

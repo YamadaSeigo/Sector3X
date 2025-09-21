@@ -8,40 +8,49 @@
 #pragma once
 
 #include <limits>
+#include <type_traits>
 
 #include "ISystem.hpp"
 #include "ComponentTypeRegistry.h"
 #include "Query.h"
 #include "../../Math/Frustum.hpp"
 #include "../../Util/UndeletablePtr.hpp"
+#include "../../Util/function_trait.h"
 
 namespace SectorFW
 {
 	namespace ECS
 	{
-		struct ForEachFrustumDesc {
-			Math::Frustumf fru;
-			float ymin = std::numeric_limits<float>::lowest(), ymax = (std::numeric_limits<float>::max)();
-		};
-
 		//前方宣言
 		template<typename Derived, typename Partition, typename AccessSpec, typename ContextSpec>
 		class ITypeSystem;
-
+		/**
+		 * @brief StartImplのオーバーロードをチェックするコンセプト
+		 */
 		template<typename Derived, typename... Services>
 		concept HasStartImpl =
 			requires (Derived & t, UndeletablePtr<Services>... services) {
 				{ t.StartImpl(services...) } -> std::same_as<void>;
 		};
-
+		// UpdateImplのオーバーロードをチェックするコンセプト
 		template<typename Derived, typename Partition, typename... Services>
 		concept HasUpdateImpl =
+			requires (Derived & t, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(services...) } -> std::same_as<void>;
+		} ||
 			requires (Derived & t, Partition & partition, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, LevelContext ctx, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(ctx, services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, Partition & partition, LevelContext & ctx, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(partition, ctx, services...) } -> std::same_as<void>;
 		};
 
 		/**
 		 * @brief ECSシステムのインターフェース
+		 * @tparam Derived CRTPで継承する派生クラス
 		 * @tparam Partition パーティションの型
 		 * @tparam AccessTypes アクセスするコンポーネントの型
 		 * @tparam Services サービスの型
@@ -51,6 +60,7 @@ namespace SectorFW
 		protected:
 			using AccessorTuple = ComponentAccess<AccessTypes...>::Tuple;
 			using ContextTuple = ServiceContext<Services...>::Tuple;
+
 			/**
 			 * @brief 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する
 			 * @param func 関数オブジェクトまたはラムダ式
@@ -75,14 +85,20 @@ namespace SectorFW
 				for (auto& chunk : chunks)
 				{
 					ComponentAccessor<AccessTypes...> accessor(chunk);
-					func(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
+					std::forward<F>(func)(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
 				}
 			}
-
+			/**
+			 * @brief 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(フラスタムカリング付き)
+			 * @param func 関数オブジェクトまたはラムダ式
+			 * @param partition 対象のパーティション
+			 * @param fru フラスタム
+			 * @param ...args 追加の引数
+			 */
 			template<typename F, typename... Args>
-			void ForEachFrustumChunkWithAccessor(F&& func, Partition& partition, ForEachFrustumDesc& desc, Args... args)
+			void ForEachFrustumChunkWithAccessor(F&& func, Partition& partition, Math::Frustumf& fru, Args... args)
 			{
-				auto cullChunks = partition.CullChunks(desc.fru, desc.ymin, desc.ymax);
+				auto cullChunks = partition.CullChunks(fru);
 
 				if (cullChunks.empty()) return;
 
@@ -102,10 +118,15 @@ namespace SectorFW
 				for (auto& chunk : chunks)
 				{
 					ComponentAccessor<AccessTypes...> accessor(chunk);
-					func(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
+					std::forward<F>(func)(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
 				}
 			}
-
+			/**
+			 * @brief 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(エンティティID付き)
+			 * @param func 関数オブジェクトまたはラムダ式
+			 * @param partition 対象のパーティション
+			 * @param ...args 追加の引数
+			 */
 			template<typename F, typename... Args>
 			void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, Args... args)
 			{
@@ -125,7 +146,7 @@ namespace SectorFW
 				for (auto& chunk : chunks)
 				{
 					ComponentAccessor<AccessTypes...> accessor(chunk);
-					func(accessor, chunk->GetEntityCount(), chunk->GetEntities(), std::forward<Args>(args)...);
+					std::forward<F>(func)(accessor, chunk->GetEntityCount(), chunk->GetEntities(), std::forward<Args>(args)...);
 				}
 			}
 		public:
@@ -138,7 +159,6 @@ namespace SectorFW
 					context = std::make_tuple(serviceLocator.Get<Services>()...);
 				}
 			}
-
 			/**
 			 * @brief システムの開始関数
 			 * @param partition パーティションの参照
@@ -166,19 +186,28 @@ namespace SectorFW
 					);
 				}
 			}
-
 			/**
 			 * @brief システムの更新関数
 			 * @param partition パーティションの参照
 			 * @detail 自身のコンテキストを使用して、UpdateImplを呼び出す
 			 */
-			void Update(Partition& partition, const ServiceLocator& serviceLocator) override {
+			void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) override {
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
 						// 静的サービスを使用する場合、サービスロケーターから直接取得
 						std::apply(
 							[&](Services*... unpacked) {
-								static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
+								constexpr bool hasPartition = function_mentions_v<decltype(&Derived::UpdateImpl), Partition&>;
+								constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::UpdateImpl), LevelContext&>;
+
+								if constexpr (hasPartition && hasLevelContext)
+									static_cast<Derived*>(this)->UpdateImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);
+								else if constexpr (hasPartition && !hasLevelContext)
+									static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
+								else if constexpr (!hasPartition && hasLevelContext)
+									static_cast<Derived*>(this)->UpdateImpl(levelCtx, UndeletablePtr<Services>(unpacked)...);
+								else
+									static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<Services>(unpacked)...);
 							},
 							context
 						);
@@ -188,7 +217,17 @@ namespace SectorFW
 					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
 					std::apply(
 						[&](Services*... unpacked) {
-							static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
+							constexpr bool hasPartition = function_mentions_v<decltype(&Derived::UpdateImpl), Partition&>;
+							constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::UpdateImpl), LevelContext&>;
+
+							if constexpr (hasPartition && hasLevelContext)
+								static_cast<Derived*>(this)->UpdateImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);
+							else if constexpr (hasPartition && !hasLevelContext)
+								static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
+							else if constexpr (!hasPartition && hasLevelContext)
+								static_cast<Derived*>(this)->UpdateImpl(levelCtx, UndeletablePtr<Services>(unpacked)...);
+							else
+								static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<Services>(unpacked)...);
 						},
 						serviceTuple
 					);
@@ -202,9 +241,7 @@ namespace SectorFW
 				return ComponentAccess<AccessTypes...>::GetAccessInfo();
 			}
 		private:
-			/**
-			 * @brief システムのコンテキストを保持するタプル
-			 */
+			//システムのコンテキストを保持するタプル
 			ContextTuple context;
 			/**
 			 * @brief コンポーネントマスクを設定するヘルパー関数

@@ -1,4 +1,9 @@
-// PhysicsShapeManager.h
+/*****************************************************************//**
+ * @file   PhysicsShapeManager.h
+ * @brief •¨—Œ`ó‚ÌŠÇ—ƒNƒ‰ƒX
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
 #pragma once
 
 #include "IShapeResolver.h"

@@ -15,7 +15,7 @@ namespace SectorFW
 			return std::equal(suffix.rbegin(), suffix.rend(), s.rbegin());
 		}
 
-		DX11TextureManager::DX11TextureManager(ID3D11Device* device) : device(device) {}
+		DX11TextureManager::DX11TextureManager(ID3D11Device* device) noexcept : device(device) {}
 
 		DX11TextureData DX11TextureManager::CreateResource(const DX11TextureCreateDesc& desc, TextureHandle h)
 		{

@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   DX11MaterialManager.h
+ * @brief DirectX 11用のマテリアルマネージャークラスを定義するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <bitset>
@@ -11,6 +18,9 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
+		/**
+		 * @brief DirectX 11用のマテリアル作成情報構造体
+		 */
 		struct DX11MaterialCreateDesc {
 			ShaderHandle shader;
 			std::unordered_map<UINT, TextureHandle> psSRV;
@@ -19,7 +29,9 @@ namespace SectorFW
 			std::unordered_map<UINT, BufferHandle> vsCBV; // CBVバインディング
 			std::unordered_map<UINT, SamplerHandle> samplerMap; // サンプラーバインディング
 		};
-
+		/**
+		 * @brief マテリアルバインディングキャッシュ構造体
+		 */
 		template<typename CacheType>
 		struct MaterialBindingCache {
 			bool valid = false; // キャッシュが有効かどうか
@@ -33,7 +45,9 @@ namespace SectorFW
 		using MaterialBindingCacheSRV = MaterialBindingCache<ID3D11ShaderResourceView*>;
 		using MaterialBindingCacheCBV = MaterialBindingCache<ID3D11Buffer*>;
 		using MaterialBindingCacheSampler = MaterialBindingCache<ID3D11SamplerState*>;
-
+		/**
+		 * @brief DirectX 11用のマテリアルデータ構造体
+		 */
 		struct DX11MaterialData {
 			MaterialTemplateID templateID;
 			ShaderHandle shader;
@@ -44,9 +58,18 @@ namespace SectorFW
 			std::vector<BufferHandle> usedCBBuffers; // 使用中のCBハンドル
 			std::vector<SamplerHandle> usedSamplers; // 使用中のサンプラーハンドル
 		};
-
+		/**
+		 * @brief DirectX 11用のマテリアルマネージャークラス.
+		 */
 		class DX11MaterialManager : public ResourceManagerBase<DX11MaterialManager, MaterialHandle, DX11MaterialCreateDesc, DX11MaterialData> {
 		public:
+			/**
+			 * @brief コンストラクタ
+			 * @param shaderMgr シェーダーマネージャークラス
+			 * @param textureMgr テクスチャマネージャークラス
+			 * @param cbMgr CBバッファマネージャークラス
+			 * @param samplerMgr サンプラーマネージャークラス
+			 */
 			explicit DX11MaterialManager(DX11ShaderManager* shaderMgr,
 				DX11TextureManager* textureMgr,
 				DX11BufferManager* cbMgr,
@@ -54,19 +77,55 @@ namespace SectorFW
 				noexcept : shaderManager(shaderMgr), textureManager(textureMgr), cbManager(cbMgr), samplerManager(samplerMgr) {
 			}
 
-			// ResourceManagerBase フック
-			std::optional<MaterialHandle> FindExisting(const DX11MaterialCreateDesc& desc);
+			/**
+			 * @brief ResourceManagerBase フック
+			 * @param desc マテリアル作成情報
+			 * @return std::optional<MaterialHandle> 既存のマテリアルハンドル、存在しない場合は std::nullopt
+			 */
+			std::optional<MaterialHandle> FindExisting(const DX11MaterialCreateDesc& desc) noexcept;
+			/**
+			 * @brief ResourceManagerBase フック
+			 * @param desc マテリアル作成情報
+			 * @param h 登録するマテリアルハンドル
+			 */
 			void RegisterKey(const DX11MaterialCreateDesc& desc, MaterialHandle h);
-
+			/**
+			 * @brief ResourceManagerBase フック
+			 * @param desc マテリアル作成情報
+			 * @param h 登録するマテリアルハンドル
+			 * @return DX11MaterialData 作成されたマテリアルデータ
+			 */
 			DX11MaterialData CreateResource(const DX11MaterialCreateDesc& desc, MaterialHandle h);
-
+			/**
+			 * @brief 指定したインデックスのマテリアルをキャッシュから削除する関数
+			 * @param idx 削除するマテリアルのインデックス
+			 */
 			void RemoveFromCaches(uint32_t idx);
+			/**
+			 * @brief 指定したインデックスのマテリアルリソースを破棄する関数
+			 * @param idx 破棄するマテリアルのインデックス
+			 * @param currentFrame 現在のフレーム番号（遅延破棄用）
+			 */
 			void DestroyResource(uint32_t idx, uint64_t currentFrame);
-
+			/**
+			 * @brief マテリアルのシェーダーリソースビューをバインドする関数
+			 * @param ctx デバイスコンテキスト
+			 * @param cache バインディングキャッシュ
+			 */
 			static void BindMaterialPSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache);
 			static void BindMaterialVSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache);
+			/**
+			 * @brief マテリアルの定数バッファビューをバインドする関数
+			 * @param ctx デバイスコンテキスト
+			 * @param cache バインディングキャッシュ
+			 */
 			static void BindMaterialPSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache);
 			static void BindMaterialVSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache);
+			/**
+			 * @brief マテリアルのサンプラーをバインドする関数
+			 * @param ctx デバイスコンテキスト
+			 * @param cache バインディングキャッシュ
+			 */
 			static void BindMaterialSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache);
 		private:
 			MaterialBindingCacheSRV BuildBindingCacheSRV(

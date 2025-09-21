@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\SectorFW\Core\BVHPartition.h" />
+    <ClInclude Include="inc\SectorFW\Core\ChunkCrossingMove.hpp" />
     <ClInclude Include="inc\SectorFW\Core\ECS\AccessInfo.h" />
     <ClInclude Include="inc\SectorFW\Core\ECS\Accessor.hpp" />
     <ClInclude Include="inc\SectorFW\Core\ECS\Archetype.h" />
@@ -37,8 +37,9 @@
     <ClInclude Include="inc\SectorFW\Core\ECS\ServiceContext.hpp" />
     <ClInclude Include="inc\SectorFW\Core\ECS\ServiceLocator.h" />
     <ClInclude Include="inc\SectorFW\Core\ECS\SparseComponentStore.hpp" />
+    <ClInclude Include="inc\SectorFW\Core\ECS\SparseMarge.hpp" />
     <ClInclude Include="inc\SectorFW\Core\ECS\SystemScheduler.hpp" />
-    <ClInclude Include="inc\SectorFW\Core\EntityManagerRegistryService.h" />
+    <ClInclude Include="inc\SectorFW\Core\SpatialChunkRegistryService.h" />
     <ClInclude Include="inc\SectorFW\Core\GameEngine.h" />
     <ClInclude Include="inc\SectorFW\Core\Grid2DPartition.h" />
     <ClInclude Include="inc\SectorFW\Core\Grid3DPartition.h" />
@@ -47,7 +48,6 @@
     <ClInclude Include="inc\SectorFW\Core\partition.hpp" />
     <ClInclude Include="inc\SectorFW\Core\QuadTreePartition.h" />
     <ClInclude Include="inc\SectorFW\Core\RegistryTypes.h" />
-    <ClInclude Include="inc\SectorFW\Core\SAPPartitionh.h" />
     <ClInclude Include="inc\SectorFW\Core\SpatialChunk.h" />
     <ClInclude Include="inc\SectorFW\Core\World.hpp" />
     <ClInclude Include="inc\SectorFW\Debug\DebugType.h" />
@@ -79,6 +79,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\IGraphicsDevice.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderBackend.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderGraph.hpp" />
+    <ClInclude Include="inc\SectorFW\Graphics\RenderPass.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderQueue.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderTypes.h" />
@@ -105,6 +106,8 @@
     <ClInclude Include="inc\SectorFW\Physics\PhysicsSnapshot.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsTypes.h" />
     <ClInclude Include="inc\SectorFW\sector11fw.h" />
+    <ClInclude Include="inc\SectorFW\SIMD\simd_api.h" />
+    <ClInclude Include="inc\SectorFW\SIMD\simd_detect.h" />
     <ClInclude Include="inc\SectorFW\Util\AccessWrapper.hpp" />
     <ClInclude Include="inc\SectorFW\Util\alignment.h" />
     <ClInclude Include="inc\SectorFW\Util\CopyableAtomic.hpp" />
@@ -112,6 +115,7 @@
     <ClInclude Include="inc\SectorFW\Util\Flatten.hpp" />
     <ClInclude Include="inc\SectorFW\Util\for_each_macro.hpp" />
     <ClInclude Include="inc\SectorFW\Util\FrameTimer.h" />
+    <ClInclude Include="inc\SectorFW\Util\function_trait.h" />
     <ClInclude Include="inc\SectorFW\Util\Grid.hpp" />
     <ClInclude Include="inc\SectorFW\Util\Morton.h" />
     <ClInclude Include="inc\SectorFW\Util\NonCopyable.h" />
@@ -119,7 +123,6 @@
     <ClInclude Include="inc\SectorFW\Util\PathView.hpp" />
     <ClInclude Include="inc\SectorFW\Util\ResouceManagerBase.hpp" />
     <ClInclude Include="inc\SectorFW\Util\SpscRing.hpp" />
-    <ClInclude Include="inc\SectorFW\Util\TextureLoader.h" />
     <ClInclude Include="inc\SectorFW\Util\TypeChecker.hpp" />
     <ClInclude Include="inc\SectorFW\Util\UndeletablePtr.hpp" />
     <ClInclude Include="inc\SectorFW\Util\unique_variant.hpp" />
@@ -158,6 +161,9 @@
     <ClCompile Include="src\Graphics\RenderQueue.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />
     <ClCompile Include="src\Physics\PhysicsDevice.cpp" />
+    <ClCompile Include="src\SIMD\simd_avx2.cpp" />
+    <ClCompile Include="src\SIMD\simd_base.cpp" />
+    <ClCompile Include="src\SIMD\simd_init.cpp" />
     <ClCompile Include="src\Utility\message.cpp" />
     <ClCompile Include="src\Utility\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -401,6 +407,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -425,6 +432,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>

@@ -130,11 +130,16 @@ namespace SectorFW
 
 		case WM_CLOSE:
 		{
+#ifdef _CHECK_EXIT_CONFIRM
 			int res = MessageBoxA(hwnd, "終了しますか？", "確認", MB_OKCANCEL | MB_ICONQUESTION);
 			if (res == IDOK) {
 				m_mouseInput->OnFocusLost(); // 念のため状態クリア
 				DestroyWindow(hwnd); // → WM_DESTROY へ
 			}
+#else
+			m_mouseInput->OnFocusLost(); // 念のため状態クリア
+			DestroyWindow(hwnd); // → WM_DESTROY へ
+#endif
 			return 0; // 自前で完了（キャンセル時も既定破棄はさせない）
 		}
 

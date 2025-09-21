@@ -69,5 +69,8 @@
     <ClInclude Include="system\ShapeDimsRenderSystem.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="system\TestMoveSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

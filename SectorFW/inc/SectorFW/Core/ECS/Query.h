@@ -31,7 +31,7 @@ namespace SectorFW
 		template<typename>
 		inline constexpr bool always_false = false;
 		/**
-		 * @brief ECSのクエリを定義するクラス
+		 * @brief 指定したコンポーネントにマッチングするチャンクを取得ためのクラス
 		 */
 		class Query
 		{
@@ -68,13 +68,9 @@ namespace SectorFW
 				return {};
 			}
 		private:
-			/**
-			 * @brief クエリに必要なコンポーネントマスク
-			 */
+			//クエリに必要なコンポーネントマスク
 			ComponentMask required;
-			/**
-			 * @brief クエリから除外するコンポーネントマスク
-			 */
+			//クエリから除外するコンポーネントマスク
 			ComponentMask excluded;
 		};
 	}

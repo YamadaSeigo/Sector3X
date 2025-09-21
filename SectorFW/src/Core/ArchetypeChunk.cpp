@@ -17,7 +17,7 @@ namespace SectorFW
 		{
 			if (index < entityCount - 1) {
 				entities[index] = entities[entityCount - 1];
-				for (auto& [_, infos] : layout.info) {
+				for (auto& infos : layout.info) {
 					for (auto& i : infos) {
 						std::memcpy(
 							&buffer[i.offset + index * i.stride],

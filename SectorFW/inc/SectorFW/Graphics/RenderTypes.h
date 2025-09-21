@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   RenderTypes.h
+ * @brief レンダー関連の基本的な型と定数を定義するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include "../Math/Matrix.hpp"
@@ -6,32 +13,74 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
+		/**
+		 * @brief レンダリングキューのバッファ数（トリプルバッファリング推奨）
+		 */
 		static inline constexpr uint16_t RENDER_QUEUE_BUFFER_COUNT = 3;
-
+		/**
+		 * @brief メッシュハンドル構造体
+		 */
 		struct MeshHandle { uint32_t index; uint32_t generation; };
+		/**
+		 * @brief マテリアルハンドル構造体
+		 */
 		struct MaterialHandle { uint32_t index; uint32_t generation; };
+		/**
+		 * @brief シェーダハンドル構造体
+		 */
 		struct ShaderHandle { uint32_t index; uint32_t generation; };
+		/**
+		 * @brief パイプラインステートオブジェクトハンドル構造体
+		 */
 		struct PSOHandle { uint32_t index; uint32_t generation; };
+		/**
+		 * @brief テクスチャハンドル構造体
+		 */
 		struct TextureHandle { uint32_t index; uint32_t generation; };
+		/**
+		 * @brief バッファハンドル構造体
+		 */
 		struct BufferHandle { uint32_t index; uint32_t generation; };
+		/**
+		 * @brief サンプラーハンドル構造体
+		 */
 		struct SamplerHandle { uint32_t index; uint32_t generation; };
+		/**
+		 * @brief モデルアセットハンドル構造体
+		 */
 		struct ModelAssetHandle { uint32_t index; uint32_t generation; };
-
-		struct alignas(16) InstanceData
+		/**
+		 * @brief インスタンスデータ構造体
+		 */
+		struct InstanceData
 		{
 			Math::Matrix4x4f worldMtx;
 		};
-
-		struct InstanceIndex { uint32_t index = 0; };
-
+		/**
+		 * @brief インスタンスデータのインデックス構造体
+		 */
+		struct InstanceIndex {
+			uint32_t index = 0;
+			InstanceIndex& operator=(const uint32_t& idx) { index = idx; return *this; }
+		};
+		/**
+		 * @brief ソートキーを生成するヘルパ関数
+		 * @param psoIndex PSOインデックス
+		 * @param materialIndex マテリアルインデックス
+		 * @param meshIndex メッシュインデックス
+		 * @return uint64_t ソートキー
+		 */
 		inline uint64_t MakeSortKey(uint32_t psoIndex, uint32_t materialIndex, uint32_t meshIndex) {
 			return (static_cast<uint64_t>(psoIndex) << 40) |
 				(static_cast<uint64_t>(materialIndex) << 20) |
 				static_cast<uint64_t>(meshIndex);
 		}
 
-		//DrawCommand は index のみでOK（軽量・32B化しやすい）。
-		//条件：フレーム短命 + Pin / Unpin + in - flight 制御 + 投入時の generation 検証。
+		/**
+		 * @brief 描画コマンド構造体
+		 * @detail DrawCommand は index のみでOK（軽量・32B化しやすい）。
+		 * @detail 条件：フレーム短命 + Pin / Unpin + in - flight 制御 + 投入時の generation 検証。
+		 */
 		struct DrawCommand {
 			uint64_t sortKey;          // 0..63: ソートキー（PSO/材質/メッシュ/深度バケツ等をパック）
 
@@ -54,7 +103,9 @@ namespace SectorFW
 			void setCBOffsetBytes(uint32_t byteOffset) noexcept { cbOffsetDiv256 = byteOffset >> 8; }
 			uint32_t getCBOffsetBytes() const noexcept { return cbOffsetDiv256 << 8; }
 		};
-
+		/**
+		 * @brief DrawCommand のフラグビットフィールド
+		 */
 		enum DrawFlags : uint8_t {
 			DF_BindPSONeeded = 1u << 0, // 前のコマンドから PSO を切り替える必要あり
 			DF_BindMaterial = 1u << 1, // マテリアルバインドが必要
@@ -65,7 +116,9 @@ namespace SectorFW
 			DF_Skinned = 1u << 6, // スキンあり（シェーダバリアント切替のヒント）
 			// 1bit 余り
 		};
-
+		/**
+		 * @brief マテリアルテンプレートID列挙型
+		 */
 		enum class MaterialTemplateID : uint32_t {
 			PBR = 0,
 			Unlit,
@@ -73,7 +126,9 @@ namespace SectorFW
 			// ...
 			MAX_COUNT, // 有効なテンプレートの数
 		};
-
+		/**
+		 * @brief プリミティブトポロジ列挙型
+		 */
 		enum class PrimitiveTopology {
 			Undefined,
 			PointList,
@@ -90,7 +145,9 @@ namespace SectorFW
 			// ... Patch3～Patch32 など必要に応じて
 			MAX_COUNT, // ここまでが有効なトポロジ
 		};
-
+		/**
+		 * @brief ラスタライザーステートID列挙型
+		 */
 		enum class RasterizerStateID {
 			SolidCullBack,
 			SolidCullFront,
@@ -101,7 +158,9 @@ namespace SectorFW
 			// ...
 			MAX_COUNT, // 有効なラスタライザーステートの数
 		};
-
+		/**
+		 * @brief ブレンドステートID列挙型
+		 */
 		enum class BlendStateID {
 			Opaque,       // No blending
 			AlphaBlend,   // SrcAlpha / InvSrcAlpha
@@ -110,7 +169,9 @@ namespace SectorFW
 			// ...
 			MAX_COUNT,    // 有効なブレンドステートの数
 		};
-
+		/**
+		 * @brief 深度ステンシルステートID列挙型
+		 */
 		enum class DepthStencilStateID {
 			Default,          // DepthTest ON, ZWrite ON
 			DepthReadOnly,    // DepthTest ON, ZWrite OFF
@@ -118,7 +179,9 @@ namespace SectorFW
 			// ...
 			MAX_COUNT,        // 有効な深度ステンシルステートの数
 		};
-
+		/**
+		 * @brief PBRマテリアル用定数バッファ構造体
+		 */
 		struct alignas(16) PBRMaterialCB {
 			float baseColorFactor[4] = { 1,1,1,1 };
 			float metallicFactor = 1.0f;
@@ -128,9 +191,13 @@ namespace SectorFW
 			float hasMRRTex = 0.0f;
 			float _pad[3] = { 0,0,0 }; // 16B境界
 		};
-
+		/**
+		 * @brief シェーダステージ列挙型
+		 */
 		enum class ShaderStage { VS, PS /* 将来: GS, HS, DS, CS */ };
-
+		/**
+		 * @brief シェーダバリアントID型
+		 */
 		using ShaderVariantID = uint32_t;
 	}
 }

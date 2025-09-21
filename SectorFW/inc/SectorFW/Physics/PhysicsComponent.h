@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   PhysicsComponent.h
+ * @brief 物理コンポーネントを定義するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include "SectorFW/Math/Vector.hpp"
@@ -12,10 +19,16 @@
 
 namespace SectorFW
 {
+	/**
+	 * @brief JPH::BodyIDをプリミティブ型として扱うための特殊化
+	 */
 	template<> struct user_primitive<JPH::BodyID> : std::true_type {};
 
 	namespace Physics
 	{
+		/**
+		 * @brief 物理補間コンポーネント
+		 */
 		struct PhysicsInterpolation {
 			union {
 				struct {
@@ -58,12 +71,16 @@ namespace SectorFW
 			DEFINE_SOA(PhysicsInterpolation, ppx, ppy, ppz, cpx, cpy, cpz,
 				lastUpdatedFrame, prx, pry, prz, prw, crx, cry, crz, crw)
 		};
-
+		/**
+		 * @brief 物理ボディのタイプ
+		 */
 		enum BodyType : uint8_t {
 			Static = 1,
 			Dynamic = 0,
 		};
-
+		/**
+		 * @brief 物理ボディコンポーネント
+		 */
 		struct BodyComponent {
 			JPH::BodyID body = JPH::BodyID((std::numeric_limits<uint32_t>::max)());   // 生成後にセット（読み取り用）
 			uint16_t    world;  // 所属ワールド
@@ -72,7 +89,9 @@ namespace SectorFW
 
 			DEFINE_SOA(BodyComponent, body, world, kinematic, isStatic)
 		};
-
+		/**
+		 * @brief 形状寸法コンポーネント
+		 */
 		struct ShapeDims {
 			enum Type : uint8_t {
 				Box = 0,

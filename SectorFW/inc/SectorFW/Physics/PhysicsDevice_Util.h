@@ -1,4 +1,9 @@
-// PhysicsDevice_Util.h
+/*****************************************************************//**
+ * @file   PhysicsDevice_Util.h
+ * @brief PhysicsDevice 用のユーティリティ
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
 #pragma once
 #include "PhysicsTypes.h"
 #include <Jolt/Jolt.h>

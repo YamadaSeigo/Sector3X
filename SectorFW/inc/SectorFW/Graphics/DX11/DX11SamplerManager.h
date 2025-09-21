@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   DX11SamplerManager.h
+ * @brief DirectX 11のサンプラーステートを管理するクラス
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include "_dx11inc.h"
@@ -6,6 +13,9 @@
 #include <unordered_map>
 #include <string>
 
+ /**
+  * @brief D3D11_SAMPLER_DESCの比較演算子
+  */
 inline bool operator==(const D3D11_SAMPLER_DESC& a, const D3D11_SAMPLER_DESC& b) {
 	return memcmp(&a, &b, sizeof(D3D11_SAMPLER_DESC)) == 0;
 }
@@ -14,37 +24,64 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
+		/**
+		 * @brief DirectX 11のサンプラーステートを管理するクラス
+		 */
 		struct DX11SamplerCreateDesc {
 			std::string name;
 			D3D11_SAMPLER_DESC desc;
 		};
-
+		/**
+		 * @brief DirectX 11のサンプラーステートのデータ
+		 */
 		struct DX11SamplerData {
 			ComPtr<ID3D11SamplerState> state;
 			std::string_view name;
 		};
-
+		/**
+		 * @brief D3D11_SAMPLER_DESCのハッシュ関数
+		 */
 		struct DX11SamplerDescHash {
 			std::size_t operator()(const D3D11_SAMPLER_DESC& desc) const {
 				return HashBufferContent(&desc, sizeof(desc));
 			}
 		};
-
+		/**
+		 * @brief DirectX 11のサンプラーステートを管理するクラス
+		 */
 		class DX11SamplerManager : public ResourceManagerBase<
 			DX11SamplerManager, SamplerHandle, DX11SamplerCreateDesc, DX11SamplerData>
 		{
 		public:
-			DX11SamplerManager(ID3D11Device* device) : device(device) {}
-
-			std::optional<SamplerHandle> FindExisting(const DX11SamplerCreateDesc& desc) {
+			/**
+			 * @brief コンストラクタ
+			 * @param device DirectX 11のデバイス
+			 */
+			DX11SamplerManager(ID3D11Device* device) noexcept : device(device) {}
+			/**
+			 * @brief 既存のサンプラーステートを名前で検索する関数
+			 * @param desc サンプラーステートの作成情報
+			 * @return std::optional<SamplerHandle> 既存のサンプラーステートのハンドル、存在しない場合はstd::nullopt
+			 */
+			std::optional<SamplerHandle> FindExisting(const DX11SamplerCreateDesc& desc) noexcept {
 				if (auto it = nameToHandle.find(desc.name); it != nameToHandle.end())
 					return it->second;
 				return std::nullopt;
 			}
+			/**
+			 * @brief サンプラーステートを名前で登録する関数
+			 * @param desc サンプラーステートの作成情報
+			 * @param h 登録するサンプラーステートのハンドル
+			 */
 			void RegisterKey(const DX11SamplerCreateDesc& desc, SamplerHandle h) {
 				nameToHandle.emplace(desc.name, h);
 			}
-
+			/**
+			 * @brief サンプラーステートを作成する関数
+			 * @param desc サンプラーステートの作成情報
+			 * @param h 登録するサンプラーステートのハンドル
+			 * @return DX11SamplerData 作成されたサンプラーステートのデータ
+			 */
 			DX11SamplerData CreateResource(const DX11SamplerCreateDesc& desc, SamplerHandle h) {
 				DX11SamplerData data{};
 
@@ -58,7 +95,10 @@ namespace SectorFW
 
 				return data;
 			}
-
+			/**
+			 * @brief D3D11_SAMPLER_DESCの正規化を行う関数
+			 * @param d 正規化するD3D11_SAMPLER_DESC
+			 */
 			static void NormalizeDesc(D3D11_SAMPLER_DESC& d)
 			{
 				// 既定を軽く穴埋め（必要に応じて調整）
@@ -88,14 +128,21 @@ namespace SectorFW
 					d.MaxAnisotropy = 8;
 				}
 			}
-
-			// 16進の短い文字列を作るヘルパ（任意）
+			/**
+			 * @brief 16進の短い文字列を作るヘルパ（任意）
+			 * @param v 変換する値
+			 * @return std::string 16進の短い文字列
+			 */
 			static std::string Hex64(uint64_t v) {
 				char buf[17];
 				snprintf(buf, sizeof(buf), "%016llx", static_cast<unsigned long long>(v));
 				return std::string(buf);
 			}
-
+			/**
+			 * @brief D3D11_SAMPLER_DESCからサンプラーステートを取得または作成する関数
+			 * @param in D3D11_SAMPLER_DESCの作成情報
+			 * @return SamplerHandle 取得または作成されたサンプラーステートのハンドル
+			 */
 			SamplerHandle AddWithDesc(const D3D11_SAMPLER_DESC& in)
 			{
 				D3D11_SAMPLER_DESC desc = in;
@@ -127,14 +174,21 @@ namespace SectorFW
 
 				return handle;
 			}
-
+			/**
+			 * @brief 名前でサンプラーステートを検索する関数
+			 * @param name サンプラーステートの名前
+			 * @return SamplerHandle サンプラーステートのハンドル、存在しない場合は空のハンドル
+			 */
 			SamplerHandle FindByName(const std::string& name) const {
 				auto it = nameToHandle.find(name);
 				if (it != nameToHandle.end()) return it->second;
 				assert(false && "Sampler not found");
 				return {};
 			}
-
+			/**
+			 * @brief キャッシュからサンプラーステートを削除する関数
+			 * @param idx 削除するサンプラーステートのインデックス
+			 */
 			void RemoveFromCaches(uint32_t idx) {
 				auto& d = slots[idx].data;
 				if (!std::string(d.name).empty()) nameToHandle.erase(std::string(d.name));
@@ -143,10 +197,14 @@ namespace SectorFW
 					handleToDesc.erase(k);
 				}
 			}
+			/**
+			 * @brief サンプラーステートを破棄する関数
+			 * @param idx 破棄するサンプラーステートのインデックス
+			 * @param currentFrame 現在のフレーム番号（未使用）
+			 */
 			void DestroyResource(uint32_t idx, uint64_t /*currentFrame*/) {
 				slots[idx].data.state.Reset();
 			}
-
 		private:
 			ID3D11Device* device;
 			std::unordered_map<D3D11_SAMPLER_DESC, SamplerHandle, DX11SamplerDescHash> samplerCache;

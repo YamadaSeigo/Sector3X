@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   RenderService.h
+ * @brief レンダーサービスを定義するクラス
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <unordered_map>
@@ -12,13 +19,22 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
+		/**
+		 * @brief Systemが依存するレンダーサービスを管理するクラス
+		 */
 		struct RenderService
 		{
 			template<typename Backend, PointerType RTV, PointerType SRV, PointerType Buffer>
 			friend class RenderGraph;
-
+			/**
+			 * @brief コンストラクタ
+			 */
 			RenderService() : queueMutex(std::make_unique<std::shared_mutex>()) {}
-
+			/**
+			 * @brief RenderQueueのProducerSessionを取得する関数
+			 * @param passName　パス名
+			 * @return　RenderQueue::ProducerSession レンダークエリのプロデューサーセッション
+			 */
 			RenderQueue::ProducerSession GetProducerSession(const std::string& passName)
 			{
 				std::shared_lock lock(*queueMutex);
@@ -30,6 +46,11 @@ namespace SectorFW
 
 				return renderQueues[it->second]->MakeProducer();
 			}
+			/**
+			 * @brief RenderQueueのProducerSessionを取得する関数
+			 * @param index インデックス
+			 * @return RenderQueue::ProducerSession レンダークエリのプロデューサーセッション
+			 */
 			RenderQueue::ProducerSession GetProducerSession(size_t index)
 			{
 				std::shared_lock lock(*queueMutex);
@@ -38,9 +59,12 @@ namespace SectorFW
 				}
 				return renderQueues[index]->MakeProducer();
 			}
-
+			/**
+			 * @brief 指定した型のResouceManagerを取得する関数
+			 * @return ResourceType* 指定した型のResouceManagerのポインタ(見つからない場合はnullptr)
+			 */
 			template<typename ResourceType>
-			ResourceType* GetResourceManager()
+			ResourceType* GetResourceManager() noexcept
 			{
 				auto it = resourceManagers.find(typeid(ResourceType));
 				if (it == resourceManagers.end()) {

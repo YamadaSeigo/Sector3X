@@ -1,4 +1,9 @@
-// sx_math.hpp
+/*****************************************************************//**
+ * @file   sx_math.h
+ * @brief 数学関数と定数を提供するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
 #pragma once
 #include <type_traits>
 #include <limits>

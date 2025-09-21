@@ -1,9 +1,14 @@
-// Morton2D.h
+/*****************************************************************//**
+ * @file   Morton.h
+ * @brief ZigZag変換とMortonコード（Zオーダー曲線）を扱うヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
 #pragma once
 #include <cstdint>
 
 namespace SectorFW {
-	// --- オプション：負のセル座標を扱う場合の ZigZag 変換 ---
+	//オプション：負のセル座標を扱う場合の ZigZag 変換 ---
 	[[nodiscard]] static inline constexpr uint64_t ZigZag64(int64_t v) noexcept {
 		// [-2^63, 2^63-1] -> [0, 2^64-1]
 		return (uint64_t(v) << 1) ^ uint64_t(v >> 63);

@@ -26,8 +26,8 @@ namespace SectorFW
 	namespace Math
 	{
 		//==============================
-// 先行宣言: 乗算カーネル
-//==============================
+		// 先行宣言: 乗算カーネル
+		//==============================
 		template<size_t R, size_t K, size_t C, typename T>
 		struct MatMulKernel;
 
@@ -49,13 +49,13 @@ namespace SectorFW
 			}
 
 			// 添字
-			std::array<T, Cols>& operator[](size_t r) noexcept { return m[r]; }
-			const std::array<T, Cols>& operator[](size_t r) const noexcept { return m[r]; }
+			inline std::array<T, Cols>& operator[](size_t r) noexcept { return m[r]; }
+			inline const std::array<T, Cols>& operator[](size_t r) const noexcept { return m[r]; }
 
 			// 連続ポインタ（SIMDヘルパー用）
-			T* data()       noexcept { return &m[0][0]; }
-			const T* data() const noexcept { return &m[0][0]; }
-			const T* ToPointer() const noexcept { return &m[0][0]; } // T* で安全
+			inline T* data()       noexcept { return &m[0][0]; }
+			inline const T* data() const noexcept { return &m[0][0]; }
+			inline const T* ToPointer() const noexcept { return &m[0][0]; } // T* で安全
 
 			// 行列積 (ディスパッチ)
 			template <size_t OtherCols>
@@ -68,6 +68,38 @@ namespace SectorFW
 		// 型エイリアス
 		using Matrix4x4f = Matrix<4, 4, float>;
 		using Matrix4x4d = Matrix<4, 4, double>;
+
+		//=== 4x4 float 専用: 16B 整列 + 連続メモリ ===
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+		template<>
+		struct alignas(16) Matrix<4, 4, float> {
+			static constexpr size_t kRows = 4;
+			static constexpr size_t kCols = 4;
+			// C 配列で連続メモリ（行ごと 16B 境界を満たす）
+			float m[4][4];
+
+			static Matrix Identity() noexcept {
+				Matrix I{};
+				I.m[0][0] = 1.f; I.m[1][1] = 1.f; I.m[2][2] = 1.f; I.m[3][3] = 1.f;
+				return I;
+			}
+			// 添字互換
+			inline float* operator[](size_t r) noexcept { return m[r]; }
+			inline const float* operator[](size_t r) const noexcept { return m[r]; }
+			// 連続ポインタ
+			inline float* data()       noexcept { return &m[0][0]; }
+			inline const float* data() const noexcept { return &m[0][0]; }
+			inline const float* ToPointer() const noexcept { return &m[0][0]; }
+
+			// 行列積ディスパッチ（既存の特化が呼ばれる）
+			template <size_t OtherCols>
+			Matrix<4, OtherCols, float>
+				operator*(const Matrix<4, OtherCols, float>& rhs) const noexcept {
+				return MatMulKernel<4, 4, OtherCols, float>::eval(*this, rhs);
+			}
+		};
+		static_assert(alignof(Matrix4x4f) >= 16, "Matrix4x4f must be 16B aligned");
+#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 
 		//==============================
 		// スカラー汎用カーネル
@@ -100,12 +132,12 @@ namespace SectorFW
 #else
 	// FMA命令が使えない場合は MUL+ADD
 				return _mm_add_ps(_mm_mul_ps(a, b), c);
-#endif
+#endif // defined(__FMA__)
 #else
 				return _mm_add_ps(_mm_mul_ps(a, b), c);
-#endif
+#endif // defined(__FMA__) || (defined(_MSC_VER) && !defined(_M_IX86) /* x64 */
 			}
-		}
+		} // namespace detail
 
 		// C = A(4x4) * B(4x4)  row-major, 列ベクトル規約
 		template<>
@@ -114,10 +146,10 @@ namespace SectorFW
 				Matrix4x4f C{};
 
 				// B の 4 行をベクトルでロード（各行が連続）
-				const __m128 b0 = _mm_loadu_ps(B.m[0].data());
-				const __m128 b1 = _mm_loadu_ps(B.m[1].data());
-				const __m128 b2 = _mm_loadu_ps(B.m[2].data());
-				const __m128 b3 = _mm_loadu_ps(B.m[3].data());
+				const __m128 b0 = _mm_loadu_ps(B.m[0]);
+				const __m128 b1 = _mm_loadu_ps(B.m[1]);
+				const __m128 b2 = _mm_loadu_ps(B.m[2]);
+				const __m128 b3 = _mm_loadu_ps(B.m[3]);
 
 				for (int i = 0; i < 4; ++i) {
 					const __m128 a0 = _mm_set1_ps(A.m[i][0]);
@@ -130,12 +162,12 @@ namespace SectorFW
 					r = detail::fmadd_ps(a2, b2, r);
 					r = detail::fmadd_ps(a3, b3, r);
 
-					_mm_storeu_ps(C.m[i].data(), r);
+					_mm_storeu_ps(C.m[i], r);
 				}
 				return C;
 			}
 		};
-#endif
+#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 
 		//==============================
 		// 転置
@@ -152,18 +184,18 @@ namespace SectorFW
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 		inline Matrix4x4f TransposeMatrix(const Matrix4x4f& M) noexcept {
 			Matrix4x4f Rt{};
-			__m128 r0 = _mm_loadu_ps(M.m[0].data());
-			__m128 r1 = _mm_loadu_ps(M.m[1].data());
-			__m128 r2 = _mm_loadu_ps(M.m[2].data());
-			__m128 r3 = _mm_loadu_ps(M.m[3].data());
+			__m128 r0 = _mm_loadu_ps(M.m[0]);
+			__m128 r1 = _mm_loadu_ps(M.m[1]);
+			__m128 r2 = _mm_loadu_ps(M.m[2]);
+			__m128 r3 = _mm_loadu_ps(M.m[3]);
 			_MM_TRANSPOSE4_PS(r0, r1, r2, r3);
-			_mm_storeu_ps(Rt.m[0].data(), r0);
-			_mm_storeu_ps(Rt.m[1].data(), r1);
-			_mm_storeu_ps(Rt.m[2].data(), r2);
-			_mm_storeu_ps(Rt.m[3].data(), r3);
+			_mm_storeu_ps(Rt.m[0], r0);
+			_mm_storeu_ps(Rt.m[1], r1);
+			_mm_storeu_ps(Rt.m[2], r2);
+			_mm_storeu_ps(Rt.m[3], r3);
 			return Rt;
 		}
-#endif
+#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 
 		//==============================
 		// 4x4 一般逆行列（スカラー）
@@ -237,10 +269,10 @@ namespace SectorFW
 // 回転が正規直交(=R^T=R^{-1}) と仮定した最速パス
 		inline Matrix4x4f InverseAffineOrthonormal(const Matrix4x4f& M) noexcept {
 			// 行列の4行をロード
-			__m128 r0 = _mm_loadu_ps(M.m[0].data());
-			__m128 r1 = _mm_loadu_ps(M.m[1].data());
-			__m128 r2 = _mm_loadu_ps(M.m[2].data());
-			__m128 r3 = _mm_loadu_ps(M.m[3].data());
+			__m128 r0 = _mm_loadu_ps(M.m[0]);
+			__m128 r1 = _mm_loadu_ps(M.m[1]);
+			__m128 r2 = _mm_loadu_ps(M.m[2]);
+			__m128 r3 = _mm_loadu_ps(M.m[3]);
 
 			// 列に変換（col0, col1, col2, col3）
 			_MM_TRANSPOSE4_PS(r0, r1, r2, r3);
@@ -280,7 +312,7 @@ namespace SectorFW
 			// 最下行は (0,0,0,1)
 			return Out;
 		}
-#endif
+#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 
 		// 一般アフィン（R が任意の非特異 3x3）の逆行列
 		inline Matrix4x4f InverseAffine(const Matrix4x4f& M) noexcept {
@@ -345,10 +377,10 @@ namespace SectorFW
 		// 右辺 B が同一のとき（B のロードをループ外へ）
 		inline void MultiplyManyBySameRight(const Matrix4x4f* A, const Matrix4x4f& B, Matrix4x4f* C, size_t n) noexcept {
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-			const __m128 b0 = _mm_loadu_ps(B.m[0].data());
-			const __m128 b1 = _mm_loadu_ps(B.m[1].data());
-			const __m128 b2 = _mm_loadu_ps(B.m[2].data());
-			const __m128 b3 = _mm_loadu_ps(B.m[3].data());
+			const __m128 b0 = _mm_loadu_ps(B.m[0]);
+			const __m128 b1 = _mm_loadu_ps(B.m[1]);
+			const __m128 b2 = _mm_loadu_ps(B.m[2]);
+			const __m128 b3 = _mm_loadu_ps(B.m[3]);
 
 			for (size_t idx = 0; idx < n; ++idx) {
 				const Matrix4x4f& A0 = A[idx];
@@ -363,22 +395,22 @@ namespace SectorFW
 					r = detail::fmadd_ps(a2, b2, r);
 					r = detail::fmadd_ps(a3, b3, r);
 
-					_mm_storeu_ps(C[idx].m[i].data(), r);
+					_mm_storeu_ps(C[idx].m[i], r);
 				}
 			}
 #else
 			for (size_t i = 0; i < n; ++i) C[i] = A[i] * B;
-#endif
+#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 		}
 
 		// 点群変換（p' = M * [x y z 1]^T）
 		inline void TransformPoints(const Matrix4x4f& M, const Vec3<float>* inPts, Vec3<float>* outPts, size_t n) noexcept {
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 			// 列ベクトル向けに列を一度だけ用意（転置で取得）
-			__m128 r0 = _mm_loadu_ps(M.m[0].data());
-			__m128 r1 = _mm_loadu_ps(M.m[1].data());
-			__m128 r2 = _mm_loadu_ps(M.m[2].data());
-			__m128 r3 = _mm_loadu_ps(M.m[3].data());
+			__m128 r0 = _mm_loadu_ps(M.m[0]);
+			__m128 r1 = _mm_loadu_ps(M.m[1]);
+			__m128 r2 = _mm_loadu_ps(M.m[2]);
+			__m128 r3 = _mm_loadu_ps(M.m[3]);
 			_MM_TRANSPOSE4_PS(r0, r1, r2, r3); // r0..r3 が列（col0..col3）
 
 			for (size_t i = 0; i < n; ++i) {
@@ -405,7 +437,7 @@ namespace SectorFW
 				outPts[i].y = M.m[1][0] * x + M.m[1][1] * y + M.m[1][2] * z + M.m[1][3];
 				outPts[i].z = M.m[2][0] * x + M.m[2][1] * y + M.m[2][2] * z + M.m[2][3];
 			}
-#endif
+#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 		}
 
 		//==============================
@@ -560,13 +592,179 @@ namespace SectorFW
 			};
 		}
 
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+		// ---- Matrix4x4f への SIMD アサイン支援 ----
+		inline void SetZero(Matrix4x4f& M) noexcept {
+			const __m128 z = _mm_setzero_ps();
+			_mm_store_ps(&M.m[0][0], z);
+			_mm_store_ps(&M.m[1][0], z);
+			_mm_store_ps(&M.m[2][0], z);
+			_mm_store_ps(&M.m[3][0], z);
+		}
+
+		inline void SetIdentity(Matrix4x4f& M) noexcept {
+			// 対角だけ 1.0、他 0.0
+			const __m128 z = _mm_setzero_ps();
+			_mm_store_ps(&M.m[0][0], z);
+			_mm_store_ps(&M.m[1][0], z);
+			_mm_store_ps(&M.m[2][0], z);
+			_mm_store_ps(&M.m[3][0], z);
+			M.m[0][0] = 1.f; M.m[1][1] = 1.f; M.m[2][2] = 1.f; M.m[3][3] = 1.f;
+		}
+
+		// 行単位（4 要素）で未整列ポインタからロードして格納
+		inline void SetRow(Matrix4x4f& M, int r, const float* row4) noexcept {
+			__m128 v = _mm_loadu_ps(row4);
+			_mm_store_ps(&M.m[r][0], v);
+		}
+
+		// 行単位で __m128 からそのまま格納（ホットパス用）
+		inline void SetRow(Matrix4x4f& M, int r, __m128 v) noexcept {
+			_mm_store_ps(&M.m[r][0], v);
+		}
+
+		// 16 個の連続 float（row-major）から一括ロード
+		inline void LoadRowMajor(Matrix4x4f& M, const float* p16_rowMajor) noexcept {
+			_mm_store_ps(&M.m[0][0], _mm_loadu_ps(p16_rowMajor + 0));
+			_mm_store_ps(&M.m[1][0], _mm_loadu_ps(p16_rowMajor + 4));
+			_mm_store_ps(&M.m[2][0], _mm_loadu_ps(p16_rowMajor + 8));
+			_mm_store_ps(&M.m[3][0], _mm_loadu_ps(p16_rowMajor + 12));
+		}
+
+		// 16 個の連続 float（column-major）から一括ロード
+		// 4 本の列ベクトルを読み、転置して行列に格納
+		inline void LoadColumnMajor(Matrix4x4f& M, const float* p16_colMajor) noexcept {
+			__m128 c0 = _mm_loadu_ps(p16_colMajor + 0);
+			__m128 c1 = _mm_loadu_ps(p16_colMajor + 4);
+			__m128 c2 = _mm_loadu_ps(p16_colMajor + 8);
+			__m128 c3 = _mm_loadu_ps(p16_colMajor + 12);
+			_MM_TRANSPOSE4_PS(c0, c1, c2, c3); // 列→行へ
+			_mm_store_ps(&M.m[0][0], c0);
+			_mm_store_ps(&M.m[1][0], c1);
+			_mm_store_ps(&M.m[2][0], c2);
+			_mm_store_ps(&M.m[3][0], c3);
+		}
+
+		// 16 個の float を row-major で書き出す
+		inline void StoreRowMajor(const Matrix4x4f& M, float* dst16_rowMajor) noexcept {
+			_mm_storeu_ps(dst16_rowMajor + 0, _mm_load_ps(&M.m[0][0]));
+			_mm_storeu_ps(dst16_rowMajor + 4, _mm_load_ps(&M.m[1][0]));
+			_mm_storeu_ps(dst16_rowMajor + 8, _mm_load_ps(&M.m[2][0]));
+			_mm_storeu_ps(dst16_rowMajor + 12, _mm_load_ps(&M.m[3][0]));
+		}
+
+		// 4 本の __m128（行ベクトル）から高速に代入
+		inline void SetRows(Matrix4x4f& M, __m128 r0, __m128 r1, __m128 r2, __m128 r3) noexcept {
+			_mm_store_ps(&M.m[0][0], r0);
+			_mm_store_ps(&M.m[1][0], r1);
+			_mm_store_ps(&M.m[2][0], r2);
+			_mm_store_ps(&M.m[3][0], r3);
+		}
+
+		// 任意スカラーで全埋め（ブロードキャスト＋4 行ストア）
+		inline void Fill(Matrix4x4f& M, float v) noexcept {
+			__m128 s = _mm_set1_ps(v);
+			_mm_store_ps(&M.m[0][0], s);
+			_mm_store_ps(&M.m[1][0], s);
+			_mm_store_ps(&M.m[2][0], s);
+			_mm_store_ps(&M.m[3][0], s);
+		}
+
+		// 3x3（上左）を __m128×3 で一気に入れる（w=0 に初期化）
+		inline void SetUpper3x3(Matrix4x4f& M, __m128 r0, __m128 r1, __m128 r2) noexcept {
+			alignas(16) float t0[4], t1[4], t2[4];
+			_mm_store_ps(t0, r0); _mm_store_ps(t1, r1); _mm_store_ps(t2, r2);
+			// r?.w は無視（0 にする）
+			t0[3] = 0.f; t1[3] = 0.f; t2[3] = 0.f;
+			_mm_store_ps(&M.m[0][0], _mm_load_ps(t0));
+			_mm_store_ps(&M.m[1][0], _mm_load_ps(t1));
+			_mm_store_ps(&M.m[2][0], _mm_load_ps(t2));
+		}
+
+		// 最下行を [0,0,0,1] に（アフィン初期化で便利）
+		inline void SetBottomRowAffine(Matrix4x4f& M) noexcept {
+			_mm_store_ps(&M.m[3][0], _mm_set_ps(1.f, 0.f, 0.f, 0.f)); // (x,y,z,w) の順に格納
+		}
+#else
+		inline void SetZero(Matrix4x4f& M) noexcept {
+			for (int r = 0; r < 4; ++r)
+				for (int c = 0; c < 4; ++c)
+					M.m[r][c] = 0.0f;
+		}
+
+		inline void SetIdentity(Matrix4x4f& M) noexcept {
+			SetZero(M);
+			M.m[0][0] = 1.0f; M.m[1][1] = 1.0f; M.m[2][2] = 1.0f; M.m[3][3] = 1.0f;
+		}
+
+		// 行 r に 4 要素をまとめて代入（row4 は x,y,z,w の順で 4 要素）
+		inline void SetRow(Matrix4x4f& M, int r, const float* row4) noexcept {
+			M.m[r][0] = row4[0];
+			M.m[r][1] = row4[1];
+			M.m[r][2] = row4[2];
+			M.m[r][3] = row4[3];
+		}
+
+		// 16 個の連続 float（row-major: 行が連続）をそのままロード
+		inline void LoadRowMajor(Matrix4x4f& M, const float* p16_rowMajor) noexcept {
+			for (int r = 0; r < 4; ++r)
+				for (int c = 0; c < 4; ++c)
+					M.m[r][c] = p16_rowMajor[r * 4 + c];
+		}
+
+		// 16 個の連続 float（column-major: 列が連続）を転置して格納
+		inline void LoadColumnMajor(Matrix4x4f& M, const float* p16_colMajor) noexcept {
+			// 列優先 → 行優先へ： M[r][c] = colMajor[c*4 + r]
+			for (int r = 0; r < 4; ++r)
+				for (int c = 0; c < 4; ++c)
+					M.m[r][c] = p16_colMajor[c * 4 + r];
+		}
+
+		// 16 個の float を row-major で書き出し
+		inline void StoreRowMajor(const Matrix4x4f& M, float* dst16_rowMajor) noexcept {
+			for (int r = 0; r < 4; ++r)
+				for (int c = 0; c < 4; ++c)
+					dst16_rowMajor[r * 4 + c] = M.m[r][c];
+		}
+
+		// 行ベクトルを 4 本まとめてセット（各 r? は 4 要素配列）
+		inline void SetRows(Matrix4x4f& M,
+			const float* r0, const float* r1,
+			const float* r2, const float* r3) noexcept {
+			SetRow(M, 0, r0);
+			SetRow(M, 1, r1);
+			SetRow(M, 2, r2);
+			SetRow(M, 3, r3);
+		}
+
+		// 全要素を同じ値で埋める
+		inline void Fill(Matrix4x4f& M, float v) noexcept {
+			for (int r = 0; r < 4; ++r)
+				for (int c = 0; c < 4; ++c)
+					M.m[r][c] = v;
+		}
+
+		// 上左 3x3 を 3 本の行ベクトルで設定（w 要素は 0 にする）
+		inline void SetUpper3x3(Matrix4x4f& M,
+			const float* r0, const float* r1, const float* r2) noexcept {
+			M.m[0][0] = r0[0]; M.m[0][1] = r0[1]; M.m[0][2] = r0[2]; M.m[0][3] = 0.0f;
+			M.m[1][0] = r1[0]; M.m[1][1] = r1[1]; M.m[1][2] = r1[2]; M.m[1][3] = 0.0f;
+			M.m[2][0] = r2[0]; M.m[2][1] = r2[1]; M.m[2][2] = r2[2]; M.m[2][3] = 0.0f;
+		}
+
+		// 最下行を [0,0,0,1] に（アフィン初期化）
+		inline void SetBottomRowAffine(Matrix4x4f& M) noexcept {
+			M.m[3][0] = 0.0f; M.m[3][1] = 0.0f; M.m[3][2] = 0.0f; M.m[3][3] = 1.0f;
+		}
+#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+
 		//==============================
 		// 推奨: アフィン逆行列の統合入口
 		//==============================
 		inline Matrix4x4f InverseFastAffine(const Matrix4x4f& M) noexcept {
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 			if (IsOrthonormalRotation3x3(M)) return InverseAffineOrthonormal(M);
-#endif
+#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 			return InverseAffine(M);
 		}
 	}

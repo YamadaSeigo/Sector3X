@@ -9,15 +9,16 @@
 
 #include "ECS/ComponentTypeRegistry.h"
 #include "ECS/SystemScheduler.hpp"
-#include "Math/Transform.hpp"
 #include "partition.hpp"
 #include "RegistryTypes.h"
+#include "ChunkCrossingMove.hpp"
 
-#include "Debug/logger.h"
-#include "Util/extract_type.hpp"
+#include "../Math/Transform.hpp"
+#include "../Debug/logger.h"
+#include "../Util/extract_type.hpp"
 
 #ifdef _ENABLE_IMGUI
-#include "Debug/UIBus.h"
+#include "../Debug/UIBus.h"
 #endif // _ENABLE_IMGUI
 
 namespace SectorFW
@@ -29,18 +30,34 @@ namespace SectorFW
 		Main, // フル更新対象
 		Sub   // 限定的更新対象
 	};
+
+	/**
+	 * @brief Systemに渡すレベルの情報や操作を提供する構造体
+	 */
+	struct LevelContext {
+		// 2) ディファード運用
+		BudgetMover mover;
+
+		inline LevelID GetID() const noexcept { return id; }
+	private:
+		LevelID id = {};
+
+		template<PartitionConcept Partition>
+		friend class Level;
+	};
+
 	/**
 	 * @brief デフォルトのチャンクラインサイズを定義する型
 	 */
-	static constexpr ChunkSizeType DefaultChunkHeight = 64; // デフォルトのチャンクラインサイズ
+	static constexpr ChunkSizeType DefaultChunkHeight = 32; // デフォルトのチャンクラインサイズ
 	/**
 	 * @brief デフォルトのチャンクカラムサイズを定義する型
 	 */
-	static constexpr ChunkSizeType DefaultChunkWidth = 64; // デフォルトのチャンクカラムサイズ
+	static constexpr ChunkSizeType DefaultChunkWidth = 32; // デフォルトのチャンクカラムサイズ
 
-	static constexpr float DefaultChunkCellSize = 64.0f; // デフォルトのチャンクサイズ
+	static constexpr float DefaultChunkCellSize = 128.0f; // デフォルトのチャンクサイズ
 	/**
-	 * @brief レベルを定義するクラス
+	 * @brief レベル(シーン単位)を定義するクラス
 	 * @tparam Partition パーティションの型
 	 */
 	template<PartitionConcept Partition>
@@ -59,13 +76,14 @@ namespace SectorFW
 		 * @param _chunkHeight チャンクの高さ
 		 * @param _chunkCellSize チャンクのセルサイズ
 		 */
-		explicit Level(const std::string& name, ELevelState state = ELevelState::Main,
+		explicit Level(const std::string& name, SpatialChunkRegistry& reg, ELevelState state = ELevelState::Main,
 			ChunkSizeType _chunkWidth = DefaultChunkWidth, ChunkSizeType _chunkHeight = DefaultChunkHeight,
 			float _chunkCellSize = DefaultChunkCellSize
 		) noexcept
-			: name(name), state(state),
+			: name(name), state(state), entityManagerReg(reg),
 			partition(_chunkWidth, _chunkHeight, _chunkCellSize) {
-			id = LevelID(nextID.fetch_add(1, std::memory_order_relaxed));
+			levelCtx.id = LevelID(nextID.fetch_add(1, std::memory_order_relaxed));
+			partition.RegisterAllChunks(reg, levelCtx.id);
 		}
 		/**
 		 * @brief T が Args... で構築可能なときだけ、このコンストラクタを有効化
@@ -75,15 +93,17 @@ namespace SectorFW
 			requires std::constructible_from<Partition, Args...> &&
 		(!(std::same_as<std::remove_cvref_t<Args>, Level> || ...)) // 自分自身のコピー/ムーブと衝突しないようガード
 			explicit(sizeof...(Args) == 1) // 引数1個のときだけ explicit、などの好み調整も可
-			Level(const std::string& name, ELevelState state = ELevelState::Main, Args&&... args) noexcept
-			: name(name), state(state),
+			Level(const std::string& name, SpatialChunkRegistry& reg, ELevelState state = ELevelState::Main,
+				Args&&... args) noexcept
+			: name(name), state(state), entityManagerReg(reg),
 			partition(std::forward<Args>(args)...) {
-			id = LevelID(nextID.fetch_add(1, std::memory_order_relaxed));
+			levelCtx.id = LevelID(nextID.fetch_add(1, std::memory_order_relaxed));
+			partition.RegisterAllChunks(reg, levelCtx.id);
 		}
 		/**
 		 * @brief LevelIDの取得関数
 		 */
-		LevelID GetID() const noexcept { return id; }
+		LevelID GetID() const noexcept { return levelCtx.id; }
 		/**
 		 * @brief 更新処理
 		 */
@@ -94,7 +114,7 @@ namespace SectorFW
 				auto& frame = g.data();
 
 				// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Level, /*leaf=*/false, "Level : " + std::to_string(id) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Level, /*leaf=*/false, "Level : " + std::to_string(levelCtx.id) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/true, "Partition : " + std::string(typeid(Partition).name()).substr(6) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/false, "System" });
@@ -105,7 +125,10 @@ namespace SectorFW
 				partition.Update(deltaTime);
 			}
 
-			scheduler.UpdateAll(partition, serviceLocator);
+			scheduler.UpdateAll(partition, levelCtx, serviceLocator);
+
+			//書くスレッドでチャンクを跨いだ移動を実行
+			BudgetMover::Accessor::MoverFlush(levelCtx.mover, *serviceLocator.Get<SpatialChunkRegistry>(), 2000);
 		}
 		/**
 		 * @brief 限定的な更新処理
@@ -117,14 +140,13 @@ namespace SectorFW
 				auto& frame = g.data();
 
 				// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Level, /*leaf=*/true, "Limited Level : " + std::to_string(id) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Level, /*leaf=*/true, "Limited Level : " + std::to_string(levelCtx.id) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
-
 			// 限定的なSystemだけを実行（例：位置補間やフェードアウト処理）
 			for (auto& sys : limitedSystems) {
-				sys->Update(partition, serviceLocator);
+				sys->Update(partition, levelCtx, serviceLocator);
 			}
 		}
 		/**
@@ -163,7 +185,7 @@ namespace SectorFW
 				auto transform = extract_first_of_type<TransformType>(components...);
 				if (transform)
 				{
-					auto chunk = partition.GetChunk(transform->location, EOutOfBoundsPolicy::ClampToEdge); // Transformの位置に基づいてチャンクを取得
+					auto chunk = partition.GetChunk(transform->location, entityManagerReg, this->levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transformの位置に基づいてチャンクを取得
 					if (chunk)
 					{
 						id = (*chunk)->GetEntityManager().AddEntity<Components...>(mask, components...);
@@ -184,13 +206,38 @@ namespace SectorFW
 
 			return id;
 		}
+		/**
+		 * @brief グローバルエンティティを追加する関数
+		 * @param ...components 追加するコンポーネントの可変引数
+		 * @return std::optional<ECS::EntityID> エンティティIDのオプション
+		 */
+		template<typename... Components>
+		std::optional<ECS::EntityID> AddGlobalEntity(const Components&... components)
+		{
+			using namespace ECS;
+
+			ComponentMask mask;
+			(SetMask<Components>(mask), ...);
+
+			EntityID id = EntityID::Invalid();
+
+			id = partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
+
+			// エンティティIDが無効な場合はエラーをログ出力
+			if (!id.IsValid()) {
+				LOG_ERROR("EntityID is not Valid : %d", id.index);
+				return std::nullopt; // エンティティの追加に失敗した場合
+			}
+
+			return id;
+		}
 
 		/**
 		 * @brief すべてのチャンクのEntityManagerをレジスターに登録する
-		 * @param reg
+		 * @param reg EntityManagerRegistryの参照
 		 */
-		void RegisterAllChunks(EntityManagerRegistry& reg) {
-			partition.RegisterAllChunks(reg, id);
+		void RegisterAllChunks(SpatialChunkRegistry& reg) {
+			partition.RegisterAllChunks(reg, levelCtx.id);
 		}
 
 		/**
@@ -220,38 +267,26 @@ namespace SectorFW
 		ELevelState GetState() const noexcept { return state; }
 
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept {
-			return partition.GetChunk(location, policy);
+			return partition.GetChunk(location, entityManagerReg, this->levelCtx.id, policy);
 		}
 	private:
-		/**
-		 * @brief レベルの世代を生成するための静的なアトミック変数
-		 * @detail レベルごとに一意な世代を生成するために使用されます。
-		 */
+		//レベルの世代を生成するための静的なアトミック変数
+		//レベルごとに一意な世代を生成するために使用されます。
 		static inline std::atomic<LevelID> nextID;
-		/**
-		 * @brief レベルの一意なID
-		 */
-		LevelID id = 0; // レベルの一意なID（必要に応じて使用）
-		/**
-		 * @brief レベルの名前
-		 */
+		//レベルのコンテキスト
+		LevelContext levelCtx;
+		//レベルの名前
 		std::string name;
-		/**
-		 * @brief レベルの状態
-		 */
+		//レベルの状態
 		ELevelState state;
-		/**
-		 * @brief スケジューラ
-		 */
+		//スケジューラ
 		SchedulerType scheduler;
-		/**
-		 * @brief 限定的なシステムのリスト
-		 * @detail 限定的な更新対象のシステムを格納します。
-		 */
+		//限定的なシステムのリスト
+		//限定的な更新対象のシステムを格納します。
 		std::vector<std::unique_ptr<SystemType>> limitedSystems;
-		/**
-		 * @brief パーティション
-		 */
+		//パーティション
 		Partition partition;
+		//EntityManagerRegistryの参照
+		SpatialChunkRegistry& entityManagerReg;
 	};
 }

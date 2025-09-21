@@ -1,10 +1,12 @@
 #include <SectorFW/Debug/ImGuiBackendDX11Win32.h>
+#include <SectorFW/Core/ChunkCrossingMove.hpp>
 #include "system/CameraSystem.h"
 #include "system/ModelRenderSystem.h"
 #include "system/PhysicsSystem.h"
 #include "system/BuildBodiesFromIntentsSystem.hpp"
 #include "system/BodyIDWriteBackFromEventSystem.hpp"
 #include "system/ShapeDimsRenderSystem.h"
+#include "system/TestMoveSystem.h"
 #include <string>
 
 //デバッグ用
@@ -116,11 +118,9 @@ int main(void)
 	//==コンポーネントの登録=====================================
 	//main.cppに集めた方がコンパイル効率がいいので、ここで登録している
 	//※複数人で開発する場合は、各自のコンポーネントを別ファイルに分けて登録するようにする
-	ComponentTypeRegistry::Register<Transform>();
-	ComponentTypeRegistry::Register<Velocity>();
-	ComponentTypeRegistry::Register<Position>();
 	ComponentTypeRegistry::Register<CModel>();
 	ComponentTypeRegistry::Register<TransformSoA>();
+	ComponentTypeRegistry::Register<SpatialMotionTag>();
 	ComponentTypeRegistry::Register<Physics::BodyComponent>();
 	ComponentTypeRegistry::Register<Physics::PhysicsInterpolation>();
 	ComponentTypeRegistry::Register<Physics::ShapeDims>();
@@ -136,7 +136,7 @@ int main(void)
 	Physics::PhysicsDevice::InitParams params;
 	params.maxBodies = 100000;
 	params.maxBodyPairs = 64 * 1024;
-	params.maxContactConstraints = 1 * 1024;
+	params.maxContactConstraints = 2 * 1024;
 	params.workerThreads = -1; // 自動
 
 	Physics::PhysicsDevice physics;
@@ -157,7 +157,7 @@ int main(void)
 	Graphics::I3DCameraService* cameraService = &dx11CameraService;
 
 	ECS::ServiceLocator serviceLocator(graphics.GetRenderService(), &physicsService, inputService, cameraService);
-	serviceLocator.InitAndRegisterStaticService<EntityManagerRegistry>();
+	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	//デバッグ用の初期化
 	//========================================================================================-
@@ -190,11 +190,10 @@ int main(void)
 	//========================================================================================-
 
 	World<Grid2DPartition, Grid3DPartition, QuadTreePartition, OctreePartition> world(std::move(serviceLocator));
-	auto entityManagerReg = world.GetServiceLocator().Get<EntityManagerRegistry>();
+	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
 
 	for (int i = 0; i < 1; ++i) {
-		auto level = std::unique_ptr<Level<Grid3DPartition>>(new Level<Grid3DPartition>("Level" + std::to_string(i), ELevelState::Main,
-			(ChunkSizeType)4, (ChunkSizeType)4,(ChunkSizeType)4, 64.0f));
+		auto level = std::unique_ptr<Level<OctreePartition>>(new Level<OctreePartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
 
 		// System登録
 		auto& scheduler = level->GetScheduler();
@@ -202,6 +201,7 @@ int main(void)
 
 		scheduler.AddSystem<ModelRenderSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<CameraSystem>(world.GetServiceLocator());
+		//scheduler.AddSystem<TestMoveSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
@@ -211,14 +211,21 @@ int main(void)
 		auto sphere = ps->MakeSphere(0.5f);//ps->MakeBox({ 0.5f, 0.5f, 0.5f }); // Box形状を生成
 		auto sphereDims = ps->GetShapeDims(sphere);
 
-		auto box = ps->MakeBox({ 10.0f,0.5f, 10.0f });
+		auto box = ps->MakeBox({ 1000.0f,0.5f, 1000.0f });
 		auto boxDims = ps->GetShapeDims(box);
+
+		Math::Vec3f src = { 0.0f,50.0f,0.0f };
+		Math::Vec3f dst = src;
 
 		// Entity生成
 		for (int j = 0; j < 10; ++j) {
 			for (int k = 0; k < 10; ++k) {
-				for (int n = 0; n < 1; ++n) {
-					Math::Vec3f location = { powf(float(j),3), float(n) * 2.0f, powf(float(k),3) };
+				for (int n = 0; n < 10; ++n) {
+					Math::Vec3f location = { powf(float(j),2), float(n) * 32.0f, powf(float(k),2) };
+					auto chunk = level->GetChunk(location);
+					auto key = chunk.value()->GetNodeKey();
+					SpatialMotionTag tag{};
+					tag.handle = { key, chunk.value() };
 					auto id = level->AddEntity(
 						TransformSoA{ location, Math::Quatf(0.0f,0.0f,0.0f,1.0f),Math::Vec3f(1.0f,1.0f,1.0f) },
 						CModel{ modelAssetHandle },
@@ -227,11 +234,11 @@ int main(void)
 							location, // 初期位置
 							Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
 						),
-						sphereDims.value()
+						sphereDims.value(),
+						tag
 					);
 					/*if (id) {
-						auto chunk = level->GetChunk(location);
-						ps->EnqueueCreateIntent(id.value(), sphere, chunk.value()->GetNodeKey());
+						ps->EnqueueCreateIntent(id.value(), sphere, key);
 					}*/
 				}
 			}
@@ -253,7 +260,7 @@ int main(void)
 			ps->EnqueueCreateIntent(id.value(), box, chunk.value()->GetNodeKey());
 		}
 
-		world.AddLevel(std::move(level), *entityManagerReg);
+		world.AddLevel(std::move(level));
 	}
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);

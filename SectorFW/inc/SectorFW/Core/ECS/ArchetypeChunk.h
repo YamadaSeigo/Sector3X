@@ -35,7 +35,7 @@ namespace SectorFW
 		 */
 		using BufferType = uint8_t;
 		/**
-		 * @brief アーキタイプチャンクを表すクラス
+		 * @brief 対象のアーキタイプのコンポーネントのデータを格納するクラス
 		 */
 		class ArchetypeChunk {
 		public:
@@ -56,13 +56,13 @@ namespace SectorFW
 			template<typename T>
 			std::optional<T*> GetColumn() noexcept {
 				ComponentTypeID id = ComponentTypeRegistry::GetID<T>();
-				auto it = layout.info.find(id);
-				if (it == layout.info.end()) {
+				auto it = layout.infoIdx.find(id);
+				if (it == layout.infoIdx.end()) [[unlikely]] {
 					LOG_ERROR("Component type ID %d not found in layout", id);
 					return std::nullopt; // or throw an exception
 				}
-				auto info = it->second.get(0);
-				if (!info) {
+				auto info = layout.info[it->second].get(0);
+				if (!info) [[unlikely]] {
 					LOG_ERROR("Component type ID %d not found info", id);
 					return std::nullopt;
 				}
@@ -101,25 +101,15 @@ namespace SectorFW
 			 */
 			const std::vector<EntityID>& GetEntities() const noexcept { return entities; }
 		private:
-			/**
-			 * @brief アーキタイプチャンクのバッファ
-			 */
+			//アーキタイプチャンクのバッファ
 			BufferType buffer[ChunkSizeBytes] = {};
-			/**
-			 * @brief エンティティの数
-			 */
+			//エンティティの数
 			size_t entityCount = 0;
-			/**
-			 * @brief エンティティのIDを格納するベクター
-			 */
+			//エンティティのIDを格納するベクター
 			std::vector<EntityID> entities;
-			/**
-			 * @brief コンポーネントマスク
-			 */
+			//コンポーネントマスク
 			ComponentMask componentMask;
-			/**
-			 * @brief コンポーネントレイアウト
-			 */
+			//コンポーネントレイアウト
 			const ComponentLayout& layout;
 		public:
 			/**
@@ -146,9 +136,14 @@ namespace SectorFW
 				 * @return const decltype(ComponentLayout::info)& コンポーネントレイアウト情報への参照
 				 */
 				static const decltype(ComponentLayout::info)& GetLayoutInfo(ArchetypeChunk* chunk) noexcept { return chunk->layout.info; }
+				/**
+				 * @brief コンポーネントレイアウト情報のインデックスを取得する関数
+				 * @param chunk アーキタイプチャンクへのポインタ
+				 * @return const decltype(ComponentLayout::infoIdx)& コンポーネントレイアウト情報のインデックスへの参照
+				 */
+				static const decltype(ComponentLayout::infoIdx)& GetLayoutInfoIdx(ArchetypeChunk* chunk) noexcept { return chunk->layout.infoIdx; }
 
 				friend class EntityManager;
-				friend class QuadTreePartitionDyn;
 			};
 		};
 	}

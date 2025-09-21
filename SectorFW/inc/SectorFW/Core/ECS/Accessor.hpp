@@ -16,6 +16,7 @@ namespace SectorFW
 	{
 		/**
 		 * @brief コンポーネントアクセスの型を定義するテンプレート
+		 * @tparam AccessTypes アクセスするコンポーネントの型リスト(AccessInfo.h参照)
 		 */
 		template<typename... AccessTypes>
 		struct ComponentAccess {
@@ -85,28 +86,25 @@ namespace SectorFW
 			using PointerType = typename SoAPtr<T>::type;
 		};
 		/**
-		 * @brief コンポーネントアクセサークラス
+		 * @brief 指定したアクセス型に基づいて、コンポーネントにアクセスするためのクラス
 		 */
 		template<typename... AccessTypes>
 		class ComponentAccessor {
 			// 判定テンプレート
 			template <typename, typename = std::void_t<>>
 			struct IsToPtr : std::false_type {};
-
+			// ToPtrTagを持つ型はtrue
 			template <typename T>
 			struct IsToPtr<T, std::void_t<typename T::ToPtrTag>> : std::true_type {};
-
-			/*template<typename T>
-			constexpr bool is_toPtr_v = typename IsToPtr<T>::value;*/
-
 		public:
 			/**
-			 * @brief コンポーネントアクセサーのコンストラクタ
+			 * @brief コンストラクタ
 			 * @param chunk アクセスするアーキタイプチャンク
 			 */
 			explicit ComponentAccessor(ArchetypeChunk* chunk) noexcept : chunk(chunk) {}
 			/**
 			 * @brief 指定したアクセス型に対して、コンポーネントを取得する関数
+			 * @tparam AccessType アクセスするコンポーネントの型(AccessInfo.h参照)
 			 * @return　std::optional<PointerType> コンポーネントのポインタ
 			 */
 			template<typename AccessType>
@@ -116,7 +114,7 @@ namespace SectorFW
 				using PtrType = SoAPtr<ComponentType>::type;
 
 				auto column = chunk->GetColumn<ComponentType>();
-				if (!column) return std::nullopt;
+				if (!column) [[unlikely]] return std::nullopt;
 				if constexpr (IsSoAComponent<ComponentType>) {
 					size_t offset = 0;
 					size_t capacity = chunk->GetCapacity();
@@ -190,9 +188,7 @@ namespace SectorFW
 			{
 				(GetMemberStartPtrImpl<PtrType, Is>(base, capacity, offset, value), ...);
 			}
-			/**
-			 * @brief アーキタイプチャンクへのポインタ
-			 */
+			// アーキタイプチャンクへのポインタ
 			ArchetypeChunk* chunk;
 		};
 	}

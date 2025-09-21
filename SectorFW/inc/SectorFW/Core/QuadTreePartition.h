@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   QuadTreePartition.h
+ * @brief クアッドツリーパーティションを定義するクラス
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 #include <vector>
 #include <array>
@@ -11,12 +18,15 @@
 
 #include "ECS/component.hpp"
 #include "partition.hpp"
-#include "EntityManagerRegistryService.h"
+#include "SpatialChunkRegistryService.h"
 #include "../Util/Morton.h"
 #include "../Math/AABB.hpp"
 
 namespace SectorFW
 {
+	/**
+	 * @brief クアッドツリー(x-z)パーティションを管理するクラス
+	 */
 	class QuadTreePartition
 	{
 	public:
@@ -31,7 +41,13 @@ namespace SectorFW
 
 		//統合するかチェック間隔
 		static inline constexpr double coalesceInterval = 10.0; // 秒
-
+		/**
+		 * @brief コンストラクタ
+		 * @param worldW X方向の最小葉の数
+		 * @param worldH Z方向の最小葉の数
+		 * @param minLeafSize 最小葉のサイズ(ワールドサイズに対する比率、0.0~1.0)
+		 * @param maxEntitiesPerLeaf 1つの葉に格納できるエンティティの最大数
+		 */
 		explicit QuadTreePartition(ChunkSizeType worldW,
 			ChunkSizeType worldH,
 			float minLeafSize,
@@ -46,7 +62,10 @@ namespace SectorFW
 			m_root->bounds = { Math::Vec2f(0.f, 0.f), Math::Vec2f(float(m_worldW), float(m_worldH)) };
 			m_leafCount = 1; // 葉としてスタート
 		}
-
+		/**
+		 * @brief エンティティの数が少ない葉を統合ために更新
+		 * @param deltaTime 前回の更新からの経過時間(秒)
+		 */
 		void Update(double deltaTime) {
 			m_coalesceTimer += deltaTime;
 			if (m_coalesceTimer >= coalesceInterval) {
@@ -54,8 +73,16 @@ namespace SectorFW
 				CoalesceUnderutilized();
 			}
 		}
-
+		/**
+		 * @brief 指定した位置にあるチャンクを取得する関数
+		 * @param p 位置(x,z)
+		 * @param reg チャンクレジストリ
+		 * @param level レベルID
+		 * @param policy 範囲外ポリシー
+		 * @return チャンクへのポインタ(存在しない場合はstd::nullopt)
+		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f p,
+			SpatialChunkRegistry& reg, LevelID level,
 			EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept
 		{
 			if (!inBounds(p.x, p.z)) {
@@ -65,21 +92,32 @@ namespace SectorFW
 				p.z = std::clamp(p.z, 0.f, float(m_worldH) - 1e-6f);
 			}
 			Node* leaf = descendToLeaf(*m_root, p.x, p.z, /*createIfMissing=*/true);
+			EnsureKeyRegisteredForLeaf(*leaf, reg, level);
 			return &leaf->chunk;
 		}
-
+		/**
+		 * @brief グローバルエンティティマネージャーを取得する関数
+		 * @return グローバルエンティティマネージャーへの参照
+		 */
 		ECS::EntityManager& GetGlobalEntityManager() noexcept { return m_global; }
-
-		void RegisterAllChunks(EntityManagerRegistry& reg, LevelID level)
+		/**
+		 * @brief すべてのチャンクをレジストリに登録する関数
+		 * @param reg チャンクレジストリ
+		 * @param level レベルID
+		 */
+		void RegisterAllChunks(SpatialChunkRegistry& reg, LevelID level)
 		{
 			forEachLeaf([&](Node& lf) {
 				const auto [ix, iy] = leafIndex(lf);
-				EntityManagerKey key = MakeQuadKey(level, lf.depth, ix, iy, /*gen=*/lf.generation);
+				SpatialChunkKey key = MakeQuadKey(level, lf.depth, ix, iy, /*gen=*/lf.generation);
 				lf.chunk.SetNodeKey(key);
-				reg.RegisterOwner(key, &lf.chunk.GetEntityManager());
+				reg.RegisterOwner(key, &lf.chunk);
 				});
 		}
-
+		/**
+		 * @brief すべてのエンティティ数を取得する関数
+		 * @return エンティティ数
+		 */
 		size_t GetEntityNum() const noexcept
 		{
 			size_t n = m_global.GetEntityCount();
@@ -88,9 +126,15 @@ namespace SectorFW
 				});
 			return n;
 		}
-
+		/**
+		 * @brief 指定した視錐台に含まれるチャンクを列挙する関数
+		 * @param fr 視錐台
+		 * @param ymin 最低Y座標(省略時は無制限)
+		 * @param ymax 最高Y座標(省略時は無制限)
+		 * @return チャンクのポインタ配列
+		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr,
-			float ymin, float ymax) noexcept
+			float ymin = std::numeric_limits<float>::lowest(), float ymax = (std::numeric_limits<float>::max)()) noexcept
 		{
 			std::vector<SpatialChunk*> out;
 			out.reserve(64);
@@ -100,7 +144,7 @@ namespace SectorFW
 		}
 
 		std::vector<const SpatialChunk*> CullChunks(const Math::Frustumf& fr,
-			float ymin, float ymax) const noexcept
+			float ymin = std::numeric_limits<float>::lowest(), float ymax = (std::numeric_limits<float>::max)()) const noexcept
 		{
 			std::vector<const SpatialChunk*> out;
 			out.reserve(64);
@@ -122,7 +166,16 @@ namespace SectorFW
 			if (!m_root) return;
 			cullRecursive(*m_root, fr, ymin, ymax, std::forward<F>(f));
 		}
-
+		/**
+		 * @brief チャンクの境界線をデバッグ描画する関数
+		 * @param fr 視錐台
+		 * @param cp カメラ位置
+		 * @param hy カメラ高さからの上下の伸び
+		 * @param outLine 出力先のラインバッファ
+		 * @param capacity 出力先のラインバッファの容量(頂点数)
+		 * @param displayCount 表示するチャンクの最大数(0の場合は表示しない)
+		 * @return 書き込んだ頂点数
+		 */
 		uint32_t CullChunkLine(const Math::Frustumf& fr,
 			Math::Vec3f cp, float hy, Debug::LineVertex* outLine,
 			uint32_t capacity, uint32_t displayCount) const noexcept
@@ -198,9 +251,9 @@ namespace SectorFW
 				}, std::move(posFn));
 		}
 
-		void ReloadLeafByPoint(Math::Vec3f p, EntityManagerRegistry& reg)
+		void ReloadLeafByPoint(Math::Vec3f p, SpatialChunkRegistry& reg, LevelID level)
 		{
-			auto opt = GetChunk(p, EOutOfBoundsPolicy::ClampToEdge);
+			auto opt = GetChunk(p, reg, level, EOutOfBoundsPolicy::ClampToEdge);
 			if (!opt) return;
 			SpatialChunk* leafSC = *opt;
 
@@ -213,11 +266,11 @@ namespace SectorFW
 
 			const auto oldKey = target->chunk.GetNodeKey();
 			const auto [ix, iy] = leafIndex(*target);
-			EntityManagerKey newKey = MakeQuadKey(oldKey.level, target->depth, ix, iy, target->generation);
+			SpatialChunkKey newKey = MakeQuadKey(oldKey.level, target->depth, ix, iy, target->generation);
 
 			target->chunk.SetNodeKey(newKey);
 
-			reg.RegisterOwner(newKey, &target->chunk.GetEntityManager());
+			reg.RegisterOwner(newKey, &target->chunk);
 		}
 
 		std::vector<SpatialChunk*> GetChunksAABB(const AABB& aabb)
@@ -311,6 +364,23 @@ namespace SectorFW
 				return !child[0] && !child[1] && !child[2] && !child[3];
 			}
 		};
+
+		// ユーティリティ：葉のキーが未発行/未登録なら発行して登録
+		inline void EnsureKeyRegisteredForLeaf(Node& leafNode,
+			SpatialChunkRegistry& reg,
+			LevelID level)
+		{
+			SpatialChunk& sc = leafNode.chunk;
+
+			// 既に登録済みかを軽く判定：ResolveOwner が取れるか / code==0 等で簡易チェック
+			const SpatialChunkKey cur = sc.GetNodeKey();
+			if (reg.ResolveOwner(cur) != nullptr && cur.code != 0) return; // 既登録
+
+			const auto [ix, iy] = leafIndex(leafNode);
+			SpatialChunkKey key = MakeQuadKey(level, leafNode.depth, ix, iy, /*gen*/leafNode.generation);
+			sc.SetNodeKey(key);
+			reg.RegisterOwner(key, &sc);
+		}
 
 		static bool intersects(const AABB& a, const AABB& b) noexcept {
 			return !(a.ub.x <= b.lb.x || a.lb.x >= b.ub.x || a.ub.y <= b.lb.y || a.lb.y >= b.ub.y);
@@ -424,10 +494,10 @@ namespace SectorFW
 			return { ix, iy };
 		}
 
-		inline EntityManagerKey MakeQuadKey(LevelID level, uint8_t depth,
+		inline SpatialChunkKey MakeQuadKey(LevelID level, uint8_t depth,
 			uint32_t ix, uint32_t iz, uint16_t gen = 0)
 		{
-			EntityManagerKey k{};
+			SpatialChunkKey k{};
 			k.level = level;
 			k.scheme = PartitionScheme::Quadtree2D;
 			k.depth = depth;

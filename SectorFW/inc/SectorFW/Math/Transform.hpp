@@ -7,12 +7,12 @@
 
 #pragma once
 
-#include "Math/Vector.hpp"
-#include "Math/Quaternion.hpp"
+#include "Vector.hpp"
+#include "Quaternion.hpp"
 
-#include "Util/Flatten.hpp"
+#include "../Util/Flatten.hpp"
 
-#include "Core/ECS/component.hpp"
+#include "../Core/ECS/component.hpp"
 
 namespace SectorFW
 {
@@ -83,19 +83,7 @@ namespace SectorFW
 				sx, sy, sz);
 		}
 
-		TransformSoA& operator=(const TransformSoA& transform) noexcept {
-			px = transform.location.x;
-			py = transform.location.y;
-			pz = transform.location.z;
-			qx = transform.rotation.x;
-			qy = transform.rotation.y;
-			qz = transform.rotation.z;
-			qw = transform.rotation.w;
-			sx = transform.scale.x;
-			sy = transform.scale.y;
-			sz = transform.scale.z;
-			return *this;
-		}
+		TransformSoA& operator=(const TransformSoA& transform) noexcept = default;
 
 		DEFINE_SOA(TransformSoA, px, py, pz, qx, qy, qz, qw, sx, sy, sz)
 	};

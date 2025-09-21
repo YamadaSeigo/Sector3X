@@ -14,8 +14,8 @@
 #include "ArchetypeManager.h"
 #include "SparseComponentStore.hpp"
 
-#include "Util/TypeChecker.hpp"
-#include "Util/AccessWrapper.hpp"
+#include "../../Util/TypeChecker.hpp"
+#include "../../Util/AccessWrapper.hpp"
 
 #include "EntityIDAllocator.h"
 
@@ -28,7 +28,7 @@ namespace SectorFW
 	namespace ECS
 	{
 		/**
-		 * @brief エンティティマネージャーを表すクラス
+		 * @brief エンティティの生成と破棄、コンポーネントの追加・削除を管理するクラス
 		 */
 		class EntityManager {
 		public:
@@ -56,6 +56,8 @@ namespace SectorFW
 				size_t index = chunk->AddEntity(id);
 
 				(..., StoreComponent(chunk, id, index, components));
+
+				locations[id] = EntityLocation{ chunk, index };
 				return id;
 			}
 			/**
@@ -68,7 +70,7 @@ namespace SectorFW
 			[[nodiscard]] EntityID AddEntity(ComponentMask mask, const Components&... components) {
 				EntityID id = entityAllocator.Create();
 
-				if (!id.IsValid()) return id;
+				if (!id.IsValid()) [[unlikely]] return id;
 
 				Archetype* arch = archetypeManager.GetOrCreate(mask);
 				ArchetypeChunk* chunk = arch->GetOrCreateChunk();
@@ -120,18 +122,18 @@ namespace SectorFW
 				// locations は共有ロックで読み取り可能
 				{
 					std::shared_lock<std::shared_mutex> lock(locationsMutex);
-					if (!locations.contains(id)) return nullptr;
+					if (!locations.contains(id)) [[unlikely]] return nullptr;
 					const auto it = locations.find(id);
 					const auto loc = it->second; // スナップショット
 					auto col = loc.chunk->GetColumn<T>();
-					if (!col) return nullptr;
+					if (!col) [[unlikely]] return nullptr;
 					return &col.value()[loc.index];
 				}
 			}
 			/**
 			 * @brief エンティティにコンポーネントを追加する関数
 			 * @param id エンティティID
-			 * @detail archetypeの移動があるため高負荷
+			 * @detail ※archetypeの移動があるため高負荷
 			 * @param value 追加するコンポーネントの値
 			 */
 			template<typename T>
@@ -161,13 +163,17 @@ namespace SectorFW
 
 				// 必要なデータのみ移動
 				auto& oldChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(oldChunk);
+				auto& oldChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(oldChunk);
 				auto& newChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(newChunk);
-				for (const auto& [comp, info] : oldChunkLayout) {
+				auto& newChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(newChunk);
+				for (const auto& [comp, idx] : oldChunkLayoutIdx) {
+					auto& info = oldChunkLayout[idx];
+					auto& newInfo = newChunkLayout[newChunkLayoutIdx.at(comp)];
 					size_t index = 0;
 					for (const auto& i : info)
 					{
 						auto src = ArchetypeChunk::Accessor::GetBuffer(oldChunk) + i.offset;
-						auto dst = ArchetypeChunk::Accessor::GetBuffer(newChunk) + newChunkLayout.at(comp).get(index).offset;
+						auto dst = ArchetypeChunk::Accessor::GetBuffer(newChunk) + newInfo.get(index).value().get().offset;
 						auto* dstElem = static_cast<uint8_t*>(dst) + newIndex * i.stride;
 						auto* srcElem = static_cast<const uint8_t*>(src) + oldIndex * i.stride;
 						// i.stride 単位=1要素のサイズという前提
@@ -194,7 +200,7 @@ namespace SectorFW
 					if (oldIndex < lastIndexBefore) {
 						EntityID swappedId = ArchetypeChunk::Accessor::GetEntities(oldChunk)[lastIndexBefore];
 						auto it = locations.find(swappedId);
-						if (it != locations.end()) it->second = { oldChunk, oldIndex };
+						if (it != locations.end()) [[unlikely]] it->second = { oldChunk, oldIndex };
 					}
 					oldChunk->RemoveEntitySwapPop(oldIndex);
 					locations[id] = { newChunk, newIndex };
@@ -203,7 +209,7 @@ namespace SectorFW
 
 			/**
 			 * @brief エンティティからコンポーネントを削除する関数
-			 * @detail Archetypeを移動する処理があるので高負荷
+			 * @detail ※Archetypeを移動する処理があるので高負荷
 			 * @param id エンティティID
 			 */
 			template<typename T>
@@ -234,16 +240,20 @@ namespace SectorFW
 				size_t newIndex = newChunk->AddEntity(id);
 
 				// 必要なデータのみ移動
-				const auto& oldChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(oldChunk);
-				const auto& newChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(newChunk);
-				for (const auto& [comp, info] : oldChunkLayout) {
+				auto& oldChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(oldChunk);
+				auto& oldChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(oldChunk);
+				auto& newChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(newChunk);
+				auto& newChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(newChunk);
+				for (const auto& [comp, idx] : oldChunkLayout) {
 					if (comp == typeID) continue;
 
+					auto& info = oldChunkLayout[idx];
+					auto& newInfo = newChunkLayout[newChunkLayoutIdx.at(comp)];
 					size_t index = 0;
 					for (const auto& i : info)
 					{
 						auto src = ArchetypeChunk::Accessor::GetBuffer(oldChunk) + i.offset;
-						auto dst = ArchetypeChunk::Accessor::GetBuffer(newChunk) + newChunkLayout.at(comp).get(index).offset;
+						auto dst = ArchetypeChunk::Accessor::GetBuffer(newChunk) + newInfo.get(index).value().get().offset;
 						std::memcpy(static_cast<uint8_t*>(dst) + newIndex * i.stride,
 							static_cast<const uint8_t*>(src) + oldIndex * i.stride,
 							i.stride);
@@ -341,6 +351,14 @@ namespace SectorFW
 				std::shared_lock<std::shared_mutex> rlock(locationsMutex);
 				return locations.size();
 			}
+			/**
+				 * @brief IDを保持したまま dst 側に1行確保し、非スパースをコピー（manager間移送用）
+				 * @param id エンティティID
+				 * @param src 元のエンティティマネージャー
+				 * @param dst 移動先のエンティティマネージャー
+				 * @return bool 移動に成功した場合はtrue、失敗した場合はfalse
+				 */
+			static bool InsertWithID_ForManagerMove(EntityID id, EntityManager& src, EntityManager& dst);
 		private:
 			/**
 			 * @brief メモリ上のチャンクに値を設定する関数(SoAコンポーネントではない場合)
@@ -352,7 +370,10 @@ namespace SectorFW
 				requires (!requires { typename T::soa_type; })
 			void MemorySetChunk(ArchetypeChunk* chunk, size_t index, const T& value) noexcept {
 				auto column = chunk->GetColumn<T>();
-				if (!column) return;
+				if (!column) [[unlikely]] {
+					LOG_ERROR("Column for component type %d not found in chunk", ComponentTypeRegistry::GetID<T>());
+					return;
+				}
 
 				if constexpr (std::is_trivially_copyable_v<T>) {
 					std::memcpy(&column.value()[index], &value, sizeof(T));
@@ -377,7 +398,7 @@ namespace SectorFW
 				requires IsSoAComponent<T>
 			void MemorySetChunk(ArchetypeChunk* chunk, size_t index, const T& value) {
 				auto column = chunk->GetColumn<T>();
-				if (!column) {
+				if (!column) [[unlikely]] {
 					LOG_ERROR("Column for component type %d not found in chunk", ComponentTypeRegistry::GetID<T>());
 					return;
 				}
@@ -479,32 +500,18 @@ namespace SectorFW
 			/**
 			 * @brief 非スパース列（チャンク列）を src->dst にコピー
 			 */
-			void CopyEntityColumns(ArchetypeChunk* srcChunk, size_t srcIndex,
+			static void CopyEntityColumns(ArchetypeChunk* srcChunk, size_t srcIndex,
 				ArchetypeChunk* dstChunk, size_t dstIndex);
-			/**
-			 * @brief IDを保持したまま dst 側に1行確保し、非スパースをコピー（manager間移送用）
-			 * @param id エンティティID
-			 * @param src 元のエンティティマネージャー
-			 * @param dst 移動先のエンティティマネージャー
-			 * @return bool 移動に成功した場合はtrue、失敗した場合はfalse
-			 */
-			bool InsertWithID_ForManagerMove(EntityID id, EntityManager& src, EntityManager& dst);
-			/**
-			 * @brief エンティティIDアロケータ
-			 */
+			//エンティティIDアロケータ
 			static inline EntityIDAllocator entityAllocator = EntityIDAllocator(MAX_ENTITY_NUM);
-			/**
-			 * @brief アーキタイプマネージャー
-			 */
+			//アーキタイプマネージャー
 			ArchetypeManager archetypeManager;
 			/**
 			 * @brief エンティティの位置を管理するマップ
 			 * @detail EntityIDをキーに、EntityLocationを値とするマップ
 			 */
 			std::unordered_map<EntityID, EntityLocation> locations;
-			/**
-			 * @brief locations の並行アクセスを守るロック（読取多数・書込少数を想定）
-			 */
+			//locations の並行アクセスを守るロック（読取多数・書込少数を想定）
 			mutable std::shared_mutex locationsMutex;
 			/**
 			 * @brief まばらなコンポーネントストアを取得するためのインターフェース
@@ -525,23 +532,40 @@ namespace SectorFW
 			template<typename T>
 			struct SparseWrapper : ISparseWrapper {
 				SparseComponentStore<T> store;
+				/**
+				 * @brief コンポーネントを削除する関数
+				 * @param id 削除するエンティティのID
+				 */
 				void Remove(EntityID id) override { store.Remove(id); }
-
+				/**
+				 * @brief すべてのコンポーネントを別のエンティティマネージャーに移動する関数
+				 * @param dst 移動先のエンティティマネージャー
+				 */
 				void MoveAllTo(EntityManager& dst) override {
 					auto& srcMap = store.GetComponents();
 					auto& dstMap = dst.GetSparseStore<T>().GetComponents();
 					dstMap.reserve(dstMap.size() + srcMap.size());
-					for (auto it = srcMap.begin(); it != srcMap.end(); ++it)
-						dstMap.emplace(it->first, std::move(it->second));
+					for (auto it = srcMap.begin(); it != srcMap.end(); ++it) {
+						dstMap.insert_or_assign(it->first, std::move(it->second));
+					}
 					srcMap.clear();
 				}
+				/**
+				 * @brief 指定されたIDのコンポーネントを別のエンティティマネージャーに移動する関数
+				 * @param dst 移動先のエンティティマネージャー
+				 * @param ids 移動するエンティティのIDの配列
+				 * @param n 配列の要素数
+				 */
 				void MoveManyTo(EntityManager& dst, const EntityID* ids, size_t n) override {
 					auto& srcMap = store.GetComponents();
 					auto& dstMap = dst.GetSparseStore<T>().GetComponents();
 					dstMap.reserve(dstMap.size() + n);
 					for (size_t i = 0; i < n; ++i) {
 						auto it = srcMap.find(ids[i]);
-						if (it != srcMap.end()) { dstMap.emplace(it->first, std::move(it->second)); srcMap.erase(it); }
+						if (it != srcMap.end()) {
+							dstMap.insert_or_assign(it->first, std::move(it->second));
+							srcMap.erase(it);
+						}
 					}
 				}
 			};

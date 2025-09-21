@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   DX11ShaderManager.h
+ * @brief DirectX 11のシェーダーマネージャークラスを定義するヘッダーファイル
+ * @author seigo_t03b63m
+ * @date   September 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <d3d11shader.h>
@@ -13,6 +20,9 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
+		/**
+		 * @brief シェーダーステージを表す列挙型
+		 */
 		struct ShaderResourceBinding {
 			std::string name;
 			UINT bindPoint;
@@ -20,13 +30,17 @@ namespace SectorFW
 			D3D_SHADER_INPUT_FLAGS flags;
 			ShaderStage stage;
 		};
-
+		/**
+		 * @brief DirectX 11のシェーダー作成情報を定義する構造体
+		 */
 		struct DX11ShaderCreateDesc {
 			MaterialTemplateID templateID = MaterialTemplateID::PBR;
 			std::wstring vsPath;
 			std::wstring psPath;
 		};
-
+		/**
+		 * @brief DirectX 11のシェーダーデータを定義する構造体
+		 */
 		struct DX11ShaderData {
 			MaterialTemplateID templateID;
 			Microsoft::WRL::ComPtr<ID3D11VertexShader> vs;
@@ -37,18 +51,39 @@ namespace SectorFW
 			std::vector<ShaderResourceBinding> psBindings; // SRV / CBV info
 			std::vector<ShaderResourceBinding> vsBindings; // SRV / CBV info
 		};
-
+		/**
+		 * @brief DirectX 11のシェーダーマネージャークラス
+		 */
 		class DX11ShaderManager : public ResourceManagerBase<DX11ShaderManager, ShaderHandle, DX11ShaderCreateDesc, DX11ShaderData> {
 		public:
+			/**
+			 * @brief インスタンスセマンティック名
+			 */
 			static inline constexpr const char* INSTANCE_SEMANTIC_NAME = "INSTANCE_";
-
-			explicit DX11ShaderManager(ID3D11Device* device) : device(device) {}
-
-			std::optional<ShaderHandle> FindExisting(const DX11ShaderCreateDesc& desc);
+			/**
+			 * @brief コンストラクタ
+			 * @param device DirectX 11のデバイスインターフェース
+			 */
+			explicit DX11ShaderManager(ID3D11Device* device) noexcept : device(device) {}
+			/**
+			 * @brief 既存のシェーダーを検索する関数
+			 * @param desc シェーダー作成情報
+			 * @return std::optional<ShaderHandle> 既存のシェーダーハンドル、存在しない場合はstd::nullopt
+			 */
+			std::optional<ShaderHandle> FindExisting(const DX11ShaderCreateDesc& desc) noexcept;
+			/**
+			 * @brief シェーダーのキーとハンドルを登録する関数
+			 * @param desc シェーダー作成情報
+			 * @param h 登録するシェーダーハンドル
+			 */
 			void RegisterKey(const DX11ShaderCreateDesc& desc, ShaderHandle h);
-
+			/**
+			 * @brief シェーダーリソースを作成する関数
+			 * @param desc シェーダー作成情報
+			 * @param h 登録するシェーダーハンドル
+			 * @return DX11ShaderData 作成されたシェーダーデータ
+			 */
 			DX11ShaderData CreateResource(const DX11ShaderCreateDesc& desc, ShaderHandle h);
-
 		private:
 			void ReflectInputLayout(ID3DBlob* vsBlob,
 				std::vector<D3D11_INPUT_ELEMENT_DESC>& outDesc,
