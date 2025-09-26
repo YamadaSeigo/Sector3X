@@ -115,7 +115,7 @@ namespace SectorFW
 				}
 
 				ComponentTypeID id = GetID<T>();
-				assert(id < MaxComponents && "Exceeded maximum number of components");
+				assert(id < MaxComponents && "Exceeded maximum number of components. should define 'MAX_COMPONENTS_NUM'");
 
 				OneOrMore<ComponentMeta::Structure> meta_structures;
 

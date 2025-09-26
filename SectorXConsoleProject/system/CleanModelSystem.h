@@ -1,0 +1,29 @@
+#pragma once
+
+#include "ModelRenderSystem.h"
+
+template<typename Partition>
+class CleanModelSystem : public ITypeSystem<
+	CleanModelSystem<Partition>,
+	Partition,
+	ComponentAccess<Write<CModel>>,//アクセスするコンポーネントの指定
+	ServiceContext<Graphics::RenderService>>{//受け取るサービスの指定
+	using Accessor = ComponentAccessor<Write<CModel>>;
+public:
+	//指定したサービスを関数の引数として受け取る
+	void EndImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService) {
+		Graphics::DX11ModelAssetManager* modelMgr = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
+
+		this->ForEachChunkWithAccessor([](Accessor& accessor, auto entityCount, Graphics::DX11ModelAssetManager* modelMgr)
+			{
+				auto pModel = accessor.Get<Write<CModel>>();
+				if (!pModel) return;
+
+				for (auto i = 0; i < entityCount; ++i)
+				{
+					auto& model = pModel.value()[i];
+					modelMgr->Release(model.handle, Graphics::RENDER_BUFFER_COUNT);
+				}
+			}, partition, modelMgr);
+	}
+};

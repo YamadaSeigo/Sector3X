@@ -33,8 +33,8 @@ namespace SectorFW
 		{
 			auto& data = slots[idx].data;
 			for (auto& sm : data.subMeshes) {
-				meshMgr.Release(sm.mesh, currentFrame + RENDER_QUEUE_BUFFER_COUNT);
-				matMgr.Release(sm.material, currentFrame + RENDER_QUEUE_BUFFER_COUNT);
+				meshMgr.Release(sm.mesh, currentFrame + RENDER_BUFFER_COUNT);
+				matMgr.Release(sm.material, currentFrame + RENDER_BUFFER_COUNT);
 			}
 		}
 
@@ -111,32 +111,92 @@ namespace SectorFW
 				for (size_t pi = 0; pi < mesh.primitives_count; ++pi) {
 					cgltf_primitive& prim = mesh.primitives[pi];
 
-					size_t vertexCount = prim.attributes[0].data->count;
-					std::vector<float> vertexBuffer(vertexCount * 8, 0.0f);
-					const auto flip_vec3z = [&](float* v) { v[0] = -v[0]; };
-					const auto flip_tangent = [&](float* t) { t[2] = -t[2]; t[3] = -t[3]; }; // z と w を反転
+					const size_t vertexCount = prim.attributes[0].data->count;
+					// --- SoA バッファ ---
+					std::vector<Math::Vec3f> positions(vertexCount);
+					std::vector<Math::Vec3f> normals;   normals.reserve(vertexCount);
+					std::vector<Math::Vec4f> tangents;  tangents.reserve(vertexCount); // w=handedness
+					std::vector<Math::Vec2f> tex0;      tex0.reserve(vertexCount);
+					std::vector<std::array<uint8_t, 4>> skinIdx; skinIdx.reserve(vertexCount);
+					std::vector<std::array<uint8_t, 4>> skinWgt; skinWgt.reserve(vertexCount); // 0..255（合計は≃255）
+
+					auto flip_vec3z = [](float& x, float& y, float& z) { x = -x; };
+					auto flip_tangent = [](float& x, float& y, float& z, float& w) { z = -z; w = -w; };
+
+					// まず POSITION を埋める（存在必須）
 					for (size_t i = 0; i < prim.attributes_count; ++i) {
 						cgltf_attribute& attr = prim.attributes[i];
+						if (attr.type != cgltf_attribute_type_position) continue;
 						for (size_t vi = 0; vi < vertexCount; ++vi) {
 							float v[4] = {};
 							cgltf_accessor_read_float(attr.data, vi, v, 4);
-							if (attr.type == cgltf_attribute_type_position) {
-								if (flipZ) flip_vec3z(v);
-								memcpy(&vertexBuffer[vi * 8 + 0], v, sizeof(float) * 3);
+							if (flipZ) flip_vec3z(v[0], v[1], v[2]);
+							positions[vi] = { v[0], v[1], v[2] };
+						}
+					}
+					// その他の属性（存在すれば取り出し）
+					for (size_t i = 0; i < prim.attributes_count; ++i) {
+						cgltf_attribute& attr = prim.attributes[i];
+						if (attr.type == cgltf_attribute_type_normal) {
+							normals.resize(vertexCount);
+							for (size_t vi = 0; vi < vertexCount; ++vi) {
+								float v[4] = {};
+								cgltf_accessor_read_float(attr.data, vi, v, 4);
+								if (flipZ) flip_vec3z(v[0], v[1], v[2]);
+								normals[vi] = { v[0], v[1], v[2] };
 							}
-							else if (attr.type == cgltf_attribute_type_normal) {
-								if (flipZ) flip_vec3z(v);
-								memcpy(&vertexBuffer[vi * 8 + 3], v, sizeof(float) * 3);
+						}
+						else if (attr.type == cgltf_attribute_type_tangent) {
+							tangents.resize(vertexCount);
+							for (size_t vi = 0; vi < vertexCount; ++vi) {
+								float v[4] = {};
+								cgltf_accessor_read_float(attr.data, vi, v, 4); // (x,y,z,w)
+								if (flipZ) flip_tangent(v[0], v[1], v[2], v[3]);
+								tangents[vi] = { v[0], v[1], v[2], v[3] };
 							}
-							else if (attr.type == cgltf_attribute_type_tangent) {
-								// glTF TANGENT は (x,y,z,w)。鏡映時は z と w の符号を反転
-								if (flipZ) flip_tangent(v);
-								// ※ 頂点フォーマットは tan を持っていないので（8要素=pos3+nor3+uv2）、
-								//   ここでは書き出し先がない。必要なら stride を 12 に拡張して格納してください。
-								//   既存レイアウト維持のため今回は無視（法線マップ使用時はシェーダ側TBN再構成推奨）。
+						}
+						else if (attr.type == cgltf_attribute_type_texcoord && attr.index == 0) {
+							tex0.resize(vertexCount);
+							for (size_t vi = 0; vi < vertexCount; ++vi) {
+								float v[4] = {};
+								cgltf_accessor_read_float(attr.data, vi, v, 4);
+								tex0[vi] = { v[0], v[1] };
 							}
-							else if (attr.type == cgltf_attribute_type_texcoord)
-								memcpy(&vertexBuffer[vi * 8 + 6], v, sizeof(float) * 2);
+						}
+						else if (attr.type == cgltf_attribute_type_joints && attr.index == 0) {
+							skinIdx.resize(vertexCount);
+							for (size_t vi = 0; vi < vertexCount; ++vi) {
+								uint32_t j[4] = { 0,0,0,0 };
+								// 16bit の場合もあるので float で読み→丸め（0..255）
+								float tmp[4] = {};
+								cgltf_accessor_read_float(attr.data, vi, tmp, 4);
+								for (int k = 0; k < 4; ++k) {
+									int val = (int)std::round(tmp[k]);
+									skinIdx[vi][k] = (uint8_t)std::clamp(val, 0, 255);
+								}
+							}
+						}
+						else if (attr.type == cgltf_attribute_type_weights && attr.index == 0) {
+							skinWgt.resize(vertexCount);
+							for (size_t vi = 0; vi < vertexCount; ++vi) {
+								float w[4] = {};
+								cgltf_accessor_read_float(attr.data, vi, w, 4); // 0..1 or UNORM
+								// 0..255 へ量子化し、合計≃255 になるよう再正規化
+								int iw[4] = {
+								(int)std::round(w[0] * 255.0f),
+								(int)std::round(w[1] * 255.0f),
+								(int)std::round(w[2] * 255.0f),
+								(int)std::round(w[3] * 255.0f),
+								};
+								int sum = (std::max)(1, iw[0] + iw[1] + iw[2] + iw[3]);
+								// 比率維持で合計255にスケール
+								float scale = 255.0f / (float)sum;
+								for (int k = 0; k < 4; ++k) iw[k] = (int)std::round(iw[k] * scale);
+								// 丸め誤差の補正
+								int fix = 255 - (iw[0] + iw[1] + iw[2] + iw[3]);
+								iw[0] = std::clamp(iw[0] + fix, 0, 255);
+								for (int k = 0; k < 4; ++k) skinWgt[vi][k] = (uint8_t)std::clamp(iw[k], 0, 255);
+							}
 						}
 					}
 
@@ -155,16 +215,16 @@ namespace SectorFW
 						//}
 					}
 
-					DX11MeshCreateDesc meshDesc{
-						.vertices = vertexBuffer.data(),
-						.vSize = (uint32_t)vertexBuffer.size() * sizeof(float),
-						.stride = sizeof(float) * 8,
-						.indices = indices.data(),
-						.iSize = (uint32_t)indices.size() * sizeof(uint32_t),
-						.sourcePath = canonicalPath.wstring() + L"#" + std::to_wstring(meshIndex++) // optional submesh ID
-					};
+					// --- SoA（R8G8B8A8_SNORM / R16G16_FLOAT）でメッシュを登録 ---
 					MeshHandle meshHandle;
-					meshMgr.Add(meshDesc, meshHandle);
+
+					const std::wstring srcW = canonicalPath.wstring() + L"#" + std::to_wstring(meshIndex++);
+					bool ok = meshMgr.AddFromSoA_R8Snorm(
+						srcW, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, meshHandle);
+					if (!ok) {
+						assert(false && "MeshManager::AddFromSoA_R8Snorm failed");
+						continue;
+					}
 
 					// 1) glTF の PBR 情報を抽出
 					PBRMaterialCB pbrCB{};

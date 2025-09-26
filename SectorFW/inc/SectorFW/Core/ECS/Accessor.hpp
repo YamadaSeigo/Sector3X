@@ -8,7 +8,7 @@
 #pragma once
 
 #include "AccessInfo.h"
-#include "Util/TypeChecker.hpp"
+#include "../../Util/TypeChecker.hpp"
 
 namespace SectorFW
 {

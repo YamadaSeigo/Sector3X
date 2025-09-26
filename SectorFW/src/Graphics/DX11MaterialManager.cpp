@@ -138,7 +138,7 @@ namespace SectorFW
 			m.samplerCache.valid = false;
 
 			// 子の参照を連鎖解放（1～2フレ先に遅延）
-			const uint64_t del = currentFrame + RENDER_QUEUE_BUFFER_COUNT;
+			const uint64_t del = currentFrame + RENDER_BUFFER_COUNT;
 			for (auto& th : m.usedTextures)  textureManager->Release(th, del);
 			for (auto& cb : m.usedCBBuffers) cbManager->Release(cb, del);
 			for (auto& sp : m.usedSamplers)  samplerManager->Release(sp, del);

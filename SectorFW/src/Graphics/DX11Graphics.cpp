@@ -8,6 +8,15 @@
 #include "Debug/UIBus.h"
 #endif
 
+#ifdef SHOW_DX_LIVE_OBJECT
+#include <dxgi1_3.h>
+#include <dxgidebug.h>
+
+#pragma comment(lib, "dxgi.lib")
+#pragma comment(lib, "dxguid.lib")
+
+#endif //_DEBUG
+
 namespace SectorFW
 {
 	namespace Graphics
@@ -16,6 +25,24 @@ namespace SectorFW
 		{
 			// ここでレンダースレッドを停止
 			StopRenderThread();
+
+#ifdef SHOW_DX_LIVE_OBJECT
+			// まずはバインド解除と状態クリア
+			m_context->ClearState();
+			m_context->Flush();
+
+			// 1) D3D11 側（型別・参照カウントつきで詳細）
+			ComPtr<ID3D11Debug> d3dDebug;
+			if (SUCCEEDED(m_device.As(&d3dDebug))) {
+				d3dDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+			}
+
+			// 2) DXGI 側（モジュール横断）
+			ComPtr<IDXGIDebug1> dxgiDebug;
+			if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&dxgiDebug)))) {
+				dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
+			}
+#endif //_DEBUG
 		}
 
 		DX11GraphicsDevice::DX11GraphicsDevice(DX11GraphicsDevice&& rhs) noexcept
@@ -103,7 +130,12 @@ namespace SectorFW
 			}
 
 			// RenderTargetView 作成
-			hr = m_device->CreateRenderTargetView(backBuffer.Get(), nullptr, m_renderTargetView.GetAddressOf());
+			// RTV は SRGB で作成（ガンマ書き込みが有効）
+			D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+			rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+			rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+
+			hr = m_device->CreateRenderTargetView(backBuffer.Get(), &rtvDesc, m_renderTargetView.GetAddressOf());
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to create render target view: %d", hr);
 				return false;
@@ -152,11 +184,39 @@ namespace SectorFW
 				return false;
 			}
 
+			//ResourceManager関連初期化
+			//===========================================================
+			meshManager = std::make_unique<DX11MeshManager>(m_device.Get());
+			shaderManager = std::make_unique<DX11ShaderManager>(m_device.Get());
+			textureManager = std::make_unique<DX11TextureManager>(m_device.Get());
+			bufferManager = std::make_unique<DX11BufferManager>(m_device.Get(), m_context.Get());
+			samplerManager = std::make_unique<DX11SamplerManager>(m_device.Get());
+			materialManager = std::make_unique<DX11MaterialManager>(shaderManager.get(), textureManager.get(), bufferManager.get(), samplerManager.get());
+			psoManager = std::make_unique<DX11PSOManager>(m_device.Get(), shaderManager.get());
+		/*	DX11ModelAssetManager(
+				DX11MeshManager & meshMgr,
+				DX11MaterialManager & matMgr,
+				DX11ShaderManager & shaderMgr,
+				DX11TextureManager & texMgr,
+				DX11BufferManager & cbManager,
+				DX11SamplerManager & samplerManager,
+				ID3D11Device * device);*/
+
+			modelAssetManager = std::make_unique<DX11ModelAssetManager>(*meshManager, *materialManager, *shaderManager, *textureManager, *bufferManager, *samplerManager, m_device.Get());
+
+			backend = std::make_unique<DX11Backend>(
+				m_device.Get(), m_context.Get(),
+				meshManager.get(), materialManager.get(), shaderManager.get(), psoManager.get(),
+				textureManager.get(), bufferManager.get(), samplerManager.get(), modelAssetManager.get()
+			);
+
+			renderGraph = std::make_unique<DX11RenderGraph>(*backend);
+
 			// ここでレンダースレッドを起動
 			StartRenderThread();
 
 #ifdef _ENABLE_IMGUI
-			m_gpuTimer.init(m_device.Get(), RENDER_QUEUE_BUFFER_COUNT);
+			m_gpuTimer.init(m_device.Get(), RENDER_BUFFER_COUNT);
 			m_gpuTimeBudget = 1.0f / fps;
 #endif
 
@@ -175,8 +235,7 @@ namespace SectorFW
 			m_gpuTimer.begin(m_context.Get());
 #endif
 
-			auto& renderGraph = GetRenderGraph();
-			renderGraph.Execute();
+			renderGraph->Execute();
 
 #ifdef _ENABLE_IMGUI
 			m_gpuTimer.end(m_context.Get());
@@ -259,11 +318,10 @@ namespace SectorFW
 
 		void DX11GraphicsDevice::TestInitialize()
 		{
-			auto& graph = GetRenderGraph();
 			std::vector<ID3D11RenderTargetView*> rtvs{
 				m_renderTargetView.Get() };
 
-			auto constantMgr = GetRenderGraph().GetRenderService()->GetResourceManager<DX11BufferManager>();
+			auto constantMgr = renderGraph->GetRenderService()->GetResourceManager<DX11BufferManager>();
 			auto cameraHandle = constantMgr->FindByName(DX113DCameraService::BUFFER_NAME);
 
 			RenderPassDesc<ID3D11RenderTargetView*> passDesc;
@@ -272,35 +330,15 @@ namespace SectorFW
 			passDesc.dsv = m_depthStencilView.Get();
 			passDesc.cbvs = { cameraHandle };
 			passDesc.rasterizerState = RasterizerStateID::SolidCullBack;
+			passDesc.blendState = BlendStateID::AlphaBlend;
 
-			graph.AddPass(passDesc);
+			renderGraph->AddPass(passDesc);
 
 			passDesc.name = "DrawLine";
 			passDesc.topology = PrimitiveTopology::LineList;
 			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
-			graph.AddPass(passDesc);
-		}
-
-		inline DX11GraphicsDevice::DX11RenderGraph& DX11GraphicsDevice::GetRenderGraph()
-		{
-			static DX11MeshManager meshManager(m_device.Get());
-			static DX11ShaderManager shaderManager(m_device.Get());
-			static DX11TextureManager textureManager(m_device.Get());
-			static DX11BufferManager cbManager(m_device.Get(), m_context.Get());
-			static DX11SamplerManager samplerManager(m_device.Get());
-			static DX11MaterialManager materialManager(&shaderManager, &textureManager, &cbManager, &samplerManager);
-			static DX11PSOManager psoManager(m_device.Get(), &shaderManager);
-			static DX11ModelAssetManager modelAssetManager(meshManager, materialManager, shaderManager, textureManager, cbManager, samplerManager, m_device.Get());
-
-			static DX11Backend backend = DX11Backend(
-				m_device.Get(), m_context.Get(),
-				&meshManager, &materialManager, &shaderManager, &psoManager,
-				&textureManager, &cbManager, &samplerManager, &modelAssetManager
-			);
-
-			static DX11RenderGraph m_renderGraph = DX11RenderGraph(backend);
-			return m_renderGraph;
+			renderGraph->AddPass(passDesc);
 		}
 
 		void DX11GraphicsDevice::RenderThreadMain(std::shared_ptr<RTState> st) {

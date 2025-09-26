@@ -512,7 +512,7 @@ namespace SectorFW
 				maxInstancesPerFrame(maxInstancesPerFrame) {
 				assert(maxInstancesPerFrame > 0 && maxInstancesPerFrame <= MAX_INSTANCES_PER_FRAME);
 
-				for (int i = 0; i < RENDER_QUEUE_BUFFER_COUNT; ++i) {
+				for (int i = 0; i < RENDER_BUFFER_COUNT; ++i) {
 					queues[i] = std::make_unique<moodycamel::ConcurrentQueue<DrawCommand>>();
 					instancePools[i] = std::unique_ptr<InstanceData[]>(new InstanceData[maxInstancesPerFrame]);
 					instWritePos[i].store(0, std::memory_order_relaxed);
@@ -528,7 +528,7 @@ namespace SectorFW
 				current(other.current.load()), sortContext(std::move(other.sortContext)) {
 				assert(maxInstancesPerFrame > 0 && maxInstancesPerFrame <= MAX_INSTANCES_PER_FRAME);
 
-				for (int i = 0; i < RENDER_QUEUE_BUFFER_COUNT; ++i) {
+				for (int i = 0; i < RENDER_BUFFER_COUNT; ++i) {
 					queues[i] = std::move(other.queues[i]);
 					instancePools[i] = std::move(other.instancePools[i]);
 					instWritePos[i].store(other.instWritePos[i].load());
@@ -546,7 +546,7 @@ namespace SectorFW
 				if (this != &other) {
 					current.store(other.current.load());
 					sortContext = std::move(other.sortContext);
-					for (int i = 0; i < RENDER_QUEUE_BUFFER_COUNT; ++i)
+					for (int i = 0; i < RENDER_BUFFER_COUNT; ++i)
 						queues[i] = std::move(other.queues[i]);
 				}
 				return *this;
@@ -566,7 +566,7 @@ namespace SectorFW
 				const InstanceData*& outInstances, uint32_t& outCount) {
 				// “現在の生産キュー” を次のフレームへ先に切り替える
 				const int prev = current.exchange(
-					(current.load(std::memory_order_relaxed) + 1) % RENDER_QUEUE_BUFFER_COUNT,
+					(current.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT,
 					std::memory_order_acq_rel);
 
 				auto& q = *queues[prev];
@@ -610,7 +610,7 @@ namespace SectorFW
 			void Submit(std::pmr::vector<DrawCommand>& out,
 				const InstanceData*& outInstances, uint32_t& outCount) {
 				const int prev = current.exchange(
-					(current.load(std::memory_order_relaxed) + 1) % RENDER_QUEUE_BUFFER_COUNT,
+					(current.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT,
 					std::memory_order_acq_rel);
 
 				auto& q = *queues[prev];
@@ -665,13 +665,13 @@ namespace SectorFW
 		private:
 			const uint32_t maxInstancesPerFrame;
 
-			std::unique_ptr<moodycamel::ConcurrentQueue<DrawCommand>> queues[RENDER_QUEUE_BUFFER_COUNT];
-			std::optional<moodycamel::ConsumerToken> ctoken[RENDER_QUEUE_BUFFER_COUNT];
+			std::unique_ptr<moodycamel::ConcurrentQueue<DrawCommand>> queues[RENDER_BUFFER_COUNT];
+			std::optional<moodycamel::ConsumerToken> ctoken[RENDER_BUFFER_COUNT];
 			std::atomic<int> current = 0;
 
 			// フレーム別インスタンスプール（固定長配列）
-			std::unique_ptr<InstanceData[]> instancePools[RENDER_QUEUE_BUFFER_COUNT];
-			std::atomic<uint32_t> instWritePos[RENDER_QUEUE_BUFFER_COUNT];
+			std::unique_ptr<InstanceData[]> instancePools[RENDER_BUFFER_COUNT];
+			std::atomic<uint32_t> instWritePos[RENDER_BUFFER_COUNT];
 
 			// 取り込み用一時バッファ：std::array でヒープ確保ゼロ化
 			std::array<DrawCommand, DRAWCOMMAND_TMPBUF_SIZE> tmp{};

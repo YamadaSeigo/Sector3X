@@ -47,6 +47,21 @@ namespace SectorFW
 			requires (Derived & t, Partition & partition, LevelContext & ctx, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, ctx, services...) } -> std::same_as<void>;
 		};
+		// EndImplのオーバーロードをチェックするコンセプト
+		template<typename Derived, typename Partition, typename... Services>
+		concept HasEndImpl =
+			requires (Derived & t, UndeletablePtr<Services>... services) {
+				{ t.EndImpl(services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, Partition & partition, UndeletablePtr<Services>... services) {
+				{ t.EndImpl(partition, services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, LevelContext ctx, UndeletablePtr<Services>... services) {
+				{ t.EndImpl(ctx, services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, Partition & partition, LevelContext & ctx, UndeletablePtr<Services>... services) {
+				{ t.EndImpl(partition, ctx, services...) } -> std::same_as<void>;
+		};
 
 		/**
 		 * @brief ECSシステムのインターフェース
@@ -151,6 +166,24 @@ namespace SectorFW
 			}
 		public:
 			/**
+			 * @brief  UpdateImpl関数を保持しているか？
+			 * @return 保持している場合はtrue
+			 * @detail ISystemのIsUpdateable関数を隠蔽
+			 */
+			static constexpr bool IsUpdateable() noexcept {
+				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) return true;
+				return false;
+			}
+			/**
+			 * @brief  UpdateImpl関数を保持しているか？
+			 * @return 保持している場合はtrue
+			 * @detail ISystemのIsUpdateable関数を隠蔽
+			 */
+			static constexpr bool IsEndSystem() noexcept {
+				if constexpr (HasEndImpl<Derived, Partition, Services...>) return true;
+				return false;
+			}
+			/**
 			 * @brief コンテキストを設定する関数
 			 * @param ctx コンテキストのタプル
 			 */
@@ -228,6 +261,53 @@ namespace SectorFW
 								static_cast<Derived*>(this)->UpdateImpl(levelCtx, UndeletablePtr<Services>(unpacked)...);
 							else
 								static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<Services>(unpacked)...);
+						},
+						serviceTuple
+					);
+				}
+			}
+			/**
+			 * @brief システムの終了関数
+			 * @param partition パーティションの参照
+			 * @detail 自身のコンテキストを使用して、StartImplを呼び出す
+			 */
+			void End(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) override {
+				if constexpr (HasEndImpl<Derived, Partition, Services...>) {
+					if constexpr (AllStaticServices<Services...>) {
+						// 静的サービスを使用する場合、サービスロケーターから直接取得
+						std::apply(
+							[&](Services*... unpacked) {
+								constexpr bool hasPartition = function_mentions_v<decltype(&Derived::EndImpl), Partition&>;
+								constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::EndImpl), LevelContext&>;
+
+								if constexpr (hasPartition && hasLevelContext)
+									static_cast<Derived*>(this)->EndImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);
+								else if constexpr (hasPartition && !hasLevelContext)
+									static_cast<Derived*>(this)->EndImpl(partition, UndeletablePtr<Services>(unpacked)...);
+								else if constexpr (!hasPartition && hasLevelContext)
+									static_cast<Derived*>(this)->EndImpl(levelCtx, UndeletablePtr<Services>(unpacked)...);
+								else
+									static_cast<Derived*>(this)->EndImpl(UndeletablePtr<Services>(unpacked)...);
+							},
+							context
+						);
+						return;
+					}
+
+					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
+					std::apply(
+						[&](Services*... unpacked) {
+							constexpr bool hasPartition = function_mentions_v<decltype(&Derived::EndImpl), Partition&>;
+							constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::EndImpl), LevelContext&>;
+
+							if constexpr (hasPartition && hasLevelContext)
+								static_cast<Derived*>(this)->EndImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);
+							else if constexpr (hasPartition && !hasLevelContext)
+								static_cast<Derived*>(this)->EndImpl(partition, UndeletablePtr<Services>(unpacked)...);
+							else if constexpr (!hasPartition && hasLevelContext)
+								static_cast<Derived*>(this)->EndImpl(levelCtx, UndeletablePtr<Services>(unpacked)...);
+							else
+								static_cast<Derived*>(this)->EndImpl(UndeletablePtr<Services>(unpacked)...);
 						},
 						serviceTuple
 					);

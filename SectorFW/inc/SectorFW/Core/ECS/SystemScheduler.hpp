@@ -15,10 +15,10 @@
 #include "EntityManager.h"
 #include "ITypeSystem.hpp"
 
-#include "Debug/ImGuiLayer.h"
+#include "../../Debug/ImGuiLayer.h"
 
 #ifdef _ENABLE_IMGUI
-#include "Debug/UIBus.h"
+#include "../../Debug/UIBus.h"
 #endif
 
 namespace SectorFW
@@ -67,20 +67,29 @@ namespace SectorFW
 				}
 				if (!newly.empty()) {
 					// まとめて systems と accessList に移動/push（reserve で再配置削減）
-					systems.reserve(systems.size() + newly.size());
+					updateSystems.reserve(updateSystems.size() + newly.size());
 					accessList.reserve(accessList.size() + newly.size());
 
 					for (auto& uptr : newly) {
 						// ここで必要ならコンテキスト注入（AddSystem時に済なら不要）
 						// uptr->SetContext(serviceLocator);
 
-						systems.emplace_back(std::move(uptr));
+						// UpdateImpl を持たないシステムは登録しない
+						if constexpr (std::remove_reference_t<decltype(*uptr)>::IsUpdateable())
+						{
+							scheduleDirty = true; // 追加があれば再構築フラグ
 
-						// AccessInfo を取得してキャッシュ
-						// ※ 実装に合わせてメソッド名を調整してください
-						accessList.emplace_back(systems.back()->GetAccessInfo());
+							updateSystems.emplace_back(std::move(uptr));
+
+							// AccessInfo を取得してキャッシュ
+							// ※ 実装に合わせてメソッド名を調整してください
+							accessList.emplace_back(updateSystems.back()->GetAccessInfo());
+						}
+						else
+						{
+							systems.emplace_back(std::move(uptr)); // Update不要なシステムは別途保存
+						}
 					}
-					scheduleDirty = true; // 追加があれば再構築フラグ
 				}
 
 				// --- 並列実行プランの再構築（必要時のみ） ---
@@ -89,14 +98,14 @@ namespace SectorFW
 				}
 
 #ifdef _ENABLE_IMGUI
-				size_t n = systems.size();
+				size_t n = updateSystems.size();
 				for (size_t i = 0; i < n; ++i)
 				{
 					auto g = Debug::BeginTreeWrite(); // lock & back buffer
 					auto& frame = g.data();
 
 					// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-					std::string systemName = systems[i]->derived_name();
+					std::string systemName = updateSystems[i]->derived_name();
 					std::string partitionName = typeid(Partition).name();
 					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::System, /*leaf=*/true, std::string(systemName.begin() + 6, systemName.end() - (partitionName.size() + 2)) });
 				} // guard のデストラクトで unlock。swap は UI スレッドで。
@@ -109,15 +118,33 @@ namespace SectorFW
 					std::for_each(std::execution::par_unseq, group.begin(), group.end(),
 						[&](size_t idx) noexcept {
 							// 可能なら no-throw Update を用意、あるいはここでtry/catch
-							systems[idx]->Update(partition, levelCtx, serviceLocator);
+							updateSystems[idx]->Update(partition, levelCtx, serviceLocator);
 						}
 					);
 					// 同バッチ内は並列、次バッチは暗黙にバリア
 				}
 			}
+
+			void CleanSystem(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) {
+				for (auto& sys : systems)
+				{
+					if constexpr (std::remove_reference_t<decltype(*sys)>::IsEndSystem())
+					{
+						sys->End(partition, levelCtx, serviceLocator);
+					}
+				}
+				for (auto& sys : updateSystems)
+				{
+					if constexpr (std::remove_reference_t<decltype(*sys)>::IsEndSystem())
+					{
+						sys->End(partition, levelCtx, serviceLocator);
+					}
+				}
+			}
 		private:
-			//システムのリスト
 			std::vector<std::unique_ptr<ISystem<Partition>>> systems;
+			//更新するシステムのリスト
+			std::vector<std::unique_ptr<ISystem<Partition>>> updateSystems;
 			//アクセス情報のリスト
 			std::vector<AccessInfo> accessList;
 			//保留中のシステムのリスト
@@ -148,10 +175,10 @@ namespace SectorFW
 			 */
 			void RebuildBatches() {
 				batches.clear();
-				batches.reserve(systems.size() / 2 + 1);
+				batches.reserve(updateSystems.size() / 2 + 1);
 
 				// Greedy coloring 的に最初に入れられるバッチへ突っ込む
-				for (size_t i = 0; i < systems.size(); ++i) {
+				for (size_t i = 0; i < updateSystems.size(); ++i) {
 					const auto& ai = accessList[i];
 					bool placed = false;
 					for (auto& group : batches) {

@@ -34,7 +34,7 @@ namespace SectorFW
 		class RenderGraph {
 		public:
 			using PassType = RenderPass<RTV, SRV, Buffer>;
-			static constexpr uint32_t kFlights = RENDER_QUEUE_BUFFER_COUNT; // フレームインフライト数
+			static constexpr uint32_t kFlights = RENDER_BUFFER_COUNT; // フレームインフライト数
 
 			/**
 			 * @brief コンストラクタ
@@ -55,7 +55,7 @@ namespace SectorFW
 				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(desc.maxInstancesPerFrame));
 				renderService.queueIndex[desc.name] = renderService.renderQueues.size() - 1; // レンダーサービスにキューを登録
 
-				passes.emplace_back(
+				passes.push_back(std::make_unique<PassType>(
 					desc.name,
 					desc.rtvs,
 					desc.dsv,
@@ -65,7 +65,7 @@ namespace SectorFW
 					desc.blendState,
 					desc.depthStencilState,
 					desc.cbvs,
-					desc.customExecute);
+					desc.customExecute));
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 				// パスごとのランタイムを初期化（常駐アリーナを作っておく）
@@ -85,10 +85,10 @@ namespace SectorFW
 			 */
 			PassType& GetPass(const std::string& name) {
 				for (auto& p : passes) {
-					if (p.name == name) return p;
+					if (p->name == name) return p;
 				}
 				assert(false && "Pass not found");
-				return passes[0];
+				return *passes[0];
 			}
 			/**
 			 * @brief 描画の実行
@@ -108,23 +108,23 @@ namespace SectorFW
 #endif // _ENABLE_IMGUI
 
 				for (auto& pass : passes) {
-					backend.SetPrimitiveTopology(pass.topology);
+					backend.SetPrimitiveTopology(pass->topology);
 
-					bool useRasterizer = pass.rasterizerState.has_value();
+					bool useRasterizer = pass->rasterizerState.has_value();
 					if (useRasterizer)
-						backend.SetRasterizerState(*pass.rasterizerState);
+						backend.SetRasterizerState(*pass->rasterizerState);
 
-					backend.SetBlendState(pass.blendState); // デフォルトのブレンドステートを使用
+					backend.SetBlendState(pass->blendState); // デフォルトのブレンドステートを使用
 
-					backend.SetDepthStencilState(pass.depthStencilState);
+					backend.SetDepthStencilState(pass->depthStencilState);
 
-					backend.SetRenderTargets(pass.rtvs, pass.dsv);
+					backend.SetRenderTargets(pass->rtvs, pass->dsv);
 
-					backend.BindGlobalCBVs(pass.cbvs);
+					backend.BindGlobalCBVs(pass->cbvs);
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 					// 常駐アリーナ＆cmdsを取得（再構築しない）
-					PassRuntime* rt = getRuntime(pass.name);
+					PassRuntime* rt = getRuntime(pass->name);
 					const uint32_t flight = renderService.currentFrame % kFlights;
 					auto& pf = rt->perFlight[flight];
 					pf.release();              // メモリは解放せず、ポインタだけ巻き戻す
@@ -136,7 +136,7 @@ namespace SectorFW
 					const InstanceData* instances = nullptr;
 					uint32_t instCount = 0;
 
-					pass.queue->Submit(cmds, instances, instCount);
+					pass->queue->Submit(cmds, instances, instCount);
 
 #ifdef _ENABLE_IMGUI
 					{
@@ -144,7 +144,7 @@ namespace SectorFW
 						auto& frame = g.data();
 
 						// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Pass, /*leaf=*/false, "Pass : " + pass.name });
+						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Pass, /*leaf=*/false, "Pass : " + pass->name });
 						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::DrawCommand, /*leaf=*/true, "DrawCommand : " + std::to_string(cmds.size()) });
 					} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif // _ENABLE_IMGUI
@@ -152,7 +152,7 @@ namespace SectorFW
 					backend.BeginFrameUpload(instances, instCount);
 					backend.ExecuteDrawIndexedInstanced(cmds, !useRasterizer); // インスタンシング対応
 
-					if (pass.customExecute) pass.customExecute();
+					if (pass->customExecute) pass->customExecute();
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 					// 使用量からヒント更新 & 必要時のみ拡張
@@ -192,7 +192,7 @@ namespace SectorFW
 
 		private:
 			Backend& backend;
-			std::vector<PassType> passes;
+			std::vector<std::unique_ptr<PassType>> passes;
 			RenderService renderService; // レンダーサービスのインスタンス
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
@@ -264,7 +264,7 @@ namespace SectorFW
 
 				std::string name;
 				size_t hint{ 0 };
-				PerFlight perFlight[kFlights];
+				std::vector<PerFlight> perFlight = std::vector<PerFlight>(kFlights);
 
 				bool needs_grow() const {
 					for (uint32_t i = 0; i < kFlights; ++i) {

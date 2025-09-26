@@ -213,6 +213,8 @@ namespace SectorFW
 
 		private:
 			void DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer);
+			void BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx);
+			void BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx);
 
 			HRESULT CreateInstanceBuffer();
 			HRESULT CreateRasterizerStates();

@@ -78,25 +78,11 @@ namespace SectorFW
 			}
 
 			// 新規確保
-			uint32_t idx;
-			{
-				std::unique_lock lock(mapMutex);
-				if (!freeList.empty()) {
-					idx = freeList.back();
-					freeList.pop_back();
-					slots[idx].generation++;
-				}
-				else {
-					idx = static_cast<uint32_t>(slots.size());
-					slots.push_back({});
-					refCount.push_back(0);
-				}
-			}
-			HandleType h{ idx, slots[idx].generation };
+			HandleType h = AllocateHandle();
 
-			slots[idx].data = static_cast<Derived*>(this)->CreateResource(desc, h);
-			slots[idx].alive = true;
-			refCount[idx].store(1, std::memory_order_relaxed);
+			slots[h.index].data = static_cast<Derived*>(this)->CreateResource(desc, h);
+			slots[h.index].alive = true;
+			refCount[h.index].store(1, std::memory_order_relaxed);
 
 			static_cast<Derived*>(this)->RegisterKey(desc, h);
 
@@ -119,8 +105,8 @@ namespace SectorFW
 		void Release(HandleType h, uint64_t deleteSync = 0) {
 			assert(IsValid(h));
 			auto prev = refCount[h.index].fetch_sub(1, std::memory_order_acq_rel);
-			assert(prev > 0 && "Release underflow");
-			if (prev == 1) EnqueueDelete(h.index, deleteSync);
+			assert(prev >= 0 && "Release underflow");
+			if (prev == 0) EnqueueDelete(h.index, deleteSync);
 		}
 		/**
 		 * @brief 削除要求の登録（重複を防いで期限更新）
@@ -209,6 +195,25 @@ namespace SectorFW
 				slots[h.index].alive;
 		}
 	protected:
+		/**
+		 * @brief ハンドルを新規確保する関数
+		 * @return HandleType 新規確保したハンドル
+		 */
+		HandleType AllocateHandle() {
+			uint32_t idx;
+			std::unique_lock lock(mapMutex);
+			if (!freeList.empty()) {
+				idx = freeList.back();
+				freeList.pop_back();
+				slots[idx].generation++;
+			}
+			else {
+				idx = static_cast<uint32_t>(slots.size());
+				slots.push_back({});
+				refCount.push_back(0);
+			}
+			return { idx, slots[idx].generation };
+		}
 		/**
 		 * @brief 派生が使うユーティリティ
 		 * @detail 指定したインデックスのスロットを死んでいる状態にする（ProcessDeferredDeletes での最終破棄までの間に使う）

@@ -131,6 +131,14 @@ namespace SectorFW
 			BudgetMover::Accessor::MoverFlush(levelCtx.mover, *serviceLocator.Get<SpatialChunkRegistry>(), 2000);
 		}
 		/**
+		 * @brief 終了処理
+		 * @detail SystemSchedulerのSystemのEnd関数を呼び出す
+		 */
+		void Clean(const ECS::ServiceLocator& serviceLocator) {
+			scheduler.CleanSystem(partition, levelCtx, serviceLocator);
+		}
+
+		/**
 		 * @brief 限定的な更新処理
 		 */
 		void UpdateLimited(const ECS::ServiceLocator& serviceLocator, double deltaTime) {
@@ -148,17 +156,6 @@ namespace SectorFW
 			for (auto& sys : limitedSystems) {
 				sys->Update(partition, levelCtx, serviceLocator);
 			}
-		}
-		/**
-		 * @brief システムを追加する関数
-		 * @param system システムのユニークポインタ
-		 * @param limited 限定的な更新対象かどうか
-		 */
-		void AddSystem(std::unique_ptr<SystemType> system, bool limited = false) {
-			if (limited)
-				limitedSystems.push_back(std::move(system));
-			else
-				scheduler.AddSystem(std::move(system));
 		}
 		/**
 		 * @brief エンティティを追加する関数

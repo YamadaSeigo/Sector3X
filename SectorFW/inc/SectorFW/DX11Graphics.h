@@ -80,7 +80,7 @@ namespace SectorFW
 			void WaitSubmittedFramesImpl(uint64_t uptoFrame);
 
 			RenderService* GetRenderService() noexcept {
-				return GetRenderGraph().GetRenderService();
+				return renderGraph->GetRenderService();
 			}
 
 			void TestInitialize();
@@ -88,13 +88,6 @@ namespace SectorFW
 			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }
 			ID3D11DeviceContext* GetDeviceContext() const noexcept { return m_context.Get(); }
 		private:
-			/**
-			 * @brief RenderGraphを取得する関数
-			 * @detail コンパイルの遅延判定のために関数に梱包している。Deviceを初期化してから初期化させたいため
-			 * @return DX11RenderGraph& RenderGraphの参照
-			 */
-			inline DX11RenderGraph& GetRenderGraph();
-
 			// ===== レンダースレッド実装 =====
 			struct RenderSubmit {
 				FLOAT clearColor[4]{ 0,0,0,1 };
@@ -120,7 +113,7 @@ namespace SectorFW
 				std::atomic<uint64_t> lastCompleted{ 0 };
 
 				// 上限（= バッファ数）
-				static constexpr uint32_t MaxInFlight = RENDER_QUEUE_BUFFER_COUNT;
+				static constexpr uint32_t MaxInFlight = RENDER_BUFFER_COUNT;
 			};
 
 			void RenderThreadMain(std::shared_ptr<RTState> st);
@@ -137,6 +130,18 @@ namespace SectorFW
 			ComPtr<ID3D11Texture2D> m_depthStencilBuffer;
 			// デフォルトの深度ステンシルビュー
 			ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+
+			std::unique_ptr<DX11MeshManager> meshManager;
+			std::unique_ptr<DX11ShaderManager> shaderManager;
+			std::unique_ptr<DX11TextureManager> textureManager;
+			std::unique_ptr<DX11BufferManager> bufferManager;
+			std::unique_ptr<DX11SamplerManager> samplerManager;
+			std::unique_ptr<DX11MaterialManager> materialManager;
+			std::unique_ptr<DX11PSOManager> psoManager;
+			std::unique_ptr<DX11ModelAssetManager> modelAssetManager;
+
+			std::unique_ptr<DX11Backend> backend;
+			std::unique_ptr<DX11RenderGraph> renderGraph;
 
 			std::shared_ptr<RTState> m_rt;
 

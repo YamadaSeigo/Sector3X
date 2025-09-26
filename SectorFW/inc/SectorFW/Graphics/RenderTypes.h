@@ -16,7 +16,7 @@ namespace SectorFW
 		/**
 		 * @brief レンダリングキューのバッファ数（トリプルバッファリング推奨）
 		 */
-		static inline constexpr uint16_t RENDER_QUEUE_BUFFER_COUNT = 3;
+		static inline constexpr uint16_t RENDER_BUFFER_COUNT = 3;
 		/**
 		 * @brief メッシュハンドル構造体
 		 */

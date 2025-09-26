@@ -59,7 +59,7 @@ namespace SectorFW
 			uint32_t maxEntitiesPerLeaf = 1024) noexcept
 			: m_worldX(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksX* minLeafSize)))
 			, m_worldY(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksY* minLeafSize))) // óßï˚ëÃÇ…çáÇÌÇπÇÈ
-			, m_worldZ(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksZ == 0 ? worldBlocksX : worldBlocksZ * minLeafSize)))
+			, m_worldZ(std::max<ChunkSizeType>(1, ChunkSizeType((worldBlocksZ == ChunkSizeType(0) ? worldBlocksX : worldBlocksZ) * minLeafSize)))
 			, m_minLeaf(std::max<float>(1.f, minLeafSize))
 			, m_maxPerLeafCount(std::max<uint32_t>(1, maxEntitiesPerLeaf))
 		{

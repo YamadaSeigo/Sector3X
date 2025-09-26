@@ -107,6 +107,7 @@ namespace SectorFW
 		void DX11Backend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer)
 		{
 			MaterialTemplateID templateID = MaterialTemplateID::MAX_COUNT;
+			InputBindingMode bindingMode;
 			{
 				auto pso = psoManager->GetDirect(psoIdx);
 
@@ -122,6 +123,7 @@ namespace SectorFW
 				context->PSSetShader(shader.ref().ps.Get(), nullptr, 0);
 
 				templateID = shader.ref().templateID;
+				bindingMode = shader.ref().bindingMode;
 			}
 			{
 				auto mat = materialManager->GetDirect(matIdx);
@@ -143,15 +145,140 @@ namespace SectorFW
 			}
 			{
 				auto mesh = meshManager->GetDirect(meshIdx);
-
-				UINT strides[1] = { mesh.ref().stride };
-				UINT offsets[1] = { 0 };
-				ID3D11Buffer* buffers[1] = { mesh.ref().vb.Get() };
 				context->IASetIndexBuffer(mesh.ref().ib.Get(), DXGI_FORMAT_R32_UINT, 0);
-				context->IASetVertexBuffers(0, 1, buffers, strides, offsets);
+				
+				switch (bindingMode) {
+				case InputBindingMode::AutoStreams:
+					BindMeshVertexStreamsForPSO(meshIdx, psoIdx);     // 既存の自動ストリーム
+					break;
+				case InputBindingMode::OverrideMap:
+					BindMeshVertexStreamsFromOverrides(meshIdx, psoIdx); // overrides_/attribMap 準拠でセット（簡易でAutoStreamsと共通でもOK）
+					break;
+				case InputBindingMode::LegacyManual:
+				default: {
+					// 旧: 単一AoS VB だけをslot=0に
+					ID3D11Buffer* buf = mesh.ref().vbs[0].Get(); // 互換の単一VB
+					UINT stride = mesh.ref().stride ? mesh.ref().stride : mesh.ref().strides[0];
+					UINT off = 0;
+					context->IASetVertexBuffers(0, 1, &buf, &stride, &off);
+				} break;
+				}
 
 				context->DrawIndexedInstanced(mesh.ref().indexCount, (UINT)count, 0, 0, 0);
 			}
+		}
+
+		void DX11Backend::BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx)
+		{
+			// PSO の InputLayoutDesc から必要 slot を抽出
+			UINT minSlot = UINT_MAX, maxSlot = 0;
+			std::bitset<8> needed{};
+			{
+				auto pso = psoManager->GetDirect(psoIdx);
+				auto shader = shaderManager->GetDirect(pso.ref().shader.index);
+				for (auto& e : shader.ref().inputLayoutDesc) {
+					// インスタンス用は別（今回は slot=4 を想定）
+					if (e.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) continue;
+					needed.set(e.InputSlot);
+					minSlot = (std::min)(minSlot, e.InputSlot);
+					maxSlot = (std::max)(maxSlot, e.InputSlot);
+				}
+			}
+			if (minSlot == UINT_MAX) return; // 頂点入力なし（理論上ありえないが）
+
+			// 連続レンジ [minSlot, maxSlot] を IASetVertexBuffers で一括セット
+			std::vector<ID3D11Buffer*> bufs;
+			std::vector<UINT> strides, offs;
+			bufs.reserve(maxSlot - minSlot + 1);
+			strides.reserve(bufs.capacity());
+			offs.reserve(bufs.capacity());
+
+			{
+				auto mesh = meshManager->GetDirect(meshIdx);
+				for (UINT s = minSlot; s <= maxSlot; ++s) {
+					if (needed.test(s) && mesh.ref().usedSlots.test(s) && mesh.ref().vbs[s]) {
+						bufs.push_back(mesh.ref().vbs[s].Get());
+						strides.push_back(mesh.ref().strides[s]);
+						offs.push_back(mesh.ref().offsets[s]);
+					}
+					else {
+						// gapを埋めるために null を入れる必要はない（StartSlot=minSlot、NumBuffers=bufs.size() で詰めて渡す）
+						// ただし InputLayout は slot番号を見ているので、“詰め替え”はできない。
+						// → よって gap を作らないように、基本は slot 0..N の設計にしておく。
+						// ここでは簡単のため、gap があれば nullptr を入れて維持する。
+						bufs.push_back(nullptr);
+						strides.push_back(0);
+						offs.push_back(0);
+					}
+				}
+			}
+
+			context->IASetVertexBuffers(minSlot, (UINT)bufs.size(), bufs.data(), strides.data(), offs.data());
+		}
+
+		void DX11Backend::BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx)
+		{
+			// 取得
+			auto pso = psoManager->GetDirect(psoIdx);
+			auto shader = shaderManager->Get(pso.ref().shader);
+			auto mesh = meshManager->GetDirect(meshIdx);
+
+			// この関数は「VS の最終 InputLayout（= 反射＋オーバーライド反映済み）」を信用して
+			//  そこに書かれた InputSlot のレンジを連続で IA にセットします。
+			UINT minSlot = UINT_MAX, maxSlot = 0;
+			for (const auto& elem : shader.ref().inputLayoutDesc) {              // 反射結果は既に保持済み
+				if (elem.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) continue; // インスタンス属性は別経路
+				minSlot = (std::min)(minSlot, elem.InputSlot);
+				maxSlot = (std::max)(maxSlot, elem.InputSlot);
+			}
+			if (minSlot == UINT_MAX) {
+				// 頂点入力が無い（理論上ほぼ無い）場合は何もしない
+				return;
+			}
+
+			const UINT num = (maxSlot - minSlot + 1);
+
+			std::vector<ID3D11Buffer*> bufs(num, nullptr);
+			std::vector<UINT>          strides(num, 0);
+			std::vector<UINT>          offs(num, 0);
+
+			// 必要スロットを埋める（gap は nullptr/0 で埋めて連続レンジ維持）
+			// ここで「どのスロットにどの VB を挿すか」は ShaderManager が決めた InputSlot＝最終形に合わせる
+			for (const auto& elem : shader.ref().inputLayoutDesc) {
+				if (elem.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) continue;
+
+				const UINT slot = elem.InputSlot;
+				const size_t idx = size_t(slot - minSlot);
+
+				// --- SoA（複数VB）パス ---
+				// 前提：DX11MeshData に vbs/strides/offsets/usedSlots がある（SoA対応を入れている場合）
+				// あるいは AoS しか無いメッシュなら、下のフォールバックを通す
+				bool bound = false;
+#if 1
+				// SoA 対応が入っている場合は、このブロックが生きます
+				if (mesh.ref().usedSlots.test(slot) && mesh.ref().vbs[slot]) {
+					bufs[idx] = mesh.ref().vbs[slot].Get();
+					strides[idx] = mesh.ref().strides[slot];
+					offs[idx] = mesh.ref().offsets[slot];
+					bound = true;
+				}
+#endif
+				// --- フォールバック：従来 AoS（単一VB） ---
+				if (!bound && mesh.ref().vbs[0]) {
+					// 既存の単一頂点バッファをそのまま slot に挿す（Layout 側の offset/format は既に決まっている前提）
+					bufs[idx] = mesh.ref().vbs[0].Get();
+					strides[idx] = mesh.ref().stride;
+					offs[idx] = 0;
+					bound = true;
+				}
+
+				// それでも無ければ nullptr のまま（gap）。この場合、そのセマンティクは未供給なので描画は破綻しうるが、
+				// ここで止めずに上位の整合チェックに任せる（ログを出したい場合は WARNING を出す）。
+				// LOG_WARNING("Missing vertex stream for slot %u", slot);
+			}
+
+			// 連続レンジで一気にセット（gap は nullptr/0 を渡す）
+			context->IASetVertexBuffers(minSlot, num, bufs.data(), strides.data(), offs.data());
 		}
 
 		HRESULT DX11Backend::CreateInstanceBuffer()

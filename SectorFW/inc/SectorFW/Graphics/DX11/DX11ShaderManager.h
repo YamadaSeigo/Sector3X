@@ -21,6 +21,36 @@ namespace SectorFW
 	namespace Graphics
 	{
 		/**
+		 * @brief シェーダーハンドルの型
+		 */
+		enum class InputBindingMode { AutoStreams, LegacyManual, OverrideMap };
+		/**
+		 * @brief セマンティクキーを表す構造体
+		 */
+		struct SemanticKey {
+			std::string name;
+			UINT index;
+			bool operator==(const SemanticKey& o) const { return name == o.name && index == o.index; }
+		};
+		/**
+		 * @brief セマンティクキーのハッシュ関数
+		 */
+		struct SemanticKeyHash {
+			size_t operator()(SemanticKey const& k) const noexcept {
+				return std::hash<std::string>()(k.name) ^ (k.index * 1315423911u);
+			}
+		};
+		/**
+		 * @brief セマンティクバインディングを表す構造体
+		 */
+		struct SemanticBinding {
+			UINT slot = 0;
+			DXGI_FORMAT format = DXGI_FORMAT_R32G32B32_FLOAT;
+			UINT alignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+			D3D11_INPUT_CLASSIFICATION slotClass = D3D11_INPUT_PER_VERTEX_DATA;
+			UINT stepRate = 0;
+		};
+		/**
 		 * @brief シェーダーステージを表す列挙型
 		 */
 		struct ShaderResourceBinding {
@@ -50,6 +80,9 @@ namespace SectorFW
 			std::vector<std::string> inputLayoutSemanticNames; // セマンティック名のリスト
 			std::vector<ShaderResourceBinding> psBindings; // SRV / CBV info
 			std::vector<ShaderResourceBinding> vsBindings; // SRV / CBV info
+
+			InputBindingMode bindingMode = InputBindingMode::AutoStreams;
+			std::vector<SemanticKey> requiredInputs;
 		};
 		/**
 		 * @brief DirectX 11のシェーダーマネージャークラス
@@ -87,7 +120,11 @@ namespace SectorFW
 		private:
 			void ReflectInputLayout(ID3DBlob* vsBlob,
 				std::vector<D3D11_INPUT_ELEMENT_DESC>& outDesc,
-				std::vector<std::string>& semanticNames);
+				std::vector<std::string>& semanticNames,
+				DX11ShaderData& currentShaderData);
+
+			// セマンティク名から InputSlot を決める簡易ポリシー
+			static unsigned int DecideInputSlotFromSemantic(std::string_view name, unsigned int semanticIndex) noexcept;
 
 			//=== キー計算 ===
 			size_t MakeKey(const DX11ShaderCreateDesc& desc) const;
@@ -99,10 +136,16 @@ namespace SectorFW
 
 			void ReflectShaderResources(ID3DBlob* blob, std::vector<ShaderResourceBinding>& outBindings);
 
+			bool IsKnownSemantic(std::string_view s) const noexcept;
+			void RegisterSemanticOverride(const SemanticKey& key, const SemanticBinding& bind);
+
 		private:
 			ID3D11Device* device;
 			// キー -> ハンドル の検索表
 			std::unordered_map<size_t, ShaderHandle> keyToHandle;
+
+			// 内部テーブル
+			std::unordered_map<SemanticKey, SemanticBinding, SemanticKeyHash> overrides_;
 		};
 	}
 }

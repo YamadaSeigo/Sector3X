@@ -21,7 +21,7 @@ namespace SectorFW
 		struct SkeletonJoint {
 			std::string name;
 			int parentIndex = -1; // -1 ‚È‚ç root
-			Math::Matrix4x4f inverseBindMatrix;
+			Math::Matrix4x4f inverseBindMatrix = {};
 		};
 
 		struct Skeleton {

@@ -94,6 +94,9 @@
     <Filter Include="Src\SIMD">
       <UniqueIdentifier>{4e55244a-1d2c-4a4e-be0a-5c19334220de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\Graphics\MOC">
+      <UniqueIdentifier>{da44bf4c-9dbb-475f-bafa-34cbd0206df6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utility\doxygen_sample.h">
@@ -223,9 +226,6 @@
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11SamplerManager.h">
-      <Filter>Inc\Graphics\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShaderManager.h">
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11TextureManager.h">
@@ -428,6 +428,9 @@
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Core\ECS\SparseMarge.hpp">
       <Filter>Inc\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShaderManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -922,6 +925,21 @@
     </ClCompile>
     <ClCompile Include="src\SIMD\simd_init.cpp">
       <Filter>Src\SIMD</Filter>
+    </ClCompile>
+    <ClCompile Include="external\MOC\MaskedOcclusionCullingAVX2.cpp">
+      <Filter>Inc\Graphics\MOC</Filter>
+    </ClCompile>
+    <ClCompile Include="external\MOC\MaskedOcclusionCullingAVX512.cpp">
+      <Filter>Inc\Graphics\MOC</Filter>
+    </ClCompile>
+    <ClCompile Include="external\MOC\MaskedOcclusionCulling.cpp">
+      <Filter>Inc\Graphics\MOC</Filter>
+    </ClCompile>
+    <ClCompile Include="external\MOC\FrameRecorder.cpp">
+      <Filter>Inc\Graphics\MOC</Filter>
+    </ClCompile>
+    <ClCompile Include="external\MOC\CullingThreadpool.cpp">
+      <Filter>Inc\Graphics\MOC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

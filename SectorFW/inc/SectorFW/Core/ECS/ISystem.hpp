@@ -56,6 +56,20 @@ namespace SectorFW
 		class ISystem {
 		public:
 			/**
+			 * @brief UpdateImpl関数を保持しているか？
+			 * @return 保持している場合true
+			 */
+			static constexpr bool IsUpdateable() noexcept {
+				return true;
+			}
+			/**
+			 * @brief EndImpl関数を保持しているか？
+			 * @return 保持している場合true
+			 */
+			static constexpr bool IsEndSystem() noexcept {
+				return true;
+			}
+			/**
 			 * @brief システムの開始関数
 			 * @param partition 対象のパーティション
 			 * @param serviceLocator サービスロケーター
@@ -67,6 +81,12 @@ namespace SectorFW
 			 * @param serviceLocator サービズロケーター
 			 */
 			virtual void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) = 0;
+			/**
+			 * @brief システムの終了関数
+			 * @param partition 対象のパーティション
+			 * @param serviceLocator サービズロケーター
+			 */
+			virtual void End(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator){}
 			/**
 			 * @brief アクセス情報の取得関数
 			 * @return AccessInfo アクセス情報
