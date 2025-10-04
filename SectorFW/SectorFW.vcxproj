@@ -62,6 +62,7 @@
     <ClInclude Include="inc\SectorFW\DX11Graphics.h" />
     <ClInclude Include="inc\SectorFW\DX12Graphics.h" />
     <ClInclude Include="inc\SectorFW\Graphics\convert_directX.hpp" />
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX112DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX113DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11BufferManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11MaterialManager.h" />
@@ -75,6 +76,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\DX11\_dx11inc.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX12\dx12inc.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX12\DX12RenderBackend.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\I2DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\I3DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\IGraphicsDevice.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderBackend.hpp" />
@@ -87,10 +89,13 @@
     <ClInclude Include="inc\SectorFW\Input\WinInput.h" />
     <ClInclude Include="inc\SectorFW\Input\WinMouseInput.h" />
     <ClInclude Include="inc\SectorFW\Math\AABB.hpp" />
+    <ClInclude Include="inc\SectorFW\Math\BoundingSphere.hpp" />
     <ClInclude Include="inc\SectorFW\Math\convert.hpp" />
     <ClInclude Include="inc\SectorFW\Math\Frustum.hpp" />
+    <ClInclude Include="inc\SectorFW\Math\aabb_util.h" />
     <ClInclude Include="inc\SectorFW\Math\Matrix.hpp" />
     <ClInclude Include="inc\SectorFW\Math\Quaternion.hpp" />
+    <ClInclude Include="inc\SectorFW\Math\Rectangle.hpp" />
     <ClInclude Include="inc\SectorFW\Math\sx_math.h" />
     <ClInclude Include="inc\SectorFW\Math\Transform.hpp" />
     <ClInclude Include="inc\SectorFW\Math\Vector.hpp" />

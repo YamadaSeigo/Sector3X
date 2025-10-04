@@ -203,6 +203,55 @@ namespace SectorFW
 			cullRecursive(*m_root, fr, ymin, ymax, std::forward<F>(f));
 		}
 
+		static inline float Dist2PointAABB3D(const Math::Vec3f& p,
+			const Math::Vec3f& c,
+			const Math::Vec3f& e)
+		{
+			auto clamp = [](float v, float lo, float hi) { return v < lo ? lo : (v > hi ? hi : v); };
+			const float qx = clamp(p.x, c.x - e.x, c.x + e.x);
+			const float qy = clamp(p.y, c.y - e.y, c.y + e.y);
+			const float qz = clamp(p.z, c.z - e.z, c.z + e.z);
+			const float dx = p.x - qx, dy = p.y - qy, dz = p.z - qz;
+			return dx * dx + dy * dy + dz * dz;
+		}
+
+		// 可視チャンクを近い順で上位K件
+		std::vector<SpatialChunk*> CullChunksNear(const Math::Frustumf& fr,
+			const Math::Vec3f& eye,
+			size_t maxCount = (std::numeric_limits<size_t>::max)()) const noexcept
+		{
+			struct Item { SpatialChunk* sc; float d2; };
+
+			std::vector<Item> items; items.reserve(128);
+			if (!m_root) return {};
+
+			// 可視葉 (chunk, bounds) を同時に収集する内部再帰
+			std::function<void(const Node&)> rec = [&](const Node& n) {
+				if (!nodeIntersectsFrustum3D(n, fr)) return;
+				if (n.isLeaf()) {
+					const Math::Vec3f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
+					const Math::Vec3f e = (n.bounds.ub - n.bounds.lb) * 0.5f;
+					const float d2 = Dist2PointAABB3D(eye, c, e);
+					items.push_back({ const_cast<SpatialChunk*>(&n.chunk), d2 });
+					return;
+				}
+				for (int i = 0; i < 8; ++i) if (n.child[i]) rec(*n.child[i]);
+				};
+			rec(*m_root);
+
+			if (items.empty()) return {};
+			const size_t K = (std::min)(maxCount, items.size());
+			std::nth_element(items.begin(), items.begin() + K, items.end(),
+				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
+			items.resize(K);
+			std::sort(items.begin(), items.end(),
+				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
+
+			std::vector<SpatialChunk*> out; out.reserve(K);
+			for (auto& it : items) out.push_back(it.sc);
+			return out;
+		}
+
 		/**
 		 * @brief チャンクのワイヤーフレームをフラスタムカリング付きで取得
 		 * @param fr フラスタム

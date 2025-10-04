@@ -63,6 +63,50 @@ namespace SectorFW
 				{ t.EndImpl(partition, ctx, services...) } -> std::same_as<void>;
 		};
 
+		// ComponentAccess<Override...> が Allowed... の部分集合か？
+		template<class AccessSpec, class... Allowed>
+		struct access_subset_impl : std::false_type {};
+
+		template<class... Override, class... Allowed>
+		struct access_subset_impl<ComponentAccess<Override...>, Allowed...>
+			: std::bool_constant<(OneOf<Override, Allowed...> && ...)> {
+		};
+
+		template<class AccessSpec, class... Allowed>
+		concept AccessSpecSubsetOf = access_subset_impl<AccessSpec, Allowed...>::value;
+
+		// （オプション）Read/Write の違いを無視して「コンポーネント型だけ」比較したい場合
+		template<class A> struct access_component { using type = typename AccessPolicy<A>::ComponentType; };
+
+		template<class T, class... Allowed>
+		concept OneOfByComponent =
+			(std::is_same_v<typename access_component<T>::type,
+				typename access_component<Allowed>::type> || ...);
+
+		template<class AccessSpec, class... Allowed>
+		struct access_subset_by_comp_impl : std::false_type {};
+
+		template<class... Override, class... Allowed>
+		struct access_subset_by_comp_impl<ComponentAccess<Override...>, Allowed...>
+			: std::bool_constant<(OneOfByComponent<Override, Allowed...> && ...)> {
+		};
+
+		template<class AccessSpec, class... Allowed>
+		concept AccessSpecSubsetOfByComponent =
+			access_subset_by_comp_impl<AccessSpec, Allowed...>::value;
+
+		// 1) 正規化トレイト
+		template<class T>
+		struct access_spec_normalize { using type = T; };
+
+		template<class... Ts>
+		struct access_spec_normalize<ComponentAccessor<Ts...>> {
+			using type = ComponentAccess<Ts...>;
+		};
+
+		template<class T>
+		using access_spec_normalize_t = typename access_spec_normalize<std::remove_cvref_t<T>>::type;
+
 		/**
 		 * @brief ECSシステムのインターフェース
 		 * @tparam Derived CRTPで継承する派生クラス
@@ -81,28 +125,34 @@ namespace SectorFW
 			 * @param func 関数オブジェクトまたはラムダ式
 			 * @param partition 対象のパーティション
 			 */
-			template<typename F, typename... Args>
-			void ForEachChunkWithAccessor(F&& func, Partition& partition, Args... args)
+			template<typename F, typename... CallArgs>
+			void ForEachChunkWithAccessor(F&& func, Partition& partition, CallArgs&&... args)
 			{
-				Query query;
-				query.With<typename AccessPolicy<AccessTypes>::ComponentType...>();
-				std::vector<ArchetypeChunk*> chunks = query.MatchingChunks<Partition&>(partition);
-#ifdef _DEBUG
-				if (chunks.empty() && matchingChunk) {
-					matchingChunk = false;
-					std::string log = std::string("No matching chunks : ") + this->derived_name();
-					LOG_WARNING(log.c_str());
-				}
-				else {
-					matchingChunk = true;
-				}
-#endif
-				for (auto& chunk : chunks)
-				{
-					ComponentAccessor<AccessTypes...> accessor(chunk);
-					std::forward<F>(func)(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
-				}
+				ForEach_impl(static_cast<ComponentAccess<AccessTypes...>*>(nullptr),
+					this, std::forward<F>(func), partition,
+					std::forward<CallArgs>(args)...);
 			}
+
+			template<typename AccessSpec, typename F, typename... CallArgs>
+				requires ::SectorFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
+			void ForEachChunkWithAccessor(F&& func, Partition& partition, CallArgs&&... args)
+			{
+				using AS = access_spec_normalize_t<AccessSpec>;
+				ForEach_impl(static_cast<AS*>(nullptr),
+					this, std::forward<F>(func), partition,
+					std::forward<CallArgs>(args)...);
+			}
+
+			template<typename... Override, typename F, typename... CallArgs>
+				requires (sizeof...(Override) > 0) &&
+			::SectorFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
+				void ForEachChunkWithAccessor(F&& func, Partition& partition, CallArgs&&... args)
+			{
+				using Access = ComponentAccess<Override...>;
+				this->template ForEachChunkWithAccessor<Access>(
+					std::forward<F>(func), partition, std::forward<CallArgs>(args)...);
+			}
+
 			/**
 			 * @brief 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(フラスタムカリング付き)
 			 * @param func 関数オブジェクトまたはラムダ式
@@ -110,60 +160,143 @@ namespace SectorFW
 			 * @param fru フラスタム
 			 * @param ...args 追加の引数
 			 */
-			template<typename F, typename... Args>
-			void ForEachFrustumChunkWithAccessor(F&& func, Partition& partition, Math::Frustumf& fru, Args... args)
+			 // A) 既定版：クラス定義の AccessTypes... を使う（制約なし）
+			template<typename F, typename... CallArgs>
+			void ForEachFrustumChunkWithAccessor(F&& func,
+				Partition& partition,
+				Math::Frustumf& fru,
+				CallArgs&&... args)
 			{
 				auto cullChunks = partition.CullChunks(fru);
-
 				if (cullChunks.empty()) return;
 
-				Query query;
-				query.With<typename AccessPolicy<AccessTypes>::ComponentType...>();
-				std::vector<ArchetypeChunk*> chunks = query.MatchingChunks<decltype(cullChunks)&>(cullChunks);
-#ifdef _DEBUG
-				if (chunks.empty() && matchingChunk) {
-					matchingChunk = false;
-					std::string log = std::string("No matching chunks : ") + this->derived_name();
-					LOG_WARNING(log.c_str());
-				}
-				else if (!chunks.empty()) {
-					matchingChunk = true;
-				}
-#endif
-				for (auto& chunk : chunks)
-				{
-					ComponentAccessor<AccessTypes...> accessor(chunk);
-					std::forward<F>(func)(accessor, chunk->GetEntityCount(), std::forward<Args>(args)...);
-				}
+				using DefaultAccess = ComponentAccess<AccessTypes...>;
+				ForEachFrustum_impl(static_cast<DefaultAccess*>(nullptr),
+					this, std::forward<F>(func), cullChunks,
+					std::forward<CallArgs>(args)...);
 			}
+
+			// B) 上書き版（単一 AccessSpec）…部分集合であることを要求
+			template<typename AccessSpec, typename F, typename... CallArgs>
+				requires ::SectorFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
+			void ForEachFrustumChunkWithAccessor(F&& func,
+				Partition& partition,
+				Math::Frustumf& fru,
+				CallArgs&&... args)
+			{
+				auto cullChunks = partition.CullChunks(fru);
+				if (cullChunks.empty()) return;
+
+				ForEachFrustum_impl(static_cast<AccessSpec*>(nullptr),
+					this, std::forward<F>(func), cullChunks,
+					std::forward<CallArgs>(args)...);
+			}
+
+			// C) 上書き版（従来の書き味：<Read<...>, Read<...>>）…内部で束ねて転送
+			template<typename... Override, typename F, typename... CallArgs>
+				requires (sizeof...(Override) > 0) &&
+			::SectorFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
+				void ForEachFrustumChunkWithAccessor(F&& func,
+					Partition& partition,
+					Math::Frustumf& fru,
+					CallArgs&&... args)
+			{
+				using Access = ComponentAccess<Override...>;
+				this->template ForEachFrustumChunkWithAccessor<Access>(
+					std::forward<F>(func), partition, fru, std::forward<CallArgs>(args)...);
+			}
+			/**
+			* @brief 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(フラスタムカリング近い順番付き)
+			* @param func 関数オブジェクトまたはラムダ式
+			* @param partition 対象のパーティション
+			* @param fru フラスタム
+			* @param cp カメラの位置
+			* @param ...args 追加の引数
+			*/
+			// A) 既定版：クラス定義の AccessTypes... を使う（制約なし）
+			template<typename F, typename... CallArgs>
+			void ForEachFrustumNearChunkWithAccessor(F&& func,
+				Partition& partition,
+				Math::Frustumf& fru,
+				Math::Vec3f cp,
+				CallArgs&&... args)
+			{
+				auto cullChunks = partition.CullChunksNear(fru, cp);
+				if (cullChunks.empty()) return;
+
+				using DefaultAccess = ComponentAccess<AccessTypes...>;
+				ForEachFrustum_impl(static_cast<DefaultAccess*>(nullptr),
+					this, std::forward<F>(func), cullChunks,
+					std::forward<CallArgs>(args)...);
+			}
+
+			// B) 上書き版（単一 AccessSpec）…部分集合であることを要求
+			template<typename AccessSpec, typename F, typename... CallArgs>
+				requires ::SectorFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
+			void ForEachFrustumNearChunkWithAccessor(F&& func,
+				Partition& partition,
+				Math::Frustumf& fru,
+				Math::Vec3f cp,
+				CallArgs&&... args)
+			{
+				auto cullChunks = partition.CullChunksNear(fru, cp);
+				if (cullChunks.empty()) return;
+
+				ForEachFrustum_impl(static_cast<AccessSpec*>(nullptr),
+					this, std::forward<F>(func), cullChunks,
+					std::forward<CallArgs>(args)...);
+			}
+
+			// C) 上書き版（従来の書き味：<Read<...>, Read<...>>）…内部で束ねて転送
+			template<typename... Override, typename F, typename... CallArgs>
+				requires (sizeof...(Override) > 0) &&
+			::SectorFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
+				void ForEachFrustumNearChunkWithAccessor(F&& func,
+					Partition& partition,
+					Math::Frustumf& fru,
+					Math::Vec3f cp,
+					CallArgs&&... args)
+			{
+				using Access = ComponentAccess<Override...>;
+				this->template ForEachFrustumNearChunkWithAccessor<Access>(
+					std::forward<F>(func), partition, fru, cp, std::forward<CallArgs>(args)...);
+			}
+
 			/**
 			 * @brief 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(エンティティID付き)
 			 * @param func 関数オブジェクトまたはラムダ式
 			 * @param partition 対象のパーティション
 			 * @param ...args 追加の引数
 			 */
-			template<typename F, typename... Args>
-			void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, Args... args)
+			template<typename F, typename... CallArgs>
+			void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, CallArgs&&... args)
 			{
-				Query query;
-				query.With<typename AccessPolicy<AccessTypes>::ComponentType...>();
-				std::vector<ArchetypeChunk*> chunks = query.MatchingChunks<Partition&>(partition);
-#ifdef _DEBUG
-				if (chunks.empty() && matchingChunk) {
-					matchingChunk = false;
-					std::string log = std::string("No matching chunks : ") + this->derived_name();
-					LOG_WARNING(log.c_str());
-				}
-				else {
-					matchingChunk = true;
-				}
-#endif
-				for (auto& chunk : chunks)
-				{
-					ComponentAccessor<AccessTypes...> accessor(chunk);
-					std::forward<F>(func)(accessor, chunk->GetEntityCount(), chunk->GetEntities(), std::forward<Args>(args)...);
-				}
+				ForEachWithIDs_impl(static_cast<ComponentAccess<AccessTypes...>*>(nullptr),
+					this, std::forward<F>(func), partition,
+					std::forward<CallArgs>(args)...);
 			}
+
+			template<typename AccessSpec, typename F, typename... CallArgs>
+				requires ::SectorFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
+			void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, CallArgs&&... args)
+			{
+				using AS = access_spec_normalize_t<AccessSpec>;
+				ForEachWithIDs_impl(static_cast<AS*>(nullptr),
+					this, std::forward<F>(func), partition,
+					std::forward<CallArgs>(args)...);
+			}
+
+			template<typename... Override, typename F, typename... CallArgs>
+				requires (sizeof...(Override) > 0) &&
+			::SectorFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
+				void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, CallArgs&&... args)
+			{
+				using Access = ComponentAccess<Override...>;
+				this->template ForEachChunkWithAccessorAndEntityIDs<Access>(
+					std::forward<F>(func), partition, std::forward<CallArgs>(args)...);
+			}
+
+
 		public:
 			/**
 			 * @brief  UpdateImpl関数を保持しているか？
@@ -321,6 +454,7 @@ namespace SectorFW
 				return ComponentAccess<AccessTypes...>::GetAccessInfo();
 			}
 		private:
+
 			//システムのコンテキストを保持するタプル
 			ContextTuple context;
 			/**
@@ -359,6 +493,99 @@ namespace SectorFW
 #ifdef _DEBUG
 			bool matchingChunk = true;
 #endif //_DEBUG
+		private:
+			// 未マッチ用（誤用検出）
+			template<class AccessSpec, class Self, class F, class Source, class... Extra>
+			static void ForEach_impl(AccessSpec*, Self*, F&&, Source&, Extra&&...) {
+				static_assert(sizeof(AccessSpec) == 0,
+					"AccessSpec must be ComponentAccess<...> / ComponentAccessor<...>");
+			}
+
+			template<class... Ts, class Self, class F, class Source, class... Extra>
+			static void ForEach_impl(ComponentAccess<Ts...>*,
+				Self* self, F&& func, Source& source, Extra&&... extra)
+			{
+				Query q;
+				q.With<typename AccessPolicy<Ts>::ComponentType...>();
+				auto chunks = q.MatchingChunks<Source&>(source);
+
+#ifdef _DEBUG
+				if (chunks.empty() && self->matchingChunk) {
+					self->matchingChunk = false;
+					std::string log = std::string("No matching chunks : ") + self->derived_name();
+					LOG_WARNING(log.c_str());
+				}
+				else if (!chunks.empty()) {
+					self->matchingChunk = true;
+				}
+#endif
+				for (auto* ch : chunks) {
+					ComponentAccessor<Ts...> acc(ch);
+					std::forward<F>(func)(acc, ch->GetEntityCount(), std::forward<Extra>(extra)...);
+				}
+			}
+
+			// 展開ヘルパ（AccessSpec = ComponentAccess<Ts...> を Ts... に割り出す）
+			template<class AccessSpec, class Self, class F, class CullChunks, class... Extra>
+			static void ForEachFrustum_impl(Self*, F&&, CullChunks&, Extra&&...) {
+				static_assert(sizeof(AccessSpec) == 0, "AccessSpec must be ComponentAccess<...>");
+			}
+
+			template<template<class...> class CA, class... Ts, class Self, class F, class CullChunks, class... Extra>
+			static void ForEachFrustum_impl(CA<Ts...>*, Self* self, F&& func, CullChunks& cullChunks, Extra&&... extra)
+			{
+				Query query;
+				query.With<typename AccessPolicy<Ts>::ComponentType...>();
+				auto chunks = query.MatchingChunks<CullChunks&>(cullChunks);
+
+#ifdef _DEBUG
+				if (chunks.empty() && self->matchingChunk) {
+					self->matchingChunk = false;
+					std::string log = std::string("No matching chunks : ") + self->derived_name();
+					LOG_WARNING(log.c_str());
+				}
+				else if (!chunks.empty()) {
+					self->matchingChunk = true;
+				}
+#endif
+				for (auto* chunk : chunks)
+				{
+					ComponentAccessor<Ts...> accessor(chunk);
+					std::forward<F>(func)(accessor, chunk->GetEntityCount(), std::forward<Extra>(extra)...);
+				}
+			}
+
+			// --- EntityIDs 版 ---
+			template<class AccessSpec, class Self, class F, class Source, class... Extra>
+			static void ForEachWithIDs_impl(AccessSpec*, Self*, F&&, Source&, Extra&&...) {
+				static_assert(sizeof(AccessSpec) == 0,
+					"AccessSpec must be ComponentAccess<...> / ComponentAccessor<...>");
+			}
+
+			template<class... Ts, class Self, class F, class Source, class... Extra>
+			static void ForEachWithIDs_impl(ComponentAccess<Ts...>*,
+				Self* self, F&& func, Source& source, Extra&&... extra)
+			{
+				Query q;
+				q.With<typename AccessPolicy<Ts>::ComponentType...>();
+				auto chunks = q.MatchingChunks<Source&>(source);
+
+#ifdef _DEBUG
+				if (chunks.empty() && self->matchingChunk) {
+					self->matchingChunk = false;
+					std::string log = std::string("No matching chunks : ") + self->derived_name();
+					LOG_WARNING(log.c_str());
+				}
+				else if (!chunks.empty()) {
+					self->matchingChunk = true;
+				}
+#endif
+				for (auto* ch : chunks) {
+					ComponentAccessor<Ts...> acc(ch);
+					std::forward<F>(func)(acc, ch->GetEntityCount(), ch->GetEntities(),
+						std::forward<Extra>(extra)...);
+				}
+			}
 		};
 	}
 }

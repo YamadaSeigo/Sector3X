@@ -153,6 +153,55 @@ namespace SectorFW
 			return out;
 		}
 
+		static inline float Dist2PointAABB3D(const Math::Vec3f& p,
+			const Math::Vec2f& c,
+			const Math::Vec2f& e)
+		{
+			auto clamp = [](float v, float lo, float hi) { return v < lo ? lo : (v > hi ? hi : v); };
+			const float qx = clamp(p.x, c.x - e.x, c.x + e.x);
+			const float qz = clamp(p.z, c.y - e.y, c.y + e.y);
+			const float dx = p.x - qx, dz = p.z - qz;
+			return dx * dx + dz * dz;
+		}
+
+		std::vector<SpatialChunk*> CullChunksNear(const Math::Frustumf& fr,
+			const Math::Vec3f& camPos,
+			size_t maxCount = (std::numeric_limits<size_t>::max)(),
+			float ymin = std::numeric_limits<float>::lowest(),
+			float ymax = (std::numeric_limits<float>::max)()) const noexcept
+		{
+			struct Item { SpatialChunk* sc; float d2; };
+
+			std::vector<Item> items; items.reserve(128);
+			if (!m_root) return {};
+
+			// ‰Â‹—t (chunk, bounds) ‚ğ“¯‚ÉûW‚·‚é“à•”Ä‹A
+			std::function<void(const Node&)> rec = [&](const Node& n) {
+				if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
+				if (n.isLeaf()) {
+					const Math::Vec2f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
+					const Math::Vec2f e = (n.bounds.ub - n.bounds.lb) * 0.5f;
+					const float d2 = 10.0f;//this->Dist2PointAABB3D(camPos, c, e);
+					items.push_back({ const_cast<SpatialChunk*>(&n.chunk), d2 });
+					return;
+				}
+				for (int i = 0; i < 8; ++i) if (n.child[i]) rec(*n.child[i]);
+				};
+			rec(*m_root);
+
+			if (items.empty()) return {};
+			const size_t K = (std::min)(maxCount, items.size());
+			std::nth_element(items.begin(), items.begin() + K, items.end(),
+				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
+			items.resize(K);
+			std::sort(items.begin(), items.end(),
+				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
+
+			std::vector<SpatialChunk*> out; out.reserve(K);
+			for (auto& it : items) out.push_back(it.sc);
+			return out;
+		}
+
 		template<class F>
 		void CullChunks(const Math::Frustumf& fr, float ymin, float ymax, F&& f) noexcept
 		{

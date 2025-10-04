@@ -46,6 +46,7 @@ namespace SectorFW
 			const T& operator[](size_t i) const noexcept { return data[i]; }
 
 			Vec2 operator+(const Vec2& rhs) const noexcept { return Vec2(x + rhs.x, y + rhs.y); }
+			Vec2& operator+=(const Vec2& rhs) noexcept { x += rhs.x; y += rhs.y; return *this; }
 			Vec2 operator-(const Vec2& rhs) const noexcept { return Vec2(x - rhs.x, y - rhs.y); }
 			Vec2 operator*(T s) const noexcept { return Vec2(x * s, y * s); }
 			Vec2 operator/(T s) const noexcept { return Vec2(x / s, x / s); }

@@ -1,7 +1,7 @@
 #include <SectorFW/Math/Vector.hpp>
 #include <numbers>
 
-#include "ShapeDimsRenderSystem.h"
+#include "DebugRenderSystem.h"
 
 // 24頂点+36インデックスを生成（中心原点、寸法 w,h,d）
 void MakeBox(float w, float h, float d,

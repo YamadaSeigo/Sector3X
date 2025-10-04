@@ -217,7 +217,7 @@ namespace SectorFW
 				static constexpr size_t kStackBuf = 256 * 1024;
 				struct PerFlight {
 					// 初期バッファ（stack か heap のどちらかを使用）
-					alignas(64) std::byte stack[kStackBuf];
+					alignas(64) std::byte stack[kStackBuf] = {};
 					std::unique_ptr<std::byte[]> heap{};
 					size_t heapSize{ 0 };
 					TrackingResource tracker{ std::pmr::get_default_resource() };

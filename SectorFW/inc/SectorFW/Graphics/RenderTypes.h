@@ -51,10 +51,21 @@ namespace SectorFW
 		struct ModelAssetHandle { uint32_t index; uint32_t generation; };
 		/**
 		 * @brief インスタンスデータ構造体
+		 * @detail m[3][3]が0.0fならインスタンスデータを保持していない
 		 */
 		struct InstanceData
 		{
 			Math::Matrix4x4f worldMtx;
+
+			InstanceData() : worldMtx(Math::Matrix4x4f::Identity()) {
+				worldMtx[3][3] = 0.0f; // 無効化
+			}
+			InstanceData(const Math::Matrix4x4f& mtx) : worldMtx(mtx) {
+				worldMtx[3][3] = 1.0f; // 有効化
+			}
+
+			bool HasData() const noexcept { return worldMtx[3][3] != 0.0f; }
+			void SetData(const Math::Matrix4x4f& mtx) noexcept { worldMtx = mtx; worldMtx[3][3] = 1.0f; }
 		};
 		/**
 		 * @brief インスタンスデータのインデックス構造体

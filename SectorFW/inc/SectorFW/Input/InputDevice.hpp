@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Core/ECS/ServiceContext.hpp"
+#include "../Core/ECS/ServiceContext.hpp"
 
 namespace SectorFW
 {

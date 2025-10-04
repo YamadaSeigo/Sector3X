@@ -5,7 +5,7 @@
 #include "system/PhysicsSystem.h"
 #include "system/BuildBodiesFromIntentsSystem.hpp"
 #include "system/BodyIDWriteBackFromEventSystem.hpp"
-#include "system/ShapeDimsRenderSystem.h"
+#include "system/DebugRenderSystem.h"
 #include "system/TestMoveSystem.h"
 #include "system/CleanModelSystem.h"
 #include <string>
@@ -154,11 +154,18 @@ int main(void)
 	InputService* inputService = &winInput;
 
 	auto bufferMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11BufferManager>();
-	Graphics::DX113DCameraService dx11CameraService(bufferMgr);
-	Graphics::I3DCameraService* cameraService = &dx11CameraService;
+	Graphics::DX113DPerCameraService dx11PerCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	Graphics::I3DPerCameraService* perCameraService = &dx11PerCameraService;
 
-	ECS::ServiceLocator serviceLocator(graphics.GetRenderService(), &physicsService, inputService, cameraService);
+	Graphics::DX113DOrtCameraService dx11OrtCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	Graphics::I3DOrtCameraService* ortCameraService = &dx11OrtCameraService;
+
+	Graphics::DX112DCameraService dx112DCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	Graphics::I2DCameraService* camera2DService = &dx112DCameraService;
+
+	ECS::ServiceLocator serviceLocator(graphics.GetRenderService(), &physicsService, inputService, perCameraService, ortCameraService, camera2DService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
+
 
 	//デバッグ用の初期化
 	//========================================================================================-
@@ -181,10 +188,12 @@ int main(void)
 	auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11ModelAssetManager>();
 	// モデルアセットの読み込み
 	DX11ModelAssetCreateDesc modelDesc;
-	modelDesc.path = "assets/model/StylizedNatureMegaKit/Plant_1.gltf";
+	modelDesc.path = "assets/model/StylizedNatureMegaKit/Pine_2.gltf";
 	modelDesc.shader = shaderHandle;
 	modelDesc.pso = psoHandle;
 	modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
+	modelDesc.instancesPeak = 1000;
+	modelDesc.viewMax = 1000.0f;
 	ModelAssetHandle modelAssetHandle;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle);
 
@@ -206,7 +215,7 @@ int main(void)
 		scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<ShapeDimsRenderSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<CleanModelSystem>(world.GetServiceLocator());
 
 		auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
@@ -220,10 +229,10 @@ int main(void)
 		Math::Vec3f dst = src;
 
 		// Entity生成
-		for (int j = 0; j < 1; ++j) {
-			for (int k = 0; k < 1; ++k) {
-				for (int n = 0; n < 1; ++n) {
-					Math::Vec3f location = { powf(float(j),2), float(n) * 32.0f, powf(float(k),2) };
+		for (int j = 0; j < 10; ++j) {
+			for (int k = 0; k < 10; ++k) {
+				for (int n = 0; n < 10; ++n) {
+					Math::Vec3f location = { float(j) * 40.0f, float(n) * 40.0f, float(k) * 40.0f};
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();
 					SpatialMotionTag tag{};
@@ -245,22 +254,22 @@ int main(void)
 				}
 			}
 		}
-		Physics::BodyComponent staticBody{};
-		staticBody.isStatic = Physics::BodyType::Static; // staticにする
-		auto id = level->AddEntity(
-			TransformSoA{ 10.0f,-10.0f, 10.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
-			CModel{ modelAssetHandle },
-			staticBody,
-			Physics::PhysicsInterpolation(
-				Math::Vec3f{ 10.0f,-10.0f, 10.0f }, // 初期位置
-				Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-			),
-			boxDims.value()
-		);
-		if (id) {
-			auto chunk = level->GetChunk({ 0.0f,-100.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
-			ps->EnqueueCreateIntent(id.value(), box, chunk.value()->GetNodeKey());
-		}
+		//Physics::BodyComponent staticBody{};
+		//staticBody.isStatic = Physics::BodyType::Static; // staticにする
+		//auto id = level->AddEntity(
+		//	TransformSoA{ 10.0f,-10.0f, 10.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
+		//	CModel{ modelAssetHandle },
+		//	staticBody,
+		//	Physics::PhysicsInterpolation(
+		//		Math::Vec3f{ 10.0f,-10.0f, 10.0f }, // 初期位置
+		//		Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+		//	),
+		//	boxDims.value()
+		//);
+		//if (id) {
+		//	auto chunk = level->GetChunk({ 0.0f,-100.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
+		//	ps->EnqueueCreateIntent(id.value(), box, chunk.value()->GetNodeKey());
+		//}
 
 		world.AddLevel(std::move(level));
 	}

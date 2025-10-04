@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="system\ShapeDimsRenderSystem.cpp">
+    <ClCompile Include="system\DebugRenderSystem.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="app\main.cpp">
@@ -63,7 +63,7 @@
     <ClInclude Include="system\BuildBodiesFromIntentsSystem.hpp">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="system\ShapeDimsRenderSystem.h">
+    <ClInclude Include="system\DebugRenderSystem.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="system\TestMoveSystem.h">
@@ -73,6 +73,9 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="app\stdafx.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Packed2Bits32.h">
       <Filter>App</Filter>
     </ClInclude>
   </ItemGroup>

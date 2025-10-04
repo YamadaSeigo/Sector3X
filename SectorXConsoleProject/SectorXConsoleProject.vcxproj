@@ -156,7 +156,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="system\ShapeDimsRenderSystem.cpp" />
+    <ClCompile Include="system\DebugRenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\PS_Default.hlsl">
@@ -182,12 +182,13 @@
     <None Include="shader\GlobalTypes.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="app\Packed2Bits32.h" />
     <ClInclude Include="app\stdafx.h" />
     <ClInclude Include="system\BodyIDWriteBackFromEventSystem.hpp" />
     <ClInclude Include="system\BuildBodiesFromIntentsSystem.hpp" />
     <ClInclude Include="system\CameraSystem.h" />
     <ClInclude Include="system\CleanModelSystem.h" />
-    <ClInclude Include="system\ShapeDimsRenderSystem.h" />
+    <ClInclude Include="system\DebugRenderSystem.h" />
     <ClInclude Include="system\ModelRenderSystem.h" />
     <ClInclude Include="system\PhysicsSystem.h" />
     <ClInclude Include="system\TestMoveSystem.h" />

@@ -8,7 +8,7 @@ struct PSInput
 };
 
 float4 main(PSInput input) : SV_TARGET
-{    
+{        
     if (hasBaseColorTex == 0)
         return baseColorFactor;
 

@@ -12,6 +12,7 @@
 #include "Graphics/RenderTypes.h"
 #include "Graphics/DX11/DX11RenderBackend.h"
 #include "Graphics/DX11/DX113DCameraService.h"
+#include "Graphics/DX11/DX112DCameraService.h"
 
 #ifdef _ENABLE_IMGUI
 #include "Debug/GPUTimerD3D11.h"

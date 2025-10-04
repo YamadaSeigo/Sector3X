@@ -171,6 +171,64 @@ namespace SectorFW
 				}
 			}
 		}
+
+		static inline float Dist2PointAABB3D(const Math::Vec3f& p,
+			const Math::Vec3f& c, // AABB center
+			const Math::Vec3f& e) // AABB extent
+		{
+			auto clamp = [](float v, float lo, float hi) { return v < lo ? lo : (v > hi ? hi : v); };
+			const float qx = clamp(p.x, c.x - e.x, c.x + e.x);
+			const float qy = clamp(p.y, c.y - e.y, c.y + e.y);
+			const float qz = clamp(p.z, c.z - e.z, c.z + e.z);
+			const float dx = p.x - qx, dy = p.y - qy, dz = p.z - qz;
+			return dx * dx + dy * dy + dz * dz;
+		}
+
+		// 可視チャンクを「カメラ位置から近い順」に上位K件返す
+		std::vector<SpatialChunk*> CullChunksNear(const Math::Frustumf& fr,
+			const Math::Vec3f& camPos,
+			size_t maxCount = (std::numeric_limits<size_t>::max)(),
+			float ymin = std::numeric_limits<float>::lowest(),
+			float ymax = (std::numeric_limits<float>::max)()) const noexcept
+		{
+			struct Item { SpatialChunk* sc; float d2; };
+			std::vector<Item> items; items.reserve(128);
+
+			const uint32_t w = grid.width(), d = grid.height();
+			const float cell = float(chunkSize);
+			const float exz = 0.5f * cell;
+
+			for (uint32_t z = 0; z < d; ++z) {
+				for (uint32_t x = 0; x < w; ++x) {
+					const float cx = (x + 0.5f) * cell;
+					const float cz = (z + 0.5f) * cell;
+
+					float cyEff, eyEff;
+					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, ymin, ymax, cyEff, eyEff)) continue;
+
+					const Math::Vec3f center{ cx, cyEff, cz };
+					const Math::Vec3f extent{ exz, eyEff, exz };
+
+					if (!fr.IntersectsAABB(center, extent)) continue;
+
+					const float d2 = Dist2PointAABB3D(camPos, center, extent);
+					items.push_back({ const_cast<SpatialChunk*>(&grid(x, z)), d2 });
+				}
+			}
+
+			if (items.empty()) return {};
+			const size_t K = (std::min)(maxCount, items.size());
+			std::nth_element(items.begin(), items.begin() + K, items.end(),
+				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
+			items.resize(K);
+			std::sort(items.begin(), items.end(),
+				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
+
+			std::vector<SpatialChunk*> out; out.reserve(K);
+			for (auto& it : items) out.push_back(it.sc);
+			return out;
+		}
+
 		/**
 		 * @brief フラスタムカリングを行い、可視なチャンクのワイヤーフレームラインを取得します。
 		 * @param fr フラスタム

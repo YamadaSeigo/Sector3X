@@ -20,6 +20,7 @@
 
 #include "Vector.hpp"
 #include "Quaternion.hpp"
+#include "AABB.hpp"
 
 namespace SectorFW
 {
@@ -196,6 +197,140 @@ namespace SectorFW
 			return Rt;
 		}
 #endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+
+		//==============================
+		// Vec4 との掛け算（列ベクトル規約）
+		//==============================
+		template<typename T>
+		inline Vec4<T> operator*(const Matrix<4, 4, T>& M, const Vec4<T>& v) noexcept {
+			// スカラー汎用（SSE なし環境も含めて動く）
+			Vec4<T> out{};
+			out.x = M.m[0][0] * v.x + M.m[0][1] * v.y + M.m[0][2] * v.z + M.m[0][3] * v.w;
+			out.y = M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z + M.m[1][3] * v.w;
+			out.z = M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z + M.m[2][3] * v.w;
+			out.w = M.m[3][0] * v.x + M.m[3][1] * v.y + M.m[3][2] * v.z + M.m[3][3] * v.w;
+			return out;
+		}
+
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+		// SIMD 版（Matrix4x4f × Vec4f）
+		inline Vec4f operator*(const Matrix4x4f& M, const Vec4f& v) noexcept {
+			// 列ベクトル規約： out = v.x*col0 + v.y*col1 + v.z*col2 + v.w*col3
+			// 行列は row-major なので、一度転置して列を取り出すのが速い
+			__m128 r0 = _mm_loadu_ps(M.m[0]); // 行0
+			__m128 r1 = _mm_loadu_ps(M.m[1]); // 行1
+			__m128 r2 = _mm_loadu_ps(M.m[2]); // 行2
+			__m128 r3 = _mm_loadu_ps(M.m[3]); // 行3
+			_MM_TRANSPOSE4_PS(r0, r1, r2, r3); // r0..r3 が列（col0..col3）
+
+			const __m128 vx = _mm_set1_ps(v.x);
+			const __m128 vy = _mm_set1_ps(v.y);
+			const __m128 vz = _mm_set1_ps(v.z);
+			const __m128 vw = _mm_set1_ps(v.w);
+
+			__m128 out = _mm_mul_ps(vx, r0);
+			out = detail::fmadd_ps(vy, r1, out);
+			out = detail::fmadd_ps(vz, r2, out);
+			out = detail::fmadd_ps(vw, r3, out);
+
+			alignas(16) float tmp[4];
+			_mm_storeu_ps(tmp, out);
+			return Vec4f{ tmp[0], tmp[1], tmp[2], tmp[3] };
+		}
+#endif // SIMD
+
+		// スカラー汎用
+		template<typename T>
+		inline Vec4<T> operator*(const Vec4<T>& v, const Matrix<4, 4, T>& M) noexcept {
+			// v*M = v.x*row0 + v.y*row1 + v.z*row2 + v.w*row3
+			Vec4<T> out{};
+			out.x = v.x * M.m[0][0] + v.y * M.m[1][0] + v.z * M.m[2][0] + v.w * M.m[3][0];
+			out.y = v.x * M.m[0][1] + v.y * M.m[1][1] + v.z * M.m[2][1] + v.w * M.m[3][1];
+			out.z = v.x * M.m[0][2] + v.y * M.m[1][2] + v.z * M.m[2][2] + v.w * M.m[3][2];
+			out.w = v.x * M.m[0][3] + v.y * M.m[1][3] + v.z * M.m[2][3] + v.w * M.m[3][3];
+			return out;
+		}
+
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+		// SIMD（float 専用）
+		inline Vec4f operator*(const Vec4f& v, const Matrix4x4f& M) noexcept {
+			// 行優先：各行が連続なのでそのまま使える（転置不要）
+			const __m128 r0 = _mm_loadu_ps(M.m[0]); // row0
+			const __m128 r1 = _mm_loadu_ps(M.m[1]); // row1
+			const __m128 r2 = _mm_loadu_ps(M.m[2]); // row2
+			const __m128 r3 = _mm_loadu_ps(M.m[3]); // row3
+
+			const __m128 vx = _mm_set1_ps(v.x);
+			const __m128 vy = _mm_set1_ps(v.y);
+			const __m128 vz = _mm_set1_ps(v.z);
+			const __m128 vw = _mm_set1_ps(v.w);
+
+			__m128 out = _mm_mul_ps(vx, r0);
+			out = detail::fmadd_ps(vy, r1, out);
+			out = detail::fmadd_ps(vz, r2, out);
+			out = detail::fmadd_ps(vw, r3, out);
+
+			alignas(16) float t[4];
+			_mm_storeu_ps(t, out);
+			return Vec4f{ t[0], t[1], t[2], t[3] };
+		}
+#endif //SIMD
+
+		template<typename T, typename VecT>
+		inline AABB<T, VecT> operator*(const AABB<T, VecT>& box, const Matrix<4, 4, T>& M) noexcept {
+			static_assert(std::is_same_v<VecT, Vec3<T>>, "This overload expects Vec3<T> AABB.");
+
+			// 中心と半径
+			const VecT c = (box.lb + box.ub) * T(0.5);
+			const VecT e = (box.ub - box.lb) * T(0.5);
+
+			// 中心の変換: c' = c * R + t   （行ベクトル規約）
+			VecT c2;
+			c2.x = c.x * M.m[0][0] + c.y * M.m[1][0] + c.z * M.m[2][0] + M.m[3][0];
+			c2.y = c.x * M.m[0][1] + c.y * M.m[1][1] + c.z * M.m[2][1] + M.m[3][1];
+			c2.z = c.x * M.m[0][2] + c.y * M.m[1][2] + c.z * M.m[2][2] + M.m[3][2];
+
+			// 半径の変換: e' = |A^T| * e  （行ベクトル規約のときは列の絶対値を使う）
+			const T ex = std::abs(e.x), ey = std::abs(e.y), ez = std::abs(e.z);
+
+			VecT e2;
+			e2.x = ex * std::abs(M.m[0][0]) + ey * std::abs(M.m[1][0]) + ez * std::abs(M.m[2][0]);
+			e2.y = ex * std::abs(M.m[0][1]) + ey * std::abs(M.m[1][1]) + ez * std::abs(M.m[2][1]);
+			e2.z = ex * std::abs(M.m[0][2]) + ey * std::abs(M.m[1][2]) + ez * std::abs(M.m[2][2]);
+
+			AABB<T, VecT> out;
+			out.lb = c2 - e2;
+			out.ub = c2 + e2;
+			return out;
+		}
+
+		// 参考: 列ベクトル規約（p' = M * p）を併用したい場合はこっちも用意
+		template<typename T, typename VecT>
+		inline AABB<T, VecT> operator*(const Matrix<4, 4, T>& M, const AABB<T, VecT>& box) noexcept {
+			static_assert(std::is_same_v<VecT, Vec3<T>>, "This overload expects Vec3<T> AABB.");
+
+			const VecT c = (box.lb + box.ub) * T(0.5);
+			const VecT e = (box.ub - box.lb) * T(0.5);
+
+			// 列ベクトル規約: c' = R*c + t
+			VecT c2;
+			c2.x = M.m[0][0] * c.x + M.m[0][1] * c.y + M.m[0][2] * c.z + M.m[0][3];
+			c2.y = M.m[1][0] * c.x + M.m[1][1] * c.y + M.m[1][2] * c.z + M.m[1][3];
+			c2.z = M.m[2][0] * c.x + M.m[2][1] * c.y + M.m[2][2] * c.z + M.m[2][3];
+
+			const T ex = std::abs(e.x), ey = std::abs(e.y), ez = std::abs(e.z);
+
+			// e' = |A| * e  （列ベクトル規約は行の絶対値）
+			VecT e2;
+			e2.x = ex * std::abs(M.m[0][0]) + ey * std::abs(M.m[0][1]) + ez * std::abs(M.m[0][2]);
+			e2.y = ex * std::abs(M.m[1][0]) + ey * std::abs(M.m[1][1]) + ez * std::abs(M.m[1][2]);
+			e2.z = ex * std::abs(M.m[2][0]) + ey * std::abs(M.m[2][1]) + ez * std::abs(M.m[2][2]);
+
+			AABB<T, VecT> out;
+			out.lb = c2 - e2;
+			out.ub = c2 + e2;
+			return out;
+		}
 
 		//==============================
 		// 4x4 一般逆行列（スカラー）
@@ -545,6 +680,16 @@ namespace SectorFW
 			return m;
 		}
 
+		/**
+		 * @brief 直交射影行列 (左手系)
+		 * @param l left
+		 * @param r right
+		 * @param b bottom
+		 * @param t top
+		 * @param n near
+		 * @param f far
+		 * @return 直交射影行列
+		 */
 		template<typename T>
 		Matrix<4, 4, T> MakeOrthographicMatrixLH(T l, T r, T b, T t, T n, T f) noexcept {
 			Matrix<4, 4, T> m{};

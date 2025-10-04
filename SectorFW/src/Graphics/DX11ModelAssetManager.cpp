@@ -6,7 +6,17 @@
 
 #include "Debug/logger.h"
 
+#include "Math/aabb_util.h"
+
 #include <numbers>
+
+#ifdef USE_MESHOPTIMIZER
+#ifdef _DEBUG
+#include <meshoptimizer/MDdx64/include/meshoptimizer.h>
+#else
+#include <meshoptimizer/MDx64/include/meshoptimizer.h>
+#endif//_DEBUG
+#endif//USE_MESHOPTIMIZER
 
 namespace SectorFW
 {
@@ -33,8 +43,11 @@ namespace SectorFW
 		{
 			auto& data = slots[idx].data;
 			for (auto& sm : data.subMeshes) {
-				meshMgr.Release(sm.mesh, currentFrame + RENDER_BUFFER_COUNT);
+				meshMgr.Release(sm.proxy, currentFrame + RENDER_BUFFER_COUNT);
 				matMgr.Release(sm.material, currentFrame + RENDER_BUFFER_COUNT);
+				for (auto& lod : sm.lods) {
+					meshMgr.Release(lod.mesh, currentFrame + RENDER_BUFFER_COUNT);
+				}
 			}
 		}
 
@@ -69,13 +82,9 @@ namespace SectorFW
 			return m;
 		}
 
-		const DX11ModelAssetData DX11ModelAssetManager::LoadFromGLTF(
-			const std::string& path,
-			ShaderHandle shader,
-			PSOHandle pso,
-			bool flipZ)
+		const DX11ModelAssetData DX11ModelAssetManager::LoadFromGLTF(const DX11ModelAssetCreateDesc& desc)
 		{
-			std::filesystem::path canonicalPath = std::filesystem::weakly_canonical(path);
+			std::filesystem::path canonicalPath = std::filesystem::weakly_canonical(desc.path);
 
 			// 読み込み & アセット構築
 			DX11ModelAssetData asset;
@@ -102,11 +111,6 @@ namespace SectorFW
 				cgltf_node& node = data->nodes[ni];
 				if (!node.mesh) continue;
 
-				Math::Matrix4x4f transform = Math::Matrix4x4f::Identity();
-				if (node.has_matrix) {
-					memcpy(&transform.m[0][0], node.matrix, sizeof(float) * 16);
-				}
-
 				cgltf_mesh& mesh = *node.mesh;
 				for (size_t pi = 0; pi < mesh.primitives_count; ++pi) {
 					cgltf_primitive& prim = mesh.primitives[pi];
@@ -130,7 +134,7 @@ namespace SectorFW
 						for (size_t vi = 0; vi < vertexCount; ++vi) {
 							float v[4] = {};
 							cgltf_accessor_read_float(attr.data, vi, v, 4);
-							if (flipZ) flip_vec3z(v[0], v[1], v[2]);
+							if (desc.rhFlipZ) flip_vec3z(v[0], v[1], v[2]);
 							positions[vi] = { v[0], v[1], v[2] };
 						}
 					}
@@ -142,7 +146,7 @@ namespace SectorFW
 							for (size_t vi = 0; vi < vertexCount; ++vi) {
 								float v[4] = {};
 								cgltf_accessor_read_float(attr.data, vi, v, 4);
-								if (flipZ) flip_vec3z(v[0], v[1], v[2]);
+								if (desc.rhFlipZ) flip_vec3z(v[0], v[1], v[2]);
 								normals[vi] = { v[0], v[1], v[2] };
 							}
 						}
@@ -151,7 +155,7 @@ namespace SectorFW
 							for (size_t vi = 0; vi < vertexCount; ++vi) {
 								float v[4] = {};
 								cgltf_accessor_read_float(attr.data, vi, v, 4); // (x,y,z,w)
-								if (flipZ) flip_tangent(v[0], v[1], v[2], v[3]);
+								if (desc.rhFlipZ) flip_tangent(v[0], v[1], v[2], v[3]);
 								tangents[vi] = { v[0], v[1], v[2], v[3] };
 							}
 						}
@@ -214,17 +218,68 @@ namespace SectorFW
 						//	}
 						//}
 					}
+					DX11ModelAssetData::SubMesh sub;
 
-					// --- SoA（R8G8B8A8_SNORM / R16G16_FLOAT）でメッシュを登録 ---
-					MeshHandle meshHandle;
+					// AABB生成
+					sub.aabb = MakeAABB(positions, indices);
 
+					// LOD生成
+					//============================================================================
+
+					bool alphaCutout = (prim.material && prim.material->alpha_mode == cgltf_alpha_mode_mask);
+					AssetStats stats = {
+						(uint32_t)vertexCount,
+						desc.instancesPeak,
+						desc.viewMin, desc.viewMax,
+						data->skins_count > 0,
+						alphaCutout,
+						desc.hero
+					};
+					auto recipes = BuildLodRecipes(stats);
+
+					size_t lodLevelNum = recipes.size() + 1;
+					sub.lods.resize(lodLevelNum);
+
+					//メッシュ本体（最も高精細な LOD0）
+					// =============================================================================
 					const std::wstring srcW = canonicalPath.wstring() + L"#" + std::to_wstring(meshIndex++);
 					bool ok = meshMgr.AddFromSoA_R8Snorm(
-						srcW, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, meshHandle);
+						srcW, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, sub.lods[0].mesh);
 					if (!ok) {
 						assert(false && "MeshManager::AddFromSoA_R8Snorm failed");
 						continue;
 					}
+
+					std::vector<DX11MeshManager::ClusterInfo> clusters;
+					std::vector<uint32_t> clusterVerts;
+					std::vector<uint8_t>  clusterTris;
+					DX11MeshManager::BuildClustersWithMeshoptimizer(
+						positions, indices,
+						clusters, clusterTris, clusterVerts);
+					sub.lods[0].clusters = std::move(clusters);
+
+					// 2) LOD1～N を生成
+					for (int li = 1; li < lodLevelNum; ++li) {
+						DX11MeshManager::RemappedStreams rs;
+						std::vector<uint32_t> idx;
+						std::wstring tag = canonicalPath.wstring() + L"#sub" + std::to_wstring(meshIndex) + L"-lod" + std::to_wstring(li + 1);
+						bool ok = BuildOneLodMesh(indices, positions,
+							normals.empty() ? nullptr : &normals,
+							tangents.empty() ? nullptr : &tangents,
+							tex0.empty() ? nullptr : &tex0,
+							skinIdx.empty() ? nullptr : &skinIdx,
+							skinWgt.empty() ? nullptr : &skinWgt,
+							recipes[li - 1], meshMgr, tag,
+							sub.lods[li], idx, rs,
+							/*buildClusters=*/true);
+						if (!ok) {
+							// フォールバック: ひとつ前のLODを使う等
+							sub.lods[li] = (li > 0) ? sub.lods[li - 1] : DX11ModelAssetData::SubmeshLOD{};
+						}
+					}
+
+					// 7) プロキシ（超低比率）
+					sub.proxy = sub.lods.back().mesh; // たとえば LOD2 を流用
 
 					// 1) glTF の PBR 情報を抽出
 					PBRMaterialCB pbrCB{};
@@ -254,7 +309,7 @@ namespace SectorFW
 					std::unordered_map<UINT, BufferHandle>  vsCBVMap;
 					std::unordered_map<UINT, SamplerHandle> samplerMap;
 
-					auto psShader = shaderMgr.Get(shader);
+					auto psShader = shaderMgr.Get(desc.shader);
 					const auto& psBindings = psShader.ref().psBindings;
 					for (const auto& b : psBindings) {
 						if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
@@ -262,7 +317,7 @@ namespace SectorFW
 						}
 					}
 
-					auto vsShader = shaderMgr.Get(shader);
+					auto vsShader = shaderMgr.Get(desc.shader);
 					const auto& vsBindings = vsShader.ref().vsBindings;
 					for (const auto& b : vsBindings) {
 						if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
@@ -319,7 +374,7 @@ namespace SectorFW
 
 					// 6) Material を作る（desc に cbvMap を追加！）
 					DX11MaterialCreateDesc matDesc{
-						.shader = shader,
+						.shader = desc.shader,
 						.psSRV = psSRVMap,
 						.vsSRV = vsSRVMap,
 						.psCBV = psCBVMap,
@@ -349,13 +404,18 @@ namespace SectorFW
 					}
 					// -----------------------------------------------
 
-					asset.subMeshes.push_back(DX11ModelAssetData::SubMesh{
-						.mesh = meshHandle,
-						.material = matHandle,
-						.pso = pso,
-						.hasInstanceData = node.has_matrix != 0,
-						.instance = {.worldMtx = transform }
-						});
+					sub.material = matHandle;
+					sub.pso = desc.pso;
+
+					sub.lodThresholds = BuildLodThresholds(stats, (int)lodLevelNum);
+
+					if (node.has_matrix) {
+						Math::Matrix4x4f transform = Math::Matrix4x4f::Identity();
+						memcpy(transform.data(), node.matrix, sizeof(float) * 16);
+						sub.instance.SetData(transform);
+					}
+
+					asset.subMeshes.push_back(std::move(sub));
 				}
 			}
 
@@ -372,7 +432,7 @@ namespace SectorFW
 					j.parentIndex = FindParentIndex(joint, skin.joints, skin.joints_count);
 					j.inverseBindMatrix = ExtractMatrixFromAccessor<decltype(j.inverseBindMatrix)>(skin.inverse_bind_matrices, i);
 					j.inverseBindMatrix = ExtractMatrixFromAccessor<decltype(j.inverseBindMatrix)>(skin.inverse_bind_matrices, i);
-					if (flipZ) {
+					if (desc.rhFlipZ) {
 						// IBM' = S · IBM · S, S=diag(1,1,-1)
 						const auto S = Math::MakeScalingMatrix(Math::Vec3f(1.f, 1.f, -1.f));
 						j.inverseBindMatrix = S * j.inverseBindMatrix * S;
@@ -390,6 +450,358 @@ namespace SectorFW
 
 			LOG_INFO("Loaded model asset: %s", asset.name.c_str());
 			return asset;
+		}
+
+		static void MakeStreamsAoS(const std::vector<Math::Vec3f>& pos,
+			const std::vector<Math::Vec3f>* nor,
+			const std::vector<Math::Vec4f>* tan,
+			const std::vector<Math::Vec2f>* uv,
+			const std::vector<std::array<uint8_t, 4>>* si,
+			const std::vector<std::array<uint8_t, 4>>* sw,
+			meshopt_Stream* streams, size_t& sc)
+		{
+			auto as_u8 = [](auto p) { return reinterpret_cast<const unsigned char*>(p); };
+			sc = 0;
+			streams[sc++] = { as_u8(&pos[0].x), sizeof(Math::Vec3f), sizeof(Math::Vec3f) };
+			if (nor && !nor->empty()) streams[sc++] = { as_u8(&(*nor)[0].x), sizeof(Math::Vec3f), sizeof(Math::Vec3f) };
+			if (tan && !tan->empty()) streams[sc++] = { as_u8(&(*tan)[0].x), sizeof(Math::Vec4f), sizeof(Math::Vec4f) };
+			if (uv && !uv->empty())  streams[sc++] = { as_u8(&(*uv)[0].x),  sizeof(Math::Vec2f), sizeof(Math::Vec2f) };
+			if (si && !si->empty())  streams[sc++] = { reinterpret_cast<const unsigned char*>(si->data()), sizeof((*si)[0]), sizeof((*si)[0]) };
+			if (sw && !sw->empty())  streams[sc++] = { reinterpret_cast<const unsigned char*>(sw->data()), sizeof((*sw)[0]), sizeof((*sw)[0]) };
+		}
+
+		static bool SimplifyIndices(const DX11ModelAssetManager::LodRecipe& r,
+			const std::vector<uint32_t>& baseIdx,
+			const std::vector<Math::Vec3f>& pos,
+			/*inout*/ std::vector<uint32_t>& outIdx,
+			/*for attributes*/ const float* attrAoS, size_t attrStrideBytes, const float* weights, int attrCount,
+			float& outError)
+		{
+			outIdx.resize(baseIdx.size());
+			const size_t targetIndexCount = std::max<size_t>(3, size_t(baseIdx.size() * r.targetRatio));
+			size_t outCount = 0;
+
+			switch (r.mode)
+			{
+			case DX11ModelAssetManager::LodQualityMode::Attributes:
+				outCount = meshopt_simplifyWithAttributes(
+					outIdx.data(), baseIdx.data(), baseIdx.size(),
+					&pos[0].x, pos.size(), sizeof(Math::Vec3f),
+					attrAoS, attrStrideBytes, weights, attrCount,
+					/*locks*/nullptr,
+					targetIndexCount, r.targetError,
+					/*options*/0, &outError);
+				break;
+
+			case DX11ModelAssetManager::LodQualityMode::Permissive:
+				outCount = meshopt_simplifyWithAttributes(
+					outIdx.data(), baseIdx.data(), baseIdx.size(),
+					&pos[0].x, pos.size(), sizeof(Math::Vec3f),
+					attrAoS, attrStrideBytes, weights, attrCount,
+					/*locks*/nullptr,
+					targetIndexCount, /*target_error*/FLT_MAX,
+					/*options*/meshopt_SimplifyPermissive, &outError);
+				// 到達しないときのフォールバック：Sloppy
+				if (outCount < targetIndexCount * 95 / 100) break; // 充分削れた
+				if (outCount > targetIndexCount + 6 && targetIndexCount >= 36) {
+					// 頂点数ぶん 0 初期化（＝全頂点が自由）
+					std::vector<unsigned char> locks(pos.size(), 0);
+					outCount = meshopt_simplifySloppy(outIdx.data(), baseIdx.data(), baseIdx.size(),
+						&pos[0].x, pos.size(), sizeof(Math::Vec3f),
+						locks.data(),
+						targetIndexCount, r.targetError, &outError);
+				}
+				break;
+
+			case DX11ModelAssetManager::LodQualityMode::Sloppy:
+				// 頂点数ぶん 0 初期化（＝全頂点が自由）
+				std::vector<unsigned char> locks(pos.size(), 0);
+				outCount = meshopt_simplifySloppy(
+					outIdx.data(), baseIdx.data(), baseIdx.size(),
+					&pos[0].x, pos.size(), sizeof(Math::Vec3f),
+					locks.data(),
+					targetIndexCount, r.targetError, &outError);
+				break;
+			}
+
+			if (outCount == 0) return false;
+			outIdx.resize(outCount);
+			return true;
+		}
+
+		bool DX11ModelAssetManager::BuildOneLodMesh(
+			const std::vector<uint32_t>& baseIndices,
+			const std::vector<Math::Vec3f>& basePositions,
+			const std::vector<Math::Vec3f>* baseNormals,
+			const std::vector<Math::Vec4f>* baseTangents,
+			const std::vector<Math::Vec2f>* baseUV0,
+			const std::vector<std::array<uint8_t, 4>>* baseSkinIdx,
+			const std::vector<std::array<uint8_t, 4>>* baseSkinWgt,
+			const LodRecipe& recipe,
+			DX11MeshManager& meshMgr,
+			const std::wstring& tagForCaching,
+			DX11ModelAssetData::SubmeshLOD& outMesh,
+			std::vector<uint32_t>& outIdx,
+			DX11MeshManager::RemappedStreams& outStreams,
+			bool buildClusters)
+		{
+			if (baseIndices.empty() || basePositions.empty()) return false;
+
+			// --- 0) 属性 AoS テンポラリ（Normal+UV を優先; 必要なら Tangent も） ---
+			const bool hasN = baseNormals && !baseNormals->empty();
+			const bool hasU = baseUV0 && !baseUV0->empty();
+			const bool includeTangent = false; // 接線は後で再生成する想定
+			const int attrCount = hasN * 3 + hasU * 2 + (includeTangent ? 4 : 0);
+			std::vector<float> attrAoS;
+			std::array<float, 16> weights{}; // 上限ゆとり
+			size_t cursor = 0;
+
+			if (attrCount > 0) {
+				attrAoS.resize(basePositions.size() * attrCount);
+				for (size_t i = 0; i < basePositions.size(); ++i) {
+					size_t o = i * attrCount;
+					if (hasN) {
+						const auto& n = (*baseNormals)[i];
+						attrAoS[o + 0] = n.x; attrAoS[o + 1] = n.y; attrAoS[o + 2] = n.z; o += 3;
+					}
+					if (hasU) {
+						const auto& t = (*baseUV0)[i];
+						attrAoS[o + 0] = t.x; attrAoS[o + 1] = t.y; o += 2;
+					}
+					if (includeTangent && baseTangents && !baseTangents->empty()) {
+						const auto& tg = (*baseTangents)[i];
+						attrAoS[o + 0] = tg.x; attrAoS[o + 1] = tg.y; attrAoS[o + 2] = tg.z; attrAoS[o + 3] = tg.w; o += 4;
+					}
+				}
+				// 重み（近=重く, 中=軽め）
+				float wN = (recipe.mode == LodQualityMode::Attributes ? recipe.wNormal : 0.6f);
+				float wU = (recipe.mode == LodQualityMode::Attributes ? recipe.wUV : 0.3f);
+				cursor = 0;
+				if (hasN) { weights[cursor++] = wN; weights[cursor++] = wN; weights[cursor++] = wN; }
+				if (hasU) { weights[cursor++] = wU; weights[cursor++] = wU; }
+				if (includeTangent) { weights[cursor++] = 0.4f; weights[cursor++] = 0.4f; weights[cursor++] = 0.4f; weights[cursor++] = 0.2f; }
+			}
+
+			// --- 1) 簡略化（レシピに応じて） ---
+			float resultError = 0.f;
+			std::vector<uint32_t> idx_lod;
+			if (!SimplifyIndices(recipe, baseIndices, basePositions, idx_lod,
+				attrCount ? attrAoS.data() : nullptr,
+				sizeof(float) * attrCount,
+				attrCount ? weights.data() : nullptr, attrCount,
+				resultError))
+				return false;
+
+			// --- 2) Multi リマップ（UV破綻防止） ---
+			std::vector<uint32_t> remap(basePositions.size());
+			meshopt_Stream streams[6]; size_t sc = 0;
+			MakeStreamsAoS(basePositions, baseNormals, baseTangents, baseUV0, baseSkinIdx, baseSkinWgt, streams, sc);
+
+			const size_t newVertexCount = meshopt_generateVertexRemapMulti(
+				remap.data(), idx_lod.data(), idx_lod.size(),
+				basePositions.size(), streams, sc);
+
+			// --- 3) インデックス / 全ストリームをリマップ ---
+			outIdx.resize(idx_lod.size());
+			meshopt_remapIndexBuffer(outIdx.data(), idx_lod.data(), idx_lod.size(), remap.data());
+
+			DX11MeshManager::ApplyRemapToStreams(
+				remap, basePositions,
+				baseNormals, baseTangents, baseUV0, baseSkinIdx, baseSkinWgt,
+				newVertexCount, outStreams);
+
+			// --- 4) 最適化（Cache → Overdraw → FetchRemap） ---
+			meshopt_optimizeVertexCache(outIdx.data(), outIdx.data(), outIdx.size(), newVertexCount);
+			meshopt_optimizeOverdraw(outIdx.data(), outIdx.data(), outIdx.size(),
+				&outStreams.positions[0].x, newVertexCount, sizeof(Math::Vec3f), 1.05f);
+
+			std::vector<uint32_t> fetchRemap(newVertexCount);
+			meshopt_optimizeVertexFetchRemap(fetchRemap.data(), outIdx.data(), outIdx.size(), newVertexCount);
+			meshopt_remapIndexBuffer(outIdx.data(), outIdx.data(), outIdx.size(), fetchRemap.data());
+
+			meshopt_remapVertexBuffer(outStreams.positions.data(), outStreams.positions.data(), newVertexCount, sizeof(Math::Vec3f), fetchRemap.data());
+			if (!outStreams.normals.empty())
+				meshopt_remapVertexBuffer(outStreams.normals.data(), outStreams.normals.data(), newVertexCount, sizeof(Math::Vec3f), fetchRemap.data());
+			if (!outStreams.tangents.empty())
+				meshopt_remapVertexBuffer(outStreams.tangents.data(), outStreams.tangents.data(), newVertexCount, sizeof(Math::Vec4f), fetchRemap.data());
+			if (!outStreams.tex0.empty())
+				meshopt_remapVertexBuffer(outStreams.tex0.data(), outStreams.tex0.data(), newVertexCount, sizeof(Math::Vec2f), fetchRemap.data());
+			if (!outStreams.skinIdx.empty())
+				meshopt_remapVertexBuffer(outStreams.skinIdx.data(), outStreams.skinIdx.data(), newVertexCount, sizeof(std::array<uint8_t, 4>), fetchRemap.data());
+			if (!outStreams.skinWgt.empty())
+				meshopt_remapVertexBuffer(outStreams.skinWgt.data(), outStreams.skinWgt.data(), newVertexCount, sizeof(std::array<uint8_t, 4>), fetchRemap.data());
+
+			// --- 5) MeshManager 登録（SoA → VB/IB） ---
+			// ※ あなたの AddFromSoA_R8Snorm のシグネチャに合わせてください
+			if (!meshMgr.AddFromSoA_R8Snorm(tagForCaching,
+				outStreams.positions, outStreams.normals,
+				outStreams.tangents, outStreams.tex0,
+				outStreams.skinIdx, outStreams.skinWgt,
+				outIdx, outMesh.mesh))
+				return false;
+
+#ifdef USE_MESHOPTIMIZER
+			if (buildClusters) {
+				std::vector<DX11MeshManager::ClusterInfo> clusters;
+				std::vector<uint32_t> clusterVerts;
+				std::vector<uint8_t>  clusterTris;
+				DX11MeshManager::BuildClustersWithMeshoptimizer(
+					outStreams.positions, outIdx,
+					clusters, clusterTris, clusterVerts);
+				outMesh.clusters = std::move(clusters);
+			}
+#endif
+			return true;
+		}
+
+		int DX11ModelAssetManager::SelectLod(float s, const LodThresholds& th, int lodCount, int prevLod, float globalBias)
+		{
+			// globalBias は距離スケールに変換（段±1 ≒しきい値×2^±1 の感覚）
+			float biasScale = std::pow(2.0f, globalBias);
+			// 遷移方向ごとにヒステリシス
+			auto t = [&](int i, bool up) {
+				float h = up ? (1.0f + th.hysteresisUp) : (1.0f - th.hysteresisDown);
+				return th.T[i] * biasScale * (1.0f - 0.1 * i) * h;
+				};
+
+			// s が大きいほど高品質
+			if (lodCount <= 1) return 0;
+			bool goingUp = (prevLod > 0 && s > th.T[prevLod - 1]); // 粗→細 方向かの簡易判定
+
+			// LOD0?
+			if (s > t(0, goingUp)) return 0;
+			if (lodCount == 2)     return 1;
+			// LOD1?
+			if (s > t(1, goingUp)) return 1;
+			if (lodCount == 3)     return 2;
+			// LOD2?
+			if (s > t(2, goingUp)) return 2;
+			return (std::min)(lodCount - 1, 3); // LOD3 以降
+		}
+
+		std::vector<DX11ModelAssetManager::LodRecipe> DX11ModelAssetManager::BuildLodRecipes(const AssetStats& a)
+		{
+			auto lg = [](float x) { return std::log10((std::max)(1.0f, x)); };
+
+			// --- 段数決定（ざっくり・安全寄り） ---
+			int lodCount = 1; // LOD0のみ
+			if (a.vertices >= 300 && a.vertices < 3000)       lodCount = 2; // LOD0-1
+			else if (a.vertices >= 3000 && a.vertices < 30000) lodCount = 3; // LOD0-2
+			else if (a.vertices >= 30000)                      lodCount = 4; // LOD0-3
+
+			// 大量配置は段数+1、ヒーローは-1（最低1は維持）
+			if (a.instancesPeak >= 1000)  lodCount = (std::min)(4, lodCount + 1);
+			if (a.hero)                    lodCount = (std::max)(2, lodCount - 1);
+
+			if (lodCount <= 1) return {}; // LOD0のみ
+
+			// --- 基本の ratio ラダー（LOD1, LOD2, LOD3 の目安）---
+			// *Attributes→Permissive→Sloppy と遠くほど強めに
+			constexpr float baseRatios[3] = { 0.50f, 0.25f, 0.05f }; // LOD1,2,3
+			// インスタンス大量 & 視距離レンジ広い → さらに強め
+			float instBoost = std::clamp<float>(0.05f * lg((float)(std::max)((uint32_t)1, a.instancesPeak)), 0.0f, 0.20f);
+			float rangeBoost = std::clamp<float>(0.05f * lg((std::max)(1.0f, a.viewMax / (std::max)(0.5f, a.viewMin))), 0.0f, 0.20f);
+
+			// 品質を守るべき要因 → 弱め（ratioを上げる＝削減を緩く）
+			float qualityGuard = 0.0f;
+			if (a.skinned)     qualityGuard += 0.10f;
+			if (a.alphaCutout) qualityGuard += 0.05f;  // カードの輪郭破綻を抑える
+			if (a.hero)        qualityGuard += 0.15f;
+
+			// ratio 調整係数（下げる=強く削減、上げる=弱く）
+			float pushStronger = 1.0f - (instBoost + rangeBoost);   // 0.6～1.0 くらい
+			float pushSofter = 1.0f + qualityGuard;               // 1.0～1.3 くらい
+			float tune = std::clamp(pushStronger * pushSofter, 0.6f, 1.3f);
+
+			// --- mode / weights / error の方針 ---
+			auto modeOf = [&](int level)->LodQualityMode {
+				// LOD1=Attributes, LOD2=Permissive, LOD3=Sloppy（ヒーローなら一段ずつ保守的に）
+				if (level == 1) return LodQualityMode::Attributes;
+				if (level == 2) return a.hero ? LodQualityMode::Attributes : LodQualityMode::Permissive;
+				return a.hero ? LodQualityMode::Permissive : LodQualityMode::Sloppy;
+				};
+
+			auto weightsOf = [&](LodQualityMode m)->std::pair<float, float> {
+				switch (m) {
+				case LodQualityMode::Attributes: return { 0.9f, 0.7f }; // 法線・UVを強く保持
+				case LodQualityMode::Permissive: return { 0.7f, 0.5f };
+				case LodQualityMode::Sloppy:     return { 0.4f, 0.3f };
+				}
+				return { 0.8f,0.5f };
+				};
+
+			auto errorOf = [&](int level, LodQualityMode m)->float {
+				// 基本は誤差制限なし（FLT_MAX）。ただし近距離＆重要寄りは少し縛る。
+				if (level == 1 && (a.hero || a.skinned)) return 0.02f; // 相対単位：ツール側でスケール扱い
+				if (m == LodQualityMode::Attributes && a.alphaCutout)  return 0.03f;
+				return std::numeric_limits<float>::infinity();          // FLT_MAX 相当
+				};
+
+			// --- レシピ構築 ---
+			std::vector<LodRecipe> out;
+			out.reserve(lodCount - 1);
+			for (int i = 1; i < lodCount; ++i) {
+				LodQualityMode m = modeOf(i);
+				auto [wn, wuv] = weightsOf(m);
+
+				float r = baseRatios[i - 1];
+				// LODが深いほどほんの少しだけ強め（遠景はより削ってOK）
+				float depthMul = 1.0f - 0.05f * (i - 1);
+				float targetRatio = std::clamp(r * tune * depthMul, 0.05f, 0.90f);
+
+				// カットアウトは輪郭重視 → 近距離は弱め、遠距離は逆に強め
+				if (a.alphaCutout) {
+					if (i == 1) targetRatio = (std::max)(targetRatio, r * 1.05f);
+					else        targetRatio = (std::min)(targetRatio, r * 0.95f);
+				}
+
+				LodRecipe rec{};
+				rec.mode = m;
+				rec.targetRatio = targetRatio;
+				rec.targetError = errorOf(i, m);
+				rec.wNormal = wn;
+				rec.wUV = wuv;
+
+				out.push_back(rec);
+			}
+			return out;
+		}
+		LodThresholds DX11ModelAssetManager::BuildLodThresholds(const AssetStats& a, int lodCount)
+		{
+			LodThresholds th{};
+			// --- グローバル既定 ---
+			constexpr float base[3] = { 0.10f, 0.05f, 0.01f };
+
+			// --- 係数 k を作る（>1 で早めにLODを落とす、<1で粘る） ---
+			auto lg = [](float x) { return std::log10((std::max)(1.0f, x)); };
+
+			// 性能側プッシュ（大量配置・遠近幅）
+			float perfPush =
+				0.10f * std::clamp<float>(lg((float)(std::max)((uint32_t)1, a.instancesPeak)), 0.0f, 2.0f) +   // 0..0.20
+				0.08f * std::clamp<float>(lg((std::max)(1.0f, a.viewMax / (std::max)(0.5f, a.viewMin))), 0.0f, 2.0f); // 0..0.16
+
+			// 品質側ガード（ヒーロー・スキン・カットアウト）
+			float qualPull =
+				(a.hero ? 0.15f : 0.0f) +
+				(a.skinned ? 0.10f : 0.0f) +
+				(a.alphaCutout ? 0.05f : 0.0f); // カードの縁を守る
+
+			float k = std::clamp(1.0f + perfPush - qualPull, 0.6f, 1.6f);
+
+			// LODが深いほど少しだけ厳しめ（遠景は落としやすく）
+			for (int i = 0; i < 3; ++i) {
+				float depthMul = 1.0f + 0.05f * i; // i=0,1,2 → 1.00,1.05,1.10
+				th.T[i] = std::clamp(base[i] * k * depthMul, 0.005f, 0.6f);
+			}
+			th.T[3] = 0.0f; // 番兵
+
+			// ヒステリシスも少し調整（ヒーローはポップ抑制強め）
+			if (a.hero) { th.hysteresisUp = 0.20f; th.hysteresisDown = 0.12f; }
+			if (a.instancesPeak >= 2000) { th.hysteresisUp *= 0.9f; th.hysteresisDown *= 0.9f; } // 大量配置は敏捷性優先
+
+			// lodCount に合わせて使う本数だけ有効
+			// 例: lodCount=2 → T[0]のみ, lodCount=4 → T[0],T[1],T[2]
+			return th;
 		}
 	}
 }

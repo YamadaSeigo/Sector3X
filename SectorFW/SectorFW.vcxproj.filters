@@ -79,9 +79,6 @@
     <Filter Include="Inc\Physics\Jolt\TriangleSplitter">
       <UniqueIdentifier>{eb6c466b-285b-4720-9c89-f99614f0d455}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\GUI">
-      <UniqueIdentifier>{5f5624a5-82dd-44cb-8295-eb4708cf0fcd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Inc\Debug">
       <UniqueIdentifier>{cd2cc6f7-e936-43e6-9df1-303dbd59d9a3}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,9 @@
     </Filter>
     <Filter Include="Inc\Graphics\MOC">
       <UniqueIdentifier>{da44bf4c-9dbb-475f-bafa-34cbd0206df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Debug">
+      <UniqueIdentifier>{5f5624a5-82dd-44cb-8295-eb4708cf0fcd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -430,6 +430,21 @@
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShaderManager.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\aabb_util.h">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\Rectangle.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\I2DCameraService.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\BoundingSphere.hpp">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX112DCameraService.h">
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
   </ItemGroup>
@@ -909,13 +924,13 @@
       <Filter>Src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Debug\ImGuiLayer.cpp">
-      <Filter>Src\GUI</Filter>
+      <Filter>Src\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\Debug\PerfHUD.cpp">
-      <Filter>Src\GUI</Filter>
+      <Filter>Src\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\Debug\UIBus.cpp">
-      <Filter>Src\GUI</Filter>
+      <Filter>Src\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\SIMD\simd_base.cpp">
       <Filter>Src\SIMD</Filter>

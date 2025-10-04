@@ -12,7 +12,7 @@
 #include <shared_mutex>
 #include <unordered_map>
 
-#include "Util/CopyableAtomic.hpp"
+#include "CopyableAtomic.hpp"
 
 namespace SectorFW
 {
@@ -23,33 +23,68 @@ namespace SectorFW
 	class ResourceManagerBase {
 	public:
 		/**
-		 * @brief リソースをShared Lock付きで取得するためのラッパー
+		 * @brief リソースをSLock付きで取得するためのラッパー
 		 */
-		struct Resource {
-			Resource(const ResourceType& resource, std::shared_mutex& mutex) : data(resource), lock(mutex) {}
+		template<class T, template<class> class Lock>
+		class LockedResource {
+		public:
+			using mutex_type = std::shared_mutex;
 
-			Resource(Resource&& other) : data(other.data), lock(std::move(other.lock)) {}
+			// 共有ロックなら const T&/const T*、それ以外は T&/T*
+			using ref_type = std::conditional_t<
+				std::is_same_v<Lock<mutex_type>, std::shared_lock<mutex_type>>,
+				const T&, T&
+			>;
+			using ptr_type = std::conditional_t<
+				std::is_same_v<Lock<mutex_type>, std::shared_lock<mutex_type>>,
+				const T*, T*
+			>;
 
-			// コピー禁止
-			Resource(const Resource&) = delete;
-			Resource& operator=(const Resource&) = delete;
+			LockedResource(ref_type resource, mutex_type& m)
+				: ptr_(&resource), lock_(m) {
+				assert(lock_.owns_lock()); // デバッグ時の保険
+			}
 
-			Resource& operator=(Resource&& other) noexcept {
+			// ムーブのみ可
+			LockedResource(LockedResource&& other) noexcept
+				: ptr_(other.ptr_), lock_(std::move(other.lock_)) {
+				other.ptr_ = nullptr;
+			}
+			LockedResource& operator=(LockedResource&& other) noexcept {
 				if (this != &other) {
-					data = other.data;
-					lock = std::move(other.lock);
+					// 先に自分のロックを解放（unique_lock/shared_lock はムーブ代入で自動でやってくれるが念のため順序を明確化）
+					lock_ = LockTransfer(std::move(other.lock_));
+					ptr_ = other.ptr_;
+					other.ptr_ = nullptr;
 				}
 				return *this;
 			}
 
-			inline const ResourceType& operator*() const& noexcept { return data; } // lvalueを許可
-			const ResourceType& operator*() const&& = delete;		// rvalueは不可
+			LockedResource(const LockedResource&) = delete;
+			LockedResource& operator=(const LockedResource&) = delete;
 
-			inline const ResourceType& ref() const& noexcept { return data; } // lvalueを許可
+
+			const ResourceType& operator*() const&& = delete;		// rvalueは不可
+			const ResourceType& operator->() const&& = delete;		// rvalueは不可
 			const ResourceType& ref() const&& = delete;  	// rvalueは不可
+
+			// アクセス
+			ref_type operator*() const& noexcept { return *ptr_; }
+			ptr_type operator->() const& noexcept { return ptr_; }
+			// 明示的に参照を取りたい場合
+			ref_type ref() const& noexcept { return *ptr_; }
+
+			// ロックを明示的に保持したままにしたい設計なら、unlock を出さない（RAII）
+			// 必要なら lock を取り出す API を追加しても良い（非推奨）
+
 		private:
-			const ResourceType& data;
-			std::shared_lock<std::shared_mutex> lock;
+			// lock_ のムーブ代入を式として切り出すだけの小道具
+			static Lock<mutex_type> LockTransfer(Lock<mutex_type>&& lk) noexcept {
+				return std::move(lk);
+			}
+
+			ptr_type ptr_ = nullptr;
+			Lock<mutex_type> lock_;
 		};
 		/**
 		 * @brief リソースが有効かどうかをチェックする関数
@@ -142,7 +177,17 @@ namespace SectorFW
 		 * @param h 有効なハンドル
 		 * @return Resource リソースのラッパー
 		 */
-		[[nodiscard]] Resource Get(HandleType h) const {
+		[[nodiscard]] LockedResource<ResourceType, std::shared_lock> Get(HandleType h) const {
+			assert(IsValid(h));
+			return { slots[h.index].data, mapMutex };
+		}
+
+		/**
+	 * @brief Get: 有効なハンドルなら Shared Lock 付きでリソースを返す
+	 * @param h 有効なハンドル
+	 * @return Resource リソースのラッパー
+	 */
+		[[nodiscard]] LockedResource<ResourceType, std::unique_lock> GetWrite(HandleType h) {
 			assert(IsValid(h));
 			return { slots[h.index].data, mapMutex };
 		}
@@ -151,7 +196,15 @@ namespace SectorFW
 		 * @param idx スロットインデックス
 		 * @return Resource リソースのラッパー
 		 */
-		[[nodiscard]] Resource GetDirect(uint32_t idx) const {
+		[[nodiscard]] LockedResource<ResourceType, std::shared_lock> GetDirect(uint32_t idx) const {
+			return { slots[idx].data, mapMutex };
+		}
+		/**
+		 * @brief GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）
+		 * @param idx スロットインデックス
+		 * @return Resource リソースのラッパー
+		 */
+		[[nodiscard]] LockedResource<ResourceType, std::unique_lock> GetDirectWrite(uint32_t idx) {
 			return { slots[idx].data, mapMutex };
 		}
 		/**

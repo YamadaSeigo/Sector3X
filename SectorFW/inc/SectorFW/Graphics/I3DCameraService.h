@@ -20,9 +20,15 @@ namespace SectorFW
 {
 	namespace Graphics
 	{
+		enum ProjectionType : uint8_t{
+			Perspective,
+			Orthographic
+		};
+
 		/**
 		 * @brief 3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。
 		 */
+		template<ProjectionType Type = ProjectionType::Perspective>
 		class I3DCameraService : public ECS::IUpdateService {
 			friend class ECS::ServiceLocator;
 		public:
@@ -232,6 +238,14 @@ namespace SectorFW
 				return Math::RFAxes::makeRight(Math::RFAxes::up(), forward);
 			}
 			/**
+			 * @brief カメラの解像度を取得
+			 * @return Math::Vec2f カメラの解像度ベクトル (width, height)
+			 */
+			Math::Vec2f GetResolution() const noexcept {
+				std::shared_lock lock(sharedMutex);
+				return Math::Vec2f{ right - left, bottom - top };
+			}
+			/**
 			 * @brief ビュー行列を取得
 			 * @return Math::Matrix4x4f ビュー行列
 			 */
@@ -301,6 +315,20 @@ namespace SectorFW
 			float nearClip = 0.1f;
 			// ファークリップ
 			float farClip = 1000.0f;
+			
+			float left = 0.0;
+#ifdef SCREEN_WIDTH
+			float right = SCREEN_WIDTH;
+#else
+			float right = 1080.0f;
+#endif
+#ifdef SCREEN_HEIGHT
+			float bottom = SCREEN_HEIGHT;
+#else
+			float bottom = 1920.0f;
+#endif
+			float top = 0.0f;
+
 			// 注視点までの距離
 			float focusDist = 5.0f;
 			// 移動ベクトル
@@ -320,5 +348,8 @@ namespace SectorFW
 		public:
 			STATIC_SERVICE_TAG
 		};
+
+		using I3DPerCameraService = I3DCameraService<Perspective>;
+		using I3DOrtCameraService = I3DCameraService<Orthographic>;
 	}
 }

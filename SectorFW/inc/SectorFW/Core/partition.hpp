@@ -51,6 +51,8 @@ namespace SectorFW
 		{ t.GetEntityNum() } -> std::same_as<size_t>;
 		//フラスタムカリング
 		{ t.CullChunks(fr) } -> std::same_as<std::vector<SpatialChunk*>>;
+		//フラスタムカリング（近い順番）
+		{ t.CullChunksNear(fr, cp) } -> std::same_as<std::vector<SpatialChunk*>>;
 		//チャンクのワイヤーフレームを取得
 		{ t.CullChunkLine(fr, cp, hy, outLine, lineCapacity, displayCount) } -> std::same_as<uint32_t>;
 	};

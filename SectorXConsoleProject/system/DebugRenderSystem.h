@@ -1,0 +1,324 @@
+#pragma once
+
+#include <SectorFW/Physics/PhysicsComponent.h>
+#include <SectorFW/Debug/DebugType.h>
+#include <SectorFW/Math/aabb_util.h>
+#include <SectorFW/Math/Rectangle.hpp>
+
+#include "ModelRenderSystem.h"
+
+using namespace SectorFW;
+
+// 24頂点+36インデックスを生成（中心原点、寸法 w,h,d）
+void MakeBox(float w, float h, float d,
+	std::vector<Debug::VertexPNUV>& outVerts,
+	std::vector<uint32_t>& outIndices);
+
+void MakeBoxLines(float w, float h, float d,
+	std::vector<Debug::LineVertex>& outVerts,
+	std::vector<uint32_t>& outIndices);
+
+// 頂点/インデックス生成（UV 球）
+//  radius: 半径
+//  slices: 経度分割数（最小 3）
+//  stacks: 緯度分割数（最小 2）
+// 生成結果は CW（時計回り）で表面になるインデックス
+void MakeSphere(float radius, uint32_t slices, uint32_t stacks,
+	std::vector<Debug::VertexPNUV>& outVerts,
+	std::vector<uint32_t>& outIndices);
+
+enum class CirclePlane { XY, XZ, YZ };
+
+// segments: 8 以上推奨。LINELIST なので閉ループは (i, i+1), (last, first) を張る
+void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
+	std::vector<Debug::LineVertex>& verts, std::vector<uint32_t>& idx,
+	float yOffset = 0.0f, float rotY = 0.0f);
+
+// 十字（3 本）のみ
+void MakeSphereCrossLines(float radius, uint32_t segments,
+	std::vector<Debug::LineVertex>& outVerts,
+	std::vector<uint32_t>& outIndices,
+	bool addXY = true, bool addYZ = true, bool addXZ = true);
+
+template<typename Partition>
+class DebugRenderSystem : public ITypeSystem<
+	DebugRenderSystem<Partition>,
+	Partition,
+	ComponentAccess<Read<Physics::ShapeDims>, Read<Physics::PhysicsInterpolation>, Read<TransformSoA>, Read<CModel>>,//アクセスするコンポーネントの指定
+	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService, Graphics::I2DCameraService>>{//受け取るサービスの指定
+	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<Physics::PhysicsInterpolation>>;
+	using ModelAccessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
+
+	static constexpr inline uint32_t MAX_CAPACITY_3DLINE = 65536;
+	static constexpr inline uint32_t MAX_CAPACITY_3DVERTEX = MAX_CAPACITY_3DLINE * 2;
+
+	static constexpr inline uint32_t MAX_CAPACITY_2DLINE = 65536 / 4;
+	static constexpr inline uint32_t MAX_CAPACITY_2DVERTEX = MAX_CAPACITY_2DLINE * 2;
+
+	static constexpr inline uint32_t DRAW_LINE_CHUNK_COUNT = 12;
+public:
+	void StartImpl(UndeletablePtr<Graphics::RenderService> renderService,
+		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
+		UndeletablePtr<Graphics::I2DCameraService>) {
+		using namespace Graphics;
+		using namespace Debug;
+
+		auto meshMgr = renderService->GetResourceManager<DX11MeshManager>();
+
+		std::vector<LineVertex> boxVerts;
+		std::vector<uint32_t> boxIndices;
+
+		MakeBoxLines(1.0f, 1.0f, 1.0f, boxVerts, boxIndices);
+		DX11MeshCreateDesc boxDesc{
+			.vertices = boxVerts.data(),
+			.vSize = (uint32_t)boxVerts.size() * sizeof(LineVertex),
+			.stride = sizeof(LineVertex),
+			.indices = boxIndices.data(),
+			.iSize = (uint32_t)boxIndices.size() * sizeof(uint32_t),
+			.sourcePath = L"__internal__/Box"
+		};
+
+		meshMgr->Add(boxDesc, boxHandle);
+
+		std::vector<LineVertex> sphereVerts;
+		std::vector<uint32_t> sphereIndices;
+
+		//MakeSphere(0.5f, 8, 8, sphereVerts, sphereIndices);
+		MakeSphereCrossLines(0.5f, 16, sphereVerts, sphereIndices, true, true, true);
+		DX11MeshCreateDesc sphereDesc{
+			.vertices = sphereVerts.data(),
+			.vSize = (uint32_t)sphereVerts.size() * sizeof(LineVertex),
+			.stride = sizeof(LineVertex),
+			.indices = sphereIndices.data(),
+			.iSize = (uint32_t)sphereIndices.size() * sizeof(uint32_t),
+			.sourcePath = L"__internal__/Sphere"
+		};
+
+		meshMgr->Add(sphereDesc, sphereHandle);
+
+		auto shaderMgr = renderService->GetResourceManager<DX11ShaderManager>();
+		DX11ShaderCreateDesc shaderDesc;
+		shaderDesc.templateID = MaterialTemplateID::PBR;
+		shaderDesc.vsPath = L"assets/shader/VS_DrawLineList.cso";
+		shaderDesc.psPath = L"assets/shader/PS_DrawLineList.cso";
+		ShaderHandle shaderHandle;
+		shaderMgr->Add(shaderDesc, shaderHandle);
+
+		auto psoMgr = renderService->GetResourceManager<DX11PSOManager>();
+		DX11PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::WireCullNone };
+		psoMgr->Add(psoDesc, psoHandle);
+
+		// --- Index Buffer（固定：0,1,2,3,4,5,…）---
+		std::vector<uint32_t> indices(MAX_CAPACITY_3DLINE);
+		for (uint32_t i = 0; i < MAX_CAPACITY_3DLINE; ++i) indices[i] = i;
+
+		DX11MeshCreateDesc lineDesc;
+		lineDesc.vertices = nullptr;
+		lineDesc.vSize = sizeof(LineVertex) * MAX_CAPACITY_3DVERTEX;
+		lineDesc.stride = sizeof(LineVertex);
+		lineDesc.vUsage = D3D11_USAGE_DYNAMIC;
+		lineDesc.indices = indices.data();
+		lineDesc.iSize = sizeof(uint32_t) * (uint32_t)indices.size();
+		lineDesc.sourcePath = L"__internal__/Line3DBuffer";
+		meshMgr->Add(lineDesc, line3DHandle);
+
+		line3DVertices.reset(new LineVertex[MAX_CAPACITY_3DLINE]);
+
+		lineDesc.vSize = sizeof(LineVertex) * MAX_CAPACITY_2DVERTEX;
+		lineDesc.iSize = sizeof(uint32_t) * MAX_CAPACITY_2DLINE;
+		lineDesc.sourcePath = L"__internal__/Line2DBuffer";
+		meshMgr->Add(lineDesc, line2DHandle);
+
+		line2DVertices.reset(new LineVertex[MAX_CAPACITY_2DLINE]);
+	}
+
+	//指定したサービスを関数の引数として受け取る
+	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService,
+		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
+		UndeletablePtr<Graphics::I2DCameraService> camera2DService) {
+		//機能を制限したRenderQueueを取得
+		auto draw3DLineSession = renderService->GetProducerSession("DrawLine");
+		auto draw2DLineSession = renderService->GetProducerSession("Draw2D");
+		auto meshManager = renderService->GetResourceManager<Graphics::DX11MeshManager>();
+		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
+		auto psoManager = renderService->GetResourceManager<Graphics::DX11PSOManager>();
+		auto bufferManager = renderService->GetResourceManager<Graphics::DX11BufferManager>();
+		if (!psoManager->IsValid(psoHandle)) {
+			LOG_ERROR("PSOHandle is not valid in ShapeDimsRenderSystem");
+			return;
+		}
+
+		auto fru = camera3DService->MakeFrustum();
+
+		auto cameraPos = camera3DService->GetPosition();
+		const auto& viewProj = camera3DService->GetCameraBufferData().viewProj;
+
+		Math::Vec2f resolution = camera2DService->GetVirtualResolution();
+
+		auto line3DCount = partition.CullChunkLine(fru, cameraPos, 200.0f,
+			line3DVertices.get(), MAX_CAPACITY_3DLINE, DRAW_LINE_CHUNK_COUNT);
+
+		uint32_t line2DCount = 0;
+
+		this->ForEachFrustumChunkWithAccessor<ModelAccessor>([&](ModelAccessor& accessor, size_t entityCount)
+			{
+				//読み取り専用でTransformSoAのアクセサを取得
+				auto transform = accessor.Get<Read<TransformSoA>>();
+				auto model = accessor.Get<Read<CModel>>();
+
+				bool overflow = false;
+				for (size_t i = 0; i < entityCount; ++i) {
+					if (overflow) return;
+
+					Math::Vec3f pos(transform->px()[i], transform->py()[i], transform->pz()[i]);
+					Math::Quatf rot(transform->qx()[i], transform->qy()[i], transform->qz()[i], transform->qw()[i]);
+					Math::Vec3f scale(transform->sx()[i], transform->sy()[i], transform->sz()[i]);
+					auto transMtx = Math::MakeTranslationMatrix(pos);
+					auto rotMtx = Math::MakeRotationMatrix(rot);
+					auto scaleMtx = Math::MakeScalingMatrix(scale);
+					//ワールド行列を計算
+					auto worldMtx = transMtx * rotMtx * scaleMtx;
+
+					//モデルアセットを取得
+					auto modelAsset = modelManager->Get(model.value()[i].handle);
+
+					float dis = (pos - cameraPos).length();
+					if (dis > 200.0f) continue; // 遠すぎる
+					float alpha = 1.0f - (dis / 200.0f);
+					auto rgba = Math::LerpColor(0x00000ff, 0x00ff00ff, alpha); // 緑->黒
+
+					std::vector<Math::Vec3f> linePoss;
+					std::vector<uint32_t> lineColors;
+					for (const auto& mesh : modelAsset.ref().subMeshes) {
+						Math::Rectangle rect = Math::ProjectAABBToScreenRect(worldMtx * mesh.aabb, viewProj, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
+						auto rectLines = rect.MakeLineVertex();
+						if (line2DCount + (uint32_t)rectLines.size() > MAX_CAPACITY_2DLINE) {
+							overflow = true;
+							break;
+						}
+						for (auto& l : rectLines) {
+							line2DVertices.get()[line2DCount++] = { Math::Vec3f(l.x, l.y, 5.0f), rgba };
+						}
+
+					/*	auto lines = Math::MakeAABBLineVertices(mesh.aabb, rgba);
+						if (line3DCount + (uint32_t)lines.size() > MAX_CAPACITY_3DLINE) {
+							overflow = true;
+							break;
+						}
+
+						linePoss.reserve(linePoss.size() + lines.size());
+						lineColors.reserve(lineColors.size() + lines.size() * 4);
+
+						for (auto& l : lines) {
+							linePoss.push_back(l.pos);
+							lineColors.push_back(l.rgba);
+						}*/
+					}
+					/*if (linePoss.empty()) continue;
+
+					std::vector<Math::Vec3f> outPoss(linePoss.size());
+					Math::TransformPoints(worldMtx, linePoss.data(), outPoss.data(), linePoss.size());
+
+					for (size_t v = 0; v < outPoss.size(); ++v) {
+						line3DVertices.get()[line3DCount + v] = { outPoss[v], lineColors[v] };
+					}
+
+					line3DCount += (uint32_t)outPoss.size();*/
+				}
+
+			}, partition, fru);
+
+
+		Graphics::DX11BufferUpdateDesc vbUpdateDesc;
+		{
+			auto lineBuffer = meshManager->Get(line3DHandle);
+			vbUpdateDesc.buffer = lineBuffer.ref().vbs[0];
+		}
+
+		meshManager->SetIndexCount(line3DHandle, (uint32_t)line3DCount);
+		vbUpdateDesc.data = line3DVertices.get();
+		vbUpdateDesc.size = sizeof(Debug::LineVertex) * line3DCount;
+		vbUpdateDesc.isDelete = false; // 更新時は削除
+		bufferManager->UpdateBuffer(vbUpdateDesc);
+
+	/*	auto& v1 = line2DVertices.get()[0];
+		v1.pos = Math::Vec3f(-460.0f, -1.0f, 100.0f);
+		v1.rgba = 0xFF0000FF;
+		auto& v2 = line2DVertices.get()[1];
+		v2.pos = Math::Vec3f(1.0f,  1.0f, 100.0f);
+		v2.rgba = 0x0000FFFF;
+		line2DCount = 2;*/
+
+		{
+			auto lineBuffer = meshManager->Get(line2DHandle);
+			vbUpdateDesc.buffer = lineBuffer.ref().vbs[0];
+		}
+		meshManager->SetIndexCount(line2DHandle, (uint32_t)line2DCount);
+		vbUpdateDesc.data = line2DVertices.get();
+		vbUpdateDesc.size = sizeof(Debug::LineVertex) * line2DCount;
+		vbUpdateDesc.isDelete = false; // 更新時は削除
+		bufferManager->UpdateBuffer(vbUpdateDesc);
+
+		Graphics::DrawCommand cmd;
+		cmd.instanceIndex = draw3DLineSession.AllocInstance({ Math::Matrix4x4f::Identity() });
+		cmd.mesh = line3DHandle.index;
+		cmd.material = 0;
+		cmd.pso = psoHandle.index;
+		cmd.sortKey = 0; // 適切なソートキーを設定
+		draw3DLineSession.Push(cmd);
+
+		cmd.mesh = line2DHandle.index;
+		draw2DLineSession.Push(cmd);
+
+		this->ForEachFrustumChunkWithAccessor<ShapeDimsAccessor>([](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh)
+			{
+				auto shapeDims = accessor.Get<Read<Physics::ShapeDims>>();
+				auto interp = accessor.Get<Read<Physics::PhysicsInterpolation>>();
+
+				if (!shapeDims) return;
+				if (!interp) return;
+
+				for (int i = 0; i < entityCount; ++i) {
+					auto transMtx = Math::MakeTranslationMatrix(Math::Vec3f(interp->cpx()[i], interp->cpy()[i], interp->cpz()[i]));
+					auto rotMtx = Math::MakeRotationMatrix(Math::Quatf(interp->crx()[i], interp->cry()[i], interp->crz()[i], interp->crw()[i]));
+
+					auto& d = shapeDims.value()[i];
+					switch (d.type) {
+					case Physics::ShapeDims::Type::Box: {
+						auto mtx = transMtx * rotMtx * Math::MakeScalingMatrix(d.dims);
+						Graphics::DrawCommand cmd;
+						cmd.instanceIndex = queue->AllocInstance({ mtx });
+						cmd.mesh = boxMesh;
+						cmd.material = 0;
+						cmd.pso = pso;
+						cmd.sortKey = 0; // 適切なソートキーを設定
+						queue->Push(std::move(cmd));
+						break;
+					}
+					case Physics::ShapeDims::Type::Sphere: {
+						auto mtx = transMtx * rotMtx * Math::MakeScalingMatrix(Math::Vec3f(d.r * 2)); // 球は均一スケーリング
+						Graphics::DrawCommand cmd;
+						cmd.instanceIndex = queue->AllocInstance({ mtx });
+						cmd.mesh = sphereMesh;
+						cmd.material = 0;
+						cmd.pso = pso;
+						cmd.sortKey = 0; // 適切なソートキーを設定
+						queue->Push(std::move(cmd));
+						break;
+					}
+					default:
+						break;
+					}
+				}
+			}, partition, fru, meshManager, &draw3DLineSession, psoHandle.index, boxHandle.index, sphereHandle.index);
+	}
+private:
+	Graphics::PSOHandle psoHandle = {};
+	Graphics::MeshHandle line3DHandle = {};
+	Graphics::MeshHandle line2DHandle = {};
+	std::unique_ptr<Debug::LineVertex> line3DVertices;
+	std::unique_ptr<Debug::LineVertex> line2DVertices;
+
+	Graphics::MeshHandle boxHandle = {}; // デフォルトメッシュ（立方体）
+	Graphics::MeshHandle sphereHandle = {}; // デフォルトメッシュ（球）
+};

@@ -322,19 +322,28 @@ namespace SectorFW
 				m_renderTargetView.Get() };
 
 			auto constantMgr = renderGraph->GetRenderService()->GetResourceManager<DX11BufferManager>();
-			auto cameraHandle = constantMgr->FindByName(DX113DCameraService::BUFFER_NAME);
+			auto cameraHandle3D = constantMgr->FindByName(DX113DPerCameraService::BUFFER_NAME);
+			auto cameraHandle2D = constantMgr->FindByName(DX112DCameraService::BUFFER_NAME);
 
 			RenderPassDesc<ID3D11RenderTargetView*> passDesc;
 			passDesc.name = "Default";
 			passDesc.rtvs = rtvs;
 			passDesc.dsv = m_depthStencilView.Get();
-			passDesc.cbvs = { cameraHandle };
+			passDesc.cbvs = { cameraHandle3D };
 			passDesc.rasterizerState = RasterizerStateID::SolidCullBack;
 			passDesc.blendState = BlendStateID::AlphaBlend;
 
 			renderGraph->AddPass(passDesc);
 
 			passDesc.name = "DrawLine";
+			passDesc.topology = PrimitiveTopology::LineList;
+			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+
+			renderGraph->AddPass(passDesc);
+
+			passDesc.name = "Draw2D";
+			passDesc.dsv = nullptr;
+			passDesc.cbvs = { cameraHandle2D };
 			passDesc.topology = PrimitiveTopology::LineList;
 			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
