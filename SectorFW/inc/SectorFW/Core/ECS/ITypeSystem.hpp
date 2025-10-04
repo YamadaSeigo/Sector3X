@@ -463,7 +463,7 @@ namespace SectorFW
 			 */
 			template<typename T>
 			static void SetMask(ComponentMask& mask) {
-				mask.set(ComponentTypeRegistry::GetID<T::Type>());
+				mask.set(ComponentTypeRegistry::GetID<typename T::Type>());
 			}
 			/**
 			 * @brief タプルからコンポーネントマスクを構築するヘルパー関数
