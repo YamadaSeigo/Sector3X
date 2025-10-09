@@ -47,6 +47,7 @@ namespace SectorFW
 			std::array<UINT, 8> strides{};
 			std::array<UINT, 8> offsets{};
 			std::bitset<8> usedSlots{};
+			uint32_t stride = 0; // 旧：単一VBの互換維持（未使用でも保持）
 
 			// セマンティク（"POSITION0","NORMAL0","TANGENT0","TEXCOORD0","BLENDINDICES0","BLENDWEIGHT0"...）
 			struct AttribBinding {
@@ -58,7 +59,7 @@ namespace SectorFW
 
 			ComPtr<ID3D11Buffer> ib = nullptr;
 			uint32_t indexCount = 0;
-			uint32_t stride = 0; // 旧：単一VBの互換維持（未使用でも保持）
+			uint32_t startIndex = 0;
 
 		private:
 			std::wstring path; // キャッシュ用パス
@@ -86,7 +87,9 @@ namespace SectorFW
 			 * @brief コンストラクタ
 			 * @param dev DirectX 11のデバイス
 			 */
-			explicit DX11MeshManager(ID3D11Device* dev) noexcept : device(dev) {}
+			explicit DX11MeshManager(ID3D11Device* dev) noexcept : device(dev) {
+				InitCommonMeshes();
+			}
 			/**
 			 * @brief 既存のメッシュを検索する関数
 			 * @param d メッシュ作成のための構造体
@@ -212,18 +215,29 @@ namespace SectorFW
 			 * @param h メッシュハンドル
 			 * @param count インデックス数
 			 */
-			void SetIndexCount(MeshHandle h, uint32_t count) {
+			void SetIndexCount(MeshHandle h, uint32_t count, uint32_t start = 0) {
 				if (!IsValid(h)) {
 					assert(false && "Invalid MeshHandle in SetIndexCount");
 					return;
 				}
 				std::unique_lock lock(mapMutex);
 				slots[h.index].data.indexCount = count;
+				slots[h.index].data.startIndex = start;
 			}
+
+			// スプライト（単位クアッド：中心原点、幅=高さ=1、Z=0）
+			MeshHandle GetSpriteQuadHandle() const { return spriteQuadHandle_; }
+		private:
+			// 共通メッシュを初期化（複数回呼んでも安全）
+			bool InitCommonMeshes();
+
 		private:
 			ID3D11Device* device;
 
 			std::unordered_map<std::wstring, MeshHandle> pathToHandle;
+
+			// 共通スプライト用ハンドル（無効のままなら未初期化）
+			MeshHandle spriteQuadHandle_{};
 		};
 	}
 }

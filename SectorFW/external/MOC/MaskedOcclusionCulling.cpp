@@ -25,9 +25,9 @@
 #endif
 
 #if defined(__AVX__) || defined(__AVX2__)
-	// For performance reasons, the MaskedOcclusionCullingAVX2/512.cpp files should be compiled with VEX encoding for SSE instructions (to avoid 
+	// For performance reasons, the MaskedOcclusionCullingAVX2/512.cpp files should be compiled with VEX encoding for SSE instructions (to avoid
 	// AVX-SSE transition penalties, see https://software.intel.com/en-us/articles/avoiding-avx-sse-transition-penalties). However, this file
-	// _must_ be compiled without VEX encoding to allow backwards compatibility. Best practice is to use lowest supported target platform 
+	// _must_ be compiled without VEX encoding to allow backwards compatibility. Best practice is to use lowest supported target platform
 	// (/arch:SSE2) as project default, and elevate only the MaskedOcclusionCullingAVX2/512.cpp files.
 	#error The MaskedOcclusionCulling.cpp should be compiled with lowest supported target platform, e.g. /arch:SSE2
 #endif
@@ -45,7 +45,7 @@ static MaskedOcclusionCulling::Implementation DetectCPUFeatures(MaskedOcclusionC
     //  cpuId.resize( regs[0] );
     size_t cpuIdCount = regs[0];
     CpuInfo * cpuId = (CpuInfo*)alignedAlloc( 64, sizeof(CpuInfo) * cpuIdCount );
-    
+
 	for (size_t i = 0; i < cpuIdCount; ++i)
 		__cpuidex(cpuId[i].regs, (int)i, 0);
 
@@ -75,7 +75,7 @@ static MaskedOcclusionCulling::Implementation DetectCPUFeatures(MaskedOcclusionC
 			retVal = MaskedOcclusionCulling::AVX512;
 		else if (TEST_XMM_YMM && TEST_BMI1_BMI2_AVX2)
 			retVal = MaskedOcclusionCulling::AVX2;
-	} 
+	}
     else if (TEST_SSE41)
 		retVal = MaskedOcclusionCulling::SSE41;
     alignedFree( cpuId );
@@ -93,7 +93,7 @@ void MaskedOcclusionCulling::TransformVertices(const float *mtx, const float *in
 	if (nVtx == 0)
 		return;
 
-	// Load matrix and swizzle out the z component. For post-multiplication (OGL), the matrix is assumed to be column 
+	// Load matrix and swizzle out the z component. For post-multiplication (OGL), the matrix is assumed to be column
 	// major, with one column per SSE register. For pre-multiplication (DX), the matrix is assumed to be row major.
 	__m128 mtxCol0 = _mm_loadu_ps(mtx);
 	__m128 mtxCol1 = _mm_loadu_ps(mtx + 4);
@@ -224,7 +224,7 @@ MAKE_ACCESSOR(simd_i32, __m128i, int, , 4)
 MAKE_ACCESSOR(simd_i32, __m128i, int, const, 4)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Specialized SSE input assembly function for general vertex gather 
+// Specialized SSE input assembly function for general vertex gather
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 FORCE_INLINE void GatherVertices(__m128 *vtxX, __m128 *vtxY, __m128 *vtxW, const float *inVtx, const unsigned int *inTrisPtr, int numLanes, const VertexLayout &vtxLayout)
@@ -307,19 +307,19 @@ namespace MaskedOcclusionCullingSSE41
 namespace MaskedOcclusionCullingSSE2
 {
 	FORCE_INLINE __m128i _mmw_mullo_epi32(const __m128i &a, const __m128i &b)
-	{ 
+	{
 		// Do products for even / odd lanes & merge the result
 		__m128i even = _mm_and_si128(_mm_mul_epu32(a, b), _mm_setr_epi32(~0, 0, ~0, 0));
 		__m128i odd = _mm_slli_epi64(_mm_mul_epu32(_mm_srli_epi64(a, 32), _mm_srli_epi64(b, 32)), 32);
 		return _mm_or_si128(even, odd);
 	}
 	FORCE_INLINE __m128i _mmw_min_epi32(const __m128i &a, const __m128i &b)
-	{ 
+	{
 		__m128i cond = _mm_cmpgt_epi32(a, b);
 		return _mm_or_si128(_mm_andnot_si128(cond, a), _mm_and_si128(cond, b));
 	}
 	FORCE_INLINE __m128i _mmw_max_epi32(const __m128i &a, const __m128i &b)
-	{ 
+	{
 		__m128i cond = _mm_cmpgt_epi32(b, a);
 		return _mm_or_si128(_mm_andnot_si128(cond, a), _mm_and_si128(cond, b));
 	}
@@ -329,16 +329,16 @@ namespace MaskedOcclusionCullingSSE2
 		return _mm_add_epi32(_mm_xor_si128(a, mask), _mm_srli_epi32(mask, 31));
 	}
 	FORCE_INLINE int _mmw_testz_epi32(const __m128i &a, const __m128i &b)
-	{ 
+	{
 		return _mm_movemask_epi8(_mm_cmpeq_epi8(_mm_and_si128(a, b), _mm_setzero_si128())) == 0xFFFF;
 	}
 	FORCE_INLINE __m128 _mmw_blendv_ps(const __m128 &a, const __m128 &b, const __m128 &c)
-	{	
+	{
 		__m128 cond = _mm_castsi128_ps(_mm_srai_epi32(_mm_castps_si128(c), 31));
 		return _mm_or_ps(_mm_andnot_ps(cond, a), _mm_and_ps(cond, b));
 	}
 	FORCE_INLINE __m128 _mmx_dp4_ps(const __m128 &a, const __m128 &b)
-	{ 
+	{
 		// Product and two shuffle/adds pairs (similar to hadd_ps)
 		__m128 prod = _mm_mul_ps(a, b);
 		__m128 dp = _mm_add_ps(prod, _mm_shuffle_ps(prod, prod, _MM_SHUFFLE(2, 3, 0, 1)));
@@ -346,7 +346,7 @@ namespace MaskedOcclusionCullingSSE2
 		return dp;
 	}
 	FORCE_INLINE __m128 _mmw_floor_ps(const __m128 &a)
-	{ 
+	{
 		int originalMode = _MM_GET_ROUNDING_MODE();
 		_MM_SET_ROUNDING_MODE(_MM_ROUND_DOWN);
 		__m128 rounded = _mm_cvtepi32_ps(_mm_cvtps_epi32(a));
@@ -354,7 +354,7 @@ namespace MaskedOcclusionCullingSSE2
 		return rounded;
 	}
 	FORCE_INLINE __m128 _mmw_ceil_ps(const __m128 &a)
-	{ 
+	{
 		int originalMode = _MM_GET_ROUNDING_MODE();
 		_MM_SET_ROUNDING_MODE(_MM_ROUND_UP);
 		__m128 rounded = _mm_cvtepi32_ps(_mm_cvtps_epi32(a));
@@ -373,7 +373,7 @@ namespace MaskedOcclusionCullingSSE2
 	FORCE_INLINE __m128i _mmw_sllv_ones(const __m128i &ishift)
 	{
 		__m128i shift = _mmw_min_epi32(ishift, _mm_set1_epi32(32));
-		
+
 		// Uses scalar approach to perform _mm_sllv_epi32(~0, shift)
 		static const unsigned int maskLUT[33] = {
 			~0U << 0, ~0U << 1, ~0U << 2 ,  ~0U << 3, ~0U << 4, ~0U << 5, ~0U << 6 , ~0U << 7, ~0U << 8, ~0U << 9, ~0U << 10 , ~0U << 11, ~0U << 12, ~0U << 13, ~0U << 14 , ~0U << 15,

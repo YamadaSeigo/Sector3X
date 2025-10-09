@@ -488,5 +488,52 @@ namespace SectorFW
 				if (vb) { vb.Reset(); }
 			if (data.ib) { data.ib.Reset(); }
 		}
+		bool DX11MeshManager::InitCommonMeshes()
+		{
+			// すでに有効なら何もしない（ResourceManagerBase の IsValid を想定）
+			if (IsValid(spriteQuadHandle_)) return true;
+
+			// 単位クアッド（中心原点、XY: [-0.5, +0.5]、UV: [0,1]）
+			using Math::Vec2f; using Math::Vec3f;
+
+			// 左下→右下→右上→左上（時計回り）
+			const std::vector<Vec3f> positions = {
+				{-0.5f, -0.5f, 0.0f},
+				{ +0.5f, -0.5f, 0.0f},
+				{ +0.5f, +0.5f, 0.0f},
+				{-0.5f, +0.5f, 0.0f},
+			};
+			// D3D 標準のテクスチャ座標系（左上(0,0)）に合わせて下→上で v を反転
+			const std::vector<Vec2f> tex0 = {
+				{0.0f, 1.0f}, // 左下
+				{1.0f, 1.0f}, // 右下
+				{1.0f, 0.0f}, // 右上
+				{0.0f, 0.0f}, // 左上
+			};
+			const std::vector<uint32_t> indices = {
+				0, 1, 2,  0, 2, 3
+			};
+
+			// SoA 経由で VB/IB と attribMap を構築（NORMAL/TANGENT/SKIN は不要なので空）
+			// 一意キーとして擬似パスを与えてキャッシュ可能にする
+			const std::wstring key = L"__builtin:/sprite_unit_quad";
+
+			MeshHandle h{};
+			const bool ok = AddFromSoA_R8Snorm(
+				key,
+				positions,
+				/*normals*/  std::vector<Vec3f>{},
+				/*tangents*/ std::vector<Math::Vec4f>{},
+				/*tex0*/     tex0,
+				/*skinIdx*/  std::vector<std::array<uint8_t, 4>>{},
+				/*skinWgt*/  std::vector<std::array<uint8_t, 4>>{},
+				indices,
+				h
+			);
+			if (!ok) return false;
+
+			spriteQuadHandle_ = h;
+			return true;
+		}
 	}
 }

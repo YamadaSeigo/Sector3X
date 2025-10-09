@@ -188,21 +188,13 @@ namespace SectorFW
 			//===========================================================
 			meshManager = std::make_unique<DX11MeshManager>(m_device.Get());
 			shaderManager = std::make_unique<DX11ShaderManager>(m_device.Get());
-			textureManager = std::make_unique<DX11TextureManager>(m_device.Get());
+			textureManager = std::make_unique<DX11TextureManager>(m_device.Get(), m_context.Get());
 			bufferManager = std::make_unique<DX11BufferManager>(m_device.Get(), m_context.Get());
 			samplerManager = std::make_unique<DX11SamplerManager>(m_device.Get());
 			materialManager = std::make_unique<DX11MaterialManager>(shaderManager.get(), textureManager.get(), bufferManager.get(), samplerManager.get());
 			psoManager = std::make_unique<DX11PSOManager>(m_device.Get(), shaderManager.get());
-		/*	DX11ModelAssetManager(
-				DX11MeshManager & meshMgr,
-				DX11MaterialManager & matMgr,
-				DX11ShaderManager & shaderMgr,
-				DX11TextureManager & texMgr,
-				DX11BufferManager & cbManager,
-				DX11SamplerManager & samplerManager,
-				ID3D11Device * device);*/
 
-			modelAssetManager = std::make_unique<DX11ModelAssetManager>(*meshManager, *materialManager, *shaderManager, *textureManager, *bufferManager, *samplerManager, m_device.Get());
+			modelAssetManager = std::make_unique<DX11ModelAssetManager>(*meshManager, *materialManager, *shaderManager, *psoManager, *textureManager, *bufferManager, *samplerManager, m_device.Get());
 
 			backend = std::make_unique<DX11Backend>(
 				m_device.Get(), m_context.Get(),
@@ -210,7 +202,18 @@ namespace SectorFW
 				textureManager.get(), bufferManager.get(), samplerManager.get(), modelAssetManager.get()
 			);
 
-			renderGraph = std::make_unique<DX11RenderGraph>(*backend);
+			//Masked Occlution Culling初期化
+			//==============================================================
+			MOC* moc = MOC::Create();
+			if (!moc) {
+				assert(false && "Failed to create MOC instance");
+			}
+
+			moc->SetResolution(width, height);
+			moc->ClearBuffer();
+			moc->SetNearClipPlane(0.1f);
+
+			renderGraph = std::make_unique<DX11RenderGraph>(*backend, moc);
 
 			// ここでレンダースレッドを起動
 			StartRenderThread();
@@ -326,26 +329,33 @@ namespace SectorFW
 			auto cameraHandle2D = constantMgr->FindByName(DX112DCameraService::BUFFER_NAME);
 
 			RenderPassDesc<ID3D11RenderTargetView*> passDesc;
-			passDesc.name = "Default";
+			passDesc.name = "3D";
 			passDesc.rtvs = rtvs;
 			passDesc.dsv = m_depthStencilView.Get();
 			passDesc.cbvs = { cameraHandle3D };
-			passDesc.rasterizerState = RasterizerStateID::SolidCullBack;
+			//passDesc.rasterizerState = RasterizerStateID::SolidCullBack;
 			passDesc.blendState = BlendStateID::AlphaBlend;
 
 			renderGraph->AddPass(passDesc);
 
-			passDesc.name = "DrawLine";
+			passDesc.name = "Line";
 			passDesc.topology = PrimitiveTopology::LineList;
 			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
 			renderGraph->AddPass(passDesc);
 
-			passDesc.name = "Draw2D";
+			
 			passDesc.dsv = nullptr;
 			passDesc.cbvs = { cameraHandle2D };
+			passDesc.name = "Line2D";
 			passDesc.topology = PrimitiveTopology::LineList;
 			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+
+			renderGraph->AddPass(passDesc);
+
+			passDesc.name = "2D";
+			passDesc.topology = PrimitiveTopology::TriangleList;
+			passDesc.rasterizerState = std::nullopt;
 
 			renderGraph->AddPass(passDesc);
 		}

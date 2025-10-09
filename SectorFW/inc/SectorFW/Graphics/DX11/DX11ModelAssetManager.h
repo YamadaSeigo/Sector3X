@@ -10,6 +10,7 @@
 #include <filesystem>
 
 #include "DX11MeshManager.h"
+#include "DX11PSOManager.h"
 
 #include "../../Math/Matrix.hpp"
 #include "../../Math/BoundingSphere.hpp"
@@ -33,13 +34,20 @@ namespace SectorFW
 
 		struct DX11ModelAssetCreateDesc {
 			std::string path;
-			ShaderHandle shader = {};
 			PSOHandle pso = {};
 			uint32_t option = 1; // トポロジーを保持するか（LOD生成時にメッシュ最適化を行わない）
 			uint32_t    instancesPeak = 1;   // 同時表示おおよそ
 			float  viewMin = 0, viewMax = 100;// 想定視距離[m]
 			bool hero = false;            // 注視対象（品質優先）
 			bool rhFlipZ = false; // Z軸反転フラグ（右手系GLTF用）
+
+			// ===== Occluder 構築設定 =====
+			bool  buildOccluders = true;    // インポート時にOccluder適性判定＋melt AABB生成を行う
+			float occScoreThreshold = 0.35f;// このスコア以上ならOccluder化（0..1）
+			int   meltResolution = 8;      // meltのボクセル解像度。小さくするほどボクセルが大きくなる（64 or 96 程度が実用。性能と品質のトレードオフ）
+			float meltStopRatio = 0.3f;   // meltの停止しきい（小AABB生成を抑える目安。0.1～0.7）
+			float minWorldSizeM = 1.0f;    // 小さすぎるモデルはOccluder対象外（対角長[m]）
+			float minThicknessRatio = 0.01f;// 最小厚み比。これ未満は超薄板として減点
 		};
 
 		struct LodThresholds {
@@ -67,6 +75,14 @@ namespace SectorFW
 				LodThresholds lodThresholds = {}; // LOD選択用の閾値
 				PSOHandle pso = {};
 				InstanceData instance = {};
+
+				// ===== Occluder 情報 =====
+				struct OccluderInfo {
+					bool  candidate = false;     // Occluder候補か
+					float score = 0.0f;       // 0..1
+					uint32_t estimatedAABBCount = 0; // melt見積 or 生成後の個数
+					std::vector<Math::AABB3f> meltAABBs; // meltが生成した内接AABB群（meltが無い場合は1個＝全体AABB）
+				} occluder;
 			};
 
 			std::vector<SubMesh> subMeshes = {};
@@ -85,6 +101,7 @@ namespace SectorFW
 				DX11MeshManager& meshMgr,
 				DX11MaterialManager& matMgr,
 				DX11ShaderManager& shaderMgr,
+				DX11PSOManager& psoMgr,
 				DX11TextureManager& texMgr,
 				DX11BufferManager& cbManager,
 				DX11SamplerManager& samplerManager,
@@ -143,10 +160,10 @@ namespace SectorFW
 			// - 失敗時 false（フォールバックは内部でやる）
 			bool BuildOneLodMesh(
 				const std::vector<uint32_t>& baseIndices,
-				const std::vector<SectorFW::Math::Vec3f>& basePositions,
-				const std::vector<SectorFW::Math::Vec3f>* baseNormals,
-				const std::vector<SectorFW::Math::Vec4f>* baseTangents,
-				const std::vector<SectorFW::Math::Vec2f>* baseUV0,
+				const std::vector<Math::Vec3f>& basePositions,
+				const std::vector<Math::Vec3f>* baseNormals,
+				const std::vector<Math::Vec4f>* baseTangents,
+				const std::vector<Math::Vec2f>* baseUV0,
 				const std::vector<std::array<uint8_t, 4>>* baseSkinIdx,
 				const std::vector<std::array<uint8_t, 4>>* baseSkinWgt,
 				const LodRecipe& recipe,
@@ -168,6 +185,7 @@ namespace SectorFW
 			DX11MeshManager& meshMgr;
 			DX11MaterialManager& matMgr;
 			DX11ShaderManager& shaderMgr;
+			DX11PSOManager& psoMgr;
 			DX11TextureManager& texMgr;
 			DX11BufferManager& cbManager;
 			DX11SamplerManager& samplerManager;

@@ -18,16 +18,52 @@
 #endif//_DEBUG
 #endif//USE_MESHOPTIMIZER
 
+#define SFW_MATH_ROWVEC 1
+#include "Graphics/OccluderToolkit.h"
+
 namespace SectorFW
 {
 	namespace Graphics
 	{
+		//-------------------------
+			// Occluder適性スコア計算
+			//-------------------------
+		static float ComputeOccluderScore(const DX11ModelAssetManager::AssetStats& a,
+			const SectorFW::Math::AABB3f& bbox,
+			bool alphaCutoutThisSubmesh,
+			float minThicknessRatio)
+		{
+			using namespace SectorFW::Math;
+			// 寸法と厚み指標
+			Vec3f sz = bbox.size(); // ub - lb
+			float ex = (std::max)(sz.x, 1e-6f), ey = (std::max)(sz.y, 1e-6f), ez = (std::max)(sz.z, 1e-6f);
+			float maxd = (std::max)({ ex, ey, ez });
+			float mind = (std::min)({ ex, ey, ez });
+			float t = mind / maxd; // 最小厚み比
+
+			// 基本スコア：大きい＆厚いほど高評価
+			float s_size = std::clamp(maxd / 10.0f, 0.0f, 1.0f); // 目安: 10mで1.0
+			float s_thick = std::clamp((t - minThicknessRatio) / (0.1f - minThicknessRatio + 1e-6f), 0.0f, 1.0f);
+			float s_static = a.skinned ? 0.0f : 1.0f;
+			float s_alpha = alphaCutoutThisSubmesh ? 0.0f : 1.0f; // 葉/フェンスなどは0寄り
+
+			// 合成（重みは実用的なバランス）
+			float score = 0.45f * s_size + 0.30f * s_thick + 0.15f * s_static + 0.10f * s_alpha;
+			// ヒーローは邪魔になりがちなので少し抑制
+			if (a.hero) score *= 0.8f;
+			// 大量配置は価値が上がる（“遮蔽が効く場面が多い”）
+			float instBoost = std::clamp(std::log10((std::max)(1u, a.instancesPeak) * 1.0f) * 0.05f, 0.0f, 0.15f);
+			score = std::clamp(score + instBoost, 0.0f, 1.0f);
+			return score;
+		}
+
 		DX11ModelAssetManager::DX11ModelAssetManager(
 			DX11MeshManager& meshMgr, DX11MaterialManager& matMgr,
-			DX11ShaderManager& shaderMgr, DX11TextureManager& texMgr,
-			DX11BufferManager& cbMgr, DX11SamplerManager& samplMgr,
-			ID3D11Device* device) :
-			meshMgr(meshMgr), matMgr(matMgr), shaderMgr(shaderMgr), texMgr(texMgr), cbManager(cbMgr), samplerManager(samplMgr), device(device) {
+			DX11ShaderManager& shaderMgr, DX11PSOManager& psoMgr,
+			DX11TextureManager& texMgr,DX11BufferManager& cbMgr,
+			DX11SamplerManager& samplMgr, ID3D11Device* device) :
+			meshMgr(meshMgr), matMgr(matMgr), shaderMgr(shaderMgr), psoMgr(psoMgr),
+			texMgr(texMgr), cbManager(cbMgr), samplerManager(samplMgr), device(device) {
 		}
 
 		void DX11ModelAssetManager::RemoveFromCaches(uint32_t idx)
@@ -309,72 +345,80 @@ namespace SectorFW
 					std::unordered_map<UINT, BufferHandle>  vsCBVMap;
 					std::unordered_map<UINT, SamplerHandle> samplerMap;
 
-					auto psShader = shaderMgr.Get(desc.shader);
-					const auto& psBindings = psShader.ref().psBindings;
-					for (const auto& b : psBindings) {
-						if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
-							psCBVMap[b.bindPoint] = matCB;
-						}
+					ShaderHandle shaderHandle;
+					{
+						auto psoData = psoMgr.Get(desc.pso);
+						shaderHandle = psoData.ref().shader;
 					}
 
-					auto vsShader = shaderMgr.Get(desc.shader);
-					const auto& vsBindings = vsShader.ref().vsBindings;
-					for (const auto& b : vsBindings) {
-						if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
-							vsCBVMap[b.bindPoint] = matCB;
+					{
+						auto psShader = shaderMgr.Get(shaderHandle);
+						const auto& psBindings = psShader.ref().psBindings;
+						for (const auto& b : psBindings) {
+							if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
+								psCBVMap[b.bindPoint] = matCB;
+							}
 						}
+
+						auto vsShader = shaderMgr.Get(shaderHandle);
+						const auto& vsBindings = vsShader.ref().vsBindings;
+						for (const auto& b : vsBindings) {
+							if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
+								vsCBVMap[b.bindPoint] = matCB;
+							}
+						}
+
+						// 4) テクスチャの自動割り当て（既存のBaseColorに加えて Normal / MRR にも対応）
+						auto bindTex = [&](const char* name, TextureHandle h,
+							const std::vector<ShaderResourceBinding>& binding,
+							std::unordered_map<UINT, TextureHandle>& map) {
+								for (const auto& b : binding)
+									if (b.type == D3D_SIT_TEXTURE && b.name == name)
+										map[b.bindPoint] = h;
+							};
+
+						if (prim.material) {
+							const auto* m = prim.material;
+							// BaseColor
+							if (auto* t = m->pbr_metallic_roughness.base_color_texture.texture) {
+								std::filesystem::path texPath = baseDir / t->image->uri;
+								TextureHandle tex;
+								texMgr.Add({ texPath.string(), /*forceSRGB=*/true }, tex);
+								bindTex("gBaseColorTex", tex, psBindings, psSRVMap);
+								bindTex("gBaseColorTex", tex, vsBindings, vsSRVMap);
+							}
+							// Normal
+							if (auto* t = m->normal_texture.texture) {
+								std::filesystem::path texPath = baseDir / t->image->uri;
+								TextureHandle tex;
+								texMgr.Add({ texPath.string(), /*forceSRGB=*/false }, tex);
+								bindTex("gNormalTex", tex, psBindings, psSRVMap);
+								bindTex("gNormalTex", tex, vsBindings, vsSRVMap);
+							}
+							// MetallicRoughness (通常 R=Occlusion, G=Roughness, B=Metallic 等の流儀があるのでシェーダ側で取り決め)
+							if (auto* t = m->pbr_metallic_roughness.metallic_roughness_texture.texture) {
+								std::filesystem::path texPath = baseDir / t->image->uri;
+								TextureHandle tex;
+								texMgr.Add({ texPath.string(), /*forceSRGB=*/false }, tex);
+								bindTex("gMetallicRoughness", tex, psBindings, psSRVMap);
+								bindTex("gMetallicRoughness", tex, vsBindings, vsSRVMap);
+							}
+						}
+
+						// 5) サンプラ（デフォルト1個を全テクスチャに共有でもOK）
+						D3D11_SAMPLER_DESC sampDesc = {};
+						sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+						sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+						SamplerHandle samp = samplerManager.AddWithDesc(sampDesc);
+
+						for (const auto& b : psBindings)
+							if (b.type == D3D_SIT_SAMPLER && b.name == "gSampler")
+								samplerMap[b.bindPoint] = samp;
 					}
-
-					// 4) テクスチャの自動割り当て（既存のBaseColorに加えて Normal / MRR にも対応）
-					auto bindTex = [&](const char* name, TextureHandle h,
-						const std::vector<ShaderResourceBinding>& binding,
-						std::unordered_map<UINT, TextureHandle>& map) {
-							for (const auto& b : binding)
-								if (b.type == D3D_SIT_TEXTURE && b.name == name)
-									map[b.bindPoint] = h;
-						};
-
-					if (prim.material) {
-						const auto* m = prim.material;
-						// BaseColor
-						if (auto* t = m->pbr_metallic_roughness.base_color_texture.texture) {
-							std::filesystem::path texPath = baseDir / t->image->uri;
-							TextureHandle tex;
-							texMgr.Add({ texPath.string(), /*forceSRGB=*/true }, tex);
-							bindTex("gBaseColorTex", tex, psBindings, psSRVMap);
-							bindTex("gBaseColorTex", tex, vsBindings, vsSRVMap);
-						}
-						// Normal
-						if (auto* t = m->normal_texture.texture) {
-							std::filesystem::path texPath = baseDir / t->image->uri;
-							TextureHandle tex;
-							texMgr.Add({ texPath.string(), /*forceSRGB=*/false }, tex);
-							bindTex("gNormalTex", tex, psBindings, psSRVMap);
-							bindTex("gNormalTex", tex, vsBindings, vsSRVMap);
-						}
-						// MetallicRoughness (通常 R=Occlusion, G=Roughness, B=Metallic 等の流儀があるのでシェーダ側で取り決め)
-						if (auto* t = m->pbr_metallic_roughness.metallic_roughness_texture.texture) {
-							std::filesystem::path texPath = baseDir / t->image->uri;
-							TextureHandle tex;
-							texMgr.Add({ texPath.string(), /*forceSRGB=*/false }, tex);
-							bindTex("gMetallicRoughness", tex, psBindings, psSRVMap);
-							bindTex("gMetallicRoughness", tex, vsBindings, vsSRVMap);
-						}
-					}
-
-					// 5) サンプラ（デフォルト1個を全テクスチャに共有でもOK）
-					D3D11_SAMPLER_DESC sampDesc = {};
-					sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-					sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-					SamplerHandle samp = samplerManager.AddWithDesc(sampDesc);
-
-					for (const auto& b : psBindings)
-						if (b.type == D3D_SIT_SAMPLER && b.name == "gSampler")
-							samplerMap[b.bindPoint] = samp;
 
 					// 6) Material を作る（desc に cbvMap を追加！）
 					DX11MaterialCreateDesc matDesc{
-						.shader = desc.shader,
+						.shader = shaderHandle,
 						.psSRV = psSRVMap,
 						.vsSRV = vsSRVMap,
 						.psCBV = psCBVMap,
@@ -416,6 +460,44 @@ namespace SectorFW
 					}
 
 					asset.subMeshes.push_back(std::move(sub));
+
+					// ====== Occluder 適性判定 ＆ melt AABB 生成 ======
+					if (desc.buildOccluders) {
+						auto& subRef = asset.subMeshes.back();
+						// 透明/カットアウト判定は prim.material から取ったものを再利用
+						bool alphaCutoutThis = alphaCutout;
+
+						// 世界サイズの目安（モデルTRSをここで掛けないならローカル[m]想定）
+						SectorFW::Math::Vec3f sz = subRef.aabb.size();
+						float diag = std::sqrt(sz.x * sz.x + sz.y * sz.y + sz.z * sz.z);
+						if (diag >= desc.minWorldSizeM) {
+							float occScore = ComputeOccluderScore(stats, subRef.aabb, alphaCutoutThis, desc.minThicknessRatio);
+							subRef.occluder.score = occScore;
+							subRef.occluder.candidate = (occScore >= desc.occScoreThreshold);
+
+							if (subRef.occluder.candidate) {
+								std::vector<SectorFW::Math::AABB3f> meltAABBs;
+								GenerateOccluderAABBs_MaybeWithMelt(
+									positions, indices, desc.meltResolution, desc.meltStopRatio, meltAABBs);
+								if (meltAABBs.empty()) {
+									// 何も作れなかったときだけ候補を落とす
+									subRef.occluder.candidate = false;
+									subRef.occluder.estimatedAABBCount = 0;
+								}
+								else {
+									subRef.occluder.meltAABBs = std::move(meltAABBs);
+									subRef.occluder.estimatedAABBCount =
+										static_cast<uint32_t>(subRef.occluder.meltAABBs.size());
+									// 任意: 劣化フラグ（melt未導入/フォールバック時にtrueにしたい場合）
+									// subRef.occluder.degraded = (subRef.occluder.estimatedAABBCount == 1 && usedFallback);
+								}
+							}
+						}
+						else {
+							subRef.occluder.candidate = false;
+							subRef.occluder.score = 0.0f;
+						}
+					}
 				}
 			}
 

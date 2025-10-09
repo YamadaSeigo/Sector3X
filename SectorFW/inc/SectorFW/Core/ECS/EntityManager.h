@@ -284,7 +284,7 @@ namespace SectorFW
 			void MoveSparseIDsTo(EntityManager& dst, const std::vector<EntityID>& ids);
 
 			// src の全エンティティを this へ統合。戻り値: 移送件数
-						// 手順: 1) Sparse 全型を一括 move  2) 非スパースをチャンク列 memcpy で移送  3) src をローカル除去
+			// 手順: 1) Sparse 全型を一括 move  2) 非スパースをチャンク列 memcpy で移送  3) src をローカル除去
 			size_t MergeFromAll(EntityManager& src);
 
 			// ルータ: router(EntityID id, const ComponentMask& mask) -> EntityManager&

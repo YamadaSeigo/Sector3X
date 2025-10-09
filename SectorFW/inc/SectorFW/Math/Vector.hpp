@@ -165,6 +165,9 @@ namespace SectorFW
 		struct alignas(GetAlignmentForVector<T, 4>()) Vec4 {
 			union {
 				struct { T x, y, z, w; };
+				struct { T r, g, b, a; };
+				// 3要素ベクトルとしてもアクセス可能
+				struct { Vec3<T> xyz; T w; };
 				T data[4];
 			};
 

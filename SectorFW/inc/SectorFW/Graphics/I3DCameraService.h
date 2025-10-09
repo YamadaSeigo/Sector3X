@@ -245,6 +245,22 @@ namespace SectorFW
 				std::shared_lock lock(sharedMutex);
 				return Math::Vec2f{ right - left, bottom - top };
 			}
+
+			Math::Matrix4x4f MakeViewProjMatrix() const {
+				std::shared_lock lock(sharedMutex);
+				Math::Vec3f r, u, f;
+				Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
+				auto view = Math::MakeLookAtMatrixLH(pos, eye, u);
+				Math::Matrix4x4f proj;
+				if constexpr (Type == ProjectionType::Perspective) {
+					proj = Math::MakePerspectiveMatrixLH(fovRad, aspectRatio, nearClip, farClip);
+				}
+				else {
+					proj = Math::MakeOrthographicMatrixLH(left, right, bottom, top, nearClip, farClip);
+				}
+				return view * proj;
+			}
+
 			/**
 			 * @brief ビュー行列を取得
 			 * @return Math::Matrix4x4f ビュー行列

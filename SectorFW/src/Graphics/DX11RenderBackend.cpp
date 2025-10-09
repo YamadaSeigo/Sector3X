@@ -95,6 +95,7 @@ namespace SectorFW
 		void DX11Backend::ProcessDeferredDeletesImpl(uint64_t currentFrame)
 		{
 			cbManager->PendingUpdates();
+			textureManager->PendingUpdates();
 
 			materialManager->ProcessDeferredDeletes(currentFrame);
 			meshManager->ProcessDeferredDeletes(currentFrame);
@@ -146,7 +147,7 @@ namespace SectorFW
 			{
 				auto mesh = meshManager->GetDirect(meshIdx);
 				context->IASetIndexBuffer(mesh.ref().ib.Get(), DXGI_FORMAT_R32_UINT, 0);
-				
+
 				switch (bindingMode) {
 				case InputBindingMode::AutoStreams:
 					BindMeshVertexStreamsForPSO(meshIdx, psoIdx);     // Šù‘¶‚ÌŽ©“®ƒXƒgƒŠ[ƒ€
@@ -164,7 +165,7 @@ namespace SectorFW
 				} break;
 				}
 
-				context->DrawIndexedInstanced(mesh.ref().indexCount, (UINT)count, 0, 0, 0);
+				context->DrawIndexedInstanced(mesh.ref().indexCount, (UINT)count, mesh.ref().startIndex, 0, 0);
 			}
 		}
 

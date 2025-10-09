@@ -5,6 +5,8 @@
 #include <SectorFW/Math/aabb_util.h>
 #include <SectorFW/Math/Rectangle.hpp>
 
+#include <SectorFW/Graphics/OccluderToolkit.h>
+
 #include "ModelRenderSystem.h"
 
 using namespace SectorFW;
@@ -106,7 +108,14 @@ public:
 
 		auto psoMgr = renderService->GetResourceManager<DX11PSOManager>();
 		DX11PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::WireCullNone };
-		psoMgr->Add(psoDesc, psoHandle);
+		psoMgr->Add(psoDesc, psoLineHandle);
+
+		ShaderHandle mocShaderHandle;
+		shaderDesc.vsPath = L"assets/shader/VS_Default.cso";
+		shaderDesc.psPath = L"assets/shader/PS_MOCDebug.cso";
+		shaderMgr->Add(shaderDesc, mocShaderHandle);
+		psoDesc = { mocShaderHandle, RasterizerStateID::SolidCullBack };
+		psoMgr->Add(psoDesc, psoMOCHandle);
 
 		// --- Index Buffer（固定：0,1,2,3,4,5,…）---
 		std::vector<uint32_t> indices(MAX_CAPACITY_3DLINE);
@@ -130,6 +139,35 @@ public:
 		meshMgr->Add(lineDesc, line2DHandle);
 
 		line2DVertices.reset(new LineVertex[MAX_CAPACITY_2DLINE]);
+
+		auto texMgr = renderService->GetResourceManager<DX11TextureManager>();
+
+		Graphics::DX11TextureRecipe recipe =
+		{
+		.width = 960,
+		.height = 720,
+		.format = DXGI_FORMAT_R32_FLOAT,
+		.mipLevels = 1,
+		.arraySize = 1,
+		.usage = D3D11_USAGE_DEFAULT,
+		.bindFlags = D3D11_BIND_SHADER_RESOURCE, // 必要に応じて RENDER_TARGET など追加
+		.cpuAccessFlags = 0,
+		.miscFlags = 0,
+		.initialData = mocDepth.data(),
+		.initialRowPitch = 960 * 4
+		};
+
+		texMgr->Add({
+		.path = "",                 // ←空で"生成モード"
+		.forceSRGB = false,         // 無視されます
+		.recipe = &recipe           // レシピを指定
+			}, mocTexHandle);
+
+		Graphics::DX11MaterialCreateDesc matDesc;
+		matDesc.shader = mocShaderHandle;
+		matDesc.psSRV[5] = mocTexHandle; // TEX5 にセット
+		auto matMgr = renderService->GetResourceManager<Graphics::DX11MaterialManager>();
+		matMgr->Add(matDesc, mocMaterialHandle);
 	}
 
 	//指定したサービスを関数の引数として受け取る
@@ -137,13 +175,15 @@ public:
 		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
 		UndeletablePtr<Graphics::I2DCameraService> camera2DService) {
 		//機能を制限したRenderQueueを取得
-		auto draw3DLineSession = renderService->GetProducerSession("DrawLine");
-		auto draw2DLineSession = renderService->GetProducerSession("Draw2D");
-		auto meshManager = renderService->GetResourceManager<Graphics::DX11MeshManager>();
+		auto defaultSession = renderService->GetProducerSession("3D");
+		auto draw3DLineSession = renderService->GetProducerSession("Line");
+		auto draw2DSession = renderService->GetProducerSession("2D");
+		auto draw2DLineSession = renderService->GetProducerSession("Line2D");
+		Graphics::DX11MeshManager* meshManager = renderService->GetResourceManager<Graphics::DX11MeshManager>();
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
 		auto psoManager = renderService->GetResourceManager<Graphics::DX11PSOManager>();
 		auto bufferManager = renderService->GetResourceManager<Graphics::DX11BufferManager>();
-		if (!psoManager->IsValid(psoHandle)) {
+		if (!psoManager->IsValid(psoLineHandle)) {
 			LOG_ERROR("PSOHandle is not valid in ShapeDimsRenderSystem");
 			return;
 		}
@@ -152,8 +192,11 @@ public:
 
 		auto cameraPos = camera3DService->GetPosition();
 		const auto& viewProj = camera3DService->GetCameraBufferData().viewProj;
+		auto fov = camera3DService->GetFOV();
 
 		Math::Vec2f resolution = camera2DService->GetVirtualResolution();
+
+		const Graphics::Viewport vp = { (int)resolution.x, (int)resolution.y, fov };
 
 		auto line3DCount = partition.CullChunkLine(fru, cameraPos, 200.0f,
 			line3DVertices.get(), MAX_CAPACITY_3DLINE, DRAW_LINE_CHUNK_COUNT);
@@ -170,6 +213,8 @@ public:
 				for (size_t i = 0; i < entityCount; ++i) {
 					if (overflow) return;
 
+					if (!model.value()[i].occluded) continue;
+
 					Math::Vec3f pos(transform->px()[i], transform->py()[i], transform->pz()[i]);
 					Math::Quatf rot(transform->qx()[i], transform->qy()[i], transform->qz()[i], transform->qw()[i]);
 					Math::Vec3f scale(transform->sx()[i], transform->sy()[i], transform->sz()[i]);
@@ -185,36 +230,111 @@ public:
 					float dis = (pos - cameraPos).length();
 					if (dis > 200.0f) continue; // 遠すぎる
 					float alpha = 1.0f - (dis / 200.0f);
-					auto rgba = Math::LerpColor(0x00000ff, 0x00ff00ff, alpha); // 緑->黒
+					auto rgbaAABB = Math::LerpColor(0x00000ff, 0x00ff00ff, alpha);
+					auto rgbaRect = Math::LerpColor(0x00000ff, 0xffff00ff, alpha);
+					auto rgbaOcc  = Math::LerpColor(0x000000ff,0xff00ffff, alpha);
+					auto rgbaOccQuad = Math::LerpColor(0x000000ff, 0xFF0000ff, alpha);
+
+					auto& lodBits = model.value()[i].prevLODBits;
+					int subMeshIdx = 0;
 
 					std::vector<Math::Vec3f> linePoss;
 					std::vector<uint32_t> lineColors;
 					for (const auto& mesh : modelAsset.ref().subMeshes) {
 						Math::Rectangle rect = Math::ProjectAABBToScreenRect(worldMtx * mesh.aabb, viewProj, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
 						auto rectLines = rect.MakeLineVertex();
-						if (line2DCount + (uint32_t)rectLines.size() > MAX_CAPACITY_2DLINE) {
+						if ((size_t)line2DCount + rectLines.size() > MAX_CAPACITY_2DLINE) {
 							overflow = true;
 							break;
 						}
 						for (auto& l : rectLines) {
-							line2DVertices.get()[line2DCount++] = { Math::Vec3f(l.x, l.y, 5.0f), rgba };
+							line2DVertices.get()[line2DCount++] = { Math::Vec3f(l.x, l.y, 5.0f), rgbaRect };
 						}
 
-					/*	auto lines = Math::MakeAABBLineVertices(mesh.aabb, rgba);
-						if (line3DCount + (uint32_t)lines.size() > MAX_CAPACITY_3DLINE) {
+						constexpr bool showOccAABB = false;
+
+						//3D AABB
+						auto lines = Math::MakeAABBLineVertices(mesh.aabb, rgbaAABB);
+						size_t newLineSize = lines.size();
+						if (mesh.occluder.candidate)
+						{
+							if (showOccAABB)
+								newLineSize += mesh.occluder.meltAABBs.size() * 24; // OCcluder AABB 分
+						}
+
+						if ((size_t)line3DCount + linePoss.size() + newLineSize > MAX_CAPACITY_3DLINE) {
 							overflow = true;
 							break;
 						}
 
-						linePoss.reserve(linePoss.size() + lines.size());
-						lineColors.reserve(lineColors.size() + lines.size() * 4);
+						linePoss.reserve(linePoss.size() + newLineSize);
+						lineColors.reserve(lineColors.size() + newLineSize);
 
 						for (auto& l : lines) {
 							linePoss.push_back(l.pos);
 							lineColors.push_back(l.rgba);
-						}*/
+						}
+
+						//OCcluder AABB
+						if (mesh.occluder.candidate) {
+
+							if(showOccAABB)
+								for (const auto& aabb : mesh.occluder.meltAABBs)
+								{
+									auto occLines = Math::MakeAABBLineVertices(aabb, rgbaOcc);
+									for (auto& l : occLines) {
+										linePoss.push_back(l.pos);
+										lineColors.push_back(l.rgba);
+									}
+								}
+
+							int prevLod = (int)lodBits.get(subMeshIdx);
+							float s = (std::min)((rect.width() * rect.height()) / (resolution.x * resolution.y), 1.0f);
+							int ll = Graphics::DX11ModelAssetManager::SelectLod(s, mesh.lodThresholds, (int)mesh.lods.size(), prevLod, -2.0f);
+
+							float s_occ = Graphics::ScreenCoverageFromRectPx(rect.x0, rect.y0, rect.x1, rect.y1, resolution.x, resolution.y);
+							auto occLod = Graphics::DecideOccluderLOD_FromThresholds(s_occ, mesh.lodThresholds, prevLod, prevLod);
+
+							size_t occCount = mesh.occluder.meltAABBs.size();
+							std::vector<Math::AABB3f> occAABB(occCount);
+							for (auto i = 0; i < occCount; ++i)
+							{
+								occAABB[i] = worldMtx * mesh.occluder.meltAABBs[i];
+							}
+
+							//auto outQuad = Math::CollectFacingPlanes(occAABB, cameraPos, viewProj);
+
+							std::vector<Graphics::QuadCandidate> outQuad;
+							Graphics::SelectOccluderQuads_AVX2(
+								occAABB,
+								cameraPos,
+								viewProj,
+								vp,
+								occLod,
+								outQuad);
+
+							if ((size_t)line3DCount + outQuad.size() * 8 > MAX_CAPACITY_3DLINE) {
+								overflow = true;
+								break;
+							}
+
+							for (const auto& quad : outQuad)
+							{
+								line3DVertices.get()[line3DCount++] = { quad.quad.v[0], rgbaOccQuad };
+								line3DVertices.get()[line3DCount++] = { quad.quad.v[1], rgbaOccQuad };
+								line3DVertices.get()[line3DCount++] = { quad.quad.v[1], rgbaOccQuad };
+								line3DVertices.get()[line3DCount++] = { quad.quad.v[2], rgbaOccQuad };
+								line3DVertices.get()[line3DCount++] = { quad.quad.v[2], rgbaOccQuad };
+								line3DVertices.get()[line3DCount++] = { quad.quad.v[3], rgbaOccQuad };
+								line3DVertices.get()[line3DCount++] = { quad.quad.v[3], rgbaOccQuad };
+								line3DVertices.get()[line3DCount++] = { quad.quad.v[0], rgbaOccQuad };
+							}
+						}
+
+						subMeshIdx++;
 					}
-					/*if (linePoss.empty()) continue;
+					// 3dラインをワールド変換して格納
+					if (linePoss.empty()) continue;
 
 					std::vector<Math::Vec3f> outPoss(linePoss.size());
 					Math::TransformPoints(worldMtx, linePoss.data(), outPoss.data(), linePoss.size());
@@ -223,7 +343,7 @@ public:
 						line3DVertices.get()[line3DCount + v] = { outPoss[v], lineColors[v] };
 					}
 
-					line3DCount += (uint32_t)outPoss.size();*/
+					line3DCount += (uint32_t)outPoss.size();
 				}
 
 			}, partition, fru);
@@ -263,10 +383,11 @@ public:
 		cmd.instanceIndex = draw3DLineSession.AllocInstance({ Math::Matrix4x4f::Identity() });
 		cmd.mesh = line3DHandle.index;
 		cmd.material = 0;
-		cmd.pso = psoHandle.index;
+		cmd.pso = psoLineHandle.index;
 		cmd.sortKey = 0; // 適切なソートキーを設定
 		draw3DLineSession.Push(cmd);
 
+		cmd.instanceIndex = draw2DLineSession.AllocInstance({ Math::Matrix4x4f::Identity() });
 		cmd.mesh = line2DHandle.index;
 		draw2DLineSession.Push(cmd);
 
@@ -310,14 +431,35 @@ public:
 						break;
 					}
 				}
-			}, partition, fru, meshManager, &draw3DLineSession, psoHandle.index, boxHandle.index, sphereHandle.index);
+			}, partition, fru, meshManager, &draw3DLineSession, psoLineHandle.index, boxHandle.index, sphereHandle.index);
+
+		renderService->GetDepthBuffer(mocDepth);
+
+		Graphics::DX11TextureManager* texMgr = renderService->GetResourceManager<Graphics::DX11TextureManager>();
+		texMgr->UpdateTexture(mocTexHandle, mocDepth.data(), 960 * 4);
+
+		Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(300.0f, -220.0f, 0.0f));
+		Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 320.0f, 240.0f, 1.0f });
+
+		cmd.instanceIndex = draw2DSession.AllocInstance(transMat * scaleMat);
+		cmd.mesh = meshManager->GetSpriteQuadHandle().index;
+		cmd.pso = psoMOCHandle.index;
+		cmd.material = mocMaterialHandle.index;
+
+		draw2DSession.Push(std::move(cmd));
 	}
 private:
-	Graphics::PSOHandle psoHandle = {};
+	Graphics::PSOHandle psoLineHandle = {};
+	Graphics::PSOHandle psoMOCHandle = {};
 	Graphics::MeshHandle line3DHandle = {};
 	Graphics::MeshHandle line2DHandle = {};
 	std::unique_ptr<Debug::LineVertex> line3DVertices;
 	std::unique_ptr<Debug::LineVertex> line2DVertices;
+
+	Graphics::TextureHandle mocTexHandle = {};
+	Graphics::MaterialHandle mocMaterialHandle = {};
+
+	std::vector<float> mocDepth = std::vector<float>(960 * 720, 0.2f);
 
 	Graphics::MeshHandle boxHandle = {}; // デフォルトメッシュ（立方体）
 	Graphics::MeshHandle sphereHandle = {}; // デフォルトメッシュ（球）

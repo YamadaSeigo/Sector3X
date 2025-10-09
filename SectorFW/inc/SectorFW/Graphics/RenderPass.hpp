@@ -115,6 +115,10 @@ namespace SectorFW
 			RenderPass& operator=(const RenderPass&) = delete;
 		};
 
+		/**
+		 * @brief レンダーパスの設定を定義する構造体
+		 * @detial ラスタライズを指定しない場合PSOで指定したラスタライズを使用する
+		 */
 		template<typename RTV>
 		struct RenderPassDesc {
 			std::string name;

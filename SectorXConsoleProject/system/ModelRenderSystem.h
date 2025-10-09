@@ -10,6 +10,8 @@ struct CModel
 {
 	Graphics::ModelAssetHandle handle;
 	Packed2Bits32 prevLODBits = {};
+	Packed2Bits32 prevOCCBits = {};
+	bool occluded = false;
 };
 
 template<typename Partition>
@@ -24,7 +26,7 @@ public:
 	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::I3DPerCameraService> cameraService) {
 		//機能を制限したRenderQueueを取得
-		auto producerSession = renderService->GetProducerSession("Default");
+		auto producerSession = renderService->GetProducerSession("3D");
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11MeshManager>();
 		auto materialManager = renderService->GetResourceManager<Graphics::DX11MaterialManager>();
@@ -35,18 +37,32 @@ public:
 		auto viewProj = cameraService->GetCameraBufferData().viewProj;
 		auto resolution = cameraService->GetResolution();
 
+		const Graphics::Viewport vp = { (int)resolution.x, (int)resolution.y, cameraService->GetFOV() };
+
 		//アクセスを宣言したコンポーネントにマッチするチャンクに指定した関数を適応する
 		this->ForEachFrustumNearChunkWithAccessor([](Accessor& accessor, size_t entityCount,
-			auto modelMgr, auto meshMgr, auto materialMgr, auto psoMgr,
-			auto queue, auto* viewProj, Math::Vec2f resolution)
+			Graphics::RenderService* renderService, auto modelMgr, auto meshMgr, auto materialMgr, auto psoMgr,
+			auto queue, auto* viewProj, Math::Vec3f cp, const Graphics::Viewport* vp)
 			{
+				float nearClip = renderService->GetNearClipPlane();
+
 				//読み取り専用でTransformSoAのアクセサを取得
 				auto transform = accessor.Get<Read<TransformSoA>>();
 				auto model = accessor.Get<Write<CModel>>();
+
+				SoATransforms soaTf = {
+					transform->px(), transform->py(), transform->pz(), (uint32_t)entityCount
+				};
+
+				std::vector<uint32_t> order;
+				BuildOrder_FixedRadix16(soaTf, cp.x, cp.y, cp.z, nearClip, 1000.0f, order);
+				//BuildFrontK_Strict(soaTf, cp.x, cp.y, cp.z, 6, order);
+
 				for (size_t i = 0; i < entityCount; ++i) {
-					Math::Vec3f pos(transform->px()[i], transform->py()[i], transform->pz()[i]);
-					Math::Quatf rot(transform->qx()[i], transform->qy()[i], transform->qz()[i], transform->qw()[i]);
-					Math::Vec3f scale(transform->sx()[i], transform->sy()[i], transform->sz()[i]);
+					uint32_t idx = order[i];
+					Math::Vec3f pos(transform->px()[idx], transform->py()[idx], transform->pz()[idx]);
+					Math::Quatf rot(transform->qx()[idx], transform->qy()[idx], transform->qz()[idx], transform->qw()[idx]);
+					Math::Vec3f scale(transform->sx()[idx], transform->sy()[idx], transform->sz()[idx]);
 					auto transMtx = Math::MakeTranslationMatrix(pos);
 					auto rotMtx = Math::MakeRotationMatrix(rot);
 					auto scaleMtx = Math::MakeScalingMatrix(scale);
@@ -54,10 +70,10 @@ public:
 					auto worldMtx = transMtx * rotMtx * scaleMtx;
 
 					//モデルアセットを取得
-					auto modelAsset = modelMgr->Get(model.value()[i].handle);
+					auto modelAsset = modelMgr->Get(model.value()[idx].handle);
 
 					auto instanceIdx = queue->AllocInstance({ worldMtx });
-					auto& lodBits = model.value()[i].prevLODBits;
+					auto& lodBits = model.value()[idx].prevLODBits;
 
 					int subMeshIdx = 0;
 					for (const Graphics::DX11ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
@@ -65,25 +81,73 @@ public:
 						if (materialMgr->IsValid(mesh.material) == false) [[unlikely]] continue;
 						if (psoMgr->IsValid(mesh.pso) == false) [[unlikely]] continue;
 
-						Math::Rectangle rect;
+						Math::NdcRectWithW ndc;
 						if (mesh.instance.HasData()) [[unlikely]] {
 							Graphics::InstanceData instance = { worldMtx * mesh.instance.worldMtx };
 							cmd.instanceIndex = queue->AllocInstance(instance);
 							auto localMVP = (*viewProj) * (worldMtx * mesh.instance.worldMtx);
-							rect = Math::ProjectAABBToScreenRect((worldMtx * mesh.instance.worldMtx) * mesh.aabb, *viewProj, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
+							ndc = Math::ProjectAABBToNdcRectWithW_SIMD((worldMtx * mesh.instance.worldMtx) * mesh.aabb, *viewProj);
 						}
 						else [[likely]] {
 							cmd.instanceIndex = instanceIdx;
-							rect = Math::ProjectAABBToScreenRect(worldMtx * mesh.aabb, *viewProj, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
+							ndc = Math::ProjectAABBToNdcRectWithW_SIMD(worldMtx * mesh.aabb, *viewProj);
 						}
 
-						float s = (std::min)((rect.width() * rect.height()) / (resolution.x * resolution.y), 1.0f);
-						int ll = Graphics::DX11ModelAssetManager::SelectLod(s, mesh.lodThresholds, (int)mesh.lods.size(), (int)lodBits.get(subMeshIdx), -2.0f);
-						if (ll < 0 || ll > 3) {
+						if (ndc.valid)
+						{
+							if (renderService->IsVisibleInMOC(ndc) != Graphics::MOC::CullingResult::VISIBLE) {
+								model.value()[idx].occluded = true;
+								continue;
+							}
+						}
+						else {
+							continue;
+						}
+
+						model.value()[idx].occluded = false;
+
+						float s = (std::min)(Graphics::NDCCoverageFromRectPx(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);
+						int prevLod = (int)lodBits.get(subMeshIdx);
+						int ll = Graphics::DX11ModelAssetManager::SelectLod(s, mesh.lodThresholds, (int)mesh.lods.size(), prevLod, -5.0f);
+						if (ll < 0 || ll > 3) [[unlikely]] {
 							LOG_ERROR("LOD selection out of range: %d", ll);
 							ll = 0;
 						}
 						lodBits.set(subMeshIdx, (uint8_t)ll);
+
+						if (mesh.occluder.candidate)
+						{
+							auto prevOccLod = (int)model.value()[idx].prevOCCBits.get(subMeshIdx);
+							auto occLod = Graphics::DecideOccluderLOD_FromThresholds(s, mesh.lodThresholds, prevOccLod, ll, -0.5f);
+							model.value()[idx].prevOCCBits.set(subMeshIdx, (uint8_t)occLod);
+							if (occLod != Graphics::OccluderLOD::Far)
+							{
+								size_t occCount = mesh.occluder.meltAABBs.size();
+								std::vector<Math::AABB3f> occAABB(occCount);
+								for (auto j = 0; j < occCount; ++j)
+								{
+									occAABB[j] = worldMtx * mesh.occluder.meltAABBs[j];
+								}
+
+								std::vector<Graphics::QuadCandidate> outQuad;
+								Graphics::SelectOccluderQuads_AVX2(
+									occAABB,
+									cp,
+									*viewProj,
+									*vp,
+									occLod,
+									outQuad);
+
+								for (const auto& quad : outQuad)
+								{
+									auto quadMOC = Graphics::ConvertAABBFrontFaceQuadToMoc(quad.quad, *viewProj, nearClip);
+									if (quadMOC.valid)
+									{
+										renderService->RenderingOccluderInMOC(quadMOC);
+									}
+								}
+							}
+						}
 
 						//LOG_INFO("Model LOD selected: %d (s=%f)", ll, s);
 
@@ -104,7 +168,8 @@ public:
 						}
 					}
 				}
-			}, partition, fru, camPos, modelManager, meshManager, materialManager, psoManager, &producerSession, &viewProj, resolution
+			}, partition, fru, camPos, renderService.get(), modelManager, meshManager, materialManager,
+			psoManager, &producerSession, &viewProj, camPos, &vp
 		);
 	}
 };

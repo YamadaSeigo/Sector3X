@@ -240,60 +240,124 @@ namespace SectorFW {
 
         //==================== 本体 ====================
 
-        DX11TextureManager::DX11TextureManager(ID3D11Device* device, std::filesystem::path convertedDir) noexcept
-            : device(device), convertedDir(convertedDir) {}
+        DX11TextureManager::DX11TextureManager(ID3D11Device* device, ID3D11DeviceContext* context, std::filesystem::path convertedDir) noexcept
+            : device(device), context(context), convertedDir(convertedDir) {}
 
         DX11TextureData DX11TextureManager::CreateResource(const DX11TextureCreateDesc& desc, TextureHandle) {
-            TexMetadata meta{};
-            ScratchImage img{};
-            HRESULT hr = E_FAIL;
+			// パスがある場合はそちらを優先
+            if (!desc.path.empty())
+            {
+                TexMetadata meta{};
+                ScratchImage img{};
+                HRESULT hr = E_FAIL;
 
-            std::string resolved = ResolveConvertedPath(desc.path);
+                std::string resolved = ResolveConvertedPath(desc.path);
 
-            const auto wpath = Utf8ToWide(resolved);
-            auto lower = detail::NormalizePath(resolved);
+                const auto wpath = Utf8ToWide(resolved);
+                auto lower = detail::NormalizePath(resolved);
 
-            if (detail::EndsWithI(lower, ".dds")) {
-                hr = LoadFromDDSFile(wpath.c_str(), DDS_FLAGS_NONE, &meta, img);
+                if (detail::EndsWithI(lower, ".dds")) {
+                    hr = LoadFromDDSFile(wpath.c_str(), DDS_FLAGS_NONE, &meta, img);
+                }
+                else if (detail::EndsWithI(lower, ".tga")) {
+                    hr = LoadFromTGAFile(wpath.c_str(), &meta, img);
+                }
+                else if (detail::EndsWithI(lower, ".hdr")) {
+                    hr = LoadFromHDRFile(wpath.c_str(), &meta, img);
+                }
+                else {
+                    // WIC (PNG/JPG/BMP 等) は RGB 展開を強制
+                    WIC_FLAGS wicFlags = WIC_FLAGS_FORCE_RGB;
+                    // sRGB 強制をかける場合もここでは “読み込みフラグ” として渡す（WIC の色空間タグ対策）
+                    if (desc.forceSRGB) wicFlags |= WIC_FLAGS_FORCE_SRGB;
+                    hr = LoadFromWICFile(wpath.c_str(), wicFlags, &meta, img);
+                }
+                if (FAILED(hr)) throw std::runtime_error("Failed to load image.");
+
+                // ---- ここからミップ生成（堅牢フロー） ----
+                EnsureMipChain(img, meta, desc.forceSRGB, maxGeneratedMips_);
+
+                // GPU テクスチャ化
+                ComPtr<ID3D11Resource> tex;
+                hr = CreateTexture(device, img.GetImages(), img.GetImageCount(), meta, tex.GetAddressOf());
+                if (FAILED(hr)) {
+                    char buf[256];
+                    sprintf_s(buf,
+                        "CreateTexture E_FAIL: fmt=%d w=%zu h=%zu mips=%zu arr=%zu depth=%zu dim=%d\n",
+                        int(meta.format), meta.width, meta.height, meta.mipLevels,
+                        meta.arraySize, meta.depth, int(meta.dimension));
+                    OutputDebugStringA(buf);
+                    throw std::runtime_error("CreateTexture failed.");
+                }
+
+                // SRV
+                ComPtr<ID3D11ShaderResourceView> srv = CreateSRV(tex.Get(), meta, device, desc.forceSRGB);
+
+                // 返却
+                DX11TextureData out{};
+                out.path = desc.path;
+                out.srv = std::move(srv);
+                out.resource = std::move(tex);
+                return out;
             }
-            else if (detail::EndsWithI(lower, ".tga")) {
-                hr = LoadFromTGAFile(wpath.c_str(), &meta, img);
-            }
-            else if (detail::EndsWithI(lower, ".hdr")) {
-                hr = LoadFromHDRFile(wpath.c_str(), &meta, img);
+
+			assert(desc.recipe != nullptr && "not reference of recipe instance"); // recipe 必須
+
+            //==============================
+            // B) パス無し：解像度から生成
+            //==============================
+            D3D11_TEXTURE2D_DESC td{};
+            td.Width = desc.recipe->width;
+            td.Height = desc.recipe->height;
+            td.MipLevels = (desc.recipe->mipLevels == 0) ? 0 : desc.recipe->mipLevels; // 0=フルチェーン
+            td.ArraySize = (std::max)(1u, desc.recipe->arraySize);
+            td.Format = desc.recipe->format;
+            td.SampleDesc.Count = 1;
+            td.Usage = desc.recipe->usage;
+            td.BindFlags = desc.recipe->bindFlags | D3D11_BIND_SHADER_RESOURCE; // SRV は付けておく
+            td.CPUAccessFlags = desc.recipe->cpuAccessFlags;
+            td.MiscFlags = desc.recipe->miscFlags;
+
+            ComPtr<ID3D11Texture2D> tex2D;
+            HRESULT hr;
+            if (desc.recipe->initialData) {
+                D3D11_SUBRESOURCE_DATA srd{};
+                srd.pSysMem = desc.recipe->initialData;
+                srd.SysMemPitch = desc.recipe->initialRowPitch;
+                hr = device->CreateTexture2D(&td, &srd, tex2D.GetAddressOf());
+
             }
             else {
-                // WIC (PNG/JPG/BMP 等) は RGB 展開を強制
-                WIC_FLAGS wicFlags = WIC_FLAGS_FORCE_RGB;
-                // sRGB 強制をかける場合もここでは “読み込みフラグ” として渡す（WIC の色空間タグ対策）
-                if (desc.forceSRGB) wicFlags |= WIC_FLAGS_FORCE_SRGB;
-                hr = LoadFromWICFile(wpath.c_str(), wicFlags, &meta, img);
+                hr = device->CreateTexture2D(&td, nullptr, tex2D.GetAddressOf());
+
             }
-            if (FAILED(hr)) throw std::runtime_error("Failed to load image.");
+            if (FAILED(hr)) throw std::runtime_error("CreateTexture2D failed.");
 
-            // ---- ここからミップ生成（堅牢フロー） ----
-            EnsureMipChain(img, meta, desc.forceSRGB, maxGeneratedMips_);
+            // SRV 設定（mipLevels=0 の場合は全段 SRV）
+            D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
+            sd.Format = td.Format;
+            if (td.ArraySize > 1) {
+                sd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+                sd.Texture2DArray.MostDetailedMip = 0;
+                sd.Texture2DArray.MipLevels = (td.MipLevels == 0) ? -1 : td.MipLevels;
+                sd.Texture2DArray.FirstArraySlice = 0;
+                sd.Texture2DArray.ArraySize = td.ArraySize;
 
-            // GPU テクスチャ化
-            ComPtr<ID3D11Resource> tex;
-            hr = CreateTexture(device, img.GetImages(), img.GetImageCount(), meta, tex.GetAddressOf());
-            if (FAILED(hr)) {
-                char buf[256];
-                sprintf_s(buf,
-                    "CreateTexture E_FAIL: fmt=%d w=%zu h=%zu mips=%zu arr=%zu depth=%zu dim=%d\n",
-                    int(meta.format), meta.width, meta.height, meta.mipLevels,
-                    meta.arraySize, meta.depth, int(meta.dimension));
-                OutputDebugStringA(buf);
-                throw std::runtime_error("CreateTexture failed.");
             }
+            else {
+                sd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+                sd.Texture2D.MostDetailedMip = 0;
+                sd.Texture2D.MipLevels = (td.MipLevels == 0) ? -1 : td.MipLevels;
 
-            // SRV
-            ComPtr<ID3D11ShaderResourceView> srv = CreateSRV(tex.Get(), meta, device, desc.forceSRGB);
+            }
+            ComPtr<ID3D11ShaderResourceView> srv;
+            hr = device->CreateShaderResourceView(tex2D.Get(), &sd, srv.GetAddressOf());
+            if (FAILED(hr)) throw std::runtime_error("CreateShaderResourceView failed.");
 
-            // 返却
             DX11TextureData out{};
-            out.path = desc.path;
+            out.path.clear();        // 生成物はパス無し
             out.srv = std::move(srv);
+			out.resource = std::move(tex2D);
             return out;
         }
 
@@ -309,6 +373,106 @@ namespace SectorFW {
             RemoveFromCaches(idx);
             auto& d = this->slots[idx].data;
             if (d.srv) d.srv.Reset();
+			if (d.resource) d.resource.Reset();
+        }
+
+        //================ 遅延更新 実装 ================
+        void DX11TextureManager::UpdateTexture(const DX11TextureUpdateDesc& desc)
+        {
+            std::lock_guard<std::mutex> lock(updateMx_);
+            pendingTexUpdates_.push_back(desc);
+        }
+
+        void DX11TextureManager::UpdateTexture(TextureHandle h, const void* pData, UINT rowPitch, UINT depthPitch,
+            bool isDelete, const D3D11_BOX* pBox, UINT subresource)
+        {
+            auto d = Get(h);
+            DX11TextureUpdateDesc u{};
+            u.tex = d.ref().resource;
+            u.subresource = subresource;
+            u.pData = pData;
+            u.rowPitch = rowPitch;
+            u.depthPitch = depthPitch;
+            u.isDelete = isDelete;
+            if (pBox) { u.useBox = true; u.box = *pBox; }
+            UpdateTexture(u);
+        }
+
+        void DX11TextureManager::QueueGenerateMips(TextureHandle h)
+        {
+            auto d = Get(h);
+            if (!d.ref().srv) return;
+            std::lock_guard<std::mutex> lock(updateMx_);
+            pendingGenMips_.push_back({ d.ref().srv });
+        }
+
+        void DX11TextureManager::PendingUpdates()
+        {
+            // ユニーク化： (tex, subresource) で最新だけ残す
+            std::vector<DX11TextureUpdateDesc> work;
+            {
+                std::lock_guard<std::mutex> lock(updateMx_);
+                if (pendingTexUpdates_.empty() && pendingGenMips_.empty()) return;
+
+                // 後勝ちマップ（同じキーが複数回あっても最後のものだけ適用）
+                struct Key {
+                    ID3D11Resource* r; UINT s;
+                    bool operator==(const Key& other) const noexcept {
+                        return r == other.r && s == other.s;
+                    }
+                };
+                struct KeyHash {
+                    size_t operator()(const Key& k) const noexcept {
+                        return std::hash<void*>()(k.r) ^ (std::hash<UINT>()(k.s) * 16777619u);
+
+                    }
+
+                };
+                std::unordered_map<Key, size_t, KeyHash> lastIndex;
+                work = pendingTexUpdates_; // 一旦コピー
+                for (size_t i = 0; i < work.size(); ++i) {
+                    lastIndex[Key{ work[i].tex.Get(), work[i].subresource }] = i;
+
+                }
+                // フィルタして「最後のものだけ」残す
+                std::vector<DX11TextureUpdateDesc> filtered;
+                filtered.reserve(lastIndex.size());
+                for (auto& [k, idx] : lastIndex) filtered.push_back(std::move(work[idx]));
+                work.swap(filtered);
+            }
+
+            // 適用：UpdateSubresource
+            for (auto& u : work) {
+                if (!u.tex) continue;
+                if (u.useBox) {
+                    // 部分更新
+                    context->UpdateSubresource(u.tex.Get(), u.subresource, &u.box, u.pData, u.rowPitch, u.depthPitch);
+
+                }
+                else {
+                    // 全体更新
+                    context->UpdateSubresource(u.tex.Get(), u.subresource, nullptr, u.pData, u.rowPitch, u.depthPitch);
+
+                }
+                if (u.pData && u.isDelete) {
+                    // BufferManager と同様の寿命管理
+                    delete[] reinterpret_cast<const std::byte*>(u.pData);
+
+                }
+
+            }
+
+            // 生成ミップ
+            std::vector<GenMipsItem> gen;
+            {
+                std::lock_guard<std::mutex> lock(updateMx_);
+                gen.swap(pendingGenMips_);
+                pendingTexUpdates_.clear();
+            }
+            for (auto& g : gen) {
+                if (g.srv) context->GenerateMips(g.srv.Get());
+
+            }
         }
 
         std::string DX11TextureManager::ResolveConvertedPath(const std::string& original) {
@@ -321,7 +485,7 @@ namespace SectorFW {
             std::error_code ec;
             fs::path rel = fs::relative(p.parent_path(), assetsDir, ec);
             if (ec) {
-				LOG_ERROR("Failed to make relative path: {}", ec.message());
+                LOG_ERROR("Failed to make relative path: {}", ec.message());
                 return original;
             }
 

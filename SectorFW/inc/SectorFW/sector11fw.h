@@ -23,6 +23,8 @@
 #include "Core/QuadTreePartition.h"
 #include "Core/OctreePartition.h"
 
+#include "Core/build_order.h"
+
 #include "Physics/PhysicsService.h"
 
 #include "SIMD/simd_api.h"

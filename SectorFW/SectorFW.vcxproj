@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\SectorFW\Core\build_order.h" />
     <ClInclude Include="inc\SectorFW\Core\ChunkCrossingMove.hpp" />
     <ClInclude Include="inc\SectorFW\Core\ECS\AccessInfo.h" />
     <ClInclude Include="inc\SectorFW\Core\ECS\Accessor.hpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\I2DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\I3DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\IGraphicsDevice.hpp" />
+    <ClInclude Include="inc\SectorFW\Graphics\OccluderToolkit.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderBackend.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderGraph.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderPass.hpp" />
@@ -149,8 +151,8 @@
     <ClCompile Include="external\MOC\MaskedOcclusionCulling.cpp">
       <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="external\MOC\MaskedOcclusionCullingAVX2.cpp" />
     <ClCompile Include="external\MOC\MaskedOcclusionCullingAVX512.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="src\Graphics\DX11ShaderManager.cpp" />
     <ClCompile Include="src\Graphics\DX11TextureManager.cpp" />
     <ClCompile Include="src\Graphics\DX12Graphics.cpp" />
+    <ClCompile Include="src\Graphics\OccluderToolkit.cpp" />
     <ClCompile Include="src\Graphics\RenderQueue.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />
     <ClCompile Include="src\Physics\PhysicsDevice.cpp" />

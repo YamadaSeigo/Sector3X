@@ -91,11 +91,11 @@
     <Filter Include="Src\SIMD">
       <UniqueIdentifier>{4e55244a-1d2c-4a4e-be0a-5c19334220de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Inc\Graphics\MOC">
-      <UniqueIdentifier>{da44bf4c-9dbb-475f-bafa-34cbd0206df6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Debug">
       <UniqueIdentifier>{5f5624a5-82dd-44cb-8295-eb4708cf0fcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\MOC">
+      <UniqueIdentifier>{da44bf4c-9dbb-475f-bafa-34cbd0206df6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -446,6 +446,12 @@
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX112DCameraService.h">
       <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\OccluderToolkit.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\build_order.h">
+      <Filter>Inc\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -942,19 +948,22 @@
       <Filter>Src\SIMD</Filter>
     </ClCompile>
     <ClCompile Include="external\MOC\MaskedOcclusionCullingAVX2.cpp">
-      <Filter>Inc\Graphics\MOC</Filter>
+      <Filter>Src\Graphics\MOC</Filter>
     </ClCompile>
     <ClCompile Include="external\MOC\MaskedOcclusionCullingAVX512.cpp">
-      <Filter>Inc\Graphics\MOC</Filter>
+      <Filter>Src\Graphics\MOC</Filter>
     </ClCompile>
     <ClCompile Include="external\MOC\MaskedOcclusionCulling.cpp">
-      <Filter>Inc\Graphics\MOC</Filter>
+      <Filter>Src\Graphics\MOC</Filter>
     </ClCompile>
     <ClCompile Include="external\MOC\FrameRecorder.cpp">
-      <Filter>Inc\Graphics\MOC</Filter>
+      <Filter>Src\Graphics\MOC</Filter>
     </ClCompile>
     <ClCompile Include="external\MOC\CullingThreadpool.cpp">
-      <Filter>Inc\Graphics\MOC</Filter>
+      <Filter>Src\Graphics\MOC</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\OccluderToolkit.cpp">
+      <Filter>Src\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

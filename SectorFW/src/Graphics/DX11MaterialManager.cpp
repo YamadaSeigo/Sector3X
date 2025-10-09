@@ -51,16 +51,7 @@ namespace SectorFW
 
 		DX11MaterialData DX11MaterialManager::CreateResource(const DX11MaterialCreateDesc& desc, MaterialHandle h)
 		{
-			auto shader = shaderManager->Get(desc.shader);
-
 			DX11MaterialData mat{};
-			mat.templateID = shader.ref().templateID;
-			mat.shader = desc.shader;
-			mat.usedTextures.reserve(desc.psSRV.size());
-
-			// === リフレクション情報取得 ===
-			const auto& psBindings = shader.ref().psBindings;
-			const auto& vsBindings = shader.ref().vsBindings;
 
 			std::unordered_map<UINT, ID3D11ShaderResourceView*> psSRVMap;
 			for (const auto& [slot, texHandle] : desc.psSRV) {
@@ -101,6 +92,15 @@ namespace SectorFW
 				mat.usedSamplers.push_back(samplerHandle);
 				samplerManager->AddRef(samplerHandle); // 所有権追跡開始
 			}
+
+			auto shader = shaderManager->Get(desc.shader);
+			mat.templateID = shader.ref().templateID;
+			mat.shader = desc.shader;
+			mat.usedTextures.reserve(desc.psSRV.size());
+
+			// === リフレクション情報取得 ===
+			const auto& psBindings = shader.ref().psBindings;
+			const auto& vsBindings = shader.ref().vsBindings;
 
 			// === キャッシュ構築 ===
 			mat.psSRV = BuildBindingCacheSRV(psBindings, psSRVMap);

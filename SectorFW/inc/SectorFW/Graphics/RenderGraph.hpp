@@ -41,7 +41,7 @@ namespace SectorFW
 			 * @detail RenderGraphにResouceManagerの追加を行う
 			 * @param backend レンダーバックエンド
 			 */
-			RenderGraph(Backend& backend) : backend(backend) {
+			explicit RenderGraph(Backend& backend, MOC* moc) : backend(backend), renderService(moc) {
 				// レンダーバックエンドでRenderServiceにリソースマネージャーを登録
 				backend.AddResourceManagerToRenderService(*this);
 			}
