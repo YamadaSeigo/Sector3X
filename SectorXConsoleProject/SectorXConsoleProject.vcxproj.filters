@@ -87,5 +87,8 @@
     <ClInclude Include="app\Packed2Bits32.h">
       <Filter>App</Filter>
     </ClInclude>
+    <ClInclude Include="system\SimpleModelRenderSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

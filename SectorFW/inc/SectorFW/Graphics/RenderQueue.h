@@ -414,6 +414,15 @@ namespace SectorFW
 				[[nodiscard]] InstanceIndex AllocInstance(InstanceData&& inst);
 
 				/**
+				* @brief 連続した InstanceData をまとめて登録し、対応する InstanceIndex 配列を返す
+				* @param src     連続した InstanceData 配列（count 要素）
+				* @param count   src の要素数
+				* @param outIndices 書き込み先の InstanceIndex 配列（少なくとも count 要素分を想定）
+				* @return 実際に書き込めた要素数（cap 超過時はクランプ）
+				*/
+				size_t AllocInstances(const InstanceData* src, size_t count, InstanceIndex* outIndices);
+
+				/**
 				 * @brief SoA で DrawCommand を一括投入するための受け口
 				 */
 				struct DrawCommandSOA {
@@ -425,22 +434,6 @@ namespace SectorFW
 					size_t count = 0;
 				};
 
-				/**
-				 * @brief InstanceData を連続領域に一括コピーして確保
-				 */
-				[[nodiscard]] inline std::pair<InstanceIndex, uint32_t>
-					AllocInstancesBulk(const InstanceData* src, uint32_t count) {
-					if (count == 0) return { InstanceIndex{ 0u }, 0u };
-					RebindIfNeeded();
-					auto [poolPtr, writePos] = rq->GetCurrentInstancePoolAccess(); // 生産中の側へ
-					const uint32_t start = writePos->fetch_add(count, std::memory_order_acq_rel);
-					if (start + count > MAX_INSTANCES_PER_FRAME) {
-						// 元に戻さず例外：上位でフレームの上限を見直す
-						throw std::runtime_error("Instance pool overflow in AllocInstancesBulk");
-					}
-					std::memcpy(poolPtr + start, src, sizeof(InstanceData) * count);
-					return { InstanceIndex{ start }, count };
-				}
 				/**
 				 * @brief SoA から AoS に詰め替えてキューへ一括投入
 				 */

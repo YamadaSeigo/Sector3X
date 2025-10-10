@@ -912,5 +912,157 @@ namespace SectorFW
 #endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 			return InverseAffine(M);
 		}
-	}
-}
+
+		// SoA からワールド行列 (M = T * R * S) を一括生成
+		struct MTransformSoA {
+			const float* px; const float* py; const float* pz;       // translation
+			const float* qx; const float* qy; const float* qz; const float* qw; // rotation (unit quaternion 推奨)
+			const float* sx; const float* sy; const float* sz;       // scale
+		};
+
+		// q を（ほぼ）単位化したい場合は true。コストを避けたいなら false。
+		inline void BuildWorldMatrices_FromSoA(
+			const MTransformSoA& t, size_t n, SectorFW::Math::Matrix4x4f* outM, bool renormalizeQuat = false) noexcept
+		{
+			using namespace SectorFW::Math;
+
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+			const size_t vecN = n & ~size_t(3);
+			const __m128 two = _mm_set1_ps(2.0f);
+			const __m128 one = _mm_set1_ps(1.0f);
+
+			auto normalize4 = [](__m128 x, __m128 y, __m128 z, __m128 w) {
+				// 1/sqrt(x^2+y^2+z^2+w^2) を掛ける（近似 rsqrt）
+				__m128 s = _mm_add_ps(_mm_mul_ps(x, x), _mm_add_ps(_mm_mul_ps(y, y), _mm_add_ps(_mm_mul_ps(z, z), _mm_mul_ps(w, w))));
+				__m128 rinv = _mm_rsqrt_ps(s);
+				// 1回だけニュートン法で精度向上（任意）
+				// rinv = rinv * (1.5 - 0.5*s*rinv*rinv)
+				__m128 half = _mm_set1_ps(0.5f), three = _mm_set1_ps(3.0f);
+				rinv = _mm_mul_ps(rinv, _mm_sub_ps(three, _mm_mul_ps(_mm_mul_ps(s, rinv), _mm_mul_ps(rinv, half))));
+				return std::tuple{
+					_mm_mul_ps(x, rinv),
+					_mm_mul_ps(y, rinv),
+					_mm_mul_ps(z, rinv),
+					_mm_mul_ps(w, rinv)
+				};
+				};
+
+			for (size_t i = 0; i < vecN; i += 4) {
+				// --- SoA をロード ---
+				__m128 px = _mm_loadu_ps(t.px + i);
+				__m128 py = _mm_loadu_ps(t.py + i);
+				__m128 pz = _mm_loadu_ps(t.pz + i);
+
+				__m128 qx = _mm_loadu_ps(t.qx + i);
+				__m128 qy = _mm_loadu_ps(t.qy + i);
+				__m128 qz = _mm_loadu_ps(t.qz + i);
+				__m128 qw = _mm_loadu_ps(t.qw + i);
+
+				__m128 sx = _mm_loadu_ps(t.sx + i);
+				__m128 sy = _mm_loadu_ps(t.sy + i);
+				__m128 sz = _mm_loadu_ps(t.sz + i);
+
+				if (renormalizeQuat) {
+					std::tie(qx, qy, qz, qw) = normalize4(qx, qy, qz, qw);
+				}
+
+				// --- 回転行列（あなたの MakeRotationMatrix と同式）---
+				__m128 xx = _mm_mul_ps(qx, qx);
+				__m128 yy = _mm_mul_ps(qy, qy);
+				__m128 zz = _mm_mul_ps(qz, qz);
+				__m128 xy = _mm_mul_ps(qx, qy);
+				__m128 xz = _mm_mul_ps(qx, qz);
+				__m128 yz = _mm_mul_ps(qy, qz);
+				__m128 wx = _mm_mul_ps(qw, qx);
+				__m128 wy = _mm_mul_ps(qw, qy);
+				__m128 wz = _mm_mul_ps(qw, qz);
+
+				// r00..r22
+				__m128 r00 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(yy, zz)));
+				__m128 r01 = _mm_mul_ps(two, _mm_sub_ps(xy, wz));
+				__m128 r02 = _mm_mul_ps(two, _mm_add_ps(xz, wy));
+
+				__m128 r10 = _mm_mul_ps(two, _mm_add_ps(xy, wz));
+				__m128 r11 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(xx, zz)));
+				__m128 r12 = _mm_mul_ps(two, _mm_sub_ps(yz, wx));
+
+				__m128 r20 = _mm_mul_ps(two, _mm_sub_ps(xz, wy));
+				__m128 r21 = _mm_mul_ps(two, _mm_add_ps(yz, wx));
+				__m128 r22 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(xx, yy)));
+
+				// --- 列スケール（M3x3 = R * diag(sx,sy,sz)）---
+				__m128 m00 = _mm_mul_ps(r00, sx);
+				__m128 m01 = _mm_mul_ps(r01, sy);
+				__m128 m02 = _mm_mul_ps(r02, sz);
+
+				__m128 m10 = _mm_mul_ps(r10, sx);
+				__m128 m11 = _mm_mul_ps(r11, sy);
+				__m128 m12 = _mm_mul_ps(r12, sz);
+
+				__m128 m20 = _mm_mul_ps(r20, sx);
+				__m128 m21 = _mm_mul_ps(r21, sy);
+				__m128 m22 = _mm_mul_ps(r22, sz);
+
+				// 行列の右端列 = 平行移動
+				__m128 m03 = px;
+				__m128 m13 = py;
+				__m128 m23 = pz;
+
+				// ---- 4枚へ AoS に散らす ----
+				alignas(16) float r0[4], r1[4], r2[4], t0[4], t1[4], t2[4];
+				_mm_store_ps(r0, m00); _mm_store_ps(r1, m10); _mm_store_ps(r2, m20);
+				_mm_store_ps(t0, m01); _mm_store_ps(t1, m11); _mm_store_ps(t2, m21);
+				alignas(16) float u0[4], u1[4], u2[4], tr0[4], tr1[4], tr2[4];
+				_mm_store_ps(u0, m02); _mm_store_ps(u1, m12); _mm_store_ps(u2, m22);
+				_mm_store_ps(tr0, m03); _mm_store_ps(tr1, m13); _mm_store_ps(tr2, m23);
+
+				for (int lane = 0; lane < 4; ++lane) {
+					Matrix4x4f& M = outM[i + lane];
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+					// 行0,1,2 をまとめて書き込み（右端列に平行移動）
+					_mm_storeu_ps(&M.m[0][0], _mm_set_ps(tr0[lane], u0[lane], t0[lane], r0[lane]));
+					_mm_storeu_ps(&M.m[1][0], _mm_set_ps(tr1[lane], u1[lane], t1[lane], r1[lane]));
+					_mm_storeu_ps(&M.m[2][0], _mm_set_ps(tr2[lane], u2[lane], t2[lane], r2[lane]));
+					_mm_storeu_ps(&M.m[3][0], _mm_set_ps(1.f, 0.f, 0.f, 0.f)); // [0,0,0,1]
+#else
+					M.m[0][0] = r0[lane]; M.m[0][1] = t0[lane]; M.m[0][2] = u0[lane]; M.m[0][3] = tr0[lane];
+					M.m[1][0] = r1[lane]; M.m[1][1] = t1[lane]; M.m[1][2] = u1[lane]; M.m[1][3] = tr1[lane];
+					M.m[2][0] = r2[lane]; M.m[2][1] = t2[lane]; M.m[2][2] = u2[lane]; M.m[2][3] = tr2[lane];
+					M.m[3][0] = 0.f; M.m[3][1] = 0.f; M.m[3][2] = 0.f; M.m[3][3] = 1.f;
+#endif
+				}
+			}
+			// 端数
+			for (size_t i = vecN; i < n; ++i) {
+#else
+			for (size_t i = 0; i < n; ++i) {
+#endif
+				// スカラ版（あなたの MakeRotationMatrix と同式）
+				Quat<float> q( t.qx[i], t.qy[i], t.qz[i], t.qw[i] );
+				if (renormalizeQuat) q.Normalize();
+				const auto R = MakeRotationMatrix(q);
+
+				Matrix4x4f M{};
+				// 列スケール：列ごとに sx,sy,sz を掛ける
+				M.m[0][0] = R.m[0][0] * t.sx[i];
+				M.m[0][1] = R.m[0][1] * t.sy[i];
+				M.m[0][2] = R.m[0][2] * t.sz[i];
+				M.m[0][3] = t.px[i];
+
+				M.m[1][0] = R.m[1][0] * t.sx[i];
+				M.m[1][1] = R.m[1][1] * t.sy[i];
+				M.m[1][2] = R.m[1][2] * t.sz[i];
+				M.m[1][3] = t.py[i];
+
+				M.m[2][0] = R.m[2][0] * t.sx[i];
+				M.m[2][1] = R.m[2][1] * t.sy[i];
+				M.m[2][2] = R.m[2][2] * t.sz[i];
+				M.m[2][3] = t.pz[i];
+
+				M.m[3][0] = 0.f; M.m[3][1] = 0.f; M.m[3][2] = 0.f; M.m[3][3] = 1.f;
+
+				outM[i] = M;
+			}
+		}
+	} //namespace math
+}// namespace SectorFW

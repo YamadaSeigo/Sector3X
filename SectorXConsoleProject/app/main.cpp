@@ -8,6 +8,7 @@
 #include "system/DebugRenderSystem.h"
 #include "system/TestMoveSystem.h"
 #include "system/CleanModelSystem.h"
+#include "system/SimpleModelRenderSystem.h"
 #include <string>
 
 //デバッグ用
@@ -185,6 +186,8 @@ int main(void)
 	PSOHandle psoHandle;
 	psoMgr->Add(psoDesc, psoHandle);
 
+	ModelAssetHandle modelAssetHandle[3];
+
 	auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11ModelAssetManager>();
 	// モデルアセットの読み込み
 	DX11ModelAssetCreateDesc modelDesc;
@@ -193,8 +196,14 @@ int main(void)
 	modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
 	modelDesc.instancesPeak = 1000;
 	modelDesc.viewMax = 1000.0f;
-	ModelAssetHandle modelAssetHandle;
-	modelAssetMgr->Add(modelDesc, modelAssetHandle);
+	modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
+
+	modelDesc.path = "assets/model/StylizedNatureMegaKit/Clover_1.gltf";
+	modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
+
+	modelDesc.path = "assets/model/StylizedNatureMegaKit/DeadTree_2.gltf";
+	modelDesc.buildOccluders = false;
+	modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 	//========================================================================================-
 
@@ -209,12 +218,13 @@ int main(void)
 		//scheduler.AddSystem<MovementSystem>(world.GetServiceLocator());
 
 		scheduler.AddSystem<ModelRenderSystem>(world.GetServiceLocator());
+		//scheduler.AddSystem<SimpleModelRenderSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<CameraSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<TestMoveSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
+		//scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<CleanModelSystem>(world.GetServiceLocator());
 
 		auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
@@ -228,17 +238,17 @@ int main(void)
 		Math::Vec3f dst = src;
 
 		// Entity生成
-		for (int j = 0; j < 5; ++j) {
-			for (int k = 0; k < 5; ++k) {
-				for (int n = 0; n < 5; ++n) {
-					Math::Vec3f location = { float(j) * 5.0f, float(n) * 20.0f, float(k) * 5.0f};
+		for (int j = 0; j < 100; ++j) {
+			for (int k = 0; k < 100; ++k) {
+				for (int n = 0; n < 1; ++n) {
+					Math::Vec3f location = { float(j) * (rand() % 10 + 2), float(n) * 20.0f, float(k) * (rand() % 10 + 2) };
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();
 					SpatialMotionTag tag{};
 					tag.handle = { key, chunk.value() };
 					auto id = level->AddEntity(
 						TransformSoA{ location, Math::Quatf(0.0f,0.0f,0.0f,1.0f),Math::Vec3f(1.0f,1.0f,1.0f) },
-						CModel{ modelAssetHandle },
+						CModel{ modelAssetHandle[rand() % (sizeof(modelAssetHandle) / sizeof(ModelAssetHandle))]},
 						Physics::BodyComponent{},
 						Physics::PhysicsInterpolation(
 							location, // 初期位置

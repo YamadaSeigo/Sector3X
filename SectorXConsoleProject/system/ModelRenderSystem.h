@@ -50,31 +50,34 @@ public:
 				auto transform = accessor.Get<Read<TransformSoA>>();
 				auto model = accessor.Get<Write<CModel>>();
 
-				SoATransforms soaTf = {
+				SoAPositions soaTf = {
 					transform->px(), transform->py(), transform->pz(), (uint32_t)entityCount
 				};
 
+				//カメラに近い順にソート
 				std::vector<uint32_t> order;
 				BuildOrder_FixedRadix16(soaTf, cp.x, cp.y, cp.z, nearClip, 1000.0f, order);
 				//BuildFrontK_Strict(soaTf, cp.x, cp.y, cp.z, 6, order);
 
+				Math::MTransformSoA mtf = {
+					transform->px(), transform->py(), transform->pz(),
+					transform->qx(), transform->qy(), transform->qz(), transform->qw(),
+					transform->sx(), transform->sy(), transform->sz()
+				};
+
+				// ワールド行列を一括生成
+				std::vector<Math::Matrix4x4f> worldMatrices(entityCount);
+				Math::BuildWorldMatrices_FromSoA(mtf, entityCount, worldMatrices.data(), false); // クォータニオン非正規化
+
 				for (size_t i = 0; i < entityCount; ++i) {
 					uint32_t idx = order[i];
-					Math::Vec3f pos(transform->px()[idx], transform->py()[idx], transform->pz()[idx]);
-					Math::Quatf rot(transform->qx()[idx], transform->qy()[idx], transform->qz()[idx], transform->qw()[idx]);
-					Math::Vec3f scale(transform->sx()[idx], transform->sy()[idx], transform->sz()[idx]);
-					auto transMtx = Math::MakeTranslationMatrix(pos);
-					auto rotMtx = Math::MakeRotationMatrix(rot);
-					auto scaleMtx = Math::MakeScalingMatrix(scale);
-					//ワールド行列を計算
-					auto worldMtx = transMtx * rotMtx * scaleMtx;
-
-					//モデルアセットを取得
-					auto modelAsset = modelMgr->Get(model.value()[idx].handle);
+					const auto& worldMtx = worldMatrices[idx];
 
 					auto instanceIdx = queue->AllocInstance({ worldMtx });
 					auto& lodBits = model.value()[idx].prevLODBits;
 
+					//モデルアセットを取得
+					auto modelAsset = modelMgr->Get(model.value()[idx].handle);
 					int subMeshIdx = 0;
 					for (const Graphics::DX11ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
 						Graphics::DrawCommand cmd;
@@ -118,7 +121,7 @@ public:
 						if (mesh.occluder.candidate)
 						{
 							auto prevOccLod = (int)model.value()[idx].prevOCCBits.get(subMeshIdx);
-							auto occLod = Graphics::DecideOccluderLOD_FromThresholds(s, mesh.lodThresholds, prevOccLod, ll, -0.5f);
+							auto occLod = Graphics::DecideOccluderLOD_FromThresholds(s, mesh.lodThresholds, prevOccLod, ll, 0.0f);
 							model.value()[idx].prevOCCBits.set(subMeshIdx, (uint8_t)occLod);
 							if (occLod != Graphics::OccluderLOD::Far)
 							{

@@ -44,36 +44,61 @@ public:
 	 * @brief フレームタイマーを更新します。
 	 */
 	void Tick() {
+		using namespace std::chrono;
+
+		const bool limit = (maxFrameRate > 0.0);
+		const duration<double> minFrameTime = limit ? duration<double>(1.0 / maxFrameRate)
+			: duration<double>(0.0);
+
 		auto now = clock::now();
-		std::chrono::duration<double> frameDuration = now - lastTime;
 
-		// 最大FPS制限がある場合は待機
-		if (maxFrameRate > 0.0) {
-			const double minFrameTime = 1.0 / maxFrameRate;
-			if (frameDuration.count() < minFrameTime) {
-				auto sleepDuration = std::chrono::duration<double>(minFrameTime - frameDuration.count());
-				std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::milliseconds>(sleepDuration));
+		if (limit) {
+			// 前回 tick からの理想的な次フレーム時刻を決める
+			const time_point nextTick = lastTime + duration_cast<clock::duration>(minFrameTime);
 
-				now = clock::now();
-				frameDuration = now - lastTime;
-
-				// busy waitで調整（より精密に）
-				while (frameDuration.count() < minFrameTime) {
-					now = clock::now();
-					frameDuration = now - lastTime;
+			// 余裕があるなら until で寝る（丸めロスなし）
+			if (now < nextTick) {
+				// 大半は sleep_until で待ち、最後のわずかな差だけ軽くスピン
+				// （OS 粒度が粗い環境に配慮）
+				const auto spinThreshold = microseconds(200); // 調整ポイント
+				const auto sleepUntilTime = nextTick - spinThreshold;
+				if (now < sleepUntilTime) {
+					std::this_thread::sleep_until(sleepUntilTime);
 				}
+				// 小さくスピン（or yield）
+				do {
+					std::this_thread::yield();
+					now = clock::now();
+				} while (now < nextTick);
+			}
+			else {
+				// すでに遅れている場合は何もしない（追いつく）
 			}
 		}
 
-		deltaTime = frameDuration.count();
+		// 経過時間を計算
+		const duration<double> frameDuration = now - lastTime;
+		double dt = frameDuration.count();
+
+		// スパイク対策のクランプ（必要に応じて調整）
+		constexpr double MIN_DT = 0.0;
+		constexpr double MAX_DT = 1.0 / 15.0; // 15 FPS 以下の巨大 dt は抑制
+		if (dt < MIN_DT) dt = MIN_DT;
+		if (dt > MAX_DT) dt = MAX_DT;
+
+		deltaTime = dt;
 		lastTime = now;
 
-		// FPS計測
+		// FPS 計測（移動平均の例）
 		frameCount++;
 		timeSinceLastFPSUpdate += deltaTime;
 
-		if (timeSinceLastFPSUpdate >= 1.0) {
-			fps = frameCount / timeSinceLastFPSUpdate;
+		// 0.25 秒ごとに更新し、EMA で滑らかに
+		constexpr double UPDATE_INTERVAL = 0.25;
+		if (timeSinceLastFPSUpdate >= UPDATE_INTERVAL) {
+			const double instFPS = frameCount / timeSinceLastFPSUpdate;
+			// 係数 0.25（お好みで）
+			fps = (fps == 0.0) ? instFPS : (fps * 0.75 + instFPS * 0.25);
 			frameCount = 0;
 			timeSinceLastFPSUpdate = 0.0;
 		}

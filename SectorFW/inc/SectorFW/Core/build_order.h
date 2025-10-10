@@ -19,7 +19,7 @@
 namespace SectorFW
 {
 
-    struct SoATransforms {
+    struct SoAPositions {
         const float* x; // [N]
         const float* y; // [N]
         const float* z; // [N]
@@ -34,7 +34,7 @@ namespace SectorFW
     }
 
     // dx^2 + dy^2 + dz^2（カメラ位置からの距離^2）
-    inline float Dist2(const SoATransforms& T, uint32_t i,
+    inline float Dist2(const SoAPositions& T, uint32_t i,
         float cx, float cy, float cz) noexcept {
         float dx = T.x[i] - cx;
         float dy = T.y[i] - cy;
@@ -44,7 +44,7 @@ namespace SectorFW
 
     // 近→遠の近似順で order を構築（安定）
     template<int B = 32>
-    void BuildNearToFar_Order_Buckets(const SoATransforms& T,
+    void BuildNearToFar_Order_Buckets(const SoAPositions& T,
         float cx, float cy, float cz,
         float near2, float far2,
         std::vector<uint32_t>& order)
@@ -86,7 +86,7 @@ namespace SectorFW
         return (uint16_t)v;
     }
 
-    static void BuildOrder_FixedRadix16(const SoATransforms& T,
+    static void BuildOrder_FixedRadix16(const SoAPositions& T,
         float cx, float cy, float cz,
         float near2, float far2,
         std::vector<uint32_t>& order)
@@ -163,7 +163,7 @@ namespace SectorFW
 
     struct KeyRow { float dist2; uint32_t row; };
 
-    static void BuildFrontK_Strict(const SoATransforms& T,
+    static void BuildFrontK_Strict(const SoAPositions& T,
         float cx, float cy, float cz,
         uint32_t K,
         std::vector<uint32_t>& order)

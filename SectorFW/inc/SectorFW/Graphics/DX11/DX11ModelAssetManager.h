@@ -43,8 +43,8 @@ namespace SectorFW
 
 			// ===== Occluder 構築設定 =====
 			bool  buildOccluders = true;    // インポート時にOccluder適性判定＋melt AABB生成を行う
-			float occScoreThreshold = 0.35f;// このスコア以上ならOccluder化（0..1）
-			int   meltResolution = 8;      // meltのボクセル解像度。小さくするほどボクセルが大きくなる（64 or 96 程度が実用。性能と品質のトレードオフ）
+			float occScoreThreshold = 0.5f;// このスコア以上ならOccluder化（0..1）
+			int   meltResolution = 16;      // meltのボクセル解像度。小さくするほどボクセルが大きくなる（64 or 96 程度が実用。性能と品質のトレードオフ）
 			float meltStopRatio = 0.3f;   // meltの停止しきい（小AABB生成を抑える目安。0.1～0.7）
 			float minWorldSizeM = 1.0f;    // 小さすぎるモデルはOccluder対象外（対角長[m]）
 			float minThicknessRatio = 0.01f;// 最小厚み比。これ未満は超薄板として減点

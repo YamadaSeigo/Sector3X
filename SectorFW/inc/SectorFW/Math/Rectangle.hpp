@@ -201,10 +201,11 @@ namespace SectorFW::Math {
     }
 
     // AABB 8頂点を一括で WVP 変換（row-major & 右掛け版）
+  // 変更: Z を追加で出力
     static inline void TransformAABBCorners8_AVX2(
         const SectorFW::Math::AABB<float, SectorFW::Math::Vec3f>& box,
         const SectorFW::Math::Matrix<4, 4, float>& M,
-        __m256& X, __m256& Y, __m256& W
+        __m256& X, __m256& Y, __m256& Z, __m256& W
     ) {
         const float lx = box.lb.x, ly = box.lb.y, lz = box.lb.z;
         const float ux = box.ub.x, uy = box.ub.y, uz = box.ub.z;
@@ -233,6 +234,10 @@ namespace SectorFW::Math {
             _mm256_fmadd_ps(vy, _mm256_set1_ps(m11),
                 _mm256_fmadd_ps(vz, _mm256_set1_ps(m21),
                     _mm256_mul_ps(vw, _mm256_set1_ps(m31)))));
+        __m256 rz = _mm256_fmadd_ps(vx, _mm256_set1_ps(m02),
+            _mm256_fmadd_ps(vy, _mm256_set1_ps(m12),
+                _mm256_fmadd_ps(vz, _mm256_set1_ps(m22),
+                    _mm256_mul_ps(vw, _mm256_set1_ps(m32)))));
         __m256 rw = _mm256_fmadd_ps(vx, _mm256_set1_ps(m03),
             _mm256_fmadd_ps(vy, _mm256_set1_ps(m13),
                 _mm256_fmadd_ps(vz, _mm256_set1_ps(m23),
@@ -241,7 +246,39 @@ namespace SectorFW::Math {
         // 列ベクトル左掛け/column-major の場合はここを書き換え
 #endif
 
-        X = rx; Y = ry; W = rw;
+        X = rx; Y = ry; Z = rz; W = rw;
+    }
+
+    struct Clip4 { float x, y, z, w; };
+
+    // f(c)=a*x + b*y + c*z + d*w の符号で内外判定（内側: f>=0）
+    // Left : x + w >= 0  -> {+1,0,0,+1}
+    // Right: x - w <= 0  -> {-1,0,0,+1} でも良いが上と対照で {+1,0,0,-1}
+    // Bottom:y + w >= 0  -> {0,+1,0,+1}
+    // Top  :y - w <= 0  -> {0,+1,0,-1}
+    // Near :z >= 0      -> {0,0,+1,0}
+    // （Far: z - w <= 0 -> {0,0,+1,-1} 必要なら）
+    struct ClipPlane { float a, b, c, d; };
+
+    inline float EvalPlane(const Clip4& v, const ClipPlane& P) {
+        return P.a * v.x + P.b * v.y + P.c * v.z + P.d * v.w;
+    }
+
+    inline bool IntersectEdgeWithPlane(const Clip4& A, const Clip4& B,
+        const ClipPlane& P, Clip4& out)
+    {
+        const float fa = EvalPlane(A, P);
+        const float fb = EvalPlane(B, P);
+        const bool ina = (fa >= 0.0f);
+        const bool inb = (fb >= 0.0f);
+        if (ina == inb) return false;           // 一方のみ内側のときだけ交点
+
+        const float t = fa / (fa - fb);         // 同次線形補間
+        out.x = A.x + (B.x - A.x) * t;
+        out.y = A.y + (B.y - A.y) * t;
+        out.z = A.z + (B.z - A.z) * t;
+        out.w = A.w + (B.w - A.w) * t;
+        return out.w != 0.0f;                   // 0除算ガード（必要なら閾値を）
     }
 
     // SIMD 版：AABB→NDC矩形 + wmin を取得
@@ -249,41 +286,129 @@ namespace SectorFW::Math {
         const SectorFW::Math::AABB<float, SectorFW::Math::Vec3f>& box,
         const SectorFW::Math::Matrix<4, 4, float>& worldViewProj
     ) {
-        NdcRectWithW out{};
-        out.valid = false;
+        NdcRectWithW out{}; out.valid = false;
 
-        // 退化チェック
         if (box.lb.x > box.ub.x || box.lb.y > box.ub.y || box.lb.z > box.ub.z) {
-            out.xmin = out.ymin = out.xmax = out.ymax = 0.0f;
-            out.wmin = 0.0f;
+            out = { 0,0,0,0, 0, false };
             return out;
         }
 
 #if defined(__AVX2__)
-        __m256 X, Y, W;
-        TransformAABBCorners8_AVX2(box, worldViewProj, X, Y, W);
+        __m256 Xv, Yv, Zv, Wv;
+        TransformAABBCorners8_AVX2(box, worldViewProj, Xv, Yv, Zv, Wv); // ← Z を出す版
 
-        // wmin は 8頂点の clip-space W の最小値（クランプしない）
-        const float w_min = (std::max)(hmin8(W), 1e-4f);
+        alignas(32) float X[8], Y[8], Z[8], W[8];
+        _mm256_store_ps(X, Xv); _mm256_store_ps(Y, Yv);
+        _mm256_store_ps(Z, Zv); _mm256_store_ps(W, Wv);
 
-        // 透視除算は安全のため W を微小値で下駄履かせ
-        //  (負の W があると NDC が膨らみ保守的になる = MOC 的には安全側)
-        __m256 eps = _mm256_set1_ps(1e-20f);
-        __m256 safeW = _mm256_max_ps(W, eps);
-        __m256 invW = _mm256_rcp_ps(safeW);
+        // --- Fast path: 8頂点だけで NDC 矩形 + wmin を取得 ---
+        float ndc_min_x = FLT_MAX, ndc_max_x = -FLT_MAX;
+        float ndc_min_y = FLT_MAX, ndc_max_y = -FLT_MAX;
+        float w_min = FLT_MAX;
+        uint8_t maskWpos = 0;
 
-        __m256 ndcX = _mm256_mul_ps(X, invW);
-        __m256 ndcY = _mm256_mul_ps(Y, invW);
+        for (int i = 0; i < 8; ++i) {
+            const float w = W[i];
+            w_min = (std::min)(w_min, w);
+            if (w > 0.0f) maskWpos |= (1u << i);
 
-        out.xmin = hmin8(ndcX);
-        out.xmax = hmax8(ndcX);
-        out.ymin = hmin8(ndcY);
-        out.ymax = hmax8(ndcY);
-        out.wmin = w_min;
+            const float invw = 1.0f / (std::max)(w, 1e-20f);
+            const float nx = X[i] * invw;
+            const float ny = Y[i] * invw;
+            ndc_min_x = (std::min)(ndc_min_x, nx);
+            ndc_max_x = (std::max)(ndc_max_x, nx);
+            ndc_min_y = (std::min)(ndc_min_y, ny);
+            ndc_max_y = (std::max)(ndc_max_y, ny);
+        }
 
-        // valid 判定：前方点が一つはある（W>0 が存在）かつ矩形が非負
-        const int frontMask = _mm256_movemask_ps(_mm256_cmp_ps(W, _mm256_set1_ps(0.0f), _CMP_GT_OQ));
-        out.valid = (frontMask != 0) && (out.xmin <= out.xmax) && (out.ymin <= out.ymax);
+        // 画面内判定の“ゆとり”（端にかなり近い時だけ交点に進む）
+        constexpr float EDGE_EPS = 0.02f;
+
+        bool clearlyInside =
+            (ndc_min_x > -1.0f + EDGE_EPS) &&
+            (ndc_max_x < 1.0f - EDGE_EPS) &&
+            (ndc_min_y > -1.0f + EDGE_EPS) &&
+            (ndc_max_y < 1.0f - EDGE_EPS);
+
+        if (maskWpos != 0 && clearlyInside) {
+            out.xmin = ndc_min_x; out.xmax = ndc_max_x;
+            out.ymin = ndc_min_y; out.ymax = ndc_max_y;
+            out.wmin = (std::max)(w_min, 1e-6f);
+            out.valid = true;
+            return out; // ← ここで終了（交点計算しない）
+        }
+
+        // --- Slow path: 端面を“またいでいる”面だけ交点追加 ---
+        // 面の符号 f = a*x + b*y + c*z + d*w
+        auto fL = [&](int i) { return  X[i] + W[i]; };   // Left:  x + w >= 0
+        auto fR = [&](int i) { return  X[i] - W[i]; };   // Right: x - w <= 0
+        auto fB = [&](int i) { return  Y[i] + W[i]; };   // Bottom:y + w >= 0
+        auto fT = [&](int i) { return  Y[i] - W[i]; };   // Top:   y - w <= 0
+        auto fN = [&](int i) { return  Z[i]; };          // Near:  z >= 0
+
+        auto buildMask = [&](auto f)->uint8_t {
+            uint8_t m = 0; for (int i = 0; i < 8; ++i) if (f(i) >= 0.0f) m |= (1u << i); return m;
+            };
+        uint8_t mL = buildMask(fL), mR = buildMask(fR), mB = buildMask(fB), mT = buildMask(fT), mN = buildMask(fN);
+
+        auto needPlane = [&](uint8_t m) { return m != 0 && m != 0xFF; }; // 内外が混在＝“またいでいる”
+
+        // 初期候補: z>=0 & w>0 の頂点だけ
+        struct Clip4 { float x, y, z, w; };
+        Clip4 cand[32]; int n = 0;
+        for (int i = 0; i < 8; ++i) if (Z[i] >= 0.0f && W[i] > 0.0f) cand[n++] = { X[i],Y[i],Z[i],W[i] };
+
+        // 交点ユーティリティ（同次線形補間）
+        auto intersectPlane = [](const Clip4& A, const Clip4& B, float fa, float fb)->Clip4 {
+            const float t = fa / (fa - fb);
+            return { A.x + (B.x - A.x) * t, A.y + (B.y - A.y) * t, A.z + (B.z - A.z) * t, A.w + (B.w - A.w) * t };
+            };
+
+        // 対象面だけ処理
+        auto addIntersectionsForPlane = [&](auto fPlane) {
+            for (int e = 0; e < 12; ++e) {
+                int i0 = kEdges[e][0], i1 = kEdges[e][1];
+                float fa = fPlane(i0), fb = fPlane(i1);
+                bool ina = (fa >= 0.0f), inb = (fb >= 0.0f);
+                if (ina == inb) continue;
+                Clip4 A{ X[i0],Y[i0],Z[i0],W[i0] };
+                Clip4 B{ X[i1],Y[i1],Z[i1],W[i1] };
+                Clip4 I = intersectPlane(A, B, fa, fb);
+                if (I.w > 0.0f) { if (n < (int)std::size(cand)) cand[n++] = I; }
+            }
+            };
+
+        if (needPlane(mL)) addIntersectionsForPlane(fL);
+        if (needPlane(mR)) addIntersectionsForPlane(fR);
+        if (needPlane(mB)) addIntersectionsForPlane(fB);
+        if (needPlane(mT)) addIntersectionsForPlane(fT);
+        if (needPlane(mN)) addIntersectionsForPlane(fN);
+        // （Far が必要なら同様に）
+
+        if (n == 0) return out;
+
+        // 交点を含めて最終 NDC 矩形 + wmin
+        float minx = FLT_MAX, maxx = -FLT_MAX, miny = FLT_MAX, maxy = -FLT_MAX, wmin = FLT_MAX;
+        bool anyFront = false;
+        for (int i = 0; i < n; ++i) {
+            const Clip4& c = cand[i];
+            if (c.w <= 0.0f) continue;
+            anyFront = true;
+            wmin = (std::min)(wmin, c.w);
+            const float invw = 1.0f / (std::max)(c.w, 1e-20f);
+            const float nx = c.x * invw, ny = c.y * invw;
+            minx = (std::min)(minx, nx); maxx = (std::max)(maxx, nx);
+            miny = (std::min)(miny, ny); maxy = (std::max)(maxy, ny);
+        }
+        if (!anyFront) return out;
+
+        out.xmin = (std::max)(minx, -1.0f);
+        out.ymin = (std::max)(miny, -1.0f);
+        out.xmax = (std::min)(maxx, 1.0f);
+        out.ymax = (std::min)(maxy, 1.0f);
+        out.wmin = (std::max)(wmin, 1e-6f);
+        out.valid = (out.xmin < out.xmax) && (out.ymin < out.ymax);
+        return out;
 #else
         // SSE/スカラ fallback
         const float lx = box.lb.x, ly = box.lb.y, lz = box.lb.z;
@@ -321,4 +446,5 @@ namespace SectorFW::Math {
 #endif
         return out;
     }
+
 } // namespace SectorFW::Math
