@@ -248,7 +248,8 @@ namespace SectorFW::Math {
 	// 安全な逆平方根（精度優先）
 	//-------------------------------------
 	template<std::floating_point T>
-	[[nodiscard]] inline T rsqrt(T x) noexcept {
+	inline T rsqrt(T x) noexcept {
+		if (x <= T(0)) return std::numeric_limits<T>::infinity(); // もしくは 0, または小さなepsilonで保護
 		return T(1) / std::sqrt(x);
 	}
 

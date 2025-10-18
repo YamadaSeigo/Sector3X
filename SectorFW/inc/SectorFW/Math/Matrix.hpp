@@ -1,8 +1,8 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Matrix.hpp
- * @brief s—ñ‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
- * @author seigo_t03b63m
- * @date   July 2025
+ * @brief  è¡Œåˆ—ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ã«çµ±ä¸€ï¼‰
+ * @author seigo
+ * @date   Revised: Oct 2025
  *********************************************************************/
 
 #pragma once
@@ -11,1058 +11,1839 @@
 #include <cassert>
 #include <cmath>
 #include <cstdint>
+#include <type_traits>
 
 #if defined(_MSC_VER)
-#include <immintrin.h> // SSE2/AVX/FMA (MSVC x64 ‚Å‚ÍSSE2‚Íí‚É—LŒø)
+#include <immintrin.h> // SSE2/AVX/FMA
 #elif defined(__SSE2__)
 #include <immintrin.h>
 #endif
 
-#include "Vector.hpp"
-#include "Quaternion.hpp"
-#include "AABB.hpp"
+#include "Vector.hpp"      // Vec2/3/4
+#include "Quaternion.hpp"  // Quat
+#include "AABB.hpp"        // AABB<Vec3<T>>
 
-namespace SectorFW
-{
-	namespace Math
-	{
-		//==============================
-		// æséŒ¾: æZƒJ[ƒlƒ‹
-		//==============================
-		template<size_t R, size_t K, size_t C, typename T>
-		struct MatMulKernel;
+ //==============================================================
+ // æœ¬ãƒ˜ãƒƒãƒ€ã®å‰æï¼ˆå¿…ãšå®ˆã‚‹ï¼‰
+ // - ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸: row-majorï¼ˆm[r][c]ï¼‰
+ // - æ¼”ç®—è¦ç´„  : åˆ—ãƒ™ã‚¯ãƒˆãƒ« p' = M * p
+ // - å¹³è¡Œç§»å‹•  : æœ€å³åˆ—ï¼ˆm[0..2][3]ï¼‰
+ //==============================================================
 
-		//==============================
-		// s—ñ (row-major •Û‘¶)
-		//==============================
-		template <size_t Rows, size_t Cols, typename T>
-		struct Matrix {
-			static constexpr size_t kRows = Rows;
-			static constexpr size_t kCols = Cols;
+namespace SectorFW {
+    namespace Math {
 
-			std::array<std::array<T, Cols>, Rows> m{};
+        //==============================
+        // å…ˆè¡Œå®£è¨€: ä¹—ç®—ã‚«ãƒ¼ãƒãƒ«
+        //==============================
+        template<size_t R, size_t K, size_t C, typename T>
+        struct MatMulKernel;
 
-			static Matrix Identity() noexcept {
-				static_assert(Rows == Cols, "Identity matrix must be square.");
-				Matrix I{};
-				for (size_t i = 0; i < Rows; ++i) I.m[i][i] = T(1);
-				return I;
-			}
+        //==============================
+        // è¡Œåˆ—ï¼ˆæ±ç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ, row-majorï¼‰
+        //==============================
+        template <size_t Rows, size_t Cols, typename T>
+        struct Matrix {
+            static constexpr size_t kRows = Rows;
+            static constexpr size_t kCols = Cols;
 
-			// “Yš
-			inline std::array<T, Cols>& operator[](size_t r) noexcept { return m[r]; }
-			inline const std::array<T, Cols>& operator[](size_t r) const noexcept { return m[r]; }
+            std::array<std::array<T, Cols>, Rows> m{};
 
-			// ˜A‘±ƒ|ƒCƒ“ƒ^iSIMDƒwƒ‹ƒp[—pj
-			inline T* data()       noexcept { return &m[0][0]; }
-			inline const T* data() const noexcept { return &m[0][0]; }
-			inline const T* ToPointer() const noexcept { return &m[0][0]; } // T* ‚ÅˆÀ‘S
+            static constexpr Matrix Identity() noexcept {
+                static_assert(Rows == Cols, "Identity matrix must be square.");
+                Matrix I{};
+                for (size_t i = 0; i < Rows; ++i) I.m[i][i] = T(1);
+                return I;
+            }
 
-			// s—ñÏ (ƒfƒBƒXƒpƒbƒ`)
-			template <size_t OtherCols>
-			Matrix<Rows, OtherCols, T>
-				operator*(const Matrix<Cols, OtherCols, T>& rhs) const noexcept {
-				return MatMulKernel<Rows, Cols, OtherCols, T>::eval(*this, rhs);
-			}
-		};
+            inline std::array<T, Cols>& operator[](size_t r) noexcept { return m[r]; }
+            inline const std::array<T, Cols>& operator[](size_t r) const noexcept { return m[r]; }
 
-		// Œ^ƒGƒCƒŠƒAƒX
-		using Matrix4x4f = Matrix<4, 4, float>;
-		using Matrix4x4d = Matrix<4, 4, double>;
+            inline T* data() noexcept { return &m[0][0]; }
+            inline const T* data() const noexcept { return &m[0][0]; }
+            inline const T* ToPointer() const noexcept { return &m[0][0]; }
 
-		//=== 4x4 float ê—p: 16B ®—ñ + ˜A‘±ƒƒ‚ƒŠ ===
+            template <size_t OtherCols>
+            Matrix<Rows, OtherCols, T>
+                operator*(const Matrix<Cols, OtherCols, T>& rhs) const noexcept {
+                return MatMulKernel<Rows, Cols, OtherCols, T>::eval(*this, rhs);
+            }
+        };
+
+        // å‹ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+        using Matrix4x4f = Matrix<4, 4, float>;
+        using Matrix4x4d = Matrix<4, 4, double>;
+
+        using Matrix3x4f = Matrix<3, 4, float>;
+
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		template<>
-		struct alignas(16) Matrix<4, 4, float> {
-			static constexpr size_t kRows = 4;
-			static constexpr size_t kCols = 4;
-			// C ”z—ñ‚Å˜A‘±ƒƒ‚ƒŠis‚²‚Æ 16B ‹«ŠE‚ğ–‚½‚·j
-			float m[4][4];
+        //==============================
+        // 3x4 float å°‚ç”¨: 16B æ•´åˆ— + é€£ç¶šãƒ¡ãƒ¢ãƒª
+        //==============================
+        template<>
+        struct alignas(16) Matrix<3, 4, float> {
+            static constexpr size_t kRows = 3;
+            static constexpr size_t kCols = 4;
+            float m[3][4];
 
-			static Matrix Identity() noexcept {
-				Matrix I{};
-				I.m[0][0] = 1.f; I.m[1][1] = 1.f; I.m[2][2] = 1.f; I.m[3][3] = 1.f;
-				return I;
-			}
-			// “YšŒİŠ·
-			inline float* operator[](size_t r) noexcept { return m[r]; }
-			inline const float* operator[](size_t r) const noexcept { return m[r]; }
-			// ˜A‘±ƒ|ƒCƒ“ƒ^
-			inline float* data()       noexcept { return &m[0][0]; }
-			inline const float* data() const noexcept { return &m[0][0]; }
-			inline const float* ToPointer() const noexcept { return &m[0][0]; }
+            static constexpr Matrix Identity() noexcept {
+                Matrix I{};
+                I.m[0][0] = 1.f; I.m[1][1] = 1.f; I.m[2][2] = 1.f;
+                return I;
+            }
+            inline float* operator[](size_t r) noexcept { return m[r]; }
+            inline const float* operator[](size_t r) const noexcept { return m[r]; }
 
-			// s—ñÏƒfƒBƒXƒpƒbƒ`iŠù‘¶‚Ì“Á‰»‚ªŒÄ‚Î‚ê‚éj
-			template <size_t OtherCols>
-			Matrix<4, OtherCols, float>
-				operator*(const Matrix<4, OtherCols, float>& rhs) const noexcept {
-				return MatMulKernel<4, 4, OtherCols, float>::eval(*this, rhs);
-			}
-		};
-		static_assert(alignof(Matrix4x4f) >= 16, "Matrix4x4f must be 16B aligned");
-#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+            inline float* data() noexcept { return &m[0][0]; }
+            inline const float* data() const noexcept { return &m[0][0]; }
+            inline const float* ToPointer() const noexcept { return &m[0][0]; }
 
-		//==============================
-		// ƒXƒJƒ‰[”Ä—pƒJ[ƒlƒ‹
-		//==============================
-		template<size_t R, size_t K, size_t C, typename T>
-		struct MatMulKernel {
-			static Matrix<R, C, T> eval(const Matrix<R, K, T>& A, const Matrix<K, C, T>& B) noexcept {
-				Matrix<R, C, T> out{};
-				for (size_t i = 0; i < R; ++i) {
-					for (size_t j = 0; j < C; ++j) {
-						T s = T(0);
-						for (size_t k = 0; k < K; ++k) s += A.m[i][k] * B.m[k][j];
-						out.m[i][j] = s;
-					}
-				}
-				return out;
-			}
-		};
+            template <size_t OtherCols>
+            Matrix<3, OtherCols, float>
+                operator*(const Matrix<3, OtherCols, float>& rhs) const noexcept {
+                return MatMulKernel<3, 4, OtherCols, float>::eval(*this, rhs);
+            }
+        };
+        static_assert(alignof(Matrix3x4f) >= 16, "Matrix4x4f must be 16B aligned");
 
-		//==============================
-		// 4x4 float SIMD “Á‰» (SSE2+)
-		//==============================
+        //==============================
+        // 4x4 float å°‚ç”¨: 16B æ•´åˆ— + é€£ç¶šãƒ¡ãƒ¢ãƒª
+        //==============================
+        template<>
+        struct alignas(16) Matrix<4, 4, float> {
+            static constexpr size_t kRows = 4;
+            static constexpr size_t kCols = 4;
+            float m[4][4];
+
+            static constexpr Matrix Identity() noexcept {
+                Matrix I{};
+                I.m[0][0] = 1.f; I.m[1][1] = 1.f; I.m[2][2] = 1.f; I.m[3][3] = 1.f;
+                return I;
+            }
+            inline float* operator[](size_t r) noexcept { return m[r]; }
+            inline const float* operator[](size_t r) const noexcept { return m[r]; }
+
+            inline float* data() noexcept { return &m[0][0]; }
+            inline const float* data() const noexcept { return &m[0][0]; }
+            inline const float* ToPointer() const noexcept { return &m[0][0]; }
+
+            template <size_t OtherCols>
+            Matrix<4, OtherCols, float>
+                operator*(const Matrix<4, OtherCols, float>& rhs) const noexcept {
+                return MatMulKernel<4, 4, OtherCols, float>::eval(*this, rhs);
+            }
+        };
+        static_assert(alignof(Matrix4x4f) >= 16, "Matrix4x4f must be 16B aligned");
+#endif
+
+        //==============================
+        // ã‚¹ã‚«ãƒ©ãƒ¼æ±ç”¨ã‚«ãƒ¼ãƒãƒ«
+        //==============================
+        template<size_t R, size_t K, size_t C, typename T>
+        struct MatMulKernel {
+            static Matrix<R, C, T> eval(const Matrix<R, K, T>& A, const Matrix<K, C, T>& B) noexcept {
+                Matrix<R, C, T> out{};
+                for (size_t i = 0; i < R; ++i) {
+                    for (size_t j = 0; j < C; ++j) {
+                        T s = T(0);
+                        for (size_t k = 0; k < K; ++k) s += A.m[i][k] * B.m[k][j];
+                        out.m[i][j] = s;
+                    }
+                }
+                return out;
+            }
+        };
+
+        //==============================
+        // 4x4 float SIMD ç‰¹åŒ– (SSE2+)
+        //==============================
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		namespace detail {
-			static inline __m128 fmadd_ps(__m128 a, __m128 b, __m128 c) noexcept {
-#if defined(__FMA__) || (defined(_MSC_VER) && !defined(_M_IX86) /* x64 */)
-				// MSVC x64 ‚Å‚Í /arch:AVX2 + FMA —LŒø‚É _mm_fmadd_ps g—p‰Â
-#if defined(__FMA__)
-				return _mm_fmadd_ps(a, b, c);
+        namespace detail {
+            static inline __m128 fmadd_ps(__m128 a, __m128 b, __m128 c) noexcept {
+#if defined(__FMA__) || defined(__AVX2__) || defined(_M_FMA) || defined(_M_AVX2)
+                // FMA ãŒä½¿ãˆã‚‹å ´åˆã¯ 1 å‘½ä»¤
+                return _mm_fmadd_ps(a, b, c);  // a*b + c
 #else
-	// FMA–½—ß‚ªg‚¦‚È‚¢ê‡‚Í MUL+ADD
-				return _mm_add_ps(_mm_mul_ps(a, b), c);
-#endif // defined(__FMA__)
+                return _mm_add_ps(_mm_mul_ps(a, b), c);
+#endif
+            }
+        }
+
+        // C = A(4x4) * B(4x4)  ï¼ˆrow-major ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸ã€æ¼”ç®—ã¯åˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ï¼‰
+        template<>
+        struct MatMulKernel<4, 4, 4, float> {
+            static Matrix4x4f eval(const Matrix4x4f& A, const Matrix4x4f& B) noexcept {
+                Matrix4x4f C{};
+
+                const __m128 b0 = _mm_loadu_ps(B.m[0]);
+                const __m128 b1 = _mm_loadu_ps(B.m[1]);
+                const __m128 b2 = _mm_loadu_ps(B.m[2]);
+                const __m128 b3 = _mm_loadu_ps(B.m[3]);
+
+                for (int i = 0; i < 4; ++i) {
+                    const __m128 a0 = _mm_set1_ps(A.m[i][0]);
+                    const __m128 a1 = _mm_set1_ps(A.m[i][1]);
+                    const __m128 a2 = _mm_set1_ps(A.m[i][2]);
+                    const __m128 a3 = _mm_set1_ps(A.m[i][3]);
+
+                    __m128 r = _mm_mul_ps(a0, b0);
+                    r = detail::fmadd_ps(a1, b1, r);
+                    r = detail::fmadd_ps(a2, b2, r);
+                    r = detail::fmadd_ps(a3, b3, r);
+
+                    _mm_storeu_ps(C.m[i], r);
+                }
+                return C;
+            }
+        };
+
+#endif // SSE2
+
+        //==============================
+        // è»¢ç½®
+        //==============================
+        template <size_t R, size_t C, typename T>
+        constexpr Matrix<C, R, T> TransposeMatrix(const Matrix<R, C, T>& M) noexcept {
+            Matrix<C, R, T> Rt{};
+            for (size_t i = 0; i < R; ++i) for (size_t j = 0; j < C; ++j) Rt.m[j][i] = M.m[i][j];
+            return Rt;
+        }
+
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+        inline Matrix4x4f TransposeMatrix(const Matrix4x4f& M) noexcept {
+            Matrix4x4f Rt{};
+            __m128 r0 = _mm_loadu_ps(M.m[0]);
+            __m128 r1 = _mm_loadu_ps(M.m[1]);
+            __m128 r2 = _mm_loadu_ps(M.m[2]);
+            __m128 r3 = _mm_loadu_ps(M.m[3]);
+            _MM_TRANSPOSE4_PS(r0, r1, r2, r3);
+            _mm_storeu_ps(Rt.m[0], r0);
+            _mm_storeu_ps(Rt.m[1], r1);
+            _mm_storeu_ps(Rt.m[2], r2);
+            _mm_storeu_ps(Rt.m[3], r3);
+            return Rt;
+        }
+#endif
+
+        //==============================
+        // ãƒ™ã‚¯ãƒˆãƒ«ã¨ã®ç©ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ï¼‰
+        //==============================
+        template<typename T>
+        inline Vec4<T> operator*(const Matrix<4, 4, T>& M, const Vec4<T>& v) noexcept {
+            Vec4<T> out{};
+            out.x = M.m[0][0] * v.x + M.m[0][1] * v.y + M.m[0][2] * v.z + M.m[0][3] * v.w;
+            out.y = M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z + M.m[1][3] * v.w;
+            out.z = M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z + M.m[2][3] * v.w;
+            out.w = M.m[3][0] * v.x + M.m[3][1] * v.y + M.m[3][2] * v.z + M.m[3][3] * v.w;
+            return out;
+        }
+
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+        inline Vec4f operator*(const Matrix4x4f& M, const Vec4f& v) noexcept {
+            // åˆ—ãƒ™ã‚¯ãƒˆãƒ« = åˆ—ã®ç·šå½¢çµåˆï¼ˆåˆ—ã‚’å¾—ã‚‹ãŸã‚ã«è»¢ç½®ï¼‰
+            __m128 r0 = _mm_loadu_ps(M.m[0]);
+            __m128 r1 = _mm_loadu_ps(M.m[1]);
+            __m128 r2 = _mm_loadu_ps(M.m[2]);
+            __m128 r3 = _mm_loadu_ps(M.m[3]);
+            _MM_TRANSPOSE4_PS(r0, r1, r2, r3); // r0..r3 ãŒåˆ—
+
+            const __m128 vx = _mm_set1_ps(v.x);
+            const __m128 vy = _mm_set1_ps(v.y);
+            const __m128 vz = _mm_set1_ps(v.z);
+            const __m128 vw = _mm_set1_ps(v.w);
+
+            __m128 out = _mm_mul_ps(vx, r0);
+            out = detail::fmadd_ps(vy, r1, out);
+            out = detail::fmadd_ps(vz, r2, out);
+            out = detail::fmadd_ps(vw, r3, out);
+
+            alignas(16) float t[4];
+            _mm_storeu_ps(t, out);
+            return Vec4f{ t[0],t[1],t[2],t[3] };
+        }
+#endif
+
+        //ï¼ˆè¡Œãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ã® v*M ã¯ä»Šå›ã®çµ±ä¸€ã§ã¯ä½¿ã‚ãªã„ãŸã‚æœªæä¾›ï¼å¿…è¦ãªã‚‰åˆ¥åã§å®Ÿè£…ï¼‰
+
+        //==============================
+        // AABB å¤‰æ›ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„å¯¾å¿œï¼‰
+        //==============================
+        template<typename T, typename VecT>
+        inline AABB<T, VecT> operator*(const Matrix<4, 4, T>& M, const AABB<T, VecT>& box) noexcept {
+            // ADL å®‰å…¨ãª absï¼ˆfloat/double ä¸¡å¯¾å¿œï¼‰
+            using std::abs;
+
+            static_assert(std::is_same_v<VecT, Vec3<T>>, "This overload expects Vec3<T> AABB.");
+
+            const VecT c = (box.lb + box.ub) * T(0.5);
+            const VecT e = (box.ub - box.lb) * T(0.5);
+
+            // c' = R*c + t  ï¼ˆå³åˆ—ãŒ tï¼‰
+            VecT c2;
+            c2.x = M.m[0][0] * c.x + M.m[0][1] * c.y + M.m[0][2] * c.z + M.m[0][3];
+            c2.y = M.m[1][0] * c.x + M.m[1][1] * c.y + M.m[1][2] * c.z + M.m[1][3];
+            c2.z = M.m[2][0] * c.x + M.m[2][1] * c.y + M.m[2][2] * c.z + M.m[2][3];
+
+            const T ex = abs(e.x), ey = abs(e.y), ez = abs(e.z);
+
+            // e' = |R| * e  ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ã¯ã€Œè¡Œã®çµ¶å¯¾å€¤ã€ã‚’ä½¿ã†ï¼‰
+            VecT e2;
+            e2.x = ex * abs(M.m[0][0]) + ey * abs(M.m[0][1]) + ez * abs(M.m[0][2]);
+            e2.y = ex * abs(M.m[1][0]) + ey * abs(M.m[1][1]) + ez * abs(M.m[1][2]);
+            e2.z = ex * abs(M.m[2][0]) + ey * abs(M.m[2][1]) + ez * abs(M.m[2][2]);
+
+            AABB<T, VecT> out;
+            out.lb = c2 - e2;
+            out.ub = c2 + e2;
+            return out;
+        }
+
+        // C = A(4x4) * B(3x4)  ã‚’ 4x4 ã«å‡ºåŠ›ï¼ˆB ã®ä¸‹æ®µã¯ [0,0,0,1] ã¨ä»®å®šï¼‰
+        static inline Matrix4x4f Mul4x4x3x4_SSE_rowcombine(const Matrix4x4f& A,
+            const Matrix3x4f& B) noexcept
+        {
+            Matrix4x4f C;
+
+            // B ã®ã€Œè¡Œã€ã‚’ãã®ã¾ã¾ãƒ­ãƒ¼ãƒ‰
+            const __m128 b0 = _mm_loadu_ps(&B.m[0][0]); // [r01 r02 r03 t01]
+            const __m128 b1 = _mm_loadu_ps(&B.m[1][0]); // [r11 r12 r13 t02]
+            const __m128 b2 = _mm_loadu_ps(&B.m[2][0]); // [r21 r22 r23 t03]
+            const __m128 b3 = _mm_set_ps(1.f, 0.f, 0.f, 0.f); // ä¸‹æ®µ = [0,0,0,1] ã‚’ "è¡Œ" ã¨ã—ã¦
+
+            for (int i = 0; i < 4; ++i) {
+                const __m128 a0 = _mm_set1_ps(A.m[i][0]);
+                const __m128 a1 = _mm_set1_ps(A.m[i][1]);
+                const __m128 a2 = _mm_set1_ps(A.m[i][2]);
+                const __m128 a3 = _mm_set1_ps(A.m[i][3]);
+
+                __m128 r = _mm_mul_ps(a0, b0);
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                r = _mm_fmadd_ps(a1, b1, r);
+                r = _mm_fmadd_ps(a2, b2, r);
+                r = _mm_fmadd_ps(a3, b3, r);
 #else
-				return _mm_add_ps(_mm_mul_ps(a, b), c);
-#endif // defined(__FMA__) || (defined(_MSC_VER) && !defined(_M_IX86) /* x64 */
-			}
-		} // namespace detail
-
-		// C = A(4x4) * B(4x4)  row-major, —ñƒxƒNƒgƒ‹‹K–ñ
-		template<>
-		struct MatMulKernel<4, 4, 4, float> {
-			static Matrix4x4f eval(const Matrix4x4f& A, const Matrix4x4f& B) noexcept {
-				Matrix4x4f C{};
-
-				// B ‚Ì 4 s‚ğƒxƒNƒgƒ‹‚Åƒ[ƒhiŠes‚ª˜A‘±j
-				const __m128 b0 = _mm_loadu_ps(B.m[0]);
-				const __m128 b1 = _mm_loadu_ps(B.m[1]);
-				const __m128 b2 = _mm_loadu_ps(B.m[2]);
-				const __m128 b3 = _mm_loadu_ps(B.m[3]);
-
-				for (int i = 0; i < 4; ++i) {
-					const __m128 a0 = _mm_set1_ps(A.m[i][0]);
-					const __m128 a1 = _mm_set1_ps(A.m[i][1]);
-					const __m128 a2 = _mm_set1_ps(A.m[i][2]);
-					const __m128 a3 = _mm_set1_ps(A.m[i][3]);
-
-					__m128 r = _mm_mul_ps(a0, b0);
-					r = detail::fmadd_ps(a1, b1, r);
-					r = detail::fmadd_ps(a2, b2, r);
-					r = detail::fmadd_ps(a3, b3, r);
-
-					_mm_storeu_ps(C.m[i], r);
-				}
-				return C;
-			}
-		};
-#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-
-		//==============================
-		// “]’u
-		//==============================
-		template <size_t R, size_t C, typename T>
-		Matrix<C, R, T> TransposeMatrix(const Matrix<R, C, T>& M) noexcept {
-			Matrix<C, R, T> Rm{};
-			for (size_t i = 0; i < R; ++i)
-				for (size_t j = 0; j < C; ++j)
-					Rm.m[j][i] = M.m[i][j];
-			return Rm;
-		}
-
-#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		inline Matrix4x4f TransposeMatrix(const Matrix4x4f& M) noexcept {
-			Matrix4x4f Rt{};
-			__m128 r0 = _mm_loadu_ps(M.m[0]);
-			__m128 r1 = _mm_loadu_ps(M.m[1]);
-			__m128 r2 = _mm_loadu_ps(M.m[2]);
-			__m128 r3 = _mm_loadu_ps(M.m[3]);
-			_MM_TRANSPOSE4_PS(r0, r1, r2, r3);
-			_mm_storeu_ps(Rt.m[0], r0);
-			_mm_storeu_ps(Rt.m[1], r1);
-			_mm_storeu_ps(Rt.m[2], r2);
-			_mm_storeu_ps(Rt.m[3], r3);
-			return Rt;
-		}
-#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-
-		//==============================
-		// Vec4 ‚Æ‚ÌŠ|‚¯Zi—ñƒxƒNƒgƒ‹‹K–ñj
-		//==============================
-		template<typename T>
-		inline Vec4<T> operator*(const Matrix<4, 4, T>& M, const Vec4<T>& v) noexcept {
-			// ƒXƒJƒ‰[”Ä—piSSE ‚È‚µŠÂ‹«‚àŠÜ‚ß‚Ä“®‚­j
-			Vec4<T> out{};
-			out.x = M.m[0][0] * v.x + M.m[0][1] * v.y + M.m[0][2] * v.z + M.m[0][3] * v.w;
-			out.y = M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z + M.m[1][3] * v.w;
-			out.z = M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z + M.m[2][3] * v.w;
-			out.w = M.m[3][0] * v.x + M.m[3][1] * v.y + M.m[3][2] * v.z + M.m[3][3] * v.w;
-			return out;
-		}
-
-#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		// SIMD ”ÅiMatrix4x4f ~ Vec4fj
-		inline Vec4f operator*(const Matrix4x4f& M, const Vec4f& v) noexcept {
-			// —ñƒxƒNƒgƒ‹‹K–ñF out = v.x*col0 + v.y*col1 + v.z*col2 + v.w*col3
-			// s—ñ‚Í row-major ‚È‚Ì‚ÅAˆê“x“]’u‚µ‚Ä—ñ‚ğæ‚èo‚·‚Ì‚ª‘¬‚¢
-			__m128 r0 = _mm_loadu_ps(M.m[0]); // s0
-			__m128 r1 = _mm_loadu_ps(M.m[1]); // s1
-			__m128 r2 = _mm_loadu_ps(M.m[2]); // s2
-			__m128 r3 = _mm_loadu_ps(M.m[3]); // s3
-			_MM_TRANSPOSE4_PS(r0, r1, r2, r3); // r0..r3 ‚ª—ñicol0..col3j
-
-			const __m128 vx = _mm_set1_ps(v.x);
-			const __m128 vy = _mm_set1_ps(v.y);
-			const __m128 vz = _mm_set1_ps(v.z);
-			const __m128 vw = _mm_set1_ps(v.w);
-
-			__m128 out = _mm_mul_ps(vx, r0);
-			out = detail::fmadd_ps(vy, r1, out);
-			out = detail::fmadd_ps(vz, r2, out);
-			out = detail::fmadd_ps(vw, r3, out);
-
-			alignas(16) float tmp[4];
-			_mm_storeu_ps(tmp, out);
-			return Vec4f{ tmp[0], tmp[1], tmp[2], tmp[3] };
-		}
-#endif // SIMD
-
-		// ƒXƒJƒ‰[”Ä—p
-		template<typename T>
-		inline Vec4<T> operator*(const Vec4<T>& v, const Matrix<4, 4, T>& M) noexcept {
-			// v*M = v.x*row0 + v.y*row1 + v.z*row2 + v.w*row3
-			Vec4<T> out{};
-			out.x = v.x * M.m[0][0] + v.y * M.m[1][0] + v.z * M.m[2][0] + v.w * M.m[3][0];
-			out.y = v.x * M.m[0][1] + v.y * M.m[1][1] + v.z * M.m[2][1] + v.w * M.m[3][1];
-			out.z = v.x * M.m[0][2] + v.y * M.m[1][2] + v.z * M.m[2][2] + v.w * M.m[3][2];
-			out.w = v.x * M.m[0][3] + v.y * M.m[1][3] + v.z * M.m[2][3] + v.w * M.m[3][3];
-			return out;
-		}
-
-#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		// SIMDifloat ê—pj
-		inline Vec4f operator*(const Vec4f& v, const Matrix4x4f& M) noexcept {
-			// s—DæFŠes‚ª˜A‘±‚È‚Ì‚Å‚»‚Ì‚Ü‚Üg‚¦‚éi“]’u•s—vj
-			const __m128 r0 = _mm_loadu_ps(M.m[0]); // row0
-			const __m128 r1 = _mm_loadu_ps(M.m[1]); // row1
-			const __m128 r2 = _mm_loadu_ps(M.m[2]); // row2
-			const __m128 r3 = _mm_loadu_ps(M.m[3]); // row3
-
-			const __m128 vx = _mm_set1_ps(v.x);
-			const __m128 vy = _mm_set1_ps(v.y);
-			const __m128 vz = _mm_set1_ps(v.z);
-			const __m128 vw = _mm_set1_ps(v.w);
-
-			__m128 out = _mm_mul_ps(vx, r0);
-			out = detail::fmadd_ps(vy, r1, out);
-			out = detail::fmadd_ps(vz, r2, out);
-			out = detail::fmadd_ps(vw, r3, out);
-
-			alignas(16) float t[4];
-			_mm_storeu_ps(t, out);
-			return Vec4f{ t[0], t[1], t[2], t[3] };
-		}
-#endif //SIMD
-
-		template<typename T, typename VecT>
-		inline AABB<T, VecT> operator*(const AABB<T, VecT>& box, const Matrix<4, 4, T>& M) noexcept {
-			static_assert(std::is_same_v<VecT, Vec3<T>>, "This overload expects Vec3<T> AABB.");
-
-			// ’†S‚Æ”¼Œa
-			const VecT c = (box.lb + box.ub) * T(0.5);
-			const VecT e = (box.ub - box.lb) * T(0.5);
-
-			// ’†S‚Ì•ÏŠ·: c' = c * R + t   isƒxƒNƒgƒ‹‹K–ñj
-			VecT c2;
-			c2.x = c.x * M.m[0][0] + c.y * M.m[1][0] + c.z * M.m[2][0] + M.m[3][0];
-			c2.y = c.x * M.m[0][1] + c.y * M.m[1][1] + c.z * M.m[2][1] + M.m[3][1];
-			c2.z = c.x * M.m[0][2] + c.y * M.m[1][2] + c.z * M.m[2][2] + M.m[3][2];
-
-			// ”¼Œa‚Ì•ÏŠ·: e' = |A^T| * e  isƒxƒNƒgƒ‹‹K–ñ‚Ì‚Æ‚«‚Í—ñ‚Ìâ‘Î’l‚ğg‚¤j
-			const T ex = std::abs(e.x), ey = std::abs(e.y), ez = std::abs(e.z);
-
-			VecT e2;
-			e2.x = ex * std::abs(M.m[0][0]) + ey * std::abs(M.m[1][0]) + ez * std::abs(M.m[2][0]);
-			e2.y = ex * std::abs(M.m[0][1]) + ey * std::abs(M.m[1][1]) + ez * std::abs(M.m[2][1]);
-			e2.z = ex * std::abs(M.m[0][2]) + ey * std::abs(M.m[1][2]) + ez * std::abs(M.m[2][2]);
-
-			AABB<T, VecT> out;
-			out.lb = c2 - e2;
-			out.ub = c2 + e2;
-			return out;
-		}
-
-		// Ql: —ñƒxƒNƒgƒ‹‹K–ñip' = M * pj‚ğ•¹—p‚µ‚½‚¢ê‡‚Í‚±‚Á‚¿‚à—pˆÓ
-		template<typename T, typename VecT>
-		inline AABB<T, VecT> operator*(const Matrix<4, 4, T>& M, const AABB<T, VecT>& box) noexcept {
-			static_assert(std::is_same_v<VecT, Vec3<T>>, "This overload expects Vec3<T> AABB.");
-
-			const VecT c = (box.lb + box.ub) * T(0.5);
-			const VecT e = (box.ub - box.lb) * T(0.5);
-
-			// —ñƒxƒNƒgƒ‹‹K–ñ: c' = R*c + t
-			VecT c2;
-			c2.x = M.m[0][0] * c.x + M.m[0][1] * c.y + M.m[0][2] * c.z + M.m[0][3];
-			c2.y = M.m[1][0] * c.x + M.m[1][1] * c.y + M.m[1][2] * c.z + M.m[1][3];
-			c2.z = M.m[2][0] * c.x + M.m[2][1] * c.y + M.m[2][2] * c.z + M.m[2][3];
-
-			const T ex = std::abs(e.x), ey = std::abs(e.y), ez = std::abs(e.z);
-
-			// e' = |A| * e  i—ñƒxƒNƒgƒ‹‹K–ñ‚Ís‚Ìâ‘Î’lj
-			VecT e2;
-			e2.x = ex * std::abs(M.m[0][0]) + ey * std::abs(M.m[0][1]) + ez * std::abs(M.m[0][2]);
-			e2.y = ex * std::abs(M.m[1][0]) + ey * std::abs(M.m[1][1]) + ez * std::abs(M.m[1][2]);
-			e2.z = ex * std::abs(M.m[2][0]) + ey * std::abs(M.m[2][1]) + ez * std::abs(M.m[2][2]);
-
-			AABB<T, VecT> out;
-			out.lb = c2 - e2;
-			out.ub = c2 + e2;
-			return out;
-		}
-
-		//==============================
-		// 4x4 ˆê”Ê‹ts—ñiƒXƒJƒ‰[j
-		//==============================
-		template<typename T>
-		Matrix<4, 4, T> Inverse(const Matrix<4, 4, T>& M) noexcept {
-			Matrix<4, 4, T> inv{};
-			const auto& a = M.m;
-
-			inv[0][0] = a[1][1] * a[2][2] * a[3][3] - a[1][1] * a[2][3] * a[3][2] - a[2][1] * a[1][2] * a[3][3]
-				+ a[2][1] * a[1][3] * a[3][2] + a[3][1] * a[1][2] * a[2][3] - a[3][1] * a[1][3] * a[2][2];
-
-			inv[0][1] = -a[0][1] * a[2][2] * a[3][3] + a[0][1] * a[2][3] * a[3][2] + a[2][1] * a[0][2] * a[3][3]
-				- a[2][1] * a[0][3] * a[3][2] - a[3][1] * a[0][2] * a[2][3] + a[3][1] * a[0][3] * a[2][2];
-
-			inv[0][2] = a[0][1] * a[1][2] * a[3][3] - a[0][1] * a[1][3] * a[3][2] - a[1][1] * a[0][2] * a[3][3]
-				+ a[1][1] * a[0][3] * a[3][2] + a[3][1] * a[0][2] * a[1][3] - a[3][1] * a[0][3] * a[1][2];
-
-			inv[0][3] = -a[0][1] * a[1][2] * a[2][3] + a[0][1] * a[1][3] * a[2][2] + a[1][1] * a[0][2] * a[2][3]
-				- a[1][1] * a[0][3] * a[2][2] - a[2][1] * a[0][2] * a[1][3] + a[2][1] * a[0][3] * a[1][2];
-
-			inv[1][0] = -a[1][0] * a[2][2] * a[3][3] + a[1][0] * a[2][3] * a[3][2] + a[2][0] * a[1][2] * a[3][3]
-				- a[2][0] * a[1][3] * a[3][2] - a[3][0] * a[1][2] * a[2][3] + a[3][0] * a[1][3] * a[2][2];
-
-			inv[1][1] = a[0][0] * a[2][2] * a[3][3] - a[0][0] * a[2][3] * a[3][2] - a[2][0] * a[0][2] * a[3][3]
-				+ a[2][0] * a[0][3] * a[3][2] + a[3][0] * a[0][2] * a[2][3] - a[3][0] * a[0][3] * a[2][2];
-
-			inv[1][2] = -a[0][0] * a[1][2] * a[3][3] + a[0][0] * a[1][3] * a[3][2] + a[1][0] * a[0][2] * a[3][3]
-				- a[1][0] * a[0][3] * a[3][2] - a[3][0] * a[0][2] * a[1][3] + a[3][0] * a[0][3] * a[1][2];
-
-			inv[1][3] = a[0][0] * a[1][2] * a[2][3] - a[0][0] * a[1][3] * a[2][2] - a[1][0] * a[0][2] * a[2][3]
-				+ a[1][0] * a[0][3] * a[2][2] + a[2][0] * a[0][2] * a[1][3] - a[2][0] * a[0][3] * a[1][2];
-
-			inv[2][0] = a[1][0] * a[2][1] * a[3][3] - a[1][0] * a[2][3] * a[3][1] - a[2][0] * a[1][1] * a[3][3]
-				+ a[2][0] * a[1][3] * a[3][1] + a[3][0] * a[1][1] * a[2][3] - a[3][0] * a[1][3] * a[2][1];
-
-			inv[2][1] = -a[0][0] * a[2][1] * a[3][3] + a[0][0] * a[2][3] * a[3][1] + a[2][0] * a[0][1] * a[3][3]
-				- a[2][0] * a[0][3] * a[3][1] - a[3][0] * a[0][1] * a[2][3] + a[3][0] * a[0][3] * a[2][1];
-
-			inv[2][2] = a[0][0] * a[1][1] * a[3][3] - a[0][0] * a[1][3] * a[3][1] - a[1][0] * a[0][1] * a[3][3]
-				+ a[1][0] * a[0][3] * a[3][1] + a[3][0] * a[0][1] * a[1][3] - a[3][0] * a[0][3] * a[1][1];
-
-			inv[2][3] = -a[0][0] * a[1][1] * a[2][3] + a[0][0] * a[1][3] * a[2][1] + a[1][0] * a[0][1] * a[2][3]
-				- a[1][0] * a[0][3] * a[2][1] - a[2][0] * a[0][1] * a[1][3] + a[2][0] * a[0][3] * a[1][1];
-
-			inv[3][0] = -a[1][0] * a[2][1] * a[3][2] + a[1][0] * a[2][2] * a[3][1] + a[2][0] * a[1][1] * a[3][2]
-				- a[2][0] * a[1][2] * a[3][1] - a[3][0] * a[1][1] * a[2][2] + a[3][0] * a[1][2] * a[2][1];
-
-			inv[3][1] = a[0][0] * a[2][1] * a[3][2] - a[0][0] * a[2][2] * a[3][1] - a[2][0] * a[0][1] * a[3][2]
-				+ a[2][0] * a[0][2] * a[3][1] + a[3][0] * a[0][1] * a[2][2] - a[3][0] * a[0][2] * a[2][1];
-
-			inv[3][2] = -a[0][0] * a[1][1] * a[3][2] + a[0][0] * a[1][2] * a[3][1] + a[1][0] * a[0][1] * a[3][2]
-				- a[1][0] * a[0][2] * a[3][1] - a[3][0] * a[0][1] * a[1][2] + a[3][0] * a[0][2] * a[1][1];
-
-			inv[3][3] = a[0][0] * a[1][1] * a[2][2] - a[0][0] * a[1][2] * a[2][1] - a[1][0] * a[0][1] * a[2][2]
-				+ a[1][0] * a[0][2] * a[2][1] + a[2][0] * a[0][1] * a[1][2] - a[2][0] * a[0][2] * a[1][1];
-
-			T det = a[0][0] * inv[0][0] + a[0][1] * inv[1][0] + a[0][2] * inv[2][0] + a[0][3] * inv[3][0];
-			assert(det != T(0));
-			T invDet = T(1) / det;
-			for (int i = 0; i < 4; ++i)
-				for (int j = 0; j < 4; ++j)
-					inv[i][j] *= invDet;
-			return inv;
-		}
-
-		//==============================
-		// ƒAƒtƒBƒ“‹ts—ñ (4x4 float)
-		//==============================
-#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-// ‰ñ“]‚ª³‹K’¼Œğ(=R^T=R^{-1}) ‚Æ‰¼’è‚µ‚½Å‘¬ƒpƒX
-		inline Matrix4x4f InverseAffineOrthonormal(const Matrix4x4f& M) noexcept {
-			// s—ñ‚Ì4s‚ğƒ[ƒh
-			__m128 r0 = _mm_loadu_ps(M.m[0]);
-			__m128 r1 = _mm_loadu_ps(M.m[1]);
-			__m128 r2 = _mm_loadu_ps(M.m[2]);
-			__m128 r3 = _mm_loadu_ps(M.m[3]);
-
-			// —ñ‚É•ÏŠ·icol0, col1, col2, col3j
-			_MM_TRANSPOSE4_PS(r0, r1, r2, r3);
-			const __m128 col0 = r0; // [m00 m10 m20 m30]
-			const __m128 col1 = r1; // [m01 m11 m21 m31]
-			const __m128 col2 = r2; // [m02 m12 m22 m32]
-			const __m128 tcol = r3; // [tx  ty  tz  1]
-
-			// R^T ‚ğ‚»‚Ì‚Ü‚Üs‚Æ‚µ‚Äg‚¤iÅŒã‚Ì—v‘f‚Í0j
-			Matrix4x4f Out = Matrix4x4f::Identity();
-			alignas(16) float tmp[4];
-
-			// s0
-			_mm_storeu_ps(tmp, col0); // col0 = (m00,m10,m20,m30)
-			Out.m[0][0] = tmp[0]; Out.m[0][1] = tmp[1]; Out.m[0][2] = tmp[2]; Out.m[0][3] = 0.f;
-			// s1
-			_mm_storeu_ps(tmp, col1);
-			Out.m[1][0] = tmp[0]; Out.m[1][1] = tmp[1]; Out.m[1][2] = tmp[2]; Out.m[1][3] = 0.f;
-			// s2
-			_mm_storeu_ps(tmp, col2);
-			Out.m[2][0] = tmp[0]; Out.m[2][1] = tmp[1]; Out.m[2][2] = tmp[2]; Out.m[2][3] = 0.f;
-
-			// t' = -(R^T * t)
-			const __m128 maskXYZ = _mm_castsi128_ps(_mm_set_epi32(0, -1, -1, -1)); // [1,1,1,0]
-			const __m128 txyz = _mm_and_ps(tcol, maskXYZ);
-			auto dot3 = [&](__m128 a)->float {
-				__m128 prod = _mm_mul_ps(a, txyz);
-				__m128 shuf = _mm_movehdup_ps(prod);      // (y y w w)
-				__m128 sums = _mm_add_ps(prod, shuf);     // (x+y, y+y, z+w, w+w)
-				shuf = _mm_movehl_ps(shuf, sums);         // (z+w, w+w, ?, ?)
-				sums = _mm_add_ss(sums, shuf);            // x+y+z
-				return _mm_cvtss_f32(sums);
-				};
-			Out.m[0][3] = -dot3(col0);
-			Out.m[1][3] = -dot3(col1);
-			Out.m[2][3] = -dot3(col2);
-			// Å‰ºs‚Í (0,0,0,1)
-			return Out;
-		}
-#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-
-		// ˆê”ÊƒAƒtƒBƒ“iR ‚ª”CˆÓ‚Ì”ñ“ÁˆÙ 3x3j‚Ì‹ts—ñ
-		inline Matrix4x4f InverseAffine(const Matrix4x4f& M) noexcept {
-			// ã¶3x3 ‚ğƒXƒJƒ‰[‚Å‹ts—ñA•½sˆÚ“®‚Í -R^{-1}t
-			const float a00 = M.m[0][0], a01 = M.m[0][1], a02 = M.m[0][2];
-			const float a10 = M.m[1][0], a11 = M.m[1][1], a12 = M.m[1][2];
-			const float a20 = M.m[2][0], a21 = M.m[2][1], a22 = M.m[2][2];
-
-			const float det =
-				a00 * (a11 * a22 - a12 * a21) -
-				a01 * (a10 * a22 - a12 * a20) +
-				a02 * (a10 * a21 - a11 * a20);
-			assert(std::fabs(det) > 0.0f);
-			const float invDet = 1.0f / det;
-
-			Matrix4x4f Rinv{};
-			Rinv.m[0][0] = (a11 * a22 - a12 * a21) * invDet;
-			Rinv.m[0][1] = -(a01 * a22 - a02 * a21) * invDet;
-			Rinv.m[0][2] = (a01 * a12 - a02 * a11) * invDet;
-
-			Rinv.m[1][0] = -(a10 * a22 - a12 * a20) * invDet;
-			Rinv.m[1][1] = (a00 * a22 - a02 * a20) * invDet;
-			Rinv.m[1][2] = -(a00 * a12 - a02 * a10) * invDet;
-
-			Rinv.m[2][0] = (a10 * a21 - a11 * a20) * invDet;
-			Rinv.m[2][1] = -(a00 * a21 - a01 * a20) * invDet;
-			Rinv.m[2][2] = (a00 * a11 - a01 * a10) * invDet;
-
-			const float tx = M.m[0][3], ty = M.m[1][3], tz = M.m[2][3];
-
-			Matrix4x4f Out = Matrix4x4f::Identity();
-			// ã¶3x3
-			for (int r = 0; r < 3; ++r)
-				for (int c = 0; c < 3; ++c)
-					Out.m[r][c] = Rinv.m[r][c];
-			// ‰E’[‚Ì—ñi•½sˆÚ“®j
-			Out.m[0][3] = -(Rinv.m[0][0] * tx + Rinv.m[0][1] * ty + Rinv.m[0][2] * tz);
-			Out.m[1][3] = -(Rinv.m[1][0] * tx + Rinv.m[1][1] * ty + Rinv.m[1][2] * tz);
-			Out.m[2][3] = -(Rinv.m[2][0] * tx + Rinv.m[2][1] * ty + Rinv.m[2][2] * tz);
-			return Out;
-		}
-
-		// ‹ß—‚Å³‹K’¼Œğ‚Æ‚İ‚È‚¹‚é‚©i‚µ‚«‚¢’l‚Í“K‹X’²®j
-		inline bool IsOrthonormalRotation3x3(const Matrix4x4f& M, float eps = 1e-4f) noexcept {
-			// sƒx[ƒX‚Åƒ`ƒFƒbƒNi—ñ‚Å‚à–{¿“¯‚¶j
-			const Vec3<float> r0{ M.m[0][0],M.m[0][1],M.m[0][2] };
-			const Vec3<float> r1{ M.m[1][0],M.m[1][1],M.m[1][2] };
-			const Vec3<float> r2{ M.m[2][0],M.m[2][1],M.m[2][2] };
-			auto near1 = [&](float v) { return std::fabs(v - 1.f) <= eps; };
-			auto near0 = [&](float v) { return std::fabs(v) <= eps; };
-			return near1(r0.dot(r0)) && near1(r1.dot(r1)) && near1(r2.dot(r2)) &&
-				near0(r0.dot(r1)) && near0(r1.dot(r2)) && near0(r2.dot(r0));
-		}
-
-		//==============================
-		// ƒoƒbƒ`‰‰Z
-		//==============================
-		inline void Multiply4x4Batch(const Matrix4x4f* A, const Matrix4x4f* B, Matrix4x4f* C, size_t n) noexcept {
-			for (size_t i = 0; i < n; ++i) C[i] = A[i] * B[i];
-		}
-
-		// ‰E•Ó B ‚ª“¯ˆê‚Ì‚Æ‚«iB ‚Ìƒ[ƒh‚ğƒ‹[ƒvŠO‚Öj
-		inline void MultiplyManyBySameRight(const Matrix4x4f* A, const Matrix4x4f& B, Matrix4x4f* C, size_t n) noexcept {
-#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-			const __m128 b0 = _mm_loadu_ps(B.m[0]);
-			const __m128 b1 = _mm_loadu_ps(B.m[1]);
-			const __m128 b2 = _mm_loadu_ps(B.m[2]);
-			const __m128 b3 = _mm_loadu_ps(B.m[3]);
-
-			for (size_t idx = 0; idx < n; ++idx) {
-				const Matrix4x4f& A0 = A[idx];
-				for (int i = 0; i < 4; ++i) {
-					const __m128 a0 = _mm_set1_ps(A0.m[i][0]);
-					const __m128 a1 = _mm_set1_ps(A0.m[i][1]);
-					const __m128 a2 = _mm_set1_ps(A0.m[i][2]);
-					const __m128 a3 = _mm_set1_ps(A0.m[i][3]);
-
-					__m128 r = _mm_mul_ps(a0, b0);
-					r = detail::fmadd_ps(a1, b1, r);
-					r = detail::fmadd_ps(a2, b2, r);
-					r = detail::fmadd_ps(a3, b3, r);
-
-					_mm_storeu_ps(C[idx].m[i], r);
-				}
-			}
+                r = _mm_add_ps(r, _mm_mul_ps(a1, b1));
+                r = _mm_add_ps(r, _mm_mul_ps(a2, b2));
+                r = _mm_add_ps(r, _mm_mul_ps(a3, b3));
+#endif
+                _mm_storeu_ps(C.m[i], r);
+            }
+            return C;
+        }
+
+        // 3x4 ã‚’åˆ—ãƒ™ã‚¯ãƒˆãƒ«4æœ¬ï¼ˆc0..c3ï¼‰ã«ï¼ˆc3 ã¯ [tx ty tz 1]ï¼‰
+        static inline void MakeColsFromMat3x4_SSE(const Matrix3x4f& B,
+            __m128& c0, __m128& c1,
+            __m128& c2, __m128& c3) noexcept
+        {
+            const __m128 r0 = _mm_loadu_ps(&B.m[0][0]); // [r00 r01 r02 tx]
+            const __m128 r1 = _mm_loadu_ps(&B.m[1][0]); // [r10 r11 r12 ty]
+            const __m128 r2 = _mm_loadu_ps(&B.m[2][0]); // [r20 r21 r22 tz]
+            __m128 r3 = _mm_setzero_ps();               // ãƒ€ãƒŸãƒ¼
+
+            // è»¢ç½®ã§ c0=[r00 r10 r20 0], c1=[r01 r11 r21 0], c2=[r02 r12 r22 0], c3=[tx ty tz 0]
+            __m128 t0 = r0, t1 = r1, t2 = r2, t3 = r3;
+            _MM_TRANSPOSE4_PS(t0, t1, t2, t3);
+            c0 = t0; c1 = t1; c2 = t2;
+            // c3 ã® W ã‚’ 1 ã«å·®ã—æ›¿ãˆã‚‹
+            c3 = _mm_set_ps(1.0f, B.m[2][3], B.m[1][3], B.m[0][3]); // [tx ty tz 1]
+        }
+
+        static inline void Mul4x4x3x4_Batch_To4x4_SSE_RowCombine(
+            const Matrix4x4f& VP,
+            const Matrix3x4f* __restrict W,   // N å€‹ã® World(3x4)
+            Matrix4x4f* __restrict C,         // N å€‹ã®å‡ºåŠ›(4x4)
+            std::size_t N) noexcept
+        {
+            // VP ã®å„è¡Œã‚’ä¸€ç™ºã§å¼•ã‘ã‚‹ã‚ˆã†ã«ã—ã¦ãŠã
+            const __m128 b3_row = _mm_set_ps(1.f, 0.f, 0.f, 0.f); // ä¸‹æ®µ = [0,0,0,1]
+
+            // å„è¡Œã®ä¿‚æ•°ï¼ˆa0..a3 = VP.m[i][0..3]ï¼‰ã‚’ãƒ–ãƒ­ãƒ¼ãƒ‰ã‚­ãƒ£ã‚¹ãƒˆã—ã¦ãŠã
+            __m128 a0[4], a1[4], a2[4], a3[4];
+            for (int i = 0; i < 4; ++i) {
+                a0[i] = _mm_set1_ps(VP.m[i][0]);
+                a1[i] = _mm_set1_ps(VP.m[i][1]);
+                a2[i] = _mm_set1_ps(VP.m[i][2]);
+                a3[i] = _mm_set1_ps(VP.m[i][3]);
+            }
+
+            for (std::size_t i = 0; i < N; ++i) {
+                const __m128 b0 = _mm_loadu_ps(&W[i].m[0][0]); // [r01 r02 r03 t01]
+                const __m128 b1 = _mm_loadu_ps(&W[i].m[1][0]); // [r11 r12 r13 t02]
+                const __m128 b2 = _mm_loadu_ps(&W[i].m[2][0]); // [r21 r22 r23 t03]
+
+                // row_i(C) = a0[i]*b0 + a1[i]*b1 + a2[i]*b2 + a3[i]*[0,0,0,1]
+                for (int r = 0; r < 4; ++r) {
+                    __m128 v = _mm_mul_ps(a0[r], b0);
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                    v = _mm_fmadd_ps(a1[r], b1, v);
+                    v = _mm_fmadd_ps(a2[r], b2, v);
+                    v = _mm_fmadd_ps(a3[r], b3_row, v);
 #else
-			for (size_t i = 0; i < n; ++i) C[i] = A[i] * B;
-#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		}
+                    v = _mm_add_ps(v, _mm_mul_ps(a1[r], b1));
+                    v = _mm_add_ps(v, _mm_mul_ps(a2[r], b2));
+                    v = _mm_add_ps(v, _mm_mul_ps(a3[r], b3_row));
+#endif
+                    _mm_storeu_ps(C[i].m[r], v);
+                }
+            }
+        }
 
-		// “_ŒQ•ÏŠ·ip' = M * [x y z 1]^Tj
-		inline void TransformPoints(const Matrix4x4f& M, const Vec3<float>* inPts, Vec3<float>* outPts, size_t n) noexcept {
-#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-			// —ñƒxƒNƒgƒ‹Œü‚¯‚É—ñ‚ğˆê“x‚¾‚¯—pˆÓi“]’u‚Åæ“¾j
-			__m128 r0 = _mm_loadu_ps(M.m[0]);
-			__m128 r1 = _mm_loadu_ps(M.m[1]);
-			__m128 r2 = _mm_loadu_ps(M.m[2]);
-			__m128 r3 = _mm_loadu_ps(M.m[3]);
-			_MM_TRANSPOSE4_PS(r0, r1, r2, r3); // r0..r3 ‚ª—ñicol0..col3j
-
-			for (size_t i = 0; i < n; ++i) {
-				const __m128 vx = _mm_set1_ps(inPts[i].x);
-				const __m128 vy = _mm_set1_ps(inPts[i].y);
-				const __m128 vz = _mm_set1_ps(inPts[i].z);
-
-				__m128 res = _mm_mul_ps(vx, r0);
-				res = detail::fmadd_ps(vy, r1, res);
-				res = detail::fmadd_ps(vz, r2, res);
-				res = _mm_add_ps(res, r3);
-
-				alignas(16) float tmp[4];
-				_mm_storeu_ps(tmp, res);
-				outPts[i].x = tmp[0];
-				outPts[i].y = tmp[1];
-				outPts[i].z = tmp[2];
-				// w ‚Í•s—v‚È‚ç”jŠü
-			}
+        // AVX2/FMA: åŒä¸€ VP Ã— è¤‡æ•° W(3x4) â†’ C(4x4)
+// 2ä½“ãšã¤å‡¦ç†ã€‚ç«¯æ•°1ä½“ã¯ SSE ç‰ˆã«å›ã—ã¾ã™ã€‚
+        static inline void Mul4x4x3x4_Batch_To4x4_AVX2_RowCombine(
+            const Matrix4x4f& VP,
+            const Matrix3x4f* __restrict W,
+            Matrix4x4f* __restrict C,
+            std::size_t N) noexcept
+        {
+#if !defined(__AVX2__) && !(defined(_MSC_VER) && defined(__AVX2__))
+            // ç’°å¢ƒãŒ AVX2 ã§ãªã‘ã‚Œã° SSE ç‰ˆã«ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
+            Mul4x4x3x4_Batch_To4x4_SSE_RowCombine(VP, W, C, N);
+            return;
 #else
-			for (size_t i = 0; i < n; ++i) {
-				const float x = inPts[i].x, y = inPts[i].y, z = inPts[i].z;
-				outPts[i].x = M.m[0][0] * x + M.m[0][1] * y + M.m[0][2] * z + M.m[0][3];
-				outPts[i].y = M.m[1][0] * x + M.m[1][1] * y + M.m[1][2] * z + M.m[1][3];
-				outPts[i].z = M.m[2][0] * x + M.m[2][1] * y + M.m[2][2] * z + M.m[2][3];
-			}
-#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		}
+            // ä¸‹æ®µ [0,0,0,1] ã‚’ 2 ä½“åˆ†ï¼ˆä¸‹ä½/ä¸Šä½ 128bitï¼‰ç”¨æ„
+            const __m256 b3_row = _mm256_set_ps(1.f, 0.f, 0.f, 0.f,
+                1.f, 0.f, 0.f, 0.f);
 
-		//==============================
-		// s—ñƒrƒ‹ƒ_[ (4x4)
-		//==============================
-		template<typename T>
-		Matrix<4, 4, T> MakeTranslationMatrix(const Vec3<T>& t) noexcept {
-			auto m = Matrix<4, 4, T>::Identity();
-			m[0][3] = t.x; m[1][3] = t.y; m[2][3] = t.z;
-			return m;
-		}
+            // VP ã®å„è¡Œã®ä¿‚æ•°ã‚’ __m256ï¼ˆå…¨ãƒ¬ãƒ¼ãƒ³åŒå€¤ï¼‰ã§ä¿æŒ
+            __m256 a0[4], a1[4], a2[4], a3[4];
+            for (int r = 0; r < 4; ++r) {
+                a0[r] = _mm256_set1_ps(VP.m[r][0]);
+                a1[r] = _mm256_set1_ps(VP.m[r][1]);
+                a2[r] = _mm256_set1_ps(VP.m[r][2]);
+                a3[r] = _mm256_set1_ps(VP.m[r][3]);
+            }
 
-		template<typename T>
-		Matrix<4, 4, T> MakeScalingMatrix(const Vec3<T>& s) noexcept {
-			Matrix<4, 4, T> m{};
-			m[0][0] = s.x; m[1][1] = s.y; m[2][2] = s.z; m[3][3] = T(1);
-			return m;
-		}
+            std::size_t i = 0;
+            for (; i + 1 < N; i += 2) {
+                // 2ãƒ¯ãƒ¼ãƒ«ãƒ‰åˆ†ã® B ã®ã€Œè¡Œã€ã‚’ 256bit ã«ãƒ‘ãƒƒã‚¯
+                const __m128 b0_lo = _mm_loadu_ps(&W[i + 0].m[0][0]); // [r01 r02 r03 t01]
+                const __m128 b0_hi = _mm_loadu_ps(&W[i + 1].m[0][0]);
+                const __m128 b1_lo = _mm_loadu_ps(&W[i + 0].m[1][0]); // [r11 r12 r13 t02]
+                const __m128 b1_hi = _mm_loadu_ps(&W[i + 1].m[1][0]);
+                const __m128 b2_lo = _mm_loadu_ps(&W[i + 0].m[2][0]); // [r21 r22 r23 t03]
+                const __m128 b2_hi = _mm_loadu_ps(&W[i + 1].m[2][0]);
 
-		template<typename T>
-		Matrix<4, 4, T> MakeRotationMatrix(const Quat<T>& q) noexcept {
-			// q ‚Í³‹K‰»‚³‚ê‚Ä‚¢‚é‘O’ñ
-			Matrix<4, 4, T> m{};
-			const T x = q.x, y = q.y, z = q.z, w = q.w;
-			const T xx = x * x, yy = y * y, zz = z * z;
-			const T xy = x * y, xz = x * z, yz = y * z;
-			const T wx = w * x, wy = w * y, wz = w * z;
+                const __m256 b0 = _mm256_set_m128(b0_hi, b0_lo);
+                const __m256 b1 = _mm256_set_m128(b1_hi, b1_lo);
+                const __m256 b2 = _mm256_set_m128(b2_hi, b2_lo);
 
-			m[0][0] = T(1) - T(2) * (yy + zz);
-			m[0][1] = T(2) * (xy - wz);
-			m[0][2] = T(2) * (xz + wy);
-			m[0][3] = T(0);
-
-			m[1][0] = T(2) * (xy + wz);
-			m[1][1] = T(1) - T(2) * (xx + zz);
-			m[1][2] = T(2) * (yz - wx);
-			m[1][3] = T(0);
-
-			m[2][0] = T(2) * (xz - wy);
-			m[2][1] = T(2) * (yz + wx);
-			m[2][2] = T(1) - T(2) * (xx + yy);
-			m[2][3] = T(0);
-
-			m[3][0] = T(0); m[3][1] = T(0); m[3][2] = T(0); m[3][3] = T(1);
-			return m;
-		}
-
-		template<typename T>
-		Matrix<4, 4, T> MakeLookAtMatrixLH(const Vec3<T>& eye, const Vec3<T>& target, const Vec3<T>& up) noexcept {
-			Vec3<T> z = (target - eye).normalized();   // forward
-			Vec3<T> x = up.cross(z).normalized();      // right
-			Vec3<T> y = z.cross(x);                    // upiÄ’¼Œğj
-
-			Matrix<4, 4, T> m{};
-			// ‰ñ“]‚Íu—ñ‚É²ƒxƒNƒgƒ‹v‚ğ“ü‚ê‚éis‚É‚Í x/y/z ‚ÌŠe¬•ªj
-			m[0][0] = x.x; m[0][1] = y.x; m[0][2] = z.x; m[0][3] = T(0);
-			m[1][0] = x.y; m[1][1] = y.y; m[1][2] = z.y; m[1][3] = T(0);
-			m[2][0] = x.z; m[2][1] = y.z; m[2][2] = z.z; m[2][3] = T(0);
-
-			// © •½sˆÚ“®‚ÍgÅ‰ºsh
-			m[3][0] = -x.dot(eye);
-			m[3][1] = -y.dot(eye);
-			m[3][2] = -z.dot(eye);
-			m[3][3] = T(1);
-			return m;
-		}
-
-		template<typename T>
-		Matrix<4, 4, T> MakeLookAtMatrixRH(const Vec3<T>& eye, const Vec3<T>& center, const Vec3<T>& up) noexcept {
-			Vec3<T> f = (center - eye).normalized();
-			Vec3<T> s = f.cross(up).normalized();
-			Vec3<T> u = s.cross(f);
-
-			Matrix<4, 4, T> m{};
-			m[0][0] = s.x; m[0][1] = u.x; m[0][2] = -f.x; m[0][3] = T(0);
-			m[1][0] = s.y; m[1][1] = u.y; m[1][2] = -f.y; m[1][3] = T(0);
-			m[2][0] = s.z; m[2][1] = u.z; m[2][2] = -f.z; m[2][3] = T(0);
-
-			m[3][0] = -s.dot(eye);
-			m[3][1] = -u.dot(eye);
-			m[3][2] = f.dot(eye);
-			m[3][3] = T(1);
-			return m;
-		}
-
-		template<typename T>
-		Matrix<4, 4, T> MakePerspectiveMatrixLH(T fovY, T aspect, T nearZ, T farZ) noexcept {
-			const T f = T(1) / std::tan(fovY / T(2));
-			Matrix<4, 4, T> m{};
-			m[0][0] = f / aspect; m[1][1] = f;
-			m[2][2] = farZ / (farZ - nearZ);
-			m[2][3] = T(1);
-			m[3][2] = (-nearZ * farZ) / (farZ - nearZ);
-			return m;
-		}
-
-		template<typename T>
-		Matrix<4, 4, T> MakePerspectiveMatrixRH(T fovY, T aspect, T zNear, T zFar) noexcept {
-			const T f = T(1) / std::tan(fovY / T(2));
-			Matrix<4, 4, T> m{};
-			m[0][0] = f / aspect; m[1][1] = f;
-			m[2][2] = (zFar + zNear) / (zNear - zFar);
-			m[2][3] = T(-1);
-			m[3][2] = (T(2) * zFar * zNear) / (zNear - zFar);
-			return m;
-		}
-
-		/**
-		 * @brief ’¼ŒğË‰es—ñ (¶èŒn)
-		 * @param l left
-		 * @param r right
-		 * @param b bottom
-		 * @param t top
-		 * @param n near
-		 * @param f far
-		 * @return ’¼ŒğË‰es—ñ
-		 */
-		template<typename T>
-		Matrix<4, 4, T> MakeOrthographicMatrixLH(T l, T r, T b, T t, T n, T f) noexcept {
-			Matrix<4, 4, T> m{};
-			m[0][0] = T(2) / (r - l);
-			m[1][1] = T(2) / (t - b);
-			m[2][2] = T(1) / (f - n);
-			// © •½sˆÚ“®‚ÍgÅ‰ºsh
-			m[3][0] = -(r + l) / (r - l);
-			m[3][1] = -(t + b) / (t - b);
-			m[3][2] = -n / (f - n);
-			m[3][3] = T(1);
-			return m;
-		}
-
-		template<typename T>
-		Matrix<4, 4, T> MakeOrthographicMatrixRH(T l, T r, T b, T t, T n, T f) noexcept {
-			Matrix<4, 4, T> m{};
-			m[0][0] = T(2) / (r - l);
-			m[1][1] = T(2) / (t - b);
-			m[2][2] = T(-2) / (f - n);
-			m[3][0] = -(r + l) / (r - l);
-			m[3][1] = -(t + b) / (t - b);
-			m[3][2] = -(f + n) / (f - n);
-			m[3][3] = T(1);
-			return m;
-		}
-
-		//==============================
-		// ƒ†[ƒeƒBƒŠƒeƒB: “_/•ûŒü‚Ì’P”­•ÏŠ·
-		//==============================
-		template<typename T>
-		inline Vec3<T> TransformPoint(const Matrix<4, 4, T>& M, const Vec3<T>& p) noexcept {
-			return {
-				M.m[0][0] * p.x + M.m[0][1] * p.y + M.m[0][2] * p.z + M.m[0][3],
-				M.m[1][0] * p.x + M.m[1][1] * p.y + M.m[1][2] * p.z + M.m[1][3],
-				M.m[2][0] * p.x + M.m[2][1] * p.y + M.m[2][2] * p.z + M.m[2][3],
-			};
-		}
-		template<typename T>
-		inline Vec3<T> TransformVector(const Matrix<4, 4, T>& M, const Vec3<T>& v) noexcept {
-			return {
-				M.m[0][0] * v.x + M.m[0][1] * v.y + M.m[0][2] * v.z,
-				M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z,
-				M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z,
-			};
-		}
-
-#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		// ---- Matrix4x4f ‚Ö‚Ì SIMD ƒAƒTƒCƒ“x‰‡ ----
-		inline void SetZero(Matrix4x4f& M) noexcept {
-			const __m128 z = _mm_setzero_ps();
-			_mm_store_ps(&M.m[0][0], z);
-			_mm_store_ps(&M.m[1][0], z);
-			_mm_store_ps(&M.m[2][0], z);
-			_mm_store_ps(&M.m[3][0], z);
-		}
-
-		inline void SetIdentity(Matrix4x4f& M) noexcept {
-			// ‘ÎŠp‚¾‚¯ 1.0A‘¼ 0.0
-			const __m128 z = _mm_setzero_ps();
-			_mm_store_ps(&M.m[0][0], z);
-			_mm_store_ps(&M.m[1][0], z);
-			_mm_store_ps(&M.m[2][0], z);
-			_mm_store_ps(&M.m[3][0], z);
-			M.m[0][0] = 1.f; M.m[1][1] = 1.f; M.m[2][2] = 1.f; M.m[3][3] = 1.f;
-		}
-
-		// s’PˆÊi4 —v‘fj‚Å–¢®—ñƒ|ƒCƒ“ƒ^‚©‚çƒ[ƒh‚µ‚ÄŠi”[
-		inline void SetRow(Matrix4x4f& M, int r, const float* row4) noexcept {
-			__m128 v = _mm_loadu_ps(row4);
-			_mm_store_ps(&M.m[r][0], v);
-		}
-
-		// s’PˆÊ‚Å __m128 ‚©‚ç‚»‚Ì‚Ü‚ÜŠi”[iƒzƒbƒgƒpƒX—pj
-		inline void SetRow(Matrix4x4f& M, int r, __m128 v) noexcept {
-			_mm_store_ps(&M.m[r][0], v);
-		}
-
-		// 16 ŒÂ‚Ì˜A‘± floatirow-majorj‚©‚çˆêŠ‡ƒ[ƒh
-		inline void LoadRowMajor(Matrix4x4f& M, const float* p16_rowMajor) noexcept {
-			_mm_store_ps(&M.m[0][0], _mm_loadu_ps(p16_rowMajor + 0));
-			_mm_store_ps(&M.m[1][0], _mm_loadu_ps(p16_rowMajor + 4));
-			_mm_store_ps(&M.m[2][0], _mm_loadu_ps(p16_rowMajor + 8));
-			_mm_store_ps(&M.m[3][0], _mm_loadu_ps(p16_rowMajor + 12));
-		}
-
-		// 16 ŒÂ‚Ì˜A‘± floaticolumn-majorj‚©‚çˆêŠ‡ƒ[ƒh
-		// 4 –{‚Ì—ñƒxƒNƒgƒ‹‚ğ“Ç‚İA“]’u‚µ‚Äs—ñ‚ÉŠi”[
-		inline void LoadColumnMajor(Matrix4x4f& M, const float* p16_colMajor) noexcept {
-			__m128 c0 = _mm_loadu_ps(p16_colMajor + 0);
-			__m128 c1 = _mm_loadu_ps(p16_colMajor + 4);
-			__m128 c2 = _mm_loadu_ps(p16_colMajor + 8);
-			__m128 c3 = _mm_loadu_ps(p16_colMajor + 12);
-			_MM_TRANSPOSE4_PS(c0, c1, c2, c3); // —ñ¨s‚Ö
-			_mm_store_ps(&M.m[0][0], c0);
-			_mm_store_ps(&M.m[1][0], c1);
-			_mm_store_ps(&M.m[2][0], c2);
-			_mm_store_ps(&M.m[3][0], c3);
-		}
-
-		// 16 ŒÂ‚Ì float ‚ğ row-major ‚Å‘‚«o‚·
-		inline void StoreRowMajor(const Matrix4x4f& M, float* dst16_rowMajor) noexcept {
-			_mm_storeu_ps(dst16_rowMajor + 0, _mm_load_ps(&M.m[0][0]));
-			_mm_storeu_ps(dst16_rowMajor + 4, _mm_load_ps(&M.m[1][0]));
-			_mm_storeu_ps(dst16_rowMajor + 8, _mm_load_ps(&M.m[2][0]));
-			_mm_storeu_ps(dst16_rowMajor + 12, _mm_load_ps(&M.m[3][0]));
-		}
-
-		// 4 –{‚Ì __m128isƒxƒNƒgƒ‹j‚©‚ç‚‘¬‚É‘ã“ü
-		inline void SetRows(Matrix4x4f& M, __m128 r0, __m128 r1, __m128 r2, __m128 r3) noexcept {
-			_mm_store_ps(&M.m[0][0], r0);
-			_mm_store_ps(&M.m[1][0], r1);
-			_mm_store_ps(&M.m[2][0], r2);
-			_mm_store_ps(&M.m[3][0], r3);
-		}
-
-		// ”CˆÓƒXƒJƒ‰[‚Å‘S–„‚ßiƒuƒ[ƒhƒLƒƒƒXƒg{4 sƒXƒgƒAj
-		inline void Fill(Matrix4x4f& M, float v) noexcept {
-			__m128 s = _mm_set1_ps(v);
-			_mm_store_ps(&M.m[0][0], s);
-			_mm_store_ps(&M.m[1][0], s);
-			_mm_store_ps(&M.m[2][0], s);
-			_mm_store_ps(&M.m[3][0], s);
-		}
-
-		// 3x3iã¶j‚ğ __m128~3 ‚Åˆê‹C‚É“ü‚ê‚éiw=0 ‚É‰Šú‰»j
-		inline void SetUpper3x3(Matrix4x4f& M, __m128 r0, __m128 r1, __m128 r2) noexcept {
-			alignas(16) float t0[4], t1[4], t2[4];
-			_mm_store_ps(t0, r0); _mm_store_ps(t1, r1); _mm_store_ps(t2, r2);
-			// r?.w ‚Í–³‹i0 ‚É‚·‚éj
-			t0[3] = 0.f; t1[3] = 0.f; t2[3] = 0.f;
-			_mm_store_ps(&M.m[0][0], _mm_load_ps(t0));
-			_mm_store_ps(&M.m[1][0], _mm_load_ps(t1));
-			_mm_store_ps(&M.m[2][0], _mm_load_ps(t2));
-		}
-
-		// Å‰ºs‚ğ [0,0,0,1] ‚ÉiƒAƒtƒBƒ“‰Šú‰»‚Å•Ö—˜j
-		inline void SetBottomRowAffine(Matrix4x4f& M) noexcept {
-			_mm_store_ps(&M.m[3][0], _mm_set_ps(1.f, 0.f, 0.f, 0.f)); // (x,y,z,w) ‚Ì‡‚ÉŠi”[
-		}
+                // 4 è¡Œã¶ã‚“ã¾ã¨ã‚ã¦ï¼š row_r(C) = a0*b0 + a1*b1 + a2*b2 + a3*[0,0,0,1]
+                for (int r = 0; r < 4; ++r) {
+                    __m256 v = _mm256_mul_ps(a0[r], b0);
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                    v = _mm256_fmadd_ps(a1[r], b1, v);
+                    v = _mm256_fmadd_ps(a2[r], b2, v);
+                    v = _mm256_fmadd_ps(a3[r], b3_row, v);
 #else
-		inline void SetZero(Matrix4x4f& M) noexcept {
-			for (int r = 0; r < 4; ++r)
-				for (int c = 0; c < 4; ++c)
-					M.m[r][c] = 0.0f;
-		}
+                    v = _mm256_add_ps(v, _mm256_mul_ps(a1[r], b1));
+                    v = _mm256_add_ps(v, _mm256_mul_ps(a2[r], b2));
+                    v = _mm256_add_ps(v, _mm256_mul_ps(a3[r], b3_row));
+#endif
+                    // ä¸‹ä½/ä¸Šä½ 128 ã‚’ãã‚Œãã‚Œ 2 ä½“åˆ†ã«ã‚¹ãƒˆã‚¢
+                    _mm_storeu_ps(C[i + 0].m[r], _mm256_castps256_ps128(v));
+                    _mm_storeu_ps(C[i + 1].m[r], _mm256_extractf128_ps(v, 1));
+                }
+            }
 
-		inline void SetIdentity(Matrix4x4f& M) noexcept {
-			SetZero(M);
-			M.m[0][0] = 1.0f; M.m[1][1] = 1.0f; M.m[2][2] = 1.0f; M.m[3][3] = 1.0f;
-		}
+            // ç«¯æ•°1ä½“ãŒæ®‹ã‚Œã° SSE ç‰ˆã§å‡¦ç†
+            if (i < N) {
+                Mul4x4x3x4_Batch_To4x4_SSE_RowCombine(VP, W + i, C + i, 1);
+            }
+#endif
+        }
 
-		// s r ‚É 4 —v‘f‚ğ‚Ü‚Æ‚ß‚Ä‘ã“üirow4 ‚Í x,y,z,w ‚Ì‡‚Å 4 —v‘fj
-		inline void SetRow(Matrix4x4f& M, int r, const float* row4) noexcept {
-			M.m[r][0] = row4[0];
-			M.m[r][1] = row4[1];
-			M.m[r][2] = row4[2];
-			M.m[r][3] = row4[3];
-		}
+        static inline void Mul4x4x3x4_Batch_To3x4_SSE_RowCombine(
+            const Matrix4x4f& VP,
+            const Matrix3x4f* __restrict W,   // N å€‹
+            Matrix3x4f* __restrict C,         // N å€‹ï¼ˆä¸Š3è¡Œã®ã¿ï¼‰
+            std::size_t N) noexcept
+        {
+            const __m128 b3_row = _mm_set_ps(1.f, 0.f, 0.f, 0.f);
 
-		// 16 ŒÂ‚Ì˜A‘± floatirow-major: s‚ª˜A‘±j‚ğ‚»‚Ì‚Ü‚Üƒ[ƒh
-		inline void LoadRowMajor(Matrix4x4f& M, const float* p16_rowMajor) noexcept {
-			for (int r = 0; r < 4; ++r)
-				for (int c = 0; c < 4; ++c)
-					M.m[r][c] = p16_rowMajor[r * 4 + c];
-		}
+            __m128 a0[3], a1[3], a2[3], a3[3];
+            for (int i = 0; i < 3; ++i) {
+                a0[i] = _mm_set1_ps(VP.m[i][0]);
+                a1[i] = _mm_set1_ps(VP.m[i][1]);
+                a2[i] = _mm_set1_ps(VP.m[i][2]);
+                a3[i] = _mm_set1_ps(VP.m[i][3]);
+            }
 
-		// 16 ŒÂ‚Ì˜A‘± floaticolumn-major: —ñ‚ª˜A‘±j‚ğ“]’u‚µ‚ÄŠi”[
-		inline void LoadColumnMajor(Matrix4x4f& M, const float* p16_colMajor) noexcept {
-			// —ñ—Dæ ¨ s—Dæ‚ÖF M[r][c] = colMajor[c*4 + r]
-			for (int r = 0; r < 4; ++r)
-				for (int c = 0; c < 4; ++c)
-					M.m[r][c] = p16_colMajor[c * 4 + r];
-		}
+            for (std::size_t i = 0; i < N; ++i) {
+                const __m128 b0 = _mm_loadu_ps(&W[i].m[0][0]);
+                const __m128 b1 = _mm_loadu_ps(&W[i].m[1][0]);
+                const __m128 b2 = _mm_loadu_ps(&W[i].m[2][0]);
 
-		// 16 ŒÂ‚Ì float ‚ğ row-major ‚Å‘‚«o‚µ
-		inline void StoreRowMajor(const Matrix4x4f& M, float* dst16_rowMajor) noexcept {
-			for (int r = 0; r < 4; ++r)
-				for (int c = 0; c < 4; ++c)
-					dst16_rowMajor[r * 4 + c] = M.m[r][c];
-		}
+                for (int r = 0; r < 3; ++r) {
+                    __m128 v = _mm_mul_ps(a0[r], b0);
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                    v = _mm_fmadd_ps(a1[r], b1, v);
+                    v = _mm_fmadd_ps(a2[r], b2, v);
+                    v = _mm_fmadd_ps(a3[r], b3_row, v);
+#else
+                    v = _mm_add_ps(v, _mm_mul_ps(a1[r], b1));
+                    v = _mm_add_ps(v, _mm_mul_ps(a2[r], b2));
+                    v = _mm_add_ps(v, _mm_mul_ps(a3[r], b3_row));
+#endif
+                    _mm_storeu_ps(&C[i].m[r][0], v);
+                }
+            }
+        }
 
-		// sƒxƒNƒgƒ‹‚ğ 4 –{‚Ü‚Æ‚ß‚ÄƒZƒbƒgiŠe r? ‚Í 4 —v‘f”z—ñj
-		inline void SetRows(Matrix4x4f& M,
-			const float* r0, const float* r1,
-			const float* r2, const float* r3) noexcept {
-			SetRow(M, 0, r0);
-			SetRow(M, 1, r1);
-			SetRow(M, 2, r2);
-			SetRow(M, 3, r3);
-		}
 
-		// ‘S—v‘f‚ğ“¯‚¶’l‚Å–„‚ß‚é
-		inline void Fill(Matrix4x4f& M, float v) noexcept {
-			for (int r = 0; r < 4; ++r)
-				for (int c = 0; c < 4; ++c)
-					M.m[r][c] = v;
-		}
+        static inline void MakeColsFromMat4x4_SSE(const Matrix4x4f& B,
+            __m128& c0, __m128& c1,
+            __m128& c2, __m128& c3) noexcept
+        {
+            __m128 r0 = _mm_loadu_ps(&B.m[0][0]); // [b00 b01 b02 b03]
+            __m128 r1 = _mm_loadu_ps(&B.m[1][0]); // [b10 b11 b12 b13]
+            __m128 r2 = _mm_loadu_ps(&B.m[2][0]); // [b20 b21 b22 b23]
+            __m128 r3 = _mm_loadu_ps(&B.m[3][0]); // [b30 b31 b32 b33]
+            _MM_TRANSPOSE4_PS(r0, r1, r2, r3);       // c0=r0=[b00 b10 b20 b30], ...
+            c0 = r0; c1 = r1; c2 = r2; c3 = r3;
+        }
 
-		// ã¶ 3x3 ‚ğ 3 –{‚ÌsƒxƒNƒgƒ‹‚Åİ’èiw —v‘f‚Í 0 ‚É‚·‚éj
-		inline void SetUpper3x3(Matrix4x4f& M,
-			const float* r0, const float* r1, const float* r2) noexcept {
-			M.m[0][0] = r0[0]; M.m[0][1] = r0[1]; M.m[0][2] = r0[2]; M.m[0][3] = 0.0f;
-			M.m[1][0] = r1[0]; M.m[1][1] = r1[1]; M.m[1][2] = r1[2]; M.m[1][3] = 0.0f;
-			M.m[2][0] = r2[0]; M.m[2][1] = r2[1]; M.m[2][2] = r2[2]; M.m[2][3] = 0.0f;
-		}
+        // out = A4x4 * B3x4(æ‹¡å¼µ)
+        static inline Matrix4x4f Mul4x4x3x4_SSE(const Matrix4x4f& A, const Matrix3x4f& B) noexcept
+        {
+            Matrix4x4f out;
 
-		// Å‰ºs‚ğ [0,0,0,1] ‚ÉiƒAƒtƒBƒ“‰Šú‰»j
-		inline void SetBottomRowAffine(Matrix4x4f& M) noexcept {
-			M.m[3][0] = 0.0f; M.m[3][1] = 0.0f; M.m[3][2] = 0.0f; M.m[3][3] = 1.0f;
-		}
-#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+            __m128 c0, c1, c2, c3; MakeColsFromMat3x4_SSE(B, c0, c1, c2, c3);
 
-		//==============================
-		// „§: ƒAƒtƒBƒ“‹ts—ñ‚Ì“‡“üŒû
-		//==============================
-		inline Matrix4x4f InverseFastAffine(const Matrix4x4f& M) noexcept {
+            const __m128 r0 = _mm_loadu_ps(A.m[0]);
+            const __m128 r1 = _mm_loadu_ps(A.m[1]);
+            const __m128 r2 = _mm_loadu_ps(A.m[2]);
+            const __m128 r3 = _mm_loadu_ps(A.m[3]);
+
+            auto rowDotCols = [](__m128 r, __m128 c0, __m128 c1, __m128 c2, __m128 c3) {
+                const __m128 rx = _mm_shuffle_ps(r, r, _MM_SHUFFLE(0, 0, 0, 0));
+                const __m128 ry = _mm_shuffle_ps(r, r, _MM_SHUFFLE(1, 1, 1, 1));
+                const __m128 rz = _mm_shuffle_ps(r, r, _MM_SHUFFLE(2, 2, 2, 2));
+                const __m128 rw = _mm_shuffle_ps(r, r, _MM_SHUFFLE(3, 3, 3, 3));
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                __m128 v = _mm_mul_ps(rx, c0);
+                v = _mm_fmadd_ps(ry, c1, v);
+                v = _mm_fmadd_ps(rz, c2, v);
+                v = _mm_fmadd_ps(rw, c3, v);
+                return v;
+#else
+                __m128 v = _mm_add_ps(_mm_mul_ps(rx, c0), _mm_mul_ps(ry, c1));
+                v = _mm_add_ps(v, _mm_mul_ps(rz, c2));
+                v = _mm_add_ps(v, _mm_mul_ps(rw, c3));
+                return v;
+#endif
+                };
+
+            _mm_storeu_ps(out.m[0], rowDotCols(r0, c0, c1, c2, c3));
+            _mm_storeu_ps(out.m[1], rowDotCols(r1, c0, c1, c2, c3));
+            _mm_storeu_ps(out.m[2], rowDotCols(r2, c0, c1, c2, c3));
+            _mm_storeu_ps(out.m[3], rowDotCols(r3, c0, c1, c2, c3));
+
+            return out;
+        }
+
+        static inline Matrix3x4f Mul3x4x4x4_To3x4_SSE(const Matrix3x4f& A,
+            const Matrix4x4f& B) noexcept
+        {
+			Matrix3x4f C;
+
+            __m128 c0, c1, c2, c3; MakeColsFromMat4x4_SSE(B, c0, c1, c2, c3);
+
+            const __m128 r0 = _mm_loadu_ps(&A.m[0][0]); // [r00 r01 r02 tx]
+            const __m128 r1 = _mm_loadu_ps(&A.m[1][0]); // [r10 r11 r12 ty]
+            const __m128 r2 = _mm_loadu_ps(&A.m[2][0]); // [r20 r21 r22 tz]
+
+            auto RowTimesCols = [](__m128 r, __m128 c0, __m128 c1, __m128 c2, __m128 c3) {
+                const __m128 rx = _mm_shuffle_ps(r, r, _MM_SHUFFLE(0, 0, 0, 0));
+                const __m128 ry = _mm_shuffle_ps(r, r, _MM_SHUFFLE(1, 1, 1, 1));
+                const __m128 rz = _mm_shuffle_ps(r, r, _MM_SHUFFLE(2, 2, 2, 2));
+                const __m128 rw = _mm_shuffle_ps(r, r, _MM_SHUFFLE(3, 3, 3, 3));
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                __m128 v = _mm_mul_ps(rx, c0);
+                v = _mm_fmadd_ps(ry, c1, v);
+                v = _mm_fmadd_ps(rz, c2, v);
+                v = _mm_fmadd_ps(rw, c3, v);
+                return v;
+#else
+                __m128 v = _mm_add_ps(_mm_mul_ps(rx, c0), _mm_mul_ps(ry, c1));
+                v = _mm_add_ps(v, _mm_mul_ps(rz, c2));
+                v = _mm_add_ps(v, _mm_mul_ps(rw, c3));
+                return v;
+#endif
+                };
+
+            _mm_storeu_ps(&C.m[0][0], RowTimesCols(r0, c0, c1, c2, c3));
+            _mm_storeu_ps(&C.m[1][0], RowTimesCols(r1, c0, c1, c2, c3));
+            _mm_storeu_ps(&C.m[2][0], RowTimesCols(r2, c0, c1, c2, c3));
+
+			return C;
+        }
+
+        static inline void Mul4x4x3x4_Batch_SSE(const Matrix4x4f& A,
+            const Matrix3x4f* B, Matrix4x4f* out,
+            std::size_t count) noexcept
+        {
+            const __m128 r0 = _mm_loadu_ps(A.m[0]);
+            const __m128 r1 = _mm_loadu_ps(A.m[1]);
+            const __m128 r2 = _mm_loadu_ps(A.m[2]);
+            const __m128 r3 = _mm_loadu_ps(A.m[3]);
+
+            const __m128 r0x = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r0y = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r0z = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r0w = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(3, 3, 3, 3));
+            const __m128 r1x = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r1y = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r1z = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r1w = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(3, 3, 3, 3));
+            const __m128 r2x = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r2y = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r2z = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r2w = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(3, 3, 3, 3));
+            const __m128 r3x = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r3y = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r3z = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r3w = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(3, 3, 3, 3));
+
+            for (std::size_t i = 0; i < count; ++i) {
+                __m128 c0, c1, c2, c3; MakeColsFromMat3x4_SSE(B[i], c0, c1, c2, c3);
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                auto dot4 = [](__m128 rx, __m128 ry, __m128 rz, __m128 rw,
+                    __m128 c0, __m128 c1, __m128 c2, __m128 c3) {
+                        __m128 v = _mm_mul_ps(rx, c0);
+                        v = _mm_fmadd_ps(ry, c1, v);
+                        v = _mm_fmadd_ps(rz, c2, v);
+                        v = _mm_fmadd_ps(rw, c3, v);
+                        return v;
+                    };
+#else
+                auto dot4 = [](__m128 rx, __m128 ry, __m128 rz, __m128 rw,
+                    __m128 c0, __m128 c1, __m128 c2, __m128 c3) {
+                        __m128 v = _mm_add_ps(_mm_mul_ps(rx, c0), _mm_mul_ps(ry, c1));
+                        v = _mm_add_ps(v, _mm_mul_ps(rz, c2));
+                        v = _mm_add_ps(v, _mm_mul_ps(rw, c3));
+                        return v;
+                    };
+#endif
+                _mm_storeu_ps(out[i].m[0], dot4(r0x, r0y, r0z, r0w, c0, c1, c2, c3));
+                _mm_storeu_ps(out[i].m[1], dot4(r1x, r1y, r1z, r1w, c0, c1, c2, c3));
+                _mm_storeu_ps(out[i].m[2], dot4(r2x, r2y, r2z, r2w, c0, c1, c2, c3));
+                _mm_storeu_ps(out[i].m[3], dot4(r3x, r3y, r3z, r3w, c0, c1, c2, c3));
+            }
+        }
+
+        static inline void Mul4x4x3x4_To3x4_SSE(const Matrix4x4f& A, const Matrix3x4f& B, Matrix3x4f& out) noexcept
+        {
+            __m128 c0, c1, c2, c3; MakeColsFromMat3x4_SSE(B, c0, c1, c2, c3);
+
+            const __m128 r0 = _mm_loadu_ps(A.m[0]);
+            const __m128 r1 = _mm_loadu_ps(A.m[1]);
+            const __m128 r2 = _mm_loadu_ps(A.m[2]);
+
+            auto rowDotCols = [](__m128 r, __m128 c0, __m128 c1, __m128 c2, __m128 c3) {
+                const __m128 rx = _mm_shuffle_ps(r, r, _MM_SHUFFLE(0, 0, 0, 0));
+                const __m128 ry = _mm_shuffle_ps(r, r, _MM_SHUFFLE(1, 1, 1, 1));
+                const __m128 rz = _mm_shuffle_ps(r, r, _MM_SHUFFLE(2, 2, 2, 2));
+                const __m128 rw = _mm_shuffle_ps(r, r, _MM_SHUFFLE(3, 3, 3, 3));
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                __m128 v = _mm_mul_ps(rx, c0);
+                v = _mm_fmadd_ps(ry, c1, v);
+                v = _mm_fmadd_ps(rz, c2, v);
+                v = _mm_fmadd_ps(rw, c3, v);
+                return v;
+#else
+                __m128 v = _mm_add_ps(_mm_mul_ps(rx, c0), _mm_mul_ps(ry, c1));
+                v = _mm_add_ps(v, _mm_mul_ps(rz, c2));
+                v = _mm_add_ps(v, _mm_mul_ps(rw, c3));
+                return v;
+#endif
+                };
+
+            __m128 o0 = rowDotCols(r0, c0, c1, c2, c3);
+            __m128 o1 = rowDotCols(r1, c0, c1, c2, c3);
+            __m128 o2 = rowDotCols(r2, c0, c1, c2, c3);
+
+            // oN = [c0 c1 c2 t] ã®å½¢ã§æ¥ã‚‹ã®ã§ã€ãã®ã¾ã¾ row-major 3x4 ã«æ ¼ç´
+            _mm_storeu_ps(&out.m[0][0], o0);
+            _mm_storeu_ps(&out.m[1][0], o1);
+            _mm_storeu_ps(&out.m[2][0], o2);
+        }
+
+
+        //==============================
+        // 4x4 ä¸€èˆ¬é€†è¡Œåˆ—ï¼ˆã‚¹ã‚«ãƒ©ãƒ¼ï¼‰
+         // det è¿‘å‚ 0 ã®å ´åˆã¯æ’ç­‰ã‚’è¿”ã™ï¼ˆRelease å®‰å…¨ï¼‰
+        //==============================
+        template<typename T>
+        Matrix<4, 4, T> Inverse(const Matrix<4, 4, T>& M) noexcept {
+            using std::abs;
+
+            Matrix<4, 4, T> inv{};
+            const auto& a = M.m;
+
+            inv[0][0] = a[1][1] * a[2][2] * a[3][3] - a[1][1] * a[2][3] * a[3][2] - a[2][1] * a[1][2] * a[3][3]
+                + a[2][1] * a[1][3] * a[3][2] + a[3][1] * a[1][2] * a[2][3] - a[3][1] * a[1][3] * a[2][2];
+
+            inv[0][1] = -a[0][1] * a[2][2] * a[3][3] + a[0][1] * a[2][3] * a[3][2] + a[2][1] * a[0][2] * a[3][3]
+                - a[2][1] * a[0][3] * a[3][2] - a[3][1] * a[0][2] * a[2][3] + a[3][1] * a[0][3] * a[2][2];
+
+            inv[0][2] = a[0][1] * a[1][2] * a[3][3] - a[0][1] * a[1][3] * a[3][2] - a[1][1] * a[0][2] * a[3][3]
+                + a[1][1] * a[0][3] * a[3][2] + a[3][1] * a[0][2] * a[1][3] - a[3][1] * a[0][3] * a[1][2];
+
+            inv[0][3] = -a[0][1] * a[1][2] * a[2][3] + a[0][1] * a[1][3] * a[2][2] + a[1][1] * a[0][2] * a[2][3]
+                - a[1][1] * a[0][3] * a[2][2] - a[2][1] * a[0][2] * a[1][3] + a[2][1] * a[0][3] * a[1][2];
+
+            inv[1][0] = -a[1][0] * a[2][2] * a[3][3] + a[1][0] * a[2][3] * a[3][2] + a[2][0] * a[1][2] * a[3][3]
+                - a[2][0] * a[1][3] * a[3][2] - a[3][0] * a[1][2] * a[2][3] + a[3][0] * a[1][3] * a[2][2];
+
+            inv[1][1] = a[0][0] * a[2][2] * a[3][3] - a[0][0] * a[2][3] * a[3][2] - a[2][0] * a[0][2] * a[3][3]
+                + a[2][0] * a[0][3] * a[3][2] + a[3][0] * a[0][2] * a[2][3] - a[3][0] * a[0][3] * a[2][2];
+
+            inv[1][2] = -a[0][0] * a[1][2] * a[3][3] + a[0][0] * a[1][3] * a[3][2] + a[1][0] * a[0][2] * a[3][3]
+                - a[1][0] * a[0][3] * a[3][2] - a[3][0] * a[0][2] * a[1][3] + a[3][0] * a[0][3] * a[1][2];
+
+            inv[1][3] = a[0][0] * a[1][2] * a[2][3] - a[0][0] * a[1][3] * a[2][2] - a[1][0] * a[0][2] * a[2][3]
+                + a[1][0] * a[0][3] * a[2][2] + a[2][0] * a[0][2] * a[1][3] - a[2][0] * a[0][3] * a[1][2];
+
+            inv[2][0] = a[1][0] * a[2][1] * a[3][3] - a[1][0] * a[2][3] * a[3][1] - a[2][0] * a[1][1] * a[3][3]
+                + a[2][0] * a[1][3] * a[3][1] + a[3][0] * a[1][1] * a[2][3] - a[3][0] * a[1][3] * a[2][1];
+
+            inv[2][1] = -a[0][0] * a[2][1] * a[3][3] + a[0][0] * a[2][3] * a[3][1] + a[2][0] * a[0][1] * a[3][3]
+                - a[2][0] * a[0][3] * a[3][1] - a[3][0] * a[0][1] * a[2][3] + a[3][0] * a[0][3] * a[2][1];
+
+            inv[2][2] = a[0][0] * a[1][1] * a[3][3] - a[0][0] * a[1][3] * a[3][1] - a[1][0] * a[0][1] * a[3][3]
+                + a[1][0] * a[0][3] * a[3][1] + a[3][0] * a[0][1] * a[1][3] - a[3][0] * a[0][3] * a[1][1];
+
+            inv[2][3] = -a[0][0] * a[1][1] * a[2][3] + a[0][0] * a[1][3] * a[2][1] + a[1][0] * a[0][1] * a[2][3]
+                - a[1][0] * a[0][3] * a[2][1] - a[2][0] * a[0][1] * a[1][3] + a[2][0] * a[0][3] * a[1][1];
+
+            inv[3][0] = -a[1][0] * a[2][1] * a[3][2] + a[1][0] * a[2][2] * a[3][1] + a[2][0] * a[1][1] * a[3][2]
+                - a[2][0] * a[1][2] * a[3][1] - a[3][0] * a[1][1] * a[2][2] + a[3][0] * a[1][2] * a[2][1];
+
+            inv[3][1] = a[0][0] * a[2][1] * a[3][2] - a[0][0] * a[2][2] * a[3][1] - a[2][0] * a[0][1] * a[3][2]
+                + a[2][0] * a[0][2] * a[3][1] + a[3][0] * a[0][1] * a[2][2] - a[3][0] * a[0][2] * a[2][1];
+
+            inv[3][2] = -a[0][0] * a[1][1] * a[3][2] + a[0][0] * a[1][2] * a[3][1] + a[1][0] * a[0][1] * a[3][2]
+                - a[1][0] * a[0][2] * a[3][1] - a[3][0] * a[0][1] * a[1][2] + a[3][0] * a[0][2] * a[1][1];
+
+            inv[3][3] = a[0][0] * a[1][1] * a[2][2] - a[0][0] * a[1][2] * a[2][1] - a[1][0] * a[0][1] * a[2][2]
+                + a[1][0] * a[0][2] * a[2][1] + a[2][0] * a[0][1] * a[1][2] - a[2][0] * a[0][2] * a[1][1];
+
+            T det = a[0][0] * inv[0][0] + a[0][1] * inv[1][0] + a[0][2] * inv[2][0] + a[0][3] * inv[3][0];
+            // æ•°å€¤å®‰å®šåŒ–: è¡Œåˆ—è¦ç´ ã®ã‚¹ã‚±ãƒ¼ãƒ«ã«å¿œã˜ãŸç›¸å¯¾ã—ãã„å€¤
+            T s = T(0);
+            for (int i = 0; i < 4; ++i)
+                for (int j = 0; j < 4; ++j)
+                    s = (abs(a[i][j]) > s) ? abs(a[i][j]) : s;
+            const T eps = std::numeric_limits<T>::epsilon() * T(100) * (s > T(1) ? s : T(1));
+            if (abs(det) <= eps) {
+                // éæ­£å‰‡ï¼šæ’ç­‰è¿”ã—ï¼ˆç”¨é€”ã«å¿œã˜ã¦å¤‰æ›´å¯ï¼‰
+                return Matrix<4, 4, T>::Identity();
+            }
+            const T invDet = T(1) / det;
+            for (int i = 0; i < 4; ++i) for (int j = 0; j < 4; ++j) inv[i][j] *= invDet;
+            return inv;
+        }
+
+        //==============================
+        // ã‚¢ãƒ•ã‚£ãƒ³é€†è¡Œåˆ—ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ï¼‰
+        //==============================
+        inline bool IsOrthonormalRotation3x3(const Matrix4x4f& M, float eps = 1e-4f) noexcept {
+            const Vec3<float> r0{ M.m[0][0],M.m[0][1],M.m[0][2] };
+            const Vec3<float> r1{ M.m[1][0],M.m[1][1],M.m[1][2] };
+            const Vec3<float> r2{ M.m[2][0],M.m[2][1],M.m[2][2] };
+            auto near1 = [&](float v) { return std::fabs(v - 1.f) <= eps; };
+            auto near0 = [&](float v) { return std::fabs(v) <= eps; };
+            const bool ortho = near1(r0.dot(r0)) && near1(r1.dot(r1)) && near1(r2.dot(r2)) &&
+                near0(r0.dot(r1)) && near0(r1.dot(r2)) && near0(r2.dot(r0));
+            const float det = r0.dot(r1.cross(r2));
+            return ortho && (std::fabs(det - 1.f) <= 2e-3f); // detâ‰ˆ+1 ã‚‚ãƒã‚§ãƒƒã‚¯
+        }
+
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-			if (IsOrthonormalRotation3x3(M)) return InverseAffineOrthonormal(M);
-#endif // (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-			return InverseAffine(M);
-		}
+        // R ãŒæ­£è¦ç›´äº¤ï¼ˆR^{-1}=R^Tï¼‰æƒ³å®šï¼šM=[R t; 0 1] â†’ M^{-1}=[R^T -R^T t; 0 1]
+        inline Matrix4x4f InverseAffineOrthonormal(const Matrix4x4f& M) noexcept {
+            // è¡Œã‚’èª­ã¿è¾¼ã‚“ã§è»¢ç½®â†’åˆ—ã‚’å¾—ã‚‹
+            __m128 r0 = _mm_loadu_ps(M.m[0]);
+            __m128 r1 = _mm_loadu_ps(M.m[1]);
+            __m128 r2 = _mm_loadu_ps(M.m[2]);
+            __m128 r3 = _mm_loadu_ps(M.m[3]);
+            _MM_TRANSPOSE4_PS(r0, r1, r2, r3); // r0=col0=[m00 m10 m20 m30], r3=col3=[tx ty tz 1]
 
-		// SoA ‚©‚çƒ[ƒ‹ƒhs—ñ (M = T * R * S) ‚ğˆêŠ‡¶¬
-		struct MTransformSoA {
-			const float* px; const float* py; const float* pz;       // translation
-			const float* qx; const float* qy; const float* qz; const float* qw; // rotation (unit quaternion „§)
-			const float* sx; const float* sy; const float* sz;       // scale
-		};
+            // R^T ã¯è¡Œã¨ã—ã¦ã¯å…ƒã®è¡Œåˆ—ã®ä¸Šå·¦3x3 è»¢ç½®
+            // col0..2 ã® xyz ã‚’ãã‚Œãã‚Œè¡Œã«ç½®ã
+            Matrix4x4f Out = Matrix4x4f::Identity();
 
-		// q ‚ği‚Ù‚Új’PˆÊ‰»‚µ‚½‚¢ê‡‚Í trueBƒRƒXƒg‚ğ”ğ‚¯‚½‚¢‚È‚ç falseB
-		inline void BuildWorldMatrices_FromSoA(
-			const MTransformSoA& t, size_t n, SectorFW::Math::Matrix4x4f* outM, bool renormalizeQuat = false) noexcept
+            alignas(16) float c0[4], c1[4], c2[4], c3[4];
+            _mm_storeu_ps(c0, r0);
+            _mm_storeu_ps(c1, r1);
+            _mm_storeu_ps(c2, r2);
+            _mm_storeu_ps(c3, r3); // t = (c3[0],c3[1],c3[2])
+
+            // ä¸Šå·¦3x3 = R^T
+            Out.m[0][0] = c0[0]; Out.m[0][1] = c1[0]; Out.m[0][2] = c2[0];
+            Out.m[1][0] = c0[1]; Out.m[1][1] = c1[1]; Out.m[1][2] = c2[1];
+            Out.m[2][0] = c0[2]; Out.m[2][1] = c1[2]; Out.m[2][2] = c2[2];
+
+            // t' = -R^T * t
+            const float tx = c3[0], ty = c3[1], tz = c3[2];
+            Out.m[0][3] = -(Out.m[0][0] * tx + Out.m[0][1] * ty + Out.m[0][2] * tz);
+            Out.m[1][3] = -(Out.m[1][0] * tx + Out.m[1][1] * ty + Out.m[1][2] * tz);
+            Out.m[2][3] = -(Out.m[2][0] * tx + Out.m[2][1] * ty + Out.m[2][2] * tz);
+            return Out;
+        }
+#endif
+
+        inline Matrix4x4f InverseAffine(const Matrix4x4f& M) noexcept {
+            // ä¸Šå·¦3x3 ã‚’é€†è¡Œåˆ—ã€å³åˆ—ã® t ã‚’ -R^{-1}t ã«
+            const float a00 = M.m[0][0], a01 = M.m[0][1], a02 = M.m[0][2];
+            const float a10 = M.m[1][0], a11 = M.m[1][1], a12 = M.m[1][2];
+            const float a20 = M.m[2][0], a21 = M.m[2][1], a22 = M.m[2][2];
+
+            const float det =
+                a00 * (a11 * a22 - a12 * a21) -
+                a01 * (a10 * a22 - a12 * a20) +
+                a02 * (a10 * a21 - a11 * a20);
+            const float eps = 1e-20f;
+            if (std::fabs(det) <= eps) {
+                return Matrix4x4f::Identity();
+            }
+            const float invDet = 1.0f / det;
+
+            Matrix4x4f Rinv = Matrix4x4f::Identity();
+            Rinv.m[0][0] = (a11 * a22 - a12 * a21) * invDet;
+            Rinv.m[0][1] = -(a01 * a22 - a02 * a21) * invDet;
+            Rinv.m[0][2] = (a01 * a12 - a02 * a11) * invDet;
+
+            Rinv.m[1][0] = -(a10 * a22 - a12 * a20) * invDet;
+            Rinv.m[1][1] = (a00 * a22 - a02 * a20) * invDet;
+            Rinv.m[1][2] = -(a00 * a12 - a02 * a10) * invDet;
+
+            Rinv.m[2][0] = (a10 * a21 - a11 * a20) * invDet;
+            Rinv.m[2][1] = -(a00 * a21 - a01 * a20) * invDet;
+            Rinv.m[2][2] = (a00 * a11 - a01 * a10) * invDet;
+
+            const float tx = M.m[0][3], ty = M.m[1][3], tz = M.m[2][3];
+
+            Matrix4x4f Out = Matrix4x4f::Identity();
+            for (int r = 0; r < 3; ++r) for (int c = 0; c < 3; ++c) Out.m[r][c] = Rinv.m[r][c];
+
+            Out.m[0][3] = -(Rinv.m[0][0] * tx + Rinv.m[0][1] * ty + Rinv.m[0][2] * tz);
+            Out.m[1][3] = -(Rinv.m[1][0] * tx + Rinv.m[1][1] * ty + Rinv.m[1][2] * tz);
+            Out.m[2][3] = -(Rinv.m[2][0] * tx + Rinv.m[2][1] * ty + Rinv.m[2][2] * tz);
+            return Out;
+        }
+
+        inline Matrix4x4f InverseFastAffine(const Matrix4x4f& M) noexcept {
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+            if (IsOrthonormalRotation3x3(M)) return InverseAffineOrthonormal(M);
+#endif
+            return InverseAffine(M);
+        }
+
+        //==============================
+        // ãƒãƒƒãƒæ¼”ç®—
+        //==============================
+        inline void Multiply4x4Batch(const Matrix4x4f* A, const Matrix4x4f* B, Matrix4x4f* C, size_t n) noexcept {
+            for (size_t i = 0; i < n; ++i) C[i] = A[i] * B[i];
+        }
+
+        inline void MultiplyManyBySameRight(const Matrix4x4f* A, const Matrix4x4f& B, Matrix4x4f* C, size_t n) noexcept {
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+            const __m128 b0 = _mm_loadu_ps(B.m[0]);
+            const __m128 b1 = _mm_loadu_ps(B.m[1]);
+            const __m128 b2 = _mm_loadu_ps(B.m[2]);
+            const __m128 b3 = _mm_loadu_ps(B.m[3]);
+            for (size_t idx = 0; idx < n; ++idx) {
+                const Matrix4x4f& A0 = A[idx];
+                for (int i = 0; i < 4; ++i) {
+                    const __m128 a0 = _mm_set1_ps(A0.m[i][0]);
+                    const __m128 a1 = _mm_set1_ps(A0.m[i][1]);
+                    const __m128 a2 = _mm_set1_ps(A0.m[i][2]);
+                    const __m128 a3 = _mm_set1_ps(A0.m[i][3]);
+
+                    __m128 r = _mm_mul_ps(a0, b0);
+                    r = detail::fmadd_ps(a1, b1, r);
+                    r = detail::fmadd_ps(a2, b2, r);
+                    r = detail::fmadd_ps(a3, b3, r);
+                    _mm_storeu_ps(C[idx].m[i], r);
+                }
+            }
+#else
+            for (size_t i = 0; i < n; ++i) C[i] = A[i] * B;
+#endif
+        }
+
+        //==============================
+        /* ç‚¹ç¾¤å¤‰æ›ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ï¼‰
+         * out[i] = M * [in[i].x, in[i].y, in[i].z, 1]^T ã® xyz ã‚’è¿”ã™
+         */
+         //==============================
+        inline void TransformPoints(const Matrix4x4f& M, const Vec3<float>* inPts, Vec3<float>* outPts, size_t n) noexcept {
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+            __m128 r0 = _mm_loadu_ps(M.m[0]);
+            __m128 r1 = _mm_loadu_ps(M.m[1]);
+            __m128 r2 = _mm_loadu_ps(M.m[2]);
+            __m128 r3 = _mm_loadu_ps(M.m[3]);
+            _MM_TRANSPOSE4_PS(r0, r1, r2, r3); // åˆ—ã‚’å–å¾—
+
+            for (size_t i = 0; i < n; ++i) {
+                const __m128 vx = _mm_set1_ps(inPts[i].x);
+                const __m128 vy = _mm_set1_ps(inPts[i].y);
+                const __m128 vz = _mm_set1_ps(inPts[i].z);
+
+                __m128 res = _mm_mul_ps(vx, r0);
+                res = detail::fmadd_ps(vy, r1, res);
+                res = detail::fmadd_ps(vz, r2, res);
+                res = _mm_add_ps(res, r3); // +t
+
+                alignas(16) float t[4];
+                _mm_storeu_ps(t, res);
+                outPts[i].x = t[0];
+                outPts[i].y = t[1];
+                outPts[i].z = t[2];
+            }
+#else
+            for (size_t i = 0; i < n; ++i) {
+                const float x = inPts[i].x, y = inPts[i].y, z = inPts[i].z;
+                outPts[i].x = M.m[0][0] * x + M.m[0][1] * y + M.m[0][2] * z + M.m[0][3];
+                outPts[i].y = M.m[1][0] * x + M.m[1][1] * y + M.m[1][2] * z + M.m[1][3];
+                outPts[i].z = M.m[2][0] * x + M.m[2][1] * y + M.m[2][2] * z + M.m[2][3];
+            }
+#endif
+        }
+
+        //==============================
+        // è¡Œåˆ—ãƒ“ãƒ«ãƒ€ãƒ¼ (4x4) â€»åˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„, å³åˆ—=å¹³è¡Œç§»å‹•
+        //==============================
+        template<typename T>
+        constexpr Matrix<4, 4, T> MakeTranslationMatrix(const Vec3<T>& t) noexcept {
+            auto m = Matrix<4, 4, T>::Identity();
+            m[0][3] = t.x; m[1][3] = t.y; m[2][3] = t.z;
+            return m;
+        }
+
+        template<typename T>
+        constexpr Matrix<4, 4, T> MakeScalingMatrix(const Vec3<T>& s) noexcept {
+            Matrix<4, 4, T> m{};
+            m[0][0] = s.x; m[1][1] = s.y; m[2][2] = s.z; m[3][3] = T(1);
+            return m;
+        }
+
+        template<typename T>
+        constexpr Matrix<4, 4, T> MakeRotationMatrix(const Quat<T>& qIn) noexcept {
+            Quat<T> q = qIn; // æ­£è¦åŒ–å‰æï¼ˆå¿…è¦ãªã‚‰ Normalizeï¼‰
+            // â€»ã“ã“ã§ Normalize ã—ã¦ã‚‚ã‚ˆã„
+            const T x = q.x, y = q.y, z = q.z, w = q.w;
+            const T xx = x * x, yy = y * y, zz = z * z;
+            const T xy = x * y, xz = x * z, yz = y * z;
+            const T wx = w * x, wy = w * y, wz = w * z;
+
+            Matrix<4, 4, T> m{};
+            m[0][0] = T(1) - T(2) * (yy + zz);
+            m[0][1] = T(2) * (xy - wz);
+            m[0][2] = T(2) * (xz + wy);
+            m[0][3] = T(0);
+
+            m[1][0] = T(2) * (xy + wz);
+            m[1][1] = T(1) - T(2) * (xx + zz);
+            m[1][2] = T(2) * (yz - wx);
+            m[1][3] = T(0);
+
+            m[2][0] = T(2) * (xz - wy);
+            m[2][1] = T(2) * (yz + wx);
+            m[2][2] = T(1) - T(2) * (xx + yy);
+            m[2][3] = T(0);
+
+            m[3][0] = T(0); m[3][1] = T(0); m[3][2] = T(0); m[3][3] = T(1);
+            return m;
+        }
+
+        // LookAtï¼ˆå·¦æ‰‹ç³», åˆ—ãƒ™ã‚¯ãƒˆãƒ«, å³åˆ—=å¹³è¡Œç§»å‹•, +Zï¼‰
+        template<typename T>
+        inline Matrix<4, 4, T> MakeLookAtMatrixLH(const Vec3<T>& eye,
+            const Vec3<T>& target,
+            const Vec3<T>& up) noexcept
+        {
+            const Vec3<T> z = (target - eye).normalized();   // forward (+Z)
+            const Vec3<T> x = up.cross(z).normalized();      // right
+            const Vec3<T> y = z.cross(x);                    // up (å†ç›´äº¤)
+
+            Matrix<4, 4, T> m{}; // 0åˆæœŸåŒ–
+            // åˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ã§ã¯ã€Œè¡Œã€ã« x/y/z ã®æˆåˆ†ã‚’æ¨ªä¸¦ã³ã§ç½®ã
+            m[0][0] = x.x;  m[0][1] = x.y;  m[0][2] = x.z;  m[0][3] = -x.dot(eye);
+            m[1][0] = y.x;  m[1][1] = y.y;  m[1][2] = y.z;  m[1][3] = -y.dot(eye);
+            m[2][0] = z.x;  m[2][1] = z.y;  m[2][2] = z.z;  m[2][3] = -z.dot(eye);
+            m[3][0] = 0;    m[3][1] = 0;    m[3][2] = 0;    m[3][3] = 1;
+            return m;
+        }
+
+        // LookAtï¼ˆå³æ‰‹ç³», åˆ—ãƒ™ã‚¯ãƒˆãƒ«, å³åˆ—=å¹³è¡Œç§»å‹•, -Zï¼‰
+        template<typename T>
+        inline Matrix<4, 4, T> MakeLookAtMatrixRH(const Vec3<T>& eye,
+            const Vec3<T>& target,
+            const Vec3<T>& up) noexcept
+        {
+            const Vec3<T> z = (eye - target).normalized();   // forward (âˆ’Z)
+            const Vec3<T> x = up.cross(z).normalized();      // right
+            const Vec3<T> y = z.cross(x);                    // up
+
+            Matrix<4, 4, T> m{};
+            m[0][0] = x.x;  m[0][1] = x.y;  m[0][2] = x.z;  m[0][3] = -x.dot(eye);
+            m[1][0] = y.x;  m[1][1] = y.y;  m[1][2] = y.z;  m[1][3] = -y.dot(eye);
+            m[2][0] = z.x;  m[2][1] = z.y;  m[2][2] = z.z;  m[2][3] = -z.dot(eye);
+            m[3][0] = 0;    m[3][1] = 0;    m[3][2] = 0;    m[3][3] = 1;
+            return m;
+        }
+
+        enum class Handedness { LH, RH };
+        enum class ClipZRange { ZeroToOne, NegOneToOne }; // DX, GL
+
+        //==============================================================
+        // é€è¦–æŠ•å½±ï¼ˆFOVï¼‰â€” åˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ / row-major / å³åˆ—=å¹³è¡Œç§»å‹•
+        // æ³¨æ„: w' = z_view ã«ãªã‚‹ã‚ˆã†ã« m[3][2] ã‚’ Â±1 ã«ç½®ãã®ãŒè‚
+        //   LH+DX[0,1]:   m[3][2] = +1
+        //   RH+DX[0,1]:   m[3][2] = -1
+        //   LH/RH+GL[-1,1] ã§ã‚‚ m[3][2] ã® Â±1 ã¯ç¶­æŒï¼ˆz è¡Œã®ä¿‚æ•°ã ã‘å¤‰åŒ–ï¼‰
+        //==============================================================
+        template<Handedness H, ClipZRange Z, typename T>
+        constexpr Matrix<4, 4, T>
+            MakePerspectiveFovT(T fovY, T aspect, T nearZ, T farZ) noexcept
+        {
+            const T s = T(1) / std::tan(fovY / T(2));
+            Matrix<4, 4, T> m{};          // 0 åˆæœŸåŒ–
+            m[0][0] = s / aspect;
+            m[1][1] = s;
+            // m[3][3] = 0
+
+            if constexpr (H == Handedness::LH) {
+                // ---- Left-handed (+Z forward)
+                if constexpr (Z == ClipZRange::ZeroToOne) {
+                    // DX [0,1]
+                    m[2][2] = farZ / (farZ - nearZ);
+                    m[2][3] = (-nearZ * farZ) / (farZ - nearZ);
+                    m[3][2] = T(1);               // w' = z_view
+                }
+                else {
+                    // GL [-1,1]
+                    m[2][2] = (farZ + nearZ) / (farZ - nearZ);
+                    m[2][3] = (-T(2) * nearZ * farZ) / (farZ - nearZ);
+                    m[3][2] = T(1);
+                }
+            }
+            else {
+                // ---- Right-handed (âˆ’Z forward)
+                if constexpr (Z == ClipZRange::ZeroToOne) {
+                    // DX [0,1]
+                    m[2][2] = farZ / (nearZ - farZ);
+                    m[2][3] = (nearZ * farZ) / (nearZ - farZ);
+                    m[3][2] = T(-1);              // w' = âˆ’z_view
+                }
+                else {
+                    // GL [-1,1]
+                    m[2][2] = (farZ + nearZ) / (nearZ - farZ);
+                    m[2][3] = (T(2) * nearZ * farZ) / (nearZ - farZ);
+                    m[3][2] = T(-1);
+                }
+            }
+            return m;
+        }
+
+        //==============================================================
+        // ç›´äº¤æŠ•å½± â€” åˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ / row-major / å³åˆ—=å¹³è¡Œç§»å‹•
+        // â€» ã‚ªãƒ«ã‚½ã¯ w' = 1 ã®ã¾ã¾ãªã®ã§ m[3][2] ã¯ 0ã€m[3][3] = 1
+        //==============================================================
+        template<Handedness H, ClipZRange Z, typename T>
+        constexpr Matrix<4, 4, T>
+            MakeOrthographicT(T l, T r, T b, T t, T n, T f_) noexcept
+        {
+            Matrix<4, 4, T> m{}; // 0 åˆæœŸåŒ–
+            m[0][0] = T(2) / (r - l);
+            m[1][1] = T(2) / (t - b);
+            m[0][3] = -(r + l) / (r - l);
+            m[1][3] = -(t + b) / (t - b);
+            m[3][3] = T(1);                 // â˜… w' = 1
+
+            if constexpr (H == Handedness::LH) {
+                if constexpr (Z == ClipZRange::ZeroToOne) {
+                    // DX [0,1]
+                    m[2][2] = T(1) / (f_ - n);
+                    m[2][3] = -n / (f_ - n);
+                }
+                else {
+                    // GL [-1,1]
+                    m[2][2] = T(2) / (f_ - n);
+                    m[2][3] = -(f_ + n) / (f_ - n);
+                }
+            }
+            else {
+                if constexpr (Z == ClipZRange::ZeroToOne) {
+                    // DX [0,1]
+                    m[2][2] = T(-1) / (f_ - n);
+                    m[2][3] = -n / (f_ - n);
+                }
+                else {
+                    // GL [-1,1]
+                    m[2][2] = T(-2) / (f_ - n);
+                    m[2][3] = -(f_ + n) / (f_ - n);
+                }
+            }
+            return m;
+        }
+
+
+
+        //==============================
+        // ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£: ç‚¹/æ–¹å‘ã®å˜ç™ºå¤‰æ›ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«ï¼‰
+        //==============================
+        template<typename T>
+        inline Vec3<T> TransformPoint(const Matrix<4, 4, T>& M, const Vec3<T>& p) noexcept {
+            return {
+                M.m[0][0] * p.x + M.m[0][1] * p.y + M.m[0][2] * p.z + M.m[0][3],
+                M.m[1][0] * p.x + M.m[1][1] * p.y + M.m[1][2] * p.z + M.m[1][3],
+                M.m[2][0] * p.x + M.m[2][1] * p.y + M.m[2][2] * p.z + M.m[2][3],
+            };
+        }
+        template<typename T>
+        inline Vec3<T> TransformVector(const Matrix<4, 4, T>& M, const Vec3<T>& v) noexcept {
+            return {
+                M.m[0][0] * v.x + M.m[0][1] * v.y + M.m[0][2] * v.z,
+                M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z,
+                M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z,
+            };
+        }
+
+        //==============================
+        // Matrix4x4f ã¸ã® SIMD ã‚¢ã‚µã‚¤ãƒ³æ”¯æ´
+        //==============================
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+        inline void SetZero(Matrix4x4f& M) noexcept {
+            const __m128 z = _mm_setzero_ps();
+            _mm_storeu_ps(M.m[0], z);
+            _mm_storeu_ps(M.m[1], z);
+            _mm_storeu_ps(M.m[2], z);
+            _mm_storeu_ps(M.m[3], z);
+        }
+        inline void SetIdentity(Matrix4x4f& M) noexcept {
+            SetZero(M);
+            M.m[0][0] = 1.f; M.m[1][1] = 1.f; M.m[2][2] = 1.f; M.m[3][3] = 1.f;
+        }
+        inline void SetRow(Matrix4x4f& M, int r, const float* row4) noexcept {
+            _mm_storeu_ps(M.m[r], _mm_loadu_ps(row4));
+        }
+        inline void SetRow(Matrix4x4f& M, int r, __m128 v) noexcept {
+            _mm_storeu_ps(M.m[r], v);
+        }
+        inline void LoadRowMajor(Matrix4x4f& M, const float* p16_rowMajor) noexcept {
+            _mm_storeu_ps(M.m[0], _mm_loadu_ps(p16_rowMajor + 0));
+            _mm_storeu_ps(M.m[1], _mm_loadu_ps(p16_rowMajor + 4));
+            _mm_storeu_ps(M.m[2], _mm_loadu_ps(p16_rowMajor + 8));
+            _mm_storeu_ps(M.m[3], _mm_loadu_ps(p16_rowMajor + 12));
+        }
+        inline void LoadColumnMajor(Matrix4x4f& M, const float* p16_colMajor) noexcept {
+            __m128 c0 = _mm_loadu_ps(p16_colMajor + 0);
+            __m128 c1 = _mm_loadu_ps(p16_colMajor + 4);
+            __m128 c2 = _mm_loadu_ps(p16_colMajor + 8);
+            __m128 c3 = _mm_loadu_ps(p16_colMajor + 12);
+            _MM_TRANSPOSE4_PS(c0, c1, c2, c3);
+            _mm_storeu_ps(M.m[0], c0);
+            _mm_storeu_ps(M.m[1], c1);
+            _mm_storeu_ps(M.m[2], c2);
+            _mm_storeu_ps(M.m[3], c3);
+        }
+        inline void StoreRowMajor(const Matrix4x4f& M, float* dst16_rowMajor) noexcept {
+            _mm_storeu_ps(dst16_rowMajor + 0, _mm_loadu_ps(M.m[0]));
+            _mm_storeu_ps(dst16_rowMajor + 4, _mm_loadu_ps(M.m[1]));
+            _mm_storeu_ps(dst16_rowMajor + 8, _mm_loadu_ps(M.m[2]));
+            _mm_storeu_ps(dst16_rowMajor + 12, _mm_loadu_ps(M.m[3]));
+        }
+        inline void SetRows(Matrix4x4f& M, __m128 r0, __m128 r1, __m128 r2, __m128 r3) noexcept {
+            _mm_storeu_ps(M.m[0], r0);
+            _mm_storeu_ps(M.m[1], r1);
+            _mm_storeu_ps(M.m[2], r2);
+            _mm_storeu_ps(M.m[3], r3);
+        }
+        inline void Fill(Matrix4x4f& M, float v) noexcept {
+            __m128 s = _mm_set1_ps(v);
+            _mm_storeu_ps(M.m[0], s);
+            _mm_storeu_ps(M.m[1], s);
+            _mm_storeu_ps(M.m[2], s);
+            _mm_storeu_ps(M.m[3], s);
+        }
+        // ä¸Šå·¦3x3 ã‚’ __m128Ã—3 ã§å…¥ã‚Œã‚‹ï¼ˆw ã¯ 0ï¼‰
+        inline void SetUpper3x3(Matrix4x4f& M, __m128 r0, __m128 r1, __m128 r2) noexcept {
+            alignas(16) float a0[4], a1[4], a2[4];
+            _mm_storeu_ps(a0, r0); _mm_storeu_ps(a1, r1); _mm_storeu_ps(a2, r2);
+            a0[3] = 0.f; a1[3] = 0.f; a2[3] = 0.f;
+            _mm_storeu_ps(M.m[0], _mm_loadu_ps(a0));
+            _mm_storeu_ps(M.m[1], _mm_loadu_ps(a1));
+            _mm_storeu_ps(M.m[2], _mm_loadu_ps(a2));
+        }
+        inline void SetBottomRowAffine(Matrix4x4f& M) noexcept {
+            _mm_storeu_ps(M.m[3], _mm_set_ps(1.f, 0.f, 0.f, 0.f)); // [0,0,0,1]
+        }
+#else
+        inline void SetZero(Matrix4x4f& M) noexcept {
+            for (int r = 0; r < 4; ++r) for (int c = 0; c < 4; ++c) M.m[r][c] = 0.0f;
+        }
+        inline void SetIdentity(Matrix4x4f& M) noexcept {
+            SetZero(M);
+            M.m[0][0] = 1.0f; M.m[1][1] = 1.0f; M.m[2][2] = 1.0f; M.m[3][3] = 1.0f;
+        }
+        inline void SetRow(Matrix4x4f& M, int r, const float* row4) noexcept {
+            for (int c = 0; c < 4; ++c) M.m[r][c] = row4[c];
+        }
+        inline void LoadRowMajor(Matrix4x4f& M, const float* p) noexcept {
+            for (int r = 0; r < 4; ++r) for (int c = 0; c < 4; ++c) M.m[r][c] = p[r * 4 + c];
+        }
+        inline void LoadColumnMajor(Matrix4x4f& M, const float* p) noexcept {
+            for (int r = 0; r < 4; ++r) for (int c = 0; c < 4; ++c) M.m[r][c] = p[c * 4 + r];
+        }
+        inline void StoreRowMajor(const Matrix4x4f& M, float* p) noexcept {
+            for (int r = 0; r < 4; ++r) for (int c = 0; c < 4; ++c) p[r * 4 + c] = M.m[r][c];
+        }
+        inline void SetRows(Matrix4x4f& M, const float* r0, const float* r1, const float* r2, const float* r3) noexcept {
+            SetRow(M, 0, r0); SetRow(M, 1, r1); SetRow(M, 2, r2); SetRow(M, 3, r3);
+        }
+        inline void Fill(Matrix4x4f& M, float v) noexcept {
+            for (int r = 0; r < 4; ++r) for (int c = 0; c < 4; ++c) M.m[r][c] = v;
+        }
+        inline void SetUpper3x3(Matrix4x4f& M, const float* r0, const float* r1, const float* r2) noexcept {
+            M.m[0][0] = r0[0]; M.m[0][1] = r0[1]; M.m[0][2] = r0[2]; M.m[0][3] = 0.0f;
+            M.m[1][0] = r1[0]; M.m[1][1] = r1[1]; M.m[1][2] = r1[2]; M.m[1][3] = 0.0f;
+            M.m[2][0] = r2[0]; M.m[2][1] = r2[1]; M.m[2][2] = r2[2]; M.m[2][3] = 0.0f;
+        }
+        inline void SetBottomRowAffine(Matrix4x4f& M) noexcept {
+            M.m[3][0] = 0.f; M.m[3][1] = 0.f; M.m[3][2] = 0.f; M.m[3][3] = 1.f;
+        }
+#endif
+
+        //==============================
+        // SoA ã‹ã‚‰ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ— (M = T * R * S) ã‚’ä¸€æ‹¬ç”Ÿæˆ
+        //==============================
+        struct MTransformSoA {
+            const float* px; const float* py; const float* pz;                    // translation
+            const float* qx; const float* qy; const float* qz; const float* qw;   // quaternion (unit æ¨å¥¨)
+            const float* sx; const float* sy; const float* sz;                    // scale
+        };
+
+        // q ã‚’æ­£è¦åŒ–ã—ãŸã„å ´åˆ true
+        inline void BuildWorldMatrices_FromSoA(
+            const MTransformSoA& t, size_t n, SectorFW::Math::Matrix4x4f* outM, bool renormalizeQuat = false) noexcept
+        {
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+            const size_t vecN = n & ~size_t(3);
+            static const __m128 two = _mm_set1_ps(2.0f);
+            static const __m128 one = _mm_set1_ps(1.0f);
+            static const __m128 half = _mm_set1_ps(0.5f);
+            static const __m128 onept5 = _mm_set1_ps(1.5f);
+            static const __m128 tiny = _mm_set1_ps(1e-20f);
+
+            auto normalize4 = [](__m128 x, __m128 y, __m128 z, __m128 w) {
+                // s = x^2 + y^2 + z^2 + w^2
+                __m128 s = _mm_add_ps(_mm_mul_ps(x, x),
+                    _mm_add_ps(_mm_mul_ps(y, y),
+                        _mm_add_ps(_mm_mul_ps(z, z), _mm_mul_ps(w, w))));
+                __m128 rinv = _mm_rsqrt_ps(s);
+                // 1 å›ãƒ‹ãƒ¥ãƒ¼ãƒˆãƒ³æ”¹è‰¯: y = y*(1.5 - 0.5*s*y*y)
+                __m128 yy = _mm_mul_ps(rinv, rinv);
+                rinv = _mm_mul_ps(rinv, _mm_sub_ps(onept5, _mm_mul_ps(half, _mm_mul_ps(s, yy))));
+                __m128 nx = _mm_mul_ps(x, rinv);
+                __m128 ny = _mm_mul_ps(y, rinv);
+                __m128 nz = _mm_mul_ps(z, rinv);
+                __m128 nw = _mm_mul_ps(w, rinv);
+                // ã‚¼ãƒ­å››å…ƒæ•°ã‚¬ãƒ¼ãƒ‰: s < tiny ã®ãƒ¬ãƒ¼ãƒ³ã¯ (0,0,0,1) ã«å¼·åˆ¶
+                __m128 mask = _mm_cmplt_ps(s, tiny);
+                __m128 zx = _mm_setzero_ps(), zy = _mm_setzero_ps(), zz = _mm_setzero_ps(), zw = _mm_set1_ps(1.0f);
+                nx = _mm_or_ps(_mm_and_ps(mask, zx), _mm_andnot_ps(mask, nx));
+                ny = _mm_or_ps(_mm_and_ps(mask, zy), _mm_andnot_ps(mask, ny));
+                nz = _mm_or_ps(_mm_and_ps(mask, zz), _mm_andnot_ps(mask, nz));
+                nw = _mm_or_ps(_mm_and_ps(mask, zw), _mm_andnot_ps(mask, nw));
+                return std::tuple{ nx, ny, nz, nw };
+                };
+
+            for (size_t i = 0; i < vecN; i += 4) {
+                __m128 px = _mm_loadu_ps(t.px + i), py = _mm_loadu_ps(t.py + i), pz = _mm_loadu_ps(t.pz + i);
+                __m128 qx = _mm_loadu_ps(t.qx + i), qy = _mm_loadu_ps(t.qy + i), qz = _mm_loadu_ps(t.qz + i), qw = _mm_loadu_ps(t.qw + i);
+                __m128 sx = _mm_loadu_ps(t.sx + i), sy = _mm_loadu_ps(t.sy + i), sz = _mm_loadu_ps(t.sz + i);
+
+                if (renormalizeQuat) std::tie(qx, qy, qz, qw) = normalize4(qx, qy, qz, qw);
+
+                __m128 xx = _mm_mul_ps(qx, qx), yy = _mm_mul_ps(qy, qy), zz = _mm_mul_ps(qz, qz);
+                __m128 xy = _mm_mul_ps(qx, qy), xz = _mm_mul_ps(qx, qz), yz = _mm_mul_ps(qy, qz);
+                __m128 wx = _mm_mul_ps(qw, qx), wy = _mm_mul_ps(qw, qy), wz = _mm_mul_ps(qw, qz);
+
+                __m128 r00 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(yy, zz)));
+                __m128 r01 = _mm_mul_ps(two, _mm_sub_ps(xy, wz));
+                __m128 r02 = _mm_mul_ps(two, _mm_add_ps(xz, wy));
+
+                __m128 r10 = _mm_mul_ps(two, _mm_add_ps(xy, wz));
+                __m128 r11 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(xx, zz)));
+                __m128 r12 = _mm_mul_ps(two, _mm_sub_ps(yz, wx));
+
+                __m128 r20 = _mm_mul_ps(two, _mm_sub_ps(xz, wy));
+                __m128 r21 = _mm_mul_ps(two, _mm_add_ps(yz, wx));
+                __m128 r22 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(xx, yy)));
+
+                // åˆ—ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆR * diag(sx,sy,sz)ï¼‰
+                __m128 m00 = _mm_mul_ps(r00, sx), m01 = _mm_mul_ps(r01, sy), m02 = _mm_mul_ps(r02, sz);
+                __m128 m10 = _mm_mul_ps(r10, sx), m11 = _mm_mul_ps(r11, sy), m12 = _mm_mul_ps(r12, sz);
+                __m128 m20 = _mm_mul_ps(r20, sx), m21 = _mm_mul_ps(r21, sy), m22 = _mm_mul_ps(r22, sz);
+
+                // å³åˆ— = å¹³è¡Œç§»å‹•
+                __m128 m03 = px, m13 = py, m23 = pz;
+
+                // AoS ã«æ•£ã‚‰ã™
+                alignas(16) float a00[4], a01[4], a02[4], a10[4], a11[4], a12[4], a20[4], a21[4], a22[4];
+                alignas(16) float t0[4], t1[4], t2[4];
+                _mm_store_ps(a00, m00); _mm_store_ps(a01, m01); _mm_store_ps(a02, m02);
+                _mm_store_ps(a10, m10); _mm_store_ps(a11, m11); _mm_store_ps(a12, m12);
+                _mm_store_ps(a20, m20); _mm_store_ps(a21, m21); _mm_store_ps(a22, m22);
+                _mm_store_ps(t0, m03); _mm_store_ps(t1, m13); _mm_store_ps(t2, m23);
+
+                for (int lane = 0; lane < 4; ++lane) {
+                    Matrix4x4f& M = outM[i + lane];
+                    // è¡Œ0..2, å³åˆ—ã« t
+                    _mm_storeu_ps(M.m[0], _mm_set_ps(t0[lane], a02[lane], a01[lane], a00[lane]));
+                    _mm_storeu_ps(M.m[1], _mm_set_ps(t1[lane], a12[lane], a11[lane], a10[lane]));
+                    _mm_storeu_ps(M.m[2], _mm_set_ps(t2[lane], a22[lane], a21[lane], a20[lane]));
+                    _mm_storeu_ps(M.m[3], _mm_set_ps(1.f, 0.f, 0.f, 0.f));
+                }
+            }
+            // ç«¯æ•°
+            for (size_t i = vecN; i < n; ++i) {
+#else
+            for (size_t i = 0; i < n; ++i) {
+#endif
+                Quat<float> q(t.qx[i], t.qy[i], t.qz[i], t.qw[i]);
+                if (renormalizeQuat) q.Normalize();
+                const auto R = MakeRotationMatrix(q);
+
+                Matrix4x4f M{};
+                M.m[0][0] = R.m[0][0] * t.sx[i]; M.m[0][1] = R.m[0][1] * t.sy[i]; M.m[0][2] = R.m[0][2] * t.sz[i]; M.m[0][3] = t.px[i];
+                M.m[1][0] = R.m[1][0] * t.sx[i]; M.m[1][1] = R.m[1][1] * t.sy[i]; M.m[1][2] = R.m[1][2] * t.sz[i]; M.m[1][3] = t.py[i];
+                M.m[2][0] = R.m[2][0] * t.sx[i]; M.m[2][1] = R.m[2][1] * t.sy[i]; M.m[2][2] = R.m[2][2] * t.sz[i]; M.m[2][3] = t.pz[i];
+                M.m[3][0] = 0.f; M.m[3][1] = 0.f; M.m[3][2] = 0.f; M.m[3][3] = 1.f;
+                outM[i] = M;
+            }
+        }
+
+        static inline void BuildWorldMatrices3x4_FromSoA_Scalar(
+            const float* px, const float* py, const float* pz,
+            const float* qx, const float* qy, const float* qz, const float* qw,
+            const float* sx, const float* sy, const float* sz, // null å¯ï¼ˆ=1ï¼‰
+            Matrix3x4f* out, std::size_t count) noexcept
+        {
+            for (std::size_t i = 0; i < count; ++i) {
+                const float x = qx[i], y = qy[i], z = qz[i], w = qw[i];
+                const float Sx = sx ? sx[i] : 1.f;
+                const float Sy = sy ? sy[i] : 1.f;
+                const float Sz = sz ? sz[i] : 1.f;
+
+                const float xx = x * x, yy = y * y, zz = z * z;
+                const float xy = x * y, xz = x * z, yz = y * z;
+                const float wx = w * x, wy = w * y, wz = w * z;
+
+                // å›è»¢ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ã®æ¨™æº–å¼ï¼‰
+                float r00 = 1.f - 2.f * (yy + zz);
+                float r01 = 2.f * (xy - wz);
+                float r02 = 2.f * (xz + wy);
+
+                float r10 = 2.f * (xy + wz);
+                float r11 = 1.f - 2.f * (xx + zz);
+                float r12 = 2.f * (yz - wx);
+
+                float r20 = 2.f * (xz - wy);
+                float r21 = 2.f * (yz + wx);
+                float r22 = 1.f - 2.f * (xx + yy);
+
+                // åˆ—ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ï¼ˆå„åˆ—ã« Sx,Sy,Szï¼‰
+                r00 *= Sx; r10 *= Sx; r20 *= Sx;
+                r01 *= Sy; r11 *= Sy; r21 *= Sy;
+                r02 *= Sz; r12 *= Sz; r22 *= Sz;
+
+                Matrix3x4f& M = out[i];
+                M.m[0][0] = r00; M.m[0][1] = r01; M.m[0][2] = r02; M.m[0][3] = px[i];
+                M.m[1][0] = r10; M.m[1][1] = r11; M.m[1][2] = r12; M.m[1][3] = py[i];
+                M.m[2][0] = r20; M.m[2][1] = r21; M.m[2][2] = r22; M.m[2][3] = pz[i];
+            }
+        }
+
+#if defined(__AVX2__) || (defined(_MSC_VER) && defined(__AVX2__))
+        static inline void BuildWorldMatrices3x4_FromSoA_AVX2x8(
+            const float* px, const float* py, const float* pz,
+            const float* qx, const float* qy, const float* qz, const float* qw,
+            const float* sx, const float* sy, const float* sz,
+            Matrix3x4f* out, std::size_t n) noexcept
+        {
+            const __m256 one = _mm256_set1_ps(1.0f);
+            const __m256 two = _mm256_set1_ps(2.0f);
+
+            std::size_t i = 0;
+            for (; i + 7 < n; i += 8) {
+                __m256 X = _mm256_loadu_ps(qx + i);
+                __m256 Y = _mm256_loadu_ps(qy + i);
+                __m256 Z = _mm256_loadu_ps(qz + i);
+                __m256 W = _mm256_loadu_ps(qw + i);
+
+                __m256 Sx = sx ? _mm256_loadu_ps(sx + i) : _mm256_set1_ps(1.f);
+                __m256 Sy = sy ? _mm256_loadu_ps(sy + i) : _mm256_set1_ps(1.f);
+                __m256 Sz = sz ? _mm256_loadu_ps(sz + i) : _mm256_set1_ps(1.f);
+
+                __m256 xx = _mm256_mul_ps(X, X);
+                __m256 yy = _mm256_mul_ps(Y, Y);
+                __m256 zz = _mm256_mul_ps(Z, Z);
+
+                __m256 xy = _mm256_mul_ps(X, Y);
+                __m256 xz = _mm256_mul_ps(X, Z);
+                __m256 yz = _mm256_mul_ps(Y, Z);
+
+                __m256 wx = _mm256_mul_ps(W, X);
+                __m256 wy = _mm256_mul_ps(W, Y);
+                __m256 wz = _mm256_mul_ps(W, Z);
+
+                // r00 = 1 - 2(yy+zz)
+                __m256 r00 = _mm256_fnmadd_ps(two, _mm256_add_ps(yy, zz), one);
+                // r01 = 2(xy - wz)
+                __m256 r01 = _mm256_mul_ps(two, _mm256_sub_ps(xy, wz));
+                // r02 = 2(xz + wy)
+                __m256 r02 = _mm256_mul_ps(two, _mm256_add_ps(xz, wy));
+
+                // r10 = 2(xy + wz)
+                __m256 r10 = _mm256_mul_ps(two, _mm256_add_ps(xy, wz));
+                // r11 = 1 - 2(xx+zz)
+                __m256 r11 = _mm256_fnmadd_ps(two, _mm256_add_ps(xx, zz), one);
+                // r12 = 2(yz - wx)
+                __m256 r12 = _mm256_mul_ps(two, _mm256_sub_ps(yz, wx));
+
+                // r20 = 2(xz - wy)
+                __m256 r20 = _mm256_mul_ps(two, _mm256_sub_ps(xz, wy));
+                // r21 = 2(yz + wx)
+                __m256 r21 = _mm256_mul_ps(two, _mm256_add_ps(yz, wx));
+                // r22 = 1 - 2(xx+yy)
+                __m256 r22 = _mm256_fnmadd_ps(two, _mm256_add_ps(xx, yy), one);
+
+                // åˆ—ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ï¼ˆåˆ—ã”ã¨ï¼‰
+                r00 = _mm256_mul_ps(r00, Sx);
+                r10 = _mm256_mul_ps(r10, Sx);
+                r20 = _mm256_mul_ps(r20, Sx);
+
+                r01 = _mm256_mul_ps(r01, Sy);
+                r11 = _mm256_mul_ps(r11, Sy);
+                r21 = _mm256_mul_ps(r21, Sy);
+
+                r02 = _mm256_mul_ps(r02, Sz);
+                r12 = _mm256_mul_ps(r12, Sz);
+                r22 = _mm256_mul_ps(r22, Sz);
+
+                __m256 TX = _mm256_loadu_ps(px + i);
+                __m256 TY = _mm256_loadu_ps(py + i);
+                __m256 TZ = _mm256_loadu_ps(pz + i);
+
+                // out ã¯ AoSï¼ˆMatrix3x4f é€£ç¶šï¼‰ãªã®ã§ã€8 å€‹ã¶ã‚“ã‚¹ãƒˆã‚¢ï¼ˆã‚®ãƒ£ã‚¶ãªã—ã®ã‚¹ã‚«ãƒ©ã‚¹ãƒˆã‚¢ï¼‰
+                // ãƒ«ãƒ¼ãƒ—è§£ä½“ã§ 8 å›åˆ†ã¾ã¨ã‚ã¦æ›¸ã
+                alignas(32) float r00a[8], r01a[8], r02a[8],
+                    r10a[8], r11a[8], r12a[8],
+                    r20a[8], r21a[8], r22a[8],
+                    TXa[8], TYa[8], TZa[8];
+                _mm256_store_ps(r00a, r00); _mm256_store_ps(r01a, r01); _mm256_store_ps(r02a, r02);
+                _mm256_store_ps(r10a, r10); _mm256_store_ps(r11a, r11); _mm256_store_ps(r12a, r12);
+                _mm256_store_ps(r20a, r20); _mm256_store_ps(r21a, r21); _mm256_store_ps(r22a, r22);
+                _mm256_store_ps(TXa, TX);  _mm256_store_ps(TYa, TY);  _mm256_store_ps(TZa, TZ);
+
+                for (int k = 0; k < 8; ++k) {
+                    Matrix3x4f& M = out[i + k];
+                    M.m[0][0] = r00a[k]; M.m[0][1] = r01a[k]; M.m[0][2] = r02a[k]; M.m[0][3] = TXa[k];
+                    M.m[1][0] = r10a[k]; M.m[1][1] = r11a[k]; M.m[1][2] = r12a[k]; M.m[1][3] = TYa[k];
+                    M.m[2][0] = r20a[k]; M.m[2][1] = r21a[k]; M.m[2][2] = r22a[k]; M.m[2][3] = TZa[k];
+                }
+            }
+
+            // ç«¯æ•°ã¯å¾Œæ®µã® SSE/Scalar ã«ä»»ã›ã‚‹ã®ã§ã“ã“ã§ã¯ return
+            if (i < n) {
+                // å¾Œæ®µã«å›ã™ï¼ˆå‘¼ã³å‡ºã—å´ã§ã¾ã¨ã‚ã¦å‡¦ç†ï¼‰
+                // ã“ã“ã§ã¯ä½•ã‚‚ã—ãªã„
+            }
+        }
+#endif
+
+#if defined(__SSE2__) || defined(_MSC_VER)
+        static inline std::size_t BuildWorldMatrices3x4_FromSoA_SSE4x(
+            const float* px, const float* py, const float* pz,
+            const float* qx, const float* qy, const float* qz, const float* qw,
+            const float* sx, const float* sy, const float* sz,
+            Matrix3x4f* out, std::size_t n) noexcept
+        {
+            std::size_t i = 0;
+            for (; i + 3 < n; i += 4) {
+                __m128 X = _mm_loadu_ps(qx + i);
+                __m128 Y = _mm_loadu_ps(qy + i);
+                __m128 Z = _mm_loadu_ps(qz + i);
+                __m128 W = _mm_loadu_ps(qw + i);
+
+                __m128 Sx = sx ? _mm_loadu_ps(sx + i) : _mm_set1_ps(1.f);
+                __m128 Sy = sy ? _mm_loadu_ps(sy + i) : _mm_set1_ps(1.f);
+                __m128 Sz = sz ? _mm_loadu_ps(sz + i) : _mm_set1_ps(1.f);
+
+                __m128 xx = _mm_mul_ps(X, X);
+                __m128 yy = _mm_mul_ps(Y, Y);
+                __m128 zz = _mm_mul_ps(Z, Z);
+
+                __m128 xy = _mm_mul_ps(X, Y);
+                __m128 xz = _mm_mul_ps(X, Z);
+                __m128 yz = _mm_mul_ps(Y, Z);
+
+                __m128 wx = _mm_mul_ps(W, X);
+                __m128 wy = _mm_mul_ps(W, Y);
+                __m128 wz = _mm_mul_ps(W, Z);
+
+                const __m128 one = _mm_set1_ps(1.f);
+                const __m128 two = _mm_set1_ps(2.f);
+
+                // r00 = 1 - 2(yy+zz)
+                __m128 r00 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(yy, zz)));
+                __m128 r01 = _mm_mul_ps(two, _mm_sub_ps(xy, wz));
+                __m128 r02 = _mm_mul_ps(two, _mm_add_ps(xz, wy));
+
+                __m128 r10 = _mm_mul_ps(two, _mm_add_ps(xy, wz));
+                __m128 r11 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(xx, zz)));
+                __m128 r12 = _mm_mul_ps(two, _mm_sub_ps(yz, wx));
+
+                __m128 r20 = _mm_mul_ps(two, _mm_sub_ps(xz, wy));
+                __m128 r21 = _mm_mul_ps(two, _mm_add_ps(yz, wx));
+                __m128 r22 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(xx, yy)));
+
+                // åˆ—ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
+                r00 = _mm_mul_ps(r00, Sx); r10 = _mm_mul_ps(r10, Sx); r20 = _mm_mul_ps(r20, Sx);
+                r01 = _mm_mul_ps(r01, Sy); r11 = _mm_mul_ps(r11, Sy); r21 = _mm_mul_ps(r21, Sy);
+                r02 = _mm_mul_ps(r02, Sz); r12 = _mm_mul_ps(r12, Sz); r22 = _mm_mul_ps(r22, Sz);
+
+                __m128 TX = _mm_loadu_ps(px + i);
+                __m128 TY = _mm_loadu_ps(py + i);
+                __m128 TZ = _mm_loadu_ps(pz + i);
+
+                alignas(16) float r00a[4], r01a[4], r02a[4],
+                    r10a[4], r11a[4], r12a[4],
+                    r20a[4], r21a[4], r22a[4],
+                    TXa[4], TYa[4], TZa[4];
+                _mm_store_ps(r00a, r00); _mm_store_ps(r01a, r01); _mm_store_ps(r02a, r02);
+                _mm_store_ps(r10a, r10); _mm_store_ps(r11a, r11); _mm_store_ps(r12a, r12);
+                _mm_store_ps(r20a, r20); _mm_store_ps(r21a, r21); _mm_store_ps(r22a, r22);
+                _mm_store_ps(TXa, TX);  _mm_store_ps(TYa, TY);  _mm_store_ps(TZa, TZ);
+
+                for (int k = 0; k < 4; ++k) {
+                    Matrix3x4f& M = out[i + k];
+                    M.m[0][0] = r00a[k]; M.m[0][1] = r01a[k]; M.m[0][2] = r02a[k]; M.m[0][3] = TXa[k];
+                    M.m[1][0] = r10a[k]; M.m[1][1] = r11a[k]; M.m[1][2] = r12a[k]; M.m[1][3] = TYa[k];
+                    M.m[2][0] = r20a[k]; M.m[2][1] = r21a[k]; M.m[2][2] = r22a[k]; M.m[2][3] = TZa[k];
+                }
+            }
+            return i; // æ¶ˆåŒ–ã—ãŸä»¶æ•°
+        }
+#endif
+
+        //--------------------------------------------------------------
+        // ãƒ•ãƒ­ãƒ³ãƒˆ API
+        //--------------------------------------------------------------
+        static inline void BuildWorldMatrices3x4_FromSoA(
+            const float* px, const float* py, const float* pz,
+            const float* qx, const float* qy, const float* qz, const float* qw,
+            const float* sx, const float* sy, const float* sz, // null å¯
+            Matrix3x4f* out, std::size_t count) noexcept
+        {
+            std::size_t done = 0;
+
+#if defined(__AVX2__) || (defined(_MSC_VER) && defined(__AVX2__))
+            if (count >= 8) {
+                BuildWorldMatrices3x4_FromSoA_AVX2x8(px, py, pz, qx, qy, qz, qw, sx, sy, sz, out, count);
+                // AVX2x8 å†…ã§ç«¯æ•°å‡¦ç†ã¯ã—ãªã„ã®ã§ã€ã“ã“ã§ä½•ä»¶æ®‹ã£ãŸã‹ã‚’å†è¨ˆç®—
+                done = (count / 8) * 8;
+            }
+#endif
+
+#if defined(__SSE2__) || defined(_MSC_VER)
+            if (done < count) {
+                done += BuildWorldMatrices3x4_FromSoA_SSE4x(px + done, py + done, pz + done,
+                    qx + done, qy + done, qz + done, qw + done,
+                    sx ? sx + done : nullptr,
+                    sy ? sy + done : nullptr,
+                    sz ? sz + done : nullptr,
+                    out + done, count - done);
+            }
+#endif
+            if (done < count) {
+                BuildWorldMatrices3x4_FromSoA_Scalar(px + done, py + done, pz + done,
+                    qx + done, qy + done, qz + done, qw + done,
+                    sx ? sx + done : nullptr,
+                    sy ? sy + done : nullptr,
+                    sz ? sz + done : nullptr,
+                    out + done, count - done);
+            }
+        }
+
+        static inline void BuildWorldMatrices3x4_FromSoA(
+			const MTransformSoA& t, std::size_t n, Matrix3x4f* out) noexcept
 		{
-			using namespace SectorFW::Math;
-
-#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-			const size_t vecN = n & ~size_t(3);
-			const __m128 two = _mm_set1_ps(2.0f);
-			const __m128 one = _mm_set1_ps(1.0f);
-
-			auto normalize4 = [](__m128 x, __m128 y, __m128 z, __m128 w) {
-				// 1/sqrt(x^2+y^2+z^2+w^2) ‚ğŠ|‚¯‚éi‹ß— rsqrtj
-				__m128 s = _mm_add_ps(_mm_mul_ps(x, x), _mm_add_ps(_mm_mul_ps(y, y), _mm_add_ps(_mm_mul_ps(z, z), _mm_mul_ps(w, w))));
-				__m128 rinv = _mm_rsqrt_ps(s);
-				// 1‰ñ‚¾‚¯ƒjƒ…[ƒgƒ“–@‚Å¸“xŒüãi”CˆÓj
-				// rinv = rinv * (1.5 - 0.5*s*rinv*rinv)
-				__m128 half = _mm_set1_ps(0.5f), three = _mm_set1_ps(3.0f);
-				rinv = _mm_mul_ps(rinv, _mm_sub_ps(three, _mm_mul_ps(_mm_mul_ps(s, rinv), _mm_mul_ps(rinv, half))));
-				return std::tuple{
-					_mm_mul_ps(x, rinv),
-					_mm_mul_ps(y, rinv),
-					_mm_mul_ps(z, rinv),
-					_mm_mul_ps(w, rinv)
-				};
-				};
-
-			for (size_t i = 0; i < vecN; i += 4) {
-				// --- SoA ‚ğƒ[ƒh ---
-				__m128 px = _mm_loadu_ps(t.px + i);
-				__m128 py = _mm_loadu_ps(t.py + i);
-				__m128 pz = _mm_loadu_ps(t.pz + i);
-
-				__m128 qx = _mm_loadu_ps(t.qx + i);
-				__m128 qy = _mm_loadu_ps(t.qy + i);
-				__m128 qz = _mm_loadu_ps(t.qz + i);
-				__m128 qw = _mm_loadu_ps(t.qw + i);
-
-				__m128 sx = _mm_loadu_ps(t.sx + i);
-				__m128 sy = _mm_loadu_ps(t.sy + i);
-				__m128 sz = _mm_loadu_ps(t.sz + i);
-
-				if (renormalizeQuat) {
-					std::tie(qx, qy, qz, qw) = normalize4(qx, qy, qz, qw);
-				}
-
-				// --- ‰ñ“]s—ñi‚ ‚È‚½‚Ì MakeRotationMatrix ‚Æ“¯®j---
-				__m128 xx = _mm_mul_ps(qx, qx);
-				__m128 yy = _mm_mul_ps(qy, qy);
-				__m128 zz = _mm_mul_ps(qz, qz);
-				__m128 xy = _mm_mul_ps(qx, qy);
-				__m128 xz = _mm_mul_ps(qx, qz);
-				__m128 yz = _mm_mul_ps(qy, qz);
-				__m128 wx = _mm_mul_ps(qw, qx);
-				__m128 wy = _mm_mul_ps(qw, qy);
-				__m128 wz = _mm_mul_ps(qw, qz);
-
-				// r00..r22
-				__m128 r00 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(yy, zz)));
-				__m128 r01 = _mm_mul_ps(two, _mm_sub_ps(xy, wz));
-				__m128 r02 = _mm_mul_ps(two, _mm_add_ps(xz, wy));
-
-				__m128 r10 = _mm_mul_ps(two, _mm_add_ps(xy, wz));
-				__m128 r11 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(xx, zz)));
-				__m128 r12 = _mm_mul_ps(two, _mm_sub_ps(yz, wx));
-
-				__m128 r20 = _mm_mul_ps(two, _mm_sub_ps(xz, wy));
-				__m128 r21 = _mm_mul_ps(two, _mm_add_ps(yz, wx));
-				__m128 r22 = _mm_sub_ps(one, _mm_mul_ps(two, _mm_add_ps(xx, yy)));
-
-				// --- —ñƒXƒP[ƒ‹iM3x3 = R * diag(sx,sy,sz)j---
-				__m128 m00 = _mm_mul_ps(r00, sx);
-				__m128 m01 = _mm_mul_ps(r01, sy);
-				__m128 m02 = _mm_mul_ps(r02, sz);
-
-				__m128 m10 = _mm_mul_ps(r10, sx);
-				__m128 m11 = _mm_mul_ps(r11, sy);
-				__m128 m12 = _mm_mul_ps(r12, sz);
-
-				__m128 m20 = _mm_mul_ps(r20, sx);
-				__m128 m21 = _mm_mul_ps(r21, sy);
-				__m128 m22 = _mm_mul_ps(r22, sz);
-
-				// s—ñ‚Ì‰E’[—ñ = •½sˆÚ“®
-				__m128 m03 = px;
-				__m128 m13 = py;
-				__m128 m23 = pz;
-
-				// ---- 4–‡‚Ö AoS ‚ÉU‚ç‚· ----
-				alignas(16) float r0[4], r1[4], r2[4], t0[4], t1[4], t2[4];
-				_mm_store_ps(r0, m00); _mm_store_ps(r1, m10); _mm_store_ps(r2, m20);
-				_mm_store_ps(t0, m01); _mm_store_ps(t1, m11); _mm_store_ps(t2, m21);
-				alignas(16) float u0[4], u1[4], u2[4], tr0[4], tr1[4], tr2[4];
-				_mm_store_ps(u0, m02); _mm_store_ps(u1, m12); _mm_store_ps(u2, m22);
-				_mm_store_ps(tr0, m03); _mm_store_ps(tr1, m13); _mm_store_ps(tr2, m23);
-
-				for (int lane = 0; lane < 4; ++lane) {
-					Matrix4x4f& M = outM[i + lane];
-#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-					// s0,1,2 ‚ğ‚Ü‚Æ‚ß‚Ä‘‚«‚İi‰E’[—ñ‚É•½sˆÚ“®j
-					_mm_storeu_ps(&M.m[0][0], _mm_set_ps(tr0[lane], u0[lane], t0[lane], r0[lane]));
-					_mm_storeu_ps(&M.m[1][0], _mm_set_ps(tr1[lane], u1[lane], t1[lane], r1[lane]));
-					_mm_storeu_ps(&M.m[2][0], _mm_set_ps(tr2[lane], u2[lane], t2[lane], r2[lane]));
-					_mm_storeu_ps(&M.m[3][0], _mm_set_ps(1.f, 0.f, 0.f, 0.f)); // [0,0,0,1]
-#else
-					M.m[0][0] = r0[lane]; M.m[0][1] = t0[lane]; M.m[0][2] = u0[lane]; M.m[0][3] = tr0[lane];
-					M.m[1][0] = r1[lane]; M.m[1][1] = t1[lane]; M.m[1][2] = u1[lane]; M.m[1][3] = tr1[lane];
-					M.m[2][0] = r2[lane]; M.m[2][1] = t2[lane]; M.m[2][2] = u2[lane]; M.m[2][3] = tr2[lane];
-					M.m[3][0] = 0.f; M.m[3][1] = 0.f; M.m[3][2] = 0.f; M.m[3][3] = 1.f;
-#endif
-				}
-			}
-			// ’[”
-			for (size_t i = vecN; i < n; ++i) {
-#else
-			for (size_t i = 0; i < n; ++i) {
-#endif
-				// ƒXƒJƒ‰”Åi‚ ‚È‚½‚Ì MakeRotationMatrix ‚Æ“¯®j
-				Quat<float> q( t.qx[i], t.qy[i], t.qz[i], t.qw[i] );
-				if (renormalizeQuat) q.Normalize();
-				const auto R = MakeRotationMatrix(q);
-
-				Matrix4x4f M{};
-				// —ñƒXƒP[ƒ‹F—ñ‚²‚Æ‚É sx,sy,sz ‚ğŠ|‚¯‚é
-				M.m[0][0] = R.m[0][0] * t.sx[i];
-				M.m[0][1] = R.m[0][1] * t.sy[i];
-				M.m[0][2] = R.m[0][2] * t.sz[i];
-				M.m[0][3] = t.px[i];
-
-				M.m[1][0] = R.m[1][0] * t.sx[i];
-				M.m[1][1] = R.m[1][1] * t.sy[i];
-				M.m[1][2] = R.m[1][2] * t.sz[i];
-				M.m[1][3] = t.py[i];
-
-				M.m[2][0] = R.m[2][0] * t.sx[i];
-				M.m[2][1] = R.m[2][1] * t.sy[i];
-				M.m[2][2] = R.m[2][2] * t.sz[i];
-				M.m[2][3] = t.pz[i];
-
-				M.m[3][0] = 0.f; M.m[3][1] = 0.f; M.m[3][2] = 0.f; M.m[3][3] = 1.f;
-
-				outM[i] = M;
-			}
+			BuildWorldMatrices3x4_FromSoA(t.px, t.py, t.pz,
+				t.qx, t.qy, t.qz, t.qw,
+				t.sx, t.sy, t.sz,
+				out, n);
 		}
-	} //namespace math
-}// namespace SectorFW
+
+
+        //======================================================================
+        // åˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ Ã— è¡Œå„ªå…ˆè¡Œåˆ—ï¼šç‚¹ã®å¤‰æ›ï¼ˆclip = M * [x,y,z,1]^Tï¼‰
+        //======================================================================
+        inline void MulPoint_RowMajor_ColVec(const Matrix4x4f& M,
+            float x, float y, float z,
+            float& cx, float& cy, float& cz, float& cw) noexcept
+        {
+            // row-major ä¿å­˜ã ãŒã€è¨ˆç®—ã¯ã€Œè¡Œã¨åˆ—ã®ãƒ‰ãƒƒãƒˆã€ï¼šclip = row_i Â· vec4
+            cx = M[0][0] * x + M[0][1] * y + M[0][2] * z + M[0][3] * 1.0f;
+            cy = M[1][0] * x + M[1][1] * y + M[1][2] * z + M[1][3] * 1.0f;
+            cz = M[2][0] * x + M[2][1] * y + M[2][2] * z + M[2][3] * 1.0f;
+            cw = M[3][0] * x + M[3][1] * y + M[3][2] * z + M[3][3] * 1.0f;
+        }
+
+        //----------------------------------------------
+        // ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£: 3x4 => åˆ—ãƒ™ã‚¯ãƒˆãƒ«4æœ¬(c0..c3)ã‚’ __m128 ã§æ§‹ç¯‰
+        //----------------------------------------------
+        static inline void MakeColsFromWorld3x4_SSE(const Matrix3x4f& W,
+            __m128& c0, __m128& c1,
+            __m128& c2, __m128& c3) noexcept
+        {
+            // è¡Œã‚’ãƒ­ãƒ¼ãƒ‰
+            const __m128 r0 = _mm_loadu_ps(&W.m[0][0]); // [r00 r01 r02 t0]
+            const __m128 r1 = _mm_loadu_ps(&W.m[1][0]); // [r10 r11 r12 t1]
+            const __m128 r2 = _mm_loadu_ps(&W.m[2][0]); // [r20 r21 r22 t2]
+            const __m128 z = _mm_setzero_ps();         // [0 0 0 0]
+            // 4x4 è»¢ç½®ã§åˆ—ã‚’ä½œã‚‹ï¼ˆæœ€å¾Œã®è¡Œã¯ [0 0 0 1] ã‚’å¾Œã§è¨­å®šï¼‰
+            __m128 c0r = r0, c1r = r1, c2r = r2, c3r = z;
+            _MM_TRANSPOSE4_PS(c0r, c1r, c2r, c3r);      // ã“ã“ã§ c0r=[r00 r10 r20 0], c1r=[r01 r11 r21 0]...
+            c0 = c0r;                                   // [r00 r10 r20 0]
+            c1 = c1r;                                   // [r01 r11 r21 0]
+            c2 = c2r;                                   // [r02 r12 r22 0]
+            // c3 = [t0 t1 t2 1]
+            c3 = _mm_set_ps(1.0f, W.m[2][3], W.m[1][3], W.m[0][3]);
+        }
+
+        //----------------------------------------------
+        // å˜ç™º: Mat4f out = VP * World3x4
+        //----------------------------------------------
+        static inline void MulVPxWorld3x4_SSE(const Matrix4x4f& VP, const Matrix3x4f& W, Matrix4x4f& out) noexcept
+        {
+            __m128 c0, c1, c2, c3;
+            MakeColsFromWorld3x4_SSE(W, c0, c1, c2, c3);
+
+            const __m128 r0 = _mm_loadu_ps(VP.m[0]);
+            const __m128 r1 = _mm_loadu_ps(VP.m[1]);
+            const __m128 r2 = _mm_loadu_ps(VP.m[2]);
+            const __m128 r3 = _mm_loadu_ps(VP.m[3]);
+
+            auto mad4 = [](__m128 a, __m128 b, __m128 c, __m128 d, __m128 e) {
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                // (((a*b)+c*d)+e*f) å½¢å¼ã§ FMA ä½¿ç”¨
+                __m128 ab = _mm_mul_ps(a, b);
+                __m128 cd = _mm_fmadd_ps(c, d, ab);
+                return _mm_add_ps(cd, e);
+#else
+                __m128 ab = _mm_mul_ps(a, b);
+                __m128 cd = _mm_add_ps(ab, _mm_mul_ps(c, d));
+                return _mm_add_ps(cd, e);
+#endif
+                };
+
+            // out.row(i) = r_i.xxxx*c0 + r_i.yyyy*c1 + r_i.zzzz*c2 + r_i.wwww*c3
+            const __m128 r0x = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r0y = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r0z = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r0w = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(3, 3, 3, 3));
+            __m128 o0 = mad4(r0x, c0, r0y, c1, _mm_add_ps(_mm_mul_ps(r0z, c2), _mm_mul_ps(r0w, c3)));
+
+            const __m128 r1x = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r1y = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r1z = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r1w = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(3, 3, 3, 3));
+            __m128 o1 = mad4(r1x, c0, r1y, c1, _mm_add_ps(_mm_mul_ps(r1z, c2), _mm_mul_ps(r1w, c3)));
+
+            const __m128 r2x = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r2y = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r2z = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r2w = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(3, 3, 3, 3));
+            __m128 o2 = mad4(r2x, c0, r2y, c1, _mm_add_ps(_mm_mul_ps(r2z, c2), _mm_mul_ps(r2w, c3)));
+
+            const __m128 r3x = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r3y = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r3z = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r3w = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(3, 3, 3, 3));
+            __m128 o3 = mad4(r3x, c0, r3y, c1, _mm_add_ps(_mm_mul_ps(r3z, c2), _mm_mul_ps(r3w, c3)));
+
+            _mm_storeu_ps(out.m[0], o0);
+            _mm_storeu_ps(out.m[1], o1);
+            _mm_storeu_ps(out.m[2], o2);
+            _mm_storeu_ps(out.m[3], o3);
+        }
+
+        //----------------------------------------------
+        // ãƒãƒƒãƒ: åŒä¸€ VP Ã— N å€‹ã® World3x4 -> N å€‹ã® Mat4f
+        // worlds ã¯é€£ç¶šï¼ˆsizeof(World3x4f) ã”ã¨ï¼‰
+        //----------------------------------------------
+        static inline void MulVPxWorld3x4_Batch_SSE(const Matrix4x4f& VP,
+            const Matrix3x4f* worlds,
+            Matrix4x4f* out, std::size_t count) noexcept
+        {
+            const __m128 r0 = _mm_loadu_ps(VP.m[0]);
+            const __m128 r1 = _mm_loadu_ps(VP.m[1]);
+            const __m128 r2 = _mm_loadu_ps(VP.m[2]);
+            const __m128 r3 = _mm_loadu_ps(VP.m[3]);
+
+            for (std::size_t i = 0; i < count; ++i) {
+                __m128 c0, c1, c2, c3;
+                MakeColsFromWorld3x4_SSE(worlds[i], c0, c1, c2, c3);
+
+                auto madd2 = [](__m128 a, __m128 b, __m128 c, __m128 d) {
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                    return _mm_fmadd_ps(a, b, _mm_mul_ps(c, d));
+#else
+                    return _mm_add_ps(_mm_mul_ps(a, b), _mm_mul_ps(c, d));
+#endif
+                    };
+
+                const __m128 r0x = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(0, 0, 0, 0));
+                const __m128 r0y = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(1, 1, 1, 1));
+                const __m128 r0z = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(2, 2, 2, 2));
+                const __m128 r0w = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(3, 3, 3, 3));
+                __m128 o0 = _mm_add_ps(madd2(r0x, c0, r0y, c1), _mm_add_ps(_mm_mul_ps(r0z, c2), _mm_mul_ps(r0w, c3)));
+
+                const __m128 r1x = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(0, 0, 0, 0));
+                const __m128 r1y = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(1, 1, 1, 1));
+                const __m128 r1z = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(2, 2, 2, 2));
+                const __m128 r1w = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(3, 3, 3, 3));
+                __m128 o1 = _mm_add_ps(madd2(r1x, c0, r1y, c1), _mm_add_ps(_mm_mul_ps(r1z, c2), _mm_mul_ps(r1w, c3)));
+
+                const __m128 r2x = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(0, 0, 0, 0));
+                const __m128 r2y = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(1, 1, 1, 1));
+                const __m128 r2z = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(2, 2, 2, 2));
+                const __m128 r2w = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(3, 3, 3, 3));
+                __m128 o2 = _mm_add_ps(madd2(r2x, c0, r2y, c1), _mm_add_ps(_mm_mul_ps(r2z, c2), _mm_mul_ps(r2w, c3)));
+
+                const __m128 r3x = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(0, 0, 0, 0));
+                const __m128 r3y = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(1, 1, 1, 1));
+                const __m128 r3z = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(2, 2, 2, 2));
+                const __m128 r3w = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(3, 3, 3, 3));
+                __m128 o3 = _mm_add_ps(madd2(r3x, c0, r3y, c1), _mm_add_ps(_mm_mul_ps(r3z, c2), _mm_mul_ps(r3w, c3)));
+
+                _mm_storeu_ps(out[i].m[0], o0);
+                _mm_storeu_ps(out[i].m[1], o1);
+                _mm_storeu_ps(out[i].m[2], o2);
+                _mm_storeu_ps(out[i].m[3], o3);
+            }
+        }
+
+        //----------------------------------------------
+        // ï¼ˆä»»æ„ï¼‰AVX2 4å€‹ã¾ã¨ã‚æœ€é©åŒ–ç‰ˆï¼ˆé…ç½®: World3x4f ãŒ AoS ã§é€£ç¶šï¼‰
+        // gather ã‚’é¿ã‘ã€4ã¤ãšã¤æ‰‹ä½œæ¥­ã§åˆ—ã‚’çµ„ã¿ã¾ã™ã€‚
+        // ãƒ¡ãƒ¢ãƒªå¸¯åŸŸãŒè¨±ã›ã° SSE ç‰ˆã§ã‚‚ååˆ†é«˜é€ŸãªãŸã‚ã€å¿…è¦ãªæ™‚ã ã‘ä½¿ã£ã¦ãã ã•ã„ã€‚
+        //----------------------------------------------
+        static inline void MulVPxWorld3x4_Batch4_AVX2(const Matrix4x4f& VP,
+            const Matrix3x4f* worlds,
+            Matrix4x4f* out, std::size_t count) noexcept
+        {
+#if !defined(__AVX2__) && !(defined(_MSC_VER) && defined(__AVX2__))
+            // ç’°å¢ƒãŒ AVX2 ã§ãªã‘ã‚Œã° SSE ç‰ˆã«ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
+            return MulVPxWorld3x4_Batch_SSE(VP, worlds, out, count);
+#else
+            const __m128 r0 = _mm_loadu_ps(VP.m[0]);
+            const __m128 r1 = _mm_loadu_ps(VP.m[1]);
+            const __m128 r2 = _mm_loadu_ps(VP.m[2]);
+            const __m128 r3 = _mm_loadu_ps(VP.m[3]);
+
+            auto dot4 = [](__m128 rx, __m128 ry, __m128 rz, __m128 rw,
+                __m128 c0, __m128 c1, __m128 c2, __m128 c3) {
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                    __m128 v = _mm_mul_ps(rx, c0);
+                    v = _mm_fmadd_ps(ry, c1, v);
+                    v = _mm_fmadd_ps(rz, c2, v);
+                    v = _mm_fmadd_ps(rw, c3, v);
+                    return v;
+#else
+                    __m128 v = _mm_add_ps(_mm_mul_ps(rx, c0), _mm_mul_ps(ry, c1));
+                    v = _mm_add_ps(v, _mm_mul_ps(rz, c2));
+                    v = _mm_add_ps(v, _mm_mul_ps(rw, c3));
+                    return v;
+#endif
+                };
+
+            const __m128 r0x = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r0y = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r0z = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r0w = _mm_shuffle_ps(r0, r0, _MM_SHUFFLE(3, 3, 3, 3));
+
+            const __m128 r1x = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r1y = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r1z = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r1w = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(3, 3, 3, 3));
+
+            const __m128 r2x = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r2y = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r2z = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r2w = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(3, 3, 3, 3));
+
+            const __m128 r3x = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(0, 0, 0, 0));
+            const __m128 r3y = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(1, 1, 1, 1));
+            const __m128 r3z = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(2, 2, 2, 2));
+            const __m128 r3w = _mm_shuffle_ps(r3, r3, _MM_SHUFFLE(3, 3, 3, 3));
+
+            std::size_t i = 0;
+            for (; i + 3 < count; i += 4) {
+                // 4ã¤åˆ†ã® World ã‹ã‚‰åˆ— c0..c3 ã‚’4æœ¬ãšã¤æ§‹ç¯‰ â†’ 4å› dot
+                __m128 c0[4], c1[4], c2[4], c3[4];
+                for (int k = 0; k < 4; ++k) {
+                    MakeColsFromWorld3x4_SSE(worlds[i + k], c0[k], c1[k], c2[k], c3[k]);
+                }
+
+                __m128 o0 = dot4(r0x, r0y, r0z, r0w, c0[0], c1[0], c2[0], c3[0]);
+                __m128 o1 = dot4(r1x, r1y, r1z, r1w, c0[0], c1[0], c2[0], c3[0]);
+                __m128 o2 = dot4(r2x, r2y, r2z, r2w, c0[0], c1[0], c2[0], c3[0]);
+                __m128 o3 = dot4(r3x, r3y, r3z, r3w, c0[0], c1[0], c2[0], c3[0]);
+                _mm_storeu_ps(out[i + 0].m[0], o0);
+                _mm_storeu_ps(out[i + 0].m[1], o1);
+                _mm_storeu_ps(out[i + 0].m[2], o2);
+                _mm_storeu_ps(out[i + 0].m[3], o3);
+
+                o0 = dot4(r0x, r0y, r0z, r0w, c0[1], c1[1], c2[1], c3[1]);
+                o1 = dot4(r1x, r1y, r1z, r1w, c0[1], c1[1], c2[1], c3[1]);
+                o2 = dot4(r2x, r2y, r2z, r2w, c0[1], c1[1], c2[1], c3[1]);
+                o3 = dot4(r3x, r3y, r3z, r3w, c0[1], c1[1], c2[1], c3[1]);
+                _mm_storeu_ps(out[i + 1].m[0], o0);
+                _mm_storeu_ps(out[i + 1].m[1], o1);
+                _mm_storeu_ps(out[i + 1].m[2], o2);
+                _mm_storeu_ps(out[i + 1].m[3], o3);
+
+                o0 = dot4(r0x, r0y, r0z, r0w, c0[2], c1[2], c2[2], c3[2]);
+                o1 = dot4(r1x, r1y, r1z, r1w, c0[2], c1[2], c2[2], c3[2]);
+                o2 = dot4(r2x, r2y, r2z, r2w, c0[2], c1[2], c2[2], c3[2]);
+                o3 = dot4(r3x, r3y, r3z, r3w, c0[2], c1[2], c2[2], c3[2]);
+                _mm_storeu_ps(out[i + 2].m[0], o0);
+                _mm_storeu_ps(out[i + 2].m[1], o1);
+                _mm_storeu_ps(out[i + 2].m[2], o2);
+                _mm_storeu_ps(out[i + 2].m[3], o3);
+
+                o0 = dot4(r0x, r0y, r0z, r0w, c0[3], c1[3], c2[3], c3[3]);
+                o1 = dot4(r1x, r1y, r1z, r1w, c0[3], c1[3], c2[3], c3[3]);
+                o2 = dot4(r2x, r2y, r2z, r2w, c0[3], c1[3], c2[3], c3[3]);
+                o3 = dot4(r3x, r3y, r3z, r3w, c0[3], c1[3], c2[3], c3[3]);
+                _mm_storeu_ps(out[i + 3].m[0], o0);
+                _mm_storeu_ps(out[i + 3].m[1], o1);
+                _mm_storeu_ps(out[i + 3].m[2], o2);
+                _mm_storeu_ps(out[i + 3].m[3], o3);
+            }
+            if (i < count) {
+                MulVPxWorld3x4_Batch_SSE(VP, worlds + i, out + i, count - i);
+            }
+#endif
+        }
+
+    } // namespace Math
+} // namespace SectorFW

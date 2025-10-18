@@ -210,7 +210,7 @@ namespace SectorFW
 				const float top = center.y + worldH * 0.5f;
 				const float bottom = center.y - worldH * 0.5f;
 
-				Math::Matrix4x4f proj = Math::MakeOrthographicMatrixLH(
+				Math::Matrix4x4f proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(
 					left, right, bottom, top, nearClip, farClip);
 
 				// 2) View 行列
@@ -218,7 +218,7 @@ namespace SectorFW
 				Math::Matrix4x4f T = Math::MakeTranslationMatrix(Math::Vec3f{ -center.x, -center.y, 0.0f });
 				Math::Matrix4x4f R = Math::MakeRotationMatrix(Math::Quatf::FromEuler(0.0f, 0.0f, -rotZ));
 
-				Math::Matrix4x4f view = R * T;
+				Math::Matrix4x4f view = T * R;
 
 				cameraBuffer.viewProj = proj * view;
 

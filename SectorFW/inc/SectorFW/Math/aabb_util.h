@@ -5,6 +5,7 @@
 #include <vector>
 #include "Vector.hpp"   // Vec3f
 #include "AABB.hpp"     // AABB3f
+#include "Matrix.hpp"
 
 #include "../Debug/DebugType.h"
 
@@ -51,7 +52,6 @@ namespace SectorFW::Math {
 		// SSE2: 3軸を同時に更新（1頂点/ループ）
 		__m128 vmin = _mm_set1_ps(std::numeric_limits<float>::infinity());
 		__m128 vmax = _mm_set1_ps(-std::numeric_limits<float>::infinity());
-		const __m128 pos_inf = _mm_set1_ps(std::numeric_limits<float>::infinity());
 
 		for (size_t i = 0; i < count; ++i) {
 			const Vec3f* p = reinterpret_cast<const Vec3f*>(base + i * strideBytes);
@@ -116,7 +116,6 @@ namespace SectorFW::Math {
 		// SSE2: 3軸を同時に更新（1頂点/ループ）
 		__m128 vmin = _mm_set1_ps(std::numeric_limits<float>::infinity());
 		__m128 vmax = _mm_set1_ps(-std::numeric_limits<float>::infinity());
-		const __m128 pos_inf = _mm_set1_ps(std::numeric_limits<float>::infinity());
 
 		for (size_t i = 0; i < idxCount; ++i) {
 			if (indices[i] >= posCount) [[unlikely]] continue; // 念のため範囲チェック
@@ -141,8 +140,9 @@ namespace SectorFW::Math {
 
 #else
 		// スカラー版
-		for (size_t i = 0; i < count; ++i) {
-			const Vec3f* p = reinterpret_cast<const Vec3f*>(base + i * strideBytes);
+		for (size_t i = 0; i < idxCount; ++i) {
+			if (indices[i] >= posCount) continue;
+			const Vec3f* p = reinterpret_cast<const Vec3f*>(base + indices[i] * strideBytes);
 			const float x = SanitizeFinite(p->x);
 			const float y = SanitizeFinite(p->y);
 			const float z = SanitizeFinite(p->z);
@@ -290,7 +290,7 @@ namespace SectorFW::Math {
 		return MakeAABB_FromAoS(positions.data(), positions.size(), sizeof(Vec3f));
 	}
 
-	inline AABB3f MakeAABB(const std::vector<Vec3f>& positions, std::vector<uint32_t> indices) noexcept {
+	inline AABB3f MakeAABB(const std::vector<Vec3f>& positions, const std::vector<uint32_t>& indices) noexcept {
 		return MakeAABB_FromAoSWithIndex(positions.data(), positions.size(), indices.data(), indices.size(), sizeof(Vec3f));
 	}
 
@@ -394,6 +394,58 @@ namespace SectorFW::Math {
 			Vec3f{ ub.x, ub.y, ub.z },
 			Vec3f{ lb.x, ub.y, ub.z }
 		};
+	}
+
+	//======================================================================
+	// AABB × 行列（列ベクトル規約 / row-major 保管 / 右列=平行移動）
+	// 4x4版と3x4版（48Bワールド行列）を用意
+	//   ※アフィン限定。透視（Wが変わる）は8頂点変換が必要。
+	//======================================================================
+
+	template<class T>
+	inline AABB<T, Vec3<T>>
+		TransformAABB_Affine(const Matrix<4, 4, T>& M, const AABB<T, Vec3<T>>& box) noexcept
+	{
+		// 中心と半径（extent）
+		const Vec3<T> c = (box.lb + box.ub) * T(0.5);
+		const Vec3<T> e = (box.ub - box.lb) * T(0.5);
+
+		// 列ベクトル規約なので x' = dot(row0.xyz, c) + M[0][3] などで OK
+		const T cx = M[0][0] * c.x + M[0][1] * c.y + M[0][2] * c.z + M[0][3];
+		const T cy = M[1][0] * c.x + M[1][1] * c.y + M[1][2] * c.z + M[1][3];
+		const T cz = M[2][0] * c.x + M[2][1] * c.y + M[2][2] * c.z + M[2][3];
+
+		// extent は線形部の絶対値を使って押し広げる
+		const T ex = std::abs(M[0][0]) * e.x + std::abs(M[0][1]) * e.y + std::abs(M[0][2]) * e.z;
+		const T ey = std::abs(M[1][0]) * e.x + std::abs(M[1][1]) * e.y + std::abs(M[1][2]) * e.z;
+		const T ez = std::abs(M[2][0]) * e.x + std::abs(M[2][1]) * e.y + std::abs(M[2][2]) * e.z;
+
+		AABB<T, Vec3<T>> out;
+		out.lb = { cx - ex, cy - ey, cz - ez };
+		out.ub = { cx + ex, cy + ey, cz + ez };
+		return out;
+	}
+
+	// 48B（3x4）ワールド行列にもそのまま対応
+	template<class T>
+	inline AABB<T, Vec3<T>>
+		TransformAABB_Affine(const Matrix<3, 4, T>& M, const AABB<T, Vec3<T>>& box) noexcept
+	{
+		const Vec3<T> c = (box.lb + box.ub) * T(0.5);
+		const Vec3<T> e = (box.ub - box.lb) * T(0.5);
+
+		const T cx = M[0][0] * c.x + M[0][1] * c.y + M[0][2] * c.z + M[0][3];
+		const T cy = M[1][0] * c.x + M[1][1] * c.y + M[1][2] * c.z + M[1][3];
+		const T cz = M[2][0] * c.x + M[2][1] * c.y + M[2][2] * c.z + M[2][3];
+
+		const T ex = std::abs(M[0][0]) * e.x + std::abs(M[0][1]) * e.y + std::abs(M[0][2]) * e.z;
+		const T ey = std::abs(M[1][0]) * e.x + std::abs(M[1][1]) * e.y + std::abs(M[1][2]) * e.z;
+		const T ez = std::abs(M[2][0]) * e.x + std::abs(M[2][1]) * e.y + std::abs(M[2][2]) * e.z;
+
+		AABB<T, Vec3<T>> out;
+		out.lb = { cx - ex, cy - ey, cz - ez };
+		out.ub = { cx + ex, cy + ey, cz + ez };
+		return out;
 	}
 
 } // namespace SectorFW::Math

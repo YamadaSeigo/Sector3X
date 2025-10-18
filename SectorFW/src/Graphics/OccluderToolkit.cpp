@@ -715,19 +715,108 @@ float SectorFW::Graphics::ScreenCoverageFromRectPx(float minx, float miny, float
     return (std::min)(area / (std::max)(1.f, full), 1.0f);
 }
 
-float SectorFW::Graphics::NDCCoverageFromRectPx(float minx, float miny, float maxx, float maxy)
+float SectorFW::Graphics::ComputeNDCAreaFrec(float minx, float miny, float maxx, float maxy)
 {
-    auto clamp1 = [](float v) { return (std::max)(-1.0f, (std::min)(1.0f, v)); };
-    minx = clamp1(minx); maxx = clamp1(maxx);
-    miny = clamp1(miny); maxy = clamp1(maxy);
-    if (maxx <= minx || maxy <= miny) return 0.0f;
-    float fracW = (maxx - minx) * 0.5f;
-    float fracH = (maxy - miny) * 0.5f;
-    return fracW * fracH; // 合計（0〜2の範囲に収まる）
+    // 画面ボックス [-1,1] と交差
+    const float ix0 = (std::max)(minx, -1.0f);
+    const float iy0 = (std::max)(miny, -1.0f);
+    const float ix1 = (std::min)(maxx, 1.0f);
+    const float iy1 = (std::min)(maxy, 1.0f);
+    const float w = (ix1 > ix0) ? (ix1 - ix0) : 0.0f;
+    const float h = (iy1 > iy0) ? (iy1 - iy0) : 0.0f;
+    // 画面全体の NDC 面積は 4（幅2×高さ2）
+    return (w * h) * 0.25f;
 }
 
 OccluderLOD SectorFW::Graphics::DecideOccluderLOD_FromArea(float areaPx2) {
     if (areaPx2 >= 400.0f) return OccluderLOD::Near; // >=20x20px
     if (areaPx2 >= 196.0f) return OccluderLOD::Mid;  // >=14x14px
     return OccluderLOD::Far;
+}
+
+void SectorFW::Graphics::CoarseSphereVisible_AVX2(const SoAPosRad& s, const ViewProjParams& vp, std::vector<uint32_t>& outIndices)
+{
+    outIndices.clear();
+    outIndices.reserve(s.count);
+
+    const __m256 v30 = _mm256_set1_ps(vp.v30);
+    const __m256 v31 = _mm256_set1_ps(vp.v31);
+    const __m256 v32 = _mm256_set1_ps(vp.v32);
+    const __m256 v33 = _mm256_set1_ps(vp.v33);
+
+    const __m256 P00 = _mm256_set1_ps(vp.P00);
+    const __m256 P11 = _mm256_set1_ps(vp.P11);
+    const __m256 zN = _mm256_set1_ps(vp.zNear);
+    const __m256 zF = _mm256_set1_ps(vp.zFar);
+    const __m256 eps = _mm256_set1_ps(vp.epsNdc);
+
+    const bool hasR = (s.pr != nullptr);
+    const __m256 rScalar = _mm256_set1_ps(hasR ? 0.0f : /*固定半径*/ 1.0f);
+
+    const uint32_t N = s.count;
+    uint32_t i = 0;
+
+    alignas(32) uint32_t idxBuf[8];
+
+    for (; i + 8 <= N; i += 8) {
+        __m256 x = _mm256_loadu_ps(s.px + i);
+        __m256 y = _mm256_loadu_ps(s.py + i);
+        __m256 z = _mm256_loadu_ps(s.pz + i);
+        __m256 r = hasR ? _mm256_loadu_ps(s.pr + i) : rScalar;
+
+        // cvz = v30*x + v31*y + v32*z + v33
+        __m256 cvz = _mm256_fmadd_ps(v30, x,
+            _mm256_fmadd_ps(v31, y,
+                _mm256_fmadd_ps(v32, z, v33)));
+
+        // 条件1: cvz > 0
+        __m256 m1 = _mm256_cmp_ps(cvz, _mm256_set1_ps(0.0f), _CMP_GT_OQ);
+
+        // 条件2: cvz + r > zNear
+        __m256 c2 = _mm256_cmp_ps(_mm256_add_ps(cvz, r), zN, _CMP_GT_OQ);
+
+        // 条件3: cvz - r < zFar
+        __m256 c3 = _mm256_cmp_ps(_mm256_sub_ps(cvz, r), zF, _CMP_LT_OQ);
+
+        // 画面半径: max(r*P00/cvz, r*P11/cvz) >= eps
+        // 安全のためcvz>0のみでdivを評価したいが、ここではそのまま評価してマスクで落とす
+        __m256 rx = _mm256_div_ps(_mm256_mul_ps(r, P00), cvz);
+        __m256 ry = _mm256_div_ps(_mm256_mul_ps(r, P11), cvz);
+        __m256 r_ndc = _mm256_max_ps(_mm256_andnot_ps(_mm256_set1_ps(-0.0f), rx), // abs
+            _mm256_andnot_ps(_mm256_set1_ps(-0.0f), ry));
+        __m256 c4 = _mm256_cmp_ps(r_ndc, eps, _CMP_GE_OQ);
+
+        // AND
+        __m256 m = _mm256_and_ps(_mm256_and_ps(m1, c2), _mm256_and_ps(c3, c4));
+
+        // マスク→生存インデックスをpush_back
+        int mask = _mm256_movemask_ps(m); // 下位8bitが有効
+        if (mask == 0) continue;
+
+        // 8連番を準備
+        idxBuf[0] = i + 0; idxBuf[1] = i + 1; idxBuf[2] = i + 2; idxBuf[3] = i + 3;
+        idxBuf[4] = i + 4; idxBuf[5] = i + 5; idxBuf[6] = i + 6; idxBuf[7] = i + 7;
+
+        // compress-store（AVX2にはないので分岐で詰める）
+        // 8要素だけの分岐は軽い
+        for (int k = 0; k < 8; ++k) {
+            if (mask & (1 << k)) outIndices.push_back(idxBuf[k]);
+        }
+    }
+
+    // 端数
+    for (; i < N; ++i) {
+        float x = s.px[i], y = s.py[i], z = s.pz[i];
+        float r = hasR ? s.pr[i] : 1.0f;
+
+        float cvz = vp.v30 * x + vp.v31 * y + vp.v32 * z + vp.v33;
+        if (!(cvz > 0.0f)) continue;
+        if (!((cvz + r) > vp.zNear)) continue;
+        if (!((cvz - r) < vp.zFar))  continue;
+
+        float rx = r * vp.P00 / cvz;
+        float ry = r * vp.P11 / cvz;
+        float rndc = (std::abs(rx) > std::abs(ry)) ? std::abs(rx) : std::abs(ry);
+        if (rndc >= vp.epsNdc) outIndices.push_back(i);
+    }
 }

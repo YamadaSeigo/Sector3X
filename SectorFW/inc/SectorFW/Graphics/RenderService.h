@@ -204,7 +204,7 @@ namespace SectorFW
 				const Vec3& p = quadWS.v[i];
 				const Vec4 wpos{ p.x, p.y, p.z, 1.0f };
 				// 行列の掛け順：clip = viewProj * wpos （v*M派なら wpos * viewProj）
-				out.clip[i] = wpos * viewProj;
+				out.clip[i] = viewProj * wpos;
 			}
 
 			// 2) 近クリップ整合（全頂点が near より奥側なら無効）
@@ -237,10 +237,6 @@ namespace SectorFW
 			// 4) インデックス（CCW）
 			out.indices[0] = 0; out.indices[1] = 1; out.indices[2] = 2;
 			out.indices[3] = 2; out.indices[4] = 3; out.indices[5] = 0;
-
-			// 5) これで MOC::RenderTriangles にそのまま渡せます
-			// moc->RenderTriangles((float*)&out.clip[0], sizeof(SectorFW::Math::Vec4f),
-			//                      (unsigned*)&out.indices[0], out.numTriangles);
 
 			return out;
 		}

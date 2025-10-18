@@ -26,18 +26,19 @@ namespace SectorFW
 		};
 
 		/**
+		* @brief　カメラバッファの構造体
+		*/
+		struct CameraBuffer {
+			Math::Matrix4x4f viewProj;
+		};
+
+		/**
 		 * @brief 3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。
 		 */
 		template<ProjectionType Type = ProjectionType::Perspective>
 		class I3DCameraService : public ECS::IUpdateService {
 			friend class ECS::ServiceLocator;
 		public:
-			/**
-			 * @brief　カメラバッファの構造体
-			 */
-			struct CameraBuffer {
-				Math::Matrix4x4f viewProj;
-			};
 			/**
 			 * @brief コンストラクタ
 			 */
@@ -60,33 +61,33 @@ namespace SectorFW
 			 * @brief カメラの回転
 			 * @param rotation 回転を表すクォータニオン
 			 */
-			void Rotate(const Math::Quatf& rotation) noexcept {
+			void Rotate(const Math::Quatf& q) noexcept {
 				std::unique_lock lock(sharedMutex);
-
-				Math::Vec3f forward = eye - pos;
-				forward = rotation.RotateVector(forward);
-				eye = pos + forward;
-
+				rot = q * rot;
+				rot.Normalize();
+				Math::Vec3f r, u, f;
+				Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
+				target = eye + f * focusDist;
 				isUpdateBuffer = true;
 			}
 			/**
 			 * @brief カメラの位置を設定
 			 * @param position 新しい位置ベクトル
 			 */
-			void SetPosition(const Math::Vec3f& position) noexcept {
+			void SetEyePos(const Math::Vec3f& eyePos) noexcept {
 				std::unique_lock lock(sharedMutex);
 
-				pos = position;
+				eye = eyePos;
 				isUpdateBuffer = true;
 			}
 			/**
 			 * @brief カメラの注視点を設定
 			 * @param eyePosition 新しい注視点ベクトル
 			 */
-			void SetEye(const Math::Vec3f& eyePosition) noexcept {
+			void SetTarget(const Math::Vec3f& targetPos) noexcept {
 				std::unique_lock lock(sharedMutex);
 
-				eye = eyePosition;
+				target = targetPos;
 				isUpdateBuffer = true;
 			}
 			/**
@@ -161,19 +162,19 @@ namespace SectorFW
 			 * @brief カメラの位置を取得
 			 * @return Math::Vec3f カメラの位置ベクトル
 			 */
-			Math::Vec3f GetPosition() const noexcept {
+			Math::Vec3f GetEyePos() const noexcept {
 				std::shared_lock lock(sharedMutex);
 
-				return pos;
+				return eye;
 			}
 			/**
 			 * @brief カメラの注視点を取得
 			 * @return Math::Vec3f カメラの注視点ベクトル
 			 */
-			Math::Vec3f GetEye() const noexcept {
+			Math::Vec3f GetTarget() const noexcept {
 				std::shared_lock lock(sharedMutex);
 
-				return eye;
+				return target;
 			}
 			/**
 			 * @brief カメラの上方向ベクトルを取得
@@ -227,7 +228,7 @@ namespace SectorFW
 			Math::Vec3f GetForward() const noexcept {
 				std::shared_lock lock(sharedMutex);
 
-				return (eye - pos).normalized();
+				return (target - eye).normalized();
 			}
 			/**
 			 * @brief カメラの右方向ベクトルを取得
@@ -250,15 +251,15 @@ namespace SectorFW
 				std::shared_lock lock(sharedMutex);
 				Math::Vec3f r, u, f;
 				Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
-				auto view = Math::MakeLookAtMatrixLH(pos, eye, u);
+				auto view = Math::MakeLookAtMatrixLH(eye, target, u);
 				Math::Matrix4x4f proj;
 				if constexpr (Type == ProjectionType::Perspective) {
-					proj = Math::MakePerspectiveMatrixLH(fovRad, aspectRatio, nearClip, farClip);
+					proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, nearClip, farClip);
 				}
 				else {
-					proj = Math::MakeOrthographicMatrixLH(left, right, bottom, top, nearClip, farClip);
+					proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, bottom, top, nearClip, farClip);
 				}
-				return view * proj;
+				return proj * view;
 			}
 
 			/**
@@ -266,8 +267,8 @@ namespace SectorFW
 			 * @return Math::Matrix4x4f ビュー行列
 			 */
 			Math::Frustumf MakeFrustum() const {
-				auto fru = Math::Frustumf::FromColMajor(cameraBuffer.viewProj.data());
-				Math::Frustumf::FaceInward(fru, pos, GetForward(), nearClip);
+				auto fru = Math::Frustumf::FromRowMajor(cameraBuffer.viewProj.data());
+				Math::Frustumf::FaceInward(fru, eye, GetForward(), nearClip);
 
 				return fru;
 			}
@@ -320,9 +321,9 @@ namespace SectorFW
 			//カメラのバッファデータ
 			CameraBuffer cameraBuffer = {};
 			// カメラの位置
-			Math::Vec3f pos = { 0.0f, 0.0f, -5.0f };
+			Math::Vec3f eye = { 0.0f, 0.0f, -5.0f };
 			// カメラの注視点
-			Math::Vec3f eye = { 0.0f, 0.0f, 0.0f };
+			Math::Vec3f target = { 0.0f, 0.0f, 0.0f };
 			// 垂直FOV
 			float fovRad = Math::Deg2Rad(90.0f);
 			// アスペクト比
@@ -331,7 +332,7 @@ namespace SectorFW
 			float nearClip = 0.1f;
 			// ファークリップ
 			float farClip = 1000.0f;
-			
+
 			float left = 0.0;
 #ifdef SCREEN_WIDTH
 			float right = SCREEN_WIDTH;

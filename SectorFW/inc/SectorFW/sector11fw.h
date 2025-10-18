@@ -13,6 +13,7 @@
 #include "Math/sx_math.h"
 #include "Math/Vector.hpp"
 #include "Math/Quaternion.hpp"
+#include "Math/aabb_util.h"
 
 #include "Graphics/IGraphicsDevice.hpp"
 #include "Core/GameEngine.h"

@@ -33,9 +33,9 @@ namespace SectorFW
 		 */
 		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = 65536;
 		/**
-		 * @brief フレーム当たりの最大インデックス数
+		 * @brief パス当たりの最大インスタンスインデックス数
 		 */
-		static inline constexpr uint32_t MAX_INDICES_PER_PASS = 1024 * 1024;
+		static inline constexpr uint32_t MAX_INSTANCE_INDICES_PER_PASS = 1024 * 1024;
 
 		//========================================================================
 		/**
@@ -332,6 +332,19 @@ namespace SectorFW
 			};
 
 		public:
+			struct alignas(16) InstancePool
+			{
+				Math::Matrix<3,4,float> world;
+				InstancePool& operator=(const InstanceData& data) noexcept {
+					memcpy(&world, &data, sizeof(decltype(world)));
+					return *this;
+				}
+				InstancePool& operator=(InstanceData&& data) noexcept {
+					memcpy(&world, &data, sizeof(decltype(world)));
+					return *this;
+				}
+			};
+
 			/**
 			 * @brief 生産者セッション-ユーザーに渡す用（thread_localを使わない）
 			 */
@@ -377,7 +390,7 @@ namespace SectorFW
 				~ProducerSession() { FlushAll(); }
 
 				// まとめ用固定長バッファ（ヒープなし）
-				static constexpr size_t kChunk = 256;
+				static constexpr size_t kChunk = 128;
 				struct SmallBuf {
 					DrawCommand data[kChunk];
 					size_t size = 0;
@@ -414,13 +427,24 @@ namespace SectorFW
 				[[nodiscard]] InstanceIndex AllocInstance(InstanceData&& inst);
 
 				/**
-				* @brief 連続した InstanceData をまとめて登録し、対応する InstanceIndex 配列を返す
-				* @param src     連続した InstanceData 配列（count 要素）
-				* @param count   src の要素数
-				* @param outIndices 書き込み先の InstanceIndex 配列（少なくとも count 要素分を想定）
-				* @return 実際に書き込めた要素数（cap 超過時はクランプ）
-				*/
-				size_t AllocInstances(const InstanceData* src, size_t count, InstanceIndex* outIndices);
+				 * @brief インスタンスを 1 件プールへ書き込み、Index を返す
+				 */
+				[[nodiscard]] InstanceIndex AllocInstance(const InstancePool& inst);
+				/**
+				 * @brief インスタンスを 1 件プールへ書き込み、Index を返す（ムーブ版）
+				 */
+				[[nodiscard]] InstanceIndex AllocInstance(InstancePool&& inst);
+				/**
+				 * @brief 次に割り当てられるインスタンスインデックス
+				 * @detail 実際にフレーム当たりのインスタンス数が増える
+				 */
+				[[nodiscard]] InstanceIndex NextInstanceIndex();
+				/**
+				 * @brief　インスタンスプールを 1 件分 memset で埋める
+				 * @param index 対象のインスタンスインデックス
+				 * @param inst 埋めるデータ
+				 */
+				void MemsetInstancePool(InstanceIndex index, const InstancePool& inst) noexcept;
 
 				/**
 				 * @brief SoA で DrawCommand を一括投入するための受け口
@@ -507,7 +531,7 @@ namespace SectorFW
 
 				for (int i = 0; i < RENDER_BUFFER_COUNT; ++i) {
 					queues[i] = std::make_unique<moodycamel::ConcurrentQueue<DrawCommand>>();
-					instancePools[i] = std::unique_ptr<InstanceData[]>(new InstanceData[maxInstancesPerFrame]);
+					instancePools[i] = std::unique_ptr<InstancePool[]>(new InstancePool[maxInstancesPerFrame]);
 					instWritePos[i].store(0, std::memory_order_relaxed);
 				}
 			}
@@ -556,7 +580,7 @@ namespace SectorFW
 			 * @param outCount インスタンスプールの使用数
 			 */
 			void Submit(std::vector<DrawCommand>& out,
-				const InstanceData*& outInstances, uint32_t& outCount) {
+				const InstancePool*& outInstances, uint32_t& outCount) {
 				// “現在の生産キュー” を次のフレームへ先に切り替える
 				const int prev = current.exchange(
 					(current.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT,
@@ -601,7 +625,7 @@ namespace SectorFW
 			 * @param outCount インスタンスプールの使用数
 			 */
 			void Submit(std::pmr::vector<DrawCommand>& out,
-				const InstanceData*& outInstances, uint32_t& outCount) {
+				const InstancePool*& outInstances, uint32_t& outCount) {
 				const int prev = current.exchange(
 					(current.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT,
 					std::memory_order_acq_rel);
@@ -638,7 +662,7 @@ namespace SectorFW
 			 * @brief 現在フレーム側の Instance プールアクセス
 			 * @return (InstanceData*, 書き込み位置へのポインタ)
 			 */
-			inline std::pair<InstanceData*, std::atomic<uint32_t>*>
+			inline std::pair<InstancePool*, std::atomic<uint32_t>*>
 				GetCurrentInstancePoolAccess() noexcept {
 				const int cur = current.load(std::memory_order_acquire);
 				return { instancePools[cur].get(), &instWritePos[cur] };
@@ -663,7 +687,7 @@ namespace SectorFW
 			std::atomic<int> current = 0;
 
 			// フレーム別インスタンスプール（固定長配列）
-			std::unique_ptr<InstanceData[]> instancePools[RENDER_BUFFER_COUNT];
+			std::unique_ptr<InstancePool[]> instancePools[RENDER_BUFFER_COUNT];
 			std::atomic<uint32_t> instWritePos[RENDER_BUFFER_COUNT];
 
 			// 取り込み用一時バッファ：std::array でヒープ確保ゼロ化

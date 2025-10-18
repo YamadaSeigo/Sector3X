@@ -133,7 +133,7 @@ namespace SectorFW
 #else
 					std::vector<DrawCommand> cmds;
 #endif //NO_USE_PMR_RENDER_QUEUE
-					const InstanceData* instances = nullptr;
+					const RenderQueue::InstancePool* instances = nullptr;
 					uint32_t instCount = 0;
 
 					pass->queue->Submit(cmds, instances, instCount);

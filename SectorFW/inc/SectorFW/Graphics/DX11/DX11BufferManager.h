@@ -217,7 +217,7 @@ namespace SectorFW
 					for (const auto& update : pendingUpdates) {
 						D3D11_MAPPED_SUBRESOURCE mapped;
 						HRESULT hr = context->Map(update.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
-						if (SUCCEEDED(hr)) {
+						if (SUCCEEDED(hr)) [[likely]] {
 							memcpy(mapped.pData, update.data, update.size);
 							context->Unmap(update.buffer.Get(), 0);
 						}

@@ -453,6 +453,9 @@
     <ClInclude Include="inc\SectorFW\Core\build_order.h">
       <Filter>Inc\Core</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\LODPolicy.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">
@@ -963,6 +966,9 @@
       <Filter>Src\Graphics\MOC</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\OccluderToolkit.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\LODPolicy.cpp">
       <Filter>Src\Graphics</Filter>
     </ClCompile>
   </ItemGroup>

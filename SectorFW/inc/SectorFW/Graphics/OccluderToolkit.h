@@ -25,13 +25,17 @@
 #include <array>
 #include <algorithm>
 #include <cmath>
+#include <immintrin.h>
 
 #include "../Math/Vector.hpp"   // SectorFW::Math::{Math::Vec3f, Math::Vec4f}
 #include "../Math/Matrix.hpp"   // SectorFW::Math::Math::Matrix4x4f (row-major preferred)
 #include "../Math/AABB.hpp"     // SectorFW::Math::Math::AABB3f { lb, ub }
 
 #define SFW_ROWMAJOR_MAT4F_HAS_M
-#define SFW_MATH_ROWVEC 1
+
+#ifndef SFW_MATH_ROWVEC
+#define SFW_MATH_ROWVEC 0
+#endif
 
 namespace SectorFW {
     namespace Graphics {
@@ -130,9 +134,9 @@ namespace SectorFW {
             float biasScale = std::pow(2.0f, globalBias);
             auto t = [&](int i, bool up) {
                 float h = up ? (1.0f + th.hysteresisUp) : (1.0f - th.hysteresisDown);
-                return th.T[i] * biasScale * (1.0f - 0.1f * i) * h;
+                return th.Tpx[i] * biasScale * (1.0f - 0.1f * i) * h;
                 };
-            bool goingUp = (prevLod > 0 && s > th.T[prevLod - 1]);
+            bool goingUp = (prevLod > 0 && s > th.Tpx[prevLod - 1]);
             if (s > t(0, goingUp)) return 0;
             if (lodCount == 2)     return 1;
             if (s > t(1, goingUp)) return 1;
@@ -147,7 +151,7 @@ namespace SectorFW {
             float up = 0.25f, float down = 0.03f)
         {
             TTh th = visTh;
-            for (size_t i = 0; i < th.T.size(); ++i) th.T[i] *= scale;
+            for (size_t i = 0; i < th.Tpx.size(); ++i) th.Tpx[i] *= scale;
             th.hysteresisUp = (std::max)(th.hysteresisUp, up);
             th.hysteresisDown = (std::max)(th.hysteresisDown, down);
             return th;
@@ -160,7 +164,7 @@ namespace SectorFW {
         float ScreenCoverageFromRectPx(float minx, float miny, float maxx, float maxy,
             float vpW, float vpH);
 
-        float NDCCoverageFromRectPx(float minx, float miny, float maxx, float maxy);
+        float ComputeNDCAreaFrec(float minx, float miny, float maxx, float maxy);
 
         // Decide occluder LOD using thresholds (recommended).
         template<class TTh>
@@ -182,6 +186,28 @@ namespace SectorFW {
 
         // Decide occluder LOD by pixel area only (quick heuristic).
         OccluderLOD DecideOccluderLOD_FromArea(float areaPx2);
+
+        struct SoAPosRad {
+            const float* px;  // 32B整列が理想
+            const float* py;
+            const float* pz;
+            const float* pr;  // 半径（一定なら nullptr にしてスカラを使う）
+            uint32_t     count;
+        };
+
+        struct ViewProjParams {
+            // Viewの第3行 (row-major, 右掛け想定: v = M[2][0..3])
+            float v30, v31, v32, v33;
+            // Projectionのdiagonal（対称FOVを仮定しない）
+            float P00, P11;
+            float zNear, zFar;
+            float epsNdc; // これ未満は小さすぎて無視
+        };
+
+        inline void CoarseSphereVisible_AVX2(
+            const SoAPosRad& s,
+            const ViewProjParams& vp,
+            std::vector<uint32_t>& outIndices);
 
     }
 } // namespace SectorFW::Graphics

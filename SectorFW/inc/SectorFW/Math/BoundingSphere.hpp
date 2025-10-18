@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   BoundingSphere.hpp
- * @brief  “_W‡/ƒƒbƒVƒ…‚©‚ç‚Ì‹«ŠE‹…iBounding SpherejŒvZƒ†[ƒeƒBƒŠƒeƒB
+ * @brief  ç‚¹é›†åˆ/ãƒ¡ãƒƒã‚·ãƒ¥ã‹ã‚‰ã®å¢ƒç•Œçƒï¼ˆBounding Sphereï¼‰è¨ˆç®—ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
  * @author you
  * @date   2025-09
  *********************************************************************/
@@ -15,10 +15,13 @@
 #include <cstdint>
 #include <type_traits>
 
+// è¡Œåˆ—ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã‚’ä½¿ã†
+#include "Matrix.hpp"
+
 namespace SectorFW {
     namespace Math {
 
-        // ------------- ƒxƒNƒgƒ‹ƒ†[ƒeƒBƒŠƒeƒBix,y,z‚ğ‚ÂŒ^‚È‚çOKj ----------------
+        // ------------- ãƒ™ã‚¯ãƒˆãƒ«ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ï¼ˆx,y,zã‚’æŒã¤å‹ãªã‚‰OKï¼‰ ----------------
         template<class Vec3>
         inline auto v3_add(const Vec3& a, const Vec3& b) noexcept {
             return Vec3{ a.x + b.x, a.y + b.y, a.z + b.z };
@@ -60,7 +63,7 @@ namespace SectorFW {
             Vec3 center{};
             T    radius{ T(0) };
 
-            // ------------- Šî–{ƒ†[ƒeƒBƒŠƒeƒB -------------
+            // ------------- åŸºæœ¬ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ -------------
             bool contains(const Vec3& p, T eps = T(0)) const noexcept {
                 return v3_len2(v3_sub(p, center)) <= (radius + eps) * (radius + eps);
             }
@@ -68,24 +71,24 @@ namespace SectorFW {
                 return v3_len2(v3_sub(p, center));
             }
 
-            // ------------- AABB ‚©‚ç¶¬iŒµ–§‚Å‚Í‚È‚¢‚ª‘¬‚¢j -------------
+            // ------------- AABB ã‹ã‚‰ç”Ÿæˆï¼ˆå³å¯†ã§ã¯ãªã„ãŒé€Ÿã„ï¼‰ -------------
             static BoundingSphere FromAABB(const Vec3& minP, const Vec3& maxP) noexcept {
                 BoundingSphere s;
                 s.center = v3_mid(minP, maxP);
-                // ”¼Œa‚Í‘ÎŠpü‚Ì”¼•ª
+                // åŠå¾„ã¯å¯¾è§’ç·šã®åŠåˆ†
                 s.radius = T(0.5) * v3_len(v3_sub(maxP, minP));
                 return s;
             }
 
-            // ------------- 2‹…‚ÌÅ¬•ïŠÜ‹…i³Šmj -------------
+            // ------------- 2çƒã®æœ€å°åŒ…å«çƒï¼ˆæ­£ç¢ºï¼‰ -------------
             static BoundingSphere Merge(const BoundingSphere& a, const BoundingSphere& b) noexcept {
-                // •Ğ•û‚ª‚à‚¤•Ğ•û‚ğ•ïŠÜ‚·‚éH
+                // ç‰‡æ–¹ãŒã‚‚ã†ç‰‡æ–¹ã‚’åŒ…å«ã™ã‚‹ï¼Ÿ
                 Vec3 d = v3_sub(b.center, a.center);
                 T dist = v3_len(d);
                 if (a.radius >= b.radius + dist) return a;
                 if (b.radius >= a.radius + dist) return b;
                 if (dist <= std::numeric_limits<T>::epsilon()) {
-                    // “¯S‰~‚É‹ß‚¢
+                    // åŒå¿ƒå††ã«è¿‘ã„
                     BoundingSphere s;
                     s.center = a.center;
                     s.radius = (std::max)(a.radius, b.radius);
@@ -97,14 +100,14 @@ namespace SectorFW {
                 return { newC, newR };
             }
 
-            // ------------- ’€ŸŠg’£iƒIƒ“ƒ‰ƒCƒ“XVŒü‚¯AÅ¬‚Å‚Í‚È‚¢j -------------
+            // ------------- é€æ¬¡æ‹¡å¼µï¼ˆã‚ªãƒ³ãƒ©ã‚¤ãƒ³æ›´æ–°å‘ã‘ã€æœ€å°ã§ã¯ãªã„ï¼‰ -------------
             void expandToFit(const Vec3& p) noexcept {
                 Vec3 diff = v3_sub(p, center);
                 T d2 = v3_len2(diff);
-                if (d2 <= radius * radius) return; // Šù‚É•ïŠÜ
+                if (d2 <= radius * radius) return; // æ—¢ã«åŒ…å«
                 T d = std::sqrt(d2);
                 T newR = (radius + d) * T(0.5);
-                // ƒZƒ“ƒ^[‚ğŠO‘¤‚ÖƒXƒ‰ƒCƒh
+                // ã‚»ãƒ³ã‚¿ãƒ¼ã‚’å¤–å´ã¸ã‚¹ãƒ©ã‚¤ãƒ‰
                 if (d > T(0)) {
                     center = v3_add(center, v3_muls(diff, (newR - radius) / d));
                 }
@@ -115,14 +118,14 @@ namespace SectorFW {
                 *this = Merge(*this, s);
             }
 
-            // ------------- Ritter –@i‚‘¬E‹ß—A‚Ù‚Ú\•ª‚É¬‚³‚¢j -------------
-            // points: AoS ”z—ñBN‚ª¬‚³‚­‚Ä‚àOKBO(N)B
+            // ------------- Ritter æ³•ï¼ˆé«˜é€Ÿãƒ»è¿‘ä¼¼ã€ã»ã¼ååˆ†ã«å°ã•ã„ï¼‰ -------------
+            // points: AoS é…åˆ—ã€‚NãŒå°ã•ãã¦ã‚‚OKã€‚O(N)ã€‚
             static BoundingSphere FromPointsRitter(const Vec3* points, size_t count) {
                 BoundingSphere s{};
                 if (count == 0) return s;
                 if (count == 1) { s.center = points[0]; s.radius = T(0); return s; }
 
-                // 1) ‚Ü‚¸“K“–‚È“_ p0 ‚ğ‘I‚ÑA‚»‚±‚©‚çÅ‚à‰“‚¢“_ p1A‚³‚ç‚É p1 ‚©‚çÅ‚à‰“‚¢“_ p2 ‚ğ’T‚·
+                // 1) ã¾ãšé©å½“ãªç‚¹ p0 ã‚’é¸ã³ã€ãã“ã‹ã‚‰æœ€ã‚‚é ã„ç‚¹ p1ã€ã•ã‚‰ã« p1 ã‹ã‚‰æœ€ã‚‚é ã„ç‚¹ p2 ã‚’æ¢ã™
                 size_t i0 = 0;
                 auto farthest_from = [&](size_t idx)->size_t {
                     size_t best = 0;
@@ -137,31 +140,31 @@ namespace SectorFW {
                 size_t i1 = farthest_from(i0);
                 size_t i2 = farthest_from(i1);
 
-                // 2) p1 ‚Æ p2 ‚ğ’¼Œa‚Æ‚·‚é‹…‚©‚çŠJn
+                // 2) p1 ã¨ p2 ã‚’ç›´å¾„ã¨ã™ã‚‹çƒã‹ã‚‰é–‹å§‹
                 Vec3 p1 = points[i1], p2 = points[i2];
                 s.center = v3_mid(p1, p2);
                 s.radius = T(0.5) * v3_len(v3_sub(p2, p1));
 
-                // 3) ‚·‚×‚Ä‚Ì“_‚ğ‘–¸‚µAŠO‘¤‚Ì“_‚ª‚ ‚ê‚ÎÅ¬Šg’£
+                // 3) ã™ã¹ã¦ã®ç‚¹ã‚’èµ°æŸ»ã—ã€å¤–å´ã®ç‚¹ãŒã‚ã‚Œã°æœ€å°æ‹¡å¼µ
                 for (size_t i = 0; i < count; ++i) {
                     s.expandToFit(points[i]);
                 }
                 return s;
             }
 
-            // ------------- Welzl –@iŒµ–§Å¬‹…j -------------
-            // Šú‘Ò O(N)iƒ‰ƒ“ƒ_ƒ€ƒVƒƒƒbƒtƒ‹‘O’ñjBN ‚ª”ç`”\–œ‚Å‚àŒ»À“IB
+            // ------------- Welzl æ³•ï¼ˆå³å¯†æœ€å°çƒï¼‰ -------------
+            // æœŸå¾… O(N)ï¼ˆãƒ©ãƒ³ãƒ€ãƒ ã‚·ãƒ£ãƒƒãƒ•ãƒ«å‰æï¼‰ã€‚N ãŒæ•°åƒï½æ•°åä¸‡ã§ã‚‚ç¾å®Ÿçš„ã€‚
             static BoundingSphere FromPointsWelzl(std::vector<Vec3> pts, uint64_t seed = 0xC0FFEE) {
                 BoundingSphere s{};
                 const size_t n = pts.size();
                 if (n == 0) return s;
                 if (n == 1) { s.center = pts[0]; s.radius = T(0); return s; }
 
-                // ƒ‰ƒ“ƒ_ƒ€‡˜‚É
+                // ãƒ©ãƒ³ãƒ€ãƒ é †åºã«
                 std::mt19937_64 rng(seed);
                 std::shuffle(pts.begin(), pts.end(), rng);
 
-                // ƒTƒ|[ƒgW‡ R ‚Í‚X4“_
+                // ã‚µãƒãƒ¼ãƒˆé›†åˆ R ã¯é«˜ã€…4ç‚¹
                 std::array<Vec3, 4> R{};
                 size_t rsz = 0;
 
@@ -173,8 +176,8 @@ namespace SectorFW {
                     s.radius = T(0.5) * v3_len(v3_sub(a, b));
                     };
                 auto ball_from_3 = [&](const Vec3& a, const Vec3& b, const Vec3& c) {
-                    // O“_‚ğ’Ê‚é‰~i3D‚Å‚Í3“_‹¤–Ê‚ÌŠOÚ‰~j¨ ‚»‚Ì‰~‚Ì’†S‚Æ”¼Œai•½–Ê“àj
-                    // 3“_‚ª‚Ù‚Úˆê’¼ü‚È‚ç2“_‚©‚ç‚Ì‹…‚ÖƒtƒH[ƒ‹ƒoƒbƒN
+                    // ä¸‰ç‚¹ã‚’é€šã‚‹å††ï¼ˆ3Dã§ã¯3ç‚¹å…±é¢ã®å¤–æ¥å††ï¼‰â†’ ãã®å††ã®ä¸­å¿ƒã¨åŠå¾„ï¼ˆå¹³é¢å†…ï¼‰
+                    // 3ç‚¹ãŒã»ã¼ä¸€ç›´ç·šãªã‚‰2ç‚¹ã‹ã‚‰ã®çƒã¸ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
                     Vec3 ab = v3_sub(b, a), ac = v3_sub(c, a);
                     auto abXac_x = ab.y * ac.z - ab.z * ac.y;
                     auto abXac_y = ab.z * ac.x - ab.x * ac.z;
@@ -182,7 +185,7 @@ namespace SectorFW {
                     T denom = T(2) * (abXac_x * abXac_x + abXac_y * abXac_y + abXac_z * abXac_z);
                     const T eps = T(1e-12);
                     if (std::abs(denom) < eps) {
-                        // ‘Ş‰»F2“_‚ÌÅ‘å’¼Œa
+                        // é€€åŒ–ï¼š2ç‚¹ã®æœ€å¤§ç›´å¾„
                         BoundingSphere s2; s2.radius = T(-1);
                         auto try2 = [&](const Vec3& p, const Vec3& q) {
                             BoundingSphere t; ball_from_2(p, q);
@@ -203,13 +206,13 @@ namespace SectorFW {
                     s.radius = v3_len(v3_sub(s.center, a));
                     };
                 auto ball_from_4 = [&](const Vec3& p, const Vec3& q, const Vec3& r, const Vec3& t) {
-                    // 4“_‚ÌŠOÚ‹…Bs—ñ®ƒx[ƒX‚Å‹‚ß‚éi”’l“I‚É‚Í‚â‚â‘@×jB
-                    // ‘Ş‰»i‚Ù‚Ú‹¤–Ê/‹¤’¼üj‚Ìê‡‚Í3“_/2“_‚ÉƒtƒH[ƒ‹ƒoƒbƒNB
+                    // 4ç‚¹ã®å¤–æ¥çƒã€‚è¡Œåˆ—å¼ãƒ™ãƒ¼ã‚¹ã§æ±‚ã‚ã‚‹ï¼ˆæ•°å€¤çš„ã«ã¯ã‚„ã‚„ç¹Šç´°ï¼‰ã€‚
+                    // é€€åŒ–ï¼ˆã»ã¼å…±é¢/å…±ç›´ç·šï¼‰ã®å ´åˆã¯3ç‚¹/2ç‚¹ã«ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚
                     auto det4 = [](T a11, T a12, T a13, T a14,
                         T a21, T a22, T a23, T a24,
                         T a31, T a32, T a33, T a34,
                         T a41, T a42, T a43, T a44)->T {
-                            // ƒ‰ƒvƒ‰ƒX“WŠJ‚Ìè‘‚«”Åi¬‹K–Í‚È‚Ì‚ÅOKj
+                            // ãƒ©ãƒ—ãƒ©ã‚¹å±•é–‹ã®æ‰‹æ›¸ãç‰ˆï¼ˆå°è¦æ¨¡ãªã®ã§OKï¼‰
                             T m11 = a22 * (a33 * a44 - a34 * a43) - a23 * (a32 * a44 - a34 * a42) + a24 * (a32 * a43 - a33 * a42);
                             T m12 = a21 * (a33 * a44 - a34 * a43) - a23 * (a31 * a44 - a34 * a41) + a24 * (a31 * a43 - a33 * a41);
                             T m13 = a21 * (a32 * a44 - a34 * a42) - a22 * (a31 * a44 - a34 * a41) + a24 * (a31 * a42 - a32 * a41);
@@ -223,7 +226,7 @@ namespace SectorFW {
                         t.x, t.y, t.z, T(1));
                     const T eps = T(1e-12);
                     if (std::abs(a) < eps) {
-                        // ‘Ş‰»F3“_/2“_‚©‚ç‚ÌÅ‘å‚ÉƒtƒH[ƒ‹ƒoƒbƒN
+                        // é€€åŒ–ï¼š3ç‚¹/2ç‚¹ã‹ã‚‰ã®æœ€å¤§ã«ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
                         BoundingSphere best; best.radius = T(-1);
                         auto try3 = [&](const Vec3& A, const Vec3& B, const Vec3& C) {
                             BoundingSphere tmp; ball_from_3(A, B, C);
@@ -268,11 +271,11 @@ namespace SectorFW {
                     }
                     };
 
-                // ”ñÄ‹A”Å WelzlFR ‚ğŠg’£‚µ‚È‚ª‚çƒ‹[ƒv
+                // éå†å¸°ç‰ˆ Welzlï¼šR ã‚’æ‹¡å¼µã—ãªãŒã‚‰ãƒ«ãƒ¼ãƒ—
                 s.center = pts[0]; s.radius = T(0);
                 for (size_t i = 0; i < n; ++i) {
                     if (s.contains(pts[i])) continue;
-                    // pts[i] ‚ğ•K‚¸‹«ŠE‚ÉÚ‚¹‚éÅ¬‹…‚ğì‚é
+                    // pts[i] ã‚’å¿…ãšå¢ƒç•Œã«è¼‰ã›ã‚‹æœ€å°çƒã‚’ä½œã‚‹
                     R[0] = pts[i]; rsz = 1; make_ball_from_R(R, rsz);
                     for (size_t j = 0; j < i; ++j) {
                         if (s.contains(pts[j])) continue;
@@ -290,9 +293,9 @@ namespace SectorFW {
                 return s;
             }
 
-            // ------------- ”Ä—pƒgƒ‰ƒ“ƒXƒtƒH[ƒ€ -------------
-            // ˆê—lƒXƒP[ƒ‹ + •Ài‚¾‚¯‚È‚ç³ŠmB”ñˆê—lƒXƒP[ƒ‹/‰ñ“]‚ğŠÜ‚Şê‡‚Í
-            // uüŒ`•”‚ÌÅ‘åL’·—¦i—ñƒxƒNƒgƒ‹’·‚ÌÅ‘åjv‚Å”¼Œa‚ğ•Ûç“I‚ÉŠg‘åB
+            // ------------- æ±ç”¨ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ  -------------
+            // ä¸€æ§˜ã‚¹ã‚±ãƒ¼ãƒ« + ä¸¦é€²ã ã‘ãªã‚‰æ­£ç¢ºã€‚éä¸€æ§˜ã‚¹ã‚±ãƒ¼ãƒ«/å›è»¢ã‚’å«ã‚€å ´åˆã¯
+            // ã€Œç·šå½¢éƒ¨ã®æœ€å¤§ä¼¸é•·ç‡ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«é•·ã®æœ€å¤§ï¼‰ã€ã§åŠå¾„ã‚’ä¿å®ˆçš„ã«æ‹¡å¤§ã€‚
             template<class Mat4, class Vec3Like>
             static BoundingSphere Transform(const BoundingSphere& s, const Mat4& M,
                 const Vec3Like& col0, const Vec3Like& col1, const Vec3Like& col2,
@@ -310,10 +313,171 @@ namespace SectorFW {
                 return { newC, s.radius * scale };
             }
 
-            // ˆê—lƒXƒP[ƒ‹ s ‚Æ•Ài t ‚Ì‚İŠù’m‚Èê‡
+            // ä¸€æ§˜ã‚¹ã‚±ãƒ¼ãƒ« s ã¨ä¸¦é€² t ã®ã¿æ—¢çŸ¥ãªå ´åˆ
             template<class Vec3LikeT>
             static BoundingSphere TransformUniform(const BoundingSphere& bs, const Vec3LikeT& translation, T uniform_scale) {
                 return { v3_add(bs.center, translation), bs.radius * std::abs(uniform_scale) };
+            }
+
+            //----------------------------------------------
+            // WVP (= proj * view * world) ã ã‘ã§ã®å¯è¦–åˆ¤å®š
+            // ãƒ»åˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„: clip = WVP * [x,y,z,1]^T
+            // ãƒ»LH Ã— ZeroToOne ã‚’æƒ³å®šï¼ˆx,y âˆˆ [-w,w], z âˆˆ [0,w], w>0ï¼‰
+            // ãƒ»ä¸­å¿ƒã¨å±€æ‰€è»¸ Â±R ã‚’æŠ•å½±ã—ã¦ NDC åŠå¾„ã‚’è¿‘ä¼¼ï¼ˆä¿å®ˆçš„ï¼‰
+            // ãƒ»outWmin: clip-space ã®æœ€å°Wï¼ˆMOC TestRect ç”¨ï¼‰
+            //----------------------------------------------
+            template<class Mat4>
+            bool IsVisible_WVP(const Mat4& WVP,
+                float* outNdcXmin = nullptr, float* outNdcYmin = nullptr,
+                float* outNdcXmax = nullptr, float* outNdcYmax = nullptr,
+                float* outWmin = nullptr, float* depth = nullptr) const noexcept
+            {
+                using ::SectorFW::Math::MulPoint_RowMajor_ColVec;
+
+                // 1) ä¸­å¿ƒã‚’ clip ã«
+                float cx, cy, cz, cw;
+                MulPoint_RowMajor_ColVec(WVP, center.x, center.y, center.z, cx, cy, cz, cw);
+
+                // 2) å±€æ‰€è»¸ Â±R ã‚’ 3æ–¹å‘ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ï¼ˆ+X, +Y, +Zï¼‰
+                auto proj_pt = [&](float ox, float oy, float oz,
+                    float& x, float& y, float& z, float& w) {
+                        MulPoint_RowMajor_ColVec(WVP, center.x + ox, center.y + oy, center.z + oz, x, y, z, w);
+                    };
+
+                float pxx, pxy, pxz, pxw;
+                float pyx, pyy, pyz, pyw;
+                float pzx, pzy, pzz, pzw;
+                proj_pt(+radius, 0.0f, 0.0f, pxx, pxy, pxz, pxw); // +X
+                proj_pt(0.0f, +radius, 0.0f, pyx, pyy, pyz, pyw); // +Y
+                proj_pt(0.0f, 0.0f, +radius, pzx, pzy, pzz, pzw); // +Zï¼ˆzè©•ä¾¡ã«ã‚‚ä½¿ç”¨ï¼‰
+
+                // 3) NDC ã¸ï¼ˆåŒæ¬¡é™¤ç®—ï¼‰
+                auto safe_div = [](float a, float b) {
+                    const float eps = 1e-6f;
+                    return a / ((std::fabs(b) < eps) ? (b < 0 ? -eps : eps) : b);
+                    };
+
+                const float ndc_cx = safe_div(cx, cw);
+                const float ndc_cy = safe_div(cy, cw);
+                const float ndc_cz = safe_div(cz, cw);   // ZeroToOne ãªã‚‰ [0,1] ãŒå¯è¦–
+
+                const float ndc_pxx = safe_div(pxx, pxw);
+                const float ndc_pxy = safe_div(pxy, pxw);
+
+                const float ndc_pyx = safe_div(pyx, pyw);
+                const float ndc_pyy = safe_div(pyy, pyw);
+
+                const float ndc_pzz = safe_div(pzz, pzw); // zæ–¹å‘ã®å¥¥/æ‰‹å‰è©•ä¾¡ã«åˆ©ç”¨
+
+                // 4) ç”»é¢åŠå¾„ï¼ˆä¿å®ˆçš„è¿‘ä¼¼ï¼‰
+                const float r_ndc_x = std::fabs(ndc_pxx - ndc_cx);
+                const float r_ndc_y = std::fabs(ndc_pyy - ndc_cy);
+                const float r_ndc = (std::max)(r_ndc_x, r_ndc_y);
+
+                // 5) NDC çŸ©å½¢
+                float xmin = ndc_cx - r_ndc;
+                float xmax = ndc_cx + r_ndc;
+                float ymin = ndc_cy - r_ndc;
+                float ymax = ndc_cy + r_ndc;
+
+                // 6) ã‚¯ãƒªãƒƒãƒ—ã¨ã®äº¤å·®ï¼ˆx,y ã¯ [-1,1]ã€z ã¯ [0,1]ï¼‰
+                const float zmin_est = (std::min)(ndc_cz, ndc_pzz);
+                const float zmax_est = (std::max)(ndc_cz, ndc_pzz);
+
+                const bool x_overlap = !(xmax < -1.0f || xmin > 1.0f);
+                const bool y_overlap = !(ymax < -1.0f || ymin > 1.0f);
+                const bool z_overlap = !(zmax_est < 0.0f || zmin_est > 1.0f);
+
+                // å‡ºåŠ›
+                if (outNdcXmin) *outNdcXmin = xmin;
+                if (outNdcXmax) *outNdcXmax = xmax;
+                if (outNdcYmin) *outNdcYmin = ymin;
+                if (outNdcYmax) *outNdcYmax = ymax;
+                if (depth)      *depth = cw;  // æ‰‹å‰å´ã®æ·±åº¦ã®ä»£è¡¨ã¨ã—ã¦ä¸­å¿ƒã® W ã‚’è¿”ã™
+
+                // è¿½åŠ : wminï¼ˆclip-space æœ€å°Wï¼‰â€” ä¿å®ˆçš„ã«ä¸­å¿ƒ/+X/+Y/+Z ã®æœ€å°
+                if (outWmin) {
+                    const float raw_minw = (std::min)((std::min)(cw, pxw), (std::min)(pyw, pzw));
+                    const float epsW = 1e-6f;                  // æ•°å€¤å®‰å®šç”¨
+                    *outWmin = (raw_minw < epsW) ? epsW : raw_minw;
+                }
+
+                return x_overlap && y_overlap && z_overlap;
+            }
+
+            template<class Mat4, class NDC>
+            bool IsVisible_WVP(const Mat4& WVP, NDC* outNDC, float* depth = nullptr) const noexcept
+            {
+                using ::SectorFW::Math::MulPoint_RowMajor_ColVec;
+
+                // 1) ä¸­å¿ƒã‚’ clip ã«
+                float cx, cy, cz, cw;
+                MulPoint_RowMajor_ColVec(WVP, center.x, center.y, center.z, cx, cy, cz, cw);
+
+                // 2) å±€æ‰€è»¸ Â±R ã‚’ 3æ–¹å‘ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ï¼ˆ+X, +Y, +Zï¼‰
+                auto proj_pt = [&](float ox, float oy, float oz,
+                    float& x, float& y, float& z, float& w) {
+                        MulPoint_RowMajor_ColVec(WVP, center.x + ox, center.y + oy, center.z + oz, x, y, z, w);
+                    };
+
+                float pxx, pxy, pxz, pxw;
+                float pyx, pyy, pyz, pyw;
+                float pzx, pzy, pzz, pzw;
+                proj_pt(+radius, 0.0f, 0.0f, pxx, pxy, pxz, pxw); // +X
+                proj_pt(0.0f, +radius, 0.0f, pyx, pyy, pyz, pyw); // +Y
+                proj_pt(0.0f, 0.0f, +radius, pzx, pzy, pzz, pzw); // +Zï¼ˆzè©•ä¾¡ã«ã‚‚ä½¿ç”¨ï¼‰
+
+                // 3) NDC ã¸ï¼ˆåŒæ¬¡é™¤ç®—ï¼‰
+                auto safe_div = [](float a, float b) {
+                    const float eps = 1e-6f;
+                    return a / ((std::fabs(b) < eps) ? (b < 0 ? -eps : eps) : b);
+                    };
+
+                const float ndc_cx = safe_div(cx, cw);
+                const float ndc_cy = safe_div(cy, cw);
+                const float ndc_cz = safe_div(cz, cw);   // ZeroToOne ãªã‚‰ [0,1] ãŒå¯è¦–
+
+                const float ndc_pxx = safe_div(pxx, pxw);
+                const float ndc_pxy = safe_div(pxy, pxw);
+
+                const float ndc_pyx = safe_div(pyx, pyw);
+                const float ndc_pyy = safe_div(pyy, pyw);
+
+                const float ndc_pzz = safe_div(pzz, pzw); // zæ–¹å‘ã®å¥¥/æ‰‹å‰è©•ä¾¡ã«åˆ©ç”¨
+
+                // 4) ç”»é¢åŠå¾„ï¼ˆä¿å®ˆçš„è¿‘ä¼¼ï¼‰
+                const float r_ndc_x = std::fabs(ndc_pxx - ndc_cx);
+                const float r_ndc_y = std::fabs(ndc_pyy - ndc_cy);
+                const float r_ndc = (std::max)(r_ndc_x, r_ndc_y);
+
+                // 5) NDC çŸ©å½¢
+                float xmin = ndc_cx - r_ndc;
+                float xmax = ndc_cx + r_ndc;
+                float ymin = ndc_cy - r_ndc;
+                float ymax = ndc_cy + r_ndc;
+
+                // 6) ã‚¯ãƒªãƒƒãƒ—ã¨ã®äº¤å·®ï¼ˆx,y ã¯ [-1,1]ã€z ã¯ [0,1]ï¼‰
+                const float zmin_est = (std::min)(ndc_cz, ndc_pzz);
+                const float zmax_est = (std::max)(ndc_cz, ndc_pzz);
+
+                const bool x_overlap = !(xmax < -1.0f || xmin > 1.0f);
+                const bool y_overlap = !(ymax < -1.0f || ymin > 1.0f);
+                const bool z_overlap = !(zmax_est < 0.0f || zmin_est > 1.0f);
+
+                // å‡ºåŠ›
+                if (outNDC) {
+                    outNDC->xmin = xmin;
+					outNDC->xmax = xmax;
+					outNDC->ymin = ymin;
+					outNDC->ymax = ymax;
+                    const float raw_minw = (std::min)((std::min)(cw, pxw), (std::min)(pyw, pzw));
+                    const float epsW = 1e-6f;                  // æ•°å€¤å®‰å®šç”¨
+					outNDC->wmin = (raw_minw < epsW) ? epsW : raw_minw;
+                }
+
+                if (depth)      *depth = cw;  // æ‰‹å‰å´ã®æ·±åº¦ã®ä»£è¡¨ã¨ã—ã¦ä¸­å¿ƒã® W ã‚’è¿”ã™
+
+                return x_overlap && y_overlap && z_overlap;
             }
         };
 
@@ -322,21 +486,21 @@ namespace SectorFW {
     } // namespace Math
 } // namespace SectorFW
 
-/* g‚¢•ûi—áj:
+/* ä½¿ã„æ–¹ï¼ˆä¾‹ï¼‰:
 
-// 1) ‹ß—i‚‘¬j: Ritter
+// 1) è¿‘ä¼¼ï¼ˆé«˜é€Ÿï¼‰: Ritter
 auto sphereR = BoundingSphere<float, Vec3f>::FromPointsRitter(points.data(), points.size());
 
-// 2) Œµ–§Å¬‹…: Welzl
+// 2) å³å¯†æœ€å°çƒ: Welzl
 auto sphereW = BoundingSphere<float, Vec3f>::FromPointsWelzl(std::vector<Vec3f>(points.begin(), points.end()));
 
-// 3) AABB ‚©‚ç
+// 3) AABB ã‹ã‚‰
 auto sphereAABB = BoundingSphere<float, Vec3f>::FromAABB(aabb.lb, aabb.ub);
 
-// 4) 2‹…ƒ}[ƒW
+// 4) 2çƒãƒãƒ¼ã‚¸
 auto merged = BoundingSphere<float, Vec3f>::Merge(sphereR, sphereW);
 
-// 5) ’€ŸŠg’£
+// 5) é€æ¬¡æ‹¡å¼µ
 BoundingSphere<float, Vec3f> s{center0, r0};
 for (auto& p : stream) s.expandToFit(p);
 

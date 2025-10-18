@@ -190,7 +190,7 @@ public:
 
 		auto fru = camera3DService->MakeFrustum();
 
-		auto cameraPos = camera3DService->GetPosition();
+		auto cameraPos = camera3DService->GetEyePos();
 		const auto& viewProj = camera3DService->GetCameraBufferData().viewProj;
 		auto fov = camera3DService->GetFOV();
 
@@ -222,7 +222,7 @@ public:
 					auto rotMtx = Math::MakeRotationMatrix(rot);
 					auto scaleMtx = Math::MakeScalingMatrix(scale);
 					//ワールド行列を計算
-					auto worldMtx = transMtx * rotMtx * scaleMtx;
+					auto worldMtx =  transMtx * rotMtx * scaleMtx;
 
 					//モデルアセットを取得
 					auto modelAsset = modelManager->Get(model.value()[i].handle);
@@ -241,7 +241,7 @@ public:
 					std::vector<Math::Vec3f> linePoss;
 					std::vector<uint32_t> lineColors;
 					for (const auto& mesh : modelAsset.ref().subMeshes) {
-						Math::Rectangle rect = Math::ProjectAABBToScreenRect(worldMtx * mesh.aabb, viewProj, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
+						Math::Rectangle rect = Math::ProjectAABBToScreenRect(mesh.aabb, viewProj * worldMtx, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
 						auto rectLines = rect.MakeLineVertex();
 						if ((size_t)line2DCount + rectLines.size() > MAX_CAPACITY_2DLINE) {
 							overflow = true;
@@ -289,9 +289,6 @@ public:
 								}
 
 							int prevLod = (int)lodBits.get(subMeshIdx);
-							float s = (std::min)((rect.width() * rect.height()) / (resolution.x * resolution.y), 1.0f);
-							int ll = Graphics::DX11ModelAssetManager::SelectLod(s, mesh.lodThresholds, (int)mesh.lods.size(), prevLod, -2.0f);
-
 							float s_occ = Graphics::ScreenCoverageFromRectPx(rect.x0, rect.y0, rect.x1, rect.y1, resolution.x, resolution.y);
 							auto occLod = Graphics::DecideOccluderLOD_FromThresholds(s_occ, mesh.lodThresholds, prevLod, prevLod);
 
@@ -299,7 +296,7 @@ public:
 							std::vector<Math::AABB3f> occAABB(occCount);
 							for (auto i = 0; i < occCount; ++i)
 							{
-								occAABB[i] = worldMtx * mesh.occluder.meltAABBs[i];
+								occAABB[i] = Math::TransformAABB_Affine(worldMtx, mesh.occluder.meltAABBs[i]);
 							}
 
 							//auto outQuad = Math::CollectFacingPlanes(occAABB, cameraPos, viewProj);
@@ -417,7 +414,7 @@ public:
 						break;
 					}
 					case Physics::ShapeDims::Type::Sphere: {
-						auto mtx = transMtx * rotMtx * Math::MakeScalingMatrix(Math::Vec3f(d.r * 2)); // 球は均一スケーリング
+						auto mtx =  transMtx * rotMtx * Math::MakeScalingMatrix(Math::Vec3f(d.r * 2)); // 球は均一スケーリング
 						Graphics::DrawCommand cmd;
 						cmd.instanceIndex = queue->AllocInstance({ mtx });
 						cmd.mesh = sphereMesh;
@@ -433,7 +430,7 @@ public:
 				}
 			}, partition, fru, meshManager, &draw3DLineSession, psoLineHandle.index, boxHandle.index, sphereHandle.index);
 
-		renderService->GetDepthBuffer(mocDepth);
+		/*renderService->GetDepthBuffer(mocDepth);
 
 		Graphics::DX11TextureManager* texMgr = renderService->GetResourceManager<Graphics::DX11TextureManager>();
 		texMgr->UpdateTexture(mocTexHandle, mocDepth.data(), 960 * 4);
@@ -446,7 +443,7 @@ public:
 		cmd.pso = psoMOCHandle.index;
 		cmd.material = mocMaterialHandle.index;
 
-		draw2DSession.Push(std::move(cmd));
+		draw2DSession.Push(std::move(cmd));*/
 	}
 private:
 	Graphics::PSOHandle psoLineHandle = {};

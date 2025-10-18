@@ -306,8 +306,8 @@ namespace SectorFW
 					D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
 					sd.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
 					sd.Format = DXGI_FORMAT_UNKNOWN;  // structured
-					sd.Buffer.ElementOffset = 0;
-					sd.Buffer.ElementWidth = elemCount;
+					sd.Buffer.FirstElement = 0;
+					sd.Buffer.NumElements = elemCount;
 					res = device->CreateShaderResourceView(*pBuf, &sd, pSRV);
 					if (FAILED(res)) {
 						LOG_ERROR("Failed to create SRV for instance data buffer: %d", res);
@@ -320,13 +320,13 @@ namespace SectorFW
 				};
 
 			// 例：最大 65k インスタンス／フレーム、最大 1M インデックス／パス
-			hr = createStructuredSRV(sizeof(InstanceData), MAX_INSTANCES_PER_FRAME, &m_instanceSB, &m_instanceSRV);
+			hr = createStructuredSRV(sizeof(RenderQueue::InstancePool), MAX_INSTANCES_PER_FRAME, &m_instanceSB, &m_instanceSRV);
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to create structured SRV for instance data: %d", hr);
 				return hr;
 			}
 
-			hr = createStructuredSRV(sizeof(uint32_t), MAX_INDICES_PER_PASS, &m_instIndexSB, &m_instIndexSRV);
+			hr = createStructuredSRV(sizeof(uint32_t), MAX_INSTANCE_INDICES_PER_PASS, &m_instIndexSB, &m_instIndexSRV);
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to create structured SRV for instance index data: %d", hr);
 				return hr;

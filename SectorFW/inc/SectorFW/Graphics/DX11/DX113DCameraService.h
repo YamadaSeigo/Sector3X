@@ -51,26 +51,23 @@ namespace SectorFW
 						}
 
 						auto deltaMove = moveVec * static_cast<float>(deltaTime);
-
 						Math::Vec3f r, u, f;
 						Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
-
 						{
 							std::unique_lock lock(sharedMutex);
-							pos += deltaMove; // カメラ位置を更新
-							eye += deltaMove; // 注視点も更新
-
+							eye += deltaMove;
+							target += deltaMove;
 							if (dx != 0 || dy != 0) {
-								// マウスの動きがある場合はカメラを更新
-								UpdateCameraFromMouse();
-								eye = pos + f * focusDist; // 注視点を更新
+								UpdateCameraFromMouse();   // rot をここで更新
 							}
+
+							target = eye + f * focusDist;
 						}
 
-						auto view = Math::MakeLookAtMatrixLH(pos, eye, u);
-						auto proj = Math::MakePerspectiveMatrixLH(fovRad, aspectRatio, nearClip, farClip);
+						auto view = Math::MakeLookAtMatrixLH(eye, target, u);  // 新しい u を使用
+						auto proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, nearClip, farClip);
+						cameraBuffer.viewProj = proj * view;
 
-						cameraBuffer.viewProj = view * proj; // ビュー投影行列
 						cbUpdateDesc.data = &cameraBuffer;
 						cbUpdateDesc.isDelete = false; // 更新時は削除しない
 
@@ -124,23 +121,23 @@ namespace SectorFW
 
 						Math::Vec3f r, u, f;
 						Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
-
 						{
 							std::unique_lock lock(sharedMutex);
-							pos += deltaMove; // カメラ位置を更新
-							eye += deltaMove; // 注視点も更新
+							eye += deltaMove; // カメラ位置を更新
+							target += deltaMove;
 
 							if (dx != 0 || dy != 0) {
 								// マウスの動きがある場合はカメラを更新
 								UpdateCameraFromMouse();
-								eye = pos + f * focusDist; // 注視点を更新
+								Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
+								target = eye + f * focusDist; // 注視点を更新
 							}
 						}
 
-						auto view = Math::MakeLookAtMatrixLH(pos, eye, u);
-						auto proj = Math::MakeOrthographicMatrixLH(left, right, bottom, top, nearClip, farClip);
+						auto view = Math::MakeLookAtMatrixLH(eye, target, u);
+						auto proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, bottom, top, nearClip, farClip);
 
-						cameraBuffer.viewProj = view * proj; // ビュー投影行列
+						cameraBuffer.viewProj = proj * view; // ビュー投影行列
 						cbUpdateDesc.data = &cameraBuffer;
 						cbUpdateDesc.isDelete = false; // 更新時は削除しない
 

@@ -49,7 +49,7 @@ namespace SectorFW
 			Vec2& operator+=(const Vec2& rhs) noexcept { x += rhs.x; y += rhs.y; return *this; }
 			Vec2 operator-(const Vec2& rhs) const noexcept { return Vec2(x - rhs.x, y - rhs.y); }
 			Vec2 operator*(T s) const noexcept { return Vec2(x * s, y * s); }
-			Vec2 operator/(T s) const noexcept { return Vec2(x / s, x / s); }
+			Vec2 operator/(T s) const noexcept { return Vec2(x / s, y / s); }
 
 			T dot(const Vec2& rhs) const noexcept { return x * rhs.x + y * rhs.y; }
 
@@ -213,18 +213,18 @@ namespace SectorFW
 
 		template<>
 		inline Vec4f Vec4f::operator+(const Vec4f& rhs) const noexcept {
-			__m128 a = _mm_load_ps(this->data);     // this の4要素をロード
-			__m128 b = _mm_load_ps(rhs.data);       // rhs の4要素をロード
+			__m128 a = _mm_loadu_ps(this->data);
+			__m128 b = _mm_loadu_ps(rhs.data);
 			__m128 result = _mm_add_ps(a, b);       // SIMD加算
 			Vec4f out;
-			_mm_store_ps(out.data, result);         // 結果を保存
+			_mm_storeu_ps(out.data, result);         // 結果を保存
 			return out;
 		}
 
 		template<>
 		inline float Vec4f::dot(const Vec4f& rhs) const noexcept {
-			__m128 a = _mm_load_ps(this->data);
-			__m128 b = _mm_load_ps(rhs.data);
+			__m128 a = _mm_loadu_ps(this->data);
+			__m128 b = _mm_loadu_ps(rhs.data);
 			__m128 mul = _mm_mul_ps(a, b);
 			__m128 shuf = _mm_movehdup_ps(mul);      // 高位を複製
 			__m128 sums = _mm_add_ps(mul, shuf);

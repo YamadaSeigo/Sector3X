@@ -79,7 +79,6 @@ namespace SectorFW
 		{
 			auto& data = slots[idx].data;
 			for (auto& sm : data.subMeshes) {
-				meshMgr.Release(sm.proxy, currentFrame + RENDER_BUFFER_COUNT);
 				matMgr.Release(sm.material, currentFrame + RENDER_BUFFER_COUNT);
 				for (auto& lod : sm.lods) {
 					meshMgr.Release(lod.mesh, currentFrame + RENDER_BUFFER_COUNT);
@@ -259,6 +258,9 @@ namespace SectorFW
 					// AABB生成
 					sub.aabb = MakeAABB(positions, indices);
 
+					//AABBからBoundingSphereを生成
+					sub.bs = Math::BoundingSpheref::FromAABB(sub.aabb.lb, sub.aabb.ub);
+
 					// LOD生成
 					//============================================================================
 
@@ -294,6 +296,7 @@ namespace SectorFW
 						clusters, clusterTris, clusterVerts);
 					sub.lods[0].clusters = std::move(clusters);
 
+					size_t beforeIndexCount = indices.size();
 					// 2) LOD1～N を生成
 					for (int li = 1; li < lodLevelNum; ++li) {
 						DX11MeshManager::RemappedStreams rs;
@@ -308,14 +311,13 @@ namespace SectorFW
 							recipes[li - 1], meshMgr, tag,
 							sub.lods[li], idx, rs,
 							/*buildClusters=*/true);
-						if (!ok) {
-							// フォールバック: ひとつ前のLODを使う等
-							sub.lods[li] = (li > 0) ? sub.lods[li - 1] : DX11ModelAssetData::SubmeshLOD{};
+						if (!ok || (beforeIndexCount <= idx.size())) {
+							lodLevelNum = li; // これ以降は生成しない;
+							sub.lods.erase(sub.lods.begin() + li, sub.lods.end());
+							break;
 						}
+						beforeIndexCount = idx.size();
 					}
-
-					// 7) プロキシ（超低比率）
-					sub.proxy = sub.lods.back().mesh; // たとえば LOD2 を流用
 
 					// 1) glTF の PBR 情報を抽出
 					PBRMaterialCB pbrCB{};
@@ -451,7 +453,17 @@ namespace SectorFW
 					sub.material = matHandle;
 					sub.pso = desc.pso;
 
-					sub.lodThresholds = BuildLodThresholds(stats, (int)lodLevelNum);
+					{
+						SectorFW::Graphics::LodAssetStats as{
+						.vertices = stats.vertices,
+						.instancesPeak = stats.instancesPeak,
+						.viewMin = stats.viewMin, .viewMax = stats.viewMax,
+						.skinned = stats.skinned,
+						.alphaCutout = stats.alphaCutout,
+						.hero = stats.hero
+						};
+						sub.lodThresholds = BuildLodThresholdsPx(as, (int)lodLevelNum, BASE_SCREEN_WIDTH, BASE_SCREEN_HEIGHT);
+					}
 
 					if (node.has_matrix) {
 						Math::Matrix4x4f transform = Math::Matrix4x4f::Identity();
@@ -736,31 +748,6 @@ namespace SectorFW
 			return true;
 		}
 
-		int DX11ModelAssetManager::SelectLod(float s, const LodThresholds& th, int lodCount, int prevLod, float globalBias)
-		{
-			// globalBias は距離スケールに変換（段±1 ≒しきい値×2^±1 の感覚）
-			float biasScale = std::pow(2.0f, globalBias);
-			// 遷移方向ごとにヒステリシス
-			auto t = [&](int i, bool up) {
-				float h = up ? (1.0f + th.hysteresisUp) : (1.0f - th.hysteresisDown);
-				return th.T[i] * biasScale * (1.0f - 0.1 * i) * h;
-				};
-
-			// s が大きいほど高品質
-			if (lodCount <= 1) return 0;
-			bool goingUp = (prevLod > 0 && s > th.T[prevLod - 1]); // 粗→細 方向かの簡易判定
-
-			// LOD0?
-			if (s > t(0, goingUp)) return 0;
-			if (lodCount == 2)     return 1;
-			// LOD1?
-			if (s > t(1, goingUp)) return 1;
-			if (lodCount == 3)     return 2;
-			// LOD2?
-			if (s > t(2, goingUp)) return 2;
-			return (std::min)(lodCount - 1, 3); // LOD3 以降
-		}
-
 		std::vector<DX11ModelAssetManager::LodRecipe> DX11ModelAssetManager::BuildLodRecipes(const AssetStats& a)
 		{
 			auto lg = [](float x) { return std::log10((std::max)(1.0f, x)); };
@@ -847,43 +834,6 @@ namespace SectorFW
 				out.push_back(rec);
 			}
 			return out;
-		}
-		LodThresholds DX11ModelAssetManager::BuildLodThresholds(const AssetStats& a, int lodCount)
-		{
-			LodThresholds th{};
-			// --- グローバル既定 ---
-			constexpr float base[3] = { 0.10f, 0.05f, 0.01f };
-
-			// --- 係数 k を作る（>1 で早めにLODを落とす、<1で粘る） ---
-			auto lg = [](float x) { return std::log10((std::max)(1.0f, x)); };
-
-			// 性能側プッシュ（大量配置・遠近幅）
-			float perfPush =
-				0.10f * std::clamp<float>(lg((float)(std::max)((uint32_t)1, a.instancesPeak)), 0.0f, 2.0f) +   // 0..0.20
-				0.08f * std::clamp<float>(lg((std::max)(1.0f, a.viewMax / (std::max)(0.5f, a.viewMin))), 0.0f, 2.0f); // 0..0.16
-
-			// 品質側ガード（ヒーロー・スキン・カットアウト）
-			float qualPull =
-				(a.hero ? 0.15f : 0.0f) +
-				(a.skinned ? 0.10f : 0.0f) +
-				(a.alphaCutout ? 0.05f : 0.0f); // カードの縁を守る
-
-			float k = std::clamp(1.0f + perfPush - qualPull, 0.6f, 1.6f);
-
-			// LODが深いほど少しだけ厳しめ（遠景は落としやすく）
-			for (int i = 0; i < 3; ++i) {
-				float depthMul = 1.0f + 0.05f * i; // i=0,1,2 → 1.00,1.05,1.10
-				th.T[i] = std::clamp(base[i] * k * depthMul, 0.005f, 0.6f);
-			}
-			th.T[3] = 0.0f; // 番兵
-
-			// ヒステリシスも少し調整（ヒーローはポップ抑制強め）
-			if (a.hero) { th.hysteresisUp = 0.20f; th.hysteresisDown = 0.12f; }
-			if (a.instancesPeak >= 2000) { th.hysteresisUp *= 0.9f; th.hysteresisDown *= 0.9f; } // 大量配置は敏捷性優先
-
-			// lodCount に合わせて使う本数だけ有効
-			// 例: lodCount=2 → T[0]のみ, lodCount=4 → T[0],T[1],T[2]
-			return th;
 		}
 	}
 }

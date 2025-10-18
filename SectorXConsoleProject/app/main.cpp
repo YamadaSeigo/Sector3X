@@ -21,97 +21,6 @@ constexpr uint32_t WINDOW_HEIGHT = 720;	// ウィンドウの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
-struct Velocity
-{
-	float vx = 0, vy = 0, vz = 0;
-
-	DEFINE_SOA(Velocity, vx, vy, vz)
-};
-
-struct Position
-{
-	float x = 0, y = 0, z = 0;
-
-	DEFINE_SOA(Position, x, y, z)
-};
-
-struct Health { SPARSE_TAG; int hp = 0; };
-
-template<typename Partition>
-class MovementSystem : public ITypeSystem<
-	MovementSystem<Partition>,
-	Partition,
-	ComponentAccess<Read<Velocity>, Write<Position>>,
-	ServiceContext<>>{
-	using Accessor = ComponentAccessor<Read<Velocity>, Write<Position>>;
-
-public:
-	void UpdateImpl(Partition& partition) {
-		this->ForEachChunkWithAccessor([](Accessor& accessor, size_t entityCount)
-			{
-				auto velocityPtr = accessor.Get<Read<Velocity>>();
-				if (!velocityPtr) return;
-
-				auto positionPtr = accessor.Get<Write<Position>>();
-				if (!positionPtr) return;
-
-				auto p_x = positionPtr->x();
-				auto p_y = positionPtr->y();
-				auto p_z = positionPtr->z();
-
-				auto p_vx = velocityPtr->vx();
-				auto p_vy = velocityPtr->vy();
-				auto p_vz = velocityPtr->vz();
-
-				size_t i = 0;
-				size_t simdWidth = 8; // AVX: 256bit / 32bit = 8 floats
-
-				float dt = 0.01f;
-
-				__m256 dt_vec = _mm256_set1_ps(dt);
-
-				for (; i + simdWidth <= entityCount; i += simdWidth) {
-					// load
-					__m256 px = _mm256_loadu_ps(p_x + i);
-					__m256 py = _mm256_loadu_ps(p_y + i);
-					__m256 pz = _mm256_loadu_ps(p_z + i);
-
-					__m256 vx = _mm256_loadu_ps(p_vx + i);
-					__m256 vy = _mm256_loadu_ps(p_vy + i);
-					__m256 vz = _mm256_loadu_ps(p_vz + i);
-
-					// v * dt
-					vx = _mm256_mul_ps(vx, dt_vec);
-					vy = _mm256_mul_ps(vy, dt_vec);
-					vz = _mm256_mul_ps(vz, dt_vec);
-
-					// p += v * dt
-					px = _mm256_add_ps(px, vx);
-					py = _mm256_add_ps(py, vy);
-					pz = _mm256_add_ps(pz, vz);
-
-					// store
-					_mm256_storeu_ps(p_x + i, px);
-					_mm256_storeu_ps(p_y + i, py);
-					_mm256_storeu_ps(p_z + i, pz);
-				}
-
-				// 残りをスカラー処理
-				for (; i < entityCount; ++i) {
-					p_x[i] += p_vx[i] * dt;
-					p_y[i] += p_vy[i] * dt;
-					p_z[i] += p_vz[i] * dt;
-				}
-
-				for (size_t i = 0; i < entityCount; ++i) {
-					/*velocityPtr.value()[i].vx += 1.0f;
-					LOG_INFO("%f", velocityPtr.value()[i].vx);*/
-
-					LOG_INFO("Velocity: (%f, %f, %d)", p_x[i], p_y[i], p_z[i]);
-				}
-			}, partition);
-	}
-};
 
 int main(void)
 {
@@ -186,7 +95,7 @@ int main(void)
 	PSOHandle psoHandle;
 	psoMgr->Add(psoDesc, psoHandle);
 
-	ModelAssetHandle modelAssetHandle[3];
+	ModelAssetHandle modelAssetHandle[4];
 
 	auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11ModelAssetManager>();
 	// モデルアセットの読み込み
@@ -196,35 +105,46 @@ int main(void)
 	modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
 	modelDesc.instancesPeak = 1000;
 	modelDesc.viewMax = 1000.0f;
+
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
 
 	modelDesc.path = "assets/model/StylizedNatureMegaKit/Clover_1.gltf";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
-	modelDesc.path = "assets/model/StylizedNatureMegaKit/DeadTree_2.gltf";
+	modelDesc.path = "assets/model/StylizedNatureMegaKit/DeadTree_1.gltf";
 	modelDesc.buildOccluders = false;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
+
+	modelDesc.path = "assets/model/StylizedNatureMegaKit/Grass_Common_Tall.gltf";
+	modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
+
 
 	//========================================================================================-
 
 	World<Grid2DPartition, Grid3DPartition, QuadTreePartition, OctreePartition> world(std::move(serviceLocator));
 	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
 
+	std::random_device rd;
+	std::mt19937_64 rng(rd());
+
+	// 例: A=50%, B=30%, C=20% のつもりで重みを設定（整数でも実数でもOK）
+	std::array<int, 4> weights{ 20, 30, 10 ,50};
+	std::discrete_distribution<int> dist(weights.begin(), weights.end());
+
 	for (int i = 0; i < 1; ++i) {
 		auto level = std::unique_ptr<Level<OctreePartition>>(new Level<OctreePartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
 
 		// System登録
 		auto& scheduler = level->GetScheduler();
-		//scheduler.AddSystem<MovementSystem>(world.GetServiceLocator());
 
 		scheduler.AddSystem<ModelRenderSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<SimpleModelRenderSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<CameraSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<TestMoveSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
-		//scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
+		//scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
+		//scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
+		//scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<CleanModelSystem>(world.GetServiceLocator());
 
 		auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
@@ -238,17 +158,20 @@ int main(void)
 		Math::Vec3f dst = src;
 
 		// Entity生成
-		for (int j = 0; j < 100; ++j) {
-			for (int k = 0; k < 100; ++k) {
+		for (int j = 0; j < 20; ++j) {
+			for (int k = 0; k < 20; ++k) {
 				for (int n = 0; n < 1; ++n) {
-					Math::Vec3f location = { float(j) * (rand() % 10 + 2), float(n) * 20.0f, float(k) * (rand() % 10 + 2) };
+					Math::Vec3f location = { float(rand() % 400 + 1), float(n) * 20.0f, float(rand() % 400 + 1) };
+					//Math::Vec3f location = { 10.0f * j,0.0f,10.0f * k };
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();
 					SpatialMotionTag tag{};
 					tag.handle = { key, chunk.value() };
+					float scale = 1.0f + float(rand() % 100 - 50) / 100.0f;
+					//float scale = 1.0f;
 					auto id = level->AddEntity(
-						TransformSoA{ location, Math::Quatf(0.0f,0.0f,0.0f,1.0f),Math::Vec3f(1.0f,1.0f,1.0f) },
-						CModel{ modelAssetHandle[rand() % (sizeof(modelAssetHandle) / sizeof(ModelAssetHandle))]},
+						TransformSoA{ location, Math::Quatf(0.0f,0.0f,0.0f,1.0f),Math::Vec3f(scale,scale,scale) },
+						CModel{ modelAssetHandle[dist(rng)] },
 						Physics::BodyComponent{},
 						Physics::PhysicsInterpolation(
 							location, // 初期位置

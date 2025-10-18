@@ -40,9 +40,9 @@ namespace SectorFW
 		class DX11Backend : public RenderBackendBase<DX11Backend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*> {
 		public:
 			/**
-			 * @brief インスタンスデータの最大数
+			 * @brief ひと描画命令当たりのインスタンスデータの最大数
 			 */
-			static inline constexpr uint32_t MAX_INSTANCES = 1024;
+			static inline constexpr uint32_t MAX_DRAW_CALL_INSTANCES_NUM = 1024 * 4;
 			/**
 			 * @brief コンストラクタ
 			 * @param device ID3D11Deviceのポインタ
@@ -133,11 +133,11 @@ namespace SectorFW
 			 * @param framePool インスタンスデータの配列
 			 * @param instCount インスタンスデータの数
 			 */
-			void BeginFrameUploadImpl(const InstanceData* framePool, uint32_t instCount)
+			void BeginFrameUploadImpl(const RenderQueue::InstancePool* framePool, uint32_t instCount)
 			{
 				D3D11_MAPPED_SUBRESOURCE m{};
 				context->Map(m_instanceSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
-				memcpy(m.pData, framePool, instCount * sizeof(InstanceData));
+				memcpy(m.pData, framePool, instCount * sizeof(decltype(*framePool)));
 				context->Unmap(m_instanceSB.Get(), 0);
 
 				context->VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); // t0 バインド
@@ -180,7 +180,7 @@ namespace SectorFW
 						cmds[i].pso == currentPSO &&
 						cmds[i].material == currentMat &&
 						cmds[i].mesh == currentMesh &&
-						instanceCount < MAX_INSTANCES) {
+						instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
 						dst[instanceCount++] = cmds[i].instanceIndex.index; // ← 直接書く = instances[idx];
 						++i;
 					}
@@ -236,7 +236,7 @@ namespace SectorFW
 				context->Unmap(m_instIndexSB.Get(), 0);
 				m_idxMapped = nullptr;
 
-				context->VSSetShaderResources(1, 1, m_instIndexSRV.GetAddressOf()); // t0 を VS にセット
+				context->VSSetShaderResources(1, 1, m_instIndexSRV.GetAddressOf()); // t1 を VS にセット
 			}
 
 		private:

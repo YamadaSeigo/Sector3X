@@ -2,7 +2,7 @@
 
 struct VSOutput
 {
-    float4 posH : SV_POSITION;
+    float4 clip : SV_POSITION;
     float2 uv : TEXCOORD;
     float3 normal : NORMAL;
 };
@@ -10,13 +10,19 @@ struct VSOutput
 VSOutput main(VSInput input, uint instId : SV_InstanceID)
 {
     uint pooledIndex = gInstIndices[gIndexBase + instId]; //間接参照
-    row_major float4x4 model = gInstanceMats[pooledIndex];
 
-    //float4が行なので掛ける右から掛ける
-    float4 worldPos = mul(float4(input.position, 1.0f), model);
+    row_major float3x4 world = gInstanceMats[pooledIndex].M;
+
+    float3x3 R = (float3x3) world;
+    float3 t = float3(world._m03, world._m13, world._m23);
+
     VSOutput output;
-    output.posH = mul(worldPos, uViewProj);
+    const float3 wp = mul(R, input.position) + t;
+    float3 nW = mul(R, input.normal); // 非一様スケール無し前提
+
+    // クリップ座標
+    output.clip = mul(uViewProj, float4(wp, 1.0));
     output.uv = input.uv;
-    output.normal = normalize(mul(input.normal, (float3x3) model));
+    output.normal = nW;
     return output;
 }

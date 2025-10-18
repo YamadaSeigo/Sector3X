@@ -93,7 +93,7 @@ namespace SectorFW
 			 * @param framePool インスタンスデータの配列
 			 * @param instCount インスタンスデータの数
 			 */
-			void BeginFrameUpload(const InstanceData* framePool, uint32_t instCount) {
+			void BeginFrameUpload(const RenderQueue::InstancePool* framePool, uint32_t instCount) {
 				static_cast<Derived*>(this)->BeginFrameUploadImpl(framePool, instCount);
 			}
 			/**

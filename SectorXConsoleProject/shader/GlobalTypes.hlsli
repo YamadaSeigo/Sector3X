@@ -34,8 +34,12 @@ cbuffer LightCB : register(b3)
 //テクスチャバッファの場合は,t5以降はオケ!
 //======================================================
 
-// フレーム単位：全インスタンスのワールド行列（64B/個）
-StructuredBuffer<float4x4> gInstanceMats : register(t0);
+// フレーム単位：全インスタンスのワールド行列（48B/個）
+struct InstanceMat
+{
+    row_major float3x4 M;
+};
+StructuredBuffer<InstanceMat> gInstanceMats : register(t0);
 
 // ドロー単位：このメッシュで使うインスタンスの “参照インデックス” 群
 StructuredBuffer<uint> gInstIndices : register(t1);

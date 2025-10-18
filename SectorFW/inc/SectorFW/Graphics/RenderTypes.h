@@ -63,6 +63,9 @@ namespace SectorFW
 			InstanceData(const Math::Matrix4x4f& mtx) : worldMtx(mtx) {
 				worldMtx[3][3] = 1.0f; // —LŒø‰»
 			}
+			InstanceData(Math::Matrix4x4f&& mtx) noexcept : worldMtx(std::move(mtx)) {
+				worldMtx[3][3] = 1.0f; // —LŒø‰»
+			}
 
 			bool HasData() const noexcept { return worldMtx[3][3] != 0.0f; }
 			void SetData(const Math::Matrix4x4f& mtx) noexcept { worldMtx = mtx; worldMtx[3][3] = 1.0f; }

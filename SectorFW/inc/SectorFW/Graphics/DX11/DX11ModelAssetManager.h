@@ -12,6 +12,8 @@
 #include "DX11MeshManager.h"
 #include "DX11PSOManager.h"
 
+#include "../LODPolicy.h"
+
 #include "../../Math/Matrix.hpp"
 #include "../../Math/BoundingSphere.hpp"
 #include "../../Math/AABB.hpp"
@@ -50,13 +52,7 @@ namespace SectorFW
 			float minThicknessRatio = 0.01f;// 最小厚み比。これ未満は超薄板として減点
 		};
 
-		struct LodThresholds {
-			// thresholds[i] を超えると「より高品質側」を選ぶ想定（sは画面高さ比0..1）
-			// 例: s > T[0] → LOD0,  T[1] < s ≤ T[0] → LOD1, ...
-			std::array<float, 4> T;     // 使うのは lodCount-1 個
-			float hysteresisUp = 0.15f; // 15% 幅：粗→細へ上がる時に厳しめ
-			float hysteresisDown = 0.01f; // 細→粗へ下がる時に甘め
-		};
+		using LodThresholds = SectorFW::Graphics::LodThresholdsPx; // ピクセル基準
 
 		struct DX11ModelAssetData {
 			std::string name;
@@ -67,7 +63,6 @@ namespace SectorFW
 			};
 
 			struct SubMesh {
-				MeshHandle proxy = {};
 				Math::BoundingSpheref bs = {};
 				Math::AABB3f aabb = {};
 				MaterialHandle material = {};
@@ -174,12 +169,8 @@ namespace SectorFW
 				DX11MeshManager::RemappedStreams& outStreams,
 				bool buildClusters = false);
 
-			static int SelectLod(float s, const LodThresholds& th, int lodCount, int prevLod, float globalBias /*±段*/);
-
 			// 返すのは LOD1..N 用のレシピ（LOD0は常に原型）
 			static std::vector<LodRecipe> BuildLodRecipes(const AssetStats& a);
-
-			static LodThresholds BuildLodThresholds(const AssetStats& a, int lodCount);
 
 		private:
 			DX11MeshManager& meshMgr;

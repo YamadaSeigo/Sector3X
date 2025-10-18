@@ -27,10 +27,10 @@ public:
 		auto psoManager = renderService->GetResourceManager<Graphics::DX11PSOManager>();
 
 		auto fru = cameraService->MakeFrustum();
-		Math::Vec3f camPos = cameraService->GetPosition();
+		Math::Vec3f camPos = cameraService->GetEyePos();
 
 		//アクセスを宣言したコンポーネントにマッチするチャンクに指定した関数を適応する
-		this->ForEachFrustumNearChunkWithAccessor([](Accessor& accessor, size_t entityCount,
+		this->ForEachFrustumChunkWithAccessor([](Accessor& accessor, size_t entityCount,
 			Graphics::RenderService* renderService, auto modelMgr, auto meshMgr, auto materialMgr, auto psoMgr,
 			auto queue)
 			{
@@ -49,12 +49,21 @@ public:
 
 				for (size_t i = 0; i < entityCount; ++i) {
 					size_t& idx = i;
+					//Math::Vec3f pos(transform->px()[i], transform->py()[i], transform->pz()[i]);
+					//Math::Quatf rot(transform->qx()[i], transform->qy()[i], transform->qz()[i], transform->qw()[i]);
+					//Math::Vec3f scale(transform->sx()[i], transform->sy()[i], transform->sz()[i]);
+					//auto transMtx = Math::MakeTranslationMatrix(pos);
+					//auto rotMtx = Math::MakeRotationMatrix(rot);
+					//auto scaleMtx = Math::MakeScalingMatrix(scale);
+					////ワールド行列を計算
+					//auto worldMtx =  transMtx * rotMtx * scaleMtx;
 					const auto& worldMtx = worldMatrices[i];
 
 					//モデルアセットを取得
 					auto modelAsset = modelMgr->Get(model.value()[idx].handle);
 
-					auto instanceIdx = queue->AllocInstance({ worldMtx });
+					Graphics::InstanceData instance = { worldMtx };
+					auto instanceIdx = queue->AllocInstance(std::move(instance));
 					auto& lodBits = model.value()[idx].prevLODBits;
 
 					for (const Graphics::DX11ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
@@ -81,7 +90,7 @@ public:
 						queue->Push(std::move(cmd));
 					}
 				}
-			}, partition, fru, camPos, renderService.get(), modelManager, meshManager, materialManager,
+			}, partition, fru, renderService.get(), modelManager, meshManager, materialManager,
 				psoManager, &producerSession
 				);
 	}
