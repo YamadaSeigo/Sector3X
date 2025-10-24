@@ -12,7 +12,7 @@
 #include <vector>
 #include <string>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug
 	{

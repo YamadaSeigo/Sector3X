@@ -13,7 +13,7 @@
 #include "AABB.hpp"     // SectorFW::Math::AABB2f / AABB3f (lb, ub)
 #include "Matrix.hpp"   // 行列からの抽出に使う場合（必要なら）
 
-namespace SectorFW::Math {
+namespace SFW::Math {
 	// n・x + d = 0
 	struct Planef {
 		Vec3f n{ 0.f, 0.f, 1.f };
@@ -63,6 +63,8 @@ namespace SectorFW::Math {
 
 	struct Frustumf {
 		std::array<Planef, 6> p{};
+
+		inline float* data() noexcept { return reinterpret_cast<float*>(p.data()); }
 
 		void Normalize() noexcept {
 			for (auto& pl : p) pl.Normalize();

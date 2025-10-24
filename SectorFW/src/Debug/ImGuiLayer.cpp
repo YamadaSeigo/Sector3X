@@ -6,7 +6,7 @@
 
 #include "WindowHandler.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug
 	{

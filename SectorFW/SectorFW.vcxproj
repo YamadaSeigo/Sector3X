@@ -61,11 +61,13 @@
     <ClInclude Include="inc\SectorFW\Debug\ProcessCpuUsageWin32.h" />
     <ClInclude Include="inc\SectorFW\Debug\UIBus.h" />
     <ClInclude Include="inc\SectorFW\DX11Graphics.h" />
+    <ClInclude Include="inc\SectorFW\DX11WinTerrainHelper.h" />
     <ClInclude Include="inc\SectorFW\DX12Graphics.h" />
     <ClInclude Include="inc\SectorFW\Graphics\convert_directX.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX112DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX113DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11BufferManager.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ClusterPipeline.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11MaterialManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11MeshManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ModelAssetManager.h" />
@@ -88,6 +90,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\RenderQueue.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderTypes.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\TerrainService.h" />
     <ClInclude Include="inc\SectorFW\Input\InputDevice.hpp" />
     <ClInclude Include="inc\SectorFW\Input\WinInput.h" />
     <ClInclude Include="inc\SectorFW\Input\WinMouseInput.h" />
@@ -97,6 +100,7 @@
     <ClInclude Include="inc\SectorFW\Math\Frustum.hpp" />
     <ClInclude Include="inc\SectorFW\Math\aabb_util.h" />
     <ClInclude Include="inc\SectorFW\Math\Matrix.hpp" />
+    <ClInclude Include="inc\SectorFW\Math\Perlin2D.h" />
     <ClInclude Include="inc\SectorFW\Math\Quaternion.hpp" />
     <ClInclude Include="inc\SectorFW\Math\Rectangle.hpp" />
     <ClInclude Include="inc\SectorFW\Math\sx_math.h" />
@@ -167,6 +171,7 @@
     <ClCompile Include="src\Debug\ImGuiLayer.cpp" />
     <ClCompile Include="src\Debug\PerfHUD.cpp" />
     <ClCompile Include="src\Debug\UIBus.cpp" />
+    <ClCompile Include="src\Graphics\DX11ClusterPipeline.cpp" />
     <ClCompile Include="src\Graphics\DX11Graphics.cpp" />
     <ClCompile Include="src\Graphics\DX11MaterialManager.cpp" />
     <ClCompile Include="src\Graphics\DX11MeshManager.cpp" />
@@ -179,6 +184,7 @@
     <ClCompile Include="src\Graphics\LODPolicy.cpp" />
     <ClCompile Include="src\Graphics\OccluderToolkit.cpp" />
     <ClCompile Include="src\Graphics\RenderQueue.cpp" />
+    <ClCompile Include="src\Graphics\TerrainService.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />
     <ClCompile Include="src\Physics\PhysicsDevice.cpp" />
     <ClCompile Include="src\SIMD\simd_avx2.cpp" />

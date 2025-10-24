@@ -15,7 +15,7 @@
 #include "../Math/Quaternion.hpp"
 #include "../Core/RegistryTypes.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Physics
 	{

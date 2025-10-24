@@ -15,7 +15,7 @@
 #include "../Util/Morton.h"
 #include "../Util/Grid.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief 2D(x-z)グリッドパーティションを表すクラス
@@ -348,8 +348,8 @@ namespace SectorFW
 		{
 			std::vector<ArchetypeChunk*> result;
 			auto collect_from = [&](const ECS::EntityManager& em) {
-				const auto& all = em.GetArchetypeManager().GetAll();
-				for (const auto& [_, arch] : all) {
+				const auto& all = em.GetArchetypeManager().GetAllData();
+				for (const auto& arch : all) {
 					const ComponentMask& mask = arch->GetMask();
 					if ((mask & required) == required && (mask & excluded).none()) {
 						const auto& chunks = arch->GetChunks();

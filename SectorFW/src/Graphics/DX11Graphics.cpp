@@ -17,7 +17,7 @@
 
 #endif //_DEBUG
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -338,13 +338,15 @@ namespace SectorFW
 
 			renderGraph->AddPass(passDesc);
 
+			passDesc.customExecute = nullptr;
+
 			passDesc.name = "Line";
 			passDesc.topology = PrimitiveTopology::LineList;
 			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
 			renderGraph->AddPass(passDesc);
 
-			
+
 			passDesc.dsv = nullptr;
 			passDesc.cbvs = { cameraHandle2D };
 			passDesc.name = "Line2D";

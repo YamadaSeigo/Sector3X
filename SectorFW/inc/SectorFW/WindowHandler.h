@@ -20,7 +20,7 @@
 
 #include "Util/NonCopyable.h"
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief ウィンドウハンドラ

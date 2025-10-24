@@ -10,7 +10,7 @@
 #include <string_view>
 #include <type_traits>
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief std::filesystem::pathのゼロコピービューを提供するクラス

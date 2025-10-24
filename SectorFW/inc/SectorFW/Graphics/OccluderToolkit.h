@@ -37,7 +37,7 @@
 #define SFW_MATH_ROWVEC 0
 #endif
 
-namespace SectorFW {
+namespace SFW {
     namespace Graphics {
 
         // ----- melt result status (melt.h is hidden in .cpp) -----

@@ -16,7 +16,7 @@
 #include <filesystem>
 #include <unordered_map>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

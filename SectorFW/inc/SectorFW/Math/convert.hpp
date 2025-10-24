@@ -12,7 +12,7 @@
 #include <cassert>
 #include <numbers>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Math
 	{

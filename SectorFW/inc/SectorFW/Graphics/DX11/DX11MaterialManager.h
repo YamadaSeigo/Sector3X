@@ -14,7 +14,7 @@
 #include "DX11BufferManager.h"
 #include "DX11SamplerManager.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

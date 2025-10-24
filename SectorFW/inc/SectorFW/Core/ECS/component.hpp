@@ -17,7 +17,7 @@
 #include "../../Util/unique_variant.hpp"
 #include "../../Util/TypeChecker.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{
@@ -123,7 +123,7 @@ namespace SectorFW
 		>;
 
 		//まばらなコンポーネントを識別するためのタグを定義するマクロ
-#define SPARSE_TAG using sparse_tag = SectorFW::ECS::SparseComponentTag;
+#define SPARSE_TAG using sparse_tag = SFW::ECS::SparseComponentTag;
 		//メンバ変数を定義するマクロ
 #define WRAP_MEMBER(var,name) &name::var
 		//メンバ変数のポインタを定義するマクロ
@@ -133,20 +133,20 @@ namespace SectorFW
 		//引数をdecltypeでラップするマクロ
 #define WRAP_DECLTYPE(x) decltype(x)
 		//引数をSoAPtrでラップしてポインタ型を取得するマクロ
-#define WRAP_DECLTYPE_PTR(x) SectorFW::ECS::SoAPtr<decltype(x)>::type p_##x
+#define WRAP_DECLTYPE_PTR(x) SFW::ECS::SoAPtr<decltype(x)>::type p_##x
 		//コンポーネントのメンバーを取得するため関数定義マクロ
-#define DEFINE_GET_FUNCTION(x) inline decltype(p_##x) x##() noexcept {return p_##x;} inline SectorFW::ECS::ConstReturnType<decltype(p_##x)> x##() const noexcept {return p_##x;}
+#define DEFINE_GET_FUNCTION(x) inline decltype(p_##x) x##() noexcept {return p_##x;} inline SFW::ECS::ConstReturnType<decltype(p_##x)> x##() const noexcept {return p_##x;}
 		//SoAコンポーネントの定義マクロ
 #define DEFINE_SOA(className, ...)\
 		using tuple_type = std::tuple<FOR_EACH(WRAP_DECLTYPE,COMMA,__VA_ARGS__)>;\
-		using soa_type = SectorFW::FlattenT<tuple_type>;\
-		using variant_type = SectorFW::unique_variant_from_tuple<soa_type>;\
+		using soa_type = SFW::FlattenT<tuple_type>;\
+		using variant_type = SFW::unique_variant_from_tuple<soa_type>;\
 		static constexpr auto member_ptr_tuple = std::make_tuple(WRAP_MEMBER_FOREACH(className,WRAP_MEMBER,__VA_ARGS__));\
 		struct ToPtr{private:\
 			struct ToPtrTag{}; \
 			FOR_EACH(WRAP_DECLTYPE_PTR,SEMICOLON,__VA_ARGS__);\
 			static constexpr auto ptr_tuple = std::make_tuple(WRAP_MEMBER_FOREACH(ToPtr,WRAP_MEMBER_PTR,__VA_ARGS__)); public:\
 			FOR_EACH(DEFINE_GET_FUNCTION,SPACE,__VA_ARGS__)\
-			template<typename... AccessTypes> friend class SectorFW::ECS::ComponentAccessor;};
+			template<typename... AccessTypes> friend class SFW::ECS::ComponentAccessor;};
 	}
 }

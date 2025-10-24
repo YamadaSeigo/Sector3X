@@ -10,7 +10,7 @@
 #include <wrl/client.h>
 #include <vector>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug
 	{

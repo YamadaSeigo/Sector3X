@@ -22,7 +22,7 @@
 #include "../Util/Morton.h"
 #include "../Math/AABB.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief クアッドツリー(x-z)パーティションを管理するクラス
@@ -743,13 +743,13 @@ namespace SectorFW
 	// ==== Query 特殊化 ====
 	namespace ECS {
 		template<>
-		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(SectorFW::QuadTreePartition& ctx) const noexcept
+		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(SFW::QuadTreePartition& ctx) const noexcept
 		{
 			std::vector<ArchetypeChunk*> result;
 
 			auto collect_from = [&](const ECS::EntityManager& em) {
-				const auto& all = em.GetArchetypeManager().GetAll();
-				for (const auto& [_, arch] : all) {
+				const auto& all = em.GetArchetypeManager().GetAllData();
+				for (const auto& arch : all) {
 					const ComponentMask& mask = arch->GetMask();
 					if ((mask & required) == required && (mask & excluded).none()) {
 						const auto& chunks = arch->GetChunks();

@@ -2,7 +2,7 @@
 
 #include "Debug/logger.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -12,7 +12,7 @@ namespace SectorFW
 			RebindIfNeeded();
 			// 現在のフレームスロット
 			const int slot = rq->current.load(std::memory_order_acquire);
-			auto& pos = rq->instWritePos[slot];
+			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
 			// 簡易チェック（必要なら LOG + clamp / 失敗扱いにする）
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
@@ -21,7 +21,7 @@ namespace SectorFW
 
 				LOG_ERROR("RenderQueue::ProducerSession::AllocInstance: instance pool overflow (max {})", rq->maxInstancesPerFrame);
 			}
-			rq->instancePools[slot][idx] = inst;
+			rq->sharedInstanceArena->Data(slot)[idx] = inst;
 			return InstanceIndex{ idx };
 		}
 		InstanceIndex RenderQueue::ProducerSession::AllocInstance(InstanceData&& inst)
@@ -31,7 +31,7 @@ namespace SectorFW
 			RebindIfNeeded();
 			// 現在のフレームスロット
 			const int slot = rq->current.load(std::memory_order_acquire);
-			auto& pos = rq->instWritePos[slot];
+			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
 			// 簡易チェック（必要なら LOG + clamp / 失敗扱いにする）
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
@@ -40,7 +40,7 @@ namespace SectorFW
 
 				LOG_ERROR("RenderQueue::ProducerSession::AllocInstance: instance pool overflow (max {})", rq->maxInstancesPerFrame);
 			}
-			rq->instancePools[slot][idx] = std::move(inst);
+			rq->sharedInstanceArena->Data(slot)[idx] = std::move(inst);
 			return InstanceIndex{ idx };
 		}
 		InstanceIndex RenderQueue::ProducerSession::AllocInstance(const InstancePool& inst)
@@ -48,7 +48,7 @@ namespace SectorFW
 			RebindIfNeeded();
 			// 現在のフレームスロット
 			const int slot = rq->current.load(std::memory_order_acquire);
-			auto& pos = rq->instWritePos[slot];
+			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
 			// 簡易チェック（必要なら LOG + clamp / 失敗扱いにする）
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
@@ -57,7 +57,7 @@ namespace SectorFW
 
 				LOG_ERROR("RenderQueue::ProducerSession::AllocInstance: instance pool overflow (max {})", rq->maxInstancesPerFrame);
 			}
-			rq->instancePools[slot][idx] = inst;
+			rq->sharedInstanceArena->Data(slot)[idx] = inst;
 			return InstanceIndex{ idx };
 		}
 		InstanceIndex RenderQueue::ProducerSession::AllocInstance(InstancePool&& inst)
@@ -65,7 +65,7 @@ namespace SectorFW
 			RebindIfNeeded();
 			// 現在のフレームスロット
 			const int slot = rq->current.load(std::memory_order_acquire);
-			auto& pos = rq->instWritePos[slot];
+			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
 			// 簡易チェック（必要なら LOG + clamp / 失敗扱いにする）
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
@@ -74,7 +74,7 @@ namespace SectorFW
 
 				LOG_ERROR("RenderQueue::ProducerSession::AllocInstance: instance pool overflow (max {})", rq->maxInstancesPerFrame);
 			}
-			rq->instancePools[slot][idx] = std::move(inst);
+			rq->sharedInstanceArena->Data(slot)[idx] = std::move(inst);
 			return InstanceIndex{ idx };
 		}
 		InstanceIndex RenderQueue::ProducerSession::NextInstanceIndex()
@@ -82,7 +82,7 @@ namespace SectorFW
 			RebindIfNeeded();
 			// 現在のフレームスロット
 			const int slot = rq->current.load(std::memory_order_acquire);
-			auto& pos = rq->instWritePos[slot];
+			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
 			// 簡易チェック（必要なら LOG + clamp / 失敗扱いにする）
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
@@ -103,7 +103,7 @@ namespace SectorFW
 			RebindIfNeeded();
 			// 現在のフレームスロット
 			const int slot = rq->current.load(std::memory_order_acquire);
-			rq->instancePools[slot][index.index] = inst;
+			rq->sharedInstanceArena->Data(slot)[index.index] = inst;
 		}
 	}
 }

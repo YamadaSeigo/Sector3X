@@ -11,8 +11,8 @@
 template<class Partition>
 class BodyIDWriteBackFromEventsSystem final : public ECS::ISystem<Partition> {
 public:
-	void Update(Partition& partition, SectorFW::LevelContext& levelCtx, const ECS::ServiceLocator& S) override {
-		using namespace SectorFW::Physics;
+	void Update(Partition& partition, SFW::LevelContext& levelCtx, const ECS::ServiceLocator& S) override {
+		using namespace SFW::Physics;
 
 		std::vector<PhysicsService::CreatedBody> evs;
 		ps->ConsumeCreatedBodies(evs);

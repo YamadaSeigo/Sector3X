@@ -21,7 +21,7 @@
 #include "../Debug/UIBus.h"
 #endif // _ENABLE_IMGUI
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief ƒŒƒxƒ‹‚Ìó‘Ô‚ğ’è‹`‚·‚é—ñ‹“Œ^

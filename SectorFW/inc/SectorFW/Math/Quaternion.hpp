@@ -12,7 +12,7 @@
 #include <algorithm>
 #include "Vector.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Math
 	{

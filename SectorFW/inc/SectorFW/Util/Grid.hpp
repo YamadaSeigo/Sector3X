@@ -9,7 +9,7 @@
 
 #include <vector>
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief 2Dグリッドを表すクラス

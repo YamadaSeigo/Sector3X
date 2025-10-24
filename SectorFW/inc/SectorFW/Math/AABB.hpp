@@ -10,7 +10,7 @@
 #include <limits>
 #include "Vector.hpp" // Vec<T, N> を定義しているヘッダー
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Math
 	{

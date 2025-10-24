@@ -10,7 +10,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace SectorFW
+namespace SFW
 {
 	// 任意のテンプレート引数数に対応するCRTP継承判定
 	template <typename T, template <typename, typename...> class CRTP>

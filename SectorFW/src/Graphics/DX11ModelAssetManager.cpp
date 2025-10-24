@@ -21,7 +21,7 @@
 #define SFW_MATH_ROWVEC 1
 #include "Graphics/OccluderToolkit.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -29,11 +29,11 @@ namespace SectorFW
 			// Occluder適性スコア計算
 			//-------------------------
 		static float ComputeOccluderScore(const DX11ModelAssetManager::AssetStats& a,
-			const SectorFW::Math::AABB3f& bbox,
+			const SFW::Math::AABB3f& bbox,
 			bool alphaCutoutThisSubmesh,
 			float minThicknessRatio)
 		{
-			using namespace SectorFW::Math;
+			using namespace SFW::Math;
 			// 寸法と厚み指標
 			Vec3f sz = bbox.size(); // ub - lb
 			float ex = (std::max)(sz.x, 1e-6f), ey = (std::max)(sz.y, 1e-6f), ez = (std::max)(sz.z, 1e-6f);
@@ -454,7 +454,7 @@ namespace SectorFW
 					sub.pso = desc.pso;
 
 					{
-						SectorFW::Graphics::LodAssetStats as{
+						SFW::Graphics::LodAssetStats as{
 						.vertices = stats.vertices,
 						.instancesPeak = stats.instancesPeak,
 						.viewMin = stats.viewMin, .viewMax = stats.viewMax,
@@ -480,7 +480,7 @@ namespace SectorFW
 						bool alphaCutoutThis = alphaCutout;
 
 						// 世界サイズの目安（モデルTRSをここで掛けないならローカル[m]想定）
-						SectorFW::Math::Vec3f sz = subRef.aabb.size();
+						SFW::Math::Vec3f sz = subRef.aabb.size();
 						float diag = std::sqrt(sz.x * sz.x + sz.y * sz.y + sz.z * sz.z);
 						if (diag >= desc.minWorldSizeM) {
 							float occScore = ComputeOccluderScore(stats, subRef.aabb, alphaCutoutThis, desc.minThicknessRatio);
@@ -488,7 +488,7 @@ namespace SectorFW
 							subRef.occluder.candidate = (occScore >= desc.occScoreThreshold);
 
 							if (subRef.occluder.candidate) {
-								std::vector<SectorFW::Math::AABB3f> meltAABBs;
+								std::vector<SFW::Math::AABB3f> meltAABBs;
 								GenerateOccluderAABBs_MaybeWithMelt(
 									positions, indices, desc.meltResolution, desc.meltStopRatio, meltAABBs);
 								if (meltAABBs.empty()) {

@@ -12,7 +12,7 @@
 #include <../third_party/Jolt/Jolt.h>
 #include <../third_party/Jolt/Physics/Collision/Shape/Shape.h>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Physics
 	{

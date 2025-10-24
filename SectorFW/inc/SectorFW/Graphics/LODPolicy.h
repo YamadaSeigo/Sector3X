@@ -8,7 +8,7 @@
 #include "../Math/Rectangle.hpp"
 #include "../Math/AABB.hpp"
 
-namespace SectorFW::Graphics {
+namespace SFW::Graphics {
 
     static inline constexpr int BASE_SCREEN_WIDTH = 1920;
 	static inline constexpr int BASE_SCREEN_HEIGHT = 1080;

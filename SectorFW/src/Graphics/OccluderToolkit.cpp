@@ -13,11 +13,11 @@
 
 #include "Debug/logger.h"
 
-using namespace SectorFW::Graphics;
-using SectorFW::Math::Vec3f;
-using SectorFW::Math::Vec4f;
-using Mat4f = SectorFW::Math::Matrix4x4f;
-using SectorFW::Math::AABB3f;
+using namespace SFW::Graphics;
+using SFW::Math::Vec3f;
+using SFW::Math::Vec4f;
+using Mat4f = SFW::Math::Matrix4x4f;
+using SFW::Math::AABB3f;
 
 // SIMD feature flags (compile-time)
 #if defined(__SSE2__) || defined(_M_X64)
@@ -105,7 +105,7 @@ static inline Vec4f MulPointClip_ByVP(const Mat4f& VP, const Vec4f& v)
 // -----------------------------------------------------------------------------
 // (A) melt integration (optional)
 // -----------------------------------------------------------------------------
-MeltBuildStatus SectorFW::Graphics::GenerateOccluderAABBs_MaybeWithMelt(
+MeltBuildStatus SFW::Graphics::GenerateOccluderAABBs_MaybeWithMelt(
     const std::vector<Vec3f>& positions,
     const std::vector<uint32_t>& indices,
     int   meltResolution,
@@ -209,7 +209,7 @@ MeltBuildStatus SectorFW::Graphics::GenerateOccluderAABBs_MaybeWithMelt(
 // -----------------------------------------------------------------------------
 // (B) front-face quad (O(1)), AABB helpers
 // -----------------------------------------------------------------------------
-bool SectorFW::Graphics::ComputeFrontFaceQuad(const AABB3f& b, const Vec3f& camPos, AABBFrontFaceQuad& out)
+bool SFW::Graphics::ComputeFrontFaceQuad(const AABB3f& b, const Vec3f& camPos, AABBFrontFaceQuad& out)
 {
     const float ex = b.ub.x - b.lb.x;
     const float ey = b.ub.y - b.lb.y;
@@ -253,7 +253,7 @@ bool SectorFW::Graphics::ComputeFrontFaceQuad(const AABB3f& b, const Vec3f& camP
     return true;
 }
 
-void SectorFW::Graphics::QuadToTrianglesCCW(uint16_t outIdx[6]) {
+void SFW::Graphics::QuadToTrianglesCCW(uint16_t outIdx[6]) {
     outIdx[0] = 0; outIdx[1] = 1; outIdx[2] = 2;
     outIdx[3] = 0; outIdx[4] = 2; outIdx[5] = 3;
 }
@@ -261,7 +261,7 @@ void SectorFW::Graphics::QuadToTrianglesCCW(uint16_t outIdx[6]) {
 // -----------------------------------------------------------------------------
 // (C) screen size measures + SIMD projection
 // -----------------------------------------------------------------------------
-float SectorFW::Graphics::EstimateMaxScreenDiameterPx(const AABB3f& b, const Vec3f& camPos, const Viewport& vp)
+float SFW::Graphics::EstimateMaxScreenDiameterPx(const AABB3f& b, const Vec3f& camPos, const Viewport& vp)
 {
     const Vec3f c = (b.lb + b.ub) * 0.5f;
     const Vec3f e = (b.ub - b.lb) * 0.5f;
@@ -326,7 +326,7 @@ static inline void TransformPoints4_SSE(const float p[4][3], const Mat4f& VP,
 }
 #endif
 
-float SectorFW::Graphics::ProjectQuadAreaPx2_SIMDOrScalar(
+float SFW::Graphics::ProjectQuadAreaPx2_SIMDOrScalar(
     const Vec3f quad[4],
     const Mat4f& VP, int vpW, int vpH,
     float* outMinX, float* outMinY, float* outMaxX, float* outMaxY,
@@ -405,7 +405,7 @@ float SectorFW::Graphics::ProjectQuadAreaPx2_SIMDOrScalar(
 // -----------------------------------------------------------------------------
 // (D) LOD policy & selection
 // -----------------------------------------------------------------------------
-OccluderPolicy SectorFW::Graphics::GetPolicy(OccluderLOD lod) {
+OccluderPolicy SFW::Graphics::GetPolicy(OccluderLOD lod) {
     static constexpr OccluderPolicy policy[] = {
          { 10.f, 100.f, 3, 30000, 64, 1.0f },
          { 14.f, 196.f, 2, 20000, 64, 1.3f },
@@ -425,7 +425,7 @@ static inline int TileIdFromScreenAABB_Local(float minx, float miny, float maxx,
     return y * tilesX + x;
 }
 
-int SectorFW::Graphics::SelectOccluderQuads_SIMD(
+int SFW::Graphics::SelectOccluderQuads_SIMD(
     const std::vector<AABB3f>& aabbs,
     const Vec3f& camPos,
     const Mat4f& VP,
@@ -605,7 +605,7 @@ static inline TwoQuadProjectOut ProjectTwoQuadsAreaPx2_AVX2(
 }
 #endif
 
-int SectorFW::Graphics::SelectOccluderQuads_AVX2(
+int SFW::Graphics::SelectOccluderQuads_AVX2(
     const std::vector<AABB3f>& aabbs,
     const Vec3f& camPos,
     const Mat4f& VP,
@@ -699,13 +699,13 @@ int SectorFW::Graphics::SelectOccluderQuads_AVX2(
 // -----------------------------------------------------------------------------
 // (E) LOD helpers
 // -----------------------------------------------------------------------------
-float SectorFW::Graphics::OccluderBiasFromRenderLod(int visLod) {
+float SFW::Graphics::OccluderBiasFromRenderLod(int visLod) {
     if (visLod <= 0) return 0.0f;
     if (visLod == 1) return +0.2f;
     return +0.4f;
 }
 
-float SectorFW::Graphics::ScreenCoverageFromRectPx(float minx, float miny, float maxx, float maxy,
+float SFW::Graphics::ScreenCoverageFromRectPx(float minx, float miny, float maxx, float maxy,
     float vpW, float vpH)
 {
     float w = (std::max)(0.f, maxx - minx);
@@ -715,7 +715,7 @@ float SectorFW::Graphics::ScreenCoverageFromRectPx(float minx, float miny, float
     return (std::min)(area / (std::max)(1.f, full), 1.0f);
 }
 
-float SectorFW::Graphics::ComputeNDCAreaFrec(float minx, float miny, float maxx, float maxy)
+float SFW::Graphics::ComputeNDCAreaFrec(float minx, float miny, float maxx, float maxy)
 {
     // 画面ボックス [-1,1] と交差
     const float ix0 = (std::max)(minx, -1.0f);
@@ -728,13 +728,13 @@ float SectorFW::Graphics::ComputeNDCAreaFrec(float minx, float miny, float maxx,
     return (w * h) * 0.25f;
 }
 
-OccluderLOD SectorFW::Graphics::DecideOccluderLOD_FromArea(float areaPx2) {
+OccluderLOD SFW::Graphics::DecideOccluderLOD_FromArea(float areaPx2) {
     if (areaPx2 >= 400.0f) return OccluderLOD::Near; // >=20x20px
     if (areaPx2 >= 196.0f) return OccluderLOD::Mid;  // >=14x14px
     return OccluderLOD::Far;
 }
 
-void SectorFW::Graphics::CoarseSphereVisible_AVX2(const SoAPosRad& s, const ViewProjParams& vp, std::vector<uint32_t>& outIndices)
+void SFW::Graphics::CoarseSphereVisible_AVX2(const SoAPosRad& s, const ViewProjParams& vp, std::vector<uint32_t>& outIndices)
 {
     outIndices.clear();
     outIndices.reserve(s.count);

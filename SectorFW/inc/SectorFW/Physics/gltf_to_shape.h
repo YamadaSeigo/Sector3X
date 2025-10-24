@@ -12,7 +12,7 @@
 #include <cstring>
 #include <cassert>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Physics
 	{

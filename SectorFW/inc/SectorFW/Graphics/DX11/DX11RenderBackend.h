@@ -22,7 +22,7 @@
 
 #include <cassert>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -133,7 +133,7 @@ namespace SectorFW
 			 * @param framePool インスタンスデータの配列
 			 * @param instCount インスタンスデータの数
 			 */
-			void BeginFrameUploadImpl(const RenderQueue::InstancePool* framePool, uint32_t instCount)
+			void BeginFrameUploadImpl(const SharedInstanceArena::InstancePool* framePool, uint32_t instCount)
 			{
 				D3D11_MAPPED_SUBRESOURCE m{};
 				context->Map(m_instanceSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);

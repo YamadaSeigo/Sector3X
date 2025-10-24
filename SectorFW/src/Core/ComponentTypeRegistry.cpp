@@ -1,7 +1,7 @@
 #include "Core/ECS/ComponentTypeRegistry.h"
 #include "message.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

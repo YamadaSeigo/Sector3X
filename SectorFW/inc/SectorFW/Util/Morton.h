@@ -7,7 +7,7 @@
 #pragma once
 #include <cstdint>
 
-namespace SectorFW {
+namespace SFW {
 	//オプション：負のセル座標を扱う場合の ZigZag 変換 ---
 	[[nodiscard]] static inline constexpr uint64_t ZigZag64(int64_t v) noexcept {
 		// [-2^63, 2^63-1] -> [0, 2^64-1]

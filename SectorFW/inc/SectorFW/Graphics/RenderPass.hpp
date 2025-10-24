@@ -11,7 +11,7 @@
 
 #include "RenderQueue.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -29,7 +29,7 @@ namespace SectorFW
 			BlendStateID blendState = BlendStateID::Opaque; // ブレンドステートID
 			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // 深度ステンシルステートID
 			std::vector<BufferHandle> cbvs; // 定数バッファハンドルのリスト
-			std::function<void()> customExecute; // FullscreenQuadなど
+			std::function<void(uint64_t)> customExecute; // FullscreenQuadなど
 
 			/**
 			 * @brief デフォルトコンストラクタ
@@ -58,7 +58,7 @@ namespace SectorFW
 				BlendStateID blendState = BlendStateID::Opaque,
 				DepthStencilStateID depthStencilState = DepthStencilStateID::Default,
 				const std::vector<BufferHandle>& cbvs = {},
-				std::function<void()> customExecute = nullptr)
+				std::function<void(uint64_t)> customExecute = nullptr)
 				: name(name)
 				, rtvs(rtvs)
 				, dsv(dsv)
@@ -130,7 +130,7 @@ namespace SectorFW
 			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // 深度ステンシルステートID
 			std::vector<BufferHandle> cbvs; // 定数バッファハンドルのリスト
 			uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME; // フレーム当たりの最大インスタンス数
-			std::function<void()> customExecute; // FullscreenQuadなど
+			std::function<void(uint64_t)> customExecute; // FullscreenQuadなど
 		};
 	}
 }

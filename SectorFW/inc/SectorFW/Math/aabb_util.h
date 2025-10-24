@@ -15,7 +15,7 @@
 #include <immintrin.h>
 #endif
 
-namespace SectorFW::Math {
+namespace SFW::Math {
 
 	//-------------------------------
 	// ‹¤’Êƒwƒ‹ƒp

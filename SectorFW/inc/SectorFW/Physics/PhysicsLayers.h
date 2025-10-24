@@ -11,7 +11,7 @@
 #include <Jolt/Physics/Collision/CollisionDispatch.h>
 #include <cstdint>
 
-namespace SectorFW {
+namespace SFW {
 	namespace Physics {
 		// タイトル都合で差し替え前提の最小セット
 		namespace Layers {

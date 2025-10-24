@@ -10,6 +10,7 @@
 #include "Graphics/IGraphicsDevice.hpp"
 #include "Graphics/RenderGraph.hpp"
 #include "Graphics/RenderTypes.h"
+
 #include "Graphics/DX11/DX11RenderBackend.h"
 #include "Graphics/DX11/DX113DCameraService.h"
 #include "Graphics/DX11/DX112DCameraService.h"
@@ -24,7 +25,7 @@
 #include <condition_variable>
 #include <queue>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -88,6 +89,13 @@ namespace SectorFW
 
 			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }
 			ID3D11DeviceContext* GetDeviceContext() const noexcept { return m_context.Get(); }
+
+			ComPtr<ID3D11RenderTargetView> GetMainRenderTargetView() const noexcept {
+				return m_renderTargetView;
+			}
+			ComPtr<ID3D11DepthStencilView> GetMainDepthStencilView() const noexcept {
+				return m_depthStencilView;
+			}
 		private:
 			// ===== レンダースレッド実装 =====
 			struct RenderSubmit {

@@ -6,7 +6,7 @@
 #include "../external/imgui/imgui.h"
 #endif	// _D3D11_IMGUI
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug
 	{

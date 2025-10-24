@@ -18,7 +18,7 @@
 
 #include "Matrix.hpp"
 
-namespace SectorFW::Math {
+namespace SFW::Math {
 
     struct NdcRectWithW {
         float xmin, ymin, xmax, ymax;

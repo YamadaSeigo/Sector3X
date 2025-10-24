@@ -9,7 +9,7 @@
 
 #include <atomic>
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief コピー可能なatomicラッパークラス

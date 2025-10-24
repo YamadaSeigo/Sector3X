@@ -7,7 +7,7 @@
 
 #pragma once
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief deleteを防ぐためのポインタラッパークラス

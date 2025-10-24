@@ -8,7 +8,7 @@
 #pragma once
 #include <cstdint>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug {
 		/**

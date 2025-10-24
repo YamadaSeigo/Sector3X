@@ -17,7 +17,7 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 #include "Debug/ProcessCpuUsageWin32.h"
 #endif // _D3D11_IMGUI
 
-namespace SectorFW
+namespace SFW
 {
 	// ウィンドウが作成されたかどうかのフラグ
 	bool WindowHandler::m_isCreated = false;

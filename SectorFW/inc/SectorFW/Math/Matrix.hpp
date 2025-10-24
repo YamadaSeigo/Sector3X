@@ -30,7 +30,7 @@
  // - 平行移動  : 最右列（m[0..2][3]）
  //==============================================================
 
-namespace SectorFW {
+namespace SFW {
     namespace Math {
 
         //==============================
@@ -68,6 +68,14 @@ namespace SectorFW {
                 operator*(const Matrix<Cols, OtherCols, T>& rhs) const noexcept {
                 return MatMulKernel<Rows, Cols, OtherCols, T>::eval(*this, rhs);
             }
+        };
+
+        // 3x4 ワールド行列の SoA（行優先 3x4: [r00 r01 r02 tx; r10 r11 r12 ty; r20 r21 r22 tz]）
+        struct MatrixSoA {
+            float* m00 = nullptr; float* m01 = nullptr; float* m02 = nullptr; float* tx = nullptr;
+            float* m10 = nullptr; float* m11 = nullptr; float* m12 = nullptr; float* ty = nullptr;
+            float* m20 = nullptr; float* m21 = nullptr; float* m22 = nullptr; float* tz = nullptr;
+            std::size_t count = 0;
         };
 
         // 型エイリアス
@@ -390,7 +398,7 @@ namespace SectorFW {
         }
 
         // AVX2/FMA: 同一 VP × 複数 W(3x4) → C(4x4)
-// 2体ずつ処理。端数1体は SSE 版に回します。
+        // 2体ずつ処理。端数1体は SSE 版に回します。
         static inline void Mul4x4x3x4_Batch_To4x4_AVX2_RowCombine(
             const Matrix4x4f& VP,
             const Matrix3x4f* __restrict W,
@@ -1230,7 +1238,7 @@ namespace SectorFW {
 
         // q を正規化したい場合 true
         inline void BuildWorldMatrices_FromSoA(
-            const MTransformSoA& t, size_t n, SectorFW::Math::Matrix4x4f* outM, bool renormalizeQuat = false) noexcept
+            const MTransformSoA& t, size_t n, SFW::Math::Matrix4x4f* outM, bool renormalizeQuat = false) noexcept
         {
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
             const size_t vecN = n & ~size_t(3);
@@ -1458,12 +1466,6 @@ namespace SectorFW {
                     M.m[1][0] = r10a[k]; M.m[1][1] = r11a[k]; M.m[1][2] = r12a[k]; M.m[1][3] = TYa[k];
                     M.m[2][0] = r20a[k]; M.m[2][1] = r21a[k]; M.m[2][2] = r22a[k]; M.m[2][3] = TZa[k];
                 }
-            }
-
-            // 端数は後段の SSE/Scalar に任せるのでここでは return
-            if (i < n) {
-                // 後段に回す（呼び出し側でまとめて処理）
-                // ここでは何もしない
             }
         }
 #endif
@@ -1844,6 +1846,152 @@ namespace SectorFW {
             }
 #endif
         }
+
+        //==============================
+        // 実装：TransformSoA → WorldMatrixSoA
+        //==============================
+        // normalizeQ = true なら軽量正規化（rsqrt）を入れる
+        inline void BuildWorldMatrixSoA_FromTransformSoA(
+            const MTransformSoA& in, std::size_t count, const MatrixSoA& out, bool normalizeQ = true) noexcept
+        {
+            if (count == 0) return;
+
+            // 必須入力チェック（px/py/pz + qx/qy/qz/qw は必須）
+            if (!in.px || !in.py || !in.pz || !in.qx || !in.qy || !in.qz || !in.qw) return;
+            // 出力チェック
+            if (!out.m00 || !out.m01 || !out.m02 || !out.tx ||
+                !out.m10 || !out.m11 || !out.m12 || !out.ty ||
+                !out.m20 || !out.m21 || !out.m22 || !out.tz) return;
+
+#if defined(__AVX2__) || (defined(_MSC_VER) && defined(__AVX2__))
+            const __m256 one = _mm256_set1_ps(1.0f);
+            const __m256 two = _mm256_set1_ps(2.0f);
+
+            std::size_t i = 0;
+            for (; i + 7 < count; i += 8) {
+                // 8体ロード
+                __m256 X = _mm256_loadu_ps(in.qx + i);
+                __m256 Y = _mm256_loadu_ps(in.qy + i);
+                __m256 Z = _mm256_loadu_ps(in.qz + i);
+                __m256 W = _mm256_loadu_ps(in.qw + i);
+
+                // スケール（未指定なら 1）
+                __m256 Sx = in.sx ? _mm256_loadu_ps(in.sx + i) : one;
+                __m256 Sy = in.sy ? _mm256_loadu_ps(in.sy + i) : one;
+                __m256 Sz = in.sz ? _mm256_loadu_ps(in.sz + i) : one;
+
+                // 軽量正規化（品質が必要ならニュートン1回追加も可）
+                if (normalizeQ) {
+// n2 = X*X + Y*Y + Z*Z + W*W
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                    __m256 t = _mm256_fmadd_ps(Z, Z, _mm256_mul_ps(W, W));  // t = Z*Z + W*W
+                    t = _mm256_fmadd_ps(Y, Y, t);                   // t += Y*Y
+                    __m256 n2 = _mm256_fmadd_ps(X, X, t);                   // n2 = X*X + t
+#else
+                    __m256 n2 = _mm256_add_ps(_mm256_mul_ps(X, X), _mm256_mul_ps(Y, Y));
+                    n2 = _mm256_add_ps(n2, _mm256_mul_ps(Z, Z));
+                    n2 = _mm256_add_ps(n2, _mm256_mul_ps(W, W));
+#endif
+
+                    __m256 rinv = _mm256_rsqrt_ps(n2); // 1/sqrt(n2) の近似
+
+                    // 必要ならニュートン1回で精度アップ: rinv = rinv*(1.5 - 0.5*n2*rinv*rinv)
+#if 1
+                    const __m256 half = _mm256_set1_ps(0.5f);
+                    const __m256 three_halfs = _mm256_set1_ps(1.5f);
+                    __m256 rinv2 = _mm256_mul_ps(rinv, rinv);
+                    __m256 corr = _mm256_fnmadd_ps(_mm256_mul_ps(n2, rinv2), half, three_halfs);
+                    rinv = _mm256_mul_ps(rinv, corr);
+#endif
+
+                    X = _mm256_mul_ps(X, rinv);
+                    Y = _mm256_mul_ps(Y, rinv);
+                    Z = _mm256_mul_ps(Z, rinv);
+                    W = _mm256_mul_ps(W, rinv);
+                }
+
+                // 回転 3x3
+                __m256 xx = _mm256_mul_ps(X, X), yy = _mm256_mul_ps(Y, Y), zz = _mm256_mul_ps(Z, Z);
+                __m256 xy = _mm256_mul_ps(X, Y), xz = _mm256_mul_ps(X, Z), yz = _mm256_mul_ps(Y, Z);
+                __m256 wx = _mm256_mul_ps(W, X), wy = _mm256_mul_ps(W, Y), wz = _mm256_mul_ps(W, Z);
+
+                __m256 r00 = _mm256_fnmadd_ps(two, _mm256_add_ps(yy, zz), one);
+                __m256 r01 = _mm256_mul_ps(two, _mm256_sub_ps(xy, wz));
+                __m256 r02 = _mm256_mul_ps(two, _mm256_add_ps(xz, wy));
+
+                __m256 r10 = _mm256_mul_ps(two, _mm256_add_ps(xy, wz));
+                __m256 r11 = _mm256_fnmadd_ps(two, _mm256_add_ps(xx, zz), one);
+                __m256 r12 = _mm256_mul_ps(two, _mm256_sub_ps(yz, wx));
+
+                __m256 r20 = _mm256_mul_ps(two, _mm256_sub_ps(xz, wy));
+                __m256 r21 = _mm256_mul_ps(two, _mm256_add_ps(yz, wx));
+                __m256 r22 = _mm256_fnmadd_ps(two, _mm256_add_ps(xx, yy), one);
+
+                // 列スケーリング
+                r00 = _mm256_mul_ps(r00, Sx); r10 = _mm256_mul_ps(r10, Sx); r20 = _mm256_mul_ps(r20, Sx);
+                r01 = _mm256_mul_ps(r01, Sy); r11 = _mm256_mul_ps(r11, Sy); r21 = _mm256_mul_ps(r21, Sy);
+                r02 = _mm256_mul_ps(r02, Sz); r12 = _mm256_mul_ps(r12, Sz); r22 = _mm256_mul_ps(r22, Sz);
+
+                // 並進
+                __m256 TX = _mm256_loadu_ps(in.px + i);
+                __m256 TY = _mm256_loadu_ps(in.py + i);
+                __m256 TZ = _mm256_loadu_ps(in.pz + i);
+
+                // SoA なのでそのままベクトルストア
+                _mm256_storeu_ps(out.m00 + i, r00); _mm256_storeu_ps(out.m01 + i, r01); _mm256_storeu_ps(out.m02 + i, r02); _mm256_storeu_ps(out.tx + i, TX);
+                _mm256_storeu_ps(out.m10 + i, r10); _mm256_storeu_ps(out.m11 + i, r11); _mm256_storeu_ps(out.m12 + i, r12); _mm256_storeu_ps(out.ty + i, TY);
+                _mm256_storeu_ps(out.m20 + i, r20); _mm256_storeu_ps(out.m21 + i, r21); _mm256_storeu_ps(out.m22 + i, r22); _mm256_storeu_ps(out.tz + i, TZ);
+            }
+            // テイル（スカラ）
+            for (; i < count; ++i) {
+                float X = in.qx[i], Y = in.qy[i], Z = in.qz[i], W = in.qw[i];
+                if (normalizeQ) {
+                    float n2 = X * X + Y * Y + Z * Z + W * W; float rinv = 1.0f / std::sqrt(n2);
+                    X *= rinv; Y *= rinv; Z *= rinv; W *= rinv;
+                }
+                float sx = in.sx ? in.sx[i] : 1.f;
+                float sy = in.sy ? in.sy[i] : 1.f;
+                float sz = in.sz ? in.sz[i] : 1.f;
+
+                float xx = X * X, yy = Y * Y, zz = Z * Z;
+                float xy = X * Y, xz = X * Z, yz = Y * Z;
+                float wx = W * X, wy = W * Y, wz = W * Z;
+
+                float r00 = 1 - 2 * (yy + zz), r01 = 2 * (xy - wz), r02 = 2 * (xz + wy);
+                float r10 = 2 * (xy + wz), r11 = 1 - 2 * (xx + zz), r12 = 2 * (yz - wx);
+                float r20 = 2 * (xz - wy), r21 = 2 * (yz + wx), r22 = 1 - 2 * (xx + yy);
+
+                out.m00[i] = r00 * sx; out.m01[i] = r01 * sy; out.m02[i] = r02 * sz; out.tx[i] = in.px[i];
+                out.m10[i] = r10 * sx; out.m11[i] = r11 * sy; out.m12[i] = r12 * sz; out.ty[i] = in.py[i];
+                out.m20[i] = r20 * sx; out.m21[i] = r21 * sy; out.m22[i] = r22 * sz; out.tz[i] = in.pz[i];
+            }
+#else
+            // AVX2 なし：スカラのみ
+            for (std::size_t i = 0; i < count; ++i) {
+                float X = in.qx[i], Y = in.qy[i], Z = in.qz[i], W = in.qw[i];
+                if (normalizeQ) {
+                    float n2 = X * X + Y * Y + Z * Z + W * W; float rinv = 1.0f / std::sqrt(n2);
+                    X *= rinv; Y *= rinv; Z *= rinv; W *= rinv;
+                }
+                float sx = in.sx ? in.sx[i] : 1.f;
+                float sy = in.sy ? in.sy[i] : 1.f;
+                float sz = in.sz ? in.sz[i] : 1.f;
+
+                float xx = X * X, yy = Y * Y, zz = Z * Z;
+                float xy = X * Y, xz = X * Z, yz = Y * Z;
+                float wx = W * X, wy = W * Y, wz = W * Z;
+
+                float r00 = 1 - 2 * (yy + zz), r01 = 2 * (xy - wz), r02 = 2 * (xz + wy);
+                float r10 = 2 * (xy + wz), r11 = 1 - 2 * (xx + zz), r12 = 2 * (yz - wx);
+                float r20 = 2 * (xz - wy), r21 = 2 * (yz + wx), r22 = 1 - 2 * (xx + yy);
+
+                out.m00[i] = r00 * sx; out.m01[i] = r01 * sy; out.m02[i] = r02 * sz; out.tx[i] = in.px[i];
+                out.m10[i] = r10 * sx; out.m11[i] = r11 * sy; out.m12[i] = r12 * sz; out.ty[i] = in.py[i];
+                out.m20[i] = r20 * sx; out.m21[i] = r21 * sy; out.m22[i] = r22 * sz; out.tz[i] = in.pz[i];
+            }
+#endif
+        }
+
 
     } // namespace Math
 } // namespace SectorFW

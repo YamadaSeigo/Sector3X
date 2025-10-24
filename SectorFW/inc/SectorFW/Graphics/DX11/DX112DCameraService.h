@@ -11,7 +11,7 @@
 #include "DX11BufferManager.h"
 #include "../../Math/Matrix.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

@@ -1,16 +1,17 @@
 #include "Core/ECS/ArchetypeManager.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{
 		Archetype* ArchetypeManager::GetOrCreate(const ComponentMask& mask)
 		{
-			auto [it, inserted] = archetypes.try_emplace(mask, nullptr);
+			auto [it, inserted] = archetypeIndices.try_emplace(mask, 0);
 			if (inserted) {
-				it->second = std::make_unique<Archetype>(mask);
+				archetypeData.push_back(std::make_unique<Archetype>(mask));
+				it->second = (uint32_t)archetypeData.size() - 1;
 			}
-			return it->second.get();
+			return archetypeData[it->second].get();
 		}
 	}
 }

@@ -2,7 +2,7 @@
 #include "SIMD/simd_api.h"
 #include <immintrin.h>
 
-namespace SectorFW::SIMD
+namespace SFW::SIMD
 {
 	void UpdateScalarLerp_AVX2(float* dst, const float* a, const float* b,
 		const uint32_t* mask01, size_t n, float alpha)

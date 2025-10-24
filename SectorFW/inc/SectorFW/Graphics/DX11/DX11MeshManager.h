@@ -19,7 +19,7 @@
  // MeshOptimizer‚ğg‚¤ê‡‚Í’è‹`
 #define USE_MESHOPTIMIZER
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

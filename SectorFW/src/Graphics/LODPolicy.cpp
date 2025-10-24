@@ -1,7 +1,7 @@
 #include "Graphics/LODPolicy.h"
 #include <limits>
 
-namespace SectorFW::Graphics {
+namespace SFW::Graphics {
 
     static inline float clamp01(float x) { return (std::min)((std::max)(x, 0.0f), 1.0f); }
     static inline float lg10(float x) { return std::log10((std::max)(1.0f, x)); }

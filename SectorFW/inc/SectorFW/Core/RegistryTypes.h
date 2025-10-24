@@ -7,7 +7,7 @@
 
 #pragma once
 
-namespace SectorFW
+namespace SFW
 {
 	// レベルごとに一意なインスタンスID（レベル再ロードのたびに新規値を割り当て）
 	using LevelID = std::uint32_t;

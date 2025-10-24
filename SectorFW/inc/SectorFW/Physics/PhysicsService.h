@@ -13,7 +13,7 @@
 #include "../Core/ECS/ServiceContext.hpp"
 #include "../Core/RegistryTypes.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Physics
 	{

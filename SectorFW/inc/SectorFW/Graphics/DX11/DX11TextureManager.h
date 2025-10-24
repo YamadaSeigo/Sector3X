@@ -16,7 +16,7 @@
 #include <optional>
 #include <filesystem>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

@@ -25,8 +25,8 @@ public:
 		: resolveShape(std::move(resolver)) {
 	}
 
-	void Update(Partition& partition, SectorFW::LevelContext& levelCtx, const ECS::ServiceLocator& services) override {
-		using namespace SectorFW::Physics;
+	void Update(Partition& partition, SFW::LevelContext& levelCtx, const ECS::ServiceLocator& services) override {
+		using namespace SFW::Physics;
 
 		std::vector<PhysicsService::CreateIntent> intents;
 		ps->ConsumeCreateIntents(intents);

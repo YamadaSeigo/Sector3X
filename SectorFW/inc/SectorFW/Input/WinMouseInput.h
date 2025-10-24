@@ -10,7 +10,7 @@
 #include <hidusage.h>
 #include <vector>
 
-namespace SectorFW
+namespace SFW
 {
 	class WindowHandler;
 
@@ -20,7 +20,7 @@ namespace SectorFW
 		 * @brief Windows向けマウス入力処理クラス
 		 */
 		class WinMouseInput {
-			friend class SectorFW::WindowHandler;
+			friend class SFW::WindowHandler;
 
 		private:
 			/**

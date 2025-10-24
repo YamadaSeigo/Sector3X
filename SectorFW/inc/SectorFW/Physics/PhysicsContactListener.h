@@ -9,7 +9,7 @@
 #include "PhysicsDevice_Util.h"
 #include <Jolt/Physics/Collision/ContactListener.h>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Physics
 	{

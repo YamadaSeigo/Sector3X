@@ -9,7 +9,7 @@
 #include <windows.h>
 #include <cstdint>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug
 	{

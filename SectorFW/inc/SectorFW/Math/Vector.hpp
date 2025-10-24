@@ -14,7 +14,7 @@
 
 #include <xmmintrin.h> // SSE
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Math
 	{

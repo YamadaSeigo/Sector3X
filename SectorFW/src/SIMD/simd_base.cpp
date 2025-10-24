@@ -3,7 +3,7 @@
 #include <cmath>
 #include <algorithm>
 
-namespace SectorFW::SIMD
+namespace SFW::SIMD
 {
 	void UpdateScalarLerp_Base(float* dst, const float* a, const float* b,
 		const uint32_t* mask01, size_t n, float alpha)

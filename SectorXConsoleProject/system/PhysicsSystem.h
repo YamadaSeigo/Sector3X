@@ -61,7 +61,7 @@ public:
 
 				auto alpha = physics->GetAlpha();
 
-				using namespace SectorFW::SIMD;
+				using namespace SFW::SIMD;
 
 				// ˆÊ’u
 #ifdef USE_LERP_SIMD

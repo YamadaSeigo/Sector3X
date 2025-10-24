@@ -6,7 +6,7 @@
 #include <SectorFW/DX11Graphics.h>
 
 
-using namespace SectorFW;
-using namespace SectorFW::ECS;
+using namespace SFW;
+using namespace SFW::ECS;
 
 using InputService = Input::InputDevice<Input::WinInput>;

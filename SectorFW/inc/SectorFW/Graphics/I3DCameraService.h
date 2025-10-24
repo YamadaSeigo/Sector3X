@@ -16,7 +16,7 @@
 
 #include <shared_mutex>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

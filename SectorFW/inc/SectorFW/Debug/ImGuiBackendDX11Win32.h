@@ -9,7 +9,7 @@
 #include "../external/imgui/imgui_impl_win32.h"
 #include "../external/imgui/imgui_impl_dx11.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug
 	{

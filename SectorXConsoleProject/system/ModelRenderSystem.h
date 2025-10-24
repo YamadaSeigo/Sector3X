@@ -161,7 +161,7 @@ public:
 							modelComp.occluded = true;
 
 							if (mesh.instance.HasData()) [[unlikely]] {
-								Graphics::RenderQueue::InstancePool instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtx, mesh.instance.worldMtx) };
+								Graphics::SharedInstanceArena::InstancePool instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtx, mesh.instance.worldMtx) };
 								cmd.instanceIndex = kp->queue->AllocInstance(instance);
 								ndc = Math::ProjectAABBToNdc_Fast(WVP * mesh.instance.worldMtx, mesh.aabb);
 								areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);

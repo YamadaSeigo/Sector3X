@@ -15,7 +15,7 @@
 
 #include "ImGuiBackend.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug {
 		//‘O•û’è‹`

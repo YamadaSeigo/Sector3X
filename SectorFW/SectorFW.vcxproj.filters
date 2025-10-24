@@ -456,6 +456,18 @@
     <ClInclude Include="inc\SectorFW\Graphics\LODPolicy.h">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\DX11WinTerrainHelper.h">
+      <Filter>Inc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\Perlin2D.h">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ClusterPipeline.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\TerrainService.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">
@@ -969,6 +981,12 @@
       <Filter>Src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\LODPolicy.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11ClusterPipeline.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TerrainService.cpp">
       <Filter>Src\Graphics</Filter>
     </ClCompile>
   </ItemGroup>

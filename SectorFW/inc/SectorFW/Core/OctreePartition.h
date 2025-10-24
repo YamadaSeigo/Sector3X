@@ -24,7 +24,7 @@
 #include "../Math/sx_math.h"
 #include "../Math/Transform.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief 3D ”ª•ª–ØiOctreej‚É‚æ‚é‹óŠÔ•ªŠ„
@@ -809,14 +809,14 @@ namespace SectorFW
 	// ==== Query “Áê‰» ====
 	namespace ECS {
 		template<>
-		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(SectorFW::OctreePartition& ctx) const noexcept
+		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(SFW::OctreePartition& ctx) const noexcept
 		{
 			std::vector<ArchetypeChunk*> result;
 			result.reserve(ctx.LeafCount());
 
 			auto collect_from = [&](const ECS::EntityManager& em) {
-				const auto& all = em.GetArchetypeManager().GetAll();
-				for (const auto& [_, arch] : all) {
+				const auto& all = em.GetArchetypeManager().GetAllData();
+				for (const auto& arch : all) {
 					const ComponentMask& mask = arch->GetMask();
 					if ((mask & required) == required && (mask & excluded).none()) {
 						const auto& chunks = arch->GetChunks();

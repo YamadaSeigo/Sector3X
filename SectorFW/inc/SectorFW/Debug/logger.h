@@ -30,7 +30,7 @@
 // ログに詳細なタイムスタンプ（ミリ秒まで）を表示する場合は以下を有効化
 //#define LOG_SHOW_DETAIL_TIME
 
-namespace SectorFW {
+namespace SFW {
 	namespace Debug {
 #ifdef _DEBUG
 
@@ -177,11 +177,11 @@ namespace SectorFW {
 	// デバッグビルド時のみログ出力
 #ifdef _DEBUG
 // ログ出力マクロ
-#define LOG_INFO(fmt, ...)    SectorFW::Debug::LogImpl(0, "Info",    __FILE__, __LINE__, __FUNCTION__, SectorFW::Debug::FormatPrintf(fmt, ##__VA_ARGS__))
+#define LOG_INFO(fmt, ...)    SFW::Debug::LogImpl(0, "Info",    __FILE__, __LINE__, __FUNCTION__, SFW::Debug::FormatPrintf(fmt, ##__VA_ARGS__))
 // 警告ログ出力マクロ
-#define LOG_WARNING(fmt, ...) SectorFW::Debug::LogImpl(1, "Warning", __FILE__, __LINE__, __FUNCTION__, SectorFW::Debug::FormatPrintf(fmt, ##__VA_ARGS__))
+#define LOG_WARNING(fmt, ...) SFW::Debug::LogImpl(1, "Warning", __FILE__, __LINE__, __FUNCTION__, SFW::Debug::FormatPrintf(fmt, ##__VA_ARGS__))
 // エラーログ出力マクロ
-#define LOG_ERROR(fmt, ...)   SectorFW::Debug::LogImpl(2, "Error",   __FILE__, __LINE__, __FUNCTION__, SectorFW::Debug::FormatPrintf(fmt, ##__VA_ARGS__))
+#define LOG_ERROR(fmt, ...)   SFW::Debug::LogImpl(2, "Error",   __FILE__, __LINE__, __FUNCTION__, SFW::Debug::FormatPrintf(fmt, ##__VA_ARGS__))
 
 #else // DEBUG
 

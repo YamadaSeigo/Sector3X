@@ -24,7 +24,7 @@
 
 #include "RenderTypes.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -44,10 +44,44 @@ namespace SectorFW
 		static inline constexpr size_t DRAWCOMMAND_TMPBUF_SIZE = 4096 * 4;
 		//========================================================================
 
+		// RenderQueue とは独立した“フレーム共有”アリーナ
+		struct SharedInstanceArena {
+			struct alignas(16) InstancePool {
+				SFW::Math::Matrix<3, 4, float> world;
+
+				InstancePool& operator=(const InstanceData& data) noexcept {
+					memcpy(&world, &data, sizeof(decltype(world)));
+					return *this;
+				}
+				InstancePool& operator=(InstanceData&& data) noexcept {
+					memcpy(&world, &data, sizeof(decltype(world)));
+					return *this;
+				}
+			};
+
+			SharedInstanceArena() : capacity(MAX_INSTANCES_PER_FRAME) {
+				for (int i = 0; i < RENDER_BUFFER_COUNT; ++i) {
+					pools[i] = std::make_unique<InstancePool[]>(capacity);
+					head[i].store(0, std::memory_order_relaxed);
+				}
+			}
+
+			uint32_t capacity; // MAX_INSTANCES_PER_FRAME 相当
+			std::unique_ptr<InstancePool[]> pools[RENDER_BUFFER_COUNT];
+			std::atomic<uint32_t> head[RENDER_BUFFER_COUNT];
+
+			void ResetSlot(int slot) noexcept { head[slot].store(0, std::memory_order_relaxed); }
+			InstancePool* Data(int slot) noexcept { return pools[slot].get(); }
+			uint32_t      Size(int slot) const noexcept { return head[slot].load(std::memory_order_acquire); }
+		};
+
+
 		/**
 		 * @brief 描画コマンドの発行。管理、ソート、バッチングを行うクラス
 		 */
 		class RenderQueue {
+			using InstancePool = SharedInstanceArena::InstancePool;
+
 			/**
 			 * @brief 描画コマンドのソートコンテキスト
 			 */
@@ -332,23 +366,11 @@ namespace SectorFW
 			};
 
 		public:
-			struct alignas(16) InstancePool
-			{
-				Math::Matrix<3,4,float> world;
-				InstancePool& operator=(const InstanceData& data) noexcept {
-					memcpy(&world, &data, sizeof(decltype(world)));
-					return *this;
-				}
-				InstancePool& operator=(InstanceData&& data) noexcept {
-					memcpy(&world, &data, sizeof(decltype(world)));
-					return *this;
-				}
-			};
-
 			/**
 			 * @brief 生産者セッション-ユーザーに渡す用（thread_localを使わない）
 			 */
 			class ProducerSession {
+
 			public:
 				/**
 				 * @brief コンストラクタ
@@ -525,14 +547,12 @@ namespace SectorFW
 			 * @brief コンストラクタ
 			 * @param maxInstancesPerFrame フレーム当たりの最大インスタンス数（1～MAX_INSTANCES_PER_FRAME）
 			 */
-			RenderQueue(uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME) :
-				maxInstancesPerFrame(maxInstancesPerFrame) {
+			RenderQueue(const std::atomic<int>& bufSlot, SharedInstanceArena* instanceArena, uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME) :
+				current(bufSlot), sharedInstanceArena(instanceArena), maxInstancesPerFrame(maxInstancesPerFrame){
 				assert(maxInstancesPerFrame > 0 && maxInstancesPerFrame <= MAX_INSTANCES_PER_FRAME);
 
 				for (int i = 0; i < RENDER_BUFFER_COUNT; ++i) {
 					queues[i] = std::make_unique<moodycamel::ConcurrentQueue<DrawCommand>>();
-					instancePools[i] = std::unique_ptr<InstancePool[]>(new InstancePool[maxInstancesPerFrame]);
-					instWritePos[i].store(0, std::memory_order_relaxed);
 				}
 			}
 
@@ -541,14 +561,12 @@ namespace SectorFW
 			 * @param other ムーブ元
 			 */
 			RenderQueue(RenderQueue&& other) noexcept
-				: maxInstancesPerFrame(other.maxInstancesPerFrame),
-				current(other.current.load()), sortContext(std::move(other.sortContext)) {
+				: current(other.current), sharedInstanceArena(other.sharedInstanceArena),
+				maxInstancesPerFrame(other.maxInstancesPerFrame), sortContext(std::move(other.sortContext)) {
 				assert(maxInstancesPerFrame > 0 && maxInstancesPerFrame <= MAX_INSTANCES_PER_FRAME);
 
 				for (int i = 0; i < RENDER_BUFFER_COUNT; ++i) {
 					queues[i] = std::move(other.queues[i]);
-					instancePools[i] = std::move(other.instancePools[i]);
-					instWritePos[i].store(other.instWritePos[i].load());
 				}
 			}
 
@@ -561,7 +579,6 @@ namespace SectorFW
 			 */
 			RenderQueue& operator=(RenderQueue&& other) noexcept {
 				if (this != &other) {
-					current.store(other.current.load());
 					sortContext = std::move(other.sortContext);
 					for (int i = 0; i < RENDER_BUFFER_COUNT; ++i)
 						queues[i] = std::move(other.queues[i]);
@@ -576,18 +593,10 @@ namespace SectorFW
 			/**
 			 * @brief Submit は「全ワーカーが FlushAll 済み」バリアの後に呼ぶ
 			 * @param out DrawCommand コンテナ（呼び出し側で確保して渡す）
-			 * @param outInstances インスタンスプールの生配列（次フレーム用に確保済み）
-			 * @param outCount インスタンスプールの使用数
 			 */
-			void Submit(std::vector<DrawCommand>& out,
-				const InstancePool*& outInstances, uint32_t& outCount) {
-				// “現在の生産キュー” を次のフレームへ先に切り替える
-				const int prev = current.exchange(
-					(current.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT,
-					std::memory_order_acq_rel);
-
-				auto& q = *queues[prev];
-				if (!ctoken[prev]) ctoken[prev].emplace(q); // 初回だけ生成して再利用
+			void Submit(uint32_t slot, std::vector<DrawCommand>& out) {
+				auto& q = *queues[slot];
+				if (!ctoken[slot]) ctoken[slot].emplace(q); // 初回だけ生成して再利用
 
 				//概算サイズで out を一発確保
 				if (auto approx = q.size_approx(); approx > 0) {
@@ -598,7 +607,7 @@ namespace SectorFW
 				auto pTmp = tmp.data();
 
 				size_t n;
-				while ((n = q.try_dequeue_bulk(*ctoken[prev], pTmp, DRAWCOMMAND_TMPBUF_SIZE)) != 0) {
+				while ((n = q.try_dequeue_bulk(*ctoken[slot], pTmp, DRAWCOMMAND_TMPBUF_SIZE)) != 0) {
 					const auto old = out.size();
 					out.resize(old + n);                 // 先にサイズだけ伸ばす（再確保は reserve 済みで起きない前提）
 					if constexpr (std::is_trivially_copyable_v<DrawCommand>) {
@@ -609,13 +618,6 @@ namespace SectorFW
 					}
 				}
 				sortContext.Sort(out);
-
-				// --- インスタンスプールの生配列と使用数を返す ---
-				outInstances = instancePools[prev].get();
-				outCount = instWritePos[prev].load(std::memory_order_acquire);
-
-				// 次フレーム用に prev 側の write pos をリセット
-				instWritePos[prev].store(0, std::memory_order_release);
 			}
 #ifndef NO_USE_PMR_RENDER_QUEUE
 			/**
@@ -624,14 +626,9 @@ namespace SectorFW
 			 * @param outInstances インスタンスプールの生配列（次フレーム用に確保済み）
 			 * @param outCount インスタンスプールの使用数
 			 */
-			void Submit(std::pmr::vector<DrawCommand>& out,
-				const InstancePool*& outInstances, uint32_t& outCount) {
-				const int prev = current.exchange(
-					(current.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT,
-					std::memory_order_acq_rel);
-
-				auto& q = *queues[prev];
-				if (!ctoken[prev]) ctoken[prev].emplace(q);
+			void Submit(uint32_t slot, std::pmr::vector<DrawCommand>& out) {
+				auto& q = *queues[slot];
+				if (!ctoken[slot]) ctoken[slot].emplace(q);
 
 				// 概算で一撃 reserve（pmr アリーナから確保）
 				if (auto approx = q.size_approx(); approx > 0) {
@@ -640,7 +637,7 @@ namespace SectorFW
 
 				auto pTmp = tmp.data();
 				size_t n;
-				while ((n = q.try_dequeue_bulk(*ctoken[prev], pTmp, DRAWCOMMAND_TMPBUF_SIZE)) != 0) {
+				while ((n = q.try_dequeue_bulk(*ctoken[slot], pTmp, DRAWCOMMAND_TMPBUF_SIZE)) != 0) {
 					const auto old = out.size();
 					out.resize(old + n);
 					if constexpr (std::is_trivially_copyable_v<DrawCommand>) {
@@ -651,10 +648,6 @@ namespace SectorFW
 					}
 				}
 				sortContext.Sort(out);
-
-				outInstances = instancePools[prev].get();
-				outCount = instWritePos[prev].load(std::memory_order_acquire);
-				instWritePos[prev].store(0, std::memory_order_release);
 			}
 #endif
 
@@ -665,7 +658,7 @@ namespace SectorFW
 			inline std::pair<InstancePool*, std::atomic<uint32_t>*>
 				GetCurrentInstancePoolAccess() noexcept {
 				const int cur = current.load(std::memory_order_acquire);
-				return { instancePools[cur].get(), &instWritePos[cur] };
+				return { sharedInstanceArena->Data(cur), &sharedInstanceArena->head[cur] };
 			}
 
 			/**
@@ -684,11 +677,9 @@ namespace SectorFW
 
 			std::unique_ptr<moodycamel::ConcurrentQueue<DrawCommand>> queues[RENDER_BUFFER_COUNT];
 			std::optional<moodycamel::ConsumerToken> ctoken[RENDER_BUFFER_COUNT];
-			std::atomic<int> current = 0;
+			const std::atomic<int>& current;
 
-			// フレーム別インスタンスプール（固定長配列）
-			std::unique_ptr<InstancePool[]> instancePools[RENDER_BUFFER_COUNT];
-			std::atomic<uint32_t> instWritePos[RENDER_BUFFER_COUNT];
+			SharedInstanceArena* sharedInstanceArena = nullptr;
 
 			// 取り込み用一時バッファ：std::array でヒープ確保ゼロ化
 			std::array<DrawCommand, DRAWCOMMAND_TMPBUF_SIZE> tmp{};

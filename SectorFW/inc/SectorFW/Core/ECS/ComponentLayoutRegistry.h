@@ -13,7 +13,7 @@
 #include "component.hpp"
 #include "Util/OneOrMore.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

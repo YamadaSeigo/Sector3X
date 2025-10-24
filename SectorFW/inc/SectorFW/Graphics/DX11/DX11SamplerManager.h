@@ -20,7 +20,7 @@ inline bool operator==(const D3D11_SAMPLER_DESC& a, const D3D11_SAMPLER_DESC& b)
 	return memcmp(&a, &b, sizeof(D3D11_SAMPLER_DESC)) == 0;
 }
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

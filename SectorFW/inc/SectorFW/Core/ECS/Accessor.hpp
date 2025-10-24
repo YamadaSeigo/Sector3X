@@ -10,7 +10,7 @@
 #include "AccessInfo.h"
 #include "../../Util/TypeChecker.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

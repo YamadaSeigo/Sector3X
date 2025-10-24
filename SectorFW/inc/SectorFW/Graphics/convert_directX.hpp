@@ -11,7 +11,7 @@
 #include "Math/convert.hpp"
 #include "Math/Matrix.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Math
 	{

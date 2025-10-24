@@ -17,7 +17,7 @@
 
 using namespace Microsoft::WRL;
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

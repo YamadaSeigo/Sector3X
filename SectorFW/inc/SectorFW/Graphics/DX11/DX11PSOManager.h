@@ -12,7 +12,7 @@
 
 #include "DX11ShaderManager.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

@@ -12,7 +12,7 @@
 #include "component.hpp"
 #include "../../Util/OneOrMore.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace detail {
 		// 型名をエラーメッセージに表示するための未定義テンプレート

@@ -12,7 +12,7 @@
 
 #include "ArchetypeChunk.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

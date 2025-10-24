@@ -17,7 +17,7 @@
 #include "../../Util/UndeletablePtr.hpp"
 #include "../../Util/function_trait.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{
@@ -134,7 +134,7 @@ namespace SectorFW
 			}
 
 			template<typename AccessSpec, typename F, typename... CallArgs>
-				requires ::SectorFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
+				requires ::SFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
 			void ForEachChunkWithAccessor(F&& func, Partition& partition, CallArgs&&... args)
 			{
 				using AS = access_spec_normalize_t<AccessSpec>;
@@ -145,7 +145,7 @@ namespace SectorFW
 
 			template<typename... Override, typename F, typename... CallArgs>
 				requires (sizeof...(Override) > 0) &&
-			::SectorFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
+			::SFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
 				void ForEachChunkWithAccessor(F&& func, Partition& partition, CallArgs&&... args)
 			{
 				using Access = ComponentAccess<Override...>;
@@ -178,7 +178,7 @@ namespace SectorFW
 
 			// B) 上書き版（単一 AccessSpec）…部分集合であることを要求
 			template<typename AccessSpec, typename F, typename... CallArgs>
-				requires ::SectorFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
+				requires ::SFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
 			void ForEachFrustumChunkWithAccessor(F&& func,
 				Partition& partition,
 				Math::Frustumf& fru,
@@ -195,7 +195,7 @@ namespace SectorFW
 			// C) 上書き版（従来の書き味：<Read<...>, Read<...>>）…内部で束ねて転送
 			template<typename... Override, typename F, typename... CallArgs>
 				requires (sizeof...(Override) > 0) &&
-			::SectorFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
+			::SFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
 				void ForEachFrustumChunkWithAccessor(F&& func,
 					Partition& partition,
 					Math::Frustumf& fru,
@@ -232,7 +232,7 @@ namespace SectorFW
 
 			// B) 上書き版（単一 AccessSpec）…部分集合であることを要求
 			template<typename AccessSpec, typename F, typename... CallArgs>
-				requires ::SectorFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
+				requires ::SFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
 			void ForEachFrustumNearChunkWithAccessor(F&& func,
 				Partition& partition,
 				Math::Frustumf& fru,
@@ -250,7 +250,7 @@ namespace SectorFW
 			// C) 上書き版（従来の書き味：<Read<...>, Read<...>>）…内部で束ねて転送
 			template<typename... Override, typename F, typename... CallArgs>
 				requires (sizeof...(Override) > 0) &&
-			::SectorFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
+			::SFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
 				void ForEachFrustumNearChunkWithAccessor(F&& func,
 					Partition& partition,
 					Math::Frustumf& fru,
@@ -277,7 +277,7 @@ namespace SectorFW
 			}
 
 			template<typename AccessSpec, typename F, typename... CallArgs>
-				requires ::SectorFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
+				requires ::SFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
 			void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, CallArgs&&... args)
 			{
 				using AS = access_spec_normalize_t<AccessSpec>;
@@ -288,7 +288,7 @@ namespace SectorFW
 
 			template<typename... Override, typename F, typename... CallArgs>
 				requires (sizeof...(Override) > 0) &&
-			::SectorFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
+			::SFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
 				void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, CallArgs&&... args)
 			{
 				using Access = ComponentAccess<Override...>;

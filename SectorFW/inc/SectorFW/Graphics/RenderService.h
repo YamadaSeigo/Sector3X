@@ -20,7 +20,7 @@
 #include "../Math/Rectangle.hpp"
 #include "OccluderToolkit.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -28,7 +28,7 @@ namespace SectorFW
 
 		// --- MOC 提出用の最小バッチ ---
 		struct MocQuadBatch {
-			SectorFW::Math::Vec4f clip[4];  // (x, y, z, w) だが MOC が使うのは x,y,w
+			SFW::Math::Vec4f clip[4];  // (x, y, z, w) だが MOC が使うのは x,y,w
 			uint32_t indices[6];            // 0-1-2, 2-1-3 の2枚（CCW）
 			int      numTriangles = 2;
 			bool     valid = true;          // 近クリップ全面裏などなら false
@@ -124,9 +124,9 @@ namespace SectorFW
 
 				// 可能なら Vec4f は standard-layout 前提
 				MaskedOcclusionCulling::VertexLayout layout(
-					/*stride=*/sizeof(SectorFW::Math::Vec4f),
-					/*offsetY=*/offsetof(SectorFW::Math::Vec4f, y),
-					/*offsetW=*/offsetof(SectorFW::Math::Vec4f, w)
+					/*stride=*/sizeof(SFW::Math::Vec4f),
+					/*offsetY=*/offsetof(SFW::Math::Vec4f, y),
+					/*offsetW=*/offsetof(SFW::Math::Vec4f, w)
 				);
 
 				struct Clip4 { float x, y, z, w; };
@@ -190,12 +190,12 @@ namespace SectorFW
 		// AABBFrontFaceQuad を 2トライで提出できるバッチに変換
 		inline MocQuadBatch ConvertAABBFrontFaceQuadToMoc(
 			const AABBFrontFaceQuad& quadWS,
-			const SectorFW::Math::Matrix<4, 4, float>& viewProj,
+			const SFW::Math::Matrix<4, 4, float>& viewProj,
 			float nearClipW /* = moc->GetNearClipPlane() と一致させるのが理想 */
 		)
 		{
-			using Vec3 = SectorFW::Math::Vec3f;
-			using Vec4 = SectorFW::Math::Vec4f;
+			using Vec3 = SFW::Math::Vec3f;
+			using Vec4 = SFW::Math::Vec4f;
 
 			MocQuadBatch out{};
 
@@ -220,10 +220,10 @@ namespace SectorFW
 			//    NDC の x,y を使って符号付き面積で CCW を判定し、CW なら対角を入れ替える。
 			auto ndcXY = [&](int i) {
 				const float invw = 1.0f / out.clip[i].w;
-				return SectorFW::Math::Vec2f{ out.clip[i].x * invw, out.clip[i].y * invw };
+				return SFW::Math::Vec2f{ out.clip[i].x * invw, out.clip[i].y * invw };
 				};
 			const auto a = ndcXY(0), b = ndcXY(1), c = ndcXY(2), d = ndcXY(3);
-			auto triArea2 = [](SectorFW::Math::Vec2f p, SectorFW::Math::Vec2f q, SectorFW::Math::Vec2f r) {
+			auto triArea2 = [](SFW::Math::Vec2f p, SFW::Math::Vec2f q, SFW::Math::Vec2f r) {
 				// 2倍面積（z成分）: (q - p) × (r - p)
 				return (q.x - p.x) * (r.y - p.y) - (q.y - p.y) * (r.x - p.x);
 				};

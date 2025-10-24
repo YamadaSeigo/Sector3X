@@ -21,7 +21,7 @@
 #include "../../Debug/UIBus.h"
 #endif
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

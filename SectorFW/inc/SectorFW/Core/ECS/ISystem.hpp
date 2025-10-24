@@ -36,7 +36,7 @@ inline std::string demangle_msvc(const char* decorated) {
 }
 #endif
 
-namespace SectorFW
+namespace SFW
 {
 	//‘O•û’è‹`
 	struct LevelContext;

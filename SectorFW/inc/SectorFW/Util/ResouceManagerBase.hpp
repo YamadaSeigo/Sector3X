@@ -14,7 +14,7 @@
 
 #include "CopyableAtomic.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief リソースマネージャーの基底クラス。主にRenderer系で使用する。

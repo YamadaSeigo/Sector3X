@@ -15,7 +15,7 @@
 #include "../../Util/TypeChecker.hpp"
  //#include "Input/InputService.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

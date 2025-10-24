@@ -9,7 +9,7 @@
 #include "Query.h"
 #include "EntityManager.h"
 
-namespace SectorFW::ECS {
+namespace SFW::ECS {
 	//==============================
 	// 1) Dense 最速ランナ
 	//   - Dense コンポーネントのみ対象（Sparse なし）

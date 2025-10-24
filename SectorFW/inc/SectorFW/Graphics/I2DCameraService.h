@@ -18,7 +18,7 @@
 #include <numbers>
 #include <algorithm>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

@@ -16,7 +16,7 @@
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
 
-namespace SectorFW {
+namespace SFW {
     namespace Graphics {
 
         //==================== è¨ÉwÉãÉp ====================

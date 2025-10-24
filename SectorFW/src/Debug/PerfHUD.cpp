@@ -2,7 +2,7 @@
 #include "Debug/UIBus.h"
 #include "../external/imgui/imgui_internal.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug
 	{

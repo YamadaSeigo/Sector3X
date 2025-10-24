@@ -9,7 +9,7 @@
 
 #include "Entity.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

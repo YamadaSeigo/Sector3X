@@ -7,7 +7,7 @@
 
 #pragma once
 
-namespace SectorFW
+namespace SFW
 {
 #define EXPAND(x) x
 

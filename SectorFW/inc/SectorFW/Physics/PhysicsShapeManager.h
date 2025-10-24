@@ -24,7 +24,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Physics
 	{

@@ -9,7 +9,7 @@
 
 #include <typeindex>
 
-namespace SectorFW {
+namespace SFW {
 	namespace ECS {
 		/**
 		 * @brief サービスの静的な型を定義するテンプレート

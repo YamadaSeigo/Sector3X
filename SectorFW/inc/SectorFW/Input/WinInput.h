@@ -12,7 +12,7 @@
 
 #include "WinMouseInput.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Input
 	{

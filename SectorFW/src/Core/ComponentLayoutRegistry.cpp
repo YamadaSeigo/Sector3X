@@ -4,7 +4,7 @@
 #include "Core/ECS/ComponentTypeRegistry.h"
 #include "Core/ECS/ArchetypeChunk.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

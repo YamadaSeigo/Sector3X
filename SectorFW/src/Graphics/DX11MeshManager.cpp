@@ -16,7 +16,7 @@
 #endif//_DEBUG
 #endif//USE_MESHOPTIMIZER
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

@@ -16,7 +16,7 @@
 #include "ECS/ArchetypeChunk.h"
 
 
-namespace SectorFW
+namespace SFW
 {
 
     struct SoAPositions {

@@ -18,7 +18,7 @@
 // 行列ユーティリティを使う
 #include "Matrix.hpp"
 
-namespace SectorFW {
+namespace SFW {
     namespace Math {
 
         // ------------- ベクトルユーティリティ（x,y,zを持つ型ならOK） ----------------
@@ -332,7 +332,7 @@ namespace SectorFW {
                 float* outNdcXmax = nullptr, float* outNdcYmax = nullptr,
                 float* outWmin = nullptr, float* depth = nullptr) const noexcept
             {
-                using ::SectorFW::Math::MulPoint_RowMajor_ColVec;
+                using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
                 // 1) 中心を clip に
                 float cx, cy, cz, cw;
@@ -408,7 +408,7 @@ namespace SectorFW {
             template<class Mat4, class NDC>
             bool IsVisible_WVP(const Mat4& WVP, NDC* outNDC, float* depth = nullptr) const noexcept
             {
-                using ::SectorFW::Math::MulPoint_RowMajor_ColVec;
+                using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
                 // 1) 中心を clip に
                 float cx, cy, cz, cw;

@@ -9,7 +9,7 @@
 #include <atomic>
 #include <optional>
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief シングルプロデューサ・シングルコンシューマのリングバッファ

@@ -8,7 +8,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace SIMD
 	{

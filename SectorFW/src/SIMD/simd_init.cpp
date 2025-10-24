@@ -3,7 +3,7 @@
 #include "SIMD/simd_detect.h"
 #include <xmmintrin.h>
 
-namespace SectorFW::SIMD
+namespace SFW::SIMD
 {
 	// ===== ベース実装（宣言のみ。定義は simd_base.cpp） =====
 	void UpdateScalarLerp_Base(float* dst, const float* a, const float* b,

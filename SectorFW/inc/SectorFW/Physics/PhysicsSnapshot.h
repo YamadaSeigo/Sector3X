@@ -12,7 +12,7 @@
 #include "Math/Vector.hpp"
 #include "Math/Quaternion.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Physics
 	{

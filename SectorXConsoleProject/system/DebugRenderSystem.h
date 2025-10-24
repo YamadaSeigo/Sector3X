@@ -9,7 +9,7 @@
 
 #include "ModelRenderSystem.h"
 
-using namespace SectorFW;
+using namespace SFW;
 
 // 24頂点+36インデックスを生成（中心原点、寸法 w,h,d）
 void MakeBox(float w, float h, float d,

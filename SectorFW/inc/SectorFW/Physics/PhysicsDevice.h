@@ -29,7 +29,7 @@
 #include "../Core/ECS/EntityManager.h"
 #include "../Core/RegistryTypes.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Physics
 	{

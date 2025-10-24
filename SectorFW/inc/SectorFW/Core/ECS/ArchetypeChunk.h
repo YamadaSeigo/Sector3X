@@ -20,7 +20,7 @@
 #include "Util/alignment.h"
 #include "Debug/logger.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

@@ -1,6 +1,6 @@
 #include "DX12Graphics.h"
 
-namespace SectorFW
+namespace SFW
 {
 	//bool DX12GraphicsDevice::Initialize(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height)
 	//{

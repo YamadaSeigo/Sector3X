@@ -10,7 +10,7 @@
 #include <tuple>
 #include <type_traits>
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief タプルを再帰的に展開するためのヘルパー構造体

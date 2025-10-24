@@ -12,7 +12,7 @@
 #include "message.h"
 #include "SIMD/simd_api.h"
 
-namespace SectorFW
+namespace SFW
 {
 	void InitializeGameEngine(bool initialize)
 	{

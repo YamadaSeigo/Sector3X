@@ -9,7 +9,7 @@
 
 #include "../Core/ECS/ServiceContext.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Input
 	{

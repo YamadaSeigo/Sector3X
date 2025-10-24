@@ -10,7 +10,7 @@
 #include "Archetype.h"
 #include "Query.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{
@@ -26,16 +26,28 @@ namespace SectorFW
 			 * @return 対象のアーキタイプポインタ
 			 */
 			Archetype* GetOrCreate(const ComponentMask& mask);
+
+			const Archetype* AccessArchetype(uint32_t idx) const {
+				if (idx >= archetypeData.size()) return nullptr;
+
+				return archetypeData[idx].get();
+			}
+
+			const std::unordered_map<ComponentMask, uint32_t>& GetAllMaskIndices() const noexcept {
+				return archetypeIndices;
+			}
 			/**
 			 * @brief すべてのアーキタイプを取得します。
 			 * @return アーキタイプの配列の参照
 			 */
-			const std::unordered_map<ComponentMask, std::unique_ptr<Archetype>>& GetAll() const noexcept {
-				return archetypes;
+			const std::vector<std::unique_ptr<Archetype>>& GetAllData() const noexcept {
+				return archetypeData;
 			}
 		private:
 			//アーキタイプマネージャーのアーキタイプを格納するマップ
-			std::unordered_map<ComponentMask, std::unique_ptr<Archetype>> archetypes;
+			std::unordered_map<ComponentMask, uint32_t> archetypeIndices;
+			//実際のアーキタイプのデータ
+			std::vector<std::unique_ptr<Archetype>> archetypeData;
 		};
 
 		/**
@@ -54,7 +66,7 @@ namespace SectorFW
 		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(ArchetypeManager& context) const noexcept
 		{
 			std::vector<ArchetypeChunk*> result;
-			for (const auto& [_, arch] : context.GetAll()) {
+			for (const auto& arch : context.GetAllData()) {
 				const ComponentMask& mask = arch->GetMask();
 				if ((mask & required) == required && (mask & excluded).none()) {
 					const auto& chunks = arch->GetChunks();

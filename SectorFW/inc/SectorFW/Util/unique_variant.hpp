@@ -11,7 +11,7 @@
 #include <type_traits>
 #include <tuple>
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief 指定された型Tが、可変長引数の型リストTs...のいずれかと同じかどうかを判定する

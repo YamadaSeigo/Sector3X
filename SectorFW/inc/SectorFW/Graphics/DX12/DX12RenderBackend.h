@@ -4,7 +4,7 @@
 #include "../RenderBackend.hpp"
 #include "../RenderTypes.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

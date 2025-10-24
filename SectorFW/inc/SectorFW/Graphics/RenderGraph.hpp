@@ -23,7 +23,7 @@
 #endif
 #include <memory>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -44,7 +44,11 @@ namespace SectorFW
 			explicit RenderGraph(Backend& backend, MOC* moc) : backend(backend), renderService(moc) {
 				// レンダーバックエンドでRenderServiceにリソースマネージャーを登録
 				backend.AddResourceManagerToRenderService(*this);
+
+				current.store(0, std::memory_order_relaxed);
+				sharedInstanceArena = std::make_unique<SharedInstanceArena>();
 			}
+
 			/**
 			 * @brief RenderPassの追加
 			 * @param desc レンダーパスの詳細
@@ -52,7 +56,7 @@ namespace SectorFW
 			void AddPass(RenderPassDesc<RTV>& desc) {
 				std::unique_lock lock(*renderService.queueMutex);
 
-				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(desc.maxInstancesPerFrame));
+				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(current, sharedInstanceArena.get(), desc.maxInstancesPerFrame));
 				renderService.queueIndex[desc.name] = renderService.renderQueues.size() - 1; // レンダーサービスにキューを登録
 
 				passes.push_back(std::make_unique<PassType>(
@@ -107,6 +111,11 @@ namespace SectorFW
 				} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif // _ENABLE_IMGUI
 
+				int prevSlot = current.exchange((current.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT, std::memory_order_acq_rel);
+
+				backend.BeginFrameUpload(sharedInstanceArena->Data(prevSlot), sharedInstanceArena->Size(prevSlot));
+				sharedInstanceArena->ResetSlot(prevSlot);
+
 				for (auto& pass : passes) {
 					backend.SetPrimitiveTopology(pass->topology);
 
@@ -133,10 +142,9 @@ namespace SectorFW
 #else
 					std::vector<DrawCommand> cmds;
 #endif //NO_USE_PMR_RENDER_QUEUE
-					const RenderQueue::InstancePool* instances = nullptr;
-					uint32_t instCount = 0;
 
-					pass->queue->Submit(cmds, instances, instCount);
+
+					pass->queue->Submit(prevSlot, cmds);
 
 #ifdef _ENABLE_IMGUI
 					{
@@ -149,10 +157,9 @@ namespace SectorFW
 					} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif // _ENABLE_IMGUI
 
-					backend.BeginFrameUpload(instances, instCount);
 					backend.ExecuteDrawIndexedInstanced(cmds, !useRasterizer); // インスタンシング対応
 
-					if (pass->customExecute) pass->customExecute();
+					if (pass->customExecute) pass->customExecute(renderService.currentFrame);
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 					// 使用量からヒント更新 & 必要時のみ拡張
@@ -192,6 +199,8 @@ namespace SectorFW
 
 		private:
 			Backend& backend;
+			std::atomic<int> current; // 現在のフレームインデックス
+			std::unique_ptr<SharedInstanceArena> sharedInstanceArena; // フレーム共有インスタンスアリーナ
 			std::vector<std::unique_ptr<PassType>> passes;
 			RenderService renderService; // レンダーサービスのインスタンス
 

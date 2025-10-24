@@ -7,15 +7,15 @@
 
 #pragma once
 
-#include "Graphics/IGraphicsDevice.hpp"
+#include "../Graphics/IGraphicsDevice.hpp"
 
-#include "Util/FrameTimer.h"
-#include "Util/NonCopyable.h"
+#include "../Util/FrameTimer.h"
+#include "../Util/NonCopyable.h"
 
 #include "World.hpp"
-#include "Util/TypeChecker.hpp"
+#include "../Util/TypeChecker.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief Graphics::IGraphicsDeviceをCRTPで継承している型をチェックするコンセプト

@@ -17,7 +17,7 @@
 
 #include "../Util/TypeChecker.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief JPH::BodyIDをプリミティブ型として扱うための特殊化

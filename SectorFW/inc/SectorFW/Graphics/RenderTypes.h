@@ -9,7 +9,7 @@
 
 #include "../Math/Matrix.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

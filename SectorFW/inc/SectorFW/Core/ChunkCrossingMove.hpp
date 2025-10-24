@@ -14,7 +14,7 @@
 #include "ECS/EntityManager.h"
 #include "partition.hpp"   // SpatialChunk / SpatialChunkKey / EOutOfBoundsPolicy / Registry
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief 基本ハンドル（キー主・ポインタ従の二段構え）

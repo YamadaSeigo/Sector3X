@@ -13,7 +13,7 @@
 #include <string>
 #include <typeindex>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{

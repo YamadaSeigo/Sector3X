@@ -12,7 +12,7 @@
 #include <bit>
 #include <algorithm>
 
-namespace SectorFW::Math {
+namespace SFW::Math {
 	//-------------------------------------
 	// 基本コンセプト
 	//-------------------------------------

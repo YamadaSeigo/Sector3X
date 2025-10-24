@@ -11,7 +11,7 @@
 
 #include "component.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

@@ -12,7 +12,7 @@
 #include <cmath>
 #include <cfloat>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Debug
 	{

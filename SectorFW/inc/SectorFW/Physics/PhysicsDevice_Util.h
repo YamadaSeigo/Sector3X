@@ -13,7 +13,7 @@
 #include <Jolt/Math/Mat44.h>
 #include <limits>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Physics
 	{

@@ -9,7 +9,7 @@
 
 #include "Level.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief 各レベルを管理し、更新するクラス。サービスロケーターを保持する。

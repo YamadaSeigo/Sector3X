@@ -23,7 +23,7 @@
 #include <new>
 #include <shared_mutex>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

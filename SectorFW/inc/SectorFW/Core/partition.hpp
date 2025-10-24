@@ -19,7 +19,7 @@
 
 #include "Debug/DebugType.h"
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief チャンクを検索する際のポリシーを定義する列挙型

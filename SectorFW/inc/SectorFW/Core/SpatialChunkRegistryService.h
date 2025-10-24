@@ -12,7 +12,7 @@
 #include "ECS/EntityManager.h"
 #include "ECS/ServiceContext.hpp"
 
-namespace SectorFW {
+namespace SFW {
 	/**
 	 * @brief SpatialChunkをキーで登録・取得するサービス
 	 */

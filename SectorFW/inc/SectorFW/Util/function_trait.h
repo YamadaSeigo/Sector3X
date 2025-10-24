@@ -8,7 +8,7 @@
 #include <tuple>
 #include <type_traits>
 
-namespace SectorFW
+namespace SFW
 {
 	// ---- function_traitsÅiç≈è¨å¿Åj ----
 	template<class>

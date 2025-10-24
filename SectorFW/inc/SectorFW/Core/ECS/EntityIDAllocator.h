@@ -14,7 +14,7 @@
 #include "../external/concurrentqueue/concurrentqueue.h"
 #include "entity.h"
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{

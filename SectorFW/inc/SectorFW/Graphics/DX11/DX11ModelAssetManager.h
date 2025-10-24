@@ -20,7 +20,7 @@
 #include "../../Util/PathView.hpp"
 
 
-namespace SectorFW
+namespace SFW
 {
 	namespace Graphics
 	{
@@ -52,7 +52,7 @@ namespace SectorFW
 			float minThicknessRatio = 0.01f;// 最小厚み比。これ未満は超薄板として減点
 		};
 
-		using LodThresholds = SectorFW::Graphics::LodThresholdsPx; // ピクセル基準
+		using LodThresholds = SFW::Graphics::LodThresholdsPx; // ピクセル基準
 
 		struct DX11ModelAssetData {
 			std::string name;

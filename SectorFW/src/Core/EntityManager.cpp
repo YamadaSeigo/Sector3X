@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-namespace SectorFW
+namespace SFW
 {
 	namespace ECS
 	{
@@ -74,7 +74,7 @@ namespace SectorFW
 				for (const auto& kv : locations) out.push_back(kv.first);
 			}
 			// 念のため、locations に無いものも拾う（補完）
-			for (auto& [mask, arch] : archetypeManager.GetAll()) {
+			for (auto& arch : archetypeManager.GetAllData()) {
 				for (auto& ck : arch->GetChunks()) {
 					const auto entities = ArchetypeChunk::Accessor::GetEntities(ck.get());
 					const size_t n = ck->GetEntityCount();
@@ -99,8 +99,8 @@ namespace SectorFW
 
 			//idのチャンクが存在しない場合は、全アーキタイプを検索してマスクを取得する
 			ComponentMask componentMask;
-			for (auto& [mask, arch] : archetypeManager.GetAll()) {
-				for (auto& chunk : arch->GetChunks()) {
+			for (auto& [mask, idx] : archetypeManager.GetAllMaskIndices()) {
+				for (auto& chunk : archetypeManager.AccessArchetype(idx)->GetChunks()) {
 					auto entityCount = chunk->GetEntityCount();
 					const auto& entities = ArchetypeChunk::Accessor::GetEntities(chunk.get());
 					for (size_t i = 0; i < entityCount; ++i) {

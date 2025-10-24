@@ -14,7 +14,7 @@
 
 #include "../Core/ECS/component.hpp"
 
-namespace SectorFW
+namespace SFW
 {
 	struct TransformSoA; // ‘O•ûéŒ¾
 

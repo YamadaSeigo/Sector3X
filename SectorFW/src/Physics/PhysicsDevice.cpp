@@ -14,7 +14,7 @@
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Body/BodyLockMulti.h>
 
-namespace SectorFW::Physics {
+namespace SFW::Physics {
 	// ===== PhysicsDevice メンバ追加（ヘッダに追記を想定） =====
 	// BroadPhase & Filters & Listener は所有
 	static BroadPhaseLayerInterfaceImpl           g_bpInterface;

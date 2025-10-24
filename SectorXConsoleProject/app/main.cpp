@@ -1,5 +1,10 @@
+
+//SectorFW
 #include <SectorFW/Debug/ImGuiBackendDX11Win32.h>
 #include <SectorFW/Core/ChunkCrossingMove.hpp>
+#include <SectorFW/DX11WinTerrainHelper.h>
+
+//System
 #include "system/CameraSystem.h"
 #include "system/ModelRenderSystem.h"
 #include "system/PhysicsSystem.h"
@@ -20,7 +25,6 @@ constexpr uint32_t WINDOW_WIDTH = 960;	// ウィンドウの幅
 constexpr uint32_t WINDOW_HEIGHT = 720;	// ウィンドウの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
-
 
 int main(void)
 {
@@ -79,7 +83,7 @@ int main(void)
 
 	//デバッグ用の初期化
 	//========================================================================================-
-	using namespace SectorFW::Graphics;
+	using namespace SFW::Graphics;
 
 	graphics.TestInitialize();
 	auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11ShaderManager>();
@@ -144,7 +148,7 @@ int main(void)
 		//scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
+		//scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<CleanModelSystem>(world.GetServiceLocator());
 
 		auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
@@ -158,10 +162,10 @@ int main(void)
 		Math::Vec3f dst = src;
 
 		// Entity生成
-		for (int j = 0; j < 20; ++j) {
-			for (int k = 0; k < 20; ++k) {
+		for (int j = 0; j < 200; ++j) {
+			for (int k = 0; k < 200; ++k) {
 				for (int n = 0; n < 1; ++n) {
-					Math::Vec3f location = { float(rand() % 400 + 1), float(n) * 20.0f, float(rand() % 400 + 1) };
+					Math::Vec3f location = { float(rand() % 1600 + 1), float(n) * 20.0f, float(rand() % 1600 + 1) };
 					//Math::Vec3f location = { 10.0f * j,0.0f,10.0f * k };
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();

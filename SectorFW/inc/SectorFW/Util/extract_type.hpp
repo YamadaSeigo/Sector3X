@@ -11,7 +11,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace SectorFW
+namespace SFW
 {
 	/**
 	 * @brief 型を引数から抽出するためのユーティリティ関数
