@@ -232,7 +232,8 @@ namespace SFW
 					const Math::Vec3f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
 					const Math::Vec3f e = (n.bounds.ub - n.bounds.lb) * 0.5f;
 					const float d2 = Dist2PointAABB3D(eye, c, e);
-					items.push_back({ const_cast<SpatialChunk*>(&n.chunk), d2 });
+					if (n.chunk.GetEntityManager().GetEntityCount() > 0)
+						items.push_back({ const_cast<SpatialChunk*>(&n.chunk), d2 });
 					return;
 				}
 				for (int i = 0; i < 8; ++i) if (n.child[i]) rec(*n.child[i]);
@@ -248,7 +249,7 @@ namespace SFW
 				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
 
 			std::vector<SpatialChunk*> out; out.reserve(K);
-			for (auto& it : items) out.push_back(it.sc);
+			for (auto& it : items) { out.push_back(it.sc); }
 			return out;
 		}
 
@@ -477,7 +478,7 @@ namespace SFW
 		void cullRecursive3D(const Node& n, const Math::Frustumf& fr, std::vector<AABB>& out) const
 		{
 			if (!nodeIntersectsFrustum3D(n, fr)) return;
-			if (n.isLeaf()) { out.push_back(n.bounds); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(n.bounds); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive3D(*n.child[i], fr, out);
 		}
 		// ---- 3D 版カリング（高さ範囲を使わず、八分木の AABB をそのまま使用）----
@@ -490,27 +491,27 @@ namespace SFW
 		void cullRecursive3D(Node& n, const Math::Frustumf& fr, std::vector<SpatialChunk*>& out)
 		{
 			if (!nodeIntersectsFrustum3D(n, fr)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if(n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive3D(*n.child[i], fr, out);
 		}
 		void cullRecursive3D(const Node& n, const Math::Frustumf& fr, std::vector<const SpatialChunk*>& out) const
 		{
 			if (!nodeIntersectsFrustum3D(n, fr)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive3D(*n.child[i], fr, out);
 		}
 		template<class F>
 		void cullRecursive3D(Node& n, const Math::Frustumf& fr, F&& f)
 		{
 			if (!nodeIntersectsFrustum3D(n, fr)) return;
-			if (n.isLeaf()) { f(n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) f(n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive3D(*n.child[i], fr, f);
 		}
 		template<class F>
 		void cullRecursive3D(const Node& n, const Math::Frustumf& fr, F&& f) const
 		{
 			if (!nodeIntersectsFrustum3D(n, fr)) return;
-			if (n.isLeaf()) { f(n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) f(n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive3D(*n.child[i], fr, f);
 		}
 
@@ -597,13 +598,13 @@ namespace SFW
 		void queryAABB(Node& n, const AABB& q, std::vector<SpatialChunk*>& out)
 		{
 			if (!intersects(n.bounds, q)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) queryAABB(*n.child[i], q, out);
 		}
 		void queryAABB(const Node& n, const AABB& q, std::vector<const SpatialChunk*>& out) const
 		{
 			if (!intersects(n.bounds, q)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) queryAABB(*n.child[i], q, out);
 		}
 
@@ -647,35 +648,35 @@ namespace SFW
 			std::vector<SpatialChunk*>& out)
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, out);
 		}
 		void cullRecursive(const Node& n, const Math::Frustumf& fr, float ymin, float ymax,
 			std::vector<const SpatialChunk*>& out) const
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, out);
 		}
 		template<class F>
 		void cullRecursive(Node& n, const Math::Frustumf& fr, float ymin, float ymax, F&& f)
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { f(n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) f(n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, f);
 		}
 		template<class F>
 		void cullRecursive(const Node& n, const Math::Frustumf& fr, float ymin, float ymax, F&& f) const
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { f(n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) f(n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, f);
 		}
 		void cullRecursive(const Node& n, const Math::Frustumf& fr, float ymin, float ymax,
 			std::vector<AABB>& out) const
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { out.push_back(n.bounds); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(n.bounds); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, out);
 		}
 

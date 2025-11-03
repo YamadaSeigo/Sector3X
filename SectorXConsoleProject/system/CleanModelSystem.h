@@ -19,10 +19,11 @@ public:
 				auto pModel = accessor.Get<Write<CModel>>();
 				if (!pModel) return;
 
+				uint64_t deleteFrame = renderService->GetProduceSlot() + Graphics::RENDER_BUFFER_COUNT;
 				for (auto i = 0; i < entityCount; ++i)
 				{
 					auto& model = pModel.value()[i];
-					modelMgr->Release(model.handle, Graphics::RENDER_BUFFER_COUNT);
+					modelMgr->Release(model.handle, deleteFrame);
 				}
 			}, partition, modelMgr);
 	}

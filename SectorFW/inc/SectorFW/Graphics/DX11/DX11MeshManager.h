@@ -88,7 +88,8 @@ namespace SFW
 			 * @param dev DirectX 11のデバイス
 			 */
 			explicit DX11MeshManager(ID3D11Device* dev) noexcept : device(dev) {
-				InitCommonMeshes();
+				bool ok = InitCommonMeshes();
+				assert(ok && "Failed to initialize common meshes");
 			}
 			/**
 			 * @brief 既存のメッシュを検索する関数

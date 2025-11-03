@@ -303,7 +303,8 @@ public:
 
 							std::vector<Graphics::QuadCandidate> outQuad;
 							Graphics::SelectOccluderQuads_AVX2(
-								occAABB,
+								occAABB.data(),
+								occAABB.size(),
 								cameraPos,
 								viewProj,
 								vp,
@@ -352,11 +353,13 @@ public:
 			vbUpdateDesc.buffer = lineBuffer.ref().vbs[0];
 		}
 
+		auto slot = renderService->GetProduceSlot();
+
 		meshManager->SetIndexCount(line3DHandle, (uint32_t)line3DCount);
 		vbUpdateDesc.data = line3DVertices.get();
 		vbUpdateDesc.size = sizeof(Debug::LineVertex) * line3DCount;
 		vbUpdateDesc.isDelete = false; // 更新時は削除
-		bufferManager->UpdateBuffer(vbUpdateDesc);
+		bufferManager->UpdateBuffer(vbUpdateDesc, slot);
 
 	/*	auto& v1 = line2DVertices.get()[0];
 		v1.pos = Math::Vec3f(-460.0f, -1.0f, 100.0f);
@@ -374,7 +377,7 @@ public:
 		vbUpdateDesc.data = line2DVertices.get();
 		vbUpdateDesc.size = sizeof(Debug::LineVertex) * line2DCount;
 		vbUpdateDesc.isDelete = false; // 更新時は削除
-		bufferManager->UpdateBuffer(vbUpdateDesc);
+		bufferManager->UpdateBuffer(vbUpdateDesc, slot);
 
 		Graphics::DrawCommand cmd;
 		cmd.instanceIndex = draw3DLineSession.AllocInstance({ Math::Matrix4x4f::Identity() });
@@ -430,7 +433,7 @@ public:
 				}
 			}, partition, fru, meshManager, &draw3DLineSession, psoLineHandle.index, boxHandle.index, sphereHandle.index);
 
-		/*renderService->GetDepthBuffer(mocDepth);
+		renderService->GetDepthBuffer(mocDepth);
 
 		Graphics::DX11TextureManager* texMgr = renderService->GetResourceManager<Graphics::DX11TextureManager>();
 		texMgr->UpdateTexture(mocTexHandle, mocDepth.data(), 960 * 4);
@@ -443,7 +446,7 @@ public:
 		cmd.pso = psoMOCHandle.index;
 		cmd.material = mocMaterialHandle.index;
 
-		draw2DSession.Push(std::move(cmd));*/
+		draw2DSession.Push(std::move(cmd));
 	}
 private:
 	Graphics::PSOHandle psoLineHandle = {};

@@ -43,6 +43,8 @@ namespace SFW
 					 * @param deltaTime 前のフレームからの経過時間（秒）
 					 */
 					void Update(double deltaTime) override {
+						frameIdx++;
+
 						if (!isUpdateBuffer) return;
 
 						DX11BufferUpdateDesc cbUpdateDesc;
@@ -56,13 +58,14 @@ namespace SFW
 						center += moveVec * static_cast<float>(deltaTime);
 						zoom += moveZoom * static_cast<float>(deltaTime);
 
-						RecomputeMatrices_NoLock();
+						currentSlot = frameIdx % RENDER_BUFFER_COUNT;
+						RecomputeMatrices_NoLock(currentSlot);
 
-						cbUpdateDesc.data = &cameraBuffer;
+						cbUpdateDesc.data = &cameraBuffer[currentSlot];
 						cbUpdateDesc.isDelete = false; // 更新時は削除しない
 
 						cbUpdateDesc.size = sizeof(CameraBuffer);
-						bufferManager->UpdateBuffer(cbUpdateDesc);
+						bufferManager->UpdateBuffer(cbUpdateDesc, currentSlot);
 
 						moveVec = Math::Vec2f{ 0.0f, 0.0f };
 						moveZoom = 0.0f;

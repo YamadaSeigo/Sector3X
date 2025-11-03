@@ -27,7 +27,7 @@ namespace SFW
 		/**
 		 * @brief アーキタイプチャンクのサイズ（バイト単位）
 		 */
-		constexpr size_t ChunkSizeBytes = 16 * 1024;
+		constexpr size_t ChunkSizeBytes = 32 * 1024;
 		//前方定義
 		class ComponentTypeRegistry;
 		/**

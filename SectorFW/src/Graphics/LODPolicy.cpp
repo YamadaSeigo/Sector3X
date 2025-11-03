@@ -41,13 +41,15 @@ namespace SFW::Graphics {
     }
 
     int SelectLodByPixels(float ndcAreaFrac, const LodThresholdsPx& th, int lodCount, int prevLod,
-        int renderW, int renderH, float globalBias)
+        int renderW, int renderH, float globalBias, float* outSp)
     {
         if (lodCount <= 1) return 0;
 
         // 実ピクセル → 基準解像度換算ピクセル sP
         float P = CoveragePixelsFromNdcArea(ndcAreaFrac, renderW, renderH);
         float sP = ToBasePixels(P, renderW, renderH, th.baseW, th.baseH);
+
+		if (outSp) *outSp = sP;
 
         // globalBias：段数バイアス（±1段 ≒ しきい値×2^±1 の感覚）
         float biasScale = std::pow(2.0f, globalBias);

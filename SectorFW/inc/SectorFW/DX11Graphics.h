@@ -85,7 +85,7 @@ namespace SFW
 				return renderGraph->GetRenderService();
 			}
 
-			void TestInitialize();
+			void TestInitialize(std::function<void(uint64_t)>&& clusterTest);
 
 			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }
 			ID3D11DeviceContext* GetDeviceContext() const noexcept { return m_context.Get(); }
@@ -122,7 +122,7 @@ namespace SFW
 				std::atomic<uint64_t> lastCompleted{ 0 };
 
 				// 上限（= バッファ数）
-				static constexpr uint32_t MaxInFlight = RENDER_BUFFER_COUNT;
+				static constexpr uint16_t MaxInFlight = RENDER_BUFFER_COUNT;
 			};
 
 			void RenderThreadMain(std::shared_ptr<RTState> st);

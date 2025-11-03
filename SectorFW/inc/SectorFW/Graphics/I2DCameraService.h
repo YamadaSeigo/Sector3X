@@ -151,7 +151,7 @@ namespace SFW
 			float GetNear() const noexcept { std::shared_lock lock(sharedMutex); return nearClip; }
 			float GetFar() const noexcept { std::shared_lock lock(sharedMutex); return farClip; }
 
-			const CameraBuffer& GetCameraBufferData() const noexcept { return cameraBuffer; }
+			const CameraBuffer& GetCameraBufferData() const noexcept { return cameraBuffer[currentSlot]; }
 
 			// ─────────────────────────────────────────────────────
 			// 座標変換ユーティリティ
@@ -175,7 +175,7 @@ namespace SFW
 			/// @brief ワールド座標→virtual解像度のスクリーン座標(x,y)
 			Math::Vec2f WorldToScreen(const Math::Vec2f& world) const noexcept {
 				std::shared_lock lock(sharedMutex);
-				Math::Vec4f p = cameraBuffer.viewProj * Math::Vec4f{ world.x, world.y, 0.0f, 1.0f };
+				Math::Vec4f p = cameraBuffer[currentSlot].viewProj * Math::Vec4f{world.x, world.y, 0.0f, 1.0f};
 				if (std::abs(p.w) > 1e-6f) { p.x /= p.w; p.y /= p.w; }
 				// NDC→スクリーン
 				float sx = (p.x * 0.5f + 0.5f) * virtualWidth;
@@ -194,7 +194,7 @@ namespace SFW
 			}
 
 			// 行列計算（内部専用）
-			void RecomputeMatrices_NoLock() noexcept {
+			void RecomputeMatrices_NoLock(uint16_t slot) noexcept {
 				// 1) 正射影行列（左上原点のピクセル直感に寄せるため、virtual解像度基準）
 				//    世界→スクリーンを素直にするため、世界単位→ピクセル換算(pixelsPerUnit)とzoomを投影に反映
 				//    ここでは「世界座標系」をそのまま使い、viewで中心や回転・ズームを扱う構成にする。
@@ -220,18 +220,22 @@ namespace SFW
 
 				Math::Matrix4x4f view = T * R;
 
-				cameraBuffer.viewProj = proj * view;
+				cameraBuffer[slot].viewProj = proj * view;
 
 				// 逆行列（座標変換ユーティリティ用）
-				cameraBufferInv = Math::Inverse(cameraBuffer.viewProj); // 実装がなければ適宜追加
+				cameraBufferInv = Math::Inverse(cameraBuffer[slot].viewProj); // 実装がなければ適宜追加
 			}
 
 		private:
 			// 毎フレーム or 変更時にバッファ更新
 			virtual void Update(double /*deltaTime*/) override {
+				++frameIdx;
+
 				if (!isUpdateBuffer) return;
 				std::unique_lock lock(sharedMutex);
-				RecomputeMatrices_NoLock();
+
+				currentSlot = frameIdx % RENDER_BUFFER_COUNT;
+				RecomputeMatrices_NoLock(currentSlot);
 				moveVec = Math::Vec2f{ 0.0f, 0.0f };
 				isUpdateBuffer = false;
 			}
@@ -239,7 +243,9 @@ namespace SFW
 		protected:
 			// GPU 連携
 			BufferHandle  cameraBufferHandle;
-			CameraBuffer  cameraBuffer{};
+			size_t frameIdx{ 0 };
+			uint16_t currentSlot{ 0 };
+			CameraBuffer  cameraBuffer[RENDER_BUFFER_COUNT] {};
 			Math::Matrix4x4f cameraBufferInv{ Math::Matrix4x4f::Identity() };
 
 			// 2D カメラ状態

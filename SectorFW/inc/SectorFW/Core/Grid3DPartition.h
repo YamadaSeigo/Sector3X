@@ -142,7 +142,9 @@ namespace SFW
 						const Math::Vec3f center{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
 						const Math::Vec3f extent{ e, e, e };
 						if (fr.IntersectsAABB(center, extent)) {
-							out.push_back(const_cast<SpatialChunk*>(&grid(x, y, z)));
+							auto& chunk = grid(x, y, z);
+							if (chunk.GetEntityManager().GetEntityCount() > 0)
+								out.push_back(const_cast<SpatialChunk*>(&chunk));
 						}
 					}
 				}
@@ -165,7 +167,9 @@ namespace SFW
 						const Math::Vec3f center{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
 						const Math::Vec3f extent{ e, e, e };
 						if (fr.IntersectsAABB(center, extent)) {
-							f(const_cast<SpatialChunk&>(grid(x, y, z)));
+							auto& chunk = grid(x, y, z);
+							if (chunk.GetEntityManager().GetEntityCount() > 0)
+								f(const_cast<SpatialChunk&>(chunk));
 						}
 					}
 				}
@@ -203,7 +207,9 @@ namespace SFW
 						if (!fr.IntersectsAABB(center, extent)) continue;
 
 						const float d2 = Dist2PointAABB3D(camPos, center, extent);
-						items.push_back({ const_cast<SpatialChunk*>(&grid(x, y, z)), d2 });
+						auto& chunk = grid(x, y, z);
+						if (chunk.GetEntityManager().GetEntityCount() > 0)
+							items.push_back({ const_cast<SpatialChunk*>(&chunk), d2 });
 					}
 				}
 			}

@@ -3,6 +3,8 @@
 #include <SectorFW/Debug/ImGuiBackendDX11Win32.h>
 #include <SectorFW/Core/ChunkCrossingMove.hpp>
 #include <SectorFW/DX11WinTerrainHelper.h>
+#include <SectorFW/Graphics/DX11/DX11BlockRevertHelper.h>
+#include <SectorFW/Graphics/TerrainOccluderExtraction.h>
 
 //System
 #include "system/CameraSystem.h"
@@ -77,15 +79,124 @@ int main(void)
 	Graphics::DX112DCameraService dx112DCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	Graphics::I2DCameraService* camera2DService = &dx112DCameraService;
 
-	ECS::ServiceLocator serviceLocator(graphics.GetRenderService(), &physicsService, inputService, perCameraService, ortCameraService, camera2DService);
+	SimpleThreadPoolService threadPool;
+
+	Graphics::TerrainBuildParams p;
+	p.cellsX = 512;
+	p.cellsZ = 512;
+	p.clusterCellsX = 32;
+	p.clusterCellsZ = 32;
+	p.cellSize = 1.0f;
+	p.heightScale = 40.0f;
+	p.frequency = 1.0f / 96.0f;
+	p.seed = 20251030;
+
+	SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p);
+
+	Graphics::BlockReservedContext blockRevert;
+	blockRevert.Init(graphics.GetDevice(),
+		L"assets/shader/CS_TerrainClustered.cso",
+		L"assets/shader/CS_WriteArgs.cso",
+		L"assets/shader/VS_TerrainClustered.cso",
+		L"assets/shader/PS_TerrainClustered.cso",
+		/*maxVisibleIndices*/ (UINT)terrain.indexPool.size());
+
+	std::vector<float> positions(terrain.vertices.size() * 3);
+	for (auto i = 0; i < terrain.vertices.size(); ++i)
+	{
+		positions[i * 3 + 0] = terrain.vertices[i].pos.x;
+		positions[i * 3 + 1] = terrain.vertices[i].pos.y;
+		positions[i * 3 + 2] = terrain.vertices[i].pos.z;
+	}
+	std::vector<float> lodTarget =
+	{
+		1.0f
+	};
+
+	std::vector<uint32_t> outIndexPool;
+	std::vector<Graphics::ClusterLodRange> outLodRanges;
+	std::vector<uint32_t> outLodBase;
+	std::vector<uint32_t> outLodCount;
+
+	Graphics::GenerateClusterLODs_meshopt(terrain.indexPool, terrain.clusters, positions.data(),
+		terrain.vertices.size(), sizeof(Math::Vec3f), lodTarget,
+		outIndexPool, outLodRanges, outLodBase, outLodCount);
+
+	blockRevert.BuildLodSrvs(graphics.GetDevice(), outLodRanges, outLodBase, outLodCount);
+
+	terrain.indexPool = std::move(outIndexPool);
+
+	Graphics::BuildFromTerrainClustered(graphics.GetDevice(), terrain, blockRevert);
+
+	auto deviceContext = graphics.GetDeviceContext();
+
+	auto renderService = graphics.GetRenderService();
+
+	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &threadPool);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
+
+	auto testClusterFunc = [renderService, deviceContext, perCameraService ,&terrain, &blockRevert](uint64_t frame)
+		{
+			auto viewProj = perCameraService->GetCameraBufferData().viewProj;
+			auto camPos = perCameraService->GetEyePos();
+			Math::Frustumf frustumPlanes
+				//Math::Frustumf::MakeFrustumPlanes_WorldSpace_Oriented(viewProj.data(), camPos.data, frustumPlanes.data());
+				= perCameraService->MakeFrustum(true);
+
+			auto resolution = perCameraService->GetResolution();
+			uint32_t width = (uint32_t)resolution.x;
+			uint32_t height = (uint32_t)resolution.y;
+
+			static Graphics::DefaultLodSelector lodSel = {};
+
+			Graphics::OccluderExtractOptions opt = {};
+			opt.viewProj = viewProj.data();
+			opt.viewportW = width;
+			opt.viewportH = height;
+			opt.cameraPos = camPos;
+			opt.minAreaPx = 100.0f;
+			opt.maxClusters = 256;
+			opt.lodSelector = &lodSel; // 既出の DefaultLodSelector でOK
+			opt.getLodRange = &Graphics::GetLodRange_TerrainClustered;
+			opt.terrainForGetter = &terrain;
+
+			// 1) 最小コスト（AABBの正面2トライだけ）
+			opt.mode = Graphics::OccluderExtractOptions::OccluderMode::AabbFaces;
+
+			std::vector<uint32_t> clusterIds;
+			std::vector<Graphics::SoftTriWorld> trisW;
+			std::vector<Graphics::SoftTriClip>  trisC;
+			ExtractOccluderTriangles_ScreenCoverageLOD_Budgeted(terrain, opt, clusterIds, trisW, &trisC);
+
+			// MOCバインディング
+			auto MyMOCRender = [renderService](const float* packedXYZW, uint32_t vertexCount,
+				const uint32_t* indices, uint32_t indexCount,
+				uint32_t vpW, uint32_t vpH)
+				{
+					Graphics::MocTriBatch tris =
+					{
+						packedXYZW,			//const float* clipVertices = nullptr; // (x, y, z, w) 配列
+						indices,			//const uint32_t* indices = nullptr;   // インデックス配列
+						vertexCount / 3,	//uint32_t      numTriangles = 0;
+						true				//bool          valid = true;          // 近クリップ全面裏などなら false
+					};
+
+					renderService->RenderingOccluderInMOC(tris);
+				};
+
+			// MOCにオクル―ダーを描画
+			Graphics::DispatchToMOC(MyMOCRender, trisC, width, height);
+
+			auto world = Math::Matrix4x4f::Identity();
+			blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height);
+		};
 
 	//デバッグ用の初期化
 	//========================================================================================-
 	using namespace SFW::Graphics;
 
-	graphics.TestInitialize();
+	graphics.TestInitialize(std::move(testClusterFunc));
 	auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11ShaderManager>();
 	DX11ShaderCreateDesc shaderDesc;
 	shaderDesc.templateID = MaterialTemplateID::PBR;
@@ -148,7 +259,7 @@ int main(void)
 		//scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
-		//scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
+		scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<CleanModelSystem>(world.GetServiceLocator());
 
 		auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
@@ -162,10 +273,10 @@ int main(void)
 		Math::Vec3f dst = src;
 
 		// Entity生成
-		for (int j = 0; j < 200; ++j) {
-			for (int k = 0; k < 200; ++k) {
+		for (int j = 0; j < 100; ++j) {
+			for (int k = 0; k < 100; ++k) {
 				for (int n = 0; n < 1; ++n) {
-					Math::Vec3f location = { float(rand() % 1600 + 1), float(n) * 20.0f, float(rand() % 1600 + 1) };
+					Math::Vec3f location = { float(rand() % 1000 + 1), float(n) * 20.0f, float(rand() % 1000 + 1) };
 					//Math::Vec3f location = { 10.0f * j,0.0f,10.0f * k };
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();
@@ -190,6 +301,7 @@ int main(void)
 				}
 			}
 		}
+
 		//Physics::BodyComponent staticBody{};
 		//staticBody.isStatic = Physics::BodyType::Static; // staticにする
 		//auto id = level->AddEntity(

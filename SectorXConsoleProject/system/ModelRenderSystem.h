@@ -20,14 +20,17 @@ class ModelRenderSystem : public ITypeSystem<
 	ModelRenderSystem<Partition>,
 	Partition,
 	ComponentAccess<Read<TransformSoA>, Write<CModel>>,//アクセスするコンポーネントの指定
-	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService>>{//受け取るサービスの指定
+	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService, SimpleThreadPoolService>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<Read<TransformSoA>, Write<CModel>>;
 public:
+
+	static constexpr inline uint32_t MAX_OCCLUDER_AABB_NUM  = 64;
+
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::I3DPerCameraService> cameraService) {
+		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
+		UndeletablePtr<SimpleThreadPoolService> threadPool) {
 		//機能を制限したRenderQueueを取得
-		auto producerSession = renderService->GetProducerSession("3D");
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11MeshManager>();
 		auto materialManager = renderService->GetResourceManager<Graphics::DX11MaterialManager>();
@@ -40,7 +43,30 @@ public:
 
 		const Graphics::Viewport vp = { (int)resolution.x, (int)resolution.y, cameraService->GetFOV() };
 
+		std::vector<Graphics::QuadCandidate> outQuad;
+		uint32_t aabbCount = occluderAABBCount.exchange(0, std::memory_order_acquire);
+		Graphics::SelectOccluderQuads_AVX2(
+			occluderAABBs,
+			aabbCount,
+			camPos,
+			viewProj,
+			vp,
+			Graphics::OccluderLOD::Near,
+			outQuad);
+
+		auto nearClip = renderService->GetNearClipPlane();
+
 		bool drawOcc = false;
+		for (const auto& quad : outQuad)
+		{
+			auto quadMOC = Graphics::ConvertAABBFrontFaceQuadToMoc(quad.quad, viewProj, nearClip);
+			if (quadMOC.valid)
+			{
+				drawOcc = true;
+				renderService->RenderingOccluderInMOC(quadMOC);
+			}
+		}
+
 
 		struct KernelParams {
 			Graphics::RenderService* renderService;
@@ -48,13 +74,12 @@ public:
 			Graphics::DX11MeshManager* meshMgr;
 			Graphics::DX11MaterialManager* materialMgr;
 			Graphics::DX11PSOManager* psoMgr;
-			Graphics::RenderQueue::ProducerSession* queue;
 			const Math::Matrix4x4f& viewProj;
 			Math::Vec3f cp;
 			Graphics::Viewport vp;
+			std::atomic<uint32_t>& occAABBCount;
+			Math::AABB3f* occAABBs;
 			bool drawOcc;
-			Math::Matrix3x4f* worldMatrices;
-			Math::Matrix4x4f* WVPs;
 		};
 
 		KernelParams kp = {
@@ -63,18 +88,21 @@ public:
 			meshManager,
 			materialManager,
 			psoManager,
-			&producerSession,
 			viewProj,
 			camPos,
 			vp,
-			drawOcc,
-			worldMatrices,
-			WVPs
+			occluderAABBCount,
+			occluderAABBs,
+			drawOcc
 		};
 
 		//アクセスを宣言したコンポーネントにマッチするチャンクに指定した関数を適応する
-		this->ForEachFrustumNearChunkWithAccessor([](Accessor& accessor, size_t entityCount, KernelParams* kp)
+		this->ForEachFrustumNearChunkWithAccessor<IsParallel{true}>([](Accessor& accessor, size_t entityCount, KernelParams* kp)
 			{
+				if (entityCount == 0) return;
+
+				auto producer = kp->renderService->GetProducerSession("3D");
+
 				float nearClip = kp->renderService->GetNearClipPlane();
 
 				//読み取り専用でTransformSoAのアクセサを取得
@@ -97,18 +125,23 @@ public:
 				};
 
 				// ワールド行列を一括生成
-				Math::BuildWorldMatrices3x4_FromSoA(mtf, entityCount, kp->worldMatrices); // クォータニオン非正規化
+				std::vector<float> worldMtxBuffer(12 * entityCount);
+				Math::Matrix3x4fSoA worldMtxSoA(worldMtxBuffer.data(), entityCount);
+				Math::BuildWorldMatrixSoA_FromTransformSoA(mtf, worldMtxSoA);
 
-				Math::Mul4x4x3x4_Batch_To4x4_AVX2_RowCombine(kp->viewProj, kp->worldMatrices, kp->WVPs, entityCount);
+				std::vector<Math::Matrix4x4f> WVPs(entityCount);
+				Math::Mul4x4x3x4_Batch_To4x4_AVX2_RowCombine_SoA(kp->viewProj, worldMtxSoA, WVPs.data());
+
+				std::vector<Graphics::InstanceIndex> instanceIndices(entityCount);
+				producer.AllocInstancesFromWorldSoA(worldMtxSoA, instanceIndices.data());
 
 				for (size_t i = 0; i < entityCount; ++i) {
 					uint32_t idx = order[i];
-					const auto& worldMtx = kp->worldMatrices[idx];
-					const auto& WVP = kp->WVPs[idx];
+					const auto& WVP = WVPs[idx];
 
 					auto& modelComp = model.value()[idx];
 
-					auto instanceIdx = kp->queue->AllocInstance({ worldMtx });
+					auto instanceIdx = instanceIndices[idx];
 					auto& lodBits = modelComp.prevLODBits;
 
 					//モデルアセットを取得
@@ -118,6 +151,8 @@ public:
 						Graphics::DrawCommand cmd;
 						if (kp->materialMgr->IsValid(mesh.material) == false) [[unlikely]] continue;
 						if (kp->psoMgr->IsValid(mesh.pso) == false) [[unlikely]] continue;
+
+						modelComp.occluded = false;
 
 						Math::NdcRectWithW ndc;
 						float depth = 0.0f;
@@ -152,17 +187,14 @@ public:
 							lodRefinePolicy
 						);
 
-						modelComp.occluded = false;
-
 						bool refineNeeded = refineState.shouldRefine();
 						//AABBで正確にNDCカバー率を計算し直し
 						if (refineNeeded)
 						{
-							modelComp.occluded = true;
-
 							if (mesh.instance.HasData()) [[unlikely]] {
-								Graphics::SharedInstanceArena::InstancePool instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtx, mesh.instance.worldMtx) };
-								cmd.instanceIndex = kp->queue->AllocInstance(instance);
+								LOG_INFO("model has instance matrix!");
+								Graphics::SharedInstanceArena::InstancePool instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtxSoA.AoS(idx), mesh.instance.worldMtx)};
+								cmd.instanceIndex = producer.AllocInstance(instance);
 								ndc = Math::ProjectAABBToNdc_Fast(WVP * mesh.instance.worldMtx, mesh.aabb);
 								areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);
 							}
@@ -178,34 +210,30 @@ public:
 						}
 
 
-						if (ndc.valid)
-						{
-							//前フレームで映っている場合は1フレームだけカリングをスキップ
-							if (modelComp.temporalSkip)
-							{
-								modelComp.temporalSkip = false;
-							}
-							else if(refineNeeded)
-							{
-								if (kp->drawOcc && kp->renderService->IsVisibleInMOC(ndc) != Graphics::MOC::CullingResult::VISIBLE) {
-									//modelComp.occluded = true;
-									continue;
-								}
+						bool temporalSkip = modelComp.temporalSkip;
+						modelComp.temporalSkip = false;
 
-								modelComp.temporalSkip = true;
-							}
-							else
-							{
-								modelComp.temporalSkip = true;
-							}
-						}
-						else {
-							modelComp.temporalSkip = false;
+						if (!ndc.valid)
+						{
 							continue;
 						}
 
+						//前フレームで映っている場合は1フレームだけカリングをスキップ
+						//大きすぎる場合は確実に可視
+						if (!temporalSkip)
+						{
+							if (areaFrec < 0.5f && kp->renderService->IsVisibleInMOC(ndc) != Graphics::MOC::CullingResult::VISIBLE) {
+								modelComp.temporalSkip = false;
+								modelComp.occluded = true;
+								continue;
+							}
+
+							modelComp.temporalSkip = true;
+						}
+
 						int prevLod = (int)lodBits.get(subMeshIdx);
-						int ll = Graphics::SelectLodByPixels(areaFrec, mesh.lodThresholds, lodCount, prevLod, kp->vp.width, kp->vp.height, -5.0f);
+						float s_occ;
+						int ll = Graphics::SelectLodByPixels(areaFrec, mesh.lodThresholds, lodCount, prevLod, kp->vp.width, kp->vp.height, -5.0f, &s_occ);
 						if (ll < 0 || ll > 3) [[unlikely]] {
 							LOG_ERROR("LOD selection out of range: %d", ll);
 							ll = 0;
@@ -215,39 +243,29 @@ public:
 						if (mesh.occluder.candidate)
 						{
 							auto prevOccLod = (int)modelComp.prevOCCBits.get(subMeshIdx);
-							auto occLod = Graphics::DecideOccluderLOD_FromThresholds(areaFrec, mesh.lodThresholds, prevOccLod, ll, 0.0f);
+							auto occLod = Graphics::DecideOccluderLOD_FromThresholds(s_occ, mesh.lodThresholds, prevOccLod, ll, 0.0f);
 							modelComp.prevOCCBits.set(subMeshIdx, (uint8_t)occLod);
 							if (occLod != Graphics::OccluderLOD::Far)
 							{
 								size_t occCount = mesh.occluder.meltAABBs.size();
 								std::vector<Math::AABB3f> occAABB(occCount);
+								Math::Matrix3x4f worldMtx = worldMtxSoA.AoS(idx);
 								for (auto j = 0; j < occCount; ++j)
 								{
 									occAABB[j] = Math::TransformAABB_Affine(worldMtx, mesh.occluder.meltAABBs[j]);
 								}
-
-								std::vector<Graphics::QuadCandidate> outQuad;
-								Graphics::SelectOccluderQuads_AVX2(
-									occAABB,
-									kp->cp,
-									kp->viewProj,
-									kp->vp,
-									occLod,
-									outQuad);
-
-								for (const auto& quad : outQuad)
+								uint32_t base = kp->occAABBCount.fetch_add((uint32_t)occCount, std::memory_order_acq_rel);
+								if (base + occCount < MAX_OCCLUDER_AABB_NUM)
 								{
-									auto quadMOC = Graphics::ConvertAABBFrontFaceQuadToMoc(quad.quad, kp->viewProj, nearClip);
-									if (quadMOC.valid)
-									{
-										kp->renderService->RenderingOccluderInMOC(quadMOC);
-										kp->drawOcc = true;
-									}
+									memcpy(&kp->occAABBs[base], occAABB.data(), sizeof(Math::AABB3f) * occCount);
 								}
+								else
+								{
+									LOG_WARNING("Occluder AABB buffer overflow");
+								}
+
 							}
 						}
-
-						//LOG_INFO("Model LOD selected: %d (s=%f)", ll, s);
 
 						auto& meshHandel = mesh.lods[ll].mesh;
 						if (kp->meshMgr->IsValid(meshHandel) == false) [[unlikely]] continue;
@@ -257,7 +275,7 @@ public:
 						cmd.pso = mesh.pso.index;
 
 						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
-						kp->queue->Push(std::move(cmd));
+						producer.Push(std::move(cmd));
 
 						subMeshIdx++;
 						if (subMeshIdx >= 16) [[unlikely]] {
@@ -266,10 +284,11 @@ public:
 						}
 					}
 				}
-			}, partition, fru, camPos, &kp
+			}, partition, fru, camPos, &kp, threadPool.get()
 		);
 	}
-	private:
-		Math::Matrix3x4f worldMatrices[Graphics::MAX_INSTANCES_PER_FRAME] = {};
-		Math::Matrix4x4f WVPs[Graphics::MAX_INSTANCES_PER_FRAME] = {};
+
+private:
+	Math::AABB3f occluderAABBs[MAX_OCCLUDER_AABB_NUM];
+	std::atomic<uint32_t> occluderAABBCount{ 0 };
 };

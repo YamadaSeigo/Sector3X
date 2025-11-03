@@ -47,21 +47,21 @@
     <FxCompile Include="shader\PS_MOCDebug.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\CS_CullAndBucket.hlsl">
+    <FxCompile Include="shader\VS_TerrainClustered.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\VS_Terrain.hlsl">
+    <FxCompile Include="PS_TerrainClustered.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\PS_Terrain.hlsl">
+    <FxCompile Include="shader\CS_WriteArgs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CS_TerrainClustered.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\GlobalTypes.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="shader\ClusterShared.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

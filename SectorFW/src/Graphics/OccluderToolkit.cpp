@@ -606,7 +606,8 @@ static inline TwoQuadProjectOut ProjectTwoQuadsAreaPx2_AVX2(
 #endif
 
 int SFW::Graphics::SelectOccluderQuads_AVX2(
-    const std::vector<AABB3f>& aabbs,
+    const Math::AABB3f* aabbs,
+    const size_t aabbCount,
     const Vec3f& camPos,
     const Mat4f& VP,
     const Viewport& vp,
@@ -615,12 +616,14 @@ int SFW::Graphics::SelectOccluderQuads_AVX2(
 {
 #if SFW_HAVE_AVX2 && defined(SFW_ROWMAJOR_MAT4F_HAS_M)
     out.clear();
-    out.reserve(aabbs.size());
+    out.reserve(aabbCount);
 
     const OccluderPolicy P = GetPolicy(lod);
 
-    std::vector<AABBFrontFaceQuad> quads; quads.reserve(aabbs.size());
-    for (const auto& b : aabbs) {
+    std::vector<AABBFrontFaceQuad> quads; quads.reserve(aabbCount);
+
+    for (int i = 0; i < aabbCount; ++i) {
+        const auto& b = aabbs[i];
         if (EstimateMaxScreenDiameterPx(b, camPos, vp) < P.minEdgePx) {
             continue;
         }

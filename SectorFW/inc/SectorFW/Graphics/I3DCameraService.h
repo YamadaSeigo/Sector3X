@@ -266,8 +266,8 @@ namespace SFW
 			 * @brief ビュー行列を取得
 			 * @return Math::Matrix4x4f ビュー行列
 			 */
-			Math::Frustumf MakeFrustum() const {
-				auto fru = Math::Frustumf::FromRowMajor(cameraBuffer.viewProj.data());
+			Math::Frustumf MakeFrustum(bool normalize = false) const {
+				auto fru = Math::Frustumf::FromRowMajor(cameraBuffer[currentSlot].viewProj.data(), normalize);
 				Math::Frustumf::FaceInward(fru, eye, GetForward(), nearClip);
 
 				return fru;
@@ -276,10 +276,16 @@ namespace SFW
 			 * @brief カメラバッファのデータを取得
 			 * @return const CameraBuffer& カメラバッファのデータ
 			 */
-			const CameraBuffer& GetCameraBufferData() const noexcept { return cameraBuffer; }
+			const CameraBuffer& GetCameraBufferData() const noexcept { 
+				return cameraBuffer[currentSlot];
+			}
 		private:
 			virtual void Update(double deltaTime) override {
+				++frameIdx;
+
 				if (!isUpdateBuffer) return; // 更新が必要ない場合は何もしない
+
+				currentSlot = frameIdx % RENDER_BUFFER_COUNT;
 
 				std::unique_lock lock(sharedMutex);
 
@@ -318,8 +324,10 @@ namespace SFW
 		protected:
 			// カメラバッファハンドルとデータ
 			BufferHandle cameraBufferHandle;
+			// フレームインデックス
+			uint64_t frameIdx = 0; //
 			//カメラのバッファデータ
-			CameraBuffer cameraBuffer = {};
+			CameraBuffer cameraBuffer[RENDER_BUFFER_COUNT] = {};
 			// カメラの位置
 			Math::Vec3f eye = { 0.0f, 0.0f, -5.0f };
 			// カメラの注視点
@@ -350,18 +358,20 @@ namespace SFW
 			float focusDist = 5.0f;
 			// 移動ベクトル
 			Math::Vec3f moveVec = { 0.0f, 0.0f, 0.0f };
-			// 初期回転
-			Math::Quatf rot = Math::Quatf::FromEuler(0.0f, 0.0f, 0.0f);
 			// ピッチの累積角度（制限用）
 			float pitchAccum = 0.0f;
+			// 現在のスロット
+			uint16_t currentSlot = 0;
+			// 更新フラグ
+			bool isUpdateBuffer = true;
+			// 初期回転
+			Math::Quatf rot = Math::Quatf::FromEuler(0.0f, 0.0f, 0.0f);
 			// マウス移動量
 			float dx = 0.0f, dy = 0.0f;
 			// マウス感度（ラジアン/ピクセル）
 			float sensX_rad_per_px = std::numbers::pi_v<float> / 600.0f, sensY_rad_per_px = std::numbers::pi_v<float> / 600.0f;
 			// スレッドセーフ用の共有ミューテックス
 			mutable std::shared_mutex sharedMutex;
-			// 更新フラグ
-			bool isUpdateBuffer = true;
 		public:
 			STATIC_SERVICE_TAG
 		};

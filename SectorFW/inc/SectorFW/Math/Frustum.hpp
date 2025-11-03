@@ -62,6 +62,7 @@ namespace SFW::Math {
 	enum class FrustumPlane : int { Left = 0, Right, Bottom, Top, Near, Far };
 
 	struct Frustumf {
+
 		std::array<Planef, 6> p{};
 
 		inline float* data() noexcept { return reinterpret_cast<float*>(p.data()); }
@@ -217,6 +218,58 @@ namespace SFW::Math {
 
 			if (normalize) fr.Normalize();
 			return fr;
+		}
+
+		// m は row-major 配列（float[16]）
+		static void MakeFrustumPlanes_WorldSpace(const float ViewProj[16], float outPlanes[6][4]) {
+			auto fr = SFW::Math::Frustumf::FromRowMajorWithZ(ViewProj, SFW::Math::ClipZRange::ZeroToOne, /*normalize=*/true);
+			// n・d をそのまま出す（CS側の判定: dot(n, X) + d >= 0 を IN とする）
+			for (int i = 0; i < 6; ++i) {
+				outPlanes[i][0] = fr.p[i].n.x;
+				outPlanes[i][1] = fr.p[i].n.y;
+				outPlanes[i][2] = fr.p[i].n.z;
+				outPlanes[i][3] = fr.p[i].d;
+			}
+		}
+
+		static void MakeFrustumPlanes_WorldSpace_Oriented(const float ViewProj[16],
+			const float camPos[3],
+			float* outPlanes) {
+			// 1) まず通常どおり抽出（ZeroToOne / 正規化）
+			float planes[6][4];
+			MakeFrustumPlanes_WorldSpace(ViewProj, planes); // ←あなたが今使っている関数
+
+			// 2) 各面を「カメラ位置が内側（>=0）」になるよう整える
+			for (int i = 0; i < 6; ++i) {
+				const float a = planes[i][0], b = planes[i][1], c = planes[i][2], d = planes[i][3];
+				float evalAtCam = a * camPos[0] + b * camPos[1] + c * camPos[2] + d;
+				// もしカメラ位置が負（外側）なら、法線と d を反転して“内向き”にする
+				if (evalAtCam < 0.0f) {
+					planes[i][0] = -planes[i][0];
+					planes[i][1] = -planes[i][1];
+					planes[i][2] = -planes[i][2];
+					planes[i][3] = -planes[i][3];
+				}
+			}
+			memcpy(outPlanes, planes, sizeof(planes));
+		}
+
+		// AABB がオブジェクト空間の場合（＝VSで mul(World, p) しているなら、ここでは ViewProj*World で抽出）
+		static void MakeFrustumPlanes_ObjectSpace(const float ViewProj[16], const float World[16], float outPlanes[6][4]) {
+			// 行列は row-major 同士のかけ算（row-majorの数式で OK）
+			auto mulRM = [](const float A[16], const float B[16], float M[16]) {
+				for (int r = 0; r < 4; ++r) for (int c = 0; c < 4; ++c) {
+					M[r * 4 + c] = A[r * 4 + 0] * B[0 * 4 + c] + A[r * 4 + 1] * B[1 * 4 + c] + A[r * 4 + 2] * B[2 * 4 + c] + A[r * 4 + 3] * B[3 * 4 + c];
+				}
+				};
+			float VPW[16]; mulRM(ViewProj, World, VPW); // VPW = ViewProj * World
+			auto fr = SFW::Math::Frustumf::FromRowMajorWithZ(VPW, SFW::Math::ClipZRange::ZeroToOne, /*normalize=*/true);
+			for (int i = 0; i < 6; ++i) {
+				outPlanes[i][0] = fr.p[i].n.x;
+				outPlanes[i][1] = fr.p[i].n.y;
+				outPlanes[i][2] = fr.p[i].n.z;
+				outPlanes[i][3] = fr.p[i].d;
+			}
 		}
 
 		// Matrix<4,4,T> から直接作るヘルパ

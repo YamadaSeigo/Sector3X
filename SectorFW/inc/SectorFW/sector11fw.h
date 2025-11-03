@@ -26,6 +26,8 @@
 
 #include "Core/build_order.h"
 
+#include "Graphics/TerrainClustered.h"
+
 #include "Physics/PhysicsService.h"
 
 #include "SIMD/simd_api.h"

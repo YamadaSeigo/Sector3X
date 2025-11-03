@@ -34,7 +34,7 @@ namespace SFW
 		class RenderGraph {
 		public:
 			using PassType = RenderPass<RTV, SRV, Buffer>;
-			static constexpr uint32_t kFlights = RENDER_BUFFER_COUNT; // フレームインフライト数
+			static constexpr uint16_t kFlights = RENDER_BUFFER_COUNT; // フレームインフライト数
 
 			/**
 			 * @brief コンストラクタ
@@ -45,7 +45,6 @@ namespace SFW
 				// レンダーバックエンドでRenderServiceにリソースマネージャーを登録
 				backend.AddResourceManagerToRenderService(*this);
 
-				current.store(0, std::memory_order_relaxed);
 				sharedInstanceArena = std::make_unique<SharedInstanceArena>();
 			}
 
@@ -56,7 +55,7 @@ namespace SFW
 			void AddPass(RenderPassDesc<RTV>& desc) {
 				std::unique_lock lock(*renderService.queueMutex);
 
-				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(current, sharedInstanceArena.get(), desc.maxInstancesPerFrame));
+				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(renderService.produceSlot, sharedInstanceArena.get(), desc.maxInstancesPerFrame));
 				renderService.queueIndex[desc.name] = renderService.renderQueues.size() - 1; // レンダーサービスにキューを登録
 
 				passes.push_back(std::make_unique<PassType>(
@@ -99,7 +98,7 @@ namespace SFW
 			 */
 			void Execute() {
 				//フレームのインクリメントとリソースの破棄処理
-				backend.ProcessDeferredDeletes(++renderService.currentFrame);
+				backend.ProcessDeferredDeletes(++currentFrame);
 
 #ifdef _ENABLE_IMGUI
 				{
@@ -111,7 +110,7 @@ namespace SFW
 				} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif // _ENABLE_IMGUI
 
-				int prevSlot = current.exchange((current.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT, std::memory_order_acq_rel);
+				uint16_t prevSlot = consumeSlot.exchange((consumeSlot.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT, std::memory_order_acq_rel);
 
 				backend.BeginFrameUpload(sharedInstanceArena->Data(prevSlot), sharedInstanceArena->Size(prevSlot));
 				sharedInstanceArena->ResetSlot(prevSlot);
@@ -134,7 +133,7 @@ namespace SFW
 #ifndef NO_USE_PMR_RENDER_QUEUE
 					// 常駐アリーナ＆cmdsを取得（再構築しない）
 					PassRuntime* rt = getRuntime(pass->name);
-					const uint32_t flight = renderService.currentFrame % kFlights;
+					const uint32_t flight = currentFrame % kFlights;
 					auto& pf = rt->perFlight[flight];
 					pf.release();              // メモリは解放せず、ポインタだけ巻き戻す
 					auto& cmds = pf.cmds;      // 容量は保持。clear()のみ
@@ -159,12 +158,12 @@ namespace SFW
 
 					backend.ExecuteDrawIndexedInstanced(cmds, !useRasterizer); // インスタンシング対応
 
-					if (pass->customExecute) pass->customExecute(renderService.currentFrame);
+					if (pass->customExecute) pass->customExecute(currentFrame);
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 					// 使用量からヒント更新 & 必要時のみ拡張
 					auto round_up = [](size_t x, size_t a) { return (x + (a - 1)) & ~(a - 1); };
-					size_t used = rt->perFlight[renderService.currentFrame % kFlights].tracker.used;
+					size_t used = rt->perFlight[currentFrame % kFlights].tracker.used;
 					size_t next = round_up(static_cast<size_t>(used * 5 / 4), 64 * 1024); // 1.25x
 					constexpr size_t kMin = 128 * 1024, kMax = 32ull * 1024 * 1024;
 					next = (std::min)((std::max)(next, kMin), kMax);
@@ -172,7 +171,7 @@ namespace SFW
 					if (prev == 0 || next >= prev / 2) rt->hint = next; else rt->hint = prev / 2;
 
 					// ヒントが現在の初期バッファより大きくなったら“まれに”拡張
-					const uint32_t f0 = (renderService.currentFrame % kFlights);
+					const uint32_t f0 = (currentFrame % kFlights);
 					if (rt->needs_grow()) {
 						for (uint32_t i = 0; i < kFlights; ++i) {
 							rt->perFlight[i].maybe_grow(rt->hint);
@@ -199,10 +198,11 @@ namespace SFW
 
 		private:
 			Backend& backend;
-			std::atomic<int> current; // 現在のフレームインデックス
+			std::atomic<uint16_t> consumeSlot{ 1 }; // produceの方のスロットが0 + 1から始まるのでため1スタート
 			std::unique_ptr<SharedInstanceArena> sharedInstanceArena; // フレーム共有インスタンスアリーナ
 			std::vector<std::unique_ptr<PassType>> passes;
 			RenderService renderService; // レンダーサービスのインスタンス
+			uint64_t currentFrame = 0; // 現在のフレーム番号 RenderGraphの描画前に更新している
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 			struct PassRuntime {

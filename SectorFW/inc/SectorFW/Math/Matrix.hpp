@@ -70,14 +70,6 @@ namespace SFW {
             }
         };
 
-        // 3x4 ワールド行列の SoA（行優先 3x4: [r00 r01 r02 tx; r10 r11 r12 ty; r20 r21 r22 tz]）
-        struct MatrixSoA {
-            float* m00 = nullptr; float* m01 = nullptr; float* m02 = nullptr; float* tx = nullptr;
-            float* m10 = nullptr; float* m11 = nullptr; float* m12 = nullptr; float* ty = nullptr;
-            float* m20 = nullptr; float* m21 = nullptr; float* m22 = nullptr; float* tz = nullptr;
-            std::size_t count = 0;
-        };
-
         // 型エイリアス
         using Matrix4x4f = Matrix<4, 4, float>;
         using Matrix4x4d = Matrix<4, 4, double>;
@@ -497,6 +489,157 @@ namespace SFW {
                     _mm_storeu_ps(&C[i].m[r][0], v);
                 }
             }
+        }
+
+        // 3x4 ワールド行列の SoA（行優先 3x4: [r00 r01 r02 tx; r10 r11 r12 ty; r20 r21 r22 tz]）
+        struct Matrix3x4fSoA {
+            float* m00 = nullptr; float* m01 = nullptr; float* m02 = nullptr; float* tx = nullptr;
+            float* m10 = nullptr; float* m11 = nullptr; float* m12 = nullptr; float* ty = nullptr;
+            float* m20 = nullptr; float* m21 = nullptr; float* m22 = nullptr; float* tz = nullptr;
+            std::size_t count = 0;
+
+            Matrix3x4fSoA() = default;
+
+            Matrix3x4fSoA(float* buf, size_t size) noexcept {
+                m00 = buf + 0  * size;
+				m01 = buf + 1  * size;
+				m02 = buf + 2  * size;
+				tx  = buf + 3  * size;
+				m10 = buf + 4  * size;
+				m11 = buf + 5  * size;
+				m12 = buf + 6  * size;
+				ty  = buf + 7  * size;
+				m20 = buf + 8  * size;
+				m21 = buf + 9  * size;
+				m22 = buf + 10 * size;
+				tz  = buf + 11 * size;
+				count = size;
+            }
+
+            Matrix3x4f AoS(size_t index) const noexcept {
+                Matrix3x4f mat{};
+                mat[0][0] = m00[index]; mat[0][1] = m01[index]; mat[0][2] = m02[index]; mat[0][3] = tx[index];
+                mat[1][0] = m10[index]; mat[1][1] = m11[index]; mat[1][2] = m12[index]; mat[1][3] = ty[index];
+                mat[2][0] = m20[index]; mat[2][1] = m21[index]; mat[2][2] = m22[index]; mat[2][3] = tz[index];
+                return mat;
+            }
+        };
+
+        //----------------------------------------------
+        // SSE: 同一 VP × SoA World(3x4) → C(4x4)
+        //----------------------------------------------
+        static inline void Mul4x4x3x4_Batch_To4x4_SSE_RowCombine_SoA(
+            const Matrix4x4f& VP,
+            const Matrix3x4fSoA& W,           // SoA
+            Matrix4x4f* __restrict C      // N 個の出力(4x4)
+        ) noexcept
+        {
+            const std::size_t N = W.count;
+
+            // 末行 [0,0,0,1]
+            const __m128 b3_row = _mm_set_ps(1.f, 0.f, 0.f, 0.f);
+
+            // VP の各行の係数をブロードキャスト
+            __m128 a0[4], a1[4], a2[4], a3[4];
+            for (int r = 0; r < 4; ++r) {
+                a0[r] = _mm_set1_ps(VP.m[r][0]);
+                a1[r] = _mm_set1_ps(VP.m[r][1]);
+                a2[r] = _mm_set1_ps(VP.m[r][2]);
+                a3[r] = _mm_set1_ps(VP.m[r][3]);
+            }
+
+            for (std::size_t i = 0; i < N; ++i) {
+                // SoA から行ベクトルを組み立て（[x,y,z,w] の順で _mm_set_ps(w,z,y,x)）
+                const __m128 b0 = _mm_set_ps(W.tx[i], W.m02[i], W.m01[i], W.m00[i]); // [m00 m01 m02 tx]
+                const __m128 b1 = _mm_set_ps(W.ty[i], W.m12[i], W.m11[i], W.m10[i]); // [m10 m11 m12 ty]
+                const __m128 b2 = _mm_set_ps(W.tz[i], W.m22[i], W.m21[i], W.m20[i]); // [m20 m21 m22 tz]
+
+                for (int r = 0; r < 4; ++r) {
+                    __m128 v = _mm_mul_ps(a0[r], b0);
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                    v = _mm_fmadd_ps(a1[r], b1, v);
+                    v = _mm_fmadd_ps(a2[r], b2, v);
+                    v = _mm_fmadd_ps(a3[r], b3_row, v);
+#else
+                    v = _mm_add_ps(v, _mm_mul_ps(a1[r], b1));
+                    v = _mm_add_ps(v, _mm_mul_ps(a2[r], b2));
+                    v = _mm_add_ps(v, _mm_mul_ps(a3[r], b3_row));
+#endif
+                    _mm_storeu_ps(C[i].m[r], v);
+                }
+            }
+        }
+
+        //----------------------------------------------
+        // AVX2/FMA: 同一 VP × SoA World(3x4) → C(4x4)
+        // 2体ずつ処理（端数1体は SSE へ）
+        //----------------------------------------------
+        static inline void Mul4x4x3x4_Batch_To4x4_AVX2_RowCombine_SoA(
+            const Matrix4x4f& VP,
+            const Matrix3x4fSoA& W,             // SoA
+            Matrix4x4f* __restrict C
+        ) noexcept
+        {
+#if !defined(__AVX2__) && !(defined(_MSC_VER) && defined(__AVX2__))
+            // 環境が AVX2 でなければ SSE 版にフォールバック
+            Mul4x4x3x4_Batch_To4x4_SSE_RowCombine_SoA(VP, W, C);
+            return;
+#else
+            const std::size_t N = W.count;
+
+            // 2体分の末行 [0,0,0,1] を 256bit にパック（下位= i, 上位= i+1）
+            const __m256 b3_row = _mm256_set_ps(1.f, 0.f, 0.f, 0.f,
+                1.f, 0.f, 0.f, 0.f);
+
+            // VP の各行の係数を __m256（全レーン同値）で保持
+            __m256 a0[4], a1[4], a2[4], a3[4];
+            for (int r = 0; r < 4; ++r) {
+                a0[r] = _mm256_set1_ps(VP.m[r][0]);
+                a1[r] = _mm256_set1_ps(VP.m[r][1]);
+                a2[r] = _mm256_set1_ps(VP.m[r][2]);
+                a3[r] = _mm256_set1_ps(VP.m[r][3]);
+            }
+
+            std::size_t i = 0;
+            for (; i + 1 < N; i += 2) {
+                // SoA から 2体分の行を 128bit×2 に組み立ててから 256bit へ
+                const __m128 b0_lo = _mm_set_ps(W.tx[i + 0], W.m02[i + 0], W.m01[i + 0], W.m00[i + 0]);
+                const __m128 b0_hi = _mm_set_ps(W.tx[i + 1], W.m02[i + 1], W.m01[i + 1], W.m00[i + 1]);
+
+                const __m128 b1_lo = _mm_set_ps(W.ty[i + 0], W.m12[i + 0], W.m11[i + 0], W.m10[i + 0]);
+                const __m128 b1_hi = _mm_set_ps(W.ty[i + 1], W.m12[i + 1], W.m11[i + 1], W.m10[i + 1]);
+
+                const __m128 b2_lo = _mm_set_ps(W.tz[i + 0], W.m22[i + 0], W.m21[i + 0], W.m20[i + 0]);
+                const __m128 b2_hi = _mm_set_ps(W.tz[i + 1], W.m22[i + 1], W.m21[i + 1], W.m20[i + 1]);
+
+                const __m256 b0 = _mm256_set_m128(b0_hi, b0_lo);
+                const __m256 b1 = _mm256_set_m128(b1_hi, b1_lo);
+                const __m256 b2 = _mm256_set_m128(b2_hi, b2_lo);
+
+                for (int r = 0; r < 4; ++r) {
+                    __m256 v = _mm256_mul_ps(a0[r], b0);
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                    v = _mm256_fmadd_ps(a1[r], b1, v);
+                    v = _mm256_fmadd_ps(a2[r], b2, v);
+                    v = _mm256_fmadd_ps(a3[r], b3_row, v);
+#else
+                    v = _mm256_add_ps(v, _mm256_mul_ps(a1[r], b1));
+                    v = _mm256_add_ps(v, _mm256_mul_ps(a2[r], b2));
+                    v = _mm256_add_ps(v, _mm256_mul_ps(a3[r], b3_row));
+#endif
+                    _mm_storeu_ps(C[i + 0].m[r], _mm256_castps256_ps128(v));
+                    _mm_storeu_ps(C[i + 1].m[r], _mm256_extractf128_ps(v, 1));
+                }
+            }
+
+            // 端数1体
+            if (i < N) {
+                Matrix3x4fSoA tail = W;
+                tail.count = 1;
+                // 各ポインタはそのまま i オフセットで参照されるので、SSE 版にそのまま渡せる
+                Mul4x4x3x4_Batch_To4x4_SSE_RowCombine_SoA(VP, tail, C + i);
+            }
+#endif
         }
 
 
@@ -1848,27 +1991,27 @@ namespace SFW {
         }
 
         //==============================
-        // 実装：TransformSoA → WorldMatrixSoA
+        // TransformSoA → WorldMatrixSoA
         //==============================
         // normalizeQ = true なら軽量正規化（rsqrt）を入れる
         inline void BuildWorldMatrixSoA_FromTransformSoA(
-            const MTransformSoA& in, std::size_t count, const MatrixSoA& out, bool normalizeQ = true) noexcept
+            const MTransformSoA& in, Matrix3x4fSoA& M, bool normalizeQ = true) noexcept
         {
-            if (count == 0) return;
+            if (M.count == 0) return;
 
             // 必須入力チェック（px/py/pz + qx/qy/qz/qw は必須）
             if (!in.px || !in.py || !in.pz || !in.qx || !in.qy || !in.qz || !in.qw) return;
             // 出力チェック
-            if (!out.m00 || !out.m01 || !out.m02 || !out.tx ||
-                !out.m10 || !out.m11 || !out.m12 || !out.ty ||
-                !out.m20 || !out.m21 || !out.m22 || !out.tz) return;
+            if (!M.m00 || !M.m01 || !M.m02 || !M.tx ||
+                !M.m10 || !M.m11 || !M.m12 || !M.ty ||
+                !M.m20 || !M.m21 || !M.m22 || !M.tz) return;
 
 #if defined(__AVX2__) || (defined(_MSC_VER) && defined(__AVX2__))
             const __m256 one = _mm256_set1_ps(1.0f);
             const __m256 two = _mm256_set1_ps(2.0f);
 
             std::size_t i = 0;
-            for (; i + 7 < count; i += 8) {
+            for (; i + 7 < M.count; i += 8) {
                 // 8体ロード
                 __m256 X = _mm256_loadu_ps(in.qx + i);
                 __m256 Y = _mm256_loadu_ps(in.qy + i);
@@ -1938,12 +2081,12 @@ namespace SFW {
                 __m256 TZ = _mm256_loadu_ps(in.pz + i);
 
                 // SoA なのでそのままベクトルストア
-                _mm256_storeu_ps(out.m00 + i, r00); _mm256_storeu_ps(out.m01 + i, r01); _mm256_storeu_ps(out.m02 + i, r02); _mm256_storeu_ps(out.tx + i, TX);
-                _mm256_storeu_ps(out.m10 + i, r10); _mm256_storeu_ps(out.m11 + i, r11); _mm256_storeu_ps(out.m12 + i, r12); _mm256_storeu_ps(out.ty + i, TY);
-                _mm256_storeu_ps(out.m20 + i, r20); _mm256_storeu_ps(out.m21 + i, r21); _mm256_storeu_ps(out.m22 + i, r22); _mm256_storeu_ps(out.tz + i, TZ);
+                _mm256_storeu_ps(M.m00 + i, r00); _mm256_storeu_ps(M.m01 + i, r01); _mm256_storeu_ps(M.m02 + i, r02); _mm256_storeu_ps(M.tx + i, TX);
+                _mm256_storeu_ps(M.m10 + i, r10); _mm256_storeu_ps(M.m11 + i, r11); _mm256_storeu_ps(M.m12 + i, r12); _mm256_storeu_ps(M.ty + i, TY);
+                _mm256_storeu_ps(M.m20 + i, r20); _mm256_storeu_ps(M.m21 + i, r21); _mm256_storeu_ps(M.m22 + i, r22); _mm256_storeu_ps(M.tz + i, TZ);
             }
             // テイル（スカラ）
-            for (; i < count; ++i) {
+            for (; i < M.count; ++i) {
                 float X = in.qx[i], Y = in.qy[i], Z = in.qz[i], W = in.qw[i];
                 if (normalizeQ) {
                     float n2 = X * X + Y * Y + Z * Z + W * W; float rinv = 1.0f / std::sqrt(n2);
@@ -1961,9 +2104,9 @@ namespace SFW {
                 float r10 = 2 * (xy + wz), r11 = 1 - 2 * (xx + zz), r12 = 2 * (yz - wx);
                 float r20 = 2 * (xz - wy), r21 = 2 * (yz + wx), r22 = 1 - 2 * (xx + yy);
 
-                out.m00[i] = r00 * sx; out.m01[i] = r01 * sy; out.m02[i] = r02 * sz; out.tx[i] = in.px[i];
-                out.m10[i] = r10 * sx; out.m11[i] = r11 * sy; out.m12[i] = r12 * sz; out.ty[i] = in.py[i];
-                out.m20[i] = r20 * sx; out.m21[i] = r21 * sy; out.m22[i] = r22 * sz; out.tz[i] = in.pz[i];
+                M.m00[i] = r00 * sx; M.m01[i] = r01 * sy; M.m02[i] = r02 * sz; M.tx[i] = in.px[i];
+                M.m10[i] = r10 * sx; M.m11[i] = r11 * sy; M.m12[i] = r12 * sz; M.ty[i] = in.py[i];
+                M.m20[i] = r20 * sx; M.m21[i] = r21 * sy; M.m22[i] = r22 * sz; M.tz[i] = in.pz[i];
             }
 #else
             // AVX2 なし：スカラのみ

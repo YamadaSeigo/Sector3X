@@ -34,6 +34,13 @@ namespace SFW
 			bool     valid = true;          // 近クリップ全面裏などなら false
 		};
 
+		struct MocTriBatch {
+			const float* clipVertices = nullptr; // (x, y, z, w) 配列
+			const uint32_t* indices = nullptr;   // インデックス配列
+			uint32_t      numTriangles = 0;
+			bool          valid = true;          // 近クリップ全面裏などなら false
+		};
+
 		/**
 		 * @brief Systemが依存するレンダーサービスを管理するクラス
 		 * @detail MOCのインスタンスを管理する
@@ -60,6 +67,8 @@ namespace SFW
 			void Update(double deltaTime) override final
 			{
 				moc->ClearBuffer();
+
+				produceSlot.exchange((produceSlot.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT, std::memory_order_acq_rel);
 			}
 			/**
 			 * @brief RenderQueueのProducerSessionを取得する関数
@@ -77,19 +86,7 @@ namespace SFW
 
 				return renderQueues[it->second]->MakeProducer();
 			}
-			/**
-			 * @brief RenderQueueのProducerSessionを取得する関数
-			 * @param index インデックス
-			 * @return RenderQueue::ProducerSession レンダークエリのプロデューサーセッション
-			 */
-			RenderQueue::ProducerSession GetProducerSession(size_t index)
-			{
-				std::shared_lock lock(*queueMutex);
-				if (index >= renderQueues.size()) {
-					assert(false && "RenderQueue index out of range");
-				}
-				return renderQueues[index]->MakeProducer();
-			}
+
 			/**
 			 * @brief 指定した型のResouceManagerを取得する関数
 			 * @return ResourceType* 指定した型のResouceManagerのポインタ(見つからない場合はnullptr)
@@ -122,13 +119,6 @@ namespace SFW
 			{
 				if (!quad.valid) return;
 
-				// 可能なら Vec4f は standard-layout 前提
-				MaskedOcclusionCulling::VertexLayout layout(
-					/*stride=*/sizeof(SFW::Math::Vec4f),
-					/*offsetY=*/offsetof(SFW::Math::Vec4f, y),
-					/*offsetW=*/offsetof(SFW::Math::Vec4f, w)
-				);
-
 				struct Clip4 { float x, y, z, w; };
 				Clip4 tmp[4];
 				for (int i = 0; i < 4; ++i)
@@ -139,7 +129,23 @@ namespace SFW
 					(unsigned*)&quad.indices[0],
 					quad.numTriangles,
 					nullptr,
-					MOC::BACKFACE_NONE
+					MOC::BACKFACE_CCW
+				);
+			}
+			/**
+			 * @brief MOCにオクルーダーを提出する関数
+			 * @param tri オクルーダーの三角形情報
+			 */
+			void RenderingOccluderInMOC(MocTriBatch& tri)
+			{
+				if (!tri.valid) return;
+
+				moc->RenderTriangles(
+					tri.clipVertices,
+					tri.indices,
+					tri.numTriangles,
+					nullptr,
+					MOC::BACKFACE_CCW
 				);
 			}
 			/**
@@ -160,6 +166,8 @@ namespace SFW
 
 				moc->ComputePixelDepthBuffer(buffer.data(), false);
 			}
+
+			int GetProduceSlot() const noexcept { return produceSlot.load(std::memory_order_acquire); }
 		private:
 			template<typename ResourceType>
 			void RegisterResourceManager(ResourceType* manager)
@@ -180,9 +188,10 @@ namespace SFW
 			std::vector<std::unique_ptr<RenderQueue>> renderQueues; // 全てのレンダークエリを保持する
 			std::unique_ptr<std::shared_mutex> queueMutex;
 			std::unordered_map<std::type_index, void*> resourceManagers;
-			uint64_t currentFrame = 0; // 現在のフレーム番号
 
 			MOC* moc = nullptr; // Masked Occlusion Culling のインスタンス
+
+			std::atomic<uint16_t> produceSlot{ 0 };
 		public:
 			STATIC_SERVICE_TAG
 		};
@@ -235,8 +244,8 @@ namespace SFW
 			}
 
 			// 4) インデックス（CCW）
-			out.indices[0] = 0; out.indices[1] = 1; out.indices[2] = 2;
-			out.indices[3] = 2; out.indices[4] = 3; out.indices[5] = 0;
+			out.indices[0] = 0; out.indices[1] = 2; out.indices[2] = 1;
+			out.indices[3] = 2; out.indices[4] = 0; out.indices[5] = 3;
 
 			return out;
 		}

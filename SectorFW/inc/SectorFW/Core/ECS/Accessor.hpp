@@ -139,6 +139,13 @@ namespace SFW
 					"Get<AccessType>: AccessType must be one of the AccessTypes... used in this system.");
 				return std::nullopt;
 			}
+			/**
+			 * @brief チャンクの容量を取得する関数
+			 * @return size_t チャンクの容量
+			 */
+			size_t GetCapacity() const noexcept {
+				return chunk->GetCapacity();
+			}
 		private:
 			/**
 			 * @brief SoAコンポーネントのメンバーの開始ポインタを取得する関数の実装

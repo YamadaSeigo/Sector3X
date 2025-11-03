@@ -117,7 +117,8 @@ namespace SFW {
 
         // AVX2 path (2 quads at a time). If AVX2/row-major is unavailable, this will internally fall back to the SIMD/scalar path.
         int SelectOccluderQuads_AVX2(
-            const std::vector<Math::AABB3f>& aabbs,
+            const Math::AABB3f* aabbs,
+			const size_t aabbCount,
             const Math::Vec3f& camPos,
             const Math::Matrix4x4f& VP,
             const Viewport& vp,

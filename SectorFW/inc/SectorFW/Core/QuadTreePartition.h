@@ -182,10 +182,11 @@ namespace SFW
 					const Math::Vec2f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
 					const Math::Vec2f e = (n.bounds.ub - n.bounds.lb) * 0.5f;
 					const float d2 = 10.0f;//this->Dist2PointAABB3D(camPos, c, e);
-					items.push_back({ const_cast<SpatialChunk*>(&n.chunk), d2 });
+					if (n.chunk.GetEntityManager().GetEntityCount() > 0)
+						items.push_back({ const_cast<SpatialChunk*>(&n.chunk), d2 });
 					return;
 				}
-				for (int i = 0; i < 8; ++i) if (n.child[i]) rec(*n.child[i]);
+				for (int i = 0; i < 4; ++i) if (n.child[i]) rec(*n.child[i]);
 				};
 			rec(*m_root);
 
@@ -236,8 +237,27 @@ namespace SFW
 
 			cullRecursive(*m_root, fr, cp.y - hy, cp.y + hy, boxes);
 
-			const float maxLength = m_minLeaf * displayCount;
-			if (maxLength <= 0.f) return 0;
+			struct Item { AABB box; float dist; };
+			std::vector<Item> items; items.reserve(boxes.size());
+			auto clampToBox = [](const AABB& b, const Math::Vec3f& p) {
+				return Math::Vec2f{
+					std::clamp(p.x, b.lb.x, b.ub.x),
+					std::clamp(p.z, b.lb.y, b.ub.y)
+				};
+				};
+			for (const auto& b : boxes) {
+				const Math::Vec2f q = clampToBox(b, cp);
+				Math::Vec2f vec{ q.x - cp.x, q.y - cp.z };
+				const float d = vec.length();
+				items.push_back({ b, d });
+			}
+			std::nth_element(items.begin(), items.begin() + std::min<size_t>(displayCount, items.size()), items.end(),
+				[](const Item& a, const Item& b) { return a.dist < b.dist; });
+			const size_t useN = std::min<size_t>(displayCount, items.size());
+
+			// 3) 色は距離グラデ（近=白→遠=黒）
+			float maxD = 0.f; for (size_t i = 0; i < useN; ++i) maxD = (std::max)(maxD, items[i].dist);
+			if (maxD <= 1e-6f) maxD = 1.f;
 
 			uint32_t written = 0;
 			for (const auto& box : boxes) {
@@ -247,11 +267,11 @@ namespace SFW
 				const Math::Vec2f vec{ center.x - cp.x, center.y - cp.z };
 				const float len = vec.length();
 
-				if (len > maxLength) continue; // 表示距離外
+				if (len > maxD) continue; // 表示距離外
 
 				if (capacity - written < 8) break; // 必須：容量チェック
 
-				const uint32_t rgba = Math::LerpColor(0xFFFFFFFFu, 0x00000000u, len / maxLength);
+				const uint32_t rgba = Math::LerpColor(0xFFFFFFFFu, 0x00000000u, len / maxD);
 
 				outLine[written + 0] = { Math::Vec3f(center.x - extent.x, cp.y - hy, center.y - extent.y), rgba };
 				outLine[written + 1] = { Math::Vec3f(center.x - extent.x, cp.y + hy, center.y - extent.y), rgba };
@@ -509,26 +529,26 @@ namespace SFW
 		void queryAABB(Node& n, const AABB& q, std::vector<SpatialChunk*>& out)
 		{
 			if (!intersects(n.bounds, q)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 4; ++i) if (n.child[i]) queryAABB(*n.child[i], q, out);
 		}
 		void queryAABB(const Node& n, const AABB& q, std::vector<const SpatialChunk*>& out) const
 		{
 			if (!intersects(n.bounds, q)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 4; ++i) if (n.child[i]) queryAABB(*n.child[i], q, out);
 		}
 
 		void queryCircle(Node& n, const Circle& c, std::vector<SpatialChunk*>& out)
 		{
 			if (!intersects(n.bounds, c)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 4; ++i) if (n.child[i]) queryCircle(*n.child[i], c, out);
 		}
 		void queryCircle(const Node& n, const Circle& c, std::vector<const SpatialChunk*>& out) const
 		{
 			if (!intersects(n.bounds, c)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 4; ++i) if (n.child[i]) queryCircle(*n.child[i], c, out);
 		}
 
@@ -588,7 +608,7 @@ namespace SFW
 			std::vector<SpatialChunk*>& out)
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 4; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, out);
 		}
 
@@ -596,7 +616,7 @@ namespace SFW
 			std::vector<const SpatialChunk*>& out) const
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 4; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, out);
 		}
 
@@ -604,7 +624,7 @@ namespace SFW
 		void cullRecursive(Node& n, const Math::Frustumf& fr, float ymin, float ymax, F&& f)
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { f(n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) f(n.chunk); return; }
 			for (int i = 0; i < 4; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, f);
 		}
 
@@ -612,7 +632,7 @@ namespace SFW
 		void cullRecursive(const Node& n, const Math::Frustumf& fr, float ymin, float ymax, F&& f) const
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { f(n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) f(n.chunk); return; }
 			for (int i = 0; i < 4; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, f);
 		}
 
@@ -620,7 +640,7 @@ namespace SFW
 			std::vector<AABB>& out) const
 		{
 			if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
-			if (n.isLeaf()) { out.push_back(n.bounds); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(n.bounds); return; }
 			for (int i = 0; i < 4; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, out);
 		}
 

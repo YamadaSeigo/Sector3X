@@ -139,8 +139,6 @@ namespace SFW
 				context->Map(m_instanceSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
 				memcpy(m.pData, framePool, instCount * sizeof(decltype(*framePool)));
 				context->Unmap(m_instanceSB.Get(), 0);
-
-				context->VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); // t0 バインド
 			}
 			/**
 			 * @brief インスタンスドローを実行する関数の実装
@@ -191,7 +189,8 @@ namespace SFW
 
 				EndIndexStream();
 
-				context->VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); // b1
+				context->VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); // InstanceData (t0)
+				context->VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); // (b1)
 				for (const auto& b : batches) {
 					// PerDraw CB に base と count を設定
 					struct { uint32_t base, count, pad0, pad1; }

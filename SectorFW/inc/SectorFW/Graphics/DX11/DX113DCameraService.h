@@ -42,13 +42,12 @@ namespace SFW
 					 * @param deltaTime 前のフレームからの経過時間（秒）
 					 */
 					void Update(double deltaTime) override {
+
+						++frameIdx;
+
 						if (!isUpdateBuffer) return;
 
-						DX11BufferUpdateDesc cbUpdateDesc;
-						{
-							auto data = bufferManager->Get(cameraBufferHandle);
-							cbUpdateDesc.buffer = data.ref().buffer;
-						}
+						currentSlot = frameIdx % RENDER_BUFFER_COUNT;
 
 						auto deltaMove = moveVec * static_cast<float>(deltaTime);
 						Math::Vec3f r, u, f;
@@ -66,13 +65,20 @@ namespace SFW
 
 						auto view = Math::MakeLookAtMatrixLH(eye, target, u);  // 新しい u を使用
 						auto proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, nearClip, farClip);
-						cameraBuffer.viewProj = proj * view;
 
-						cbUpdateDesc.data = &cameraBuffer;
+						DX11BufferUpdateDesc cbUpdateDesc;
+						{
+							auto data = bufferManager->Get(cameraBufferHandle);
+							cbUpdateDesc.buffer = data.ref().buffer;
+						}
+
+						auto& buffer = cameraBuffer[currentSlot];
+						buffer.viewProj = proj * view; // ビュー投影行列
+						cbUpdateDesc.data = &buffer;
 						cbUpdateDesc.isDelete = false; // 更新時は削除しない
 
 						cbUpdateDesc.size = sizeof(CameraBuffer);
-						bufferManager->UpdateBuffer(cbUpdateDesc);
+						bufferManager->UpdateBuffer(cbUpdateDesc, currentSlot);
 
 						moveVec = Math::Vec3f(0.0f, 0.0f, 0.0f); // 移動ベクトルをリセット
 						isUpdateBuffer = false;
@@ -109,13 +115,9 @@ namespace SFW
 					 * @param deltaTime 前のフレームからの経過時間（秒）
 					 */
 					void Update(double deltaTime) override {
-						if (!isUpdateBuffer) return;
+						++frameIdx;
 
-						DX11BufferUpdateDesc cbUpdateDesc;
-						{
-							auto data = bufferManager->Get(cameraBufferHandle);
-							cbUpdateDesc.buffer = data.ref().buffer;
-						}
+						if (!isUpdateBuffer) return;
 
 						auto deltaMove = moveVec * static_cast<float>(deltaTime);
 
@@ -137,12 +139,20 @@ namespace SFW
 						auto view = Math::MakeLookAtMatrixLH(eye, target, u);
 						auto proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, bottom, top, nearClip, farClip);
 
-						cameraBuffer.viewProj = proj * view; // ビュー投影行列
-						cbUpdateDesc.data = &cameraBuffer;
+						DX11BufferUpdateDesc cbUpdateDesc;
+						{
+							auto data = bufferManager->Get(cameraBufferHandle);
+							cbUpdateDesc.buffer = data.ref().buffer;
+						}
+
+						currentSlot = frameIdx % RENDER_BUFFER_COUNT;
+						auto& buffer = cameraBuffer[currentSlot];
+						buffer.viewProj = proj * view; // ビュー投影行列
+						cbUpdateDesc.data = &buffer;
 						cbUpdateDesc.isDelete = false; // 更新時は削除しない
 
 						cbUpdateDesc.size = sizeof(CameraBuffer);
-						bufferManager->UpdateBuffer(cbUpdateDesc);
+						bufferManager->UpdateBuffer(cbUpdateDesc, currentSlot);
 
 						moveVec = Math::Vec3f(0.0f, 0.0f, 0.0f); // 移動ベクトルをリセット
 						isUpdateBuffer = false;

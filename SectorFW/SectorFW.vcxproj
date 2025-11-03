@@ -50,6 +50,7 @@
     <ClInclude Include="inc\SectorFW\Core\QuadTreePartition.h" />
     <ClInclude Include="inc\SectorFW\Core\RegistryTypes.h" />
     <ClInclude Include="inc\SectorFW\Core\SpatialChunk.h" />
+    <ClInclude Include="inc\SectorFW\Core\ThreadPoolService.h" />
     <ClInclude Include="inc\SectorFW\Core\World.hpp" />
     <ClInclude Include="inc\SectorFW\Debug\DebugType.h" />
     <ClInclude Include="inc\SectorFW\Debug\GPUTimerD3D11.h" />
@@ -66,6 +67,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\convert_directX.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX112DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX113DCameraService.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11BlockRevertHelper.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11BufferManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ClusterPipeline.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11MaterialManager.h" />
@@ -90,6 +92,8 @@
     <ClInclude Include="inc\SectorFW\Graphics\RenderQueue.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderTypes.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\TerrainClustered.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\TerrainOccluderExtraction.h" />
     <ClInclude Include="inc\SectorFW\Graphics\TerrainService.h" />
     <ClInclude Include="inc\SectorFW\Input\InputDevice.hpp" />
     <ClInclude Include="inc\SectorFW\Input\WinInput.h" />
@@ -184,6 +188,7 @@
     <ClCompile Include="src\Graphics\LODPolicy.cpp" />
     <ClCompile Include="src\Graphics\OccluderToolkit.cpp" />
     <ClCompile Include="src\Graphics\RenderQueue.cpp" />
+    <ClCompile Include="src\Graphics\TerrainClustered.cpp" />
     <ClCompile Include="src\Graphics\TerrainService.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />
     <ClCompile Include="src\Physics\PhysicsDevice.cpp" />

@@ -94,7 +94,7 @@ namespace SFW
 
 		void DX11Backend::ProcessDeferredDeletesImpl(uint64_t currentFrame)
 		{
-			cbManager->PendingUpdates();
+			cbManager->PendingUpdates(currentFrame);
 			textureManager->PendingUpdates();
 
 			materialManager->ProcessDeferredDeletes(currentFrame);

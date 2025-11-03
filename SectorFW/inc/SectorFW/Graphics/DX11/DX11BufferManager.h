@@ -88,8 +88,10 @@ namespace SFW
 			 * @brief デストラクタ
 			 */
 			~DX11BufferManager() {
-				for (auto& update : pendingUpdates) {
-					if (update.data && update.isDelete) delete update.data;
+				for (auto& pendings : pendingUpdates) {
+					for (auto& update : pendings) {
+						if (update.data && update.isDelete) delete update.data;
+					}
 				}
 			}
 			/**
@@ -200,21 +202,22 @@ namespace SFW
 			 * @brief バッファの内容を遅延で更新するためにキューに追加
 			 * @param desc バッファ作成記述子
 			 */
-			void UpdateBuffer(const DX11BufferUpdateDesc& desc) {
-				std::lock_guard<std::mutex> lock(updateMutex);
-				pendingUpdates.push_back(desc);
+			void UpdateBuffer(const DX11BufferUpdateDesc& desc, uint16_t slot) {
+				pendingUpdates[slot].push_back(desc);
 			}
 			/**
 			 * @brief 保留中のバッファ更新を処理
 			 */
-			void PendingUpdates() {
-				if (!pendingUpdates.empty()) {
-					std::lock_guard<std::mutex> lock(updateMutex);
+			void PendingUpdates(size_t frameIndex) {
+				uint16_t slot = frameIndex % RENDER_BUFFER_COUNT;
+				auto& pendings = pendingUpdates[slot];
 
-					auto it = std::unique(pendingUpdates.begin(), pendingUpdates.end());
-					pendingUpdates.erase(it, pendingUpdates.end());
+				if (!pendings.empty()) {
 
-					for (const auto& update : pendingUpdates) {
+					auto it = std::unique(pendings.begin(), pendings.end());
+					pendings.erase(it, pendings.end());
+
+					for (const auto& update : pendings) {
 						D3D11_MAPPED_SUBRESOURCE mapped;
 						HRESULT hr = context->Map(update.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 						if (SUCCEEDED(hr)) [[likely]] {
@@ -227,7 +230,7 @@ namespace SFW
 						if (update.data && update.isDelete) delete update.data;
 					}
 
-					pendingUpdates.clear();
+					pendings.clear();
 				}
 			}
 
@@ -258,8 +261,7 @@ namespace SFW
 
 			std::unordered_map<uint32_t, DX11BufferCacheKey> handleToCacheKey; // key: handle.index
 
-			std::mutex updateMutex; // 更新用のミューテックス
-			std::vector<DX11BufferUpdateDesc> pendingUpdates; // 更新待ちのデータ
+			std::vector<DX11BufferUpdateDesc> pendingUpdates[RENDER_BUFFER_COUNT]; // 更新待ちのデータ
 		};
 	}
 }

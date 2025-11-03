@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   RenderQueue.h
- * @brief ƒŒƒ“ƒ_ƒŠƒ“ƒOƒRƒ}ƒ“ƒhƒLƒ…[‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -29,22 +29,22 @@ namespace SFW
 	namespace Graphics
 	{
 		/**
-		 * @brief ƒtƒŒ[ƒ€“–‚½‚è‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”
+		 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°
 		 */
-		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = 65536;
+		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = 98304;
 		/**
-		 * @brief ƒpƒX“–‚½‚è‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒXƒCƒ“ƒfƒbƒNƒX”
+		 * @brief ãƒ‘ã‚¹å½“ãŸã‚Šã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°
 		 */
 		static inline constexpr uint32_t MAX_INSTANCE_INDICES_PER_PASS = 1024 * 1024;
 
 		//========================================================================
 		/**
-		 * @brief •`‰æƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚©‚çæ‚èo‚·Û‚Ìƒoƒbƒ`ƒTƒCƒY
+		 * @brief æç”»ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã‹ã‚‰å–ã‚Šå‡ºã™éš›ã®ãƒãƒƒãƒã‚µã‚¤ã‚º
 		 */
 		static inline constexpr size_t DRAWCOMMAND_TMPBUF_SIZE = 4096 * 4;
 		//========================================================================
 
-		// RenderQueue ‚Æ‚Í“Æ—§‚µ‚½gƒtƒŒ[ƒ€‹¤—LhƒAƒŠ[ƒi
+		// RenderQueue ã¨ã¯ç‹¬ç«‹ã—ãŸâ€œãƒ•ãƒ¬ãƒ¼ãƒ å…±æœ‰â€ã‚¢ãƒªãƒ¼ãƒŠ
 		struct SharedInstanceArena {
 			struct alignas(16) InstancePool {
 				SFW::Math::Matrix<3, 4, float> world;
@@ -60,34 +60,34 @@ namespace SFW
 			};
 
 			SharedInstanceArena() : capacity(MAX_INSTANCES_PER_FRAME) {
-				for (int i = 0; i < RENDER_BUFFER_COUNT; ++i) {
+				for (uint16_t i = 0; i < RENDER_BUFFER_COUNT; ++i) {
 					pools[i] = std::make_unique<InstancePool[]>(capacity);
 					head[i].store(0, std::memory_order_relaxed);
 				}
 			}
 
-			uint32_t capacity; // MAX_INSTANCES_PER_FRAME ‘Š“–
+			uint32_t capacity; // MAX_INSTANCES_PER_FRAME ç›¸å½“
 			std::unique_ptr<InstancePool[]> pools[RENDER_BUFFER_COUNT];
 			std::atomic<uint32_t> head[RENDER_BUFFER_COUNT];
 
-			void ResetSlot(int slot) noexcept { head[slot].store(0, std::memory_order_relaxed); }
+			void ResetSlot(int slot) noexcept { head[slot].store(0, std::memory_order_release); }
 			InstancePool* Data(int slot) noexcept { return pools[slot].get(); }
 			uint32_t      Size(int slot) const noexcept { return head[slot].load(std::memory_order_acquire); }
 		};
 
 
 		/**
-		 * @brief •`‰æƒRƒ}ƒ“ƒh‚Ì”­sBŠÇ—Aƒ\[ƒgAƒoƒbƒ`ƒ“ƒO‚ğs‚¤ƒNƒ‰ƒX
+		 * @brief æç”»ã‚³ãƒãƒ³ãƒ‰ã®ç™ºè¡Œã€‚ç®¡ç†ã€ã‚½ãƒ¼ãƒˆã€ãƒãƒƒãƒãƒ³ã‚°ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹
 		 */
 		class RenderQueue {
 			using InstancePool = SharedInstanceArena::InstancePool;
 
 			/**
-			 * @brief •`‰æƒRƒ}ƒ“ƒh‚Ìƒ\[ƒgƒRƒ“ƒeƒLƒXƒg
+			 * @brief æç”»ã‚³ãƒãƒ³ãƒ‰ã®ã‚½ãƒ¼ãƒˆã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 			 */
 			class SortContext {
 #ifndef NO_USE_PMR_RENDER_QUEUE
-				// PMR —LŒø‚Í DrawCommand ƒRƒ“ƒeƒiŒ^‚ğ pmr::vector ‚ÉØ‘Ö
+				// PMR æœ‰åŠ¹æ™‚ã¯ DrawCommand ã‚³ãƒ³ãƒ†ãƒŠå‹ã‚’ pmr::vector ã«åˆ‡æ›¿
 				using DrawCmdVec = std::pmr::vector<DrawCommand>;
 				using IndexVec = std::pmr::vector<uint32_t>;
 				using KeyVec = std::pmr::vector<uint64_t>;
@@ -119,14 +119,14 @@ namespace SFW
 				{
 				}
 
-				// PMR/’Êí‚Ç‚¿‚ç‚ÌƒxƒNƒ^‚Å‚à“®‚­‚æ‚¤‚Éƒeƒ“ƒvƒŒ[ƒg‰»
+				// PMR/é€šå¸¸ã©ã¡ã‚‰ã®ãƒ™ã‚¯ã‚¿ã§ã‚‚å‹•ãã‚ˆã†ã«ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆåŒ–
 				template<class VecT>
 				void Sort(VecT& cmds) {
 					const size_t N = cmds.size();
 
 					if (N < 500000)
 					{
-						// ---- ŠÔÚƒ\[ƒgFindex ‚¾‚¯‚ğ“®‚©‚µAÅŒã‚ÉˆêŠ‡“K—p ----
+						// ---- é–“æ¥ã‚½ãƒ¼ãƒˆï¼šindex ã ã‘ã‚’å‹•ã‹ã—ã€æœ€å¾Œã«ä¸€æ‹¬é©ç”¨ ----
 						IndirectSortStd(cmds);
 					}
 					/*else if (N < 500000) {
@@ -141,13 +141,13 @@ namespace SFW
 
 			private:
 				DrawCmdVec tempBuffer;
-				IndexVec indexBuf;    // Ä—˜—p
-				KeyVec   keysBuf;     // Ä—˜—pisortKey ‚ğ’Šoj
+				IndexVec indexBuf;    // å†åˆ©ç”¨
+				KeyVec   keysBuf;     // å†åˆ©ç”¨ï¼ˆsortKey ã‚’æŠ½å‡ºï¼‰
 				IndexVec tmpIdxBuf;
-				ByteVec  visited_;    // ApplyPermutation —p g–K–âƒtƒ‰ƒOh ‚ğÄ—˜—p
+				ByteVec  visited_;    // ApplyPermutation ç”¨ â€œè¨ªå•ãƒ•ãƒ©ã‚°â€ ã‚’å†åˆ©ç”¨
 
-				// Radix(MT) —p‚Ì‘åˆæƒ[ƒNithreadCount * BUCKETSj
-				// ¦ƒXƒŒƒbƒh¶¬‚Í˜‚¦’u‚«B‚Ü‚¸‚ÍŠm•Û‰ñ”‚ÌíŒ¸‚ğ—Dæ
+				// Radix(MT) ç”¨ã®å¤§åŸŸãƒ¯ãƒ¼ã‚¯ï¼ˆthreadCount * BUCKETSï¼‰
+				// â€»ã‚¹ãƒ¬ãƒƒãƒ‰ç”Ÿæˆã¯æ®ãˆç½®ãã€‚ã¾ãšã¯ç¢ºä¿å›æ•°ã®å‰Šæ¸›ã‚’å„ªå…ˆ
 				static constexpr int RADIX_BITS = 8;
 				static constexpr int RADIX_BUCKETS = 1 << RADIX_BITS;
 #ifndef NO_USE_PMR_RENDER_QUEUE
@@ -177,7 +177,7 @@ namespace SFW
 					if (offPool.size() < need) offPool.resize(need);
 				}
 
-				// ======iV‹Kj”äŠrƒ\[ƒg—pFŠÔÚƒ\[ƒg + ˆêŠ‡“K—p ======
+				// ======ï¼ˆæ–°è¦ï¼‰æ¯”è¼ƒã‚½ãƒ¼ãƒˆç”¨ï¼šé–“æ¥ã‚½ãƒ¼ãƒˆ + ä¸€æ‹¬é©ç”¨ ======
 				template<class VecT>
 				void IndirectSortStd(VecT& cmds) {
 					const size_t N = cmds.size();
@@ -196,11 +196,11 @@ namespace SFW
 						constexpr int TOP_BITS = 12;
 						constexpr uint32_t B = 1u << TOP_BITS; // 4096
 
-						// ‚±‚±‚ÍuŒÅ’èƒTƒCƒYv‚È‚Ì‚Å thread_local ‚Ì”z—ñ‚ÅŠm•Ûƒ[ƒ‚É
+						// ã“ã“ã¯ã€Œå›ºå®šã‚µã‚¤ã‚ºã€ãªã®ã§ thread_local ã®é…åˆ—ã§ç¢ºä¿ã‚¼ãƒ­ã«
 						thread_local std::array<uint32_t, B> count{};
 						thread_local std::array<uint32_t, B> offset{};
 
-						// ƒNƒŠƒA
+						// ã‚¯ãƒªã‚¢
 						count.fill(0);
 						offset.fill(0);
 
@@ -211,16 +211,16 @@ namespace SFW
 						for (size_t i = 0; i < N; ++i) ++count[bucketId(keysBuf[indexBuf[i]])];
 						for (uint32_t b = 1; b < B; ++b) offset[b] = offset[b - 1] + count[b - 1];
 
-						// © ‚±‚±‚Å pmr ‚Æ“¯Œ^‚Ìˆêƒoƒbƒtƒ@‚ğg—p
+						// â† ã“ã“ã§ pmr ã¨åŒå‹ã®ä¸€æ™‚ãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨
 						auto& tmpIdx = tmpIdxBuf;
 						tmpIdx.resize(N);
 
 						for (size_t i = 0; i < N; ++i)
 							tmpIdx[offset[bucketId(keysBuf[indexBuf[i]])]++] = indexBuf[i];
 
-						indexBuf.swap(tmpIdx); // “¯‚¶ IndexVec “¯m‚È‚Ì‚Å OK
+						indexBuf.swap(tmpIdx); // åŒã˜ IndexVec åŒå£«ãªã®ã§ OK
 
-						// ƒoƒPƒbƒg“à‚ğ keys ‚Å”äŠrƒ\[ƒg
+						// ãƒã‚±ãƒƒãƒˆå†…ã‚’ keys ã§æ¯”è¼ƒã‚½ãƒ¼ãƒˆ
 						uint32_t start = 0;
 						for (uint32_t b = 0; b < B; ++b) {
 							uint32_t len = count[b];
@@ -298,8 +298,8 @@ namespace SFW
 					VecT* in = &cmds;
 					VecT* out = &temp;
 
-					// --- ÄŠm•Ûƒ[ƒ‚Ìƒv[ƒ‹—˜—p ---
-					// histPool/offPool ‚ÍŒÄ‚Ño‚µ‘¤ EnsureScratch ‚É‚æ‚è—e—ÊŠm•ÛÏ‚İ‘z’è
+					// --- å†ç¢ºä¿ã‚¼ãƒ­ã®ãƒ—ãƒ¼ãƒ«åˆ©ç”¨ ---
+					// histPool/offPool ã¯å‘¼ã³å‡ºã—å´ EnsureScratch ã«ã‚ˆã‚Šå®¹é‡ç¢ºä¿æ¸ˆã¿æƒ³å®š
 					auto& histPoolRef = const_cast<SortContext*>(this)->histPool;
 					auto& offPoolRef = const_cast<SortContext*>(this)->offPool;
 
@@ -367,25 +367,25 @@ namespace SFW
 
 		public:
 			/**
-			 * @brief ¶YÒƒZƒbƒVƒ‡ƒ“-ƒ†[ƒU[‚É“n‚·—pithread_local‚ğg‚í‚È‚¢j
+			 * @brief ç”Ÿç”£è€…ã‚»ãƒƒã‚·ãƒ§ãƒ³-ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«æ¸¡ã™ç”¨ï¼ˆthread_localã‚’ä½¿ã‚ãªã„ï¼‰
 			 */
 			class ProducerSession {
 
 			public:
 				/**
-				 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-				 * @param owner ‚±‚ÌƒZƒbƒVƒ‡ƒ“‚ª‘®‚·‚é RenderQueue ‚Ö‚ÌQÆ
+				 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+				 * @param owner ã“ã®ã‚»ãƒƒã‚·ãƒ§ãƒ³ãŒå±ã™ã‚‹ RenderQueue ã¸ã®å‚ç…§
 				 */
 				explicit ProducerSession(RenderQueue& owner) noexcept
 					: rq(&owner) {
 				}
 				/**
-				 * @brief ƒRƒs[‹Ö~
+				 * @brief ã‚³ãƒ”ãƒ¼ç¦æ­¢
 				 */
 				ProducerSession(const ProducerSession&) = delete;
 				ProducerSession& operator=(const ProducerSession&) = delete;
 				/**
-				 * @brief ƒ€[ƒu‚Í‰Â
+				 * @brief ãƒ ãƒ¼ãƒ–ã¯å¯
 				 */
 				ProducerSession(ProducerSession&& other) noexcept
 					: rq(other.rq), boundQueue(other.boundQueue), token(std::move(other.token)), buf(std::move(other.buf)) {
@@ -411,9 +411,9 @@ namespace SFW
 
 				~ProducerSession() { FlushAll(); }
 
-				// ‚Ü‚Æ‚ß—pŒÅ’è’·ƒoƒbƒtƒ@iƒq[ƒv‚È‚µj
+				// ã¾ã¨ã‚ç”¨å›ºå®šé•·ãƒãƒƒãƒ•ã‚¡ï¼ˆãƒ’ãƒ¼ãƒ—ãªã—ï¼‰
 				static constexpr size_t kChunk = 128;
-				struct SmallBuf {
+				struct alignas(32) SmallBuf {
 					DrawCommand data[kChunk];
 					size_t size = 0;
 					void push_back(const DrawCommand& c) noexcept { data[size++] = c; }
@@ -422,8 +422,8 @@ namespace SFW
 					void clear() noexcept { size = 0; }
 				};
 				/**
-				 * @brief DrawCommand ‚ğ 1 Œƒv[ƒ‹‚Ö‘‚«‚İ
-				 * @param cmd ‘‚«‚Ş DrawCommand ƒCƒ“ƒXƒ^ƒ“ƒX
+				 * @brief DrawCommand ã‚’ 1 ä»¶ãƒ—ãƒ¼ãƒ«ã¸æ›¸ãè¾¼ã¿
+				 * @param cmd æ›¸ãè¾¼ã‚€ DrawCommand ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 				 */
 				void Push(const DrawCommand& cmd) {
 					RebindIfNeeded();
@@ -431,8 +431,8 @@ namespace SFW
 					if (buf.full()) flushChunk();
 				}
 				/**
-				 * @brief DrawCommand ‚ğ 1 Œƒv[ƒ‹‚Ö‘‚«‚İiƒ€[ƒu”Åj
-				 * @param cmd ‘‚«‚Ş DrawCommand ƒCƒ“ƒXƒ^ƒ“ƒX
+				 * @brief DrawCommand ã‚’ 1 ä»¶ãƒ—ãƒ¼ãƒ«ã¸æ›¸ãè¾¼ã¿ï¼ˆãƒ ãƒ¼ãƒ–ç‰ˆï¼‰
+				 * @param cmd æ›¸ãè¾¼ã‚€ DrawCommand ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 				 */
 				void Push(DrawCommand&& cmd) {
 					RebindIfNeeded();
@@ -440,97 +440,68 @@ namespace SFW
 					if (buf.full()) flushChunk();
 				}
 				/**
-				 * @brief ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ 1 Œƒv[ƒ‹‚Ö‘‚«‚İAIndex ‚ğ•Ô‚·
+				 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ 1 ä»¶ãƒ—ãƒ¼ãƒ«ã¸æ›¸ãè¾¼ã¿ã€Index ã‚’è¿”ã™
 				 */
 				[[nodiscard]] InstanceIndex AllocInstance(const InstanceData& inst);
 				/**
-				 * @brief ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ 1 Œƒv[ƒ‹‚Ö‘‚«‚İAIndex ‚ğ•Ô‚·iƒ€[ƒu”Åj
+				 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ 1 ä»¶ãƒ—ãƒ¼ãƒ«ã¸æ›¸ãè¾¼ã¿ã€Index ã‚’è¿”ã™ï¼ˆãƒ ãƒ¼ãƒ–ç‰ˆï¼‰
 				 */
 				[[nodiscard]] InstanceIndex AllocInstance(InstanceData&& inst);
 
 				/**
-				 * @brief ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ 1 Œƒv[ƒ‹‚Ö‘‚«‚İAIndex ‚ğ•Ô‚·
+				 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ 1 ä»¶ãƒ—ãƒ¼ãƒ«ã¸æ›¸ãè¾¼ã¿ã€Index ã‚’è¿”ã™
 				 */
 				[[nodiscard]] InstanceIndex AllocInstance(const InstancePool& inst);
 				/**
-				 * @brief ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ 1 Œƒv[ƒ‹‚Ö‘‚«‚İAIndex ‚ğ•Ô‚·iƒ€[ƒu”Åj
+				 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ 1 ä»¶ãƒ—ãƒ¼ãƒ«ã¸æ›¸ãè¾¼ã¿ã€Index ã‚’è¿”ã™ï¼ˆãƒ ãƒ¼ãƒ–ç‰ˆï¼‰
 				 */
 				[[nodiscard]] InstanceIndex AllocInstance(InstancePool&& inst);
+
 				/**
-				 * @brief Ÿ‚ÉŠ„‚è“–‚Ä‚ç‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒXƒCƒ“ƒfƒbƒNƒX
-				 * @detail ÀÛ‚ÉƒtƒŒ[ƒ€“–‚½‚è‚ÌƒCƒ“ƒXƒ^ƒ“ƒX”‚ª‘‚¦‚é
+				* @brief WorldSoA ã‹ã‚‰ã¾ã¨ã‚ã¦ Instance ã‚’ç¢ºä¿ãƒ»æ›¸ãè¾¼ã¿
+				* @param wSoa   3x4 è¡Œåˆ—ã® SoA
+				* @param outIdx null ã§ãªã‘ã‚Œã°ã€ç¢ºä¿ã—ãŸ InstanceIndex ã‚’ count å€‹ã ã‘æ›¸ãå‡ºã™
+				* @return       å®Ÿéš›ã«ç¢ºä¿ãƒ»æ›¸ãè¾¼ã‚“ã ä»¶æ•°ï¼ˆãƒ—ãƒ¼ãƒ«æ®‹é‡ã§å°ã•ããªã‚‹å¯èƒ½æ€§ã‚ã‚Šï¼‰
+				*/
+				size_t AllocInstancesFromWorldSoA(const Math::Matrix3x4fSoA& wSoa, InstanceIndex* outIdx = nullptr);
+				/**
+				 * @brief æ¬¡ã«å‰²ã‚Šå½“ã¦ã‚‰ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				 * @detail å®Ÿéš›ã«ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ãŒå¢—ãˆã‚‹
 				 */
 				[[nodiscard]] InstanceIndex NextInstanceIndex();
 				/**
-				 * @brief@ƒCƒ“ƒXƒ^ƒ“ƒXƒv[ƒ‹‚ğ 1 Œ•ª memset ‚Å–„‚ß‚é
-				 * @param index ‘ÎÛ‚ÌƒCƒ“ƒXƒ^ƒ“ƒXƒCƒ“ƒfƒbƒNƒX
-				 * @param inst –„‚ß‚éƒf[ƒ^
+				 * @briefã€€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ—ãƒ¼ãƒ«ã‚’ 1 ä»¶åˆ† memset ã§åŸ‹ã‚ã‚‹
+				 * @param index å¯¾è±¡ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				 * @param inst åŸ‹ã‚ã‚‹ãƒ‡ãƒ¼ã‚¿
 				 */
 				void MemsetInstancePool(InstanceIndex index, const InstancePool& inst) noexcept;
 
-				/**
-				 * @brief SoA ‚Å DrawCommand ‚ğˆêŠ‡“Š“ü‚·‚é‚½‚ß‚Ìó‚¯Œû
-				 */
-				struct DrawCommandSOA {
-					const uint32_t* mesh = nullptr;
-					const uint32_t* material = nullptr;
-					const uint32_t* pso = nullptr;
-					const uint32_t* instIx = nullptr;   // È—ª‚Í baseInstance ‚©‚ç˜A”Ô‚Å‚à‰Â
-					const uint64_t* sortKey = nullptr;   // null ‚Ìê‡‚Í PushSOA “à‚Å¶¬
-					size_t count = 0;
-				};
 
 				/**
-				 * @brief SoA ‚©‚ç AoS ‚É‹l‚ß‘Ö‚¦‚ÄƒLƒ…[‚ÖˆêŠ‡“Š“ü
-				 */
-				inline void PushSOA(const DrawCommandSOA& soa) {
-					if (soa.count == 0) return;
-					RebindIfNeeded();
-
-					static_assert(kChunk >= 1, "kChunk must be positive");
-					DrawCommand tmp[kChunk];
-					size_t i = 0;
-					while (i < soa.count) {
-						const size_t n = (std::min)(kChunk, soa.count - i);
-						for (size_t j = 0; j < n; ++j) {
-							const size_t k = i + j;
-							DrawCommand& c = tmp[j];
-							c.mesh = soa.mesh ? soa.mesh[k] : 0u;
-							c.material = soa.material ? soa.material[k] : 0u;
-							c.pso = soa.pso ? soa.pso[k] : 0u;
-							c.instanceIndex = soa.instIx ? soa.instIx[k] : 0u;
-							if (soa.sortKey) c.sortKey = soa.sortKey[k];
-							else             c.sortKey = Graphics::MakeSortKey(c.pso, c.material, c.mesh);
-						}
-						boundQueue->enqueue_bulk(*token, tmp, n);
-						i += n;
-					}
-				}
-				/**
-				 * @brief ‘Sƒoƒbƒtƒ@‚ğƒLƒ…[‚Öƒtƒ‰ƒbƒVƒ…
+				 * @brief å…¨ãƒãƒƒãƒ•ã‚¡ã‚’ã‚­ãƒ¥ãƒ¼ã¸ãƒ•ãƒ©ãƒƒã‚·ãƒ¥
 				 */
 				void FlushAll() {
-					// gŒ»İƒoƒCƒ“ƒh‚³‚ê‚Ä‚¢‚éƒLƒ…[h ‚É“f‚­iƒtƒŒ[ƒ€Ø‘ÖŒã‚Å‚àæ‚è‚±‚Ú‚³‚È‚¢j
+					// â€œç¾åœ¨ãƒã‚¤ãƒ³ãƒ‰ã•ã‚Œã¦ã„ã‚‹ã‚­ãƒ¥ãƒ¼â€ ã«åãï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ åˆ‡æ›¿å¾Œã§ã‚‚å–ã‚Šã“ã¼ã•ãªã„ï¼‰
 					if (boundQueue && token && buf.size) {
-						boundQueue->enqueue_bulk(*token, buf.data, buf.size);
-						buf.clear();
+						flushChunk();
 					}
 				};
 			private:
 				RenderQueue* rq = nullptr;
 				moodycamel::ConcurrentQueue<DrawCommand>* boundQueue = nullptr;
-				std::optional<moodycamel::ProducerToken> token; // ƒCƒ“ƒ‰ƒCƒ“•Ûiƒq[ƒv‚È‚µj
+				std::optional<moodycamel::ProducerToken> token; // ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ä¿æŒï¼ˆãƒ’ãƒ¼ãƒ—ãªã—ï¼‰
 				SmallBuf buf;
 
-				void flushChunk() {
+
+				inline void flushChunk() {
 					boundQueue->enqueue_bulk(*token, buf.data, buf.size);
 					buf.clear();
 				}
 
 				void RebindIfNeeded() {
-					auto* cur = &rq->CurQ(); // Œ»İ‚Ì¶YƒLƒ…[
-					if (boundQueue != cur) [[likely]] {
-						// ‹ŒƒLƒ…[‚Öc‚è‚ğ“f‚«o‚µ‚Ä‚©‚çƒoƒCƒ“ƒhØ‘ÖiˆÀ‘Sj
+					auto* cur = &rq->CurQ(); // ç¾åœ¨ã®ç”Ÿç”£ã‚­ãƒ¥ãƒ¼
+					if (boundQueue != cur) {
+						// æ—§ã‚­ãƒ¥ãƒ¼ã¸æ®‹ã‚Šã‚’åãå‡ºã—ã¦ã‹ã‚‰ãƒã‚¤ãƒ³ãƒ‰åˆ‡æ›¿ï¼ˆå®‰å…¨ï¼‰
 						if (boundQueue && token && buf.size) {
 							boundQueue->enqueue_bulk(*token, buf.data, buf.size);
 							buf.clear();
@@ -544,63 +515,63 @@ namespace SFW
 
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param maxInstancesPerFrame ƒtƒŒ[ƒ€“–‚½‚è‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”i1`MAX_INSTANCES_PER_FRAMEj
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param maxInstancesPerFrame ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ï¼ˆ1ï½MAX_INSTANCES_PER_FRAMEï¼‰
 			 */
-			RenderQueue(const std::atomic<int>& bufSlot, SharedInstanceArena* instanceArena, uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME) :
+			RenderQueue(const std::atomic<uint16_t>& bufSlot, SharedInstanceArena* instanceArena, uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME) :
 				current(bufSlot), sharedInstanceArena(instanceArena), maxInstancesPerFrame(maxInstancesPerFrame){
 				assert(maxInstancesPerFrame > 0 && maxInstancesPerFrame <= MAX_INSTANCES_PER_FRAME);
 
-				for (int i = 0; i < RENDER_BUFFER_COUNT; ++i) {
+				for (uint16_t i = 0; i < RENDER_BUFFER_COUNT; ++i) {
 					queues[i] = std::make_unique<moodycamel::ConcurrentQueue<DrawCommand>>();
 				}
 			}
 
 			/**
-			 * @brief ƒ€[ƒuƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param other ƒ€[ƒuŒ³
+			 * @brief ãƒ ãƒ¼ãƒ–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param other ãƒ ãƒ¼ãƒ–å…ƒ
 			 */
 			RenderQueue(RenderQueue&& other) noexcept
 				: current(other.current), sharedInstanceArena(other.sharedInstanceArena),
 				maxInstancesPerFrame(other.maxInstancesPerFrame), sortContext(std::move(other.sortContext)) {
 				assert(maxInstancesPerFrame > 0 && maxInstancesPerFrame <= MAX_INSTANCES_PER_FRAME);
 
-				for (int i = 0; i < RENDER_BUFFER_COUNT; ++i) {
+				for (uint16_t i = 0; i < RENDER_BUFFER_COUNT; ++i) {
 					queues[i] = std::move(other.queues[i]);
 				}
 			}
 
 			~RenderQueue() {
-				for (auto& t : ctoken) t.reset(); // ConsumerToken –¾¦”jŠü
+				for (auto& t : ctoken) t.reset(); // ConsumerToken æ˜ç¤ºç ´æ£„
 			}
 
 			/**
-			 * @brief ƒ€[ƒu‘ã“ü‰‰Zq
+			 * @brief ãƒ ãƒ¼ãƒ–ä»£å…¥æ¼”ç®—å­
 			 */
 			RenderQueue& operator=(RenderQueue&& other) noexcept {
 				if (this != &other) {
 					sortContext = std::move(other.sortContext);
-					for (int i = 0; i < RENDER_BUFFER_COUNT; ++i)
+					for (uint16_t i = 0; i < RENDER_BUFFER_COUNT; ++i)
 						queues[i] = std::move(other.queues[i]);
 				}
 				return *this;
 			}
 			/**
-			 * @brief Šeƒ[ƒJ[‚ÍƒtƒŒ[ƒ€ / ƒ^ƒXƒNŠJn‚É‚±‚ê‚Å ProducerSession ‚ğæ“¾
-			 * @return ProducerSession ¶YÒƒZƒbƒVƒ‡ƒ“
+			 * @brief å„ãƒ¯ãƒ¼ã‚«ãƒ¼ã¯ãƒ•ãƒ¬ãƒ¼ãƒ  / ã‚¿ã‚¹ã‚¯é–‹å§‹æ™‚ã«ã“ã‚Œã§ ProducerSession ã‚’å–å¾—
+			 * @return ProducerSession ç”Ÿç”£è€…ã‚»ãƒƒã‚·ãƒ§ãƒ³
 			 */
 			ProducerSession MakeProducer() { return ProducerSession{ *this }; }
 			/**
-			 * @brief Submit ‚Íu‘Sƒ[ƒJ[‚ª FlushAll Ï‚İvƒoƒŠƒA‚ÌŒã‚ÉŒÄ‚Ô
-			 * @param out DrawCommand ƒRƒ“ƒeƒiiŒÄ‚Ño‚µ‘¤‚ÅŠm•Û‚µ‚Ä“n‚·j
+			 * @brief Submit ã¯ã€Œå…¨ãƒ¯ãƒ¼ã‚«ãƒ¼ãŒ FlushAll æ¸ˆã¿ã€ãƒãƒªã‚¢ã®å¾Œã«å‘¼ã¶
+			 * @param out DrawCommand ã‚³ãƒ³ãƒ†ãƒŠï¼ˆå‘¼ã³å‡ºã—å´ã§ç¢ºä¿ã—ã¦æ¸¡ã™ï¼‰
 			 */
 			void Submit(uint32_t slot, std::vector<DrawCommand>& out) {
 				auto& q = *queues[slot];
-				if (!ctoken[slot]) ctoken[slot].emplace(q); // ‰‰ñ‚¾‚¯¶¬‚µ‚ÄÄ—˜—p
+				if (!ctoken[slot]) ctoken[slot].emplace(q); // åˆå›ã ã‘ç”Ÿæˆã—ã¦å†åˆ©ç”¨
 
-				//ŠTZƒTƒCƒY‚Å out ‚ğˆê”­Šm•Û
+				//æ¦‚ç®—ã‚µã‚¤ã‚ºã§ out ã‚’ä¸€ç™ºç¢ºä¿
 				if (auto approx = q.size_approx(); approx > 0) {
-					// Šù‘¶—v‘f‚ª‚ ‚ê‚Î‚»‚Ì•ª‚àŒ©‰z‚µ‚Ä‚¨‚­
+					// æ—¢å­˜è¦ç´ ãŒã‚ã‚Œã°ãã®åˆ†ã‚‚è¦‹è¶Šã—ã¦ãŠã
 					out.reserve(out.size() + approx);
 				}
 
@@ -609,7 +580,7 @@ namespace SFW
 				size_t n;
 				while ((n = q.try_dequeue_bulk(*ctoken[slot], pTmp, DRAWCOMMAND_TMPBUF_SIZE)) != 0) {
 					const auto old = out.size();
-					out.resize(old + n);                 // æ‚ÉƒTƒCƒY‚¾‚¯L‚Î‚·iÄŠm•Û‚Í reserve Ï‚İ‚Å‹N‚«‚È‚¢‘O’ñj
+					out.resize(old + n);                 // å…ˆã«ã‚µã‚¤ã‚ºã ã‘ä¼¸ã°ã™ï¼ˆå†ç¢ºä¿ã¯ reserve æ¸ˆã¿ã§èµ·ããªã„å‰æï¼‰
 					if constexpr (std::is_trivially_copyable_v<DrawCommand>) {
 						std::memcpy(out.data() + old, pTmp, n * sizeof(DrawCommand));
 					}
@@ -621,16 +592,16 @@ namespace SFW
 			}
 #ifndef NO_USE_PMR_RENDER_QUEUE
 			/**
-			 * @brief PMR ”Å Submitipmr::vector ‚ğ’¼Úó‚¯‚ç‚ê‚éj
-			 * @param out DrawCommand ƒRƒ“ƒeƒiiŒÄ‚Ño‚µ‘¤‚ÅŠm•Û‚µ‚Ä“n‚·j
-			 * @param outInstances ƒCƒ“ƒXƒ^ƒ“ƒXƒv[ƒ‹‚Ì¶”z—ñiŸƒtƒŒ[ƒ€—p‚ÉŠm•ÛÏ‚İj
-			 * @param outCount ƒCƒ“ƒXƒ^ƒ“ƒXƒv[ƒ‹‚Ìg—p”
+			 * @brief PMR ç‰ˆ Submitï¼ˆpmr::vector ã‚’ç›´æ¥å—ã‘ã‚‰ã‚Œã‚‹ï¼‰
+			 * @param out DrawCommand ã‚³ãƒ³ãƒ†ãƒŠï¼ˆå‘¼ã³å‡ºã—å´ã§ç¢ºä¿ã—ã¦æ¸¡ã™ï¼‰
+			 * @param outInstances ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ—ãƒ¼ãƒ«ã®ç”Ÿé…åˆ—ï¼ˆæ¬¡ãƒ•ãƒ¬ãƒ¼ãƒ ç”¨ã«ç¢ºä¿æ¸ˆã¿ï¼‰
+			 * @param outCount ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ—ãƒ¼ãƒ«ã®ä½¿ç”¨æ•°
 			 */
 			void Submit(uint32_t slot, std::pmr::vector<DrawCommand>& out) {
 				auto& q = *queues[slot];
 				if (!ctoken[slot]) ctoken[slot].emplace(q);
 
-				// ŠTZ‚ÅˆêŒ‚ reserveipmr ƒAƒŠ[ƒi‚©‚çŠm•Ûj
+				// æ¦‚ç®—ã§ä¸€æ’ƒ reserveï¼ˆpmr ã‚¢ãƒªãƒ¼ãƒŠã‹ã‚‰ç¢ºä¿ï¼‰
 				if (auto approx = q.size_approx(); approx > 0) {
 					out.reserve(out.size() + approx);
 				}
@@ -652,8 +623,8 @@ namespace SFW
 #endif
 
 			/**
-			 * @brief Œ»İƒtƒŒ[ƒ€‘¤‚Ì Instance ƒv[ƒ‹ƒAƒNƒZƒX
-			 * @return (InstanceData*, ‘‚«‚İˆÊ’u‚Ö‚Ìƒ|ƒCƒ“ƒ^)
+			 * @brief ç¾åœ¨ãƒ•ãƒ¬ãƒ¼ãƒ å´ã® Instance ãƒ—ãƒ¼ãƒ«ã‚¢ã‚¯ã‚»ã‚¹
+			 * @return (InstanceData*, æ›¸ãè¾¼ã¿ä½ç½®ã¸ã®ãƒã‚¤ãƒ³ã‚¿)
 			 */
 			inline std::pair<InstancePool*, std::atomic<uint32_t>*>
 				GetCurrentInstancePoolAccess() noexcept {
@@ -662,13 +633,13 @@ namespace SFW
 			}
 
 			/**
-			 * @brief Å‘åƒCƒ“ƒXƒ^ƒ“ƒX”‚ÌŒöŠJ Getter
-			 * @return uint32_t Å‘åƒCƒ“ƒXƒ^ƒ“ƒX”
+			 * @brief æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ã®å…¬é–‹ Getter
+			 * @return uint32_t æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°
 			 */
 			inline uint32_t MaxInstancesPerFrame() const noexcept { return maxInstancesPerFrame; }
 
 		private:
-			// Œ»İ‚Ì¶YƒLƒ…[
+			// ç¾åœ¨ã®ç”Ÿç”£ã‚­ãƒ¥ãƒ¼
 			moodycamel::ConcurrentQueue<DrawCommand>& CurQ() noexcept {
 				return *queues[current.load(std::memory_order_acquire)];
 			}
@@ -677,19 +648,20 @@ namespace SFW
 
 			std::unique_ptr<moodycamel::ConcurrentQueue<DrawCommand>> queues[RENDER_BUFFER_COUNT];
 			std::optional<moodycamel::ConsumerToken> ctoken[RENDER_BUFFER_COUNT];
-			const std::atomic<int>& current;
+			const std::atomic<uint16_t>& current;
 
 			SharedInstanceArena* sharedInstanceArena = nullptr;
 
-			// æ‚è‚İ—pˆêƒoƒbƒtƒ@Fstd::array ‚Åƒq[ƒvŠm•Ûƒ[ƒ‰»
+			// å–ã‚Šè¾¼ã¿ç”¨ä¸€æ™‚ãƒãƒƒãƒ•ã‚¡ï¼šstd::array ã§ãƒ’ãƒ¼ãƒ—ç¢ºä¿ã‚¼ãƒ­åŒ–
 			std::array<DrawCommand, DRAWCOMMAND_TMPBUF_SIZE> tmp{};
 
-			// PMR‚Í tempBuffer ‚à“¯‘Œ¹‚ÅŠm•Û‚³‚ê‚é‚æ‚¤‚ÉƒRƒ“ƒXƒgƒ‰ƒNƒg
+			// PMRæ™‚ã¯ tempBuffer ã‚‚åŒè³‡æºã§ç¢ºä¿ã•ã‚Œã‚‹ã‚ˆã†ã«ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 #ifndef NO_USE_PMR_RENDER_QUEUE
 			SortContext sortContext{ std::pmr::get_default_resource() };
 #else
 			SortContext sortContext;
 #endif
 		};
+
 	}
 }

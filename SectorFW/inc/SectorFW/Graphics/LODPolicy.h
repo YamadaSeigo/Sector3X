@@ -79,7 +79,7 @@ namespace SFW::Graphics {
     int SelectLodByPixels(float ndcAreaFrac, const LodThresholdsPx& thPx,
         int lodCount, int prevLod,
         int renderW, int renderH,
-        float globalBias /*±段*/);
+        float globalBias /*±段*/, float* outSp = nullptr);
 
     struct Extents { float ex, ey, ez; };
 
