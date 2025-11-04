@@ -91,7 +91,8 @@ int main(void)
 	p.frequency = 1.0f / 96.0f;
 	p.seed = 20251030;
 
-	SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p);
+	std::vector<float> heightMap;
+	SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);
 
 	Graphics::BlockReservedContext blockRevert;
 	blockRevert.Init(graphics.GetDevice(),
@@ -110,7 +111,7 @@ int main(void)
 	}
 	std::vector<float> lodTarget =
 	{
-		1.0f
+		1.0f, 0.25f, 0.01f
 	};
 
 	std::vector<uint32_t> outIndexPool;
@@ -135,14 +136,25 @@ int main(void)
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &threadPool);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
+	// ---- マッピング設定（あなたの座標系に合わせて埋める） ----
+	Graphics::HeightTexMapping map{};
+	map.tex = heightMap.data();   // float[texH*texW]
+	map.texW = p.cellsX;
+	map.texH = p.cellsZ;
+	map.originX = 0; // 例: タイル(0,0)の左下ワールド座標
+	map.originZ = 0;
+	map.worldToTexU = p.cellSize; // 例: 1/メートル→テクセル
+	map.worldToTexV = p.cellSize;
+	map.uOffset = 0.0f; // タイルオフセット（必要なら）
+	map.vOffset = 0.0f;
+	map.heightScale = p.heightScale; // 高さをメートルに
+	map.heightOffset = 0.0f;
+	map.clampUV = true; // タイル境界でクランプ（リピートならfalse）
 
-	auto testClusterFunc = [renderService, deviceContext, perCameraService ,&terrain, &blockRevert](uint64_t frame)
+	auto terrainUpdateFunc = [map, perCameraService, &terrain](Graphics::RenderService* renderService)
 		{
 			auto viewProj = perCameraService->GetCameraBufferData().viewProj;
 			auto camPos = perCameraService->GetEyePos();
-			Math::Frustumf frustumPlanes
-				//Math::Frustumf::MakeFrustumPlanes_WorldSpace_Oriented(viewProj.data(), camPos.data, frustumPlanes.data());
-				= perCameraService->MakeFrustum(true);
 
 			auto resolution = perCameraService->GetResolution();
 			uint32_t width = (uint32_t)resolution.x;
@@ -150,24 +162,46 @@ int main(void)
 
 			static Graphics::DefaultLodSelector lodSel = {};
 
-			Graphics::OccluderExtractOptions opt = {};
+			// ---- 高さメッシュ（粗）オプション ----
+			Graphics::HeightCoarseOptions2 hopt{};
+			hopt.upDotMin = 0.65f;
+			hopt.maxSlopeTan = 10.0f; // 垂直近い面は除外
+			hopt.heightClampMin = -1000.f;
+			hopt.heightClampMax = +4000.f;
+			// 自動LOD（セル解像度）
+			hopt.gridLod.minCells = 2;
+			hopt.gridLod.maxCells = 8;
+			hopt.gridLod.targetCellPx = 24.f;
+			// 高さバイアス
+			hopt.bias.baseDown = 0.05f;  // 常に5cm下げる
+			hopt.bias.slopeK = 0.20f;  // 斜面で追加ダウン
+
+			// ---- 画面占有率・LOD 等 ----
+			Graphics::OccluderExtractOptions opt{};
 			opt.viewProj = viewProj.data();
 			opt.viewportW = width;
 			opt.viewportH = height;
 			opt.cameraPos = camPos;
-			opt.minAreaPx = 100.0f;
+			opt.minAreaPx = 64.f;
 			opt.maxClusters = 256;
-			opt.lodSelector = &lodSel; // 既出の DefaultLodSelector でOK
-			opt.getLodRange = &Graphics::GetLodRange_TerrainClustered;
-			opt.terrainForGetter = &terrain;
+			opt.backfaceCull = true;
 
-			// 1) 最小コスト（AABBの正面2トライだけ）
-			opt.mode = Graphics::OccluderExtractOptions::OccluderMode::AabbFaces;
+			// ---- 側面1枚の寄与評価（ハイブリッド用） ----
+			Graphics::AabbFacesReduceOptions side{};
+			side.visCos = 0.0f;
+			side.minAddedTileRatio = 0.25f;   // 寄与が小さい面は不採用にしやすく
+			side.tileW = 32; side.tileH = 32;
+			side.depthBias = 0.0f;
+			side.maxQuadsPerCluster = 1;      // 重要！1枚だけ
+			side.dilate1px = true;
 
 			std::vector<uint32_t> clusterIds;
 			std::vector<Graphics::SoftTriWorld> trisW;
 			std::vector<Graphics::SoftTriClip>  trisC;
-			ExtractOccluderTriangles_ScreenCoverageLOD_Budgeted(terrain, opt, clusterIds, trisW, &trisC);
+
+			// ---- ハイブリッド抽出 ----
+			ExtractOccluderTriangles_HeightmapCoarse_Hybrid(
+				terrain, map, hopt, opt, side, clusterIds, trisW, &trisC);
 
 			// MOCバインディング
 			auto MyMOCRender = [renderService](const float* packedXYZW, uint32_t vertexCount,
@@ -187,16 +221,35 @@ int main(void)
 
 			// MOCにオクル―ダーを描画
 			Graphics::DispatchToMOC(MyMOCRender, trisC, width, height);
+		};
+
+	auto testClusterFunc = [&graphics, deviceContext, perCameraService , &blockRevert](Graphics::RenderService* renderService)
+		{
+			auto viewProj = perCameraService->GetCameraBufferData().viewProj;
+			auto camPos = perCameraService->GetEyePos();
+			Math::Frustumf frustumPlanes
+				//Math::Frustumf::MakeFrustumPlanes_WorldSpace_Oriented(viewProj.data(), camPos.data, frustumPlanes.data());
+				= perCameraService->MakeFrustum(true);
+
+			auto resolution = perCameraService->GetResolution();
+			uint32_t width = (uint32_t)resolution.x;
+			uint32_t height = (uint32_t)resolution.y;
+
+			graphics.SetDefaultRenderTarget();
+			graphics.SetRasterizerState(Graphics::RasterizerStateID::WireCullNone);
 
 			auto world = Math::Matrix4x4f::Identity();
-			blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height);
+			blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height, 400.0f, 160.0f);
 		};
+
+	renderService->SetCustomUpdateFunction(std::move(terrainUpdateFunc));
+	renderService->SetCustomPreDrawFunction(std::move(testClusterFunc));
 
 	//デバッグ用の初期化
 	//========================================================================================-
 	using namespace SFW::Graphics;
 
-	graphics.TestInitialize(std::move(testClusterFunc));
+	graphics.TestInitialize();
 	auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11ShaderManager>();
 	DX11ShaderCreateDesc shaderDesc;
 	shaderDesc.templateID = MaterialTemplateID::PBR;
@@ -276,7 +329,7 @@ int main(void)
 		for (int j = 0; j < 100; ++j) {
 			for (int k = 0; k < 100; ++k) {
 				for (int n = 0; n < 1; ++n) {
-					Math::Vec3f location = { float(rand() % 1000 + 1), float(n) * 20.0f, float(rand() % 1000 + 1) };
+					Math::Vec3f location = { float(rand() % 2000 + 1), float(n) * 20.0f, float(rand() % 2000 + 1) };
 					//Math::Vec3f location = { 10.0f * j,0.0f,10.0f * k };
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();

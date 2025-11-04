@@ -60,7 +60,7 @@ namespace SFW {
             uint32_t vertsZ = 0;
 
             // ¶¬
-            static TerrainClustered Build(const TerrainBuildParams& p);
+            static TerrainClustered Build(const TerrainBuildParams& p, std::vector<float>* outMap = nullptr);
 
         private:
             static void GenerateHeights(std::vector<float>& outH,

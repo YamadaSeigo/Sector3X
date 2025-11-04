@@ -61,6 +61,7 @@ namespace SFW
 			~RenderService() {
 				MOC::Destroy(moc);
 			}
+		private:
 			/**
 			 * @brief MOCの更新
 			 */
@@ -69,7 +70,19 @@ namespace SFW
 				moc->ClearBuffer();
 
 				produceSlot.exchange((produceSlot.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT, std::memory_order_acq_rel);
+
+				if(updateFunc) updateFunc(this);
 			}
+			/**
+			 * @brief カスタム関数の更新
+			 * @detail RenderGraphで呼び出される
+			 */
+			void CallPreDrawCustomFunc() noexcept
+			{
+				if (preDrawFunc) preDrawFunc(this);
+			}
+
+		public:
 			/**
 			 * @brief RenderQueueのProducerSessionを取得する関数
 			 * @param passName　パス名
@@ -166,8 +179,25 @@ namespace SFW
 
 				moc->ComputePixelDepthBuffer(buffer.data(), false);
 			}
-
+			/**
+			* @ brief 現在の生産スロットを取得する
+			* @ return int 生産スロットのインデックス
+			 */
 			int GetProduceSlot() const noexcept { return produceSlot.load(std::memory_order_acquire); }
+			/**
+			* @ brief Updateカスタム関数の設定
+			* @ param func カスタム関数
+			 */
+			void SetCustomUpdateFunction(std::function<void(RenderService*)>&& func) noexcept {
+				updateFunc = std::move(func);
+			}
+			/**
+			* @ brief 描画前ドローカスタム関数の設定
+			* @ param func カスタム関数
+			 */
+			void SetCustomPreDrawFunction(std::function<void(RenderService*)>&& func) noexcept {
+				preDrawFunc = std::move(func);
+			}
 		private:
 			template<typename ResourceType>
 			void RegisterResourceManager(ResourceType* manager)
@@ -192,6 +222,9 @@ namespace SFW
 			MOC* moc = nullptr; // Masked Occlusion Culling のインスタンス
 
 			std::atomic<uint16_t> produceSlot{ 0 };
+
+			std::function<void(RenderService*)> updateFunc = nullptr;
+			std::function<void(RenderService*)> preDrawFunc = nullptr;
 		public:
 			STATIC_SERVICE_TAG
 		};

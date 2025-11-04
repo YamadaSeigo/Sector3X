@@ -115,6 +115,8 @@ namespace SFW
 				backend.BeginFrameUpload(sharedInstanceArena->Data(prevSlot), sharedInstanceArena->Size(prevSlot));
 				sharedInstanceArena->ResetSlot(prevSlot);
 
+				renderService.CallPreDrawCustomFunc(); // カスタム関数の更新
+
 				for (auto& pass : passes) {
 					backend.SetPrimitiveTopology(pass->topology);
 

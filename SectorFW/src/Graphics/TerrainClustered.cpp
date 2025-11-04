@@ -21,7 +21,7 @@ namespace SFW {
             if (s > 1e-20f) { v.x /= s; v.y /= s; v.z /= s; }
         }
 
-        TerrainClustered TerrainClustered::Build(const TerrainBuildParams& p)
+        TerrainClustered TerrainClustered::Build(const TerrainBuildParams& p, std::vector<float>* outMap)
         {
             TerrainClustered t{};
             t.vertsX = p.cellsX + 1;
@@ -29,6 +29,7 @@ namespace SFW {
 
             // 1) 高さ場
             std::vector<float> H;
+
             GenerateHeights(H, t.vertsX, t.vertsZ, p);
 
             // 2) 頂点（位置・法線・UV）
@@ -37,6 +38,8 @@ namespace SFW {
             // 3) クラスターを作って IndexPool に連結
             BuildClusters(t.indexPool, t.clusters, t.clustersX, t.clustersZ,
                 H, p.cellsX, p.cellsZ, p.clusterCellsX, p.clusterCellsZ, p.cellSize, p.heightScale);
+
+            if (outMap != nullptr) *outMap = std::move(H);
 
             return t;
         }

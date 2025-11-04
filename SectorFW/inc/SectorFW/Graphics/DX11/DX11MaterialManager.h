@@ -22,7 +22,7 @@ namespace SFW
 		 * @brief DirectX 11用のマテリアル作成情報構造体
 		 */
 		struct DX11MaterialCreateDesc {
-			ShaderHandle shader;
+			ShaderHandle shader = {};
 			std::unordered_map<UINT, TextureHandle> psSRV;
 			std::unordered_map<UINT, TextureHandle> vsSRV;
 			std::unordered_map<UINT, BufferHandle> psCBV; // CBVバインディング

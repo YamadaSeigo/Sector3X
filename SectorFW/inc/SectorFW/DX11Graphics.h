@@ -81,11 +81,15 @@ namespace SFW
 			void SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx);
 			void WaitSubmittedFramesImpl(uint64_t uptoFrame);
 
+			void SetDefaultRenderTarget();
+
+			void SetRasterizerState(RasterizerStateID state);
+
 			RenderService* GetRenderService() noexcept {
 				return renderGraph->GetRenderService();
 			}
 
-			void TestInitialize(std::function<void(uint64_t)>&& clusterTest);
+			void TestInitialize();
 
 			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }
 			ID3D11DeviceContext* GetDeviceContext() const noexcept { return m_context.Get(); }

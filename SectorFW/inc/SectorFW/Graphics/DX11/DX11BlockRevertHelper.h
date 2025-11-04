@@ -324,7 +324,7 @@ namespace SFW::Graphics {
             ctx->IASetInputLayout(nullptr);
             ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
             ctx->DrawInstancedIndirect(argsBuf.Get(), 0);
-            ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr }; 
+            ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };
             ctx->VSSetShaderResources(0, 4, nullVs);
         }
     };

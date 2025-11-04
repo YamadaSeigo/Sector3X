@@ -319,7 +319,17 @@ namespace SFW
 			st->doneCv.wait(lk, [&] { return st->lastCompleted.load(std::memory_order_acquire) >= uptoFrame; });
 		}
 
-		void DX11GraphicsDevice::TestInitialize(std::function<void(uint64_t)>&& clusterTest)
+		void DX11GraphicsDevice::SetDefaultRenderTarget()
+		{
+			backend->SetRenderTargets({m_renderTargetView.Get()}, m_depthStencilView.Get());
+		}
+
+		void DX11GraphicsDevice::SetRasterizerState(RasterizerStateID state)
+		{
+			backend->SetRasterizerState(state);
+		}
+
+		void DX11GraphicsDevice::TestInitialize()
 		{
 			std::vector<ID3D11RenderTargetView*> rtvs{
 				m_renderTargetView.Get() };
@@ -333,9 +343,8 @@ namespace SFW
 			passDesc.rtvs = rtvs;
 			passDesc.dsv = m_depthStencilView.Get();
 			passDesc.cbvs = { cameraHandle3D };
-			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+			//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 			passDesc.blendState = BlendStateID::AlphaBlend;
-			passDesc.customExecute = std::move(clusterTest);
 
 			renderGraph->AddPass(passDesc);
 

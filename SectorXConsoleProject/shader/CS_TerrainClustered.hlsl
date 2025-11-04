@@ -91,17 +91,30 @@ float ProjectedSizePx(float3 bmin, float3 bmax)
     return max(px.x, px.y) * 2.0; // diameter-ish
 }
 
+//以下の初期化の警告が発生するのでifの入れ子で対応
+//warning X4000: use of potentially uninitialized variable (SelectLodPx)
 uint SelectLodPx(float sizePx)
 {
-    // Example for up to 3 levels using LodPxThreshold.xy
-    // Larger on-screen size -> more detailed LOD (smaller index)
-    if (LodLevels <= 1)
-        return 0u;
-    if (sizePx >= LodPxThreshold.x)
-        return 0u; // LOD0
-    if (LodLevels == 2)
-        return 1u; // LOD1 only
-    return (sizePx >= LodPxThreshold.y) ? 1u : 2u; // LOD1 or LOD2
+    uint lod = 0u; // まず 0 に初期化
+
+    if (LodLevels > 1)
+    {
+        if (LodLevels == 2)
+        {
+            // LOD0 / LOD1 の二段だけ
+            lod = (sizePx >= LodPxThreshold.x) ? 0u : 1u;
+        }
+        else // LodLevels >= 3
+        {
+            // 三段（LOD0 / LOD1 / LOD2）
+            // 例：LOD0: sizePx >= x,  LOD1: y <= sizePx < x,  LOD2: sizePx < y
+            lod = (sizePx >= LodPxThreshold.x) ? 0u :
+                  (sizePx >= LodPxThreshold.y) ? 1u : 2u;
+        }
+    }
+
+    // 念のため上限をクランプ（しきい値設定ミスでもはみ出さない）
+    return min(lod, LodLevels - 1);
 }
 
 // groupshared variable for base byte offset (must be global-scope)
