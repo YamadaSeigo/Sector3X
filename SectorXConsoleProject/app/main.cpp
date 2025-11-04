@@ -86,21 +86,13 @@ int main(void)
 	p.cellsZ = 512;
 	p.clusterCellsX = 32;
 	p.clusterCellsZ = 32;
-	p.cellSize = 1.0f;
+	p.cellSize = 2.5f;
 	p.heightScale = 40.0f;
 	p.frequency = 1.0f / 96.0f;
 	p.seed = 20251030;
 
 	std::vector<float> heightMap;
 	SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);
-
-	Graphics::BlockReservedContext blockRevert;
-	blockRevert.Init(graphics.GetDevice(),
-		L"assets/shader/CS_TerrainClustered.cso",
-		L"assets/shader/CS_WriteArgs.cso",
-		L"assets/shader/VS_TerrainClustered.cso",
-		L"assets/shader/PS_TerrainClustered.cso",
-		/*maxVisibleIndices*/ (UINT)terrain.indexPool.size());
 
 	std::vector<float> positions(terrain.vertices.size() * 3);
 	for (auto i = 0; i < terrain.vertices.size(); ++i)
@@ -119,9 +111,17 @@ int main(void)
 	std::vector<uint32_t> outLodBase;
 	std::vector<uint32_t> outLodCount;
 
-	Graphics::GenerateClusterLODs_meshopt(terrain.indexPool, terrain.clusters, positions.data(),
+	Graphics::GenerateClusterLODs_meshopt_fast(terrain.indexPool, terrain.clusters, positions.data(),
 		terrain.vertices.size(), sizeof(Math::Vec3f), lodTarget,
 		outIndexPool, outLodRanges, outLodBase, outLodCount);
+
+	Graphics::BlockReservedContext blockRevert;
+	blockRevert.Init(graphics.GetDevice(),
+		L"assets/shader/CS_TerrainClustered.cso",
+		L"assets/shader/CS_WriteArgs.cso",
+		L"assets/shader/VS_TerrainClustered.cso",
+		L"assets/shader/PS_TerrainClustered.cso",
+		/*maxVisibleIndices*/ (UINT)terrain.indexPool.size());
 
 	blockRevert.BuildLodSrvs(graphics.GetDevice(), outLodRanges, outLodBase, outLodCount);
 
@@ -136,20 +136,8 @@ int main(void)
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &threadPool);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
-	// ---- マッピング設定（あなたの座標系に合わせて埋める） ----
-	Graphics::HeightTexMapping map{};
-	map.tex = heightMap.data();   // float[texH*texW]
-	map.texW = p.cellsX;
-	map.texH = p.cellsZ;
-	map.originX = 0; // 例: タイル(0,0)の左下ワールド座標
-	map.originZ = 0;
-	map.worldToTexU = p.cellSize; // 例: 1/メートル→テクセル
-	map.worldToTexV = p.cellSize;
-	map.uOffset = 0.0f; // タイルオフセット（必要なら）
-	map.vOffset = 0.0f;
-	map.heightScale = p.heightScale; // 高さをメートルに
-	map.heightOffset = 0.0f;
-	map.clampUV = true; // タイル境界でクランプ（リピートならfalse）
+	// ---- マッピング設定 ----
+	Graphics::HeightTexMapping map = Graphics::MakeHeightTexMappingFromTerrainParams(p, heightMap);
 
 	auto terrainUpdateFunc = [map, perCameraService, &terrain](Graphics::RenderService* renderService)
 		{
@@ -165,13 +153,13 @@ int main(void)
 			// ---- 高さメッシュ（粗）オプション ----
 			Graphics::HeightCoarseOptions2 hopt{};
 			hopt.upDotMin = 0.65f;
-			hopt.maxSlopeTan = 10.0f; // 垂直近い面は除外
-			hopt.heightClampMin = -1000.f;
-			hopt.heightClampMax = +4000.f;
+			hopt.maxSlopeTan = 0.0f; // 垂直近い面は除外
+			hopt.heightClampMin = -4000.f;
+			hopt.heightClampMax = +8000.f;
 			// 自動LOD（セル解像度）
-			hopt.gridLod.minCells = 2;
-			hopt.gridLod.maxCells = 8;
-			hopt.gridLod.targetCellPx = 24.f;
+			hopt.gridLod.minCells = 2;  //クラスター内の最小セル数
+			hopt.gridLod.maxCells = 8; //クラスター内の最大セル数
+			hopt.gridLod.targetCellPx = 128.f;
 			// 高さバイアス
 			hopt.bias.baseDown = 0.05f;  // 常に5cm下げる
 			hopt.bias.slopeK = 0.20f;  // 斜面で追加ダウン
@@ -182,18 +170,9 @@ int main(void)
 			opt.viewportW = width;
 			opt.viewportH = height;
 			opt.cameraPos = camPos;
-			opt.minAreaPx = 64.f;
-			opt.maxClusters = 256;
+			opt.minAreaPx = 2000.f;
+			opt.maxClusters = 48;
 			opt.backfaceCull = true;
-
-			// ---- 側面1枚の寄与評価（ハイブリッド用） ----
-			Graphics::AabbFacesReduceOptions side{};
-			side.visCos = 0.0f;
-			side.minAddedTileRatio = 0.25f;   // 寄与が小さい面は不採用にしやすく
-			side.tileW = 32; side.tileH = 32;
-			side.depthBias = 0.0f;
-			side.maxQuadsPerCluster = 1;      // 重要！1枚だけ
-			side.dilate1px = true;
 
 			std::vector<uint32_t> clusterIds;
 			std::vector<Graphics::SoftTriWorld> trisW;
@@ -201,7 +180,7 @@ int main(void)
 
 			// ---- ハイブリッド抽出 ----
 			ExtractOccluderTriangles_HeightmapCoarse_Hybrid(
-				terrain, map, hopt, opt, side, clusterIds, trisW, &trisC);
+				terrain, map, hopt, opt, clusterIds, trisW, &trisC);
 
 			// MOCバインディング
 			auto MyMOCRender = [renderService](const float* packedXYZW, uint32_t vertexCount,
@@ -326,8 +305,8 @@ int main(void)
 		Math::Vec3f dst = src;
 
 		// Entity生成
-		for (int j = 0; j < 100; ++j) {
-			for (int k = 0; k < 100; ++k) {
+		for (int j = 0; j < 1; ++j) {
+			for (int k = 0; k < 1; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					Math::Vec3f location = { float(rand() % 2000 + 1), float(n) * 20.0f, float(rand() % 2000 + 1) };
 					//Math::Vec3f location = { 10.0f * j,0.0f,10.0f * k };

@@ -44,6 +44,24 @@ namespace SFW {
             return t;
         }
 
+        TerrainClustered TerrainClustered::BuildFromHeightMap(const HeightField& hf, const TerrainBuildParams& p)
+        {
+            TerrainClustered t{};
+            t.vertsX = hf.vertsX;
+            t.vertsZ = hf.vertsZ;
+
+            // 1) 頂点生成（既存関数）
+            BuildVertices(t.vertices, hf.H01, t.vertsX, t.vertsZ, p.cellSize, p.heightScale);
+
+            // 2) クラスター生成（既存関数）
+            const uint32_t cellsX = t.vertsX - 1, cellsZ = t.vertsZ - 1;
+            BuildClusters(t.indexPool, t.clusters, t.clustersX, t.clustersZ,
+                hf.H01, cellsX, cellsZ, p.clusterCellsX, p.clusterCellsZ,
+                p.cellSize, p.heightScale);
+
+            return t;
+        }
+
         void TerrainClustered::GenerateHeights(std::vector<float>& outH,
             uint32_t vx, uint32_t vz,
             const TerrainBuildParams& p)

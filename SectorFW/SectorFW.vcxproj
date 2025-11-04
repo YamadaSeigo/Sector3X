@@ -69,7 +69,6 @@
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX113DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11BlockRevertHelper.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11BufferManager.h" />
-    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ClusterPipeline.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11MaterialManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11MeshManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ModelAssetManager.h" />
@@ -81,6 +80,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\DX11\_dx11inc.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX12\dx12inc.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX12\DX12RenderBackend.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\HeightmapBake.h" />
     <ClInclude Include="inc\SectorFW\Graphics\I2DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\I3DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\IGraphicsDevice.hpp" />
@@ -175,7 +175,6 @@
     <ClCompile Include="src\Debug\ImGuiLayer.cpp" />
     <ClCompile Include="src\Debug\PerfHUD.cpp" />
     <ClCompile Include="src\Debug\UIBus.cpp" />
-    <ClCompile Include="src\Graphics\DX11ClusterPipeline.cpp" />
     <ClCompile Include="src\Graphics\DX11Graphics.cpp" />
     <ClCompile Include="src\Graphics\DX11MaterialManager.cpp" />
     <ClCompile Include="src\Graphics\DX11MeshManager.cpp" />

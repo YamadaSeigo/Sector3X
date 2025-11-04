@@ -570,7 +570,7 @@ namespace SFW {
             outQuads.clear();
             Math::Vec3f c[8]; BuildAabbWorldCorners(bounds, c);
 
-            struct Cand { FaceQuad q; float score; };
+            struct Cand { FaceQuad q; float score = 0.0f; };
             std::array<Cand, 6> cand; uint32_t candN = 0;
             const Math::Vec3f center{ (bounds.lb.x + bounds.ub.x) * 0.5f, (bounds.lb.y + bounds.ub.y) * 0.5f, (bounds.lb.z + bounds.ub.z) * 0.5f };
             Math::Vec3f viewDir{ camPos.x - center.x, camPos.y - center.y, camPos.z - center.z };
@@ -721,6 +721,39 @@ namespace SFW {
             bool clampUV = true; // true: クランプ, false: リピート
         };
 
+        // 生成済み H01（0..1 高さ配列）を使って HeightTexMapping を組み立てるユーティリティ
+        inline HeightTexMapping MakeHeightTexMappingFromTerrainParams(
+            const TerrainBuildParams& p,
+            const std::vector<float>& H01  // TerrainClustered::Build(..., &H01) で受け取った配列
+        ) {
+            using namespace SFW::Graphics;
+            HeightTexMapping m{};
+
+            // 高さ“テクスチャ”の実体は H01（row-major: y*W + x）
+            m.tex = H01.data();
+            m.texW = static_cast<int>(p.cellsX + 1); // 頂点数 = セル数+1
+            m.texH = static_cast<int>(p.cellsZ + 1);
+
+            // ワールド→テクセル変換： 1texel = cellSize [m]
+            m.originX = 0.0f;  // TerrainClustered は (x*cellSize, z*cellSize) で配置
+            m.originZ = 0.0f;  // → 原点は (0,0) でよい
+            m.worldToTexU = 1.0f / p.cellSize; // u = (x - originX) * (1/cellSize)
+            m.worldToTexV = 1.0f / p.cellSize; // v = (z - originZ) * (1/cellSize)
+
+            // 単一大域テクスチャなのでタイルオフセットは 0（タイル運用ならここに加算）
+            m.uOffset = 0.0f;
+            m.vOffset = 0.0f;
+
+            // 高さ 0..1 → ワールドY： y = h * heightScale + heightOffset
+            m.heightScale = p.heightScale;
+            m.heightOffset = 0.0f;
+
+            // タイル境界での外挿は避けたいので基本はクランプ
+            m.clampUV = true;
+
+            return m;
+        }
+
         inline int clampi(int x, int lo, int hi) { return (x < lo ? lo : (x > hi ? hi : x)); }
         inline float lerp(float a, float b, float t) { return a + (b - a) * t; }
 
@@ -835,7 +868,7 @@ namespace SFW {
 
             const float cellDiag = std::sqrt(dx * dx + dz * dz);
 
-            auto emitTri = [&](const Math::Vec3f& a, const Math::Vec3f& b, const Math::Vec3f& c) {
+            auto emitTri = [&](const Math::Vec3f& a, const Math::Vec3f& c, const Math::Vec3f& b) {
                 if (opt.backfaceCull && !IsFrontFacing(a, b, c, opt.cameraPos, opt.faceCosThreshold)) return;
                 outTrisWorld.push_back({ a,b,c });
                 if (outTrisClip && opt.makeClipSpace && opt.viewProj) {
@@ -872,6 +905,129 @@ namespace SFW {
                     emitTri(p00, p10, p01);
                     emitTri(p01, p10, p11);
                 }
+            }
+        }
+
+        // --- ハイブリッド: 高さ（粗サーフェス） ---
+        inline void ExtractOccluderTriangles_HeightmapCoarse_Hybrid(
+            const TerrainClustered& t,
+            const HeightTexMapping& map,
+            HeightCoarseOptions2 hopt,
+            const OccluderExtractOptions& opt,
+            std::vector<uint32_t>& outClusterIds,
+            std::vector<SoftTriWorld>& outTrisWorld,
+            std::vector<SoftTriClip>* outTrisClip)
+        {
+            outClusterIds.clear(); outTrisWorld.clear(); if (outTrisClip) outTrisClip->clear();
+            if (!opt.viewProj) return;
+
+            // 画面占有率でクラスタ選別
+            struct Scored { uint32_t id; float area; float d2; };
+            std::vector<Scored> sc; sc.reserve(t.clusters.size());
+            const float maxD2 = (opt.maxDistance > 0.0f) ? (opt.maxDistance * opt.maxDistance) : std::numeric_limits<float>::infinity();
+            for (uint32_t id = 0; id < (uint32_t)t.clusters.size(); ++id) {
+                const auto& cr = t.clusters[id];
+                const float d2 = Dist2PointAABB(opt.cameraPos, cr.bounds);
+                if (d2 > maxD2) continue;
+                const float areaPx = AABBScreenAreaPx(cr.bounds, opt.viewProj, opt.viewportW, opt.viewportH);
+                if (areaPx < opt.minAreaPx) continue;
+                sc.push_back({ id, areaPx, d2 });
+            }
+            if (sc.empty()) return;
+
+            // 前提: sc[] は {id, area, d2} が詰まっている
+            constexpr struct CenterBiasOptions {
+                bool  enable = true;
+                float sigmaPx = 320.0f;   // 中心からの距離に対するガウス幅（px）
+                float gain = 1.0f;     // バイアス強度（0で無効）
+                uint32_t reserveCenterN = 8;   // 中心窓から必ず確保する数（0で無効）
+                float   centerWindowFrac = 2.0f; // 画面中央の長方形（幅/高さの比）
+            } copt; // 必要に応じて外から渡してもOK
+
+            auto ProjectPointToScreen = [&](const Math::Vec3f& p, float& sx, float& sy)->bool {
+                float h[4];
+                MulRowMajor4x4_Pos(opt.viewProj, p, h);
+                if (h[3] <= 0.0f) return false;
+                const float nx = std::fmax(-2.f, std::fmin(2.f, h[0] / h[3]));
+                const float ny = std::fmax(-2.f, std::fmin(2.f, h[1] / h[3]));
+                sx = (nx * 0.5f + 0.5f) * float(opt.viewportW);
+                sy = (1.f - (ny * 0.5f + 0.5f)) * float(opt.viewportH);
+                return true;
+                };
+
+            struct Scored2 {
+                uint32_t id; float area; float score; bool inCenter;
+            };
+            std::vector<Scored2> ranked; ranked.reserve(sc.size());
+
+            const float cx = 0.5f * float(opt.viewportW);
+            const float cy = 0.5f * float(opt.viewportH);
+            const float winW = float(opt.viewportW) * copt.centerWindowFrac;
+            const float winH = float(opt.viewportH) * copt.centerWindowFrac;
+            const float left = cx - 0.5f * winW, right = cx + 0.5f * winW;
+            const float top = cy - 0.5f * winH, bottom = cy + 0.5f * winH;
+
+            for (const auto& s : sc) {
+                const auto& cr = t.clusters[s.id];
+                // AABB中心を画面座標へ（近似で十分）
+                const Math::Vec3f ctr{ (cr.bounds.lb.x + cr.bounds.ub.x) * 0.5f,
+                                       (cr.bounds.lb.y + cr.bounds.ub.y) * 0.5f,
+                                       (cr.bounds.lb.z + cr.bounds.ub.z) * 0.5f };
+                float sx = 0, sy = 0; bool vis = ProjectPointToScreen(ctr, sx, sy);
+
+                float score = s.area;
+                bool inside = false;
+                if (vis && copt.enable && copt.gain > 0.f && copt.sigmaPx > 0.f) {
+                    const float dx = sx - cx, dy = sy - cy;
+                    const float r2 = dx * dx + dy * dy;
+                    const float sig2 = copt.sigmaPx * copt.sigmaPx;
+                    const float boost = copt.gain * std::exp(-r2 / (2.0f * sig2));
+                    score = s.area * (1.0f + boost); // 中心に近いほどスコア加点
+                    inside = (sx >= left && sx <= right && sy >= top && sy <= bottom);
+                }
+                ranked.push_back({ s.id, s.area, score, inside });
+            }
+
+            // スコア降順で並べる
+            std::sort(ranked.begin(), ranked.end(),
+                [](const Scored2& a, const Scored2& b) { return a.score > b.score; });
+
+            // 収容上限
+            const uint32_t cap = (opt.maxClusters > 0)
+                ? std::min<uint32_t>((uint32_t)ranked.size(), opt.maxClusters)
+                : (uint32_t)ranked.size();
+
+            outClusterIds.clear();
+            outClusterIds.reserve(cap);
+
+            // 中心窓から N 個“先取り”
+            if (copt.enable && copt.reserveCenterN > 0) {
+                uint32_t taken = 0;
+                for (const auto& r : ranked) {
+                    if (!r.inCenter) continue;
+                    outClusterIds.push_back(r.id);
+                    if (++taken >= copt.reserveCenterN || outClusterIds.size() >= cap) break;
+                }
+            }
+
+            // 残りはスコア順で埋める（重複回避）
+            auto already = [&](uint32_t id) {
+                return std::find(outClusterIds.begin(), outClusterIds.end(), id) != outClusterIds.end();
+                };
+            for (const auto& r : ranked) {
+                if (outClusterIds.size() >= cap) break;
+                if (already(r.id)) continue;
+                outClusterIds.push_back(r.id);
+            }
+
+            // “keep で ranked を再プッシュ”は不要！
+            // ここからは outClusterIds を使って三角形を生成するだけ。
+            for (uint32_t i = 0; i < outClusterIds.size(); ++i) {
+                const uint32_t cid = outClusterIds[i];
+                const auto& cr = t.clusters[cid];
+
+                // 高さの粗サーフェスのみを出力（必要ならここに側面1枚の処理を足す）
+                BuildHeightCoarseSurfaceForCluster_Mapped(cr.bounds, map, hopt, opt, outTrisWorld, outTrisClip);
             }
         }
 
@@ -912,7 +1068,7 @@ namespace SFW {
             outClusterIds.reserve(keep);
 
             auto emitQuad = [&](const FaceQuad& q) {
-                constexpr int order[6] = { 0,1,2, 2,1,3 };
+                constexpr int order[6] = { 0,3,1, 2,1,3 };
                 for (int tix = 0; tix < 6; tix += 3) {
                     const int i0 = order[tix + 0], i1 = order[tix + 1], i2 = order[tix + 2];
                     if (outTrisClip) {

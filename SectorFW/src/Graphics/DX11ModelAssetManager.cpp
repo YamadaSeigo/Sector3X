@@ -117,7 +117,7 @@ namespace SFW
 			return m;
 		}
 
-		const DX11ModelAssetData DX11ModelAssetManager::LoadFromGLTF(const DX11ModelAssetCreateDesc& desc)
+		DX11ModelAssetData DX11ModelAssetManager::LoadFromGLTF(const DX11ModelAssetCreateDesc& desc)
 		{
 			std::filesystem::path canonicalPath = std::filesystem::weakly_canonical(desc.path);
 

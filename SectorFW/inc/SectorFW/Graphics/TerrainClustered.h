@@ -62,6 +62,13 @@ namespace SFW {
             // ê∂ê¨
             static TerrainClustered Build(const TerrainBuildParams& p, std::vector<float>* outMap = nullptr);
 
+            struct HeightField {
+                std::vector<float> H01; // size = (cellsX+1)*(cellsZ+1)
+                uint32_t vertsX, vertsZ;
+            };
+
+            static TerrainClustered BuildFromHeightMap(const HeightField& hf, const TerrainBuildParams& p);
+
         private:
             static void GenerateHeights(std::vector<float>& outH,
                 uint32_t vx, uint32_t vz,

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <wrl/client.h>
@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <cstring>
 #include <algorithm>
+#include <execution>
 
 #include "../TerrainClustered.h"
 #include "../../Math/AABB.hpp"
@@ -22,6 +23,12 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 using Microsoft::WRL::ComPtr;
+
+// オプション：品質より速度を優先したい場合は true
+#ifndef SFW_USE_SIMPLIFY_SLOPPY
+#define SFW_USE_SIMPLIFY_SLOPPY 0
+#endif
+
 
 namespace SFW::Graphics {
 
@@ -376,6 +383,7 @@ namespace SFW::Graphics {
     // Optional: Generate LODs per cluster using meshoptimizer
     // ------------------------------------------------------------
 #ifdef MESHOPTIMIZER_VERSION
+
     inline void GenerateClusterLODs_meshopt(
         const std::vector<uint32_t>& inIndexPool,
         const std::vector<ClusterRange>& inRanges,
@@ -424,6 +432,145 @@ namespace SFW::Graphics {
                 }
             }
             outLodCount[cid] = produced;
+        }
+    }
+
+    inline void GenerateClusterLODs_meshopt_fast(
+        const std::vector<uint32_t>& inIndexPool,
+        const std::vector<ClusterRange>& inRanges,
+        const float* positions, size_t vertexCount, size_t positionStrideBytes,
+        const std::vector<float>& lodTargets,
+        // outputs
+        std::vector<uint32_t>& outIndexPool,
+        std::vector<ClusterLodRange>& outLodRanges,
+        std::vector<uint32_t>& outLodBase,
+        std::vector<uint32_t>& outLodCount)
+    {
+        outIndexPool.clear();
+        outLodRanges.clear();
+        outLodBase.assign(inRanges.size(), 0);
+        outLodCount.assign(inRanges.size(), 0);
+
+        const size_t levels = lodTargets.size();
+        if (levels == 0 || inRanges.empty()) return;
+
+        // 1) 並列に「各クラスタのローカル出力」を作る
+        struct LocalOut {
+            std::vector<uint32_t> indices;            // 後で outIndexPool に連結
+            std::vector<ClusterLodRange> ranges;      // offset は local 基準（後で +global base）
+        };
+        std::vector<LocalOut> locals(inRanges.size());
+
+        std::vector<size_t> ids(inRanges.size());
+        std::iota(ids.begin(), ids.end(), size_t{ 0 });
+
+        std::for_each(std::execution::par, ids.begin(), ids.end(), [&](size_t cid)
+            {
+                const auto& r = inRanges[cid];
+                if (r.indexCount < 3) return;
+
+                // ---- thread_local scratch ----
+                struct Scratch {
+                    std::vector<uint32_t> srcIndices;
+                    std::vector<uint32_t> remap;
+                    std::vector<uint32_t> invRemap;
+                    std::vector<uint32_t> localIndices;
+                    std::vector<float>  localVerts;
+                    std::vector<uint32_t> tmp; // for output / remap back
+                };
+                Scratch s;
+
+                // 元インデックスを取り出し
+                s.srcIndices.assign(inIndexPool.begin() + r.indexOffset,
+                    inIndexPool.begin() + r.indexOffset + r.indexCount);
+
+                // 参照頂点だけに縮約
+                s.remap.resize(vertexCount);
+                size_t unique = meshopt_generateVertexRemap(
+                    s.remap.data(), s.srcIndices.data(), s.srcIndices.size(),
+                    positions, vertexCount, positionStrideBytes);
+
+                // ローカル頂点/インデックスにリマップ
+                s.localVerts.resize(unique * positionStrideBytes);
+                meshopt_remapVertexBuffer(s.localVerts.data(), positions, vertexCount,
+                    positionStrideBytes, s.remap.data());
+
+                s.localIndices.resize(s.srcIndices.size());
+                meshopt_remapIndexBuffer(s.localIndices.data(), s.srcIndices.data(),
+                    s.srcIndices.size(), s.remap.data());
+
+                // 逆リマップ表 (local -> global)
+                s.invRemap.resize(unique);
+                for (uint32_t g = 0; g < (uint32_t)vertexCount; ++g) {
+                    uint32_t l = s.remap[g];
+                    if (l != ~0u && l < unique) s.invRemap[l] = g;
+                }
+
+                LocalOut local;
+                local.indices.reserve(r.indexCount); // 少なくとも LOD0
+
+                auto appendLodLocal = [&](const uint32_t* idx, size_t count) {
+                    ClusterLodRange lr{ (uint32_t)local.indices.size(), (uint32_t)count };
+                    local.indices.insert(local.indices.end(), idx, idx + count);
+                    local.ranges.push_back(lr);
+                    };
+
+                // LOD0: ローカル→グローバルへ戻して格納
+                s.tmp.resize(s.localIndices.size());
+                for (size_t i = 0; i < s.localIndices.size(); ++i)
+                    s.tmp[i] = s.invRemap[s.localIndices[i]];
+                appendLodLocal(s.tmp.data(), s.tmp.size());
+
+                const uint32_t triCount0 = r.indexCount / 3u;
+                float error = /* r.bounds.extent().length() */ 1.0f * 0.01f;
+
+                size_t prevWritten = s.localIndices.size();
+
+                for (size_t li = 1; li < levels; ++li) {
+                    const float scale = lodTargets[li];
+                    const uint32_t targetTris = (uint32_t)(std::max)(1.0f, std::floor(triCount0 * scale));
+                    const size_t   targetIdx = size_t(targetTris) * 3;
+
+                    s.tmp.resize(s.localIndices.size());
+                    size_t written = meshopt_simplify(
+                        s.tmp.data(), s.localIndices.data(), s.localIndices.size(),
+                        s.localVerts.data(), unique, positionStrideBytes,
+                        targetIdx, error);
+
+                    if (written < 3 || written == prevWritten) break;
+
+                    meshopt_optimizeVertexCache(s.tmp.data(), s.tmp.data(), written, unique);
+                    prevWritten = written;
+
+                    // ローカル→グローバル
+                    for (size_t i = 0; i < written; ++i)
+                        s.tmp[i] = s.invRemap[s.tmp[i]];
+
+                    appendLodLocal(s.tmp.data(), written);
+                }
+
+                outLodCount[cid] = (uint32_t)local.ranges.size();
+                locals[cid] = std::move(local);
+            });
+
+        // 2) 単一スレッドで連結（offset をグローバルに直しつつ）
+        size_t totalIdx = 0, totalRanges = 0;
+        for (auto& l : locals) { totalIdx += l.indices.size(); totalRanges += l.ranges.size(); }
+        outIndexPool.reserve(totalIdx);
+        outLodRanges.reserve(totalRanges);
+
+        for (size_t cid = 0; cid < locals.size(); ++cid) {
+            auto& l = locals[cid];
+            outLodBase[cid] = (uint32_t)outLodRanges.size();
+
+            const uint32_t base = (uint32_t)outIndexPool.size();
+            outIndexPool.insert(outIndexPool.end(), l.indices.begin(), l.indices.end());
+
+            for (auto lr : l.ranges) {
+                lr.offset += base;            // ローカル→グローバル
+                outLodRanges.push_back(lr);
+            }
+            // outLodCount[cid] は並列側で設定済み
         }
     }
 #endif

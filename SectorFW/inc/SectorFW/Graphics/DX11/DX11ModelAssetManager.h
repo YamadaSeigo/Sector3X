@@ -119,7 +119,7 @@ namespace SFW
 			void DestroyResource(uint32_t idx, uint64_t currentFrame);
 
 			// キャッシュ対応：内部で保持して返す
-			const DX11ModelAssetData LoadFromGLTF(const DX11ModelAssetCreateDesc& desc);
+			DX11ModelAssetData LoadFromGLTF(const DX11ModelAssetCreateDesc& desc);
 
 			// ==== LOD プリセット ====
 			enum class LodQualityMode : uint8_t { Attributes, Permissive, Sloppy };
