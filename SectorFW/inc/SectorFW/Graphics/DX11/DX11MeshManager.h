@@ -21,12 +21,12 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		/**
 		 * @brief メッシュ作成のための構造体
 		 */
-		struct DX11MeshCreateDesc {
+		struct MeshCreateDesc {
 			const void* vertices = nullptr;
 			uint32_t vSize = {};
 			uint32_t stride = {};
@@ -41,7 +41,7 @@ namespace SFW
 		/**
 		 * @brief DirectX 11のメッシュデータを定義する構造体
 		 */
-		struct DX11MeshData {
+		struct MeshData {
 			// 複数ストリーム（slotごと）のVB
 			std::array<ComPtr<ID3D11Buffer>, 8> vbs{}; // 0..7 くらいまで確保
 			std::array<UINT, 8> strides{};
@@ -64,12 +64,12 @@ namespace SFW
 		private:
 			std::wstring path; // キャッシュ用パス
 
-			friend class DX11MeshManager;
+			friend class MeshManager;
 		};
 		/**
 		 * @brief DirectX 11のメッシュマネージャークラス
 		 */
-		class DX11MeshManager : public ResourceManagerBase<DX11MeshManager, MeshHandle, DX11MeshCreateDesc, DX11MeshData> {
+		class MeshManager : public ResourceManagerBase<MeshManager, MeshHandle, MeshCreateDesc, MeshData> {
 		public:
 			// ====== LOD 生成や再インデックスで使う公開ユーティリティ ======
 						// 頂点ストリームを一括でリマップした結果を保持する簡易構造体
@@ -87,7 +87,7 @@ namespace SFW
 			 * @brief コンストラクタ
 			 * @param dev DirectX 11のデバイス
 			 */
-			explicit DX11MeshManager(ID3D11Device* dev) noexcept : device(dev) {
+			explicit MeshManager(ID3D11Device* dev) noexcept : device(dev) {
 				bool ok = InitCommonMeshes();
 				assert(ok && "Failed to initialize common meshes");
 			}
@@ -96,7 +96,7 @@ namespace SFW
 			 * @param d メッシュ作成のための構造体
 			 * @return std::optional<MeshHandle> 既存のメッシュハンドル、存在しない場合はstd::nullopt
 			 */
-			std::optional<MeshHandle> FindExisting(const DX11MeshCreateDesc& d) noexcept {
+			std::optional<MeshHandle> FindExisting(const MeshCreateDesc& d) noexcept {
 				if (!d.sourcePath.empty()) {
 					if (auto it = pathToHandle.find(d.sourcePath); it != pathToHandle.end())
 						return it->second;
@@ -108,7 +108,7 @@ namespace SFW
 			 * @param d メッシュ作成のための構造体
 			 * @param h メッシュハンドル
 			 */
-			void RegisterKey(const DX11MeshCreateDesc& d, MeshHandle h) {
+			void RegisterKey(const MeshCreateDesc& d, MeshHandle h) {
 				if (!d.sourcePath.empty()) pathToHandle.emplace(d.sourcePath, h);
 			}
 			/**
@@ -117,7 +117,7 @@ namespace SFW
 			 * @param h メッシュハンドル
 			 * @return DX11MeshData 作成されたメッシュデータ
 			 */
-			DX11MeshData CreateResource(const DX11MeshCreateDesc& desc, MeshHandle h);
+			MeshData CreateResource(const MeshCreateDesc& desc, MeshHandle h);
 			/**
 			 * @brief cgltf から抽出した float 配列を SNORM / half にパックして SoA ストリームを作る
 			 * @param pathW メッシュの元ファイルパス（キャッシュ用）
@@ -137,7 +137,7 @@ namespace SFW
 				const std::vector<std::array<uint8_t, 4>>& skinIdx,     // optional
 				const std::vector<std::array<uint8_t, 4>>& skinWgt,     // optional (0..255, 後述)
 				const std::vector<uint32_t>& indices,
-				DX11MeshData& out);
+				MeshData& out);
 			/**
 			 * @brief CreateFromGLTF_SoA_R8Snorm用のラッパー関数
 			 * @param pathW メッシュの元ファイルパス（キャッシュ用）

@@ -21,10 +21,10 @@ public:
 		UndeletablePtr<Graphics::I3DPerCameraService> cameraService) {
 		//‹@”\‚ð§ŒÀ‚µ‚½RenderQueue‚ðŽæ“¾
 		auto producerSession = renderService->GetProducerSession("3D");
-		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
-		auto meshManager = renderService->GetResourceManager<Graphics::DX11MeshManager>();
-		auto materialManager = renderService->GetResourceManager<Graphics::DX11MaterialManager>();
-		auto psoManager = renderService->GetResourceManager<Graphics::DX11PSOManager>();
+		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
+		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
+		auto materialManager = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
+		auto psoManager = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
 
 		auto fru = cameraService->MakeFrustum();
 		Math::Vec3f camPos = cameraService->GetEyePos();
@@ -66,7 +66,7 @@ public:
 					auto instanceIdx = queue->AllocInstance(std::move(instance));
 					auto& lodBits = model.value()[idx].prevLODBits;
 
-					for (const Graphics::DX11ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
+					for (const Graphics::DX11::ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
 						Graphics::DrawCommand cmd;
 						if (materialMgr->IsValid(mesh.material) == false) [[unlikely]] continue;
 						if (psoMgr->IsValid(mesh.pso) == false) [[unlikely]] continue;

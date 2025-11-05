@@ -15,12 +15,12 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		/**
 		 * @brief DirectX 11のバッファを作成するための構造体
 		 */
-		struct DX11BufferCreateDesc {
+		struct BufferCreateDesc {
 			std::string name;
 			uint32_t size = {};
 			uint32_t structureByteStride = 0; // StructuredBuffer 用（CBV では無視される）
@@ -33,47 +33,47 @@ namespace SFW
 		/**
 		 * @brief DirectX 11のバッファデータを格納する構造体
 		 */
-		struct DX11BufferData {
+		struct BufferData {
 			ComPtr<ID3D11Buffer> buffer;
 			std::string_view name;
 		};
 		/**
 		 * @brief DirectX 11のバッファのハッシュ構造体
 		 */
-		struct DX11BufferCacheKey {
+		struct BufferCacheKey {
 			size_t hash;
 			size_t size;
 
-			bool operator==(const DX11BufferCacheKey& other) const {
+			bool operator==(const BufferCacheKey& other) const {
 				return hash == other.hash && size == other.size;
 			}
 		};
 		/**
 		 * @brief DirectX 11のバッファの内容をハッシュ化するための関数
 		 */
-		struct DX11BufferCacheKeyHash {
-			std::size_t operator()(const DX11BufferCacheKey& k) const {
+		struct BufferCacheKeyHash {
+			std::size_t operator()(const BufferCacheKey& k) const {
 				return std::hash<size_t>()(k.hash) ^ std::hash<size_t>()(k.size);
 			}
 		};
 		/**
 		 * @brief DirectX 11のバッファを更新するための構造体
 		 */
-		struct DX11BufferUpdateDesc {
+		struct BufferUpdateDesc {
 			ComPtr<ID3D11Buffer> buffer;
 			const void* data = nullptr;
 			size_t size = {};
 			bool isDelete = true;
 
-			bool operator==(const DX11BufferUpdateDesc& other) const {
+			bool operator==(const BufferUpdateDesc& other) const {
 				return buffer.Get() == other.buffer.Get();
 			}
 		};
 		/**
 		 * @brief バッファの管理クラス。DirectX 11のバッファを作成、キャッシュ、更新する機能を提供する。
 		 */
-		class DX11BufferManager : public ResourceManagerBase<
-			DX11BufferManager, BufferHandle, DX11BufferCreateDesc, DX11BufferData>
+		class BufferManager : public ResourceManagerBase<
+			BufferManager, BufferHandle, BufferCreateDesc, BufferData>
 		{
 		public:
 			/**
@@ -81,13 +81,13 @@ namespace SFW
 			 * @param device DX11のデバイス
 			 * @param context　DX11のデバイスコンテキスト
 			 */
-			DX11BufferManager(ID3D11Device* device, ID3D11DeviceContext* context) noexcept
+			BufferManager(ID3D11Device* device, ID3D11DeviceContext* context) noexcept
 				: device(device), context(context) {
 			}
 			/**
 			 * @brief デストラクタ
 			 */
-			~DX11BufferManager() {
+			~BufferManager() {
 				for (auto& pendings : pendingUpdates) {
 					for (auto& update : pendings) {
 						if (update.data && update.isDelete) delete update.data;
@@ -99,7 +99,7 @@ namespace SFW
 			 * @param desc バッファ作成記述子
 			 * @return std::optional<BufferHandle> 既存のバッファハンドル、存在しない場合は std::nullopt
 			 */
-			std::optional<BufferHandle> FindExisting(const DX11BufferCreateDesc& desc) noexcept {
+			std::optional<BufferHandle> FindExisting(const BufferCreateDesc& desc) noexcept {
 				if (auto it = nameToHandle.find(desc.name); it != nameToHandle.end())
 					return it->second;
 				return std::nullopt;
@@ -109,7 +109,7 @@ namespace SFW
 			 * @param desc バッファ作成記述子
 			 * @param h 登録するバッファハンドル
 			 */
-			void RegisterKey(const DX11BufferCreateDesc& desc, BufferHandle h) {
+			void RegisterKey(const BufferCreateDesc& desc, BufferHandle h) {
 				nameToHandle.emplace(desc.name, h);
 			}
 			/**
@@ -118,8 +118,8 @@ namespace SFW
 			 * @param h 登録するバッファハンドル
 			 * @return DX11BufferData 作成されたバッファデータ
 			 */
-			DX11BufferData CreateResource(const DX11BufferCreateDesc& desc, BufferHandle h) {
-				DX11BufferData cb{};
+			BufferData CreateResource(const BufferCreateDesc& desc, BufferHandle h) {
+				BufferData cb{};
 
 				D3D11_BUFFER_DESC bd = {};
 				bd.Usage = desc.usage;
@@ -176,7 +176,7 @@ namespace SFW
 			BufferHandle AcquireWithContent(const void* data, uint32_t size) {
 				assert(data && size > 0);
 
-				DX11BufferCacheKey key{ HashBufferContent(data, size), size };
+				BufferCacheKey key{ HashBufferContent(data, size), size };
 				if (auto it = cbvCache.find(key); it != cbvCache.end()) {
 					AddRef(it->second);
 					return it->second;
@@ -202,7 +202,7 @@ namespace SFW
 			 * @brief バッファの内容を遅延で更新するためにキューに追加
 			 * @param desc バッファ作成記述子
 			 */
-			void UpdateBuffer(const DX11BufferUpdateDesc& desc, uint16_t slot) {
+			void UpdateBuffer(const BufferUpdateDesc& desc, uint16_t slot) {
 				pendingUpdates[slot].push_back(desc);
 			}
 			/**
@@ -257,11 +257,11 @@ namespace SFW
 			ID3D11Device* device;
 			ID3D11DeviceContext* context;
 			std::unordered_map<std::string, BufferHandle> nameToHandle;
-			std::unordered_map<DX11BufferCacheKey, BufferHandle, DX11BufferCacheKeyHash> cbvCache;
+			std::unordered_map<BufferCacheKey, BufferHandle, BufferCacheKeyHash> cbvCache;
 
-			std::unordered_map<uint32_t, DX11BufferCacheKey> handleToCacheKey; // key: handle.index
+			std::unordered_map<uint32_t, BufferCacheKey> handleToCacheKey; // key: handle.index
 
-			std::vector<DX11BufferUpdateDesc> pendingUpdates[RENDER_BUFFER_COUNT]; // 更新待ちのデータ
+			std::vector<BufferUpdateDesc> pendingUpdates[RENDER_BUFFER_COUNT]; // 更新待ちのデータ
 		};
 	}
 }

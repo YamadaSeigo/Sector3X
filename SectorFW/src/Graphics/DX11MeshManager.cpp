@@ -18,11 +18,11 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
-		DX11MeshData DX11MeshManager::CreateResource(const DX11MeshCreateDesc& desc, MeshHandle h)
+		MeshData MeshManager::CreateResource(const MeshCreateDesc& desc, MeshHandle h)
 		{
-			DX11MeshData mesh{};
+			MeshData mesh{};
 			// Vertex Buffer
 			// 互換API：単一VBパス（既存の呼び出し維持）
 			D3D11_BUFFER_DESC vbDesc = {};
@@ -138,7 +138,7 @@ namespace SFW
 
 		}
 
-		bool DX11MeshManager::CreateFromGLTF_SoA_R8Snorm(
+		bool MeshManager::CreateFromGLTF_SoA_R8Snorm(
 			const std::wstring& pathW,
 			const std::vector<Math::Vec3f>& positions,
 			const std::vector<Math::Vec3f>& normals,
@@ -147,7 +147,7 @@ namespace SFW
 			const std::vector<std::array<uint8_t, 4>>& skinIdx,
 			const std::vector<std::array<uint8_t, 4>>& skinWgt,
 			const std::vector<uint32_t>& indices,
-			DX11MeshData& out)
+			MeshData& out)
 		{
 			out = {};
 			out.path = pathW;
@@ -206,14 +206,14 @@ namespace SFW
 			// slot0: POSITION
 			if (!MakeVB(device, out.vbs[0], (UINT)(positions.size() * sizeof(Math::Vec3f)), sizeof(Math::Vec3f), positions.data())) return false;
 			out.strides[0] = sizeof(Math::Vec3f); out.offsets[0] = 0; out.usedSlots.set(0);
-			out.attribMap.emplace("POSITION0", DX11MeshData::AttribBinding{ 0, DXGI_FORMAT_R32G32B32_FLOAT, 0 });
+			out.attribMap.emplace("POSITION0", MeshData::AttribBinding{ 0, DXGI_FORMAT_R32G32B32_FLOAT, 0 });
 
 			// slot1: Tangent と Normal を“同一 slot”に詰める（InputLayout で append offset 指定）
 			// ここでは簡単化のため「別々の VB」にします（同一slotにまとめたい場合は 8byte/頂点の連結バッファを用意）
 			if (!packedTan.empty()) {
 				if (!MakeVB(device, out.vbs[1], (UINT)(packedTan.size() * sizeof(uint32_t)), /*stride*/4, packedTan.data())) return false;
 				out.strides[1] = 4; out.offsets[1] = 0; out.usedSlots.set(1);
-				out.attribMap.emplace("TANGENT0", DX11MeshData::AttribBinding{ 1, DXGI_FORMAT_R8G8B8A8_SNORM, 0 });
+				out.attribMap.emplace("TANGENT0", MeshData::AttribBinding{ 1, DXGI_FORMAT_R8G8B8A8_SNORM, 0 });
 
 			}
 			if (!packedNrm.empty()) {
@@ -221,7 +221,7 @@ namespace SFW
 					// ここでは別 VB（slot=1 のままにしたいなら TANGENT を slot=1, NORMAL を slot=5 などに分けてもOK）。
 				if (!MakeVB(device, out.vbs[5], (UINT)(packedNrm.size() * sizeof(uint32_t)), 4, packedNrm.data())) return false;
 				out.strides[5] = 4; out.offsets[5] = 0; out.usedSlots.set(5);
-				out.attribMap.emplace("NORMAL0", DX11MeshData::AttribBinding{ 5, DXGI_FORMAT_R8G8B8A8_SNORM, 0 });
+				out.attribMap.emplace("NORMAL0", MeshData::AttribBinding{ 5, DXGI_FORMAT_R8G8B8A8_SNORM, 0 });
 
 			}
 
@@ -229,7 +229,7 @@ namespace SFW
 			if (!packedUV.empty()) {
 				if (!MakeVB(device, out.vbs[2], (UINT)(packedUV.size() * sizeof(uint32_t)), /*stride*/4, packedUV.data())) return false;
 				out.strides[2] = 4; out.offsets[2] = 0; out.usedSlots.set(2);
-				out.attribMap.emplace("TEXCOORD0", DX11MeshData::AttribBinding{ 2, DXGI_FORMAT_R16G16_FLOAT, 0 });
+				out.attribMap.emplace("TEXCOORD0", MeshData::AttribBinding{ 2, DXGI_FORMAT_R16G16_FLOAT, 0 });
 
 			}
 
@@ -239,8 +239,8 @@ namespace SFW
 				if (!MakeVB(device, out.vbs[4], (UINT)(skinWgtU32.size() * sizeof(uint32_t)), 4, skinWgtU32.data())) return false;
 				out.strides[3] = 4; out.offsets[3] = 0; out.usedSlots.set(3);
 				out.strides[4] = 4; out.offsets[4] = 0; out.usedSlots.set(4);
-				out.attribMap.emplace("BLENDINDICES0", DX11MeshData::AttribBinding{ 3, DXGI_FORMAT_R8G8B8A8_UINT, 0 });
-				out.attribMap.emplace("BLENDWEIGHT0", DX11MeshData::AttribBinding{ 4, DXGI_FORMAT_R8G8B8A8_UNORM, 0 });
+				out.attribMap.emplace("BLENDINDICES0", MeshData::AttribBinding{ 3, DXGI_FORMAT_R8G8B8A8_UINT, 0 });
+				out.attribMap.emplace("BLENDWEIGHT0", MeshData::AttribBinding{ 4, DXGI_FORMAT_R8G8B8A8_UNORM, 0 });
 
 			}
 
@@ -258,7 +258,7 @@ namespace SFW
 			return true;
 		}
 
-		bool DX11MeshManager::AddFromSoA_R8Snorm(const std::wstring& sourcePath,
+		bool MeshManager::AddFromSoA_R8Snorm(const std::wstring& sourcePath,
 			const std::vector<Math::Vec3f>& positions,
 			const std::vector<Math::Vec3f>& normals,
 			const std::vector<Math::Vec4f>& tangents,
@@ -268,7 +268,7 @@ namespace SFW
 			const std::vector<uint32_t>& indices,
 			MeshHandle& outHandle)
 		{
-			DX11MeshData data;
+			MeshData data;
 			if (!CreateFromGLTF_SoA_R8Snorm(sourcePath, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, data))
 				return false;
 
@@ -353,7 +353,7 @@ namespace SFW
 		}
 
 		// ========= 全ストリーム一括 remap =========
-		/*static*/ void DX11MeshManager::ApplyRemapToStreams(
+		/*static*/ void MeshManager::ApplyRemapToStreams(
 			const std::vector<uint32_t>& remap,
 			const std::vector<Math::Vec3f>& inPos,
 			const std::vector<Math::Vec3f>* inNor,
@@ -362,7 +362,7 @@ namespace SFW
 			const std::vector<std::array<uint8_t, 4>>* inSkinIdx,
 			const std::vector<std::array<uint8_t, 4>>* inSkinWgt,
 			size_t outVertexCount,
-			DX11MeshManager::RemappedStreams& out)
+			MeshManager::RemappedStreams& out)
 		{
 			// 必須: POSITION
 			out.positions.resize(outVertexCount);
@@ -397,7 +397,7 @@ namespace SFW
 		}
 
 #ifdef USE_MESHOPTIMIZER
-		/*static*/ bool DX11MeshManager::BuildClustersWithMeshoptimizer(
+		/*static*/ bool MeshManager::BuildClustersWithMeshoptimizer(
 			const std::vector<Math::Vec3f>& positions,
 			const std::vector<uint32_t>& indices,
 			std::vector<ClusterInfo>& outClusters,
@@ -473,7 +473,7 @@ namespace SFW
 		}
 #endif // USE_MESHOPTIMIZER
 
-		void DX11MeshManager::RemoveFromCaches(uint32_t idx)
+		void MeshManager::RemoveFromCaches(uint32_t idx)
 		{
 			auto& data = slots[idx].data;
 			auto pathIt = pathToHandle.find(data.path);
@@ -481,14 +481,14 @@ namespace SFW
 				pathToHandle.erase(pathIt);
 			}
 		}
-		void DX11MeshManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
+		void MeshManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
 		{
 			auto& data = slots[idx].data;
 			for (auto& vb : data.vbs)
 				if (vb) { vb.Reset(); }
 			if (data.ib) { data.ib.Reset(); }
 		}
-		bool DX11MeshManager::InitCommonMeshes()
+		bool MeshManager::InitCommonMeshes()
 		{
 			// すでに有効なら何もしない（ResourceManagerBase の IsValid を想定）
 			if (IsValid(spriteQuadHandle_)) return true;

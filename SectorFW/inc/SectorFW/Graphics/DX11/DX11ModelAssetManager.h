@@ -22,7 +22,7 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		struct SkeletonJoint {
 			std::string name;
@@ -34,7 +34,7 @@ namespace SFW
 			std::vector<SkeletonJoint> joints;
 		};
 
-		struct DX11ModelAssetCreateDesc {
+		struct ModelAssetCreateDesc {
 			std::string path;
 			PSOHandle pso = {};
 			uint32_t option = 1; // トポロジーを保持するか（LOD生成時にメッシュ最適化を行わない）
@@ -54,12 +54,12 @@ namespace SFW
 
 		using LodThresholds = SFW::Graphics::LodThresholdsPx; // ピクセル基準
 
-		struct DX11ModelAssetData {
+		struct ModelAssetData {
 			std::string name;
 
 			struct SubmeshLOD {
 				MeshHandle mesh = {};                // このLODのメッシュ（VB/IB）
-				std::vector<DX11MeshManager::ClusterInfo> clusters; // このLODのクラスタ（meshlets）
+				std::vector<MeshManager::ClusterInfo> clusters; // このLODのクラスタ（meshlets）
 			};
 
 			struct SubMesh {
@@ -86,32 +86,32 @@ namespace SFW
 		private:
 			path_view path; // キャッシュ用のパスビュー
 
-			friend class DX11ModelAssetManager;
+			friend class ModelAssetManager;
 		};
 
-		class DX11ModelAssetManager : public
-			ResourceManagerBase<DX11ModelAssetManager, ModelAssetHandle, DX11ModelAssetCreateDesc, DX11ModelAssetData> {
+		class ModelAssetManager : public
+			ResourceManagerBase<ModelAssetManager, ModelAssetHandle, ModelAssetCreateDesc, ModelAssetData> {
 		public:
-			DX11ModelAssetManager(
-				DX11MeshManager& meshMgr,
-				DX11MaterialManager& matMgr,
-				DX11ShaderManager& shaderMgr,
-				DX11PSOManager& psoMgr,
-				DX11TextureManager& texMgr,
-				DX11BufferManager& cbManager,
-				DX11SamplerManager& samplerManager,
+			ModelAssetManager(
+				MeshManager& meshMgr,
+				MaterialManager& matMgr,
+				ShaderManager& shaderMgr,
+				PSOManager& psoMgr,
+				TextureManager& texMgr,
+				BufferManager& cbManager,
+				SamplerManager& samplerManager,
 				ID3D11Device* device);
 
-			std::optional<ModelAssetHandle> FindExisting(const DX11ModelAssetCreateDesc& d) {
+			std::optional<ModelAssetHandle> FindExisting(const ModelAssetCreateDesc& d) {
 				auto p = std::filesystem::weakly_canonical(d.path);
 				if (auto it = pathToHandle.find(p); it != pathToHandle.end()) return it->second;
 				return std::nullopt;
 			}
-			void RegisterKey(const DX11ModelAssetCreateDesc& d, ModelAssetHandle h) {
+			void RegisterKey(const ModelAssetCreateDesc& d, ModelAssetHandle h) {
 				pathToHandle.emplace(std::filesystem::weakly_canonical(d.path), h);
 			}
 
-			DX11ModelAssetData CreateResource(const DX11ModelAssetCreateDesc& desc, ModelAssetHandle h) {
+			ModelAssetData CreateResource(const ModelAssetCreateDesc& desc, ModelAssetHandle h) {
 				return LoadFromGLTF(desc);
 			}
 
@@ -119,7 +119,7 @@ namespace SFW
 			void DestroyResource(uint32_t idx, uint64_t currentFrame);
 
 			// キャッシュ対応：内部で保持して返す
-			DX11ModelAssetData LoadFromGLTF(const DX11ModelAssetCreateDesc& desc);
+			ModelAssetData LoadFromGLTF(const ModelAssetCreateDesc& desc);
 
 			// ==== LOD プリセット ====
 			enum class LodQualityMode : uint8_t { Attributes, Permissive, Sloppy };
@@ -162,24 +162,24 @@ namespace SFW
 				const std::vector<std::array<uint8_t, 4>>* baseSkinIdx,
 				const std::vector<std::array<uint8_t, 4>>* baseSkinWgt,
 				const LodRecipe& recipe,
-				DX11MeshManager& meshMgr,
+				MeshManager& meshMgr,
 				const std::wstring& tagForCaching,    // 例: path + L"#subX-lodY"
-				DX11ModelAssetData::SubmeshLOD& outMesh,
+				ModelAssetData::SubmeshLOD& outMesh,
 				std::vector<uint32_t>& outIdx,
-				DX11MeshManager::RemappedStreams& outStreams,
+				MeshManager::RemappedStreams& outStreams,
 				bool buildClusters = false);
 
 			// 返すのは LOD1..N 用のレシピ（LOD0は常に原型）
 			static std::vector<LodRecipe> BuildLodRecipes(const AssetStats& a);
 
 		private:
-			DX11MeshManager& meshMgr;
-			DX11MaterialManager& matMgr;
-			DX11ShaderManager& shaderMgr;
-			DX11PSOManager& psoMgr;
-			DX11TextureManager& texMgr;
-			DX11BufferManager& cbManager;
-			DX11SamplerManager& samplerManager;
+			MeshManager& meshMgr;
+			MaterialManager& matMgr;
+			ShaderManager& shaderMgr;
+			PSOManager& psoMgr;
+			TextureManager& texMgr;
+			BufferManager& cbManager;
+			SamplerManager& samplerManager;
 			ID3D11Device* device;
 
 			// キャッシュ：正規化パス→ModelAsset

@@ -6,9 +6,9 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
-		std::filesystem::path DX11ShaderManager::Canonicalize(const std::wstring& w) {
+		std::filesystem::path ShaderManager::Canonicalize(const std::wstring& w) {
 			// weakly_canonical は存在しないパスでも正規化してくれる
 			std::error_code ec{};
 			auto p = std::filesystem::path(w);
@@ -16,7 +16,7 @@ namespace SFW
 			return ec ? p : c;
 		}
 
-		size_t DX11ShaderManager::MakeKey(const DX11ShaderCreateDesc& desc) const {
+		size_t ShaderManager::MakeKey(const ShaderCreateDesc& desc) const {
 			// パスは正規化 & lowercase（Windows想定の大文字小文字差異の吸収）
 			auto vsCan = Canonicalize(desc.vsPath).generic_wstring();
 			auto psCan = Canonicalize(desc.psPath).generic_wstring();
@@ -31,21 +31,21 @@ namespace SFW
 			return seed;
 		}
 
-		std::optional<ShaderHandle> DX11ShaderManager::FindExisting(const DX11ShaderCreateDesc& desc) noexcept {
+		std::optional<ShaderHandle> ShaderManager::FindExisting(const ShaderCreateDesc& desc) noexcept {
 			const size_t k = MakeKey(desc);
 			if (auto it = keyToHandle.find(k); it != keyToHandle.end())
 				return it->second;
 			return std::nullopt;
 		}
 
-		void DX11ShaderManager::RegisterKey(const DX11ShaderCreateDesc& desc, ShaderHandle h) {
+		void ShaderManager::RegisterKey(const ShaderCreateDesc& desc, ShaderHandle h) {
 			const size_t k = MakeKey(desc);
 			keyToHandle.emplace(k, h);
 		}
 
-		DX11ShaderData DX11ShaderManager::CreateResource(const DX11ShaderCreateDesc& desc, ShaderHandle h)
+		ShaderData ShaderManager::CreateResource(const ShaderCreateDesc& desc, ShaderHandle h)
 		{
-			DX11ShaderData shader{};
+			ShaderData shader{};
 
 			shader.templateID = desc.templateID;
 
@@ -94,7 +94,7 @@ namespace SFW
 		}
 
 		inline bool IsInstanceSemantic(const std::string& semanticName) {
-			return semanticName.starts_with(DX11ShaderManager::INSTANCE_SEMANTIC_NAME);
+			return semanticName.starts_with(ShaderManager::INSTANCE_SEMANTIC_NAME);
 		}
 
 		// System-Value(SV_*) は IA ではなくパイプラインが自動供給する → InputLayout から除外
@@ -110,10 +110,10 @@ namespace SFW
 			return s == "TEXCOORD" || s.rfind("TEXCOORD", 0) == 0;
 		}
 
-		void DX11ShaderManager::ReflectInputLayout(ID3DBlob* vsBlob,
+		void ShaderManager::ReflectInputLayout(ID3DBlob* vsBlob,
 			std::vector<D3D11_INPUT_ELEMENT_DESC>& outDesc,
 			std::vector<std::string>& semanticNames,
-			DX11ShaderData& currentShaderData)
+			ShaderData& currentShaderData)
 		{
 			outDesc.clear();
 			semanticNames.clear();
@@ -220,7 +220,7 @@ namespace SFW
 					: InputBindingMode::LegacyManual);
 		}
 
-		unsigned int DX11ShaderManager::DecideInputSlotFromSemantic(std::string_view name, unsigned int semanticIndex) noexcept
+		unsigned int ShaderManager::DecideInputSlotFromSemantic(std::string_view name, unsigned int semanticIndex) noexcept
 		{
 			// ざっくり規約：
 				// POSITION        -> slot 0
@@ -239,7 +239,7 @@ namespace SFW
 			return 0;
 		}
 
-		void DX11ShaderManager::ReflectShaderResources(ID3DBlob* blob, std::vector<ShaderResourceBinding>& outBindings)
+		void ShaderManager::ReflectShaderResources(ID3DBlob* blob, std::vector<ShaderResourceBinding>& outBindings)
 		{
 			Microsoft::WRL::ComPtr<ID3D11ShaderReflection> reflector;
 			D3DReflect(blob->GetBufferPointer(), blob->GetBufferSize(), IID_PPV_ARGS(&reflector));
@@ -261,7 +261,7 @@ namespace SFW
 			}
 		}
 
-		bool DX11ShaderManager::IsKnownSemantic(std::string_view s) const noexcept {
+		bool ShaderManager::IsKnownSemantic(std::string_view s) const noexcept {
 			// 必要なら小文字化
 			if (s == "POSITION" || s == "NORMAL" || s == "TANGENT" || s == "BLENDINDICES" || s == "BLENDWEIGHT") return true;
 			if (s.rfind("TEXCOORD", 0) == 0) return true;     // TEXCOORD0,1,...
@@ -269,7 +269,7 @@ namespace SFW
 			return false;
 		}
 
-		void DX11ShaderManager::RegisterSemanticOverride(const SemanticKey& key, const SemanticBinding& bind) {
+		void ShaderManager::RegisterSemanticOverride(const SemanticKey& key, const SemanticBinding& bind) {
 			overrides_[key] = bind;
 		}
 	}

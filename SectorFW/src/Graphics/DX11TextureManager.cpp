@@ -17,12 +17,12 @@ using Microsoft::WRL::ComPtr;
 using namespace DirectX;
 
 namespace SFW {
-    namespace Graphics {
+    namespace Graphics::DX11 {
 
         //==================== 小ヘルパ ====================
 
         // UTF-8 -> Wide
-        std::wstring DX11TextureManager::Utf8ToWide(std::string_view s) {
+        std::wstring TextureManager::Utf8ToWide(std::string_view s) {
             if (s.empty()) return L"";
             int len = MultiByteToWideChar(CP_UTF8, 0, s.data(), (int)s.size(), nullptr, 0);
             std::wstring w(len, L'\0');
@@ -240,10 +240,10 @@ namespace SFW {
 
         //==================== 本体 ====================
 
-        DX11TextureManager::DX11TextureManager(ID3D11Device* device, ID3D11DeviceContext* context, std::filesystem::path convertedDir) noexcept
+        TextureManager::TextureManager(ID3D11Device* device, ID3D11DeviceContext* context, std::filesystem::path convertedDir) noexcept
             : device(device), context(context), convertedDir(convertedDir) {}
 
-        DX11TextureData DX11TextureManager::CreateResource(const DX11TextureCreateDesc& desc, TextureHandle) {
+        TextureData TextureManager::CreateResource(const TextureCreateDesc& desc, TextureHandle) {
 			// パスがある場合はそちらを優先
             if (!desc.path.empty())
             {
@@ -294,7 +294,7 @@ namespace SFW {
                 ComPtr<ID3D11ShaderResourceView> srv = CreateSRV(tex.Get(), meta, device, desc.forceSRGB);
 
                 // 返却
-                DX11TextureData out{};
+                TextureData out{};
                 out.path = desc.path;
                 out.srv = std::move(srv);
                 out.resource = std::move(tex);
@@ -354,22 +354,22 @@ namespace SFW {
             hr = device->CreateShaderResourceView(tex2D.Get(), &sd, srv.GetAddressOf());
             if (FAILED(hr)) throw std::runtime_error("CreateShaderResourceView failed.");
 
-            DX11TextureData out{};
+            TextureData out{};
             out.path.clear();        // 生成物はパス無し
             out.srv = std::move(srv);
 			out.resource = std::move(tex2D);
             return out;
         }
 
-        void DX11TextureManager::RemoveFromCaches(uint32_t idx) {
+        void TextureManager::RemoveFromCaches(uint32_t idx) {
             const auto& d = this->slots[idx].data;
-            detail::DX11TextureKey victim{ detail::NormalizePath(d.path), false };
+            detail::TextureKey victim{ detail::NormalizePath(d.path), false };
             std::unique_lock lk(cacheMx_);
             victim.forceSRGB = false; pathToHandle_.erase(victim);
             victim.forceSRGB = true;  pathToHandle_.erase(victim);
         }
 
-        void DX11TextureManager::DestroyResource(uint32_t idx, uint64_t) {
+        void TextureManager::DestroyResource(uint32_t idx, uint64_t) {
             RemoveFromCaches(idx);
             auto& d = this->slots[idx].data;
             if (d.srv) d.srv.Reset();
@@ -377,17 +377,17 @@ namespace SFW {
         }
 
         //================ 遅延更新 実装 ================
-        void DX11TextureManager::UpdateTexture(const DX11TextureUpdateDesc& desc)
+        void TextureManager::UpdateTexture(const TextureUpdateDesc& desc)
         {
             std::lock_guard<std::mutex> lock(updateMx_);
             pendingTexUpdates_.push_back(desc);
         }
 
-        void DX11TextureManager::UpdateTexture(TextureHandle h, const void* pData, UINT rowPitch, UINT depthPitch,
+        void TextureManager::UpdateTexture(TextureHandle h, const void* pData, UINT rowPitch, UINT depthPitch,
             bool isDelete, const D3D11_BOX* pBox, UINT subresource)
         {
             auto d = Get(h);
-            DX11TextureUpdateDesc u{};
+            TextureUpdateDesc u{};
             u.tex = d.ref().resource;
             u.subresource = subresource;
             u.pData = pData;
@@ -398,7 +398,7 @@ namespace SFW {
             UpdateTexture(u);
         }
 
-        void DX11TextureManager::QueueGenerateMips(TextureHandle h)
+        void TextureManager::QueueGenerateMips(TextureHandle h)
         {
             auto d = Get(h);
             if (!d.ref().srv) return;
@@ -406,10 +406,10 @@ namespace SFW {
             pendingGenMips_.push_back({ d.ref().srv });
         }
 
-        void DX11TextureManager::PendingUpdates()
+        void TextureManager::PendingUpdates()
         {
             // ユニーク化： (tex, subresource) で最新だけ残す
-            std::vector<DX11TextureUpdateDesc> work;
+            std::vector<TextureUpdateDesc> work;
             {
                 std::lock_guard<std::mutex> lock(updateMx_);
                 if (pendingTexUpdates_.empty() && pendingGenMips_.empty()) return;
@@ -435,7 +435,7 @@ namespace SFW {
 
                 }
                 // フィルタして「最後のものだけ」残す
-                std::vector<DX11TextureUpdateDesc> filtered;
+                std::vector<TextureUpdateDesc> filtered;
                 filtered.reserve(lastIndex.size());
                 for (auto& [k, idx] : lastIndex) filtered.push_back(std::move(work[idx]));
                 work.swap(filtered);
@@ -475,7 +475,7 @@ namespace SFW {
             }
         }
 
-        std::string DX11TextureManager::ResolveConvertedPath(const std::string& original) {
+        std::string TextureManager::ResolveConvertedPath(const std::string& original) {
             namespace fs = std::filesystem;
 
             fs::path p = original;

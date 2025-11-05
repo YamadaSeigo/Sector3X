@@ -30,7 +30,7 @@ using Microsoft::WRL::ComPtr;
 #endif
 
 
-namespace SFW::Graphics {
+namespace SFW::Graphics::DX11 {
 
     // ------------------------------------------------------------
     // PODs
@@ -323,6 +323,7 @@ namespace SFW::Graphics {
             // 4) Draw (vertex-pull)
             ctx->VSSetShader(vs.Get(), nullptr, 0);
             ctx->PSSetShader(ps.Get(), nullptr, 0);
+
             struct VSParams { float ViewProj[16]; float World[16]; } vsp{}; memcpy(vsp.ViewProj, viewProj, 64); memcpy(vsp.World, world, 64);
             ctx->Map(cbVS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms); memcpy(ms.pData, &vsp, sizeof(vsp)); ctx->Unmap(cbVS.Get(), 0);
             ctx->VSSetConstantBuffers(0, 1, cbVS.GetAddressOf());
@@ -335,6 +336,44 @@ namespace SFW::Graphics {
             ctx->VSSetShaderResources(0, 4, nullVs);
         }
     };
+
+    struct ClusterSplatSRVs {
+        // 素材4 + スプラット(RGBA)
+        ComPtr<ID3D11ShaderResourceView> layers[4];
+        ComPtr<ID3D11ShaderResourceView> splat;
+        // タイルをPS定数へ渡す用（cluster毎）
+        float layerTiling[4][2]{}; // {u,v}
+        float splatST[2]{ 1.f,1.f };
+        float splatOffset[2]{ 0.f,0.f };
+    };
+
+    // PS用の追加リソース
+    struct SplatRenderResources {
+        ComPtr<ID3D11SamplerState> sampLinearWrap; // s0
+        ComPtr<ID3D11Buffer> cbSplat;              // b1 : tiling等
+        // クラスタ→SRV群
+        std::vector<ClusterSplatSRVs> perCluster;  // size == terrain.clusters.size()
+    };
+
+    // 初期化（サンプラ/CB確保 & perClusterリサイズ）
+    inline bool InitSplatResources(ID3D11Device* dev,
+        SplatRenderResources& out,
+        size_t clusterCount)
+    {
+        out.perCluster.resize(clusterCount);
+
+        // サンプラ
+        D3D11_SAMPLER_DESC sd{}; sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+        sd.AddressU = sd.AddressV = sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+        if (FAILED(dev->CreateSamplerState(&sd, &out.sampLinearWrap))) return false;
+
+        // PS定数バッファ（タイル/オフセット など、1クラスタぶん）
+        D3D11_BUFFER_DESC bd{}; bd.ByteWidth = 16 * 4; // 64B (16バイト境界)
+        bd.Usage = D3D11_USAGE_DYNAMIC; bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+        bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+        if (FAILED(dev->CreateBuffer(&bd, nullptr, &out.cbSplat))) return false;
+        return true;
+    }
 
     // ------------------------------------------------------------
     // Convenience: build from TerrainClustered (AoS) into this context
@@ -574,5 +613,46 @@ namespace SFW::Graphics {
         }
     }
 #endif
+
+    // ID→パス 等の解決はコールバックで柔軟化
+    using ResolveTexturePathFn = bool(*)(uint32_t id, /*out*/ std::string& path, /*out*/ bool& forceSRGB);
+
+    // 1回だけ構築（またはホットリロード時に呼び直し）
+    inline bool BuildClusterSplatSRVs(ID3D11Device* dev,
+        SFW::Graphics::DX11::TextureManager& texMgr,
+        const SFW::Graphics::TerrainClustered& terrain,
+        ResolveTexturePathFn resolve,
+        SplatRenderResources& io)
+    {
+        if (terrain.clusters.size() != io.perCluster.size()) return false;
+
+        for (size_t cid = 0; cid < terrain.clusters.size(); ++cid) {
+            const auto& meta = terrain.splat[cid];
+            auto& dst = io.perCluster[cid];
+
+            // 素材4
+            for (uint32_t li = 0; li < meta.layerCount && li < 4; ++li) {
+                std::string path; bool srgb = true;
+                if (!resolve(meta.layers[li].materialId, path, srgb)) return false;
+                SFW::Graphics::DX11::TextureCreateDesc d{}; d.path = path; d.forceSRGB = srgb;
+
+                dst.layers[li] = texMgr.CreateResource(d, {}).srv;
+                dst.layerTiling[li][0] = meta.layers[li].uvTilingU;
+                dst.layerTiling[li][1] = meta.layers[li].uvTilingV;
+            }
+
+            // スプラット（RGBA）
+            {
+                std::string path; bool srgb = false; // 正規化された重みなら非sRGB推奨
+                if (!resolve(meta.splatTextureId, path, srgb)) return false;
+                SFW::Graphics::DX11::TextureCreateDesc d{}; d.path = path; d.forceSRGB = srgb;
+                dst.splat = texMgr.CreateResource(d, {}).srv;
+                dst.splatST[0] = meta.splatUVScaleU; dst.splatST[1] = meta.splatUVScaleV;
+                dst.splatOffset[0] = meta.splatUVOffsetU; dst.splatOffset[1] = meta.splatUVOffsetV;
+            }
+        }
+        return true;
+    }
+
 
 } // namespace SFW

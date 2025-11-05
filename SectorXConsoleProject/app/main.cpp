@@ -46,7 +46,7 @@ int main(void)
 	// ウィンドウの作成
 	WindowHandler::Create(_T(WINDOW_NAME), WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	Graphics::DX11GraphicsDevice graphics;
+	Graphics::DX11::GraphicsDevice graphics;
 	graphics.Configure<Debug::ImGuiBackendDX11Win32>(WindowHandler::GetMainHandle(), WINDOW_WIDTH, WINDOW_HEIGHT, FPS_LIMIT);
 
 	// デバイス & サービス（Worldコンテナ）
@@ -69,14 +69,14 @@ int main(void)
 	Input::WinInput winInput(WindowHandler::GetMouseInput());
 	InputService* inputService = &winInput;
 
-	auto bufferMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11BufferManager>();
-	Graphics::DX113DPerCameraService dx11PerCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	auto bufferMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::BufferManager>();
+	Graphics::DX11::PerCamera3DService dx11PerCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	Graphics::I3DPerCameraService* perCameraService = &dx11PerCameraService;
 
-	Graphics::DX113DOrtCameraService dx11OrtCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	Graphics::DX11::OrtCamera3DService dx11OrtCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	Graphics::I3DOrtCameraService* ortCameraService = &dx11OrtCameraService;
 
-	Graphics::DX112DCameraService dx112DCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	Graphics::DX11::Camera2DService dx112DCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	Graphics::I2DCameraService* camera2DService = &dx112DCameraService;
 
 	SimpleThreadPoolService threadPool;
@@ -107,15 +107,15 @@ int main(void)
 	};
 
 	std::vector<uint32_t> outIndexPool;
-	std::vector<Graphics::ClusterLodRange> outLodRanges;
+	std::vector<Graphics::DX11::ClusterLodRange> outLodRanges;
 	std::vector<uint32_t> outLodBase;
 	std::vector<uint32_t> outLodCount;
 
-	Graphics::GenerateClusterLODs_meshopt_fast(terrain.indexPool, terrain.clusters, positions.data(),
+	Graphics::DX11::GenerateClusterLODs_meshopt_fast(terrain.indexPool, terrain.clusters, positions.data(),
 		terrain.vertices.size(), sizeof(Math::Vec3f), lodTarget,
 		outIndexPool, outLodRanges, outLodBase, outLodCount);
 
-	Graphics::BlockReservedContext blockRevert;
+	Graphics::DX11::BlockReservedContext blockRevert;
 	blockRevert.Init(graphics.GetDevice(),
 		L"assets/shader/CS_TerrainClustered.cso",
 		L"assets/shader/CS_WriteArgs.cso",
@@ -127,7 +127,7 @@ int main(void)
 
 	terrain.indexPool = std::move(outIndexPool);
 
-	Graphics::BuildFromTerrainClustered(graphics.GetDevice(), terrain, blockRevert);
+	Graphics::DX11::BuildFromTerrainClustered(graphics.GetDevice(), terrain, blockRevert);
 
 	auto deviceContext = graphics.GetDeviceContext();
 
@@ -221,32 +221,32 @@ int main(void)
 			blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height, 400.0f, 160.0f);
 		};
 
-	renderService->SetCustomUpdateFunction(std::move(terrainUpdateFunc));
-	renderService->SetCustomPreDrawFunction(std::move(testClusterFunc));
+	//renderService->SetCustomUpdateFunction(std::move(terrainUpdateFunc));
+	//renderService->SetCustomPreDrawFunction(std::move(testClusterFunc));
 
 	//デバッグ用の初期化
 	//========================================================================================-
 	using namespace SFW::Graphics;
 
 	graphics.TestInitialize();
-	auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11ShaderManager>();
-	DX11ShaderCreateDesc shaderDesc;
+	auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11::ShaderManager>();
+	DX11::ShaderCreateDesc shaderDesc;
 	shaderDesc.templateID = MaterialTemplateID::PBR;
 	shaderDesc.vsPath = L"assets/shader/VS_Default.cso";
 	shaderDesc.psPath = L"assets/shader/PS_Default.cso";
 	ShaderHandle shaderHandle;
 	shaderMgr->Add(shaderDesc, shaderHandle);
 
-	DX11PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
-	auto psoMgr = graphics.GetRenderService()->GetResourceManager<DX11PSOManager>();
+	DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
+	auto psoMgr = graphics.GetRenderService()->GetResourceManager<DX11::PSOManager>();
 	PSOHandle psoHandle;
 	psoMgr->Add(psoDesc, psoHandle);
 
 	ModelAssetHandle modelAssetHandle[4];
 
-	auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11ModelAssetManager>();
+	auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
 	// モデルアセットの読み込み
-	DX11ModelAssetCreateDesc modelDesc;
+	DX11::ModelAssetCreateDesc modelDesc;
 	modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_1.gltf";
 	modelDesc.pso = psoHandle;
 	modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
@@ -291,7 +291,7 @@ int main(void)
 		//scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
+		//scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<CleanModelSystem>(world.GetServiceLocator());
 
 		auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
@@ -305,10 +305,10 @@ int main(void)
 		Math::Vec3f dst = src;
 
 		// Entity生成
-		for (int j = 0; j < 1; ++j) {
-			for (int k = 0; k < 1; ++k) {
+		for (int j = 0; j < 300; ++j) {
+			for (int k = 0; k < 300; ++k) {
 				for (int n = 0; n < 1; ++n) {
-					Math::Vec3f location = { float(rand() % 2000 + 1), float(n) * 20.0f, float(rand() % 2000 + 1) };
+					Math::Vec3f location = { float(rand() % 3000 + 1), float(n) * 20.0f, float(rand() % 3000 + 1) };
 					//Math::Vec3f location = { 10.0f * j,0.0f,10.0f * k };
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();

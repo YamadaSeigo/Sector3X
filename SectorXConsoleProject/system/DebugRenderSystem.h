@@ -65,13 +65,13 @@ public:
 		using namespace Graphics;
 		using namespace Debug;
 
-		auto meshMgr = renderService->GetResourceManager<DX11MeshManager>();
+		auto meshMgr = renderService->GetResourceManager<DX11::MeshManager>();
 
 		std::vector<LineVertex> boxVerts;
 		std::vector<uint32_t> boxIndices;
 
 		MakeBoxLines(1.0f, 1.0f, 1.0f, boxVerts, boxIndices);
-		DX11MeshCreateDesc boxDesc{
+		DX11::MeshCreateDesc boxDesc{
 			.vertices = boxVerts.data(),
 			.vSize = (uint32_t)boxVerts.size() * sizeof(LineVertex),
 			.stride = sizeof(LineVertex),
@@ -87,7 +87,7 @@ public:
 
 		//MakeSphere(0.5f, 8, 8, sphereVerts, sphereIndices);
 		MakeSphereCrossLines(0.5f, 16, sphereVerts, sphereIndices, true, true, true);
-		DX11MeshCreateDesc sphereDesc{
+		DX11::MeshCreateDesc sphereDesc{
 			.vertices = sphereVerts.data(),
 			.vSize = (uint32_t)sphereVerts.size() * sizeof(LineVertex),
 			.stride = sizeof(LineVertex),
@@ -98,16 +98,16 @@ public:
 
 		meshMgr->Add(sphereDesc, sphereHandle);
 
-		auto shaderMgr = renderService->GetResourceManager<DX11ShaderManager>();
-		DX11ShaderCreateDesc shaderDesc;
+		auto shaderMgr = renderService->GetResourceManager<DX11::ShaderManager>();
+		DX11::ShaderCreateDesc shaderDesc;
 		shaderDesc.templateID = MaterialTemplateID::PBR;
 		shaderDesc.vsPath = L"assets/shader/VS_DrawLineList.cso";
 		shaderDesc.psPath = L"assets/shader/PS_DrawLineList.cso";
 		ShaderHandle shaderHandle;
 		shaderMgr->Add(shaderDesc, shaderHandle);
 
-		auto psoMgr = renderService->GetResourceManager<DX11PSOManager>();
-		DX11PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::WireCullNone };
+		auto psoMgr = renderService->GetResourceManager<DX11::PSOManager>();
+		DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::WireCullNone };
 		psoMgr->Add(psoDesc, psoLineHandle);
 
 		ShaderHandle mocShaderHandle;
@@ -121,7 +121,7 @@ public:
 		std::vector<uint32_t> indices(MAX_CAPACITY_3DLINE);
 		for (uint32_t i = 0; i < MAX_CAPACITY_3DLINE; ++i) indices[i] = i;
 
-		DX11MeshCreateDesc lineDesc;
+		DX11::MeshCreateDesc lineDesc;
 		lineDesc.vertices = nullptr;
 		lineDesc.vSize = sizeof(LineVertex) * MAX_CAPACITY_3DVERTEX;
 		lineDesc.stride = sizeof(LineVertex);
@@ -140,9 +140,9 @@ public:
 
 		line2DVertices.reset(new LineVertex[MAX_CAPACITY_2DLINE]);
 
-		auto texMgr = renderService->GetResourceManager<DX11TextureManager>();
+		auto texMgr = renderService->GetResourceManager<DX11::TextureManager>();
 
-		Graphics::DX11TextureRecipe recipe =
+		Graphics::DX11::TextureRecipe recipe =
 		{
 		.width = 960,
 		.height = 720,
@@ -163,10 +163,10 @@ public:
 		.recipe = &recipe           // レシピを指定
 			}, mocTexHandle);
 
-		Graphics::DX11MaterialCreateDesc matDesc;
+		Graphics::DX11::MaterialCreateDesc matDesc;
 		matDesc.shader = mocShaderHandle;
 		matDesc.psSRV[5] = mocTexHandle; // TEX5 にセット
-		auto matMgr = renderService->GetResourceManager<Graphics::DX11MaterialManager>();
+		auto matMgr = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
 		matMgr->Add(matDesc, mocMaterialHandle);
 	}
 
@@ -179,10 +179,10 @@ public:
 		auto draw3DLineSession = renderService->GetProducerSession("Line");
 		auto draw2DSession = renderService->GetProducerSession("2D");
 		auto draw2DLineSession = renderService->GetProducerSession("Line2D");
-		Graphics::DX11MeshManager* meshManager = renderService->GetResourceManager<Graphics::DX11MeshManager>();
-		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
-		auto psoManager = renderService->GetResourceManager<Graphics::DX11PSOManager>();
-		auto bufferManager = renderService->GetResourceManager<Graphics::DX11BufferManager>();
+		auto* meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
+		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
+		auto psoManager = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
+		auto bufferManager = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
 		if (!psoManager->IsValid(psoLineHandle)) {
 			LOG_ERROR("PSOHandle is not valid in ShapeDimsRenderSystem");
 			return;
@@ -347,7 +347,7 @@ public:
 			}, partition, fru);
 
 
-		Graphics::DX11BufferUpdateDesc vbUpdateDesc;
+		Graphics::DX11::BufferUpdateDesc vbUpdateDesc;
 		{
 			auto lineBuffer = meshManager->Get(line3DHandle);
 			vbUpdateDesc.buffer = lineBuffer.ref().vbs[0];
@@ -435,7 +435,7 @@ public:
 
 		renderService->GetDepthBuffer(mocDepth);
 
-		Graphics::DX11TextureManager* texMgr = renderService->GetResourceManager<Graphics::DX11TextureManager>();
+		Graphics::DX11::TextureManager* texMgr = renderService->GetResourceManager<Graphics::DX11::TextureManager>();
 		texMgr->UpdateTexture(mocTexHandle, mocDepth.data(), 960 * 4);
 
 		Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(300.0f, -220.0f, 0.0f));

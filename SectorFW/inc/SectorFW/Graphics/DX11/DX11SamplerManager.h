@@ -22,26 +22,26 @@ inline bool operator==(const D3D11_SAMPLER_DESC& a, const D3D11_SAMPLER_DESC& b)
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		/**
 		 * @brief DirectX 11のサンプラーステートを管理するクラス
 		 */
-		struct DX11SamplerCreateDesc {
+		struct SamplerCreateDesc {
 			std::string name;
 			D3D11_SAMPLER_DESC desc;
 		};
 		/**
 		 * @brief DirectX 11のサンプラーステートのデータ
 		 */
-		struct DX11SamplerData {
+		struct SamplerData {
 			ComPtr<ID3D11SamplerState> state;
 			std::string_view name;
 		};
 		/**
 		 * @brief D3D11_SAMPLER_DESCのハッシュ関数
 		 */
-		struct DX11SamplerDescHash {
+		struct SamplerDescHash {
 			std::size_t operator()(const D3D11_SAMPLER_DESC& desc) const {
 				return HashBufferContent(&desc, sizeof(desc));
 			}
@@ -49,21 +49,21 @@ namespace SFW
 		/**
 		 * @brief DirectX 11のサンプラーステートを管理するクラス
 		 */
-		class DX11SamplerManager : public ResourceManagerBase<
-			DX11SamplerManager, SamplerHandle, DX11SamplerCreateDesc, DX11SamplerData>
+		class SamplerManager : public ResourceManagerBase<
+			SamplerManager, SamplerHandle, SamplerCreateDesc, SamplerData>
 		{
 		public:
 			/**
 			 * @brief コンストラクタ
 			 * @param device DirectX 11のデバイス
 			 */
-			DX11SamplerManager(ID3D11Device* device) noexcept : device(device) {}
+			SamplerManager(ID3D11Device* device) noexcept : device(device) {}
 			/**
 			 * @brief 既存のサンプラーステートを名前で検索する関数
 			 * @param desc サンプラーステートの作成情報
 			 * @return std::optional<SamplerHandle> 既存のサンプラーステートのハンドル、存在しない場合はstd::nullopt
 			 */
-			std::optional<SamplerHandle> FindExisting(const DX11SamplerCreateDesc& desc) noexcept {
+			std::optional<SamplerHandle> FindExisting(const SamplerCreateDesc& desc) noexcept {
 				if (auto it = nameToHandle.find(desc.name); it != nameToHandle.end())
 					return it->second;
 				return std::nullopt;
@@ -73,7 +73,7 @@ namespace SFW
 			 * @param desc サンプラーステートの作成情報
 			 * @param h 登録するサンプラーステートのハンドル
 			 */
-			void RegisterKey(const DX11SamplerCreateDesc& desc, SamplerHandle h) {
+			void RegisterKey(const SamplerCreateDesc& desc, SamplerHandle h) {
 				nameToHandle.emplace(desc.name, h);
 			}
 			/**
@@ -82,8 +82,8 @@ namespace SFW
 			 * @param h 登録するサンプラーステートのハンドル
 			 * @return DX11SamplerData 作成されたサンプラーステートのデータ
 			 */
-			DX11SamplerData CreateResource(const DX11SamplerCreateDesc& desc, SamplerHandle h) {
-				DX11SamplerData data{};
+			SamplerData CreateResource(const SamplerCreateDesc& desc, SamplerHandle h) {
+				SamplerData data{};
 
 				HRESULT hr = device->CreateSamplerState(&desc.desc, &data.state);
 				if (FAILED(hr)) {
@@ -207,7 +207,7 @@ namespace SFW
 			}
 		private:
 			ID3D11Device* device;
-			std::unordered_map<D3D11_SAMPLER_DESC, SamplerHandle, DX11SamplerDescHash> samplerCache;
+			std::unordered_map<D3D11_SAMPLER_DESC, SamplerHandle, SamplerDescHash> samplerCache;
 			std::unordered_map<uint32_t, D3D11_SAMPLER_DESC> handleToDesc;
 
 			std::unordered_map<std::string, SamplerHandle> nameToHandle;

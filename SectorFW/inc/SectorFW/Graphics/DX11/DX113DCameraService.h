@@ -13,12 +13,12 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		/**
 		 * @brief DirectX11用の3Dカメラサービス。カメラの定数バッファを管理し、更新する。
 		 */
-		class DX113DPerCameraService : public I3DCameraService<Perspective> {
+		class PerCamera3DService : public I3DCameraService<Perspective> {
 		public:
 			/**
 			 * @brief カメラの定数バッファの名前
@@ -26,12 +26,12 @@ namespace SFW
 			constexpr static inline char BUFFER_NAME[] = "DX113DPerCamera";
 			/**
 			 * @brief コンストラクタ
-			 * @param bufferMgr DX11BufferManagerのポインタ
+			 * @param bufferMgr BufferManagerのポインタ
 			 */
-			explicit DX113DPerCameraService(DX11BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
+			explicit PerCamera3DService(BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
 				: I3DCameraService([&] {
 				BufferHandle h;
-				bufferMgr->Add(DX11BufferCreateDesc{ BUFFER_NAME, sizeof(CameraBuffer) }, h);
+				bufferMgr->Add(BufferCreateDesc{ BUFFER_NAME, sizeof(CameraBuffer) }, h);
 				return h;
 					}()), bufferManager(bufferMgr) {
 				right = (float)width, bottom = (float)height;
@@ -66,7 +66,7 @@ namespace SFW
 						auto view = Math::MakeLookAtMatrixLH(eye, target, u);  // 新しい u を使用
 						auto proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, nearClip, farClip);
 
-						DX11BufferUpdateDesc cbUpdateDesc;
+						BufferUpdateDesc cbUpdateDesc;
 						{
 							auto data = bufferManager->Get(cameraBufferHandle);
 							cbUpdateDesc.buffer = data.ref().buffer;
@@ -85,26 +85,26 @@ namespace SFW
 					}
 
 		private:
-			DX11BufferManager* bufferManager;
+			BufferManager* bufferManager;
 		};
 
 		/**
 		 * @brief DirectX11用の3Dカメラサービス。カメラの定数バッファを管理し、更新する。
 		 */
-		class DX113DOrtCameraService : public I3DCameraService<Orthographic> {
+		class OrtCamera3DService : public I3DCameraService<Orthographic> {
 		public:
 			/**
 			 * @brief カメラの定数バッファの名前
 			 */
-			constexpr static inline char BUFFER_NAME[] = "DX113DOrtCamera";
+			constexpr static inline char BUFFER_NAME[] = "3DOrtCamera";
 			/**
 			 * @brief コンストラクタ
-			 * @param bufferMgr DX11BufferManagerのポインタ
+			 * @param bufferMgr BufferManagerのポインタ
 			 */
-			explicit DX113DOrtCameraService(DX11BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
+			explicit OrtCamera3DService(BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
 				: I3DCameraService<Orthographic>([&] {
 				BufferHandle h;
-				bufferMgr->Add(DX11BufferCreateDesc{ BUFFER_NAME, sizeof(CameraBuffer) }, h);
+				bufferMgr->Add(BufferCreateDesc{ BUFFER_NAME, sizeof(CameraBuffer) }, h);
 				return h;
 					}()), bufferManager(bufferMgr){
 				right = (float)width, bottom = (float)height;
@@ -139,7 +139,7 @@ namespace SFW
 						auto view = Math::MakeLookAtMatrixLH(eye, target, u);
 						auto proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, bottom, top, nearClip, farClip);
 
-						DX11BufferUpdateDesc cbUpdateDesc;
+						BufferUpdateDesc cbUpdateDesc;
 						{
 							auto data = bufferManager->Get(cameraBufferHandle);
 							cbUpdateDesc.buffer = data.ref().buffer;
@@ -159,7 +159,7 @@ namespace SFW
 					}
 
 		private:
-			DX11BufferManager* bufferManager;
+			BufferManager* bufferManager;
 		};
 	}
 }

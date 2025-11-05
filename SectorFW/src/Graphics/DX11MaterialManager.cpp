@@ -4,11 +4,11 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		// --- 追加: Key 作成ヘルパ ---
-		DX11MaterialManager::MaterialKey DX11MaterialManager::MakeKey(const DX11MaterialCreateDesc& desc) {
-			DX11MaterialManager::MaterialKey k;
+		MaterialManager::MaterialKey MaterialManager::MakeKey(const MaterialCreateDesc& desc) {
+			MaterialManager::MaterialKey k;
 			k.shaderIndex = desc.shader.index;
 
 			k.psSrvs.reserve(desc.psSRV.size());
@@ -36,22 +36,22 @@ namespace SFW
 		}
 
 		std::optional<MaterialHandle>
-			DX11MaterialManager::FindExisting(const DX11MaterialCreateDesc& desc) noexcept {
+			MaterialManager::FindExisting(const MaterialCreateDesc& desc) noexcept {
 			auto key = MakeKey(desc);
 			if (auto it = matCache.find(key); it != matCache.end()) {
 				return it->second;
 			}
 			return std::nullopt;
 		}
-		void DX11MaterialManager::RegisterKey(const DX11MaterialCreateDesc& desc, MaterialHandle h) {
+		void MaterialManager::RegisterKey(const MaterialCreateDesc& desc, MaterialHandle h) {
 			auto key = MakeKey(desc);
 			matCache.emplace(key, h);
 			handleToKey.emplace(h.index, std::move(key));
 		}
 
-		DX11MaterialData DX11MaterialManager::CreateResource(const DX11MaterialCreateDesc& desc, MaterialHandle h)
+		MaterialData MaterialManager::CreateResource(const MaterialCreateDesc& desc, MaterialHandle h)
 		{
-			DX11MaterialData mat{};
+			MaterialData mat{};
 
 			std::unordered_map<UINT, ID3D11ShaderResourceView*> psSRVMap;
 			for (const auto& [slot, texHandle] : desc.psSRV) {
@@ -121,14 +121,14 @@ namespace SFW
 			return mat;
 		}
 
-		void DX11MaterialManager::RemoveFromCaches(uint32_t idx)
+		void MaterialManager::RemoveFromCaches(uint32_t idx)
 		{
 			if (auto k = handleToKey.find(idx); k != handleToKey.end()) {
 				matCache.erase(k->second);
 				handleToKey.erase(k);
 			}
 		}
-		void DX11MaterialManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
+		void MaterialManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
 		{
 			auto& m = slots[idx].data;
 			m.psSRV.valid = false;
@@ -144,37 +144,37 @@ namespace SFW
 			for (auto& sp : m.usedSamplers)  samplerManager->Release(sp, del);
 		}
 
-		void DX11MaterialManager::BindMaterialPSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache)
+		void MaterialManager::BindMaterialPSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache)
 		{
 			if (!cache.valid) return; // キャッシュが無効なら何もしない
 			if (cache.contiguous) ctx->PSSetShaderResources(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, srv] : cache.individualViews) ctx->PSSetShaderResources(slot, 1, &srv);
 		}
-		void DX11MaterialManager::BindMaterialVSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache)
+		void MaterialManager::BindMaterialVSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache)
 		{
 			if (!cache.valid) return; // キャッシュが無効なら何もしない
 			if (cache.contiguous) ctx->VSSetShaderResources(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, srv] : cache.individualViews) ctx->VSSetShaderResources(slot, 1, &srv);
 		}
-		void DX11MaterialManager::BindMaterialPSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache)
+		void MaterialManager::BindMaterialPSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache)
 		{
 			if (!cache.valid) return; // キャッシュが無効なら何もしない
 			if (cache.contiguous) ctx->PSSetConstantBuffers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, cbv] : cache.individualViews) ctx->PSSetConstantBuffers(slot, 1, &cbv);
 		}
-		void DX11MaterialManager::BindMaterialVSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache)
+		void MaterialManager::BindMaterialVSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache)
 		{
 			if (!cache.valid) return; // キャッシュが無効なら何もしない
 			if (cache.contiguous) ctx->VSSetConstantBuffers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, cbv] : cache.individualViews) ctx->VSSetConstantBuffers(slot, 1, &cbv);
 		}
-		void DX11MaterialManager::BindMaterialSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache)
+		void MaterialManager::BindMaterialSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache)
 		{
 			if (!cache.valid) return; // キャッシュが無効なら何もしない
 			if (cache.contiguous) ctx->PSSetSamplers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, sampler] : cache.individualViews) ctx->PSSetSamplers(slot, 1, &sampler);
 		}
-		MaterialBindingCacheSRV DX11MaterialManager::BuildBindingCacheSRV(const std::vector<ShaderResourceBinding>& bindings, const std::unordered_map<UINT, ID3D11ShaderResourceView*>& srvMap)
+		MaterialBindingCacheSRV MaterialManager::BuildBindingCacheSRV(const std::vector<ShaderResourceBinding>& bindings, const std::unordered_map<UINT, ID3D11ShaderResourceView*>& srvMap)
 		{
 			MaterialBindingCacheSRV result;
 
@@ -224,7 +224,7 @@ namespace SFW
 
 			return result;
 		}
-		MaterialBindingCacheCBV DX11MaterialManager::BuildBindingCacheCBV(const std::vector<ShaderResourceBinding>& bindings, const std::unordered_map<UINT, ID3D11Buffer*>& cbvMap)
+		MaterialBindingCacheCBV MaterialManager::BuildBindingCacheCBV(const std::vector<ShaderResourceBinding>& bindings, const std::unordered_map<UINT, ID3D11Buffer*>& cbvMap)
 		{
 			MaterialBindingCacheCBV result;
 
@@ -267,7 +267,7 @@ namespace SFW
 
 			return result;
 		}
-		MaterialBindingCacheSampler DX11MaterialManager::BuildBindingCacheSampler(const std::vector<ShaderResourceBinding>& bindings, const std::unordered_map<UINT, ID3D11SamplerState*>& samplerMap)
+		MaterialBindingCacheSampler MaterialManager::BuildBindingCacheSampler(const std::vector<ShaderResourceBinding>& bindings, const std::unordered_map<UINT, ID3D11SamplerState*>& samplerMap)
 		{
 			MaterialBindingCacheSampler result;
 

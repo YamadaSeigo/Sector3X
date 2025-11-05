@@ -31,10 +31,10 @@ public:
 		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
 		UndeletablePtr<SimpleThreadPoolService> threadPool) {
 		//機能を制限したRenderQueueを取得
-		auto modelManager = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
-		auto meshManager = renderService->GetResourceManager<Graphics::DX11MeshManager>();
-		auto materialManager = renderService->GetResourceManager<Graphics::DX11MaterialManager>();
-		auto psoManager = renderService->GetResourceManager<Graphics::DX11PSOManager>();
+		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
+		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
+		auto materialManager = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
+		auto psoManager = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
 
 		auto fru = cameraService->MakeFrustum();
 		Math::Vec3f camPos = cameraService->GetEyePos();
@@ -70,10 +70,10 @@ public:
 
 		struct KernelParams {
 			Graphics::RenderService* renderService;
-			Graphics::DX11ModelAssetManager* modelMgr;
-			Graphics::DX11MeshManager* meshMgr;
-			Graphics::DX11MaterialManager* materialMgr;
-			Graphics::DX11PSOManager* psoMgr;
+			Graphics::DX11::ModelAssetManager* modelMgr;
+			Graphics::DX11::MeshManager* meshMgr;
+			Graphics::DX11::MaterialManager* materialMgr;
+			Graphics::DX11::PSOManager* psoMgr;
 			const Math::Matrix4x4f& viewProj;
 			Math::Vec3f cp;
 			Graphics::Viewport vp;
@@ -147,7 +147,7 @@ public:
 					//モデルアセットを取得
 					auto modelAsset = kp->modelMgr->Get(modelComp.handle);
 					int subMeshIdx = 0;
-					for (const Graphics::DX11ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
+					for (const Graphics::DX11::ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
 						Graphics::DrawCommand cmd;
 						if (kp->materialMgr->IsValid(mesh.material) == false) [[unlikely]] continue;
 						if (kp->psoMgr->IsValid(mesh.pso) == false) [[unlikely]] continue;

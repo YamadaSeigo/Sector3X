@@ -18,7 +18,7 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		//= 文字列ヘルパ
 		namespace detail {
@@ -45,16 +45,16 @@ namespace SFW
 				return true;
 			}
 
-			struct DX11TextureKey {
+			struct TextureKey {
 				std::string normPath;
 				bool forceSRGB{ false };
 
-				bool operator==(const DX11TextureKey& o) const noexcept {
+				bool operator==(const TextureKey& o) const noexcept {
 					return forceSRGB == o.forceSRGB && normPath == o.normPath;
 				}
 			};
-			struct DX11TextureKeyHash {
-				size_t operator()(const DX11TextureKey& k) const noexcept {
+			struct TextureKeyHash {
+				size_t operator()(const TextureKey& k) const noexcept {
 					std::hash<std::string> hs; std::hash<bool> hb;
 					size_t h = hs(k.normPath);
 					// 合成（適当なミックス）
@@ -65,7 +65,7 @@ namespace SFW
 		} // namespace detail
 
 		//テクスチャを生データで作成する場合のレシピ
-		struct DX11TextureRecipe {
+		struct TextureRecipe {
 			// 基本は 2D テクスチャ
 			uint32_t     width = 0;
 			uint32_t     height = 0;
@@ -84,26 +84,26 @@ namespace SFW
 		/**
 		 * @brief DirectX 11のテクスチャを作成するための構造体
 		 */
-		struct DX11TextureCreateDesc {
+		struct TextureCreateDesc {
 			std::string path;
 			bool forceSRGB = false;
 
 			// --- 解像度を指定して生成する場合（path が空）----
-			DX11TextureRecipe* recipe = nullptr; //指定しない場合はnullptr(必須ではない)
+			TextureRecipe* recipe = nullptr; //指定しない場合はnullptr(必須ではない)
 		};
 		/**
 		 * @brief DirectX 11のテクスチャデータを格納する構造体
 		 */
-		struct DX11TextureData {
+		struct TextureData {
 			ComPtr<ID3D11ShaderResourceView> srv = nullptr;
 			ComPtr<ID3D11Resource> resource = nullptr; // 必要なら
 		private:
 			std::string path; // キャッシュ用のパス
 
-			friend class DX11TextureManager;
+			friend class TextureManager;
 		};
 
-		struct DX11TextureUpdateDesc {
+		struct TextureUpdateDesc {
 			// どのテクスチャを更新するか
 			ComPtr<ID3D11Resource> tex;
 			// どのサブリソースを更新するか（mip/array を含むインデックス）
@@ -123,8 +123,8 @@ namespace SFW
 		/**
 		 * @brief DirectX 11のテクスチャマネージャークラス
 		 */
-		class DX11TextureManager : public ResourceManagerBase<
-			DX11TextureManager, TextureHandle, DX11TextureCreateDesc, DX11TextureData>
+		class TextureManager : public ResourceManagerBase<
+			TextureManager, TextureHandle, TextureCreateDesc, TextureData>
 		{
 			static inline const std::filesystem::path assetsDir = "assets";
 			static inline constexpr const char* DefaultConvertedDir = "converted/textures";
@@ -134,7 +134,7 @@ namespace SFW
 			 * @brief コンストラクタ
 			 * @param device DirectX 11のデバイス
 			 */
-			explicit DX11TextureManager(ID3D11Device* device,
+			explicit TextureManager(ID3D11Device* device,
 				ID3D11DeviceContext* context,
 				std::filesystem::path convertedDir = DefaultConvertedDir) noexcept;
 			/**
@@ -142,10 +142,10 @@ namespace SFW
 			 * @param desc テクスチャの作成情報
 			 * @return std::optional<TextureHandle> 既存のテクスチャハンドル、存在しない場合はstd::nullopt
 			 */
-			std::optional<TextureHandle> FindExisting(const DX11TextureCreateDesc& desc) noexcept {
+			std::optional<TextureHandle> FindExisting(const TextureCreateDesc& desc) noexcept {
 				// 生成モード（path 空）のときは名前キャッシュを用いない
 				if (desc.path.empty()) return std::nullopt;
-				detail::DX11TextureKey k{ detail::NormalizePath(desc.path), desc.forceSRGB };
+				detail::TextureKey k{ detail::NormalizePath(desc.path), desc.forceSRGB };
 				std::shared_lock lk(cacheMx_);
 				if (auto it = pathToHandle_.find(k); it != pathToHandle_.end()) return it->second;
 				return std::nullopt;
@@ -155,9 +155,9 @@ namespace SFW
 			 * @param desc テクスチャの作成情報
 			 * @param h 登録するテクスチャハンドル
 			 */
-			void RegisterKey(const DX11TextureCreateDesc& desc, TextureHandle h) {
+			void RegisterKey(const TextureCreateDesc& desc, TextureHandle h) {
 				if (desc.path.empty()) return; // 生成モードはキー登録しない
-				detail::DX11TextureKey k{ detail::NormalizePath(desc.path), desc.forceSRGB };
+				detail::TextureKey k{ detail::NormalizePath(desc.path), desc.forceSRGB };
 				std::unique_lock lk(cacheMx_);
 				pathToHandle_.emplace(std::move(k), h);
 			}
@@ -167,7 +167,7 @@ namespace SFW
 			 * @param h 登録するテクスチャハンドル
 			 * @return DX11TextureData 作成されたテクスチャデータ
 			 */
-			DX11TextureData CreateResource(const DX11TextureCreateDesc& desc, TextureHandle h);
+			TextureData CreateResource(const TextureCreateDesc& desc, TextureHandle h);
 			/**
 			 * @brief キャッシュからテクスチャを削除する関数
 			 * @param idx 削除するテクスチャのインデックス
@@ -181,7 +181,7 @@ namespace SFW
 			void DestroyResource(uint32_t idx, uint64_t /*currentFrame*/);
 
 			// テクスチャ更新をキューに積む（リソース直指定）
-			void UpdateTexture(const DX11TextureUpdateDesc& desc);
+			void UpdateTexture(const TextureUpdateDesc& desc);
 			// ハンドルからの更新（最初のサブリソースを想定。mip/array を自前で計算する場合は上を使用）
 			void UpdateTexture(TextureHandle h, const void* pData, UINT rowPitch, UINT depthPitch = 0,
 				bool isDelete = false, const D3D11_BOX* pBox = nullptr, UINT subresource = 0);
@@ -203,7 +203,7 @@ namespace SFW
 
 			// 複合キーのキャッシュ（スレッド安全）
 			mutable std::shared_mutex cacheMx_;
-			std::unordered_map<detail::DX11TextureKey, TextureHandle, detail::DX11TextureKeyHash> pathToHandle_;
+			std::unordered_map<detail::TextureKey, TextureHandle, detail::TextureKeyHash> pathToHandle_;
 
 			std::filesystem::path convertedDir;
 
@@ -212,7 +212,7 @@ namespace SFW
 			//=== 遅延キュー ===
 			struct GenMipsItem { ComPtr<ID3D11ShaderResourceView> srv; };
 			std::mutex              updateMx_;
-			std::vector<DX11TextureUpdateDesc> pendingTexUpdates_;
+			std::vector<TextureUpdateDesc> pendingTexUpdates_;
 			std::vector<GenMipsItem>           pendingGenMips_;
 		};
 	}

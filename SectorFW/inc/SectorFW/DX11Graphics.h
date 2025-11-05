@@ -27,30 +27,30 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		/**
 		 * @brief DX11用グラフィックスデバイスクラス
 		 * @class DX11GraphicsDevice
 		 */
-		class DX11GraphicsDevice : public IGraphicsDevice<DX11GraphicsDevice>
+		class GraphicsDevice : public IGraphicsDevice<GraphicsDevice>
 		{
 		public:
-			using DX11RenderGraph = RenderGraph<DX11Backend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>;
+			using RenderGraph = RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>;
 
 			/**
 			 * @brief コンストラクタ
 			 */
-			DX11GraphicsDevice() = default;
+			GraphicsDevice() = default;
 			/**
 			 * @brief デストラクタ
 			 */
-			~DX11GraphicsDevice();
+			~GraphicsDevice();
 
-			DX11GraphicsDevice(DX11GraphicsDevice&& rhs) noexcept;
-			DX11GraphicsDevice& operator=(DX11GraphicsDevice&& rhs) noexcept;
-			DX11GraphicsDevice(const DX11GraphicsDevice&) = delete;
-			DX11GraphicsDevice& operator=(const DX11GraphicsDevice&) = delete;
+			GraphicsDevice(GraphicsDevice&& rhs) noexcept;
+			GraphicsDevice& operator=(GraphicsDevice&& rhs) noexcept;
+			GraphicsDevice(const GraphicsDevice&) = delete;
+			GraphicsDevice& operator=(const GraphicsDevice&) = delete;
 			/**
 			 * @brief 初期化関数
 			 * @param nativeWindowHandle ウィンドウハンドル
@@ -119,7 +119,7 @@ namespace SFW
 				std::atomic<bool> running{ false };
 				std::thread thread;
 
-				std::atomic<DX11GraphicsDevice*> owner{ nullptr };
+				std::atomic<GraphicsDevice*> owner{ nullptr };
 
 				// フレーム進捗
 				std::atomic<uint64_t> lastSubmitted{ 0 };
@@ -144,17 +144,17 @@ namespace SFW
 			// デフォルトの深度ステンシルビュー
 			ComPtr<ID3D11DepthStencilView> m_depthStencilView;
 
-			std::unique_ptr<DX11MeshManager> meshManager;
-			std::unique_ptr<DX11ShaderManager> shaderManager;
-			std::unique_ptr<DX11TextureManager> textureManager;
-			std::unique_ptr<DX11BufferManager> bufferManager;
-			std::unique_ptr<DX11SamplerManager> samplerManager;
-			std::unique_ptr<DX11MaterialManager> materialManager;
-			std::unique_ptr<DX11PSOManager> psoManager;
-			std::unique_ptr<DX11ModelAssetManager> modelAssetManager;
+			std::unique_ptr<MeshManager> meshManager;
+			std::unique_ptr<ShaderManager> shaderManager;
+			std::unique_ptr<TextureManager> textureManager;
+			std::unique_ptr<BufferManager> bufferManager;
+			std::unique_ptr<SamplerManager> samplerManager;
+			std::unique_ptr<MaterialManager> materialManager;
+			std::unique_ptr<PSOManager> psoManager;
+			std::unique_ptr<ModelAssetManager> modelAssetManager;
 
-			std::unique_ptr<DX11Backend> backend;
-			std::unique_ptr<DX11RenderGraph> renderGraph;
+			std::unique_ptr<RenderBackend> backend;
+			std::unique_ptr<RenderGraph> renderGraph;
 
 			std::shared_ptr<RTState> m_rt;
 

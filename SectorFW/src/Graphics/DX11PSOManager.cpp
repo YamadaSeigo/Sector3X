@@ -3,21 +3,21 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
-		std::optional<PSOHandle> DX11PSOManager::FindExisting(const DX11PSOCreateDesc& desc) noexcept {
+		std::optional<PSOHandle> PSOManager::FindExisting(const PSOCreateDesc& desc) noexcept {
 			auto it = shaderToPSO_.find(desc.shader.index);
 			if (it != shaderToPSO_.end()) return it->second;
 			return std::nullopt;
 		}
 
-		void DX11PSOManager::RegisterKey(const DX11PSOCreateDesc& desc, PSOHandle h) {
+		void PSOManager::RegisterKey(const PSOCreateDesc& desc, PSOHandle h) {
 			shaderToPSO_.emplace(desc.shader.index, h);
 		}
 
-		DX11PSOData DX11PSOManager::CreateResource(const DX11PSOCreateDesc& desc, PSOHandle h)
+		PSOData PSOManager::CreateResource(const PSOCreateDesc& desc, PSOHandle h)
 		{
-			DX11PSOData pso{};
+			PSOData pso{};
 			{
 				auto shaderData = shaderManager->Get(desc.shader);
 

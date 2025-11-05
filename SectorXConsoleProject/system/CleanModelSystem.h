@@ -12,9 +12,9 @@ class CleanModelSystem : public ITypeSystem<
 public:
 	//指定したサービスを関数の引数として受け取る
 	void EndImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService) {
-		Graphics::DX11ModelAssetManager* modelMgr = renderService->GetResourceManager<Graphics::DX11ModelAssetManager>();
+		Graphics::DX11::ModelAssetManager* modelMgr = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 
-		this->ForEachChunkWithAccessor([](Accessor& accessor, auto entityCount, Graphics::DX11ModelAssetManager* modelMgr)
+		this->ForEachChunkWithAccessor([](Accessor& accessor, auto entityCount, Graphics::DX11::ModelAssetManager* modelMgr)
 			{
 				auto pModel = accessor.Get<Write<CModel>>();
 				if (!pModel) return;

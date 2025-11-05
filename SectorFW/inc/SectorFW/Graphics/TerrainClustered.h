@@ -45,6 +45,10 @@ namespace SFW {
         };
 
         struct TerrainClustered {
+
+            // ---- Splat 用メタ（レンダラー非依存）----
+            static constexpr uint32_t kSplatMaxLayers = 4;
+
             // GPU に置く想定の “頂点プール（SRV 向け SoA にしてもOK。まずは AoS）”
             std::vector<TerrainVertex> vertices;
             // 全三角形を “クラスター順に” 連結した IndexPool（TRIANGLELIST 用）
@@ -69,6 +73,21 @@ namespace SFW {
 
             static TerrainClustered BuildFromHeightMap(const HeightField& hf, const TerrainBuildParams& p);
 
+            struct SplatLayerMeta {
+                uint32_t materialId = 0;     // 素材の論理ID（DX11側でSRVに解決）
+                float    uvTilingU = 1.0f;   // レイヤ毎タイル
+                float    uvTilingV = 1.0f;
+            };
+
+            struct ClusterSplatMeta {
+                uint32_t layerCount = 4;                         // 0..4
+                SplatLayerMeta layers[kSplatMaxLayers];          // 4レイヤ
+                uint32_t splatTextureId = 0;                     // RGBA ウェイトを持つスプラットテクスチャの論理ID
+                float    splatUVScaleU = 1.0f, splatUVScaleV = 1.0f; // スプラットUVタイル（頂点uvに乗算）
+                float    splatUVOffsetU = 0.0f, splatUVOffsetV = 0.0f;
+            };
+
+            std::vector<ClusterSplatMeta> splat; // size == clusters.size()
         private:
             static void GenerateHeights(std::vector<float>& outH,
                 uint32_t vx, uint32_t vz,
@@ -101,5 +120,4 @@ namespace SFW {
             }
         };
     }
-
 } // namespace SFW

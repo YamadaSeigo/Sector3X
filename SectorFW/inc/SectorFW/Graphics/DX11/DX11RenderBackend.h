@@ -24,7 +24,7 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		/**
 		 * @brief DirectX 11のプリミティブトポロジー変換用ルックアップテーブル
@@ -37,7 +37,7 @@ namespace SFW
 		/**
 		 * @brief DirectX 11レンダリングバックエンドクラス.
 		 */
-		class DX11Backend : public RenderBackendBase<DX11Backend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*> {
+		class RenderBackend : public RenderBackendBase<RenderBackend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*> {
 		public:
 			/**
 			 * @brief ひと描画命令当たりのインスタンスデータの最大数
@@ -56,17 +56,17 @@ namespace SFW
 			 * @param samplerMgr サンプラーマネージャー
 			 * @param modelAssetMgr モデルアセットマネージャー
 			 */
-			explicit DX11Backend(ID3D11Device* device, ID3D11DeviceContext* context,
-				DX11MeshManager* meshMgr, DX11MaterialManager* matMgr,
-				DX11ShaderManager* shaderMgr, DX11PSOManager* psoMgr,
-				DX11TextureManager* textureMgr, DX11BufferManager* cbMgr,
-				DX11SamplerManager* samplerMgr, DX11ModelAssetManager* modelAssetMgr);
+			explicit RenderBackend(ID3D11Device* device, ID3D11DeviceContext* context,
+				MeshManager* meshMgr, MaterialManager* matMgr,
+				ShaderManager* shaderMgr, PSOManager* psoMgr,
+				TextureManager* textureMgr, BufferManager* cbMgr,
+				SamplerManager* samplerMgr, ModelAssetManager* modelAssetMgr);
 			/**
 			 * @brief RendderGraphにリソースマネージャーを追加する関数
 			 * @param graph レンダーグラフ
 			 */
 			void AddResourceManagerToRenderServiceImpl(
-				RenderGraph<DX11Backend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>& graph);
+				RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>& graph);
 			/**
 			 * @brief プリミティブトポロジーを設定する関数
 			 * @param topology プリミティブトポロジー
@@ -241,14 +241,14 @@ namespace SFW
 		private:
 			ID3D11Device* device;
 			ID3D11DeviceContext* context;
-			DX11MeshManager* meshManager;
-			DX11MaterialManager* materialManager;
-			DX11ShaderManager* shaderManager;
-			DX11PSOManager* psoManager;
-			DX11TextureManager* textureManager;
-			DX11BufferManager* cbManager;
-			DX11SamplerManager* samplerManager;
-			DX11ModelAssetManager* modelAssetManager;
+			MeshManager* meshManager;
+			MaterialManager* materialManager;
+			ShaderManager* shaderManager;
+			PSOManager* psoManager;
+			TextureManager* textureManager;
+			BufferManager* cbManager;
+			SamplerManager* samplerManager;
+			ModelAssetManager* modelAssetManager;
 
 			// フレーム行列用 StructuredBuffer (SRV)
 			ComPtr<ID3D11Buffer>            m_instanceSB;

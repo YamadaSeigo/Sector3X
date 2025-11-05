@@ -23,12 +23,12 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		//-------------------------
 			// Occluder適性スコア計算
 			//-------------------------
-		static float ComputeOccluderScore(const DX11ModelAssetManager::AssetStats& a,
+		static float ComputeOccluderScore(const ModelAssetManager::AssetStats& a,
 			const SFW::Math::AABB3f& bbox,
 			bool alphaCutoutThisSubmesh,
 			float minThicknessRatio)
@@ -57,16 +57,16 @@ namespace SFW
 			return score;
 		}
 
-		DX11ModelAssetManager::DX11ModelAssetManager(
-			DX11MeshManager& meshMgr, DX11MaterialManager& matMgr,
-			DX11ShaderManager& shaderMgr, DX11PSOManager& psoMgr,
-			DX11TextureManager& texMgr,DX11BufferManager& cbMgr,
-			DX11SamplerManager& samplMgr, ID3D11Device* device) :
+		ModelAssetManager::ModelAssetManager(
+			MeshManager& meshMgr, MaterialManager& matMgr,
+			ShaderManager& shaderMgr, PSOManager& psoMgr,
+			TextureManager& texMgr,BufferManager& cbMgr,
+			SamplerManager& samplMgr, ID3D11Device* device) :
 			meshMgr(meshMgr), matMgr(matMgr), shaderMgr(shaderMgr), psoMgr(psoMgr),
 			texMgr(texMgr), cbManager(cbMgr), samplerManager(samplMgr), device(device) {
 		}
 
-		void DX11ModelAssetManager::RemoveFromCaches(uint32_t idx)
+		void ModelAssetManager::RemoveFromCaches(uint32_t idx)
 		{
 			auto& data = slots[idx].data;
 			auto cacheIt = pathToHandle.find(data.path.to_path());
@@ -75,7 +75,7 @@ namespace SFW
 			}
 		}
 
-		void DX11ModelAssetManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
+		void ModelAssetManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
 		{
 			auto& data = slots[idx].data;
 			for (auto& sm : data.subMeshes) {
@@ -117,25 +117,25 @@ namespace SFW
 			return m;
 		}
 
-		DX11ModelAssetData DX11ModelAssetManager::LoadFromGLTF(const DX11ModelAssetCreateDesc& desc)
+		ModelAssetData ModelAssetManager::LoadFromGLTF(const ModelAssetCreateDesc& desc)
 		{
 			std::filesystem::path canonicalPath = std::filesystem::weakly_canonical(desc.path);
 
 			// 読み込み & アセット構築
-			DX11ModelAssetData asset;
+			ModelAssetData asset;
 			asset.name = canonicalPath.stem().string();
 
 			cgltf_options options = {};
 			cgltf_data* data = nullptr;
 			if (cgltf_parse_file(&options, canonicalPath.string().c_str(), &data) != cgltf_result_success) {
 				assert(false && "Failed to parse GLTF file");
-				static DX11ModelAssetData emptyAsset;
+				static ModelAssetData emptyAsset;
 				return emptyAsset;
 			}
 			if (cgltf_load_buffers(&options, data, canonicalPath.string().c_str()) != cgltf_result_success) {
 				cgltf_free(data);
 				assert(false && "Failed to load GLTF buffers");
-				static DX11ModelAssetData emptyAsset;
+				static ModelAssetData emptyAsset;
 				return emptyAsset;
 			}
 
@@ -253,7 +253,7 @@ namespace SFW
 						//	}
 						//}
 					}
-					DX11ModelAssetData::SubMesh sub;
+					ModelAssetData::SubMesh sub;
 
 					// AABB生成
 					sub.aabb = MakeAABB(positions, indices);
@@ -288,10 +288,10 @@ namespace SFW
 						continue;
 					}
 
-					std::vector<DX11MeshManager::ClusterInfo> clusters;
+					std::vector<MeshManager::ClusterInfo> clusters;
 					std::vector<uint32_t> clusterVerts;
 					std::vector<uint8_t>  clusterTris;
-					DX11MeshManager::BuildClustersWithMeshoptimizer(
+					MeshManager::BuildClustersWithMeshoptimizer(
 						positions, indices,
 						clusters, clusterTris, clusterVerts);
 					sub.lods[0].clusters = std::move(clusters);
@@ -299,7 +299,7 @@ namespace SFW
 					size_t beforeIndexCount = indices.size();
 					// 2) LOD1～N を生成
 					for (int li = 1; li < lodLevelNum; ++li) {
-						DX11MeshManager::RemappedStreams rs;
+						MeshManager::RemappedStreams rs;
 						std::vector<uint32_t> idx;
 						std::wstring tag = canonicalPath.wstring() + L"#sub" + std::to_wstring(meshIndex) + L"-lod" + std::to_wstring(li + 1);
 						bool ok = BuildOneLodMesh(indices, positions,
@@ -419,7 +419,7 @@ namespace SFW
 					}
 
 					// 6) Material を作る（desc に cbvMap を追加！）
-					DX11MaterialCreateDesc matDesc{
+					MaterialCreateDesc matDesc{
 						.shader = shaderHandle,
 						.psSRV = psSRVMap,
 						.vsSRV = vsSRVMap,
@@ -564,7 +564,7 @@ namespace SFW
 			if (sw && !sw->empty())  streams[sc++] = { reinterpret_cast<const unsigned char*>(sw->data()), sizeof((*sw)[0]), sizeof((*sw)[0]) };
 		}
 
-		static bool SimplifyIndices(const DX11ModelAssetManager::LodRecipe& r,
+		static bool SimplifyIndices(const ModelAssetManager::LodRecipe& r,
 			const std::vector<uint32_t>& baseIdx,
 			const std::vector<Math::Vec3f>& pos,
 			/*inout*/ std::vector<uint32_t>& outIdx,
@@ -577,7 +577,7 @@ namespace SFW
 
 			switch (r.mode)
 			{
-			case DX11ModelAssetManager::LodQualityMode::Attributes:
+			case ModelAssetManager::LodQualityMode::Attributes:
 				outCount = meshopt_simplifyWithAttributes(
 					outIdx.data(), baseIdx.data(), baseIdx.size(),
 					&pos[0].x, pos.size(), sizeof(Math::Vec3f),
@@ -587,7 +587,7 @@ namespace SFW
 					/*options*/0, &outError);
 				break;
 
-			case DX11ModelAssetManager::LodQualityMode::Permissive:
+			case ModelAssetManager::LodQualityMode::Permissive:
 				outCount = meshopt_simplifyWithAttributes(
 					outIdx.data(), baseIdx.data(), baseIdx.size(),
 					&pos[0].x, pos.size(), sizeof(Math::Vec3f),
@@ -607,7 +607,7 @@ namespace SFW
 				}
 				break;
 
-			case DX11ModelAssetManager::LodQualityMode::Sloppy:
+			case ModelAssetManager::LodQualityMode::Sloppy:
 				// 頂点数ぶん 0 初期化（＝全頂点が自由）
 				std::vector<unsigned char> locks(pos.size(), 0);
 				outCount = meshopt_simplifySloppy(
@@ -623,7 +623,7 @@ namespace SFW
 			return true;
 		}
 
-		bool DX11ModelAssetManager::BuildOneLodMesh(
+		bool ModelAssetManager::BuildOneLodMesh(
 			const std::vector<uint32_t>& baseIndices,
 			const std::vector<Math::Vec3f>& basePositions,
 			const std::vector<Math::Vec3f>* baseNormals,
@@ -632,11 +632,11 @@ namespace SFW
 			const std::vector<std::array<uint8_t, 4>>* baseSkinIdx,
 			const std::vector<std::array<uint8_t, 4>>* baseSkinWgt,
 			const LodRecipe& recipe,
-			DX11MeshManager& meshMgr,
+			MeshManager& meshMgr,
 			const std::wstring& tagForCaching,
-			DX11ModelAssetData::SubmeshLOD& outMesh,
+			ModelAssetData::SubmeshLOD& outMesh,
 			std::vector<uint32_t>& outIdx,
-			DX11MeshManager::RemappedStreams& outStreams,
+			MeshManager::RemappedStreams& outStreams,
 			bool buildClusters)
 		{
 			if (baseIndices.empty() || basePositions.empty()) return false;
@@ -699,7 +699,7 @@ namespace SFW
 			outIdx.resize(idx_lod.size());
 			meshopt_remapIndexBuffer(outIdx.data(), idx_lod.data(), idx_lod.size(), remap.data());
 
-			DX11MeshManager::ApplyRemapToStreams(
+			MeshManager::ApplyRemapToStreams(
 				remap, basePositions,
 				baseNormals, baseTangents, baseUV0, baseSkinIdx, baseSkinWgt,
 				newVertexCount, outStreams);
@@ -736,10 +736,10 @@ namespace SFW
 
 #ifdef USE_MESHOPTIMIZER
 			if (buildClusters) {
-				std::vector<DX11MeshManager::ClusterInfo> clusters;
+				std::vector<MeshManager::ClusterInfo> clusters;
 				std::vector<uint32_t> clusterVerts;
 				std::vector<uint8_t>  clusterTris;
-				DX11MeshManager::BuildClustersWithMeshoptimizer(
+				MeshManager::BuildClustersWithMeshoptimizer(
 					outStreams.positions, outIdx,
 					clusters, clusterTris, clusterVerts);
 				outMesh.clusters = std::move(clusters);
@@ -748,7 +748,7 @@ namespace SFW
 			return true;
 		}
 
-		std::vector<DX11ModelAssetManager::LodRecipe> DX11ModelAssetManager::BuildLodRecipes(const AssetStats& a)
+		std::vector<ModelAssetManager::LodRecipe> ModelAssetManager::BuildLodRecipes(const AssetStats& a)
 		{
 			auto lg = [](float x) { return std::log10((std::max)(1.0f, x)); };
 

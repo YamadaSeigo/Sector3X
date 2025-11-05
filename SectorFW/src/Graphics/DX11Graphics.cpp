@@ -19,9 +19,9 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
-		DX11GraphicsDevice::~DX11GraphicsDevice()
+		GraphicsDevice::~GraphicsDevice()
 		{
 			// ここでレンダースレッドを停止
 			StopRenderThread();
@@ -45,7 +45,7 @@ namespace SFW
 #endif //_DEBUG
 		}
 
-		DX11GraphicsDevice::DX11GraphicsDevice(DX11GraphicsDevice&& rhs) noexcept
+		GraphicsDevice::GraphicsDevice(GraphicsDevice&& rhs) noexcept
 		{
 			m_device = rhs.m_device;
 			m_context = rhs.m_context;
@@ -57,7 +57,7 @@ namespace SFW
 			*this = std::move(rhs);
 		}
 
-		DX11GraphicsDevice& DX11GraphicsDevice::operator=(DX11GraphicsDevice&& rhs) noexcept
+		GraphicsDevice& GraphicsDevice::operator=(GraphicsDevice&& rhs) noexcept
 		{
 			if (this == &rhs) return *this;
 
@@ -81,7 +81,7 @@ namespace SFW
 			return *this;
 		}
 
-		bool DX11GraphicsDevice::InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps)
+		bool GraphicsDevice::InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps)
 		{
 			if (!std::holds_alternative<HWND>(nativeWindowHandle)) return false;
 			HWND hWnd = std::get<HWND>(nativeWindowHandle);
@@ -186,17 +186,17 @@ namespace SFW
 
 			//ResourceManager関連初期化
 			//===========================================================
-			meshManager = std::make_unique<DX11MeshManager>(m_device.Get());
-			shaderManager = std::make_unique<DX11ShaderManager>(m_device.Get());
-			textureManager = std::make_unique<DX11TextureManager>(m_device.Get(), m_context.Get());
-			bufferManager = std::make_unique<DX11BufferManager>(m_device.Get(), m_context.Get());
-			samplerManager = std::make_unique<DX11SamplerManager>(m_device.Get());
-			materialManager = std::make_unique<DX11MaterialManager>(shaderManager.get(), textureManager.get(), bufferManager.get(), samplerManager.get());
-			psoManager = std::make_unique<DX11PSOManager>(m_device.Get(), shaderManager.get());
+			meshManager = std::make_unique<MeshManager>(m_device.Get());
+			shaderManager = std::make_unique<ShaderManager>(m_device.Get());
+			textureManager = std::make_unique<TextureManager>(m_device.Get(), m_context.Get());
+			bufferManager = std::make_unique<BufferManager>(m_device.Get(), m_context.Get());
+			samplerManager = std::make_unique<SamplerManager>(m_device.Get());
+			materialManager = std::make_unique<MaterialManager>(shaderManager.get(), textureManager.get(), bufferManager.get(), samplerManager.get());
+			psoManager = std::make_unique<PSOManager>(m_device.Get(), shaderManager.get());
 
-			modelAssetManager = std::make_unique<DX11ModelAssetManager>(*meshManager, *materialManager, *shaderManager, *psoManager, *textureManager, *bufferManager, *samplerManager, m_device.Get());
+			modelAssetManager = std::make_unique<ModelAssetManager>(*meshManager, *materialManager, *shaderManager, *psoManager, *textureManager, *bufferManager, *samplerManager, m_device.Get());
 
-			backend = std::make_unique<DX11Backend>(
+			backend = std::make_unique<RenderBackend>(
 				m_device.Get(), m_context.Get(),
 				meshManager.get(), materialManager.get(), shaderManager.get(), psoManager.get(),
 				textureManager.get(), bufferManager.get(), samplerManager.get(), modelAssetManager.get()
@@ -213,7 +213,7 @@ namespace SFW
 			moc->ClearBuffer();
 			moc->SetNearClipPlane(0.1f);
 
-			renderGraph = std::make_unique<DX11RenderGraph>(*backend, moc);
+			renderGraph = std::make_unique<RenderGraph>(*backend, moc);
 
 			// ここでレンダースレッドを起動
 			StartRenderThread();
@@ -226,13 +226,13 @@ namespace SFW
 			return true;
 		}
 
-		void DX11GraphicsDevice::ClearImpl(const FLOAT clearColor[4])
+		void GraphicsDevice::ClearImpl(const FLOAT clearColor[4])
 		{
 			m_context->ClearRenderTargetView(m_renderTargetView.Get(), clearColor);
 			m_context->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 		}
 
-		void DX11GraphicsDevice::DrawImpl()
+		void GraphicsDevice::DrawImpl()
 		{
 #ifdef _ENABLE_IMGUI
 			m_gpuTimer.begin(m_context.Get());
@@ -251,13 +251,13 @@ namespace SFW
 #endif
 		}
 
-		void DX11GraphicsDevice::PresentImpl()
+		void GraphicsDevice::PresentImpl()
 		{
 			m_swapChain->Present(1, 0);
 		}
 
 		// ==== レンダースレッド API ====
-		void DX11GraphicsDevice::StartRenderThread() {
+		void GraphicsDevice::StartRenderThread() {
 			if (m_rt && m_rt->running.load()) return;
 			if (!m_rt) m_rt = std::make_shared<RTState>();
 			m_rt->owner.store(this, std::memory_order_release);
@@ -267,7 +267,7 @@ namespace SFW
 			m_rt->thread = std::thread([st = m_rt] { st->owner.load()->RenderThreadMain(st); });
 		}
 
-		void DX11GraphicsDevice::StopRenderThread() {
+		void GraphicsDevice::StopRenderThread() {
 			if (!m_rt) return;
 			if (!m_rt->running.exchange(false)) {
 				// 既に止まっている
@@ -284,7 +284,7 @@ namespace SFW
 			if (m_rt->thread.joinable()) m_rt->thread.join();
 		}
 
-		void DX11GraphicsDevice::SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx) {
+		void GraphicsDevice::SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx) {
 			auto st = m_rt;
 			if (!st) return;
 
@@ -312,31 +312,31 @@ namespace SFW
 			st->qCv.notify_one();
 		}
 
-		void DX11GraphicsDevice::WaitSubmittedFramesImpl(uint64_t uptoFrame) {
+		void GraphicsDevice::WaitSubmittedFramesImpl(uint64_t uptoFrame) {
 			auto st = m_rt;
 			if (!st) return;
 			std::unique_lock<std::mutex> lk(st->doneMtx);
 			st->doneCv.wait(lk, [&] { return st->lastCompleted.load(std::memory_order_acquire) >= uptoFrame; });
 		}
 
-		void DX11GraphicsDevice::SetDefaultRenderTarget()
+		void GraphicsDevice::SetDefaultRenderTarget()
 		{
 			backend->SetRenderTargets({m_renderTargetView.Get()}, m_depthStencilView.Get());
 		}
 
-		void DX11GraphicsDevice::SetRasterizerState(RasterizerStateID state)
+		void GraphicsDevice::SetRasterizerState(RasterizerStateID state)
 		{
 			backend->SetRasterizerState(state);
 		}
 
-		void DX11GraphicsDevice::TestInitialize()
+		void GraphicsDevice::TestInitialize()
 		{
 			std::vector<ID3D11RenderTargetView*> rtvs{
 				m_renderTargetView.Get() };
 
-			auto constantMgr = renderGraph->GetRenderService()->GetResourceManager<DX11BufferManager>();
-			auto cameraHandle3D = constantMgr->FindByName(DX113DPerCameraService::BUFFER_NAME);
-			auto cameraHandle2D = constantMgr->FindByName(DX112DCameraService::BUFFER_NAME);
+			auto constantMgr = renderGraph->GetRenderService()->GetResourceManager<BufferManager>();
+			auto cameraHandle3D = constantMgr->FindByName(PerCamera3DService::BUFFER_NAME);
+			auto cameraHandle2D = constantMgr->FindByName(Camera2DService::BUFFER_NAME);
 
 			RenderPassDesc<ID3D11RenderTargetView*> passDesc;
 			passDesc.name = "3D";
@@ -372,7 +372,7 @@ namespace SFW
 			renderGraph->AddPass(passDesc);
 		}
 
-		void DX11GraphicsDevice::RenderThreadMain(std::shared_ptr<RTState> st) {
+		void GraphicsDevice::RenderThreadMain(std::shared_ptr<RTState> st) {
 			// Immediate Context はこのスレッド専有
 			while (st->running.load(std::memory_order_acquire)) {
 				RenderSubmit job{};

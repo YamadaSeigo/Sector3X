@@ -4,13 +4,13 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
-		DX11Backend::DX11Backend(ID3D11Device* device, ID3D11DeviceContext* context,
-			DX11MeshManager* meshMgr, DX11MaterialManager* matMgr,
-			DX11ShaderManager* shaderMgr, DX11PSOManager* psoMgr,
-			DX11TextureManager* textureMgr, DX11BufferManager* cbMgr,
-			DX11SamplerManager* samplerMgr, DX11ModelAssetManager* modelAssetMgr)
+		RenderBackend::RenderBackend(ID3D11Device* device, ID3D11DeviceContext* context,
+			MeshManager* meshMgr, MaterialManager* matMgr,
+			ShaderManager* shaderMgr, PSOManager* psoMgr,
+			TextureManager* textureMgr, BufferManager* cbMgr,
+			SamplerManager* samplerMgr, ModelAssetManager* modelAssetMgr)
 			: device(device), context(context),
 			meshManager(meshMgr), materialManager(matMgr),
 			shaderManager(shaderMgr), psoManager(psoMgr),
@@ -19,43 +19,43 @@ namespace SFW
 			HRESULT hr;
 			hr = CreateInstanceBuffer();
 			if (FAILED(hr)) {
-				LOG_ERROR("Failed to create instance buffer for DX11Backend.");
+				LOG_ERROR("Failed to create instance buffer for Backend.");
 				assert(false && "Failed to create instance buffer");
 			}
 			hr = CreateRasterizerStates();
 			if (FAILED(hr)) {
-				LOG_ERROR("Failed to create rasterizer states for DX11Backend.");
+				LOG_ERROR("Failed to create rasterizer states for Backend.");
 				assert(false && "Failed to create rasterizer states");
 			}
 			hr = CreateBlendStates();
 			if (FAILED(hr)) {
-				LOG_ERROR("Failed to create blend states for DX11Backend.");
+				LOG_ERROR("Failed to create blend states for Backend.");
 				assert(false && "Failed to create blend states");
 			}
 			hr = CreateDepthStencilStates();
 			if (FAILED(hr)) {
-				LOG_ERROR("Failed to create depth stencil states for DX11Backend.");
+				LOG_ERROR("Failed to create depth stencil states for Backend.");
 				assert(false && "Failed to create depth stencil states");
 			}
 
 			assert(device && context && meshManager && materialManager && shaderManager && psoManager &&
 				textureManager && cbManager && samplerManager &&
-				"DX11Backend requires valid device, context, and managers.");
+				"Backend requires valid device, context, and managers.");
 		}
 
-		void DX11Backend::AddResourceManagerToRenderServiceImpl(RenderGraph<DX11Backend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>& graph)
+		void RenderBackend::AddResourceManagerToRenderServiceImpl(RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>& graph)
 		{
-			graph.RegisterResourceManager<DX11MeshManager>(meshManager);
-			graph.RegisterResourceManager<DX11MaterialManager>(materialManager);
-			graph.RegisterResourceManager<DX11ShaderManager>(shaderManager);
-			graph.RegisterResourceManager<DX11PSOManager>(psoManager);
-			graph.RegisterResourceManager<DX11TextureManager>(textureManager);
-			graph.RegisterResourceManager<DX11BufferManager>(cbManager);
-			graph.RegisterResourceManager<DX11SamplerManager>(samplerManager);
-			graph.RegisterResourceManager<DX11ModelAssetManager>(modelAssetManager);
+			graph.RegisterResourceManager<MeshManager>(meshManager);
+			graph.RegisterResourceManager<MaterialManager>(materialManager);
+			graph.RegisterResourceManager<ShaderManager>(shaderManager);
+			graph.RegisterResourceManager<PSOManager>(psoManager);
+			graph.RegisterResourceManager<TextureManager>(textureManager);
+			graph.RegisterResourceManager<BufferManager>(cbManager);
+			graph.RegisterResourceManager<SamplerManager>(samplerManager);
+			graph.RegisterResourceManager<ModelAssetManager>(modelAssetManager);
 		}
 
-		void DX11Backend::SetBlendStateImpl(BlendStateID state)
+		void RenderBackend::SetBlendStateImpl(BlendStateID state)
 		{
 			if (state < BlendStateID(0) || state >= BlendStateID::MAX_COUNT) {
 				LOG_ERROR("Invalid BlendStateID: %d", static_cast<int>(state));
@@ -74,7 +74,7 @@ namespace SFW
 			}
 		}
 
-		void DX11Backend::SetRasterizerStateImpl(RasterizerStateID state)
+		void RenderBackend::SetRasterizerStateImpl(RasterizerStateID state)
 		{
 			if (state < RasterizerStateID(0) || state >= RasterizerStateID::MAX_COUNT) {
 				LOG_ERROR("Invalid RasterizerStateID: %d", static_cast<int>(state));
@@ -92,7 +92,7 @@ namespace SFW
 			}
 		}
 
-		void DX11Backend::ProcessDeferredDeletesImpl(uint64_t currentFrame)
+		void RenderBackend::ProcessDeferredDeletesImpl(uint64_t currentFrame)
 		{
 			cbManager->PendingUpdates(currentFrame);
 			textureManager->PendingUpdates();
@@ -105,7 +105,7 @@ namespace SFW
 			modelAssetManager->ProcessDeferredDeletes(currentFrame);
 		}
 
-		void DX11Backend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer)
+		void RenderBackend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer)
 		{
 			MaterialTemplateID templateID = MaterialTemplateID::MAX_COUNT;
 			InputBindingMode bindingMode;
@@ -136,13 +136,13 @@ namespace SFW
 				}
 
 				// テクスチャSRVバインド
-				DX11MaterialManager::BindMaterialPSSRVs(context, mat.ref().psSRV);
-				DX11MaterialManager::BindMaterialVSSRVs(context, mat.ref().vsSRV);
+				MaterialManager::BindMaterialPSSRVs(context, mat.ref().psSRV);
+				MaterialManager::BindMaterialVSSRVs(context, mat.ref().vsSRV);
 				// CBVバインド
-				DX11MaterialManager::BindMaterialPSCBVs(context, mat.ref().psCBV);
-				DX11MaterialManager::BindMaterialVSCBVs(context, mat.ref().vsCBV);
+				MaterialManager::BindMaterialPSCBVs(context, mat.ref().psCBV);
+				MaterialManager::BindMaterialVSCBVs(context, mat.ref().vsCBV);
 				// サンプラーバインド
-				DX11MaterialManager::BindMaterialSamplers(context, mat.ref().samplerCache);
+				MaterialManager::BindMaterialSamplers(context, mat.ref().samplerCache);
 			}
 			{
 				auto mesh = meshManager->GetDirect(meshIdx);
@@ -169,7 +169,7 @@ namespace SFW
 			}
 		}
 
-		void DX11Backend::BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx)
+		void RenderBackend::BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx)
 		{
 			// PSO の InputLayoutDesc から必要 slot を抽出
 			UINT minSlot = UINT_MAX, maxSlot = 0;
@@ -217,7 +217,7 @@ namespace SFW
 			context->IASetVertexBuffers(minSlot, (UINT)bufs.size(), bufs.data(), strides.data(), offs.data());
 		}
 
-		void DX11Backend::BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx)
+		void RenderBackend::BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx)
 		{
 			// 取得
 			auto pso = psoManager->GetDirect(psoIdx);
@@ -252,7 +252,7 @@ namespace SFW
 				const size_t idx = size_t(slot - minSlot);
 
 				// --- SoA（複数VB）パス ---
-				// 前提：DX11MeshData に vbs/strides/offsets/usedSlots がある（SoA対応を入れている場合）
+				// 前提：MeshData に vbs/strides/offsets/usedSlots がある（SoA対応を入れている場合）
 				// あるいは AoS しか無いメッシュなら、下のフォールバックを通す
 				bool bound = false;
 #if 1
@@ -282,7 +282,7 @@ namespace SFW
 			context->IASetVertexBuffers(minSlot, num, bufs.data(), strides.data(), offs.data());
 		}
 
-		HRESULT DX11Backend::CreateInstanceBuffer()
+		HRESULT RenderBackend::CreateInstanceBuffer()
 		{
 			HRESULT hr;
 			auto createStructuredSRV = [&](UINT elemStride, UINT elemCount,
@@ -347,7 +347,7 @@ namespace SFW
 			return S_OK;
 		}
 
-		HRESULT DX11Backend::CreateRasterizerStates()
+		HRESULT RenderBackend::CreateRasterizerStates()
 		{
 			//--- カリング設定
 			D3D11_RASTERIZER_DESC rasterizer = {};
@@ -379,7 +379,7 @@ namespace SFW
 			return S_OK;
 		}
 
-		HRESULT DX11Backend::CreateBlendStates()
+		HRESULT RenderBackend::CreateBlendStates()
 		{
 			//--- アルファブレンディング
 			// https://pgming-ctrl.com/directx11/blend/
@@ -412,10 +412,10 @@ namespace SFW
 			return S_OK;
 		}
 
-		HRESULT DX11Backend::CreateDepthStencilStates()
+		HRESULT RenderBackend::CreateDepthStencilStates()
 		{
 			//--- 深度テスト
-			// https://tositeru.github.io/ImasaraDX11/part/ZBuffer-and-depth-stencil
+			// https://tositeru.github.io/Imasara/part/ZBuffer-and-depth-stencil
 			auto create = [&](size_t idx, const D3D11_DEPTH_STENCIL_DESC& desc) -> HRESULT {
 				depthStencilStates[idx].Reset(); // 安全のため破棄
 				return device->CreateDepthStencilState(&desc, depthStencilStates[idx].GetAddressOf());
@@ -466,7 +466,7 @@ namespace SFW
 			return S_OK;
 		}
 
-		/*void DX11Backend::UpdateInstanceBuffer(const void* pInstancesData, size_t dataSize)
+		/*void Backend::UpdateInstanceBuffer(const void* pInstancesData, size_t dataSize)
 		{
 			D3D11_MAPPED_SUBRESOURCE mapped;
 			context->Map(instanceBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);

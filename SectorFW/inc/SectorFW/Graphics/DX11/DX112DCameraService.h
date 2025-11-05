@@ -13,25 +13,25 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		/**
 		 * @brief DirectX11用の3Dカメラサービス。カメラの定数バッファを管理し、更新する。
 		 */
-		class DX112DCameraService : public I2DCameraService {
+		class Camera2DService : public I2DCameraService {
 		public:
 			/**
 			 * @brief カメラの定数バッファの名前
 			 */
-			constexpr static inline char BUFFER_NAME[] = "DX112DCamera";
+			constexpr static inline char BUFFER_NAME[] = "2DCamera";
 			/**
 			 * @brief コンストラクタ
-			 * @param bufferMgr DX11BufferManagerのポインタ
+			 * @param bufferMgr BufferManagerのポインタ
 			 */
-			explicit DX112DCameraService(DX11BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
+			explicit Camera2DService(BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
 				: I2DCameraService([&] {
 				BufferHandle h;
-				bufferMgr->Add(DX11BufferCreateDesc{ BUFFER_NAME, sizeof(CameraBuffer) }, h);
+				bufferMgr->Add(BufferCreateDesc{ BUFFER_NAME, sizeof(CameraBuffer) }, h);
 				return h;
 					}()), bufferManager(bufferMgr) {
 
@@ -47,7 +47,7 @@ namespace SFW
 
 						if (!isUpdateBuffer) return;
 
-						DX11BufferUpdateDesc cbUpdateDesc;
+						BufferUpdateDesc cbUpdateDesc;
 						{
 							auto data = bufferManager->Get(cameraBufferHandle);
 							cbUpdateDesc.buffer = data.ref().buffer;
@@ -73,7 +73,7 @@ namespace SFW
 					}
 
 		private:
-			DX11BufferManager* bufferManager;
+			BufferManager* bufferManager;
 		};
 	}
 }

@@ -341,9 +341,9 @@ namespace SFW {
         // ============================================================
         struct FaceQuad {
             // 4頂点: world, clip, screen
-            Math::Vec3f world[4];
-            float clip[4][4];
-            float sx[4], sy[4];
+            Math::Vec3f world[4] = {};
+            float clip[4][4] = {};
+            float sx[4] = {}, sy[4] = {};
             float minDepthNdc = 1.0f; // 近いほど小さい（NDC z）
             float areaPx = 0.f;       // 投影面積（ピクセル）
             int   faceIndex = -1;     // 0..5 (AABBの各面)
@@ -641,6 +641,7 @@ namespace SFW {
             auto emitQuad = [&](const FaceQuad& q) {
                 const int order[6] = { 0,1,2, 2,1,3 };
                 for (int tix = 0; tix < 6; tix += 3) {
+					if (tix > 4) break;
                     const int i0 = order[tix + 0];
                     const int i1 = order[tix + 1];
                     const int i2 = order[tix + 2];
@@ -1070,6 +1071,7 @@ namespace SFW {
             auto emitQuad = [&](const FaceQuad& q) {
                 constexpr int order[6] = { 0,3,1, 2,1,3 };
                 for (int tix = 0; tix < 6; tix += 3) {
+					if (tix > 4) break;
                     const int i0 = order[tix + 0], i1 = order[tix + 1], i2 = order[tix + 2];
                     if (outTrisClip) {
                         SoftTriClip tc{};

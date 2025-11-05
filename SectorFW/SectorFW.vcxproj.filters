@@ -462,9 +462,6 @@
     <ClInclude Include="inc\SectorFW\Math\Perlin2D.h">
       <Filter>Inc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Graphics\TerrainService.h">
-      <Filter>Inc\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SectorFW\Core\ThreadPoolService.h">
       <Filter>Inc\Core</Filter>
     </ClInclude>
@@ -993,9 +990,6 @@
       <Filter>Src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\LODPolicy.cpp">
-      <Filter>Src\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\TerrainService.cpp">
       <Filter>Src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\TerrainClustered.cpp">

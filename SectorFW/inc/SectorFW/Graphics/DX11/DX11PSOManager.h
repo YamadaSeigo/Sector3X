@@ -14,19 +14,19 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		/**
 		 * @brief DirectX 11のパイプラインステートオブジェクト（PSO）を作成するための記述子構造体
 		 */
-		struct DX11PSOCreateDesc {
+		struct PSOCreateDesc {
 			ShaderHandle shader;
 			RasterizerStateID rasterizerState = RasterizerStateID::SolidCullBack;
 		};
 		/**
 		 * @brief DirectX 11のパイプラインステートオブジェクト（PSO）のデータ構造体
 		 */
-		struct DX11PSOData {
+		struct PSOData {
 			ComPtr<ID3D11InputLayout> inputLayout = nullptr;
 			ShaderHandle shader;
 			RasterizerStateID rasterizerState = RasterizerStateID::SolidCullBack;
@@ -34,14 +34,14 @@ namespace SFW
 		/**
 		 * @brief DirectX 11のパイプラインステートオブジェクト（PSO）を管理するクラス
 		 */
-		class DX11PSOManager : public ResourceManagerBase<DX11PSOManager, PSOHandle, DX11PSOCreateDesc, DX11PSOData> {
+		class PSOManager : public ResourceManagerBase<PSOManager, PSOHandle, PSOCreateDesc, PSOData> {
 		public:
 			/**
 			 * @brief コンストラクタ
 			 * @param device DirectX 11のデバイス
 			 * @param shaderMgr シェーダーマネージャー
 			 */
-			explicit DX11PSOManager(ID3D11Device* device, DX11ShaderManager* shaderMgr) noexcept
+			explicit PSOManager(ID3D11Device* device, ShaderManager* shaderMgr) noexcept
 				: device(device), shaderManager(shaderMgr) {
 			}
 
@@ -50,19 +50,19 @@ namespace SFW
 			 * @param desc PSOの作成記述子
 			 * @return std::optional<PSOHandle> 既存のPSOハンドル、存在しない場合はstd::nullopt
 			 */
-			std::optional<PSOHandle> FindExisting(const DX11PSOCreateDesc& desc) noexcept;
-			void RegisterKey(const DX11PSOCreateDesc& desc, PSOHandle h);
+			std::optional<PSOHandle> FindExisting(const PSOCreateDesc& desc) noexcept;
+			void RegisterKey(const PSOCreateDesc& desc, PSOHandle h);
 			/**
 			 * @brief 新しいPSOリソースを作成する関数
 			 * @param desc PSOの作成記述子
 			 * @param h PSOハンドル
 			 * @return DX11PSOData 作成されたPSOデータ
 			 */
-			DX11PSOData CreateResource(const DX11PSOCreateDesc& desc, PSOHandle h);
+			PSOData CreateResource(const PSOCreateDesc& desc, PSOHandle h);
 
 		private:
 			ID3D11Device* device;
-			DX11ShaderManager* shaderManager;
+			ShaderManager* shaderManager;
 
 			// ShaderHandle.index → PSOHandle
 			std::unordered_map<uint32_t, PSOHandle> shaderToPSO_;

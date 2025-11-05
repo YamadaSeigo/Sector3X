@@ -16,12 +16,12 @@
 
 namespace SFW
 {
-	namespace Graphics
+	namespace Graphics::DX11
 	{
 		/**
 		 * @brief DirectX 11用のマテリアル作成情報構造体
 		 */
-		struct DX11MaterialCreateDesc {
+		struct MaterialCreateDesc {
 			ShaderHandle shader = {};
 			std::unordered_map<UINT, TextureHandle> psSRV;
 			std::unordered_map<UINT, TextureHandle> vsSRV;
@@ -48,7 +48,7 @@ namespace SFW
 		/**
 		 * @brief DirectX 11用のマテリアルデータ構造体
 		 */
-		struct DX11MaterialData {
+		struct MaterialData {
 			MaterialTemplateID templateID;
 			ShaderHandle shader;
 			MaterialBindingCacheSRV psSRV, vsSRV;
@@ -61,7 +61,7 @@ namespace SFW
 		/**
 		 * @brief DirectX 11用のマテリアルマネージャークラス.
 		 */
-		class DX11MaterialManager : public ResourceManagerBase<DX11MaterialManager, MaterialHandle, DX11MaterialCreateDesc, DX11MaterialData> {
+		class MaterialManager : public ResourceManagerBase<MaterialManager, MaterialHandle, MaterialCreateDesc, MaterialData> {
 		public:
 			/**
 			 * @brief コンストラクタ
@@ -70,10 +70,10 @@ namespace SFW
 			 * @param cbMgr CBバッファマネージャークラス
 			 * @param samplerMgr サンプラーマネージャークラス
 			 */
-			explicit DX11MaterialManager(DX11ShaderManager* shaderMgr,
-				DX11TextureManager* textureMgr,
-				DX11BufferManager* cbMgr,
-				DX11SamplerManager* samplerMgr)
+			explicit MaterialManager(ShaderManager* shaderMgr,
+				TextureManager* textureMgr,
+				BufferManager* cbMgr,
+				SamplerManager* samplerMgr)
 				noexcept : shaderManager(shaderMgr), textureManager(textureMgr), cbManager(cbMgr), samplerManager(samplerMgr) {
 			}
 
@@ -82,20 +82,20 @@ namespace SFW
 			 * @param desc マテリアル作成情報
 			 * @return std::optional<MaterialHandle> 既存のマテリアルハンドル、存在しない場合は std::nullopt
 			 */
-			std::optional<MaterialHandle> FindExisting(const DX11MaterialCreateDesc& desc) noexcept;
+			std::optional<MaterialHandle> FindExisting(const MaterialCreateDesc& desc) noexcept;
 			/**
 			 * @brief ResourceManagerBase フック
 			 * @param desc マテリアル作成情報
 			 * @param h 登録するマテリアルハンドル
 			 */
-			void RegisterKey(const DX11MaterialCreateDesc& desc, MaterialHandle h);
+			void RegisterKey(const MaterialCreateDesc& desc, MaterialHandle h);
 			/**
 			 * @brief ResourceManagerBase フック
 			 * @param desc マテリアル作成情報
 			 * @param h 登録するマテリアルハンドル
 			 * @return DX11MaterialData 作成されたマテリアルデータ
 			 */
-			DX11MaterialData CreateResource(const DX11MaterialCreateDesc& desc, MaterialHandle h);
+			MaterialData CreateResource(const MaterialCreateDesc& desc, MaterialHandle h);
 			/**
 			 * @brief 指定したインデックスのマテリアルをキャッシュから削除する関数
 			 * @param idx 削除するマテリアルのインデックス
@@ -141,10 +141,10 @@ namespace SFW
 				const std::unordered_map<UINT, ID3D11SamplerState*>& samplerMap);
 
 		private:
-			DX11ShaderManager* shaderManager;
-			DX11TextureManager* textureManager;
-			DX11BufferManager* cbManager;
-			DX11SamplerManager* samplerManager;
+			ShaderManager* shaderManager;
+			TextureManager* textureManager;
+			BufferManager* cbManager;
+			SamplerManager* samplerManager;
 
 			// ==== マテリアルキー（不変の組をソートしてハッシュ化）====
 			struct MaterialKey {
@@ -170,7 +170,7 @@ namespace SFW
 				}
 			};
 
-			static MaterialKey MakeKey(const DX11MaterialCreateDesc& desc);
+			static MaterialKey MakeKey(const MaterialCreateDesc& desc);
 
 			std::unordered_map<MaterialKey, MaterialHandle, MaterialKeyHash> matCache;
 			std::unordered_map<uint32_t, MaterialKey> handleToKey;

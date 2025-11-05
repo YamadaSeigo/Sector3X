@@ -94,7 +94,6 @@
     <ClInclude Include="inc\SectorFW\Graphics\RenderTypes.h" />
     <ClInclude Include="inc\SectorFW\Graphics\TerrainClustered.h" />
     <ClInclude Include="inc\SectorFW\Graphics\TerrainOccluderExtraction.h" />
-    <ClInclude Include="inc\SectorFW\Graphics\TerrainService.h" />
     <ClInclude Include="inc\SectorFW\Input\InputDevice.hpp" />
     <ClInclude Include="inc\SectorFW\Input\WinInput.h" />
     <ClInclude Include="inc\SectorFW\Input\WinMouseInput.h" />
@@ -188,7 +187,6 @@
     <ClCompile Include="src\Graphics\OccluderToolkit.cpp" />
     <ClCompile Include="src\Graphics\RenderQueue.cpp" />
     <ClCompile Include="src\Graphics\TerrainClustered.cpp" />
-    <ClCompile Include="src\Graphics\TerrainService.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />
     <ClCompile Include="src\Physics\PhysicsDevice.cpp" />
     <ClCompile Include="src\SIMD\simd_avx2.cpp" />
