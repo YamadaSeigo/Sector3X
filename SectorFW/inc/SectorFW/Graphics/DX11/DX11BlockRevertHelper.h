@@ -337,43 +337,6 @@ namespace SFW::Graphics::DX11 {
         }
     };
 
-    struct ClusterSplatSRVs {
-        // 素材4 + スプラット(RGBA)
-        ComPtr<ID3D11ShaderResourceView> layers[4];
-        ComPtr<ID3D11ShaderResourceView> splat;
-        // タイルをPS定数へ渡す用（cluster毎）
-        float layerTiling[4][2]{}; // {u,v}
-        float splatST[2]{ 1.f,1.f };
-        float splatOffset[2]{ 0.f,0.f };
-    };
-
-    // PS用の追加リソース
-    struct SplatRenderResources {
-        ComPtr<ID3D11SamplerState> sampLinearWrap; // s0
-        ComPtr<ID3D11Buffer> cbSplat;              // b1 : tiling等
-        // クラスタ→SRV群
-        std::vector<ClusterSplatSRVs> perCluster;  // size == terrain.clusters.size()
-    };
-
-    // 初期化（サンプラ/CB確保 & perClusterリサイズ）
-    inline bool InitSplatResources(ID3D11Device* dev,
-        SplatRenderResources& out,
-        size_t clusterCount)
-    {
-        out.perCluster.resize(clusterCount);
-
-        // サンプラ
-        D3D11_SAMPLER_DESC sd{}; sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-        sd.AddressU = sd.AddressV = sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-        if (FAILED(dev->CreateSamplerState(&sd, &out.sampLinearWrap))) return false;
-
-        // PS定数バッファ（タイル/オフセット など、1クラスタぶん）
-        D3D11_BUFFER_DESC bd{}; bd.ByteWidth = 16 * 4; // 64B (16バイト境界)
-        bd.Usage = D3D11_USAGE_DYNAMIC; bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-        bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-        if (FAILED(dev->CreateBuffer(&bd, nullptr, &out.cbSplat))) return false;
-        return true;
-    }
 
     // ------------------------------------------------------------
     // Convenience: build from TerrainClustered (AoS) into this context
@@ -614,45 +577,637 @@ namespace SFW::Graphics::DX11 {
     }
 #endif
 
-    // ID→パス 等の解決はコールバックで柔軟化
-    using ResolveTexturePathFn = bool(*)(uint32_t id, /*out*/ std::string& path, /*out*/ bool& forceSRGB);
+    //============================================================
+        // 4レイヤ + スプラット制御 の “Texture2DArray 方式” 支援
+        //============================================================
 
-    // 1回だけ構築（またはホットリロード時に呼び直し）
-    inline bool BuildClusterSplatSRVs(ID3D11Device* dev,
+        // Resolve: あなたの資産DBから id -> (path, forceSRGB) を解決
+    using ResolveTexturePathFn = bool(*)(uint32_t id, std::string& path, bool& forceSRGB);
+
+    // クラスタ別スプラットの slice を保持・PS 定数で通知
+    struct SplatArrayResources {
+        // 共通のスプラット Array（t14 に張る想定）
+        ComPtr<ID3D11ShaderResourceView> splatArraySRV;
+        // PS用
+        ComPtr<ID3D11SamplerState>       sampLinearWrap; // s0
+        ComPtr<ID3D11Buffer>             cbSplat;        // b1
+        // クラスタごとのメタ
+        struct PerCluster {
+            int   splatSlice = 0;     // Texture2DArray のスライス番号
+            float layerTiling[4][2]{}; // 各素材のタイル
+            float splatST[2]{ 1,1 };
+            float splatOffset[2]{ 0,0 };
+
+        };
+        std::vector<PerCluster> perCluster;
+
+    };
+
+    // PS 側のレイアウトに合わせた CB 構造（b1）
+    struct SplatCBData {
+        float layerTiling[4][2];
+        float splatST[2];
+        float splatOffset[2];
+        int   splatSlice;
+        float _pad[3];
+
+    };
+
+    // ------------------------------------------------------------------
+        // 共通4素材（アルベド）: クラスタに依らず固定の4枚を t10..t13 に張る
+            // ------------------------------------------------------------------
+    using ResolveTexturePathFn = bool(*)(uint32_t id, std::string& path, bool& forceSRGB);
+
+    struct CommonMaterialResources {
+        // t10..t13 に貼る素材アルベド
+        ComPtr<ID3D11ShaderResourceView> layerSRV[4];
+        // 共通サンプラ（s0）。既存のスプラットと共有でOK
+        ComPtr<ID3D11SamplerState>       sampLinearWrap;
+        // 管理用: 指定IDを覚えておく（デバッグ/ホットリロードなど）
+        uint32_t materialId[4]{ 0,0,0,0 };
+
+    };
+
+    // クラスタ別に必要な最小情報（PSでインデックスして読む）
+    struct ClusterParam {
+        int   splatSlice;       // Texture2DArray のスライス
+        int   _pad0[3];
+        float layerTiling[4][2]; // 各素材のタイル(U,V)
+        float splatST[2];        // スプラットUVスケール
+        float splatOffset[2];    // スプラットUVオフセット
+
+    };
+
+    // グリッド定数（b2）
+    struct alignas(16) TerrainGridCB {
+        Math::Vec2f originXZ;     // ワールドX-Zの原点（グリッド(0,0)の左下 or 任意基準）
+        Math::Vec2f cellSizeXZ;   // 各クラスタの幅・奥行（ワールド）
+        uint32_t dimX;       // クラスタ数X
+        uint32_t dimZ;       // クラスタ数Z
+        uint32_t _pad[2];
+
+    };
+
+    struct ClusterParamsGPU {
+        // SRV で読む StructuredBuffer
+        ComPtr<ID3D11Buffer>             sb;     // D3D11_BIND_SHADER_RESOURCE | D3D11_RESOURCE_MISC_BUFFER_STRUCTURED
+        ComPtr<ID3D11ShaderResourceView> srv;    // t15 にバインド
+        // グリッド用CB（b2）
+        ComPtr<ID3D11Buffer>             cbGrid;
+        // CPU側ミラー
+        std::vector<ClusterParam>        cpu;
+        TerrainGridCB                    grid;
+
+    };
+
+    // サンプラと SRV を構築（アルベドは sRGB 推奨）
+    inline bool BuildCommonMaterialSRVs(ID3D11Device* dev,
         SFW::Graphics::DX11::TextureManager& texMgr,
-        const SFW::Graphics::TerrainClustered& terrain,
+        const uint32_t materialIds[4],
         ResolveTexturePathFn resolve,
-        SplatRenderResources& io)
+        CommonMaterialResources& out)
     {
-        if (terrain.clusters.size() != io.perCluster.size()) return false;
+        // s0 (LINEARWRAP) が未作成なら作る
+        if (!out.sampLinearWrap) {
+            D3D11_SAMPLER_DESC sd{};
+            sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+            sd.AddressU = sd.AddressV = sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+            if (FAILED(dev->CreateSamplerState(&sd, &out.sampLinearWrap))) return false;
 
-        for (size_t cid = 0; cid < terrain.clusters.size(); ++cid) {
-            const auto& meta = terrain.splat[cid];
-            auto& dst = io.perCluster[cid];
+        }
 
-            // 素材4
-            for (uint32_t li = 0; li < meta.layerCount && li < 4; ++li) {
-                std::string path; bool srgb = true;
-                if (!resolve(meta.layers[li].materialId, path, srgb)) return false;
-                SFW::Graphics::DX11::TextureCreateDesc d{}; d.path = path; d.forceSRGB = srgb;
+        // 素材4をロード
+        for (int i = 0; i < 4; ++i) {
+            std::string path; bool forceSRGB = true; // アルベドはsRGB
+            if (!resolve(materialIds[i], path, forceSRGB)) return false;
+            SFW::Graphics::DX11::TextureCreateDesc d{};
+            d.path = path; d.forceSRGB = forceSRGB;
 
-                dst.layers[li] = texMgr.CreateResource(d, {}).srv;
-                dst.layerTiling[li][0] = meta.layers[li].uvTilingU;
-                dst.layerTiling[li][1] = meta.layers[li].uvTilingV;
-            }
+            TextureHandle h = {};
+            texMgr.Add(d, h); // ResourceManagerBase経由のCreate/キャッシュ
+            auto data = texMgr.Get(h);
+            auto& td = data.ref();  // TextureData（srv/resource を保持）
+            out.layerSRV[i] = td.srv;  // SRVを保持
+            out.materialId[i] = materialIds[i];
 
-            // スプラット（RGBA）
-            {
-                std::string path; bool srgb = false; // 正規化された重みなら非sRGB推奨
-                if (!resolve(meta.splatTextureId, path, srgb)) return false;
-                SFW::Graphics::DX11::TextureCreateDesc d{}; d.path = path; d.forceSRGB = srgb;
-                dst.splat = texMgr.CreateResource(d, {}).srv;
-                dst.splatST[0] = meta.splatUVScaleU; dst.splatST[1] = meta.splatUVScaleV;
-                dst.splatOffset[0] = meta.splatUVOffsetU; dst.splatOffset[1] = meta.splatUVOffsetV;
-            }
         }
         return true;
     }
 
+    // t10..t13 に共通素材をセット（描画の先頭で一度だけ呼べばOK）
+    inline void BindCommonMaterials(ID3D11DeviceContext* ctx,
+        const CommonMaterialResources& R)
+    {
+        ID3D11ShaderResourceView* mats[4] = {
+        R.layerSRV[0].Get(), R.layerSRV[1].Get(),
+        R.layerSRV[2].Get(), R.layerSRV[3].Get()
+        };
+        ctx->PSSetShaderResources(10, 4, mats);                 // t10..t13
+        ID3D11SamplerState* samp = R.sampLinearWrap.Get();
+        ctx->PSSetSamplers(0, 1, &samp);                        // s0（スプラットと共有）
+    }
+
+    // 初期化（サンプラ/CB確保 & perCluster を terrain に合わせて確保）
+    inline bool InitSplatArrayResources(ID3D11Device* dev,
+        SplatArrayResources& out,
+        size_t clusterCount)
+    {
+        out.perCluster.resize(clusterCount);
+        // sampler
+        D3D11_SAMPLER_DESC sd{};
+        sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+        sd.AddressU = sd.AddressV = sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+        if (FAILED(dev->CreateSamplerState(&sd, &out.sampLinearWrap))) return false;
+        // constant buffer
+        D3D11_BUFFER_DESC bd{};
+        bd.ByteWidth = sizeof(SplatCBData);
+        bd.Usage = D3D11_USAGE_DYNAMIC;
+        bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+        bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+        if (FAILED(dev->CreateBuffer(&bd, nullptr, &out.cbSplat))) return false;
+        return true;
+    }
+
+    // ユニークな splatTextureId を収集
+    inline void CollectUniqueSplatIds(const TerrainClustered& terrain,
+        std::vector<uint32_t>& outUnique)
+    {
+        std::vector<uint32_t> tmp;
+        tmp.reserve(terrain.splat.size());
+        for (size_t i = 0; i < terrain.splat.size(); ++i) {
+            tmp.push_back(terrain.splat[i].splatTextureId);
+
+        }
+        std::sort(tmp.begin(), tmp.end());
+        tmp.erase(std::unique(tmp.begin(), tmp.end()), tmp.end());
+        outUnique = std::move(tmp);
+    }
+
+    // ユニークID → slice の辞書を作る
+    inline std::unordered_map<uint32_t, int>
+        BuildSliceTable(const std::vector<uint32_t>& uniqueIds)
+    {
+        std::unordered_map<uint32_t, int> m; m.reserve(uniqueIds.size() * 2);
+        for (int i = 0; i < (int)uniqueIds.size(); ++i) m.emplace(uniqueIds[i], i);
+        return m;
+    }
+
+    // Texture2DArray の生成と CopySubresourceRegion によるコピー
+    // 条件: 幅・高さ・フォーマット・ミップ数がすべて同一
+    inline bool BuildSplatArrayTexture(ID3D11Device* dev,
+        ID3D11DeviceContext* ctx, // Copy 用
+        TextureManager& texMgr,
+        const std::vector<uint32_t>& uniqueSplatIds,
+        ResolveTexturePathFn resolve,
+        ComPtr<ID3D11ShaderResourceView>& outArraySRV)
+    {
+        if (uniqueSplatIds.empty()) return false;
+
+        // まず全スライスの元テクスチャ2Dを収集
+        struct SliceSrc {
+            ComPtr<ID3D11Texture2D> tex2D;
+            D3D11_TEXTURE2D_DESC    desc{};
+            UINT                    mipLevels = 1;
+
+        };
+        std::vector<SliceSrc> slices;
+        slices.reserve(uniqueSplatIds.size());
+
+        for (auto id : uniqueSplatIds) {
+            std::string path; bool forceSRGB = false; // 重みテクスチャは非sRGB推奨
+            if (!resolve(id, path, forceSRGB)) return false;
+
+            TextureCreateDesc d{}; d.path = path; d.forceSRGB = forceSRGB;
+            TextureHandle h = {};
+            texMgr.Add(d, h); // 既存キャッシュ利用
+            auto data = texMgr.Get(h);
+            auto& td = data.ref();  // TextureData
+            if (!td.resource) return false;
+
+            ComPtr<ID3D11Texture2D> t2d;
+            HRESULT hr = td.resource->QueryInterface(IID_PPV_ARGS(&t2d));
+            if (FAILED(hr) || !t2d) return false;
+
+            D3D11_TEXTURE2D_DESC desc{}; t2d->GetDesc(&desc);
+
+            // SRGBフラグが付いている場合は非sRGBに寄せたいが、ここでは前提として一致していることを期待
+            slices.push_back({ std::move(t2d), desc, desc.MipLevels });
+
+        }
+
+        // 代表値
+        const auto w = slices[0].desc.Width;
+        const auto h = slices[0].desc.Height;
+        const auto fmt = slices[0].desc.Format;
+        const auto mips = slices[0].mipLevels;
+
+        // 互換性チェック（異なる場合は失敗）
+        for (size_t i = 1; i < slices.size(); ++i) {
+            if (slices[i].desc.Width != w ||
+                slices[i].desc.Height != h ||
+                slices[i].desc.Format != fmt ||
+                slices[i].mipLevels != mips) {
+                // 必要ならここで DirectXTex を使って “リサイズ/変換” して揃えるが、簡易版は失敗にする
+                return false;
+
+            }
+
+        }
+
+        // Array 本体を作成
+        D3D11_TEXTURE2D_DESC ad = {};
+        ad.Width = w;
+        ad.Height = h;
+        ad.MipLevels = mips;
+        ad.ArraySize = (UINT)slices.size();
+        ad.Format = fmt;               // 非sRGB（重み）を想定
+        ad.SampleDesc.Count = 1;
+        ad.Usage = D3D11_USAGE_DEFAULT;
+        ad.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+        ad.CPUAccessFlags = 0;
+        ad.MiscFlags = 0;
+
+        ComPtr<ID3D11Texture2D> arrayTex;
+        HRESULT hr = dev->CreateTexture2D(&ad, nullptr, &arrayTex);
+        if (FAILED(hr)) return false;
+
+        // ---- CopySubresourceRegion で各スライスの各ミップをコピー ----
+        for (UINT slice = 0; slice < (UINT)slices.size(); ++slice) {
+            for (UINT mip = 0; mip < mips; ++mip) {
+                const UINT dstSub = D3D11CalcSubresource(mip, slice, mips);
+                const UINT srcSub = mip; // 元は ArraySize=1 を想定
+                ctx->CopySubresourceRegion(
+                    arrayTex.Get(), dstSub,
+                    0, 0, 0,
+                    slices[slice].tex2D.Get(), srcSub,
+                    nullptr // 全面コピー
+                );
+
+            }
+
+        }
+
+        // SRV を作成
+        D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
+        sd.Format = ad.Format;
+        sd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+        sd.Texture2DArray.MostDetailedMip = 0;
+        sd.Texture2DArray.MipLevels = ad.MipLevels;
+        sd.Texture2DArray.FirstArraySlice = 0;
+        sd.Texture2DArray.ArraySize = ad.ArraySize;
+
+        ComPtr<ID3D11ShaderResourceView> srv;
+        hr = dev->CreateShaderResourceView(arrayTex.Get(), &sd, &srv);
+        if (FAILED(hr)) return false;
+
+        outArraySRV = std::move(srv);
+        return true;
+    }
+
+    // まとめ：Array 構築＋クラスタごとの slice/タイルを詰める
+    inline bool BuildClusterSplatArrayResources(ID3D11Device* dev,
+        ID3D11DeviceContext* ctx,
+        TextureManager& texMgr,
+        const TerrainClustered& terrain,
+        ResolveTexturePathFn resolve,
+        SplatArrayResources& io,
+        std::vector<uint32_t>* outUniqueIds = nullptr)
+    {
+        io.perCluster.resize(terrain.clusters.size());
+
+        // 1) ユニークID収集
+        std::vector<uint32_t> uniqueIds; CollectUniqueSplatIds(terrain, uniqueIds);
+        if (uniqueIds.empty()) return false;
+
+        // 2) Array を構築
+        if (!BuildSplatArrayTexture(dev, ctx, texMgr, uniqueIds, resolve, io.splatArraySRV))
+            return false; // サイズやフォーマットが不一致なら false
+
+        // 3) id->slice の辞書
+        const auto id2slice = BuildSliceTable(uniqueIds);
+
+        // 4) perCluster に slice と各種スケール/タイルを転写
+        for (uint32_t cid = 0; cid < (uint32_t)terrain.clusters.size(); ++cid) {
+            const auto& meta = terrain.splat[cid];
+            auto it = id2slice.find(meta.splatTextureId);
+            if (it == id2slice.end()) return false;
+
+            auto& dst = io.perCluster[cid];
+            dst.splatSlice = it->second;
+
+            for (uint32_t li = 0; li < meta.layerCount && li < 4; li) {
+                dst.layerTiling[li][0] = meta.layers[li].uvTilingU;
+                dst.layerTiling[li][1] = meta.layers[li].uvTilingV;
+
+            }
+            dst.splatST[0] = meta.splatUVScaleU;
+            dst.splatST[1] = meta.splatUVScaleV;
+            dst.splatOffset[0] = meta.splatUVOffsetU;
+            dst.splatOffset[1] = meta.splatUVOffsetV;
+
+        }
+
+		if (!outUniqueIds) *outUniqueIds = std::move(uniqueIds);
+
+        return true;
+    }
+
+    // 描画直前：クラスタ cid のスプラット（slice/タイル）を b1 へ、共通の Array を t14 へ
+    inline void BindSplatArrayForCluster(ID3D11DeviceContext* ctx,
+        const SplatArrayResources& R,
+        uint32_t cid)
+    {
+        // t14 固定
+        ID3D11ShaderResourceView* srv = R.splatArraySRV.Get();
+        ctx->PSSetShaderResources(14, 1, &srv);
+        // s0
+        ID3D11SamplerState* samp = R.sampLinearWrap.Get();
+        ctx->PSSetSamplers(0, 1, &samp);
+
+        // b1 更新
+        D3D11_MAPPED_SUBRESOURCE m{};
+        if (SUCCEEDED(ctx->Map(R.cbSplat.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m))) {
+            const auto& C = R.perCluster[cid];
+            SplatCBData cb{};
+            std::memcpy(cb.layerTiling, C.layerTiling, sizeof(cb.layerTiling));
+            cb.splatST[0] = C.splatST[0];
+            cb.splatST[1] = C.splatST[1];
+            cb.splatOffset[0] = C.splatOffset[0];
+            cb.splatOffset[1] = C.splatOffset[1];
+            cb.splatSlice = C.splatSlice;
+            std::memcpy(m.pData, &cb, sizeof(cb));
+            ctx->Unmap(R.cbSplat.Get(), 0);
+
+        }
+        ID3D11Buffer* cbs[] = { R.cbSplat.Get() };
+        ctx->PSSetConstantBuffers(1, 1, cbs); // b1
+    }
+
+
+
+        // StructuredBuffer の作成/更新
+    inline bool BuildOrUpdateClusterParamsSB(ID3D11Device* dev,
+        ID3D11DeviceContext* ctx,
+        ClusterParamsGPU& out)
+    {
+        const UINT elemSize = sizeof(ClusterParam);
+        const UINT count = (UINT)out.cpu.size();
+        if (count == 0) return false;
+
+        if (!out.sb) {
+            D3D11_BUFFER_DESC bd{};
+            bd.ByteWidth = elemSize * count;
+            bd.Usage = D3D11_USAGE_DEFAULT;
+            bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+            bd.CPUAccessFlags = 0;
+            bd.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+            bd.StructureByteStride = elemSize;
+            D3D11_SUBRESOURCE_DATA init{ out.cpu.data(), 0, 0 };
+            if (FAILED(dev->CreateBuffer(&bd, &init, &out.sb))) return false;
+
+            D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
+            sd.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+            sd.Format = DXGI_FORMAT_UNKNOWN;
+            sd.Buffer.FirstElement = 0;
+            sd.Buffer.NumElements = count;
+            if (FAILED(dev->CreateShaderResourceView(out.sb.Get(), &sd, &out.srv))) return false;
+
+        }
+        else {
+            ctx->UpdateSubresource(out.sb.Get(), 0, nullptr, out.cpu.data(), 0, 0);
+
+        }
+        return true;
+    }
+
+        // グリッドCBの作成/更新
+    inline bool BuildOrUpdateTerrainGridCB(ID3D11Device* dev,
+        ID3D11DeviceContext* ctx,
+        ClusterParamsGPU& out)
+    {
+        if (!out.cbGrid) {
+            D3D11_BUFFER_DESC bd{};
+            bd.ByteWidth = sizeof(TerrainGridCB);
+            bd.Usage = D3D11_USAGE_DYNAMIC;
+            bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+            bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+            if (FAILED(dev->CreateBuffer(&bd, nullptr, &out.cbGrid))) return false;
+
+        }
+        D3D11_MAPPED_SUBRESOURCE m{};
+        if (FAILED(ctx->Map(out.cbGrid.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m))) return false;
+        std::memcpy(m.pData, &out.grid, sizeof(out.grid));
+        ctx->Unmap(out.cbGrid.Get(), 0);
+        return true;
+    }
+
+        // TerrainClustered → ClusterParamsGPU（CPU側配列とGrid定数）へ詰め替え
+        //  - unique splat を Texture2DArray にパック済み（splatSlice が確定している）前提
+        //  - ここでは slice は呼び出し側から与える（id→slice の辞書を使って設定）
+    inline bool FillClusterParamsCPU(const SFW::Graphics::TerrainClustered& terrain,
+        const std::unordered_map<uint32_t, int>& id2slice,
+        ClusterParamsGPU& out)
+    {
+        const size_t N = terrain.clusters.size();
+        if (terrain.splat.size() != N) return false;
+        out.cpu.resize(N);
+
+        for (uint32_t cid = 0; cid < (uint32_t)N; ++cid) {
+            const auto& meta = terrain.splat[cid];
+            auto it = id2slice.find(meta.splatTextureId);
+            if (it == id2slice.end()) return false;
+
+            ClusterParam p{}; p.splatSlice = it->second;
+            for (uint32_t li = 0; li < meta.layerCount && li < 4; ++li) {
+                p.layerTiling[li][0] = meta.layers[li].uvTilingU;
+                p.layerTiling[li][1] = meta.layers[li].uvTilingV;
+
+            }
+            p.splatST[0] = meta.splatUVScaleU;
+            p.splatST[1] = meta.splatUVScaleV;
+            p.splatOffset[0] = meta.splatUVOffsetU;
+            p.splatOffset[1] = meta.splatUVOffsetV;
+            out.cpu[cid] = p;
+
+        }
+        return true;
+    }
+
+        // t15 と b2 のバインド（ワンドロー前に一度だけ）
+    inline void BindClusterParamsForOneCall(ID3D11DeviceContext* ctx,
+        const ClusterParamsGPU& P)
+    {
+        ID3D11ShaderResourceView* srv = P.srv.Get();
+        ctx->PSSetShaderResources(15, 1, &srv); // t15: StructuredBuffer<ClusterParam>
+        ID3D11Buffer* cbs[] = { P.cbGrid.Get() };
+        ctx->PSSetConstantBuffers(2, 1, cbs);   // b2: TerrainGridCB
+    }
+
+        // 便利ユーティリティ：Terrain のグリッド定数を設定
+    inline void SetupTerrainGridCB(const Math::Vec2f& originXZ,
+        const Math::Vec2f& cellSizeXZ,
+        uint32_t dimX, uint32_t dimZ,
+        ClusterParamsGPU& out)
+    {
+        out.grid.originXZ = originXZ;
+        out.grid.cellSizeXZ = cellSizeXZ;
+        out.grid.dimX = dimX;
+        out.grid.dimZ = dimZ;
+    }
+
+        // 入力シート（ID）→ ID3D11Texture2D を取得
+    inline ComPtr<ID3D11Texture2D> LoadSheetAsTex2D(TextureManager& texMgr,
+        uint32_t sheetId,
+        ResolveTexturePathFn resolve,
+        bool forceSRGB)
+    {
+        std::string path{}; bool srgbFlag = forceSRGB;
+        if (!resolve(sheetId, path, srgbFlag)) return {};
+        TextureCreateDesc cd{}; cd.path = path; cd.forceSRGB = srgbFlag;
+        TextureHandle h = {};
+        texMgr.Add(cd, h);
+        auto data = texMgr.Get(h);
+        auto& td = data.ref(); // srv/resource を保持:contentReference[oaicite:5]{index=5}
+        if (!td.resource) return {};
+        ComPtr<ID3D11Texture2D> t2d;
+        td.resource->QueryInterface(IID_PPV_ARGS(&t2d)); // 失敗時は nullptr
+        return t2d;
+    }
+
+    // シートを (clustersX×clustersZ) に分割して、各クラスタ用 Texture2D を新規生成し、
+      // 各ミップを CopySubresourceRegion でコピーする。
+      // 返値: 生成した各クラスタの TextureHandle（cid=cz*clustersXcx の順）
+    inline std::vector<TextureHandle>
+        BuildClusterSplatTexturesFromSingleSheet(ID3D11Device* dev,
+            ID3D11DeviceContext* ctx,
+            TextureManager& texMgr,
+            uint32_t clustersX, uint32_t clustersZ,
+            uint32_t sheetId,
+            ResolveTexturePathFn resolve,
+            bool sheetIsSRGB = false)
+    {
+        std::vector<TextureHandle> out; out.reserve(size_t(clustersX) * clustersZ);
+
+        // 1) シートをロード
+        ComPtr<ID3D11Texture2D> sheet = LoadSheetAsTex2D(texMgr, sheetId, resolve, /*forceSRGB=*/sheetIsSRGB);
+        if (!sheet) return out;
+
+        D3D11_TEXTURE2D_DESC sd{}; sheet->GetDesc(&sd);
+        if (sd.ArraySize != 1) return out; // 2Dのみ想定
+
+        // 2) タイルのピクセル寸法
+        if (sd.Width % clustersX != 0 || sd.Height % clustersZ != 0) return out;
+        const UINT tileW = sd.Width / clustersX;
+        const UINT tileH = sd.Height / clustersZ;
+        const UINT srcMipLevels = sd.MipLevels;
+        const DXGI_FORMAT fmt = sd.Format; // 重みは非sRGB推奨
+
+        // タイルに許される最大ミップ数
+        auto CalcMaxMips = [](UINT w, UINT h) -> UINT {
+            UINT m = 1, mw = w, mh = h;
+            while (mw > 1 || mh > 1) { ++m; mw = (mw > 1) ? (mw >> 1) : 1; mh = (mh > 1) ? (mh >> 1) : 1; }
+            return m;
+            };
+        const UINT tileMaxMips = CalcMaxMips(tileW, tileH);
+        const UINT destMipLevels = (std::min)(srcMipLevels, tileMaxMips);
+
+        // 3) 各タイル分の Texture2D をレシピ生成（srv/resource を保持）:contentReference[oaicite:6]{index=6} :contentReference[oaicite:7]{index=7}
+        for (uint32_t cz = 0; cz < clustersZ; ++cz) {
+            for (uint32_t cx = 0; cx < clustersX; ++cx) {
+                TextureRecipe rec{};
+                rec.width = tileW;
+                rec.height = tileH;
+                rec.format = fmt;
+                rec.mipLevels = destMipLevels;  // シートと同数
+                rec.arraySize = 1;
+                rec.usage = D3D11_USAGE_DEFAULT;
+                rec.bindFlags = D3D11_BIND_SHADER_RESOURCE;
+                rec.cpuAccessFlags = 0;
+                rec.miscFlags = 0;
+
+                TextureCreateDesc cd{}; cd.recipe = &rec; // path is empty → 生成モード
+                TextureHandle h = {};
+                texMgr.Add(cd, h);
+                auto data = texMgr.Get(h);
+                auto& td = data.ref();
+                if (!td.resource) { /*安全策*/ continue; }
+
+                // GPUリソース本体を 2D にキャストし、そこへ CopySubresourceRegion
+                ComPtr<ID3D11Texture2D> dst;
+                td.resource->QueryInterface(IID_PPV_ARGS(&dst)); // 生成物は resource/srv を保持:contentReference[oaicite:8]{index=8}
+                if (!dst) continue;
+
+                // 4) 全ミップをコピー
+                for (UINT mip = 0; mip < destMipLevels; mip) {
+                    const UINT mw = (std::max)(1u, tileW >> mip);
+                    const UINT mh = (std::max)(1u, tileH >> mip);
+                    // subresource は “総ミップ数” が違うので、それぞれの数を渡して計算
+                    const UINT srcSub = D3D11CalcSubresource(mip, 0, srcMipLevels);   // sheet 側
+                    const UINT dstSub = D3D11CalcSubresource(mip, 0, destMipLevels);  // 生成先
+
+                    // シート上のオフセット（ミップを考慮）
+                    const UINT ox = (cx * tileW) >> mip;
+                    const UINT oy = (cz * tileH) >> mip;
+                    D3D11_BOX box{ 0, 0, 0, mw, mh, 1 };
+
+                    ctx->CopySubresourceRegion(
+                        dst.Get(), dstSub,
+                        0, 0, 0,
+                        sheet.Get(), srcSub,
+                        &box
+                    );
+
+                }
+
+                out.push_back(h);
+
+            }
+
+        }
+        return out;
+    }
+
+    // 生成 TextureHandle 群から、アプリ側IDを割当てて TerrainClustered.splat[] を埋める補助。
+    //  - allocateId(h, cx, cz, cid) : TextureHandle → 任意の uint32_t ID を返す（アセットDB登録など）
+    //  - layerTiling 決め打ち/読み出しは呼び出し側ルールに合わせてコールバックで指定可能。
+    struct LayerTiling { float uvU, uvV; };
+    using AllocateSplatIdFn = uint32_t(*)(TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid);
+    using QueryLayerTilingFn = LayerTiling(*)(uint32_t layerIndex, uint32_t cx, uint32_t cz, uint32_t cid);
+
+    inline void AssignClusterSplatsFromHandles(TerrainClustered& terrain,
+        uint32_t clustersX, uint32_t clustersZ,
+        const std::vector<TextureHandle>& handles,
+        AllocateSplatIdFn allocId,
+        QueryLayerTilingFn queryLayer = nullptr)
+    {
+        const size_t N = size_t(clustersX) * clustersZ;
+        if (handles.size() != N) return;
+        terrain.splat.resize(N);
+
+        for (uint32_t cz = 0; cz < clustersZ; ++cz) {
+            for (uint32_t cx = 0; cx < clustersX; ++cx) {
+                const uint32_t cid = cz * clustersX + cx;
+                auto& sm = terrain.splat[cid];
+                sm.layerCount = 4; // 4レイヤブレンド前提（必要に応じて変更）
+
+                // スプラットID（AllocateSplatIdFn で好きなID体系に）
+                sm.splatTextureId = allocId(handles[cid], cx, cz, cid);
+
+                // 素材のタイル（既定値 or コールバックで可変）
+                for (uint32_t li = 0; li < sm.layerCount; li) {
+                    LayerTiling t{ 1.0f, 1.0f };
+                    if (queryLayer) t = queryLayer(li, cx, cz, cid);
+                    sm.layers[li].uvTilingU = t.uvU;
+                    sm.layers[li].uvTilingV = t.uvV;
+
+                }
+                // スプラットUV（必要に応じて）
+                sm.splatUVScaleU = 1.0f; sm.splatUVScaleV = 1.0f;
+                sm.splatUVOffsetU = 0.0f; sm.splatUVOffsetV = 0.0f;
+
+            }
+
+        }
+    }
 
 } // namespace SFW

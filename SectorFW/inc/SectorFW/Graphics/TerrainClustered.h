@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <limits>
 #include <array>
+#include <functional>
+
 #include "../Math/Perlin2D.h" // SFW::Math::Perlin2D（-1..1）を使用
 #include "../Math/AABB.hpp"
 
@@ -88,6 +90,16 @@ namespace SFW {
             };
 
             std::vector<ClusterSplatMeta> splat; // size == clusters.size()
+
+            void InitSplatDefault(uint32_t commonSplatTexId,
+                const uint32_t materialIds[4],
+                const float tilingUV[4][2],
+                float splatScaleU = 1.0f, float splatScaleV = 1.0f,
+                float splatOffsetU = 0.0f, float splatOffsetV = 0.0f);
+
+            // 生成関数版：クラスターごとに好きなロジックで決める
+            using SplatGenerator = std::function<ClusterSplatMeta(uint32_t cid, const ClusterRange& c)>;
+            void InitSplatWithGenerator(const SplatGenerator& gen);
         private:
             static void GenerateHeights(std::vector<float>& outH,
                 uint32_t vx, uint32_t vz,

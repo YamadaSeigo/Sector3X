@@ -28,6 +28,47 @@ constexpr uint32_t WINDOW_HEIGHT = 720;	// ウィンドウの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
+enum : uint32_t {
+	Mat_Grass = 1, Mat_Rock = 2, Mat_Dirt = 3, Mat_Snow = 4,
+	Tex_Splat_Control_0 = 10001,
+};
+
+struct MaterialRecord {
+	std::string albedoPath;
+	bool        albedoSRGB = true;   // カラーなので true を推奨
+	// 将来用: std::string normalPath; bool normalSRGB=false;
+	// 将来用: std::string ormPath;    bool ormSRGB=false;
+};
+
+static std::unordered_map<uint32_t, MaterialRecord> gMaterials = {
+	{ Mat_Grass, { "assets/texture/terrain/grass.png", true } },
+	{ Mat_Rock,  { "assets/texture/terrain/rock.png",  true } },
+	{ Mat_Dirt,  { "assets/texture/terrain/dirt.png",  true } },
+	{ Mat_Snow,  { "assets/texture/terrain/snow.png",  true } },
+};
+
+// 素材以外（スプラット重み等）は “テクスチャID” テーブルで受ける
+static std::unordered_map<uint32_t, std::pair<std::string, bool>> gTextures = {
+	// 重みテクスチャは “非 sRGB” 推奨（正規化済みのスカラー重みだから）
+	{ Tex_Splat_Control_0, { "assets/texture/terrain/splat.png", false } },
+};
+
+// BuildClusterSplatSRVs に渡す
+static bool ResolveTexturePath(uint32_t id, std::string& path, bool& forceSRGB)
+{
+	if (auto it = gMaterials.find(id); it != gMaterials.end()) {
+		path = it->second.albedoPath;
+		forceSRGB = it->second.albedoSRGB;
+		return true;
+	}
+	if (auto it2 = gTextures.find(id); it2 != gTextures.end()) {
+		path = it2->second.first;
+		forceSRGB = it2->second.second;
+		return true;
+	}
+	return false; // 未登録ID
+}
+
 int main(void)
 {
 	LOG_INFO("SectorX Console Project started");
@@ -81,6 +122,14 @@ int main(void)
 
 	SimpleThreadPoolService threadPool;
 
+	auto device = graphics.GetDevice();
+	auto deviceContext = graphics.GetDeviceContext();
+
+	auto renderService = graphics.GetRenderService();
+
+	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &threadPool);
+	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
+
 	Graphics::TerrainBuildParams p;
 	p.cellsX = 512;
 	p.cellsZ = 512;
@@ -129,15 +178,58 @@ int main(void)
 
 	Graphics::DX11::BuildFromTerrainClustered(graphics.GetDevice(), terrain, blockRevert);
 
-	auto deviceContext = graphics.GetDeviceContext();
-
-	auto renderService = graphics.GetRenderService();
-
-	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &threadPool);
-	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
-
 	// ---- マッピング設定 ----
 	Graphics::HeightTexMapping map = Graphics::MakeHeightTexMappingFromTerrainParams(p, heightMap);
+
+	auto& textureManager = *renderService->GetResourceManager<Graphics::DX11::TextureManager>();
+
+	Graphics::DX11::CommonMaterialResources matRes;
+	const uint32_t matIds[4] = { Mat_Grass, Mat_Rock, Mat_Dirt, Mat_Snow }; // ← あなたの素材ID
+	Graphics::DX11::BuildCommonMaterialSRVs(device, textureManager, matIds, &ResolveTexturePath, matRes);
+
+	// 0) “シート画像” の ID（例: Tex_Splat_Sheet0）は ResolveTexturePathFn でパスに解決される想定
+	uint32_t sheetTexId = Tex_Splat_Control_0;
+
+	// 1) シートを分割して各クラスタの TextureHandle を生成
+	auto handles = Graphics::DX11::BuildClusterSplatTexturesFromSingleSheet(
+		device, deviceContext, textureManager,
+		terrain.clustersX, terrain.clustersZ,
+		sheetTexId, &ResolveTexturePath,
+		/*sheetIsSRGB=*/false // 重みなので通常は false
+	);
+
+	// 2) 生成ハンドルにアプリ側の “ID” を割当て → terrain.splat[cid].splatTextureId に反映
+	auto AllocateSplatId = [&](Graphics::TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid)->uint32_t {
+		// 例: ハンドルのインデックス等で安定ハッシュを作る or 登録テーブルに入れて返す
+		//     必要ならここで "ID→TextureHandle" の辞書も作っておく（レンダラー層で参照）
+		return (0x70000000u + cid); // 例：単純に cid ベースの ID
+		};
+	Graphics::DX11::AssignClusterSplatsFromHandles(terrain, terrain.clustersX, terrain.clustersZ, handles,
+		+[](Graphics::TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid) { return (0x70000000u + cid); },
+		/*queryLayer*/nullptr);
+
+	Graphics::DX11::SplatArrayResources splatRes;
+	Graphics::DX11::InitSplatArrayResources(device, splatRes, terrain.clusters.size());
+
+	// Array 構築（CopySubresourceRegion 実行）
+	std::vector<uint32_t> uniqueIds;
+	BuildClusterSplatArrayResources(device, deviceContext, textureManager, terrain, &ResolveTexturePath, splatRes, &uniqueIds);
+
+	// スライステーブルは Array 生成時の uniqueIds から得る
+	std::unordered_map<uint32_t, int> id2slice = Graphics::DX11::BuildSliceTable(uniqueIds);
+
+	// CPU配列に詰める
+	Graphics::DX11::ClusterParamsGPU cp{};
+	Graphics::DX11::FillClusterParamsCPU(terrain, id2slice, cp);
+
+	// グリッドCBを設定（TerrainClustered の定義に合わせて）
+	Graphics::DX11::SetupTerrainGridCB(/*originXZ=*/{ 0, 0 },
+		/*cellSize=*/{ p.cellSize, p.cellSize },
+		/*dimX=*/p.cellsX, /*dimZ=*/p.cellsZ, cp);
+
+	// GPUリソースを作る/更新
+	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
+	Graphics::DX11::BuildOrUpdateTerrainGridCB(device, deviceContext, cp);
 
 	auto terrainUpdateFunc = [map, perCameraService, &terrain](Graphics::RenderService* renderService)
 		{
@@ -202,7 +294,7 @@ int main(void)
 			Graphics::DispatchToMOC(MyMOCRender, trisC, width, height);
 		};
 
-	auto testClusterFunc = [&graphics, deviceContext, perCameraService , &blockRevert](Graphics::RenderService* renderService)
+	auto testClusterFunc = [&graphics, deviceContext, perCameraService, matRes, splatRes, cp, &blockRevert](Graphics::RenderService* renderService)
 		{
 			auto viewProj = perCameraService->GetCameraBufferData().viewProj;
 			auto camPos = perCameraService->GetEyePos();
@@ -217,12 +309,19 @@ int main(void)
 			graphics.SetDefaultRenderTarget();
 			graphics.SetRasterizerState(Graphics::RasterizerStateID::WireCullNone);
 
+			// フレームの先頭 or Terrainパスの先頭で 1回だけ：
+			Graphics::DX11::BindCommonMaterials(deviceContext, matRes);
+
+			ID3D11ShaderResourceView* splatSrv = splatRes.splatArraySRV.Get();
+			deviceContext->PSSetShaderResources(14, 1, &splatSrv);       // t14
+			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t15, b2
+
 			auto world = Math::Matrix4x4f::Identity();
 			blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height, 400.0f, 160.0f);
 		};
 
-	//renderService->SetCustomUpdateFunction(std::move(terrainUpdateFunc));
-	//renderService->SetCustomPreDrawFunction(std::move(testClusterFunc));
+	renderService->SetCustomUpdateFunction(std::move(terrainUpdateFunc));
+	renderService->SetCustomPreDrawFunction(std::move(testClusterFunc));
 
 	//デバッグ用の初期化
 	//========================================================================================-
@@ -305,8 +404,8 @@ int main(void)
 		Math::Vec3f dst = src;
 
 		// Entity生成
-		for (int j = 0; j < 300; ++j) {
-			for (int k = 0; k < 300; ++k) {
+		for (int j = 0; j < 1; ++j) {
+			for (int k = 0; k < 1; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					Math::Vec3f location = { float(rand() % 3000 + 1), float(n) * 20.0f, float(rand() % 3000 + 1) };
 					//Math::Vec3f location = { 10.0f * j,0.0f,10.0f * k };

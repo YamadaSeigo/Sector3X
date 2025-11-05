@@ -62,6 +62,36 @@ namespace SFW {
             return t;
         }
 
+        void TerrainClustered::InitSplatDefault(uint32_t commonSplatTexId, const uint32_t materialIds[4], const float tilingUV[4][2], float splatScaleU, float splatScaleV, float splatOffsetU, float splatOffsetV)
+        {
+            // クラスターが確定済み前提
+            splat.resize(clusters.size());
+
+            for (uint32_t cid = 0; cid < (uint32_t)clusters.size(); ++cid) {
+                ClusterSplatMeta meta{};
+                meta.layerCount = 4;
+                for (uint32_t i = 0; i < 4; ++i) {
+                    meta.layers[i].materialId = materialIds[i];
+                    meta.layers[i].uvTilingU = tilingUV[i][0];
+                    meta.layers[i].uvTilingV = tilingUV[i][1];
+                }
+                meta.splatTextureId = commonSplatTexId; // 全クラスターで同じスプラットでもOK（あとで差し替え可）
+                meta.splatUVScaleU = splatScaleU;
+                meta.splatUVScaleV = splatScaleV;
+                meta.splatUVOffsetU = splatOffsetU;
+                meta.splatUVOffsetV = splatOffsetV;
+                splat[cid] = meta;
+            }
+        }
+
+        void TerrainClustered::InitSplatWithGenerator(const SplatGenerator& gen)
+        {
+            splat.resize(clusters.size());
+            for (uint32_t cid = 0; cid < (uint32_t)clusters.size(); ++cid) {
+                splat[cid] = gen(cid, clusters[cid]);
+            }
+        }
+
         void TerrainClustered::GenerateHeights(std::vector<float>& outH,
             uint32_t vx, uint32_t vz,
             const TerrainBuildParams& p)
