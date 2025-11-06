@@ -251,7 +251,8 @@ namespace SFW {
                 ScratchImage img{};
                 HRESULT hr = E_FAIL;
 
-                std::string resolved = ResolveConvertedPath(desc.path);
+                std::string resolved = desc.path;
+                if(desc.convertDSS) resolved = ResolveConvertedPath(desc.path);
 
                 const auto wpath = Utf8ToWide(resolved);
                 auto lower = detail::NormalizePath(resolved);

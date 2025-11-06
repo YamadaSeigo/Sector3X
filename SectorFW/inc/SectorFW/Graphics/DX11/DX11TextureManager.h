@@ -87,6 +87,7 @@ namespace SFW
 		struct TextureCreateDesc {
 			std::string path;
 			bool forceSRGB = false;
+			bool convertDSS = true;
 
 			// --- 解像度を指定して生成する場合（path が空）----
 			TextureRecipe* recipe = nullptr; //指定しない場合はnullptr(必須ではない)

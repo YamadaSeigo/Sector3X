@@ -50,13 +50,13 @@
     <FxCompile Include="shader\VS_TerrainClustered.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="PS_TerrainClustered.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="shader\CS_WriteArgs.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\CS_TerrainClustered.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_TerrainClustered.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

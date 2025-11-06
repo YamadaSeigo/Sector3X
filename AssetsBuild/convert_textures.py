@@ -2,6 +2,8 @@ import os
 import subprocess
 from pathlib import Path
 import argparse
+import sys
+import shutil
 
 # 実行時にソリューションディレクトリを渡す
 parser = argparse.ArgumentParser()
@@ -66,6 +68,7 @@ def convert_texture(src: Path, dst_dir: Path):
         "-m", "0",        # 全ミップ生成
         "-y",             # 上書き許可
         "-nologo",        # ロゴ非表示
+        "-nogpu",         # GPU不使用
         "-o", str(dst_dir),
         str(src)
     ] + fmt_args

@@ -205,17 +205,16 @@ int main(void)
 		return (0x70000000u + cid); // 例：単純に cid ベースの ID
 		};
 	Graphics::DX11::AssignClusterSplatsFromHandles(terrain, terrain.clustersX, terrain.clustersZ, handles,
-		+[](Graphics::TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid) { return (0x70000000u + cid); },
+		[](Graphics::TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid) { return (0x70000000u + cid); },
 		/*queryLayer*/nullptr);
 
 	Graphics::DX11::SplatArrayResources splatRes;
 	Graphics::DX11::InitSplatArrayResources(device, splatRes, terrain.clusters.size());
 
-	// Array 構築（CopySubresourceRegion 実行）
-	std::vector<uint32_t> uniqueIds;
-	BuildClusterSplatArrayResources(device, deviceContext, textureManager, terrain, &ResolveTexturePath, splatRes, &uniqueIds);
+	BuildSplatArrayFromHandles(device, deviceContext, textureManager, handles, splatRes);
 
 	// スライステーブルは Array 生成時の uniqueIds から得る
+	std::vector<uint32_t> uniqueIds; Graphics::DX11::CollectUniqueSplatIds(terrain, uniqueIds);
 	std::unordered_map<uint32_t, int> id2slice = Graphics::DX11::BuildSliceTable(uniqueIds);
 
 	// CPU配列に詰める
@@ -224,7 +223,7 @@ int main(void)
 
 	// グリッドCBを設定（TerrainClustered の定義に合わせて）
 	Graphics::DX11::SetupTerrainGridCB(/*originXZ=*/{ 0, 0 },
-		/*cellSize=*/{ p.cellSize, p.cellSize },
+		/*cellSize=*/{ (p.cellsX + 1) * p.cellSize,  (p.cellsZ + 1) * p.cellSize },
 		/*dimX=*/p.cellsX, /*dimZ=*/p.cellsZ, cp);
 
 	// GPUリソースを作る/更新
@@ -307,7 +306,7 @@ int main(void)
 			uint32_t height = (uint32_t)resolution.y;
 
 			graphics.SetDefaultRenderTarget();
-			graphics.SetRasterizerState(Graphics::RasterizerStateID::WireCullNone);
+			graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
 
 			// フレームの先頭 or Terrainパスの先頭で 1回だけ：
 			Graphics::DX11::BindCommonMaterials(deviceContext, matRes);

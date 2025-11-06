@@ -3,8 +3,9 @@
 struct VSOut
 {
     float4 pos : SV_Position;
-    float3 n : NORMAL;
-    float2 uv : TEXCOORD0;
+    float2 uv : TEXCOORD0; // 地形の基礎UV（0..1）
+    float3 worldPos : TEXCOORD1; // 少なくとも x,z を使用
+    float3 nrm : NORMAL0; // 必要なら
 };
 
 
@@ -31,7 +32,9 @@ VSOut main(uint vtxId : SV_VertexID)
     float4 wp = mul(World, float4(p, 1));
     VSOut o;
     o.pos = mul(ViewProj, wp);
-    o.n = normalize(mul(World, float4(n, 0)).xyz);
     o.uv = uv;
+    o.worldPos = wp.xyz;
+    o.nrm = normalize(mul(World, float4(n, 0)).xyz);
+
     return o;
 }

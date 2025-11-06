@@ -895,7 +895,7 @@ namespace SFW::Graphics::DX11 {
             auto& dst = io.perCluster[cid];
             dst.splatSlice = it->second;
 
-            for (uint32_t li = 0; li < meta.layerCount && li < 4; li) {
+            for (uint32_t li = 0; li < meta.layerCount && li < 4; ++li) {
                 dst.layerTiling[li][0] = meta.layers[li].uvTilingU;
                 dst.layerTiling[li][1] = meta.layers[li].uvTilingV;
 
@@ -1064,6 +1064,9 @@ namespace SFW::Graphics::DX11 {
         std::string path{}; bool srgbFlag = forceSRGB;
         if (!resolve(sheetId, path, srgbFlag)) return {};
         TextureCreateDesc cd{}; cd.path = path; cd.forceSRGB = srgbFlag;
+#ifdef _DEBUG
+        cd.convertDSS = false;
+#endif
         TextureHandle h = {};
         texMgr.Add(cd, h);
         auto data = texMgr.Get(h);
@@ -1102,14 +1105,41 @@ namespace SFW::Graphics::DX11 {
         const UINT srcMipLevels = sd.MipLevels;
         const DXGI_FORMAT fmt = sd.Format; // 重みは非sRGB推奨
 
-        // タイルに許される最大ミップ数
-        auto CalcMaxMips = [](UINT w, UINT h) -> UINT {
-            UINT m = 1, mw = w, mh = h;
-            while (mw > 1 || mh > 1) { ++m; mw = (mw > 1) ? (mw >> 1) : 1; mh = (mh > 1) ? (mh >> 1) : 1; }
-            return m;
+        auto IsBC = [&](DXGI_FORMAT f)->bool {
+            switch (f) {
+            case DXGI_FORMAT_BC1_UNORM: case DXGI_FORMAT_BC1_UNORM_SRGB:
+            case DXGI_FORMAT_BC2_UNORM: case DXGI_FORMAT_BC2_UNORM_SRGB:
+            case DXGI_FORMAT_BC3_UNORM: case DXGI_FORMAT_BC3_UNORM_SRGB:
+            case DXGI_FORMAT_BC4_UNORM: case DXGI_FORMAT_BC4_SNORM:
+            case DXGI_FORMAT_BC5_UNORM: case DXGI_FORMAT_BC5_SNORM:
+            case DXGI_FORMAT_BC6H_UF16: case DXGI_FORMAT_BC6H_SF16:
+            case DXGI_FORMAT_BC7_UNORM: case DXGI_FORMAT_BC7_UNORM_SRGB:
+                return true;
+            default: return false;
+
+            }
             };
-        const UINT tileMaxMips = CalcMaxMips(tileW, tileH);
-        const UINT destMipLevels = (std::min)(srcMipLevels, tileMaxMips);
+        auto FloorLog2 = [](UINT v)->UINT { UINT n = 0; while (v > 1) { v >>= 1; ++n; } return n; };
+        auto CalcMaxMips = [&](UINT w, UINT h)->UINT {
+            // 非圧縮用: 1 + floor(log2(max(w,h)))
+            UINT mw = (w > h) ? w : h; return 1u + FloorLog2(mw);
+            };
+        auto CalcMaxMipsBC = [&](UINT w, UINT h)->UINT {
+            // BCは各ミップで (w>>m),(h>>m) が 4 の倍数かつ ≥4 の範囲まで
+            if ((w < 4) || (h < 4)) return 0; // そもそも不可
+            if ((w % 4) != 0 || (h % 4) != 0) return 0; // タイルが4の倍数でない
+            UINT mw = w / 4, mh = h / 4; // 4の倍数性を維持したままミップれる回数
+            // 1 + min(floor(log2(w/4)), floor(log2(h/4)))
+            return 1u + ((FloorLog2(mw) < FloorLog2(mh)) ? FloorLog2(mw) : FloorLog2(mh));
+            };
+
+        UINT destMipLevels = (std::min)(srcMipLevels, CalcMaxMips(tileW, tileH));
+        if (IsBC(fmt)) {
+            UINT bcMax = CalcMaxMipsBC(tileW, tileH);
+            if (bcMax == 0) return out; // 分割タイルがBC要件を満たさない
+            destMipLevels = (std::min)(destMipLevels, bcMax);
+
+        }
 
         // 3) 各タイル分の Texture2D をレシピ生成（srv/resource を保持）:contentReference[oaicite:6]{index=6} :contentReference[oaicite:7]{index=7}
         for (uint32_t cz = 0; cz < clustersZ; ++cz) {
@@ -1138,7 +1168,7 @@ namespace SFW::Graphics::DX11 {
                 if (!dst) continue;
 
                 // 4) 全ミップをコピー
-                for (UINT mip = 0; mip < destMipLevels; mip) {
+                for (UINT mip = 0; mip < destMipLevels; ++mip) {
                     const UINT mw = (std::max)(1u, tileW >> mip);
                     const UINT mh = (std::max)(1u, tileH >> mip);
                     // subresource は “総ミップ数” が違うので、それぞれの数を渡して計算
@@ -1148,7 +1178,12 @@ namespace SFW::Graphics::DX11 {
                     // シート上のオフセット（ミップを考慮）
                     const UINT ox = (cx * tileW) >> mip;
                     const UINT oy = (cz * tileH) >> mip;
-                    D3D11_BOX box{ 0, 0, 0, mw, mh, 1 };
+                    // BCは 4×4 ブロック境界必須
+                    if (IsBC(fmt)) {
+                        if ((mw < 4) || (mh < 4)) continue;              // このミップはコピー不可
+                        if ((ox & 3u) || (oy & 3u) || (mw & 3u) || (mh & 3u)) continue; // 非整列はスキップ
+                    }
+                    D3D11_BOX box{ ox, oy, 0, ox + mw, oy + mh, 1 };
 
                     ctx->CopySubresourceRegion(
                         dst.Get(), dstSub,
@@ -1165,6 +1200,85 @@ namespace SFW::Graphics::DX11 {
 
         }
         return out;
+    }
+
+    // ------------------------------------------------------------
+    // BuildSplatArrayFromHandles
+    //  - BuildClusterSplatTexturesFromSingleSheet() が返す各クラスタ用
+    //    TextureHandle 配列から Texture2DArray を構築し、splatArraySRV を作る
+    //  - handles の順序 = クラスタID（cid）順（cz*clustersXcx）を想定
+    //    もし順序が異なるなら、cid→handlesIndex の並びを別途渡してください
+    // ------------------------------------------------------------
+    inline bool BuildSplatArrayFromHandles(ID3D11Device* dev,
+        ID3D11DeviceContext* ctx,
+        TextureManager& texMgr,
+        const std::vector<TextureHandle>& handles,
+        SplatArrayResources& out /*writes splatArraySRV*/)
+    {
+        if (handles.empty()) return false;
+
+        // 1) 代表の desc を取得し、全ハンドルの互換性を検証
+        ComPtr<ID3D11Texture2D> first;
+        {
+            auto data = texMgr.Get(handles[0]);
+            auto& td0 = data.ref();
+            if (!td0.resource) return false;
+            if (FAILED(td0.resource->QueryInterface(IID_PPV_ARGS(&first)))) return false;
+        }
+        D3D11_TEXTURE2D_DESC refd{}; first->GetDesc(&refd);
+        if (refd.ArraySize != 1 || refd.SampleDesc.Count != 1) return false; // 2Dのみ
+
+        for (size_t i = 1; i < handles.size(); ++i) {
+            auto data = texMgr.Get(handles[i]);
+            auto& td = data.ref();
+            if (!td.resource) return false;
+            ComPtr<ID3D11Texture2D> t2d;
+            if (FAILED(td.resource->QueryInterface(IID_PPV_ARGS(&t2d)))) return false;
+            D3D11_TEXTURE2D_DESC d{}; t2d->GetDesc(&d);
+            if (d.Width != refd.Width ||
+                d.Height != refd.Height ||
+                d.Format != refd.Format ||
+                d.MipLevels != refd.MipLevels ||
+                d.ArraySize != 1 ||
+                d.SampleDesc.Count != 1)
+                return false; // サイズ/フォーマット/ミップ数が一致しない
+
+        }
+
+        // 2) Array テクスチャを作成
+        D3D11_TEXTURE2D_DESC ad = refd;
+        ad.ArraySize = (UINT)handles.size();
+        ad.BindFlags = D3D11_BIND_SHADER_RESOURCE;    // 必須
+        ComPtr<ID3D11Texture2D> arrayTex;
+        if (FAILED(dev->CreateTexture2D(&ad, nullptr, &arrayTex))) return false;
+
+        // 3) 各スライスへ全ミップをコピー
+        const UINT mips = refd.MipLevels;
+        for (UINT slice = 0; slice < handles.size(); ++slice) {
+            auto data = texMgr.Get(handles[slice]);
+            auto& td = data.ref();
+            ComPtr<ID3D11Texture2D> src; td.resource->QueryInterface(IID_PPV_ARGS(&src));
+            for (UINT mip = 0; mip < mips; ++mip) {
+                const UINT srcSub = D3D11CalcSubresource(mip, 0, mips);
+                const UINT dstSub = D3D11CalcSubresource(mip, slice, mips);
+                ctx->CopySubresourceRegion(arrayTex.Get(), dstSub, 0, 0, 0, src.Get(), srcSub, nullptr);
+
+            }
+
+        }
+
+        // 4) SRV を作成し、out.splatArraySRV に格納
+        D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
+        sd.Format = ad.Format;
+        sd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+        sd.Texture2DArray.MostDetailedMip = 0;
+        sd.Texture2DArray.MipLevels = ad.MipLevels;
+        sd.Texture2DArray.FirstArraySlice = 0;
+        sd.Texture2DArray.ArraySize = ad.ArraySize;
+        ComPtr<ID3D11ShaderResourceView> srv;
+        if (FAILED(dev->CreateShaderResourceView(arrayTex.Get(), &sd, &srv))) return false;
+        out.splatArraySRV = std::move(srv);
+        return true;
     }
 
     // 生成 TextureHandle 群から、アプリ側IDを割当てて TerrainClustered.splat[] を埋める補助。
@@ -1194,7 +1308,7 @@ namespace SFW::Graphics::DX11 {
                 sm.splatTextureId = allocId(handles[cid], cx, cz, cid);
 
                 // 素材のタイル（既定値 or コールバックで可変）
-                for (uint32_t li = 0; li < sm.layerCount; li) {
+                for (uint32_t li = 0; li < sm.layerCount; ++li) {
                     LayerTiling t{ 1.0f, 1.0f };
                     if (queryLayer) t = queryLayer(li, cx, cz, cid);
                     sm.layers[li].uvTilingU = t.uvU;
