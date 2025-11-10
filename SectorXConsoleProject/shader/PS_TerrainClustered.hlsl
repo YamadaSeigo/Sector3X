@@ -18,8 +18,8 @@ StructuredBuffer<ClusterParam> gClusters : register(t15); // ‘SƒNƒ‰ƒXƒ^‚Ìƒpƒ‰ƒ
 
 SamplerState gSamp : register(s0);
 
-// b2: ƒOƒŠƒbƒh’è”iDX11BlockRevertHelper::TerrainGridCB ‚Æˆê’vj
-cbuffer TerrainGridCB : register(b2)
+// b4: ƒOƒŠƒbƒh’è”iDX11BlockRevertHelper::TerrainGridCB ‚Æˆê’vj
+cbuffer TerrainGridCB : register(b4)
 {
     float2 gOriginXZ; // ƒ[ƒ‹ƒhÀ•W‚ÌŠî€ (x,z)
     float2 gCellSizeXZ; // 1ƒNƒ‰ƒXƒ^‚ÌƒTƒCƒY (x,z)
@@ -48,6 +48,15 @@ uint ComputeClusterId(float2 worldXZ)
     return uint(ij.y) * gDimX + uint(ij.x);
 }
 
+// ƒZƒ‹“à 0..1 ‚Ì‹ÇŠUV‚ğì‚é
+float2 ComputeClusterLocalUV(float2 worldXZ)
+{
+    float2 rel = (worldXZ - gOriginXZ) / gCellSizeXZ; // ‰½ƒZƒ‹–Ú‚©
+    float2 fracUV = frac(rel); // 0..1
+    // ’[‚Ì‹«ŠEˆ—‚ª‹C‚É‚È‚é‚È‚ç”÷¬ƒIƒtƒZƒbƒg‚Å 1.0 ‚É‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é“™‚Ì’²®‰Â
+    return fracUV;
+}
+
 float4 NormalizeWeights(float4 w)
 {
     w = saturate(w);
@@ -58,20 +67,28 @@ float4 NormalizeWeights(float4 w)
 // === PSiƒƒ“ƒhƒ[–{‘Ìj ===
 float4 main(VSOut i) : SV_Target
 {
-    // 1) ƒsƒNƒZƒ‹‚Ì worldPos.xz ¨ ƒNƒ‰ƒXƒ^ID
+    // ƒsƒNƒZƒ‹‚Ì worldPos.xz ¨ ƒNƒ‰ƒXƒ^ID
     uint cid = ComputeClusterId(i.worldPos.xz);
     ClusterParam p = gClusters[cid];
 
-    // 2) ƒXƒvƒ‰ƒbƒgd‚İiRGBAj‚ğ slice w’è‚Åæ“¾
-    float2 suv = i.uv * p.splatST + p.splatOffset;
-    float4 w = NormalizeWeights(gSplat.Sample(gSamp, float3(suv, p.splatSlice)));
+   // 1) ƒNƒ‰ƒXƒ^‹ÇŠUV 0..1
+    float2 uvC = ComputeClusterLocalUV(i.worldPos.xz);
 
-    // 3) ‹¤’Ê‘fŞ4–‡‚ğƒ^ƒCƒ‹ƒTƒ“ƒvƒ‹
-    float4 c0 = gLayer0.Sample(gSamp, i.uv * p.layerTiling[0]);
-    float4 c1 = gLayer1.Sample(gSamp, i.uv * p.layerTiling[1]);
-    float4 c2 = gLayer2.Sample(gSamp, i.uv * p.layerTiling[2]);
-    float4 c3 = gLayer3.Sample(gSamp, i.uv * p.layerTiling[3]);
+    // 2) ƒXƒvƒ‰ƒbƒgd‚İFTexture2DArray ‚È‚ç slice w’è
+    //    ’Êí‚Í p.splatST=(1,1), p.splatOffset=(0,0) ŒÅ’è‚ÅOK
+    float2 suv = uvC * p.splatST + p.splatOffset;
+    float4 w = gSplat.Sample(gSamp, float3(suv, p.splatSlice));
+    w = saturate(w);
+    w /= max(1e-5, dot(w, 1));
+    
 
-    // 4) d‚İƒuƒŒƒ“ƒh
+    // 3) ‘fŞ4F˜A‘±Š´‚ª—~‚µ‚¯‚ê‚Î world ƒx[ƒX‚Åƒ^ƒCƒ‹‚·‚é‚Ì‚ª‚¨‚·‚·‚ß
+    //    —á: ƒ[ƒ‹ƒhXZ‚ğƒXƒP[ƒ‹iŠ®‘S‚ÉƒNƒ‰ƒXƒ^–³ŠÖŒW‚Ì˜A‘±ƒ^ƒCƒ‹j
+    //float2 uvWorld = i.worldPos.xz; // •K—v‚É‰‚¶‚Ä / overallScale
+    float4 c0 = gLayer0.Sample(gSamp, suv * p.layerTiling[0]);
+    float4 c1 = gLayer1.Sample(gSamp, suv * p.layerTiling[1]);
+    float4 c2 = gLayer2.Sample(gSamp, suv * p.layerTiling[2]);
+    float4 c3 = gLayer3.Sample(gSamp, suv * p.layerTiling[3]);
+
     return c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
 }

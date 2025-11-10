@@ -247,6 +247,18 @@ namespace SFW
 				return Math::Vec2f{ right - left, bottom - top };
 			}
 
+			Math::Matrix4x4f MakeProjectionMatrix() const noexcept {
+				std::shared_lock lock(sharedMutex);
+				Math::Matrix4x4f proj;
+				if constexpr (Type == ProjectionType::Perspective) {
+					proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, nearClip, farClip);
+				}
+				else {
+					proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, bottom, top, nearClip, farClip);
+				}
+				return proj;
+			}
+
 			Math::Matrix4x4f MakeViewProjMatrix() const {
 				std::shared_lock lock(sharedMutex);
 				Math::Vec3f r, u, f;
@@ -260,6 +272,11 @@ namespace SFW
 					proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, bottom, top, nearClip, farClip);
 				}
 				return proj * view;
+			}
+
+			void MakeBasis(Math::Vec3f& outRight, Math::Vec3f& outUp, Math::Vec3f& outForward) const noexcept {
+				std::shared_lock lock(sharedMutex);
+				Math::ToBasis<float, Math::LH_ZForward>(rot, outRight, outUp, outForward);
 			}
 
 			/**
@@ -276,7 +293,7 @@ namespace SFW
 			 * @brief カメラバッファのデータを取得
 			 * @return const CameraBuffer& カメラバッファのデータ
 			 */
-			const CameraBuffer& GetCameraBufferData() const noexcept { 
+			const CameraBuffer& GetCameraBufferData() const noexcept {
 				return cameraBuffer[currentSlot];
 			}
 		private:

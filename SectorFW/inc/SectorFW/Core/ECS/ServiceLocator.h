@@ -10,10 +10,16 @@
 #include <mutex>
 #include <shared_mutex>
 #include <memory>
+#include <execution>
 
 #include "../../Graphics/RenderService.h"
 #include "../../Util/TypeChecker.hpp"
  //#include "Input/InputService.h"
+
+// 並列サービス更新を有効にするかどうかの定義
+#ifndef SFW_ENABLE_PARALLEL_SERVICE_UPDATE
+//#define SFW_ENABLE_PARALLEL_SERVICE_UPDATE
+#endif
 
 namespace SFW
 {
@@ -155,9 +161,21 @@ namespace SFW
 			 */
 			void UpdateService(double deltaTime) {
 				std::shared_lock<std::shared_mutex> lock(*mapMutex);
-				for (auto& service : updateServices) {
-					service->Update(deltaTime);
+#if defined(SFW_ENABLE_PARALLEL_SERVICE_UPDATE)
+				std::for_each(
+					std::execution::par,                // 並列実行
+					updateServices.begin(),
+					updateServices.end(),
+					[deltaTime](IUpdateService* s) noexcept {
+						if (s) s->Update(deltaTime);
+					}
+				);
+#else
+				for (IUpdateService* s : updateServices) {
+					if (s) s->Update(deltaTime);
+
 				}
+#endif
 			}
 		private:
 			/**

@@ -113,7 +113,17 @@ namespace SFW {
         struct alignas(16) Matrix<4, 4, float> {
             static constexpr size_t kRows = 4;
             static constexpr size_t kCols = 4;
-            float m[4][4];
+
+            union
+            {
+                float m[4][4];
+				struct {
+					float m00, m01, m02, m03;
+					float m10, m11, m12, m13;
+					float m20, m21, m22, m23;
+					float m30, m31, m32, m33;
+				};
+            };
 
             static constexpr Matrix Identity() noexcept {
                 Matrix I{};
@@ -634,10 +644,37 @@ namespace SFW {
 
             // 端数1体
             if (i < N) {
-                Matrix3x4fSoA tail = W;
-                tail.count = 1;
-                // 各ポインタはそのまま i オフセットで参照されるので、SSE 版にそのまま渡せる
-                Mul4x4x3x4_Batch_To4x4_SSE_RowCombine_SoA(VP, tail, C + i);
+                // 末行 [0,0,0,1]
+                const __m128 b3_row = _mm_set_ps(1.f, 0.f, 0.f, 0.f);
+
+                // VP の各行の係数をブロードキャスト
+                __m128 la0[4], la1[4], la2[4], la3[4];
+                for (int r = 0; r < 4; ++r) {
+                    la0[r] = _mm_set1_ps(VP.m[r][0]);
+                    la1[r] = _mm_set1_ps(VP.m[r][1]);
+                    la2[r] = _mm_set1_ps(VP.m[r][2]);
+                    la3[r] = _mm_set1_ps(VP.m[r][3]);
+                }
+
+                // SoA から行ベクトルを組み立て（[x,y,z,w] の順で _mm_set_ps(w,z,y,x)）
+                const __m128 b0 = _mm_set_ps(W.tx[i], W.m02[i], W.m01[i], W.m00[i]); // [m00 m01 m02 tx]
+                const __m128 b1 = _mm_set_ps(W.ty[i], W.m12[i], W.m11[i], W.m10[i]); // [m10 m11 m12 ty]
+                const __m128 b2 = _mm_set_ps(W.tz[i], W.m22[i], W.m21[i], W.m20[i]); // [m20 m21 m22 tz]
+
+                for (int r = 0; r < 4; ++r) {
+                    __m128 v = _mm_mul_ps(la0[r], b0);
+#if defined(__FMA__) || (defined(_MSC_VER) && defined(__AVX2__))
+                    v = _mm_fmadd_ps(la1[r], b1, v);
+                    v = _mm_fmadd_ps(la2[r], b2, v);
+                    v = _mm_fmadd_ps(la3[r], b3_row, v);
+#else
+                    v = _mm_add_ps(v, _mm_mul_ps(la1[r], b1));
+                    v = _mm_add_ps(v, _mm_mul_ps(la2[r], b2));
+                    v = _mm_add_ps(v, _mm_mul_ps(la3[r], b3_row));
+#endif
+                    _mm_storeu_ps(C[i].m[r], v);
+                }
+
             }
 #endif
         }

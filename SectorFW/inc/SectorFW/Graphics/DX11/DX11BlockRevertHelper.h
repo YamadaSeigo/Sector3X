@@ -26,7 +26,7 @@ using Microsoft::WRL::ComPtr;
 
 // オプション：品質より速度を優先したい場合は true
 #ifndef SFW_USE_SIMPLIFY_SLOPPY
-#define SFW_USE_SIMPLIFY_SLOPPY 0
+#define SFW_USE_SIMPLIFY_SLOPPY 1
 #endif
 
 
@@ -303,7 +303,7 @@ namespace SFW::Graphics::DX11 {
             csp.ScreenSize[0] = (float)screenW; csp.ScreenSize[1] = (float)screenH;
             csp.LodPxThreshold[0] = lodT0px; csp.LodPxThreshold[1] = lodT1px; csp.LodLevels = lodLevels;
             D3D11_MAPPED_SUBRESOURCE ms{}; ctx->Map(cbCS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms); memcpy(ms.pData, &csp, sizeof(csp)); ctx->Unmap(cbCS.Get(), 0);
-            ctx->CSSetConstantBuffers(0, 1, cbCS.GetAddressOf());
+            ctx->CSSetConstantBuffers(4, 1, cbCS.GetAddressOf());
             // 1 cluster = 1 group
             ctx->Dispatch(clusterCount, 1, 1);
             ID3D11UnorderedAccessView* nullUAV[2] = { nullptr, nullptr }; UINT zerosInit[2] = { 0,0 }; ctx->CSSetUnorderedAccessViews(0, 2, nullUAV, zerosInit);
@@ -388,7 +388,7 @@ namespace SFW::Graphics::DX11 {
 
     inline void GenerateClusterLODs_meshopt(
         const std::vector<uint32_t>& inIndexPool,
-        const std::vector<ClusterRange>& inRanges,
+        const std::vector<TerrainClustered::ClusterRange>& inRanges,
         const float* positions, size_t vertexCount, size_t positionStrideBytes,
         const std::vector<float>& lodTargets,
         // outputs
@@ -439,7 +439,7 @@ namespace SFW::Graphics::DX11 {
 
     inline void GenerateClusterLODs_meshopt_fast(
         const std::vector<uint32_t>& inIndexPool,
-        const std::vector<ClusterRange>& inRanges,
+        const std::vector<TerrainClustered::ClusterRange>& inRanges,
         const float* positions, size_t vertexCount, size_t positionStrideBytes,
         const std::vector<float>& lodTargets,
         // outputs
@@ -524,7 +524,7 @@ namespace SFW::Graphics::DX11 {
                 appendLodLocal(s.tmp.data(), s.tmp.size());
 
                 const uint32_t triCount0 = r.indexCount / 3u;
-                float error = /* r.bounds.extent().length() */ 1.0f * 0.01f;
+                float error =  r.bounds.extent().length() * 0.05f;
 
                 size_t prevWritten = s.localIndices.size();
 
@@ -537,7 +537,7 @@ namespace SFW::Graphics::DX11 {
                     size_t written = meshopt_simplify(
                         s.tmp.data(), s.localIndices.data(), s.localIndices.size(),
                         s.localVerts.data(), unique, positionStrideBytes,
-                        targetIdx, error);
+                        targetIdx, error, meshopt_SimplifyLockBorder);
 
                     if (written < 3 || written == prevWritten) break;
 
@@ -1040,7 +1040,7 @@ namespace SFW::Graphics::DX11 {
         ID3D11ShaderResourceView* srv = P.srv.Get();
         ctx->PSSetShaderResources(15, 1, &srv); // t15: StructuredBuffer<ClusterParam>
         ID3D11Buffer* cbs[] = { P.cbGrid.Get() };
-        ctx->PSSetConstantBuffers(2, 1, cbs);   // b2: TerrainGridCB
+        ctx->PSSetConstantBuffers(4, 1, cbs);   // b2: TerrainGridCB
     }
 
         // 便利ユーティリティ：Terrain のグリッド定数を設定
@@ -1084,6 +1084,7 @@ namespace SFW::Graphics::DX11 {
         BuildClusterSplatTexturesFromSingleSheet(ID3D11Device* dev,
             ID3D11DeviceContext* ctx,
             TextureManager& texMgr,
+            ComPtr<ID3D11Texture2D>& sheet,
             uint32_t clustersX, uint32_t clustersZ,
             uint32_t sheetId,
             ResolveTexturePathFn resolve,
@@ -1092,7 +1093,7 @@ namespace SFW::Graphics::DX11 {
         std::vector<TextureHandle> out; out.reserve(size_t(clustersX) * clustersZ);
 
         // 1) シートをロード
-        ComPtr<ID3D11Texture2D> sheet = LoadSheetAsTex2D(texMgr, sheetId, resolve, /*forceSRGB=*/sheetIsSRGB);
+        sheet = LoadSheetAsTex2D(texMgr, sheetId, resolve, /*forceSRGB=*/sheetIsSRGB);
         if (!sheet) return out;
 
         D3D11_TEXTURE2D_DESC sd{}; sheet->GetDesc(&sd);
@@ -1201,6 +1202,25 @@ namespace SFW::Graphics::DX11 {
         }
         return out;
     }
+
+    inline std::vector<TextureHandle>
+        BuildClusterSplatTexturesFromSingleSheet(ID3D11Device* dev,
+            ID3D11DeviceContext* ctx,
+            TextureManager& texMgr,
+            uint32_t clustersX, uint32_t clustersZ,
+            uint32_t sheetId,
+            ResolveTexturePathFn resolve,
+            bool sheetIsSRGB = false)
+    {
+        ComPtr<ID3D11Texture2D> sheet;
+        return BuildClusterSplatTexturesFromSingleSheet(
+            dev, ctx, texMgr,
+            sheet,
+            clustersX, clustersZ,
+            sheetId, resolve,
+            sheetIsSRGB);
+    }
+
 
     // ------------------------------------------------------------
     // BuildSplatArrayFromHandles

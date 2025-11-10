@@ -21,13 +21,6 @@ namespace SFW {
             Math::Vec2f uv;
         };
 
-        struct ClusterRange {
-            uint32_t indexOffset; // IndexPool 内の開始オフセット（uint32_t 要素単位）
-            uint32_t indexCount;  // ここから何個の index を読むか
-            Math::AABB3f     bounds;
-            // 将来 LOD を足すなら std::array<ClusterRange, MaxLod> などにする
-        };
-
         struct TerrainBuildParams {
             uint32_t cellsX = 256;      // X 方向セル数（頂点は +1）
             uint32_t cellsZ = 256;      // Z 方向セル数
@@ -47,6 +40,13 @@ namespace SFW {
         };
 
         struct TerrainClustered {
+
+            struct ClusterRange {
+                uint32_t indexOffset; // IndexPool 内の開始オフセット（uint32_t 要素単位）
+                uint32_t indexCount;  // ここから何個の index を読むか
+                Math::AABB3f     bounds;
+                // 将来 LOD を足すなら std::array<ClusterRange, MaxLod> などにする
+            };
 
             // ---- Splat 用メタ（レンダラー非依存）----
             static constexpr uint32_t kSplatMaxLayers = 4;
@@ -75,6 +75,19 @@ namespace SFW {
 
             static TerrainClustered BuildFromHeightMap(const HeightField& hf, const TerrainBuildParams& p);
 
+            static void WeldVerticesAlongBorders(std::vector<SFW::Graphics::TerrainVertex>& vertices,
+                std::vector<uint32_t>& indexPool,
+                float cellSize);
+
+            static bool CheckClusterBorderEquality(const std::vector<uint32_t>& indexPool,
+                const std::vector<TerrainClustered::ClusterRange>& clusters,
+                uint32_t clustersX, uint32_t clustersZ);
+
+            // クラスタ4辺に“下向きスカート”を常設する（BuildClustersの直後、LOD生成の前に一度だけ呼ぶ）
+            static void AddSkirtsToClusters(SFW::Graphics::TerrainClustered& t,
+                float skirtDepth /*= 0.2f など*/);
+
+
             struct SplatLayerMeta {
                 uint32_t materialId = 0;     // 素材の論理ID（DX11側でSRVに解決）
                 float    uvTilingU = 1.0f;   // レイヤ毎タイル
@@ -100,6 +113,31 @@ namespace SFW {
             // 生成関数版：クラスターごとに好きなロジックで決める
             using SplatGenerator = std::function<ClusterSplatMeta(uint32_t cid, const ClusterRange& c)>;
             void InitSplatWithGenerator(const SplatGenerator& gen);
+
+            static inline uint32_t VIdx(uint32_t x, uint32_t z, uint32_t vx) {
+                return z * vx + x;
+            }
+
+            struct RigidPose {
+                Math::Vec3f pos;      // 位置（WS）
+                Math::Vec3f right;    // 基底X（WS）
+                Math::Vec3f up;       // 基底Y（WS）
+                Math::Vec3f forward;  // 基底Z（WS）
+            };
+
+            // 地形サンプル：ワールドXZから高さ/法線（バイリニア）を取得
+            bool SampleHeightNormalBilinear(float x, float z, float& outH, Math::Vec3f* outN = nullptr) const;
+
+            // アンカーで“底面”を合わせて自然な回転を返す
+            RigidPose SolvePlacementByAnchors(
+                const Math::Vec3f& basePosWS,    // 配置の基準（x,z使用、yは無視して地形に合わせる）
+                float yawRad,                    // 事前のヨー回転（上から見た回転）
+                float scale,                     // インスタンスのスケール（XZに適用）
+                const std::vector<Math::Vec2f>& anchorsLocalXZ, // 底面アンカー（ローカルXZ）
+                float maxTiltDeg = 15.0f,        // 上限傾斜（横倒れ防止）
+                float upBias = 0.5f,             // 上向きバイアス（0=法線寄り, 1=より上向き）
+                float baseBias = 0.01f           // 微小押し上げ（めり込み防止, m単位）
+            ) const;
         private:
             static void GenerateHeights(std::vector<float>& outH,
                 uint32_t vx, uint32_t vz,
@@ -117,10 +155,6 @@ namespace SFW {
                 uint32_t cellsX, uint32_t cellsZ,
                 uint32_t clusterCellsX, uint32_t clusterCellsZ,
                 float cellSize, float heightScale);
-
-            static inline uint32_t VIdx(uint32_t x, uint32_t z, uint32_t vx) {
-                return z * vx + x;
-            }
 
             static inline void ExpandAABB(Math::AABB3f& b, const Math::Vec3f& p) {
                 b.lb.x = (std::min)(b.lb.x, p.x);

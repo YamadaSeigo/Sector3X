@@ -167,7 +167,9 @@ namespace SFW
 				ModelAssetData::SubmeshLOD& outMesh,
 				std::vector<uint32_t>& outIdx,
 				MeshManager::RemappedStreams& outStreams,
-				bool buildClusters = false);
+				bool buildClusters = false,
+				bool hasNormal = true,
+				bool hasUV = true);
 
 			// 返すのは LOD1..N 用のレシピ（LOD0は常に原型）
 			static std::vector<LodRecipe> BuildLodRecipes(const AssetStats& a);

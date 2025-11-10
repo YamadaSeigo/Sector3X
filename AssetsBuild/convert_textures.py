@@ -68,7 +68,7 @@ def convert_texture(src: Path, dst_dir: Path):
         "-m", "0",        # 全ミップ生成
         "-y",             # 上書き許可
         "-nologo",        # ロゴ非表示
-        "-nogpu",         # GPU不使用
+        #"-nogpu",         # GPU不使用
         "-o", str(dst_dir),
         str(src)
     ] + fmt_args

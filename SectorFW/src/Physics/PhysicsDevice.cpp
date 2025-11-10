@@ -253,9 +253,12 @@ namespace SFW::Physics {
 
 	// ===== Step =====
 	void PhysicsDevice::Step(float fixed_dt, int substeps) {
-		for (int i = 0; i < substeps; ++i) {
-			m_physics.Update(fixed_dt / float(substeps), 1, m_tempAlloc, m_jobs);
-		}
+		m_physics.Update(
+			fixed_dt,      // 合計Δt（固定）
+			substeps,      // サブステップ数（衝突/統合の内部分割）
+			m_tempAlloc,
+			m_jobs    // ここで内部が並列化
+		);
 	}
 
 	// ===== Snapshot =====

@@ -283,20 +283,20 @@ namespace SFW {
         // 現状の TerrainClustered はクラスター毎に 1つのインデックス範囲のみを持つため、
         // LOD0 のときだけ厳密な範囲を返し、LOD1/2 などは false を返して呼び出し側の
         // フォールバック間引き（lodDecimate）に委ねます。
-        inline bool GetLodRange_TerrainClustered(const void* terrain, uint32_t clusterId, uint32_t lod, IndexRange& out)
-        {
-            const auto* T = reinterpret_cast<const TerrainClustered*>(terrain);
-            if (!T) return false;
-            if (clusterId >= T->clusters.size()) return false;
-            const auto& cr = T->clusters[clusterId];
-            if (lod == 0) {
-                out.offset = cr.indexOffset;
-                out.count = cr.indexCount;
-                return true; // LOD0 は厳密に使用
-            }
-            // LOD1 以降は “専用範囲なし” として false → 抽出側が間引き適用
-            return false;
-        }
+        //inline bool GetLodRange_TerrainClustered(const void* terrain, uint32_t clusterId, uint32_t lod, IndexRange& out)
+        //{
+        //    const auto* T = reinterpret_cast<const TerrainClustered*>(terrain);
+        //    if (!T) return false;
+        //    if (clusterId >= T->clusters.size()) return false;
+        //    const auto& cr = T->clusters[clusterId];
+        //    if (lod == 0) {
+        //        out.offset = cr.indexOffset;
+        //        out.count = cr.indexCount;
+        //        return true; // LOD0 は厳密に使用
+        //    }
+        //    // LOD1 以降は “専用範囲なし” として false → 抽出側が間引き適用
+        //    return false;
+        //}
 
         // ------------------------------------------------------------
         // MOC(RenderTriangles) 向けアダプタ

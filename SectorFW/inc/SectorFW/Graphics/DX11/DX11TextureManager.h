@@ -216,5 +216,40 @@ namespace SFW
 			std::vector<TextureUpdateDesc> pendingTexUpdates_;
 			std::vector<GenMipsItem>           pendingGenMips_;
 		};
+
+		struct CpuImage {
+			UINT width = 0, height = 0, stride = 0;
+			DXGI_FORMAT fmt = DXGI_FORMAT_UNKNOWN;
+			std::vector<uint8_t> bytes; // RGBA8想定なら 4*W
+		};
+
+		// GPU 2D テクスチャ -> staging -> map で CPU に吸い出す（ミップ0のみ）
+		static bool ReadTexture2DToCPU(ID3D11Device* dev, ID3D11DeviceContext* ctx,
+			ID3D11Texture2D* src, CpuImage& out)
+		{
+			D3D11_TEXTURE2D_DESC sd{}; src->GetDesc(&sd);
+			D3D11_TEXTURE2D_DESC rd = sd;
+			rd.Usage = D3D11_USAGE_STAGING;
+			rd.BindFlags = 0;
+			rd.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+			rd.MiscFlags = 0;
+
+			Microsoft::WRL::ComPtr<ID3D11Texture2D> staging;
+			if (FAILED(dev->CreateTexture2D(&rd, nullptr, &staging))) return false;
+			ctx->CopyResource(staging.Get(), src);
+
+			D3D11_MAPPED_SUBRESOURCE ms{};
+			if (FAILED(ctx->Map(staging.Get(), 0, D3D11_MAP_READ, 0, &ms))) return false;
+
+			out.width = sd.Width;
+			out.height = sd.Height;
+			out.stride = ms.RowPitch;
+			out.fmt = sd.Format;
+			out.bytes.resize(size_t(out.stride) * out.height);
+			std::memcpy(out.bytes.data(), ms.pData, out.bytes.size());
+
+			ctx->Unmap(staging.Get(), 0);
+			return true;
+		}
 	}
 }

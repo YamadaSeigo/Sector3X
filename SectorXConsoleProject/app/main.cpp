@@ -42,8 +42,8 @@ struct MaterialRecord {
 
 static std::unordered_map<uint32_t, MaterialRecord> gMaterials = {
 	{ Mat_Grass, { "assets/texture/terrain/grass.png", true } },
-	{ Mat_Rock,  { "assets/texture/terrain/rock.png",  true } },
-	{ Mat_Dirt,  { "assets/texture/terrain/dirt.png",  true } },
+	{ Mat_Rock,  { "assets/texture/terrain/small+rocks+ground.jpg",  true } },
+	{ Mat_Dirt,  { "assets/texture/terrain/dirt4.png.preview.jpg",  true } },
 	{ Mat_Snow,  { "assets/texture/terrain/snow.png",  true } },
 };
 
@@ -135,16 +135,18 @@ int main(void)
 	p.cellsZ = 512;
 	p.clusterCellsX = 32;
 	p.clusterCellsZ = 32;
-	p.cellSize = 2.5f;
-	p.heightScale = 40.0f;
-	p.frequency = 1.0f / 96.0f;
+	p.cellSize = 6.0f;
+	p.heightScale = 60.0f;
+	p.frequency = 1.0f / 96.0f * 2.0f;
 	p.seed = 20251030;
+
 
 	std::vector<float> heightMap;
 	SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);
 
 	std::vector<float> positions(terrain.vertices.size() * 3);
-	for (auto i = 0; i < terrain.vertices.size(); ++i)
+	auto vertexSize = terrain.vertices.size();
+	for (auto i = 0; i < vertexSize; ++i)
 	{
 		positions[i * 3 + 0] = terrain.vertices[i].pos.x;
 		positions[i * 3 + 1] = terrain.vertices[i].pos.y;
@@ -152,13 +154,20 @@ int main(void)
 	}
 	std::vector<float> lodTarget =
 	{
-		1.0f, 0.25f, 0.01f
+		1.0f, 0.25f, 0.075f
 	};
 
 	std::vector<uint32_t> outIndexPool;
 	std::vector<Graphics::DX11::ClusterLodRange> outLodRanges;
 	std::vector<uint32_t> outLodBase;
 	std::vector<uint32_t> outLodCount;
+
+
+	bool check = Graphics::TerrainClustered::CheckClusterBorderEquality(terrain.indexPool, terrain.clusters, terrain.clustersX, terrain.clustersZ);
+
+	//Graphics::TerrainClustered::WeldVerticesAlongBorders(terrain.vertices, terrain.indexPool, p.cellSize);
+
+	//Graphics::TerrainClustered::AddSkirtsToClusters(terrain, /*skirtDepth=*/100.0f);
 
 	Graphics::DX11::GenerateClusterLODs_meshopt_fast(terrain.indexPool, terrain.clusters, positions.data(),
 		terrain.vertices.size(), sizeof(Math::Vec3f), lodTarget,
@@ -190,9 +199,11 @@ int main(void)
 	// 0) “シート画像” の ID（例: Tex_Splat_Sheet0）は ResolveTexturePathFn でパスに解決される想定
 	uint32_t sheetTexId = Tex_Splat_Control_0;
 
+	ComPtr<ID3D11Texture2D> sheetTex;
 	// 1) シートを分割して各クラスタの TextureHandle を生成
 	auto handles = Graphics::DX11::BuildClusterSplatTexturesFromSingleSheet(
 		device, deviceContext, textureManager,
+		sheetTex,
 		terrain.clustersX, terrain.clustersZ,
 		sheetTexId, &ResolveTexturePath,
 		/*sheetIsSRGB=*/false // 重みなので通常は false
@@ -223,8 +234,8 @@ int main(void)
 
 	// グリッドCBを設定（TerrainClustered の定義に合わせて）
 	Graphics::DX11::SetupTerrainGridCB(/*originXZ=*/{ 0, 0 },
-		/*cellSize=*/{ (p.cellsX + 1) * p.cellSize,  (p.cellsZ + 1) * p.cellSize },
-		/*dimX=*/p.cellsX, /*dimZ=*/p.cellsZ, cp);
+		/*cellSize=*/{ p.clusterCellsX * p.cellSize, p.clusterCellsZ * p.cellSize },
+		/*dimX=*/terrain.clustersX, /*dimZ=*/terrain.clustersZ, cp);
 
 	// GPUリソースを作る/更新
 	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
@@ -244,7 +255,7 @@ int main(void)
 			// ---- 高さメッシュ（粗）オプション ----
 			Graphics::HeightCoarseOptions2 hopt{};
 			hopt.upDotMin = 0.65f;
-			hopt.maxSlopeTan = 0.0f; // 垂直近い面は除外
+			hopt.maxSlopeTan = 5.0f; // 垂直近い面は除外
 			hopt.heightClampMin = -4000.f;
 			hopt.heightClampMax = +8000.f;
 			// 自動LOD（セル解像度）
@@ -262,7 +273,7 @@ int main(void)
 			opt.viewportH = height;
 			opt.cameraPos = camPos;
 			opt.minAreaPx = 2000.f;
-			opt.maxClusters = 48;
+			opt.maxClusters = 64;
 			opt.backfaceCull = true;
 
 			std::vector<uint32_t> clusterIds;
@@ -313,7 +324,7 @@ int main(void)
 
 			ID3D11ShaderResourceView* splatSrv = splatRes.splatArraySRV.Get();
 			deviceContext->PSSetShaderResources(14, 1, &splatSrv);       // t14
-			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t15, b2
+			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t15, b4
 
 			auto world = Math::Matrix4x4f::Identity();
 			blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height, 400.0f, 160.0f);
@@ -360,7 +371,8 @@ int main(void)
 	modelDesc.buildOccluders = false;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
-	modelDesc.path = "assets/model/StylizedNatureMegaKit/Grass_Common_Tall.gltf";
+	modelDesc.instancesPeak = 10000;
+	modelDesc.path = "assets/model/GrassPatch.glb";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
 
 
@@ -373,11 +385,31 @@ int main(void)
 	std::mt19937_64 rng(rd());
 
 	// 例: A=50%, B=30%, C=20% のつもりで重みを設定（整数でも実数でもOK）
-	std::array<int, 4> weights{ 20, 30, 10 ,50};
+	std::array<int, 3> weights{ 5, 10, 5 };
 	std::discrete_distribution<int> dist(weights.begin(), weights.end());
 
+	float modelScaleBase[3] = { 10.0f,6.0f,10.0f};
+	int modelScaleRange[3] = { 600,100,100};
+	int modelRotRange[3] = { 360,360,360};
+
+	std::vector<Math::Vec2f> grassAnchor;
+	{
+		auto data = modelAssetMgr->Get(modelAssetHandle[3]);
+		auto aabb = data.ref().subMeshes[0].aabb;
+		grassAnchor.reserve(4);
+		float bias = 0.8f;
+		grassAnchor.push_back({ aabb.lb.x * bias, aabb.lb.z * bias });
+		grassAnchor.push_back({ aabb.lb.x * bias, aabb.ub.z * bias });
+		grassAnchor.push_back({ aabb.ub.x * bias, aabb.lb.z * bias });
+		grassAnchor.push_back({ aabb.ub.x * bias, aabb.ub.z * bias });
+	}
+
+
+	Graphics::DX11::CpuImage cpuSplatImage;
+	Graphics::DX11::ReadTexture2DToCPU(device, deviceContext, sheetTex.Get(), cpuSplatImage);
+
 	for (int i = 0; i < 1; ++i) {
-		auto level = std::unique_ptr<Level<OctreePartition>>(new Level<OctreePartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
+		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
 
 		// System登録
 		auto& scheduler = level->GetScheduler();
@@ -402,21 +434,78 @@ int main(void)
 		Math::Vec3f src = { 0.0f,50.0f,0.0f };
 		Math::Vec3f dst = src;
 
-		// Entity生成
-		for (int j = 0; j < 1; ++j) {
-			for (int k = 0; k < 1; ++k) {
+		//草Entity生成
+		Math::Vec2f terrainScale = {
+			p.cellsX * p.cellSize,
+			p.cellsZ * p.cellSize
+		};
+		for (int j = 0; j < 50; ++j) {
+			for (int k = 0; k < 50; ++k) {
 				for (int n = 0; n < 1; ++n) {
-					Math::Vec3f location = { float(rand() % 3000 + 1), float(n) * 20.0f, float(rand() % 3000 + 1) };
-					//Math::Vec3f location = { 10.0f * j,0.0f,10.0f * k };
+					//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
+					float scale = 30.0f;
+					Math::Vec3f location = { float(j) * scale * 2.0f, 0, float(k) * scale * 2.0f };
+					auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scale, grassAnchor);
+					location = pose.pos;
+					int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
+					int row = (int)(std::clamp((location.y / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
+
+					auto splatR = cpuSplatImage.bytes[col * 4 + row * cpuSplatImage.stride];
+					if (splatR < 64) continue; // 草が薄い場所はスキップ
+
+					auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
+
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();
 					SpatialMotionTag tag{};
 					tag.handle = { key, chunk.value() };
-					float scale = 1.0f + float(rand() % 100 - 50) / 100.0f;
+					int modelIdx = 3;
 					//float scale = 1.0f;
 					auto id = level->AddEntity(
-						TransformSoA{ location, Math::Quatf(0.0f,0.0f,0.0f,1.0f),Math::Vec3f(scale,scale,scale) },
-						CModel{ modelAssetHandle[dist(rng)] },
+						TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
+						CModel{ modelAssetHandle[modelIdx] },
+						Physics::BodyComponent{},
+						Physics::PhysicsInterpolation(
+							location, // 初期位置
+							rot // 初期回転
+						),
+						sphereDims.value(),
+						tag
+					);
+					/*if (id) {
+						ps->EnqueueCreateIntent(id.value(), sphere, key);
+					}*/
+				}
+			}
+		}
+
+		// Entity生成
+		uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
+		uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
+		for (int j = 0; j < 20; ++j) {
+			for (int k = 0; k < 20; ++k) {
+				for (int n = 0; n < 1; ++n) {
+					Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
+					//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
+					auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
+					auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
+					if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
+					{
+						float y0 = heightMap[Graphics::TerrainClustered::VIdx(gridX, gridZ, p.cellsX + 1)];
+						location.y = y0 * p.heightScale;
+					}
+
+					auto chunk = level->GetChunk(location);
+					auto key = chunk.value()->GetNodeKey();
+					SpatialMotionTag tag{};
+					tag.handle = { key, chunk.value() };
+					int modelIdx = dist(rng);
+					float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
+					//float scale = 1.0f;
+					auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 },Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
+					auto id = level->AddEntity(
+						TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale)},
+						CModel{ modelAssetHandle[modelIdx] },
 						Physics::BodyComponent{},
 						Physics::PhysicsInterpolation(
 							location, // 初期位置
@@ -431,6 +520,8 @@ int main(void)
 				}
 			}
 		}
+
+
 
 		//Physics::BodyComponent staticBody{};
 		//staticBody.isStatic = Physics::BodyType::Static; // staticにする

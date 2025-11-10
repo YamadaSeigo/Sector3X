@@ -76,11 +76,19 @@ public:
 			Graphics::DX11::PSOManager* psoMgr;
 			const Math::Matrix4x4f& viewProj;
 			Math::Vec3f cp;
-			Graphics::Viewport vp;
+			Math::Vec3f camRight;
+			Math::Vec3f camUp;
+			Math::Vec3f camForward;
 			std::atomic<uint32_t>& occAABBCount;
 			Math::AABB3f* occAABBs;
+			Graphics::Viewport vp;
 			bool drawOcc;
 		};
+
+		Math::Vec3f camRight;
+		Math::Vec3f camUp;
+		Math::Vec3f camForward;
+		cameraService->MakeBasis(camRight, camUp, camForward);
 
 		KernelParams kp = {
 			renderService.get(),
@@ -90,14 +98,17 @@ public:
 			psoManager,
 			viewProj,
 			camPos,
-			vp,
+			camRight,
+			camUp,
+			camForward,
 			occluderAABBCount,
 			occluderAABBs,
+			vp,
 			drawOcc
 		};
 
 		//アクセスを宣言したコンポーネントにマッチするチャンクに指定した関数を適応する
-		this->ForEachFrustumNearChunkWithAccessor<IsParallel{true}>([](Accessor& accessor, size_t entityCount, KernelParams* kp)
+		this->ForEachFrustumNearChunkWithAccessor<IsParallel{false}>([](Accessor& accessor, size_t entityCount, KernelParams* kp)
 			{
 				if (entityCount == 0) return;
 
@@ -158,7 +169,7 @@ public:
 						float depth = 0.0f;
 						//バウンディングスフィアで高速早期判定
 						//※WVPがLHのZeroToOne深度範囲を仮定(そうでない場合はZDepthは正確ではない)
-						if (!mesh.bs.IsVisible_WVP(WVP, &ndc, &depth)) continue;
+						if (!mesh.bs.IsVisible_WVP_CamBasis_Fast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth)) continue;
 
 						ndc.valid = true;
 						int lodCount = (int)mesh.lods.size();
@@ -284,7 +295,7 @@ public:
 						}
 					}
 				}
-			}, partition, fru, camPos, &kp, threadPool.get()
+			}, partition, fru, camPos, &kp/*, threadPool.get()*/
 		);
 	}
 

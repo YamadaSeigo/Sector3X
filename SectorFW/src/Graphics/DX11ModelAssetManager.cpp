@@ -311,8 +311,9 @@ namespace SFW
 							recipes[li - 1], meshMgr, tag,
 							sub.lods[li], idx, rs,
 							/*buildClusters=*/true);
-						if (!ok || (beforeIndexCount <= idx.size())) {
-							lodLevelNum = li; // これ以降は生成しない;
+						constexpr float kMinImprove = 0.98f; // 最低でも 2% 減っていて欲しい。満たせない場合に限り打ち切り
+						if (!ok || (float(idx.size()) >= float(beforeIndexCount) * kMinImprove)) {
+							lodLevelNum = li;
 							sub.lods.erase(sub.lods.begin() + li, sub.lods.end());
 							break;
 						}
@@ -564,6 +565,7 @@ namespace SFW
 			if (sw && !sw->empty())  streams[sc++] = { reinterpret_cast<const unsigned char*>(sw->data()), sizeof((*sw)[0]), sizeof((*sw)[0]) };
 		}
 
+
 		static bool SimplifyIndices(const ModelAssetManager::LodRecipe& r,
 			const std::vector<uint32_t>& baseIdx,
 			const std::vector<Math::Vec3f>& pos,
@@ -637,71 +639,130 @@ namespace SFW
 			ModelAssetData::SubmeshLOD& outMesh,
 			std::vector<uint32_t>& outIdx,
 			MeshManager::RemappedStreams& outStreams,
-			bool buildClusters)
+			bool buildClusters,
+			bool hasNormal,
+			bool hasUV)
 		{
 			if (baseIndices.empty() || basePositions.empty()) return false;
 
-			// --- 0) 属性 AoS テンポラリ（Normal+UV を優先; 必要なら Tangent も） ---
-			const bool hasN = baseNormals && !baseNormals->empty();
-			const bool hasU = baseUV0 && !baseUV0->empty();
-			const bool includeTangent = false; // 接線は後で再生成する想定
-			const int attrCount = hasN * 3 + hasU * 2 + (includeTangent ? 4 : 0);
+			// ---- 0) 属性 AoS 構築（Normal/UV をフラグで制御） ----
+			const bool hasN = baseNormals && !baseNormals->empty() && hasNormal;
+			const bool hasU0 = baseUV0 && !baseUV0->empty(); // 入力側にUVがあるか
+			const bool includeTangent = false;
+			auto buildAttr = [&](bool useUV, /*out*/std::vector<float>& attrAoS,
+				/*out*/std::array<float, 16>& weights, /*out*/int& attrCount)
+				{
+					const bool useU = hasU0 && useUV;
+					attrCount = (hasN ? 3 : 0) + (useU ? 2 : 0) + (includeTangent ? 4 : 0);
+					attrAoS.clear();
+					std::fill(weights.begin(), weights.end(), 0.0f);
+
+					if (attrCount == 0) return;
+
+					attrAoS.resize(basePositions.size() * attrCount);
+					for (size_t i = 0; i < basePositions.size(); ++i) {
+						size_t o = i * attrCount;
+						if (hasN) {
+							const auto& n = (*baseNormals)[i];
+							attrAoS[o + 0] = n.x; attrAoS[o + 1] = n.y; attrAoS[o + 2] = n.z; o += 3;
+						}
+						if (useU) {
+							const auto& t = (*baseUV0)[i];
+							attrAoS[o + 0] = t.x; attrAoS[o + 1] = t.y; o += 2;
+						}
+						if (includeTangent && baseTangents && !baseTangents->empty()) {
+							const auto& tg = (*baseTangents)[i];
+							attrAoS[o + 0] = tg.x; attrAoS[o + 1] = tg.y; attrAoS[o + 2] = tg.z; attrAoS[o + 3] = tg.w; o += 4;
+						}
+					}
+
+					// 重み（Attributesモードならレシピ値、その他はやや弱め）
+					float wN = (recipe.mode == LodQualityMode::Attributes ? recipe.wNormal : 0.6f);
+					float wU = (recipe.mode == LodQualityMode::Attributes ? recipe.wUV : 0.3f);
+					size_t cursor = 0;
+					if (hasN) { weights[cursor++] = wN; weights[cursor++] = wN; weights[cursor++] = wN; }
+					if (useU) { weights[cursor++] = wU; weights[cursor++] = wU; }
+					if (includeTangent) { weights[cursor++] = 0.4f; weights[cursor++] = 0.4f; weights[cursor++] = 0.4f; weights[cursor++] = 0.2f; }
+				};
+
+			// 最初の試行（ユーザ指定の hasUV を尊重）
 			std::vector<float> attrAoS;
-			std::array<float, 16> weights{}; // 上限ゆとり
-			size_t cursor = 0;
+			std::array<float, 16> weights{};
+			int attrCount = 0;
+			buildAttr(/*useUV=*/hasUV, attrAoS, weights, attrCount);
 
-			if (attrCount > 0) {
-				attrAoS.resize(basePositions.size() * attrCount);
-				for (size_t i = 0; i < basePositions.size(); ++i) {
-					size_t o = i * attrCount;
-					if (hasN) {
-						const auto& n = (*baseNormals)[i];
-						attrAoS[o + 0] = n.x; attrAoS[o + 1] = n.y; attrAoS[o + 2] = n.z; o += 3;
-					}
-					if (hasU) {
-						const auto& t = (*baseUV0)[i];
-						attrAoS[o + 0] = t.x; attrAoS[o + 1] = t.y; o += 2;
-					}
-					if (includeTangent && baseTangents && !baseTangents->empty()) {
-						const auto& tg = (*baseTangents)[i];
-						attrAoS[o + 0] = tg.x; attrAoS[o + 1] = tg.y; attrAoS[o + 2] = tg.z; attrAoS[o + 3] = tg.w; o += 4;
-					}
-				}
-				// 重み（近=重く, 中=軽め）
-				float wN = (recipe.mode == LodQualityMode::Attributes ? recipe.wNormal : 0.6f);
-				float wU = (recipe.mode == LodQualityMode::Attributes ? recipe.wUV : 0.3f);
-				cursor = 0;
-				if (hasN) { weights[cursor++] = wN; weights[cursor++] = wN; weights[cursor++] = wN; }
-				if (hasU) { weights[cursor++] = wU; weights[cursor++] = wU; }
-				if (includeTangent) { weights[cursor++] = 0.4f; weights[cursor++] = 0.4f; weights[cursor++] = 0.4f; weights[cursor++] = 0.2f; }
-			}
-
-			// --- 1) 簡略化（レシピに応じて） ---
 			float resultError = 0.f;
 			std::vector<uint32_t> idx_lod;
-			if (!SimplifyIndices(recipe, baseIndices, basePositions, idx_lod,
-				attrCount ? attrAoS.data() : nullptr,
-				sizeof(float) * attrCount,
-				attrCount ? weights.data() : nullptr, attrCount,
-				resultError))
+			auto runSimplify = [&](LodQualityMode mode, const std::vector<float>& ao, int ac,
+				const std::array<float, 16>& w, /*out*/std::vector<uint32_t>& out, float& err)->bool
+				{
+					LodRecipe r = recipe; r.mode = mode;
+					return SimplifyIndices(r, baseIndices, basePositions, out,
+						ac ? ao.data() : nullptr,
+						sizeof(float) * ac,
+						ac ? w.data() : nullptr, ac,
+						err);
+				};
+
+			if (!runSimplify(recipe.mode, attrAoS, attrCount, weights, idx_lod, resultError))
 				return false;
 
-			// --- 2) Multi リマップ（UV破綻防止） ---
+			// ---- 1) 削減率が低いときの再トライ（UV外し→モード緩和） ----
+			auto reduction = [&](size_t before, size_t after)->float {
+				return (before > 0) ? float(before) / float(after) : 1.0f;
+				};
+			const size_t beforeCount = baseIndices.size();
+			float red = reduction(beforeCount, idx_lod.size());
+
+			// “ほとんど減っていない”（例: 5%未満）と判断
+			constexpr float kMinReduction = 1.05f;
+
+			if (red < kMinReduction) {
+				// (A) UV を属性から外して同モードで再トライ（草のUVシームに効果）
+				if (hasUV && attrCount > 0 && recipe.mode != LodQualityMode::Sloppy) {
+					std::vector<float> attrNoUV; std::array<float, 16> wNoUV{};
+					int acNoUV = 0;
+					buildAttr(/*useUV=*/false, attrNoUV, wNoUV, acNoUV);
+
+					std::vector<uint32_t> idx_try;
+					float err_try = 0.f;
+					if (runSimplify(recipe.mode, attrNoUV, acNoUV, wNoUV, idx_try, err_try)) {
+						float red2 = reduction(beforeCount, idx_try.size());
+						if (red2 > red) { idx_lod.swap(idx_try); resultError = err_try; red = red2; }
+					}
+				}
+
+				// (B) それでも弱いなら Permissive → Sloppy と段階的に緩和
+				if (red < kMinReduction && recipe.mode != LodQualityMode::Permissive) {
+					std::vector<uint32_t> idx_try; float err_try = 0.f;
+					if (runSimplify(LodQualityMode::Permissive, attrAoS, attrCount, weights, idx_try, err_try)) {
+						float red2 = reduction(beforeCount, idx_try.size());
+						if (red2 > red) { idx_lod.swap(idx_try); resultError = err_try; red = red2; }
+					}
+				}
+				if (red < kMinReduction) {
+					std::vector<uint32_t> idx_try; float err_try = 0.f;
+					if (runSimplify(LodQualityMode::Sloppy, /*属性無視*/{}, 0, {}, idx_try, err_try)) {
+						float red2 = reduction(beforeCount, idx_try.size());
+						if (red2 > red) { idx_lod.swap(idx_try); resultError = err_try; red = red2; }
+					}
+				}
+			}
+
+			LOG_INFO("LOD Mesh Index Count {%d}", idx_lod.size());
+
+			// ---- 2) Multi リマップ（既存処理） ----
 			std::vector<uint32_t> remap(basePositions.size());
 			meshopt_Stream streams[6]; size_t sc = 0;
-			MakeStreamsAoS(basePositions, baseNormals, baseTangents, baseUV0, baseSkinIdx, baseSkinWgt, streams, sc);
-
+			MakeStreamsAoS(basePositions, baseNormals, baseTangents, baseUV0, baseSkinIdx, baseSkinWgt, streams, sc); // ←既存ヘルパ
 			const size_t newVertexCount = meshopt_generateVertexRemapMulti(
-				remap.data(), idx_lod.data(), idx_lod.size(),
-				basePositions.size(), streams, sc);
+				remap.data(), idx_lod.data(), idx_lod.size(), basePositions.size(), streams, sc);
 
-			// --- 3) インデックス / 全ストリームをリマップ ---
+			// ---- 3) インデックス/全ストリームをリマップ（既存） ----
 			outIdx.resize(idx_lod.size());
 			meshopt_remapIndexBuffer(outIdx.data(), idx_lod.data(), idx_lod.size(), remap.data());
-
 			MeshManager::ApplyRemapToStreams(
-				remap, basePositions,
-				baseNormals, baseTangents, baseUV0, baseSkinIdx, baseSkinWgt,
+				remap, basePositions, baseNormals, baseTangents, baseUV0, baseSkinIdx, baseSkinWgt,
 				newVertexCount, outStreams);
 
 			// --- 4) 最適化（Cache → Overdraw → FetchRemap） ---
@@ -726,7 +787,7 @@ namespace SFW
 				meshopt_remapVertexBuffer(outStreams.skinWgt.data(), outStreams.skinWgt.data(), newVertexCount, sizeof(std::array<uint8_t, 4>), fetchRemap.data());
 
 			// --- 5) MeshManager 登録（SoA → VB/IB） ---
-			// ※ あなたの AddFromSoA_R8Snorm のシグネチャに合わせてください
+			// ※ AddFromSoA_R8Snorm のシグネチャに合わせる
 			if (!meshMgr.AddFromSoA_R8Snorm(tagForCaching,
 				outStreams.positions, outStreams.normals,
 				outStreams.tangents, outStreams.tex0,

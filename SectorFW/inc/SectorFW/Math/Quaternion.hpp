@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Quaternion.hpp
- * @brief ƒNƒH[ƒ^ƒjƒIƒ“‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   July 2025
  *********************************************************************/
@@ -23,7 +23,7 @@ namespace SFW
 			Quat() noexcept : x(0), y(0), z(0), w(1) {}
 			Quat(T x, T y, T z, T w) noexcept : x(x), y(y), z(z), w(w) {}
 
-			// ’·‚³/³‹K‰»
+			// é•·ã•/æ­£è¦åŒ–
 			T LengthSq() const noexcept { return x * x + y * y + z * z + w * w; }
 
 			void Normalize() noexcept {
@@ -35,14 +35,14 @@ namespace SFW
 			}
 			Quat Normalized() const noexcept { Quat q = *this; q.Normalize(); return q; }
 
-			// ƒIƒCƒ‰[iƒsƒbƒ`= X, ƒˆ[= Y, ƒ[ƒ‹= Z : “K—p‡‚Í Yaw¨Pitch¨Roll ‚ğ‘z’èj
+			// ã‚ªã‚¤ãƒ©ãƒ¼ï¼ˆãƒ”ãƒƒãƒ= X, ãƒ¨ãƒ¼= Y, ãƒ­ãƒ¼ãƒ«= Z : é©ç”¨é †ã¯ Yawâ†’Pitchâ†’Roll ã‚’æƒ³å®šï¼‰
 			static Quat FromEuler(T pitch, T yaw, T roll) noexcept {
 				const T h = T(0.5);
 				const T cy = std::cos(yaw * h), sy = std::sin(yaw * h);
 				const T cp = std::cos(pitch * h), sp = std::sin(pitch * h);
 				const T cr = std::cos(roll * h), sr = std::sin(roll * h);
 
-				// i’j‚±‚Ì®‚Í Y->X->Z ‚Ì‡i‰EŠ|‚¯“K—pj‚ğ‘z’è
+				// ï¼ˆæ³¨ï¼‰ã“ã®å¼ã¯ Y->X->Z ã®é †ï¼ˆå³æ›ã‘é©ç”¨ï¼‰ã‚’æƒ³å®š
 				return Quat(
 					sr * cp * cy - cr * sp * sy,
 					cr * sp * cy + sr * cp * sy,
@@ -60,21 +60,21 @@ namespace SFW
 				return Quat(axis.x * inv * s, axis.y * inv * s, axis.z * inv * s, c);
 			}
 
-			// ƒxƒNƒgƒ‹‰ñ“]i’PˆÊ Q ‘O’ñj
+			// ãƒ™ã‚¯ãƒˆãƒ«å›è»¢ï¼ˆå˜ä½ Q å‰æï¼‰
 			Vec3<T> RotateVector(const Vec3<T>& v) const noexcept {
 				const Vec3<T> qv{ x,y,z };
 				const Vec3<T> t = qv.cross(v) * T(2);
 				return v + t * w + qv.cross(t);
 			}
 
-			Quat Inverse() const noexcept { return Quat(-x, -y, -z, w); } // unit ‘O’ñ
+			Quat Inverse() const noexcept { return Quat(-x, -y, -z, w); } // unit å‰æ
 
 			static Quat Slerp(const Quat& a, const Quat& b, T t) noexcept {
 				T dot = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
 				Quat b2 = b;
 				if (dot < T(0)) { dot = -dot; b2 = Quat(-b.x, -b.y, -b.z, -b.w); }
 
-				// ŠÛ‚ßŒë·‘Îô
+				// ä¸¸ã‚èª¤å·®å¯¾ç­–
 				dot = std::clamp(dot, T(-1), T(1));
 
 				if (dot > T(0.9995)) {
@@ -96,7 +96,7 @@ namespace SFW
 					s0 * a.w + s1 * b2.w);
 			}
 
-			// i‰EŠ|‚¯‡¬juthis ‚ÌŒã‚É q ‚ğ“K—pv
+			// ï¼ˆå³æ›ã‘åˆæˆï¼‰ã€Œthis ã®å¾Œã« q ã‚’é©ç”¨ã€
 			Quat operator*(const Quat& q) const noexcept {
 				return Quat(
 					w * q.x + x * q.w + y * q.z - z * q.y,
@@ -113,10 +113,10 @@ namespace SFW
 		struct Basis {
 			Vec3<T> right;
 			Vec3<T> up;
-			Vec3<T> forward; // ‚±‚±‚Íu+Z ‚ğ‰ñ‚µ‚½Œ‹‰ÊvB‹K–ñ‚Å•K—v‚È‚çŒã‚Å•„†”½“]
+			Vec3<T> forward; // ã“ã“ã¯ã€Œ+Z ã‚’å›ã—ãŸçµæœã€ã€‚è¦ç´„ã§å¿…è¦ãªã‚‰å¾Œã§ç¬¦å·åè»¢
 		};
 
-		// q ‚Í’PˆÊƒNƒH[ƒ^ƒjƒIƒ“‘O’ñi•sˆÀ‚È‚ç Normalize() ‚µ‚Ä‚©‚çŒÄ‚Ôj
+		// q ã¯å˜ä½ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³å‰æï¼ˆä¸å®‰ãªã‚‰ Normalize() ã—ã¦ã‹ã‚‰å‘¼ã¶ï¼‰
 		template<typename T>
 		inline Basis<T> FastBasisFromQuat(const Quat<T>& q) noexcept {
 			const T x = q.x, y = q.y, z = q.z, w = q.w;
@@ -127,14 +127,14 @@ namespace SFW
 			const T yy2 = y * yy, yz2 = y * zz, zz2 = z * zz;
 
 			Basis<T> b;
-			// —ñƒxƒNƒgƒ‹iRight, Up, Forward(+Z)j
+			// åˆ—ãƒ™ã‚¯ãƒˆãƒ«ï¼ˆRight, Up, Forward(+Z)ï¼‰
 			b.right = { T(1) - (yy2 + zz2),  xy2 + wz,           xz2 - wy };
 			b.up = { xy2 - wz,     T(1) - (xx2 + zz2), yz2 + wx };
 			b.forward = { xz2 + wy,            yz2 - wx,    T(1) - (xx2 + yy2) };
 			return b;
 		}
 
-		// ‹K–ñ‚É‡‚í‚¹‚½ÅI“I‚ÈŠî’ê
+		// è¦ç´„ã«åˆã‚ã›ãŸæœ€çµ‚çš„ãªåŸºåº•
 		template<typename T, typename Convention = RH_ZBackward>
 		inline void ToBasis(const Quat<T>& q, Vec3<T>& outRight, Vec3<T>& outUp, Vec3<T>& outForward) noexcept
 		{
@@ -144,21 +144,132 @@ namespace SFW
 			outUp = b.up;
 
 			if constexpr (std::is_same_v<Convention, RH_ZBackward>) {
-				// RH_ZBackward: forward ‚Í -Z Šî€ ¨ +Z —ñ‚ğ”½“]
+				// RH_ZBackward: forward ã¯ -Z åŸºæº– â†’ +Z åˆ—ã‚’åè»¢
 				outForward = { -b.forward.x, -b.forward.y, -b.forward.z };
 			}
 			else {
-				// LH_ZForward: +Z ‚ª‘O
+				// LH_ZForward: +Z ãŒå‰
 				outForward = b.forward;
 			}
 		}
 
-		// ŒÂ•Êæ“¾ƒVƒ‡[ƒgƒJƒbƒg
+		// å€‹åˆ¥å–å¾—ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆ
 		template<typename T, typename Convention = RH_ZBackward>
 		inline Vec3<T> QuatRight(const Quat<T>& q)   noexcept { Vec3<T> r, u, f; ToBasis<T, Convention>(q, r, u, f); return r; }
 		template<typename T, typename Convention = RH_ZBackward>
 		inline Vec3<T> QuatUp(const Quat<T>& q)      noexcept { Vec3<T> r, u, f; ToBasis<T, Convention>(q, r, u, f); return u; }
 		template<typename T, typename Convention = RH_ZBackward>
 		inline Vec3<T> QuatForward(const Quat<T>& q) noexcept { Vec3<T> r, u, f; ToBasis<T, Convention>(q, r, u, f); return f; }
+
+		// --- å°ãƒ˜ãƒ«ãƒ‘ãƒ¼ -------------------------------------------------
+		template<typename T>
+		inline Vec3<T> NormalizeSafe(const Vec3<T>& v) noexcept {
+			const T l2 = v.x * v.x + v.y * v.y + v.z * v.z;
+			if (l2 <= std::numeric_limits<T>::epsilon()) return { T(0),T(0),T(0) };
+			const T inv = T(1) / std::sqrt(l2);
+			return { v.x * inv, v.y * inv, v.z * inv };
+		}
+
+		template<typename T>
+		inline void OrthonormalizeBasis(Basis<T>& b) noexcept {
+			// r ã‚’æ­£è¦åŒ–
+			Vec3<T> r = NormalizeSafe(b.right);
+
+			// u ã‹ã‚‰ r æˆåˆ†ã‚’å¼•ã„ã¦æ­£è¦åŒ–ï¼ˆGramâ€“Schmidtï¼‰
+			Vec3<T> u = {
+				b.up.x - (r.x * (b.up.x * r.x + b.up.y * r.y + b.up.z * r.z)),
+				b.up.y - (r.y * (b.up.x * r.x + b.up.y * r.y + b.up.z * r.z)),
+				b.up.z - (r.z * (b.up.x * r.x + b.up.y * r.y + b.up.z * r.z)),
+			};
+			u = NormalizeSafe(u);
+
+			// f ã¯ rÃ—u ã‹ã‚‰ä½œã‚‹ï¼ˆå³æ‰‹ç³»ï¼‰ã€‚å…¥åŠ› f ã¨åè»¢ã—ã¦ã„ãŸã‚‰ç¬¦å·åˆã‚ã›
+			Vec3<T> f = {
+				r.y * u.z - r.z * u.y,
+				r.z * u.x - r.x * u.z,
+				r.x * u.y - r.y * u.x
+			};
+			// å…¥åŠ› forward ã¨å‘ããŒé€†ãªã‚‰åè»¢
+			T s = (f.x * b.forward.x + f.y * b.forward.y + f.z * b.forward.z) < T(0) ? T(-1) : T(1);
+			f = { f.x * s, f.y * s, f.z * s };
+
+			b.right = r; b.up = u; b.forward = f;
+		}
+
+		// --- Basis(+Zåˆ—) â†’ Quaternionï¼ˆæ•°å€¤å®‰å®šç‰ˆï¼‰ ----------------------
+		// â€» Basis.forward ã¯ã€Œ+Zåˆ—ã€ï¼ˆFastBasisFromQuat ã¨åŒã˜å®šç¾©ï¼‰ã‚’æœŸå¾…
+		template<typename T>
+		inline Quat<T> QuatFromBasisPlusZ(Basis<T> b) noexcept {
+			// å…¥åŠ›ã®å¾®å¦™ãªéç›´äº¤ãƒ»éå˜ä½ã‚’è£œæ­£
+			OrthonormalizeBasis(b);
+
+			// åˆ—ãƒ™ã‚¯ãƒˆãƒ«ã‚’ 3x3 è¡Œåˆ—ã«é…ç½®ï¼ˆFastBasisFromQuat ã¨å¾€å¾©ä¸€è‡´ã•ã›ã‚‹ï¼‰
+			// R = [ r u f ]ï¼ˆåˆ—ï¼‰
+			const T m00 = b.right.x, m01 = b.up.x, m02 = b.forward.x;
+			const T m10 = b.right.y, m11 = b.up.y, m12 = b.forward.y;
+			const T m20 = b.right.z, m21 = b.up.z, m22 = b.forward.z;
+
+			const T trace = m00 + m11 + m22;
+			Quat<T> q;
+
+			if (trace > T(0)) {
+				T s = std::sqrt(trace + T(1)) * T(2);
+				q.w = T(0.25) * s;
+				q.x = (m21 - m12) / s;
+				q.y = (m02 - m20) / s;
+				q.z = (m10 - m01) / s;
+			}
+			else if (m00 > m11 && m00 > m22) {
+				T s = std::sqrt(T(1) + m00 - m11 - m22) * T(2);
+				q.w = (m21 - m12) / s;
+				q.x = T(0.25) * s;
+				q.y = (m01 + m10) / s;
+				q.z = (m02 + m20) / s;
+			}
+			else if (m11 > m22) {
+				T s = std::sqrt(T(1) + m11 - m00 - m22) * T(2);
+				q.w = (m02 - m20) / s;
+				q.x = (m01 + m10) / s;
+				q.y = T(0.25) * s;
+				q.z = (m12 + m21) / s;
+			}
+			else {
+				T s = std::sqrt(T(1) + m22 - m00 - m11) * T(2);
+				q.w = (m10 - m01) / s;
+				q.x = (m02 + m20) / s;
+				q.y = (m12 + m21) / s;
+				q.z = T(0.25) * s;
+			}
+
+			// ä¸¸ã‚èª¤å·®å¯¾ç­–
+			q.Normalize();
+			return q;
+		}
+
+		template<typename T, typename Convention = LH_ZForward>
+		inline Quat<T> QuatFromBasis(const Vec3<T>& right,
+			const Vec3<T>& up,
+			const Vec3<T>& forward) noexcept
+		{
+			Basis<T> b;
+			b.right = right;
+			b.up = up;
+
+			if constexpr (std::is_same_v<Convention, RH_ZBackward>) {
+				// ã‚¢ãƒ—ãƒªã® forward(-Z) â†’ å†…éƒ¨ã® +Z åˆ—ã¸
+				b.forward = { -forward.x, -forward.y, -forward.z };
+			}
+			else { // LH_ZForward ãªã©ï¼ˆ+Z ãŒå‰ï¼‰
+				b.forward = forward;
+			}
+			return QuatFromBasisPlusZ(b);
+		}
+
+		// --- ä¾¿åˆ©ãªã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ï¼ˆBasis ã‚’ãã®ã¾ã¾æ¸¡ã™ç‰ˆï¼‰ --------------
+		// æ—¢ã« forward ãŒã€Œ+Z åˆ—ã€ã«ãªã£ã¦ã„ã‚‹ Basis ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã¯ã“ã¡ã‚‰
+		template<typename T>
+		inline Quat<T> QuatFromBasis(const Basis<T>& basisPlusZ) noexcept {
+			return QuatFromBasisPlusZ(basisPlusZ);
+		}
 	}
 }

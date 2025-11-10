@@ -328,61 +328,61 @@ namespace SFW {
             //----------------------------------------------
             template<class Mat4>
             bool IsVisible_WVP(const Mat4& WVP,
-                float* outNdcXmin = nullptr, float* outNdcYmin = nullptr,
-                float* outNdcXmax = nullptr, float* outNdcYmax = nullptr,
-                float* outWmin = nullptr, float* depth = nullptr) const noexcept
+                T* outNdcXmin = nullptr, T* outNdcYmin = nullptr,
+                T* outNdcXmax = nullptr, T* outNdcYmax = nullptr,
+                T* outWmin = nullptr, T* depth = nullptr) const noexcept
             {
                 using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
                 // 1) 中心を clip に
-                float cx, cy, cz, cw;
+                T cx, cy, cz, cw;
                 MulPoint_RowMajor_ColVec(WVP, center.x, center.y, center.z, cx, cy, cz, cw);
 
                 // 2) 局所軸 ±R を 3方向サンプリング（+X, +Y, +Z）
-                auto proj_pt = [&](float ox, float oy, float oz,
-                    float& x, float& y, float& z, float& w) {
+                auto proj_pt = [&](T ox, T oy, T oz,
+                    T& x, T& y, T& z, T& w) {
                         MulPoint_RowMajor_ColVec(WVP, center.x + ox, center.y + oy, center.z + oz, x, y, z, w);
                     };
 
-                float pxx, pxy, pxz, pxw;
-                float pyx, pyy, pyz, pyw;
-                float pzx, pzy, pzz, pzw;
+                T pxx, pxy, pxz, pxw;
+                T pyx, pyy, pyz, pyw;
+                T pzx, pzy, pzz, pzw;
                 proj_pt(+radius, 0.0f, 0.0f, pxx, pxy, pxz, pxw); // +X
                 proj_pt(0.0f, +radius, 0.0f, pyx, pyy, pyz, pyw); // +Y
                 proj_pt(0.0f, 0.0f, +radius, pzx, pzy, pzz, pzw); // +Z（z評価にも使用）
 
                 // 3) NDC へ（同次除算）
-                auto safe_div = [](float a, float b) {
-                    const float eps = 1e-6f;
+                auto safe_div = [](T a, T b) {
+                    const T eps = 1e-6f;
                     return a / ((std::fabs(b) < eps) ? (b < 0 ? -eps : eps) : b);
                     };
 
-                const float ndc_cx = safe_div(cx, cw);
-                const float ndc_cy = safe_div(cy, cw);
-                const float ndc_cz = safe_div(cz, cw);   // ZeroToOne なら [0,1] が可視
+                const T ndc_cx = safe_div(cx, cw);
+                const T ndc_cy = safe_div(cy, cw);
+                const T ndc_cz = safe_div(cz, cw);   // ZeroToOne なら [0,1] が可視
 
-                const float ndc_pxx = safe_div(pxx, pxw);
-                const float ndc_pxy = safe_div(pxy, pxw);
+                const T ndc_pxx = safe_div(pxx, pxw);
+                const T ndc_pxy = safe_div(pxy, pxw);
 
-                const float ndc_pyx = safe_div(pyx, pyw);
-                const float ndc_pyy = safe_div(pyy, pyw);
+                const T ndc_pyx = safe_div(pyx, pyw);
+                const T ndc_pyy = safe_div(pyy, pyw);
 
-                const float ndc_pzz = safe_div(pzz, pzw); // z方向の奥/手前評価に利用
+                const T ndc_pzz = safe_div(pzz, pzw); // z方向の奥/手前評価に利用
 
                 // 4) 画面半径（保守的近似）
-                const float r_ndc_x = std::fabs(ndc_pxx - ndc_cx);
-                const float r_ndc_y = std::fabs(ndc_pyy - ndc_cy);
-                const float r_ndc = (std::max)(r_ndc_x, r_ndc_y);
+                const T r_ndc_x = std::fabs(ndc_pxx - ndc_cx);
+                const T r_ndc_y = std::fabs(ndc_pyy - ndc_cy);
+                const T r_ndc = (std::max)(r_ndc_x, r_ndc_y);
 
                 // 5) NDC 矩形
-                float xmin = ndc_cx - r_ndc;
-                float xmax = ndc_cx + r_ndc;
-                float ymin = ndc_cy - r_ndc;
-                float ymax = ndc_cy + r_ndc;
+                T xmin = ndc_cx - r_ndc;
+                T xmax = ndc_cx + r_ndc;
+                T ymin = ndc_cy - r_ndc;
+                T ymax = ndc_cy + r_ndc;
 
                 // 6) クリップとの交差（x,y は [-1,1]、z は [0,1]）
-                const float zmin_est = (std::min)(ndc_cz, ndc_pzz);
-                const float zmax_est = (std::max)(ndc_cz, ndc_pzz);
+                const T zmin_est = (std::min)(ndc_cz, ndc_pzz);
+                const T zmax_est = (std::max)(ndc_cz, ndc_pzz);
 
                 const bool x_overlap = !(xmax < -1.0f || xmin > 1.0f);
                 const bool y_overlap = !(ymax < -1.0f || ymin > 1.0f);
@@ -395,10 +395,10 @@ namespace SFW {
                 if (outNdcYmax) *outNdcYmax = ymax;
                 if (depth)      *depth = cw;  // 手前側の深度の代表として中心の W を返す
 
-                // 追加: wmin（clip-space 最小W）— 保守的に中心/+X/+Y/+Z の最小
+                // wmin（clip-space 最小W）— 保守的に中心/+X/+Y/+Z の最小
                 if (outWmin) {
-                    const float raw_minw = (std::min)((std::min)(cw, pxw), (std::min)(pyw, pzw));
-                    const float epsW = 1e-6f;                  // 数値安定用
+                    const T raw_minw = (std::min)((std::min)(cw, pxw), (std::min)(pyw, pzw));
+                    const T epsW = 1e-6f;                  // 数値安定用
                     *outWmin = (raw_minw < epsW) ? epsW : raw_minw;
                 }
 
@@ -406,59 +406,59 @@ namespace SFW {
             }
 
             template<class Mat4, class NDC>
-            bool IsVisible_WVP(const Mat4& WVP, NDC* outNDC, float* depth = nullptr) const noexcept
+            bool IsVisible_WVP(const Mat4& WVP, NDC* outNDC, T* depth = nullptr) const noexcept
             {
                 using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
                 // 1) 中心を clip に
-                float cx, cy, cz, cw;
+                T cx, cy, cz, cw;
                 MulPoint_RowMajor_ColVec(WVP, center.x, center.y, center.z, cx, cy, cz, cw);
 
                 // 2) 局所軸 ±R を 3方向サンプリング（+X, +Y, +Z）
-                auto proj_pt = [&](float ox, float oy, float oz,
-                    float& x, float& y, float& z, float& w) {
+                auto proj_pt = [&](T ox, T oy, T oz,
+                    T& x, T& y, T& z, T& w) {
                         MulPoint_RowMajor_ColVec(WVP, center.x + ox, center.y + oy, center.z + oz, x, y, z, w);
                     };
 
-                float pxx, pxy, pxz, pxw;
-                float pyx, pyy, pyz, pyw;
-                float pzx, pzy, pzz, pzw;
+                T pxx, pxy, pxz, pxw;
+                T pyx, pyy, pyz, pyw;
+                T pzx, pzy, pzz, pzw;
                 proj_pt(+radius, 0.0f, 0.0f, pxx, pxy, pxz, pxw); // +X
                 proj_pt(0.0f, +radius, 0.0f, pyx, pyy, pyz, pyw); // +Y
                 proj_pt(0.0f, 0.0f, +radius, pzx, pzy, pzz, pzw); // +Z（z評価にも使用）
 
                 // 3) NDC へ（同次除算）
-                auto safe_div = [](float a, float b) {
-                    const float eps = 1e-6f;
+                auto safe_div = [](T a, T b) {
+                    const T eps = 1e-6f;
                     return a / ((std::fabs(b) < eps) ? (b < 0 ? -eps : eps) : b);
                     };
 
-                const float ndc_cx = safe_div(cx, cw);
-                const float ndc_cy = safe_div(cy, cw);
-                const float ndc_cz = safe_div(cz, cw);   // ZeroToOne なら [0,1] が可視
+                const T ndc_cx = safe_div(cx, cw);
+                const T ndc_cy = safe_div(cy, cw);
+                const T ndc_cz = safe_div(cz, cw);   // ZeroToOne なら [0,1] が可視
 
-                const float ndc_pxx = safe_div(pxx, pxw);
-                const float ndc_pxy = safe_div(pxy, pxw);
+                const T ndc_pxx = safe_div(pxx, pxw);
+                const T ndc_pxy = safe_div(pxy, pxw);
 
-                const float ndc_pyx = safe_div(pyx, pyw);
-                const float ndc_pyy = safe_div(pyy, pyw);
+                const T ndc_pyx = safe_div(pyx, pyw);
+                const T ndc_pyy = safe_div(pyy, pyw);
 
-                const float ndc_pzz = safe_div(pzz, pzw); // z方向の奥/手前評価に利用
+                const T ndc_pzz = safe_div(pzz, pzw); // z方向の奥/手前評価に利用
 
                 // 4) 画面半径（保守的近似）
-                const float r_ndc_x = std::fabs(ndc_pxx - ndc_cx);
-                const float r_ndc_y = std::fabs(ndc_pyy - ndc_cy);
-                const float r_ndc = (std::max)(r_ndc_x, r_ndc_y);
+                const T r_ndc_x = std::fabs(ndc_pxx - ndc_cx);
+                const T r_ndc_y = std::fabs(ndc_pyy - ndc_cy);
+                const T r_ndc = (std::max)(r_ndc_x, r_ndc_y);
 
                 // 5) NDC 矩形
-                float xmin = ndc_cx - r_ndc;
-                float xmax = ndc_cx + r_ndc;
-                float ymin = ndc_cy - r_ndc;
-                float ymax = ndc_cy + r_ndc;
+                T xmin = ndc_cx - r_ndc;
+                T xmax = ndc_cx + r_ndc;
+                T ymin = ndc_cy - r_ndc;
+                T ymax = ndc_cy + r_ndc;
 
                 // 6) クリップとの交差（x,y は [-1,1]、z は [0,1]）
-                const float zmin_est = (std::min)(ndc_cz, ndc_pzz);
-                const float zmax_est = (std::max)(ndc_cz, ndc_pzz);
+                const T zmin_est = (std::min)(ndc_cz, ndc_pzz);
+                const T zmax_est = (std::max)(ndc_cz, ndc_pzz);
 
                 const bool x_overlap = !(xmax < -1.0f || xmin > 1.0f);
                 const bool y_overlap = !(ymax < -1.0f || ymin > 1.0f);
@@ -470,8 +470,8 @@ namespace SFW {
 					outNDC->xmax = xmax;
 					outNDC->ymin = ymin;
 					outNDC->ymax = ymax;
-                    const float raw_minw = (std::min)((std::min)(cw, pxw), (std::min)(pyw, pzw));
-                    const float epsW = 1e-6f;                  // 数値安定用
+                    const T raw_minw = (std::min)((std::min)(cw, pxw), (std::min)(pyw, pzw));
+                    const T epsW = 1e-6f;                  // 数値安定用
 					outNDC->wmin = (raw_minw < epsW) ? epsW : raw_minw;
                 }
 
@@ -479,6 +479,185 @@ namespace SFW {
 
                 return x_overlap && y_overlap && z_overlap;
             }
+
+
+            // center: 球中心（ワールド）/ radius: 半径
+            // camRight, camUp, camForward: カメラのワールド空間基底（正規直交・単位長を想定）
+            //
+            // 可視なら true。outNDC は NDC の AABB（x,y は [-1,1]、z は [0,1] で交差判定）
+            // depth には「中心の clip.w」を返します（既存コード互換）。
+            template<class Mat4, class NDC>
+            bool IsVisible_WVP_CamBasis(
+                const Mat4& WVP,
+                const Vec3& camRight, const Vec3& camUp, const Vec3& camForward,
+                NDC* outNDC,
+                T* depth = nullptr) const noexcept
+            {
+                using ::SFW::Math::MulPoint_RowMajor_ColVec;
+
+                auto safe_div = [](T a, T b) {
+                    const T eps = 1e-6f;
+                    return a / ((std::fabs(b) < eps) ? (b < 0 ? -eps : eps) : b);
+                    };
+
+                // 1) 中心を clip に
+                T cx, cy, cz, cw;
+                MulPoint_RowMajor_ColVec(WVP, center.x, center.y, center.z, cx, cy, cz, cw);
+
+                // 2) 基底方向に ±radius だけずらした点を投影
+                auto proj_pt = [&](const Vec3& p, T& x, T& y, T& z, T& w) {
+                    MulPoint_RowMajor_ColVec(WVP, p.x, p.y, p.z, x, y, z, w);
+                    };
+
+                const Vec3 Prp = { center.x + camRight.x * radius,  center.y + camRight.y * radius,  center.z + camRight.z * radius };
+                const Vec3 Prm = { center.x - camRight.x * radius,  center.y - camRight.y * radius,  center.z - camRight.z * radius };
+                const Vec3 Pup = { center.x + camUp.x * radius,  center.y + camUp.y * radius,  center.z + camUp.z * radius };
+                const Vec3 Pum = { center.x - camUp.x * radius,  center.y - camUp.y * radius,  center.z - camUp.z * radius };
+                const Vec3 Pfp = { center.x + camForward.x * radius,center.y + camForward.y * radius,center.z + camForward.z * radius };
+                const Vec3 Pfm = { center.x - camForward.x * radius,center.y - camForward.y * radius,center.z - camForward.z * radius };
+
+                T rpx, rpy, rpz, rpw; proj_pt(Prp, rpx, rpy, rpz, rpw); // +Right
+                T rm_x, rm_y, rm_z, rm_w; proj_pt(Prm, rm_x, rm_y, rm_z, rm_w); // -Right
+                T upx, upy, upz, upw; proj_pt(Pup, upx, upy, upz, upw); // +Up
+                T umx, umy, umz, umw; proj_pt(Pum, umx, umy, umz, umw); // -Up
+                T fpx, fpy, fpz, fpw; proj_pt(Pfp, fpx, fpy, fpz, fpw); // +Forward（奥）
+                T fmx, fmy, fmz, fmw; proj_pt(Pfm, fmx, fmy, fmz, fmw); // -Forward（手前）
+
+                // 3) NDC へ（同次除算）
+                const T ndc_cx = safe_div(cx, cw);
+                const T ndc_cy = safe_div(cy, cw);
+                const T ndc_cz = safe_div(cz, cw);
+
+                const T ndc_rp_x = safe_div(rpx, rpw);
+                const T ndc_rm_x = safe_div(rm_x, rm_w);
+                const T ndc_up_y = safe_div(upy, upw);
+                const T ndc_um_y = safe_div(umy, umw);
+
+                const T ndc_fp_z = safe_div(fpz, fpw);
+                const T ndc_fm_z = safe_div(fmz, fmw);
+
+                // 4) スクリーン半径（保守的）：左右は Right±、上下は Up± の最大差分
+                const T r_ndc_x = (std::max)(std::fabs(ndc_rp_x - ndc_cx),
+                    std::fabs(ndc_rm_x - ndc_cx));
+                const T r_ndc_y = (std::max)(std::fabs(ndc_up_y - ndc_cy),
+                    std::fabs(ndc_um_y - ndc_cy));
+                const T r_ndc = (std::max)(r_ndc_x, r_ndc_y);
+
+                // 5) NDC 矩形
+                T xmin = ndc_cx - r_ndc;
+                T xmax = ndc_cx + r_ndc;
+                T ymin = ndc_cy - r_ndc;
+                T ymax = ndc_cy + r_ndc;
+
+                // 6) z 範囲（保守的）：中心と Forward± の 3 サンプル
+                const T zmin_est = (std::min)((std::min)(ndc_cz, ndc_fm_z), ndc_fp_z);
+                const T zmax_est = (std::max)((std::max)(ndc_cz, ndc_fm_z), ndc_fp_z);
+
+                // 7) クリップとの交差（x,y は [-1,1]、z は [0,1]）
+                const bool x_overlap = !(xmax < -1.0f || xmin > 1.0f);
+                const bool y_overlap = !(ymax < -1.0f || ymin > 1.0f);
+                const bool z_overlap = !(zmax_est < 0.0f || zmin_est > 1.0f);
+
+                // 8) 出力
+                if (outNDC) {
+                    outNDC->xmin = xmin; outNDC->xmax = xmax;
+                    outNDC->ymin = ymin; outNDC->ymax = ymax;
+
+                    const T raw_minw = (std::min)(
+                        (std::min)((std::min)(cw, rpw), (std::min)(rm_w, upw)),
+                        (std::min)(umw, (std::min)(fpw, fmw)));
+                        const T epsW = 1e-6f;
+                        outNDC->wmin = (raw_minw < epsW) ? epsW : raw_minw;
+                }
+                if (depth) *depth = cw; // 互換用
+
+                return x_overlap && y_overlap && z_overlap;
+            }
+
+            template<class Mat4, class NDC>
+            bool IsVisible_WVP_CamBasis_Fast(
+                const Mat4& WVP,
+                const Vec3& camRight, const Vec3& camUp, const Vec3& camForward,
+                NDC* outNDC, T* depth = nullptr) const noexcept
+            {
+                using ::SFW::Math::MulPoint_RowMajor_ColVec;
+
+                // 1) 中心を clip に
+                T cx, cy, cz, cw;
+                MulPoint_RowMajor_ColVec(WVP, center.x, center.y, center.z, cx, cy, cz, cw);
+
+                // 2) WVP の線形部分を抽出
+                const T m00 = WVP.m00, m01 = WVP.m01, m02 = WVP.m02;
+                const T m10 = WVP.m10, m11 = WVP.m11, m12 = WVP.m12;
+                const T m20 = WVP.m20, m21 = WVP.m21, m22 = WVP.m22;
+                const T m30 = WVP.m30, m31 = WVP.m31, m32 = WVP.m32; // w行成分も必要
+
+                // 3) 半径方向を clip空間へ変換（ベクトル変換：平行移動は含まない）
+                auto to_clip = [&](const Vec3& v)->Vec3 {
+                    return {
+                        m00 * v.x + m01 * v.y + m02 * v.z,
+                        m10 * v.x + m11 * v.y + m12 * v.z,
+                        m20 * v.x + m21 * v.y + m22 * v.z
+                    };
+                    };
+                auto to_clip_w = [&](const Vec3& v)->T {
+                    return m30 * v.x + m31 * v.y + m32 * v.z;
+                    };
+
+                const Vec3 clipR = to_clip(camRight);
+                const Vec3 clipU = to_clip(camUp);
+                const Vec3 clipF = to_clip(camForward);
+                const T wR = to_clip_w(camRight);
+                const T wU = to_clip_w(camUp);
+                const T wF = to_clip_w(camForward);
+
+                // 4) clip 半径（+R, +U の大きい方）
+                auto safe_div = [](T a, T b) {
+                    const T eps = 1e-6f;
+                    return a / ((std::fabs(b) < eps) ? (b < 0 ? -eps : eps) : b);
+                    };
+
+                const T invCW = 1.0f / ((std::fabs(cw) < 1e-6f) ? ((cw < 0) ? -1e-6f : 1e-6f) : cw);
+
+                const T ndc_cx = cx * invCW;
+                const T ndc_cy = cy * invCW;
+                const T ndc_cz = cz * invCW;
+
+                // 5) NDC半径計算（近似：微分ベース）
+                //   d(x/w) ≈ (dx*w - x*dw)/w²
+                const T dxR = clipR.x * cw - cx * wR;
+                const T dyU = clipU.y * cw - cy * wU;
+                const T dzF = clipF.z * cw - cz * wF;
+                const T invCW2 = invCW * invCW;
+                const T r_ndc_x = std::fabs(radius * dxR * invCW2);
+                const T r_ndc_y = std::fabs(radius * dyU * invCW2);
+                const T r_ndc = (std::max)(r_ndc_x, r_ndc_y);
+
+                // 6) z 範囲（前後 ±radius * Forward）
+                const T r_ndc_z = std::fabs(radius * dzF * invCW2);
+                const T zmin_est = ndc_cz - r_ndc_z;
+                const T zmax_est = ndc_cz + r_ndc_z;
+
+                // 7) 矩形・交差判定
+                const T xmin = ndc_cx - r_ndc;
+                const T xmax = ndc_cx + r_ndc;
+                const T ymin = ndc_cy - r_ndc;
+                const T ymax = ndc_cy + r_ndc;
+
+                const bool x_overlap = !(xmax < -1.0f || xmin > 1.0f);
+                const bool y_overlap = !(ymax < -1.0f || ymin > 1.0f);
+                const bool z_overlap = !(zmax_est < 0.0f || zmin_est > 1.0f);
+
+                if (outNDC) {
+                    outNDC->xmin = xmin; outNDC->xmax = xmax;
+                    outNDC->ymin = ymin; outNDC->ymax = ymax;
+                    outNDC->wmin = cw;
+                }
+                if (depth) *depth = cw;
+
+                return x_overlap && y_overlap && z_overlap;
+            }
+
         };
 
         using BoundingSpheref = BoundingSphere<float, Vec3f>;

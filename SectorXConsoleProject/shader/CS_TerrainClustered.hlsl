@@ -14,7 +14,7 @@ struct ClusterLodRange
 };
 
 // ========================= CONSTANTS =========================
-cbuffer CSParams : register(b0)
+cbuffer CSParams : register(b4)
 {
     float4 FrustumPlanes[6]; // inward, normalized; dot(n, X) + d >= 0 is inside
     uint ClusterCount;
@@ -138,18 +138,14 @@ void main(uint3 groupID : SV_GroupID, uint3 gtid : SV_GroupThreadID)
     bool visible = AabbInFrustum(bmin, bmax);
 
     // LOD selection
-    uint lodIdx = 0u;
-    if (visible)
-    {
-        float sizePx = ProjectedSizePx(bmin, bmax);
-        lodIdx = SelectLodPx(sizePx);
-        lodIdx = min(lodIdx, max(1u, LodCount[cid]) - 1u);
-    }
-
-    // Resolve range for the selected LOD (if any)
     uint2 r = (uint2) 0;
     if (visible)
     {
+        uint lodIdx = 0u;
+        float sizePx = ProjectedSizePx(bmin, bmax);
+        lodIdx = SelectLodPx(sizePx);
+        lodIdx = min(lodIdx, max(1u, LodCount[cid]) - 1u);
+
         uint base = LodBase[cid] + lodIdx;
         ClusterLodRange lr = ClusterLodRanges[base];
         r = uint2(lr.offset, lr.count);
