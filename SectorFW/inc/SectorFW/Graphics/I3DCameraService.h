@@ -274,6 +274,21 @@ namespace SFW
 				return proj * view;
 			}
 
+			Math::Matrix4x4f MakeViewProjMatrix(float _nearClip, float _farClip) const {
+				std::shared_lock lock(sharedMutex);
+				Math::Vec3f r, u, f;
+				Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
+				auto view = Math::MakeLookAtMatrixLH(eye, target, u);
+				Math::Matrix4x4f proj;
+				if constexpr (Type == ProjectionType::Perspective) {
+					proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, _nearClip, _farClip);
+				}
+				else {
+					proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, bottom, top, _nearClip, _farClip);
+				}
+				return proj * view;
+			}
+
 			void MakeBasis(Math::Vec3f& outRight, Math::Vec3f& outUp, Math::Vec3f& outForward) const noexcept {
 				std::shared_lock lock(sharedMutex);
 				Math::ToBasis<float, Math::LH_ZForward>(rot, outRight, outUp, outForward);

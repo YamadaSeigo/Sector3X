@@ -500,5 +500,112 @@ namespace SFW {
             return original; // なければオリジナルの PNG/JPG
         }
 
+        // ms: D3D11_MAPPED_SUBRESOURCE（BC圧縮のmipサブリソースをMapした結果）
+        // descFmt: 例 DXGI_FORMAT_BC7_UNORM / _SRGB など
+        // width,height: そのmipの幅/高さ（mipを読むなら元サイズ>>mip）
+        static bool DecompressMappedBCToRGBA8(
+            const D3D11_MAPPED_SUBRESOURCE& ms,
+            DXGI_FORMAT descFmt,
+            uint32_t width, uint32_t height,
+            ScratchImage& outRGBA8) // out
+        {
+            // 1) 入力Image（圧縮）のメタを組み立て
+            Image src{};
+            src.width = width;
+            src.height = height;
+            src.format = descFmt;          // DXGI_FORMAT_BC? であること
+            src.rowPitch = ms.RowPitch;      // 1ブロック行あたりのバイト数（BC特有）
+            src.slicePitch = ms.DepthPitch;    // サブリソース全体のバイト数
+            src.pixels = reinterpret_cast<uint8_t*>(ms.pData);
+
+            // 2) RGBA8へデコード（sRGBは“値そのまま”でOKなら UNORM へ）
+            ScratchImage tmp;
+            HRESULT hr = Decompress(src, DXGI_FORMAT_R8G8B8A8_UNORM, tmp);
+            if (FAILED(hr)) return false;
+
+            outRGBA8 = std::move(tmp);
+            return true;
+        }
+
+
+        bool ReadTexture2DToCPU(ID3D11Device* dev, ID3D11DeviceContext* ctx,
+            ID3D11Texture2D* src, CpuImage& out)
+        {
+            D3D11_TEXTURE2D_DESC sd{};
+            src->GetDesc(&sd);
+
+            // 1) MSAAならまずResolveして1xへ
+            Microsoft::WRL::ComPtr<ID3D11Texture2D> resolved;
+            ID3D11Texture2D* srcForCopy = src;
+            if (sd.SampleDesc.Count > 1) {
+                D3D11_TEXTURE2D_DESC rs = sd;
+                rs.SampleDesc.Count = 1;
+                rs.SampleDesc.Quality = 0;
+                rs.BindFlags = 0;
+                rs.MiscFlags = 0;
+                rs.Usage = D3D11_USAGE_DEFAULT;
+                rs.CPUAccessFlags = 0;
+                if (FAILED(dev->CreateTexture2D(&rs, nullptr, &resolved))) return false;
+                // mip 0 / array slice 0 を想定。必要ならループで。
+                ctx->ResolveSubresource(resolved.Get(), 0, src, 0, sd.Format);
+                srcForCopy = resolved.Get();
+                sd = rs; // 以降は非MSAAのdescで進める
+            }
+
+            // 2) Stagingを同サイズで（ただしCPU Read可）
+            D3D11_TEXTURE2D_DESC rd = sd;
+            rd.Usage = D3D11_USAGE_STAGING;
+            rd.BindFlags = 0;
+            rd.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+            rd.MiscFlags = 0;
+            // mip/arrayを本当に1つだけ取りたいなら MipLevels=1, ArraySize=1 に調整して
+            // CopySubresourceRegion で必要部分だけ複写する方法もある
+
+            Microsoft::WRL::ComPtr<ID3D11Texture2D> staging;
+            if (FAILED(dev->CreateTexture2D(&rd, nullptr, &staging))) return false;
+
+            // 3) コピー（ここではリソース丸ごと。必要に応じて CopySubresourceRegion）
+            ctx->CopyResource(staging.Get(), srcForCopy);
+
+            // 4) Map（READは完了待ちするので通常Sync不要）
+            D3D11_MAPPED_SUBRESOURCE ms{};
+            if (FAILED(ctx->Map(staging.Get(), 0, D3D11_MAP_READ, 0, &ms))) return false;
+
+            if (sd.Format == DXGI_FORMAT_B8G8R8A8_UNORM)
+            {
+                // 5) 総バイト数は DepthPitch を優先利用（2Dでも有効）
+                const size_t totalBytes = (ms.DepthPitch != 0)
+                    ? size_t(ms.DepthPitch)
+                    : size_t(ms.RowPitch) * size_t(sd.Height); // フォールバック
+
+                out.width = sd.Width;
+                out.height = sd.Height;
+                out.stride = ms.RowPitch;
+                out.fmt = sd.Format;
+                out.bytes.resize(totalBytes);
+
+                // 6) そのまま一括コピー（“生”レイアウトで良いなら）
+                std::memcpy(out.bytes.data(), ms.pData, totalBytes);
+            }
+            else
+            {
+				ScratchImage rgba8;
+				DecompressMappedBCToRGBA8(ms, sd.Format, sd.Width, sd.Height, rgba8);
+
+                const Image* img = rgba8.GetImage(0, 0, 0); // mip0/array0
+                if (!img) return false;
+
+                out.width = (UINT)img->width;
+                out.height = (UINT)img->height;
+                out.stride = (UINT)img->rowPitch;
+                out.fmt = img->format;
+				out.bytes.resize(img->height * img->rowPitch);
+				// 5) RGBA8データをコピー
+				std::memcpy(out.bytes.data(), img->pixels, out.bytes.size());
+            }
+
+            ctx->Unmap(staging.Get(), 0);
+            return true;
+        }
     } // namespace Graphics
 } // namespace SectorFW

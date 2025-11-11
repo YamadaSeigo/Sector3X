@@ -1064,9 +1064,9 @@ namespace SFW::Graphics::DX11 {
         std::string path{}; bool srgbFlag = forceSRGB;
         if (!resolve(sheetId, path, srgbFlag)) return {};
         TextureCreateDesc cd{}; cd.path = path; cd.forceSRGB = srgbFlag;
-#ifdef _DEBUG
-        cd.convertDSS = false;
-#endif
+//#ifdef _DEBUG
+//        cd.convertDSS = false;
+//#endif
         TextureHandle h = {};
         texMgr.Add(cd, h);
         auto data = texMgr.Get(h);

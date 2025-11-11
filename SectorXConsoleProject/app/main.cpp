@@ -131,13 +131,13 @@ int main(void)
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
-	p.cellsX = 512;
-	p.cellsZ = 512;
+	p.cellsX = 1024;
+	p.cellsZ = 1024;
 	p.clusterCellsX = 32;
 	p.clusterCellsZ = 32;
-	p.cellSize = 6.0f;
+	p.cellSize = 3.0f;
 	p.heightScale = 60.0f;
-	p.frequency = 1.0f / 96.0f * 2.0f;
+	p.frequency = 1.0f / 96.0f * 1.0f;
 	p.seed = 20251030;
 
 
@@ -382,9 +382,6 @@ int main(void)
 
 	//========================================================================================-
 
-	World<Grid2DPartition, Grid3DPartition, QuadTreePartition, OctreePartition> world(std::move(serviceLocator));
-	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
-
 	std::random_device rd;
 	std::mt19937_64 rng(rd());
 
@@ -392,8 +389,8 @@ int main(void)
 	std::array<int, 3> weights{ 5, 10, 5 };
 	std::discrete_distribution<int> dist(weights.begin(), weights.end());
 
-	float modelScaleBase[3] = { 10.0f,6.0f,10.0f};
-	int modelScaleRange[3] = { 600,100,100};
+	float modelScaleBase[3] = { 2.5f,1.5f,2.5f};
+	int modelScaleRange[3] = { 150,25,25};
 	int modelRotRange[3] = { 360,360,360};
 
 	std::vector<Math::Vec2f> grassAnchor;
@@ -412,8 +409,11 @@ int main(void)
 	Graphics::DX11::CpuImage cpuSplatImage;
 	Graphics::DX11::ReadTexture2DToCPU(device, deviceContext, sheetTex.Get(), cpuSplatImage);
 
+	World<Grid2DPartition, Grid3DPartition, QuadTreePartition, OctreePartition> world(std::move(serviceLocator));
+	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
+
 	for (int i = 0; i < 1; ++i) {
-		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
+		auto level = std::unique_ptr<Level<OctreePartition>>(new Level<OctreePartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
 
 		// System“o˜^
 		auto& scheduler = level->GetScheduler();
@@ -443,23 +443,29 @@ int main(void)
 			p.cellsX * p.cellSize,
 			p.cellsZ * p.cellSize
 		};
-		for (int j = 0; j < 50; ++j) {
-			for (int k = 0; k < 50; ++k) {
+		for (int j = 0; j < 200; ++j) {
+			for (int k = 0; k < 200; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
-					float scale = 30.0f;
-					Math::Vec3f location = { float(j) * scale * 2.0f, 0, float(k) * scale * 2.0f };
-					auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scale, grassAnchor);
+					float scaleXZ = 10.0f;
+					float scaleY = 10.0f;
+					Math::Vec3f location = { float(j) * scaleXZ * 2.0f, 0, float(k) * scaleXZ * 2.0f };
+					auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
 					location = pose.pos;
 					int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
 					int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
 
+					int byteIndex = col * 4 + row * cpuSplatImage.stride;
+					if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
+						continue;
+					}
+
 					int modelIdx = 3;
-					auto splatR = cpuSplatImage.bytes[col * 4 + row * cpuSplatImage.stride];
+					auto splatR = cpuSplatImage.bytes[byteIndex];
 					if (splatR < 64) {
 						continue; // ‘‚ª”–‚¢êŠ‚ÍƒXƒLƒbƒv
 					}
-					location.y -= (1.0f - splatR / 255.0f) * 8.0f;
+					location.y -= (1.0f - splatR / 255.0f) * 3.0f;
 
 					auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 
@@ -470,7 +476,7 @@ int main(void)
 
 					//float scale = 1.0f;
 					auto id = level->AddEntity(
-						TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
+						TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
 						CModel{ modelAssetHandle[modelIdx] },
 						Physics::BodyComponent{},
 						Physics::PhysicsInterpolation(
