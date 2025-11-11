@@ -323,8 +323,8 @@ int main(void)
 			Graphics::DX11::BindCommonMaterials(deviceContext, matRes);
 
 			ID3D11ShaderResourceView* splatSrv = splatRes.splatArraySRV.Get();
-			deviceContext->PSSetShaderResources(14, 1, &splatSrv);       // t14
-			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t15, b4
+			deviceContext->PSSetShaderResources(24, 1, &splatSrv);       // t24
+			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t25, b10
 
 			auto world = Math::Matrix4x4f::Identity();
 			blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height, 400.0f, 160.0f);
@@ -351,7 +351,7 @@ int main(void)
 	PSOHandle psoHandle;
 	psoMgr->Add(psoDesc, psoHandle);
 
-	ModelAssetHandle modelAssetHandle[4];
+	ModelAssetHandle modelAssetHandle[5];
 
 	auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
 	// モデルアセットの読み込み
@@ -374,6 +374,10 @@ int main(void)
 	modelDesc.instancesPeak = 10000;
 	modelDesc.path = "assets/model/GrassPatch.glb";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
+
+	modelDesc.instancesPeak = 100;
+	modelDesc.path = "assets/model/StylizedNatureMegaKit/Grass_Wispy_Short.gltf";
+	modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
 
 
 	//========================================================================================-
@@ -448,10 +452,14 @@ int main(void)
 					auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scale, grassAnchor);
 					location = pose.pos;
 					int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
-					int row = (int)(std::clamp((location.y / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
+					int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
 
+					int modelIdx = 3;
 					auto splatR = cpuSplatImage.bytes[col * 4 + row * cpuSplatImage.stride];
-					if (splatR < 64) continue; // 草が薄い場所はスキップ
+					if (splatR < 64) {
+						continue; // 草が薄い場所はスキップ
+					}
+					location.y -= (1.0f - splatR / 255.0f) * 8.0f;
 
 					auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 
@@ -459,7 +467,7 @@ int main(void)
 					auto key = chunk.value()->GetNodeKey();
 					SpatialMotionTag tag{};
 					tag.handle = { key, chunk.value() };
-					int modelIdx = 3;
+
 					//float scale = 1.0f;
 					auto id = level->AddEntity(
 						TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },

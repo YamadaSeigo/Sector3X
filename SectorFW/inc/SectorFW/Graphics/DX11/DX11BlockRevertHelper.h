@@ -326,14 +326,14 @@ namespace SFW::Graphics::DX11 {
 
             struct VSParams { float ViewProj[16]; float World[16]; } vsp{}; memcpy(vsp.ViewProj, viewProj, 64); memcpy(vsp.World, world, 64);
             ctx->Map(cbVS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms); memcpy(ms.pData, &vsp, sizeof(vsp)); ctx->Unmap(cbVS.Get(), 0);
-            ctx->VSSetConstantBuffers(0, 1, cbVS.GetAddressOf());
+            ctx->VSSetConstantBuffers(10, 1, cbVS.GetAddressOf());
             ID3D11ShaderResourceView* vsSrvs[4] = { visibleSRV.Get(), posSRV.Get(), nrmSRV.Get(), uvSRV.Get() };
-            ctx->VSSetShaderResources(0, 4, vsSrvs);
+            ctx->VSSetShaderResources(20, 4, vsSrvs);
             ctx->IASetInputLayout(nullptr);
             ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
             ctx->DrawInstancedIndirect(argsBuf.Get(), 0);
             ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };
-            ctx->VSSetShaderResources(0, 4, nullVs);
+            ctx->VSSetShaderResources(20, 4, nullVs);
         }
     };
 
@@ -702,7 +702,7 @@ namespace SFW::Graphics::DX11 {
         R.layerSRV[0].Get(), R.layerSRV[1].Get(),
         R.layerSRV[2].Get(), R.layerSRV[3].Get()
         };
-        ctx->PSSetShaderResources(10, 4, mats);                 // t10..t13
+        ctx->PSSetShaderResources(20, 4, mats);                 // t10..t13
         ID3D11SamplerState* samp = R.sampLinearWrap.Get();
         ctx->PSSetSamplers(0, 1, &samp);                        // s0（スプラットと共有）
     }
@@ -1038,9 +1038,9 @@ namespace SFW::Graphics::DX11 {
         const ClusterParamsGPU& P)
     {
         ID3D11ShaderResourceView* srv = P.srv.Get();
-        ctx->PSSetShaderResources(15, 1, &srv); // t15: StructuredBuffer<ClusterParam>
+        ctx->PSSetShaderResources(25, 1, &srv); // t15: StructuredBuffer<ClusterParam>
         ID3D11Buffer* cbs[] = { P.cbGrid.Get() };
-        ctx->PSSetConstantBuffers(4, 1, cbs);   // b2: TerrainGridCB
+        ctx->PSSetConstantBuffers(10, 1, cbs);   // b2: TerrainGridCB
     }
 
         // 便利ユーティリティ：Terrain のグリッド定数を設定

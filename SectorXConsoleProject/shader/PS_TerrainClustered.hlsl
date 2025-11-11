@@ -1,4 +1,4 @@
-// t15: GPU 側とレイアウト完全一致
+// t25: GPU 側とレイアウト完全一致
 struct ClusterParam
 {
     int splatSlice; // Texture2DArray のスライス番号
@@ -9,17 +9,17 @@ struct ClusterParam
 };
 
 // ====== レジスタ割り当て（これまでの設計に準拠） ======
-Texture2D gLayer0 : register(t10);
-Texture2D gLayer1 : register(t11);
-Texture2D gLayer2 : register(t12);
-Texture2D gLayer3 : register(t13);
-Texture2DArray gSplat : register(t14); // クラスタごとの重み (RGBA) を slice で参照
-StructuredBuffer<ClusterParam> gClusters : register(t15); // 全クラスタのパラメータ表
+Texture2D gLayer0 : register(t20);
+Texture2D gLayer1 : register(t21);
+Texture2D gLayer2 : register(t22);
+Texture2D gLayer3 : register(t23);
+Texture2DArray gSplat : register(t24); // クラスタごとの重み (RGBA) を slice で参照
+StructuredBuffer<ClusterParam> gClusters : register(t25); // 全クラスタのパラメータ表
 
 SamplerState gSamp : register(s0);
 
-// b4: グリッド定数（DX11BlockRevertHelper::TerrainGridCB と一致）
-cbuffer TerrainGridCB : register(b4)
+// b14: グリッド定数（DX11BlockRevertHelper::TerrainGridCB と一致）
+cbuffer TerrainGridCB : register(b10)
 {
     float2 gOriginXZ; // ワールド座標の基準 (x,z)
     float2 gCellSizeXZ; // 1クラスタのサイズ (x,z)
@@ -80,7 +80,7 @@ float4 main(VSOut i) : SV_Target
     float4 w = gSplat.Sample(gSamp, float3(suv, p.splatSlice));
     w = saturate(w);
     w /= max(1e-5, dot(w, 1));
-    
+
 
     // 3) 素材4：連続感が欲しければ world ベースでタイルするのがおすすめ
     //    例: ワールドXZをスケール（完全にクラスタ無関係の連続タイル）

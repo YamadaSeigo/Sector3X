@@ -22,16 +22,22 @@ cbuffer MaterialCB : register(b2)
     float3 _pad_; // 16B境界合わせ
 };
 
-cbuffer LightCB : register(b3)
+cbuffer LightingCB : register(b3)
 {
-    float4 lightDir; // ワールド空間、正規化済み
-    float4 lightColor; // 0～1
-    float4 ambientColor; // 環境光
+    // Sun / directional
+    float3 gSunDirectionWS;
+    float gSunIntensity; // 16B
+    float3 gSunColor;
+    float gAmbientIntensity; // 16B
+
+    // Ambient + counts
+    float3 gAmbientColor;
+    uint gPointLightCount; // 16B
 };
 
 //======================================================
 //コンスタントバッファのスロット４以降は、個別にセットしてもオケ!
-//テクスチャバッファの場合は,t5以降はオケ!
+//テクスチャバッファの場合は,t6以降はオケ!
 //======================================================
 
 // フレーム単位：全インスタンスのワールド行列（48B/個）
@@ -49,6 +55,19 @@ Texture2D gBaseColorTex : register(t2);
 Texture2D gNormalTex : register(t3);
 
 Texture2D gMetallicRoughness : register(t4);
+
+struct PointLight
+{
+    float3 positionWS;
+    float radius; // 16B
+    float3 color;
+    float invRadius; // 16B
+    int shadowLayer;
+    float shadowBias; // 8B
+    float2 _padPL0; // 8B (16B 境界揃え)
+};
+
+StructuredBuffer<PointLight> gPointLights : register(t5);
 
 SamplerState gSampler : register(s0);
 

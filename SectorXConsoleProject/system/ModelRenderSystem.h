@@ -290,7 +290,7 @@ public:
 
 						subMeshIdx++;
 						if (subMeshIdx >= 16) [[unlikely]] {
-							LOG_ERROR("Too many subMeshes in model asset");
+							LOG_ERROR("Too many subMeshes in model asset {%d}", modelAsset.ref().subMeshes.size());
 							return;
 						}
 					}

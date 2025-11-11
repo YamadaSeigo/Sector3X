@@ -165,7 +165,7 @@ public:
 
 		Graphics::DX11::MaterialCreateDesc matDesc;
 		matDesc.shader = mocShaderHandle;
-		matDesc.psSRV[5] = mocTexHandle; // TEX5 にセット
+		matDesc.psSRV[10] = mocTexHandle; // TEX6 にセット
 		auto matMgr = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
 		matMgr->Add(matDesc, mocMaterialHandle);
 	}

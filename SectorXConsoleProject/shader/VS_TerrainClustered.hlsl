@@ -11,16 +11,16 @@ struct VSOut
 
 // ========================= VERTEX: VERTEX-PULL =========================
 
-cbuffer VSParams : register(b0)
+cbuffer VSParams : register(b10)
 {
     row_major float4x4 ViewProj;
     row_major float4x4 World;
 };
 
-StructuredBuffer<uint> VisibleIndices : register(t0);
-StructuredBuffer<float3> Pos : register(t1);
-StructuredBuffer<float3> Nrm : register(t2);
-StructuredBuffer<float2> UV : register(t3);
+StructuredBuffer<uint> VisibleIndices : register(t20);
+StructuredBuffer<float3> Pos : register(t21);
+StructuredBuffer<float3> Nrm : register(t22);
+StructuredBuffer<float2> UV : register(t23);
 
 VSOut main(uint vtxId : SV_VertexID)
 {

@@ -7,7 +7,7 @@ struct PSInput
     float3 normal : NORMAL;
 };
 
-Texture2D<float> gDepthTex : register(t5);
+Texture2D<float> gDepthTex : register(t10);
 
 float4 main(PSInput input) : SV_TARGET
 {
