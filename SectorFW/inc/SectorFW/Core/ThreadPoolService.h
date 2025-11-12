@@ -22,6 +22,8 @@ namespace SFW
             : stop_(false)
         {
             if (n == 0) n = 1;
+
+			LOG_INFO("SimpleThreadPoolService: starting with {%d} threads", n);
             workers_.reserve(n);
             for (size_t i = 0; i < n; ++i) {
                 workers_.emplace_back([this] {

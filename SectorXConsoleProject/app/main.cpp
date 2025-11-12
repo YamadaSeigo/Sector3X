@@ -138,8 +138,7 @@ int main(void)
 	p.cellSize = 3.0f;
 	p.heightScale = 60.0f;
 	p.frequency = 1.0f / 96.0f * 1.0f;
-	p.seed = 20251030;
-
+	p.seed = 20251112;
 
 	std::vector<float> heightMap;
 	SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);
@@ -367,7 +366,7 @@ int main(void)
 	modelDesc.path = "assets/model/StylizedNatureMegaKit/Clover_1.gltf";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
-	modelDesc.path = "assets/model/StylizedNatureMegaKit/DeadTree_1.gltf";
+	modelDesc.path = "assets/model/FantasyTree.gltf";
 	modelDesc.buildOccluders = false;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
@@ -413,7 +412,7 @@ int main(void)
 	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
 
 	for (int i = 0; i < 1; ++i) {
-		auto level = std::unique_ptr<Level<OctreePartition>>(new Level<OctreePartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
+		auto level = std::unique_ptr<Level<QuadTreePartition>>(new Level<QuadTreePartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
 
 		// System“o˜^
 		auto& scheduler = level->GetScheduler();
@@ -462,7 +461,7 @@ int main(void)
 
 					int modelIdx = 3;
 					auto splatR = cpuSplatImage.bytes[byteIndex];
-					if (splatR < 64) {
+					if (splatR < 32) {
 						continue; // ‘‚ª”–‚¢êŠ‚ÍƒXƒLƒbƒv
 					}
 					location.y -= (1.0f - splatR / 255.0f) * 3.0f;
@@ -496,8 +495,8 @@ int main(void)
 		// Entity¶¬
 		uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
 		uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
-		for (int j = 0; j < 20; ++j) {
-			for (int k = 0; k < 20; ++k) {
+		for (int j = 0; j < 100; ++j) {
+			for (int k = 0; k < 100; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
 					//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };

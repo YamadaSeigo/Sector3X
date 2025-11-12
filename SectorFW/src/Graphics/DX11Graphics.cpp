@@ -344,7 +344,7 @@ namespace SFW
 			passDesc.dsv = m_depthStencilView.Get();
 			passDesc.cbvs = { cameraHandle3D };
 			//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
-			passDesc.blendState = BlendStateID::AlphaBlend;
+			passDesc.blendState = BlendStateID::Opaque;
 
 			renderGraph->AddPass(passDesc);
 

@@ -108,7 +108,7 @@ public:
 		};
 
 		//アクセスを宣言したコンポーネントにマッチするチャンクに指定した関数を適応する
-		this->ForEachFrustumNearChunkWithAccessor<IsParallel{false}>([](Accessor& accessor, size_t entityCount, KernelParams* kp)
+		this->ForEachFrustumNearChunkWithAccessor<IsParallel{true}>([](Accessor& accessor, size_t entityCount, KernelParams* kp)
 			{
 				if (entityCount == 0) return;
 
@@ -295,7 +295,7 @@ public:
 						}
 					}
 				}
-			}, partition, fru, camPos, &kp/*, threadPool.get()*/
+			}, partition, fru, camPos, &kp, threadPool.get()
 		);
 	}
 

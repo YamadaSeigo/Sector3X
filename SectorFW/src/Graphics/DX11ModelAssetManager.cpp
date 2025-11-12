@@ -827,7 +827,7 @@ namespace SFW
 
 			// --- 基本の ratio ラダー（LOD1, LOD2, LOD3 の目安）---
 			// *Attributes→Permissive→Sloppy と遠くほど強めに
-			constexpr float baseRatios[3] = { 0.50f, 0.25f, 0.05f }; // LOD1,2,3
+			constexpr float baseRatios[3] = { 0.50f, 0.25f, 0.01f }; // LOD1,2,3
 			// インスタンス大量 & 視距離レンジ広い → さらに強め
 			float instBoost = std::clamp<float>(0.05f * lg((float)(std::max)((uint32_t)1, a.instancesPeak)), 0.0f, 0.20f);
 			float rangeBoost = std::clamp<float>(0.05f * lg((std::max)(1.0f, a.viewMax / (std::max)(0.5f, a.viewMin))), 0.0f, 0.20f);
