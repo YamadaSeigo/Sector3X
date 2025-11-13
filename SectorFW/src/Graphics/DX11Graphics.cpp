@@ -329,49 +329,6 @@ namespace SFW
 			backend->SetRasterizerState(state);
 		}
 
-		void GraphicsDevice::TestInitialize()
-		{
-			std::vector<ID3D11RenderTargetView*> rtvs{
-				m_renderTargetView.Get() };
-
-			auto constantMgr = renderGraph->GetRenderService()->GetResourceManager<BufferManager>();
-			auto cameraHandle3D = constantMgr->FindByName(PerCamera3DService::BUFFER_NAME);
-			auto cameraHandle2D = constantMgr->FindByName(Camera2DService::BUFFER_NAME);
-
-			RenderPassDesc<ID3D11RenderTargetView*> passDesc;
-			passDesc.name = "3D";
-			passDesc.rtvs = rtvs;
-			passDesc.dsv = m_depthStencilView.Get();
-			passDesc.cbvs = { cameraHandle3D };
-			//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
-			passDesc.blendState = BlendStateID::Opaque;
-
-			renderGraph->AddPass(passDesc);
-
-			passDesc.customExecute = nullptr;
-
-			passDesc.name = "Line";
-			passDesc.topology = PrimitiveTopology::LineList;
-			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
-
-			renderGraph->AddPass(passDesc);
-
-
-			passDesc.dsv = nullptr;
-			passDesc.cbvs = { cameraHandle2D };
-			passDesc.name = "Line2D";
-			passDesc.topology = PrimitiveTopology::LineList;
-			passDesc.rasterizerState = RasterizerStateID::WireCullNone;
-
-			renderGraph->AddPass(passDesc);
-
-			passDesc.name = "2D";
-			passDesc.topology = PrimitiveTopology::TriangleList;
-			passDesc.rasterizerState = std::nullopt;
-
-			renderGraph->AddPass(passDesc);
-		}
-
 		void GraphicsDevice::RenderThreadMain(std::shared_ptr<RTState> st) {
 			// Immediate Context はこのスレッド専有
 			while (st->running.load(std::memory_order_acquire)) {

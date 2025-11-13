@@ -105,6 +105,11 @@ namespace SFW
 			void ExecuteDrawIndexedInstanced(const VecT& cmds, bool usePSORastarizer) {
 				static_cast<Derived*>(this)->ExecuteDrawIndexedInstancedImpl(cmds, usePSORastarizer);
 			}
+
+			template<typename VecT>
+			void ExecuteDrawIndexedInstanced(const VecT& cmds, std::vector<uint32_t> indices, std::optional<PSOHandle> psoOverride = std::nullopt, bool usePSORastarizer = true) {
+				static_cast<Derived*>(this)->ExecuteDrawIndexedInstancedImpl(cmds, indices, psoOverride, usePSORastarizer);
+			}
 			/**
 			 * @brief フレーム終了時に遅延削除を処理する関数
 			 * @param currentFrame 現在のフレーム番号

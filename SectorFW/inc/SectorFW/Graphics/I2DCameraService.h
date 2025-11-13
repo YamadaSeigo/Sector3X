@@ -272,7 +272,6 @@ namespace SFW
 
 		public:
 			STATIC_SERVICE_TAG
-			DEFINE_UPDATESERVICE_GROUP(GROUP_INPUT)
 		};
 	}
 }

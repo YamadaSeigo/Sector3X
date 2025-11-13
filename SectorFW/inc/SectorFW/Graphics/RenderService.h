@@ -85,19 +85,37 @@ namespace SFW
 		public:
 			/**
 			 * @brief RenderQueueのProducerSessionを取得する関数
-			 * @param passName　パス名
+			 * @param groupName　グループ名
 			 * @return　RenderQueue::ProducerSession レンダークエリのプロデューサーセッション
 			 */
-			RenderQueue::ProducerSession GetProducerSession(const std::string& passName)
+			RenderQueue::ProducerSession GetProducerSession(const std::string& groupName)
 			{
 				std::shared_lock lock(*queueMutex);
 
-				auto it = queueIndex.find(passName);
+				auto it = queueIndex.find(groupName);
 				if (it == queueIndex.end()) {
 					assert(false && "RenderQueue not found for pass name");
 				}
 
 				return renderQueues[it->second]->MakeProducer();
+			}
+			/**
+			 * @brief RenderQueueのProducerSessionExternalを取得する関数
+			 * @param groupName　グループ名
+			 * @param buf バッファ
+			 * @return　RenderQueue::ProducerSession レンダークエリのプロデューサーセッション
+			 */
+			RenderQueue::ProducerSessionExternal GetProducerSession(const std::string& groupName, 
+				RenderQueue::ProducerSessionExternal::SmallBuf& buf)
+			{
+				std::shared_lock lock(*queueMutex);
+
+				auto it = queueIndex.find(groupName);
+				if (it == queueIndex.end()) {
+					assert(false && "RenderQueue not found for pass name");
+				}
+
+				return renderQueues[it->second]->MakeProducer(buf);
 			}
 
 			/**

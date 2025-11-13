@@ -233,6 +233,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app\Packed2Bits32.h" />
+    <ClInclude Include="app\RenderDefine.h" />
     <ClInclude Include="app\stdafx.h" />
     <ClInclude Include="system\BodyIDWriteBackFromEventSystem.hpp" />
     <ClInclude Include="system\BuildBodiesFromIntentsSystem.hpp" />

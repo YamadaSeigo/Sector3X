@@ -29,7 +29,11 @@ namespace SFW
 			BlendStateID blendState = BlendStateID::Opaque; // ブレンドステートID
 			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // 深度ステンシルステートID
 			std::vector<BufferHandle> cbvs; // 定数バッファハンドルのリスト
+			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
 			std::function<void(uint64_t)> customExecute; // FullscreenQuadなど
+
+			// このパスが見る viewMask のビット
+			uint16_t viewBit = 0;   // 例: 1<<0=ZPre, 1<<1=Opaque, 1<<2=ID...
 
 			/**
 			 * @brief デフォルトコンストラクタ
@@ -58,6 +62,7 @@ namespace SFW
 				BlendStateID blendState = BlendStateID::Opaque,
 				DepthStencilStateID depthStencilState = DepthStencilStateID::Default,
 				const std::vector<BufferHandle>& cbvs = {},
+				std::optional<PSOHandle> psoOverride = std::nullopt,
 				std::function<void(uint64_t)> customExecute = nullptr)
 				: name(name)
 				, rtvs(rtvs)
@@ -68,6 +73,7 @@ namespace SFW
 				, blendState(blendState)
 				, depthStencilState(depthStencilState)
 				, cbvs(cbvs)
+				, psoOverride(psoOverride)
 				, customExecute(customExecute) {
 			}
 
@@ -82,7 +88,9 @@ namespace SFW
 				, dsv(other.dsv)
 				, queue(std::move(other.queue))
 				, topology(other.topology)
+				, rasterizerState(other.rasterizerState)
 				, cbvs(std::move(other.cbvs))
+				, psoOverride(other.psoOverride)
 				, customExecute(std::move(other.customExecute)) {
 				other.dsv = nullptr; // 安全のためヌルクリア
 				queue = other.queue;
@@ -101,7 +109,9 @@ namespace SFW
 					queue = other.queue;
 					queue = std::move(other.queue);
 					topology = other.topology;
+					rasterizerState = other.rasterizerState;
 					cbvs = std::move(other.cbvs);
+					psoOverride = other.psoOverride;
 					customExecute = std::move(other.customExecute);
 					other.dsv = nullptr;
 				}
@@ -129,7 +139,7 @@ namespace SFW
 			BlendStateID blendState = BlendStateID::Opaque; // ブレンドステートID
 			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // 深度ステンシルステートID
 			std::vector<BufferHandle> cbvs; // 定数バッファハンドルのリスト
-			uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME; // フレーム当たりの最大インスタンス数
+			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
 			std::function<void(uint64_t)> customExecute; // FullscreenQuadなど
 		};
 	}

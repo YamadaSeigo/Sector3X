@@ -368,33 +368,45 @@ namespace SFW
 		public:
 			/**
 			 * @brief 生産者セッション-ユーザーに渡す用（thread_localを使わない）
+			 * @detail 外部からバッファを渡す
 			 */
-			class ProducerSession {
+			class ProducerSessionExternal {
 
 			public:
+				// まとめ用固定長バッファ（ヒープなし）
+				static constexpr size_t kChunk = 128;
+				struct alignas(32) SmallBuf {
+					DrawCommand data[kChunk];
+					size_t size = 0;
+					void push_back(const DrawCommand& c) noexcept { data[size++] = c; }
+					void push_back(DrawCommand&& c) noexcept { data[size++] = std::move(c); }
+					bool full() const noexcept { return size >= kChunk; }
+					void clear() noexcept { size = 0; }
+				};
+
 				/**
 				 * @brief コンストラクタ
 				 * @param owner このセッションが属する RenderQueue への参照
 				 */
-				explicit ProducerSession(RenderQueue& owner) noexcept
-					: rq(&owner) {
+				explicit ProducerSessionExternal(RenderQueue& owner, SmallBuf& buf) noexcept
+					: rq(&owner), buf(buf) {
 				}
 				/**
 				 * @brief コピー禁止
 				 */
-				ProducerSession(const ProducerSession&) = delete;
-				ProducerSession& operator=(const ProducerSession&) = delete;
+				ProducerSessionExternal(const ProducerSessionExternal&) = delete;
+				ProducerSessionExternal& operator=(const ProducerSessionExternal&) = delete;
 				/**
 				 * @brief ムーブは可
 				 */
-				ProducerSession(ProducerSession&& other) noexcept
-					: rq(other.rq), boundQueue(other.boundQueue), token(std::move(other.token)), buf(std::move(other.buf)) {
+				ProducerSessionExternal(ProducerSessionExternal&& other) noexcept
+					: rq(other.rq), boundQueue(other.boundQueue), token(std::move(other.token)), buf(other.buf) {
 					other.rq = nullptr;
 					other.boundQueue = nullptr;
 					other.token.reset();
 					other.buf.clear();
 				}
-				ProducerSession& operator=(ProducerSession&& other) noexcept {
+				ProducerSessionExternal& operator=(ProducerSessionExternal&& other) noexcept {
 					if (this != &other) {
 						FlushAll();
 						rq = other.rq;
@@ -409,18 +421,8 @@ namespace SFW
 					return *this;
 				}
 
-				~ProducerSession() { FlushAll(); }
+				~ProducerSessionExternal() { FlushAll(); }
 
-				// まとめ用固定長バッファ（ヒープなし）
-				static constexpr size_t kChunk = 128;
-				struct alignas(32) SmallBuf {
-					DrawCommand data[kChunk];
-					size_t size = 0;
-					void push_back(const DrawCommand& c) noexcept { data[size++] = c; }
-					void push_back(DrawCommand&& c) noexcept { data[size++] = std::move(c); }
-					bool full() const noexcept { return size >= kChunk; }
-					void clear() noexcept { size = 0; }
-				};
 				/**
 				 * @brief DrawCommand を 1 件プールへ書き込み
 				 * @param cmd 書き込む DrawCommand インスタンス
@@ -490,7 +492,7 @@ namespace SFW
 				RenderQueue* rq = nullptr;
 				moodycamel::ConcurrentQueue<DrawCommand>* boundQueue = nullptr;
 				std::optional<moodycamel::ProducerToken> token; // インライン保持（ヒープなし）
-				SmallBuf buf;
+				SmallBuf& buf;
 
 
 				inline void flushChunk() {
@@ -511,6 +513,13 @@ namespace SFW
 						boundQueue = cur;
 					}
 				}
+			};
+
+			class ProducerSession : public ProducerSessionExternal {
+			public:
+				ProducerSession(RenderQueue& owner) : ProducerSessionExternal(owner, buf) {}
+			private:
+				ProducerSessionExternal::SmallBuf buf;
 			};
 
 		public:
@@ -556,11 +565,13 @@ namespace SFW
 				}
 				return *this;
 			}
+
 			/**
 			 * @brief 各ワーカーはフレーム / タスク開始時にこれで ProducerSession を取得
 			 * @return ProducerSession 生産者セッション
 			 */
 			ProducerSession MakeProducer() { return ProducerSession{ *this }; }
+			ProducerSessionExternal MakeProducer(ProducerSessionExternal::SmallBuf& buf) { return ProducerSessionExternal{ *this, buf }; }
 			/**
 			 * @brief Submit は「全ワーカーが FlushAll 済み」バリアの後に呼ぶ
 			 * @param out DrawCommand コンテナ（呼び出し側で確保して渡す）

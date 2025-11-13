@@ -6,6 +6,8 @@
 
 #include "../app/Packed2Bits32.h"
 
+#include "../app/RenderDefine.h"
+
 struct CModel
 {
 	Graphics::ModelAssetHandle handle;
@@ -20,16 +22,15 @@ class ModelRenderSystem : public ITypeSystem<
 	ModelRenderSystem<Partition>,
 	Partition,
 	ComponentAccess<Read<TransformSoA>, Write<CModel>>,//アクセスするコンポーネントの指定
-	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService, SimpleThreadPoolService>>{//受け取るサービスの指定
+	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<Read<TransformSoA>, Write<CModel>>;
 public:
 
 	static constexpr inline uint32_t MAX_OCCLUDER_AABB_NUM  = 64;
 
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
-		UndeletablePtr<SimpleThreadPoolService> threadPool) {
+	void UpdateImpl(Partition& partition, UndeletablePtr<IThreadExecutor> threadPool, UndeletablePtr<Graphics::RenderService> renderService,
+		UndeletablePtr<Graphics::I3DPerCameraService> cameraService) {
 		//機能を制限したRenderQueueを取得
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
@@ -112,7 +113,9 @@ public:
 			{
 				if (entityCount == 0) return;
 
-				auto producer = kp->renderService->GetProducerSession("3D");
+				//バッファをスレッドごとに確保して渡す
+				thread_local Graphics::RenderQueue::ProducerSessionExternal::SmallBuf localQueueBuf;
+				auto producer = kp->renderService->GetProducerSession(PassGroupName[GROUP_3D_MAIN], localQueueBuf);
 
 				float nearClip = kp->renderService->GetNearClipPlane();
 
@@ -284,6 +287,8 @@ public:
 						cmd.mesh = meshHandel.index;
 						cmd.material = mesh.material.index;
 						cmd.pso = mesh.pso.index;
+
+						cmd.viewMask |= PASS_3DMAIN_OPAQUE;
 
 						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
 						producer.Push(std::move(cmd));

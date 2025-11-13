@@ -462,7 +462,7 @@
     <ClInclude Include="inc\SectorFW\Math\Perlin2D.h">
       <Filter>Inc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Core\ThreadPoolService.h">
+    <ClInclude Include="inc\SectorFW\Core\ThreadPoolExecutor.h">
       <Filter>Inc\Core</Filter>
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Graphics\TerrainClustered.h">

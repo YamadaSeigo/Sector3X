@@ -21,7 +21,7 @@
 #include "../../Math/Frustum.hpp"
 #include "../../Util/UndeletablePtr.hpp"
 #include "../../Util/function_trait.h"
-#include "../ThreadPoolService.h"
+#include "../ThreadPoolExecutor.h"
 
 //ParallelをtrueにしているのにExecutorがない場合警告を出す
 #define SFW_WARN_NO_EXECUTOR_PARALLEL 1
@@ -56,7 +56,20 @@ namespace SFW
 		} ||
 			requires (Derived & t, Partition & partition, LevelContext & ctx, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, ctx, services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(exe, services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, Partition & partition, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(partition, exe, services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, LevelContext & ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(ctx, exe, services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, Partition & partition, LevelContext & ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(partition, ctx, exe, services...) } -> std::same_as<void>;
 		};
+
 		// EndImplのオーバーロードをチェックするコンセプト
 		template<typename Derived, typename Partition, typename... Services>
 		concept HasEndImpl =
@@ -503,15 +516,29 @@ namespace SFW
 							[&](Services*... unpacked) {
 								constexpr bool hasPartition = function_mentions_v<decltype(&Derived::UpdateImpl), Partition&>;
 								constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::UpdateImpl), LevelContext&>;
+								constexpr bool hasExecutor = function_mentions_v<decltype(&Derived::UpdateImpl), UndeletablePtr<IThreadExecutor>>;
 
-								if constexpr (hasPartition && hasLevelContext)
-									static_cast<Derived*>(this)->UpdateImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);
-								else if constexpr (hasPartition && !hasLevelContext)
-									static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
-								else if constexpr (!hasPartition && hasLevelContext)
-									static_cast<Derived*>(this)->UpdateImpl(levelCtx, UndeletablePtr<Services>(unpacked)...);
+								if constexpr (hasPartition) {
+									if constexpr (hasLevelContext && hasExecutor)
+										static_cast<Derived*>(this)->UpdateImpl(partition, levelCtx, UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+									else if constexpr (hasLevelContext && !hasExecutor)
+										static_cast<Derived*>(this)->UpdateImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);
+									else if constexpr (!hasLevelContext && hasExecutor)
+										static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+									else
+										static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
+								}
 								else
-									static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<Services>(unpacked)...);
+								{
+									if constexpr (hasLevelContext && hasExecutor)
+										static_cast<Derived*>(this)->UpdateImpl(levelCtx, UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+									else if constexpr (hasLevelContext && !hasExecutor)
+										static_cast<Derived*>(this)->UpdateImpl(levelCtx, UndeletablePtr<Services>(unpacked)...);
+									else if constexpr (!hasLevelContext && hasExecutor)
+										static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+									else
+										static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<Services>(unpacked)...);
+								}
 							},
 							context
 						);
@@ -523,15 +550,29 @@ namespace SFW
 						[&](Services*... unpacked) {
 							constexpr bool hasPartition = function_mentions_v<decltype(&Derived::UpdateImpl), Partition&>;
 							constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::UpdateImpl), LevelContext&>;
+							constexpr bool hasExecutor = function_mentions_v<decltype(&Derived::UpdateImpl), UndeletablePtr<IThreadExecutor>>;
 
-							if constexpr (hasPartition && hasLevelContext)
-								static_cast<Derived*>(this)->UpdateImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);
-							else if constexpr (hasPartition && !hasLevelContext)
-								static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
-							else if constexpr (!hasPartition && hasLevelContext)
-								static_cast<Derived*>(this)->UpdateImpl(levelCtx, UndeletablePtr<Services>(unpacked)...);
+							if constexpr (hasPartition) {
+								if constexpr (hasLevelContext && hasExecutor)
+									static_cast<Derived*>(this)->UpdateImpl(partition, levelCtx, UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+								else if constexpr (hasLevelContext && !hasExecutor)
+									static_cast<Derived*>(this)->UpdateImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);
+								else if constexpr (!hasLevelContext && hasExecutor)
+									static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+								else
+									static_cast<Derived*>(this)->UpdateImpl(partition, UndeletablePtr<Services>(unpacked)...);
+							}
 							else
-								static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<Services>(unpacked)...);
+							{
+								if constexpr (hasLevelContext && hasExecutor)
+									static_cast<Derived*>(this)->UpdateImpl(levelCtx, UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+								else if constexpr (hasLevelContext && !hasExecutor)
+									static_cast<Derived*>(this)->UpdateImpl(levelCtx, UndeletablePtr<Services>(unpacked)...);
+								else if constexpr (!hasLevelContext && hasExecutor)
+									static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+								else
+									static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<Services>(unpacked)...);
+							}
 						},
 						serviceTuple
 					);

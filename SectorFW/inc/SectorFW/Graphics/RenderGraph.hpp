@@ -13,10 +13,12 @@
 #include "RenderQueue.h"
 #include "RenderService.h"
 
-#include "Debug/ImGuiLayer.h"
+#include "../Debug/ImGuiLayer.h"
 #ifdef _ENABLE_IMGUI
-#include "Debug/UIBus.h"
+#include "../Debug/UIBus.h"
 #endif
+
+#define NO_USE_PMR_RENDER_QUEUE
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 #include <memory_resource>
@@ -35,6 +37,17 @@ namespace SFW
 		public:
 			using PassType = RenderPass<RTV, SRV, Buffer>;
 			static constexpr uint16_t kFlights = RENDER_BUFFER_COUNT; // フレームインフライト数
+
+			struct PassGroup {
+				std::string name;
+				RenderQueue* queue = nullptr;          // グループ内共通キュー
+				std::vector<PassType*> passes;         // このグループに属するパス
+			};
+
+			struct PassNode {
+				uint32_t groupIndex;  // GroupA or GroupB …
+				uint32_t passIndex;   // そのグループ内の何番目のPassか
+			};
 
 			/**
 			 * @brief コンストラクタ
@@ -55,7 +68,7 @@ namespace SFW
 			void AddPass(RenderPassDesc<RTV>& desc) {
 				std::unique_lock lock(*renderService.queueMutex);
 
-				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(renderService.produceSlot, sharedInstanceArena.get(), desc.maxInstancesPerFrame));
+				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(renderService.produceSlot, sharedInstanceArena.get(), MAX_INSTANCES_PER_FRAME));
 				renderService.queueIndex[desc.name] = renderService.renderQueues.size() - 1; // レンダーサービスにキューを登録
 
 				passes.push_back(std::make_unique<PassType>(
@@ -68,6 +81,7 @@ namespace SFW
 					desc.blendState,
 					desc.depthStencilState,
 					desc.cbvs,
+					desc.psoOverride,
 					desc.customExecute));
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
@@ -81,6 +95,50 @@ namespace SFW
 				runtimes.emplace_back(std::move(rt));
 #endif //NO_USE_PMR_RENDER_QUEUE
 			}
+
+			[[nodiscard]] PassGroup& AddPassGroup(const std::string& name, uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME)
+			{
+				// このグループ専用の RenderQueue を1本作る
+				renderService.renderQueues.push_back(
+					std::make_unique<RenderQueue>(renderService.produceSlot, sharedInstanceArena.get(), maxInstancesPerFrame)
+				);
+				renderService.queueIndex[name] = renderService.renderQueues.size() - 1; // レンダーサービスにキューを登録
+
+				auto* rq = renderService.renderQueues.back().get();
+
+				groups.push_back(PassGroup{ name, rq, {} });
+				return groups.back();
+			}
+
+			PassType& AddPassToGroup(
+				PassGroup& group,
+				const RenderPassDesc<RTV>& desc,
+				uint16_t viewBit       // このパス用のビット
+			) {
+				passes.push_back(std::make_unique<PassType>(
+					desc.name,
+					desc.rtvs,
+					desc.dsv,
+					group.queue,              // 同じキューを共有
+					desc.topology,
+					desc.rasterizerState,
+					desc.blendState,
+					desc.depthStencilState,
+					desc.cbvs,
+					desc.psoOverride,
+					desc.customExecute
+				));
+
+				auto* pass = passes.back().get();
+				pass->viewBit = viewBit;
+				group.passes.push_back(pass);
+				return *pass;
+			}
+
+			void SetExecutionOrder(const std::vector<PassNode>& order) {
+				executionOrder = order;
+			}
+
 			/**
 			 * @brief パスの取得
 			 * @param name パスの名前
@@ -117,70 +175,136 @@ namespace SFW
 
 				renderService.CallPreDrawCustomFunc(); // カスタム関数の更新
 
-				for (auto& pass : passes) {
-					backend.SetPrimitiveTopology(pass->topology);
+				struct GroupState {
+					std::vector<DrawCommand> cmds;          // Submitで取り出した共通コマンド
+					std::vector<std::vector<uint32_t>> views; // パスごとの index リスト
+				};
 
-					bool useRasterizer = pass->rasterizerState.has_value();
-					if (useRasterizer)
-						backend.SetRasterizerState(*pass->rasterizerState);
+				std::vector<GroupState> groupStates(groups.size());
 
-					backend.SetBlendState(pass->blendState); // デフォルトのブレンドステートを使用
+				// 1) グループごとに Submit して cmds を埋める
+				for (size_t gi = 0; gi < groups.size(); ++gi) {
+					auto& g = groups[gi];
+					auto& gs = groupStates[gi];
 
-					backend.SetDepthStencilState(pass->depthStencilState);
-
-					backend.SetRenderTargets(pass->rtvs, pass->dsv);
-
-					backend.BindGlobalCBVs(pass->cbvs);
-
-#ifndef NO_USE_PMR_RENDER_QUEUE
-					// 常駐アリーナ＆cmdsを取得（再構築しない）
-					PassRuntime* rt = getRuntime(pass->name);
-					const uint32_t flight = currentFrame % kFlights;
-					auto& pf = rt->perFlight[flight];
-					pf.release();              // メモリは解放せず、ポインタだけ巻き戻す
-					auto& cmds = pf.cmds;      // 容量は保持。clear()のみ
-					cmds.clear();
-#else
-					std::vector<DrawCommand> cmds;
-#endif //NO_USE_PMR_RENDER_QUEUE
-
-
-					pass->queue->Submit(prevSlot, cmds);
+					g.queue->Submit(prevSlot, gs.cmds);   // ここで1回だけ取り出す
 
 #ifdef _ENABLE_IMGUI
 					{
-						auto g = Debug::BeginTreeWrite(); // lock & back buffer
-						auto& frame = g.data();
+						auto guard = Debug::BeginTreeWrite(); // lock & back buffer
+						auto& frame = guard.data();
 
 						// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Pass, /*leaf=*/false, "Pass : " + pass->name });
-						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::DrawCommand, /*leaf=*/true, "DrawCommand : " + std::to_string(cmds.size()) });
+						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::GROUP, /*leaf=*/false, "Group : " + g.name });
+						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::DrawCommand, /*leaf=*/true, "DrawCommand : " + std::to_string(gs.cmds.size()) });
 					} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif // _ENABLE_IMGUI
 
-					backend.ExecuteDrawIndexedInstanced(cmds, !useRasterizer); // インスタンシング対応
+					gs.views.resize(g.passes.size());
 
-					if (pass->customExecute) pass->customExecute(currentFrame);
-
-#ifndef NO_USE_PMR_RENDER_QUEUE
-					// 使用量からヒント更新 & 必要時のみ拡張
-					auto round_up = [](size_t x, size_t a) { return (x + (a - 1)) & ~(a - 1); };
-					size_t used = rt->perFlight[currentFrame % kFlights].tracker.used;
-					size_t next = round_up(static_cast<size_t>(used * 5 / 4), 64 * 1024); // 1.25x
-					constexpr size_t kMin = 128 * 1024, kMax = 32ull * 1024 * 1024;
-					next = (std::min)((std::max)(next, kMin), kMax);
-					size_t prev = rt->hint;
-					if (prev == 0 || next >= prev / 2) rt->hint = next; else rt->hint = prev / 2;
-
-					// ヒントが現在の初期バッファより大きくなったら“まれに”拡張
-					const uint32_t f0 = (currentFrame % kFlights);
-					if (rt->needs_grow()) {
-						for (uint32_t i = 0; i < kFlights; ++i) {
-							rt->perFlight[i].maybe_grow(rt->hint);
+					// 2) パスごとに index を振り分け
+					for (uint32_t ci = 0; ci < (uint32_t)gs.cmds.size(); ++ci) {
+						uint16_t mask = gs.cmds[ci].viewMask;
+						for (size_t pi = 0; pi < g.passes.size(); ++pi) {
+							auto* pass = g.passes[pi];
+							if (mask & pass->viewBit)
+								gs.views[pi].push_back(ci);
 						}
 					}
-#endif //NO_USE_PMR_RENDER_QUEUE
 				}
+
+				for (const auto& node : executionOrder) {
+					auto& g = groups[node.groupIndex];
+					auto& gs = groupStates[node.groupIndex];
+
+					auto* pass = g.passes[node.passIndex];
+					auto& indices = gs.views[node.passIndex];
+
+					if (indices.empty())
+						continue;
+
+					// パス固有の状態をセット
+					backend.SetPrimitiveTopology(pass->topology);
+					bool useRasterizer = pass->rasterizerState.has_value();
+					if (useRasterizer)
+						backend.SetRasterizerState(*pass->rasterizerState);
+					backend.SetBlendState(pass->blendState);
+					backend.SetDepthStencilState(pass->depthStencilState);
+					backend.SetRenderTargets(pass->rtvs, pass->dsv);
+					backend.BindGlobalCBVs(pass->cbvs);
+
+					// 共通cmds + このパスの indexビューで描画
+					backend.ExecuteDrawIndexedInstanced(gs.cmds, indices, pass->psoOverride, !useRasterizer);
+
+					if (pass->customExecute)
+						pass->customExecute(currentFrame);
+				}
+
+
+//				for (auto& pass : passes) {
+//					backend.SetPrimitiveTopology(pass->topology);
+//
+//					bool useRasterizer = pass->rasterizerState.has_value();
+//					if (useRasterizer)
+//						backend.SetRasterizerState(*pass->rasterizerState);
+//
+//					backend.SetBlendState(pass->blendState); // デフォルトのブレンドステートを使用
+//
+//					backend.SetDepthStencilState(pass->depthStencilState);
+//
+//					backend.SetRenderTargets(pass->rtvs, pass->dsv);
+//
+//					backend.BindGlobalCBVs(pass->cbvs);
+//
+//#ifndef NO_USE_PMR_RENDER_QUEUE
+//					// 常駐アリーナ＆cmdsを取得（再構築しない）
+//					PassRuntime* rt = getRuntime(pass->name);
+//					const uint32_t flight = currentFrame % kFlights;
+//					auto& pf = rt->perFlight[flight];
+//					pf.release();              // メモリは解放せず、ポインタだけ巻き戻す
+//					auto& cmds = pf.cmds;      // 容量は保持。clear()のみ
+//					cmds.clear();
+//#else
+//					std::vector<DrawCommand> cmds;
+//#endif //NO_USE_PMR_RENDER_QUEUE
+//
+//
+//					pass->queue->Submit(prevSlot, cmds);
+//
+//#ifdef _ENABLE_IMGUI
+//					{
+//						auto g = Debug::BeginTreeWrite(); // lock & back buffer
+//						auto& frame = g.data();
+//
+//						// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
+//						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::GROUP, /*leaf=*/false, "Pass : " + pass->name });
+//						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::DrawCommand, /*leaf=*/true, "DrawCommand : " + std::to_string(cmds.size()) });
+//					} // guard のデストラクトで unlock。swap は UI スレッドで。
+//#endif // _ENABLE_IMGUI
+//
+//					backend.ExecuteDrawIndexedInstanced(cmds, !useRasterizer); // インスタンシング対応
+//
+//					if (pass->customExecute) pass->customExecute(currentFrame);
+//
+//#ifndef NO_USE_PMR_RENDER_QUEUE
+//					// 使用量からヒント更新 & 必要時のみ拡張
+//					auto round_up = [](size_t x, size_t a) { return (x + (a - 1)) & ~(a - 1); };
+//					size_t used = rt->perFlight[currentFrame % kFlights].tracker.used;
+//					size_t next = round_up(static_cast<size_t>(used * 5 / 4), 64 * 1024); // 1.25x
+//					constexpr size_t kMin = 128 * 1024, kMax = 32ull * 1024 * 1024;
+//					next = (std::min)((std::max)(next, kMin), kMax);
+//					size_t prev = rt->hint;
+//					if (prev == 0 || next >= prev / 2) rt->hint = next; else rt->hint = prev / 2;
+//
+//					// ヒントが現在の初期バッファより大きくなったら“まれに”拡張
+//					const uint32_t f0 = (currentFrame % kFlights);
+//					if (rt->needs_grow()) {
+//						for (uint32_t i = 0; i < kFlights; ++i) {
+//							rt->perFlight[i].maybe_grow(rt->hint);
+//						}
+//					}
+//#endif //NO_USE_PMR_RENDER_QUEUE
+//				}
 			}
 			/**
 			 * @brief レンダーサービスの取得
@@ -202,7 +326,12 @@ namespace SFW
 			Backend& backend;
 			std::atomic<uint16_t> consumeSlot{ 1 }; // produceの方のスロットが0 + 1から始まるのでため1スタート
 			std::unique_ptr<SharedInstanceArena> sharedInstanceArena; // フレーム共有インスタンスアリーナ
-			std::vector<std::unique_ptr<PassType>> passes;
+
+			std::vector<std::unique_ptr<PassType>> passes;	//実体
+			std::vector<PassGroup> groups;                 // グループ
+
+			std::vector<PassNode> executionOrder;
+
 			RenderService renderService; // レンダーサービスのインスタンス
 			uint64_t currentFrame = 0; // 現在のフレーム番号 RenderGraphの描画前に更新している
 

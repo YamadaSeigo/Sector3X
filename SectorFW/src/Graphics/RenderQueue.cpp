@@ -6,7 +6,7 @@ namespace SFW
 {
 	namespace Graphics
 	{
-		[[nodiscard]] InstanceIndex RenderQueue::ProducerSession::AllocInstance(const InstanceData& inst) {
+		[[nodiscard]] InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(const InstanceData& inst) {
             assert(inst.worldMtx.m[3][3] == 1.0f && "InstanceData.worldMtx should be affine matrix.");
 
 			RebindIfNeeded();
@@ -24,7 +24,7 @@ namespace SFW
 			rq->sharedInstanceArena->Data(slot)[idx] = inst;
 			return InstanceIndex{ idx };
 		}
-		InstanceIndex RenderQueue::ProducerSession::AllocInstance(InstanceData&& inst)
+		InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(InstanceData&& inst)
 		{
 			assert(inst.worldMtx.m[3][3] == 1.0f && "InstanceData.worldMtx should be affine matrix.");
 
@@ -43,7 +43,7 @@ namespace SFW
 			rq->sharedInstanceArena->Data(slot)[idx] = std::move(inst);
 			return InstanceIndex{ idx };
 		}
-		InstanceIndex RenderQueue::ProducerSession::AllocInstance(const InstancePool& inst)
+		InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(const InstancePool& inst)
 		{
 			RebindIfNeeded();
 			// 現在のフレームスロット
@@ -60,7 +60,7 @@ namespace SFW
 			rq->sharedInstanceArena->Data(slot)[idx] = inst;
 			return InstanceIndex{ idx };
 		}
-		InstanceIndex RenderQueue::ProducerSession::AllocInstance(InstancePool&& inst)
+		InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(InstancePool&& inst)
 		{
 			RebindIfNeeded();
 			// 現在のフレームスロット
@@ -77,7 +77,7 @@ namespace SFW
 			rq->sharedInstanceArena->Data(slot)[idx] = std::move(inst);
 			return InstanceIndex{ idx };
 		}
-		InstanceIndex RenderQueue::ProducerSession::NextInstanceIndex()
+		InstanceIndex RenderQueue::ProducerSessionExternal::NextInstanceIndex()
 		{
 			RebindIfNeeded();
 			// 現在のフレームスロット
@@ -93,7 +93,7 @@ namespace SFW
 			}
 			return InstanceIndex{ idx };
 		}
-		void RenderQueue::ProducerSession::MemsetInstancePool(InstanceIndex index, const InstancePool& inst) noexcept
+		void RenderQueue::ProducerSessionExternal::MemsetInstancePool(InstanceIndex index, const InstancePool& inst) noexcept
 		{
 			if (index.index < 0 || index.index >= rq->maxInstancesPerFrame) [[unlikely]] {
 				LOG_ERROR("instance indexが正常な範囲ではありません (max {%d})", rq->maxInstancesPerFrame);
@@ -107,7 +107,7 @@ namespace SFW
 		}
 
 
-		size_t RenderQueue::ProducerSession::AllocInstancesFromWorldSoA(const Math::Matrix3x4fSoA& wSoa, InstanceIndex* outIdx)
+		size_t RenderQueue::ProducerSessionExternal::AllocInstancesFromWorldSoA(const Math::Matrix3x4fSoA& wSoa, InstanceIndex* outIdx)
 		{
 			const auto& W = wSoa;
 

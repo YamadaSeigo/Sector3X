@@ -203,6 +203,92 @@ namespace SFW
 					DrawInstanced(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer);
 				}
 			}
+			/**
+			 * @brief インスタンスドローを実行する関数の実装
+			 * @param cmds インスタンスドローコマンドの配列
+			 * @param indices インデックス配列
+			 * @param usePSORasterizer PSOのラスタライザーステートを使用するかどうか
+			 */
+			template<typename VecT>
+			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::vector<uint32_t> indices,std::optional<PSOHandle> psoOverride,  bool usePSORasterizer)
+			{
+				struct DrawBatch {
+					uint32_t mesh;
+					uint32_t material;
+					uint32_t pso;
+					uint32_t base;
+					uint32_t instanceCount; // instances[idx]
+				};
+
+				BeginIndexStream();
+
+				size_t k = 0;
+				size_t K = indices.size();
+				std::vector<DrawBatch> batches;
+				if (psoOverride.has_value()) {
+					// PSOオーバーライドがある場合、すべて同じPSOで描画する
+					uint32_t overriddenPSO = psoOverride.value().index;
+					while (k < K) {
+						const DrawCommand& first = cmds[indices[k]];
+						auto currentMat = first.material;
+						auto currentMesh = first.mesh;
+						uint32_t instanceCount = 0;
+						const uint32_t base = m_idxHead;
+						auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
+						while (k < K &&
+							cmds[indices[k]].material == currentMat &&
+							cmds[indices[k]].mesh == currentMesh &&
+							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
+							dst[instanceCount++] = cmds[indices[k]].instanceIndex.index;
+							++k;
+						}
+						m_idxHead += instanceCount;
+						batches.push_back({ currentMesh, currentMat, overriddenPSO, base, instanceCount });
+					}
+				}
+				else {
+					while (k < K) {
+						const DrawCommand& first = cmds[indices[k]];
+
+						auto currentPSO = first.pso;
+						auto currentMat = first.material;
+						auto currentMesh = first.mesh;
+						uint32_t instanceCount = 0;
+
+						const uint32_t base = m_idxHead;
+						auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
+
+						while (k < K &&
+							cmds[indices[k]].pso == currentPSO &&
+							cmds[indices[k]].material == currentMat &&
+							cmds[indices[k]].mesh == currentMesh &&
+							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
+
+							dst[instanceCount++] = cmds[indices[k]].instanceIndex.index;
+							++k;
+						}
+						m_idxHead += instanceCount;
+
+						batches.push_back({ currentMesh, currentMat, currentPSO, base, instanceCount });
+					}
+				}
+
+				EndIndexStream();
+
+				context->VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); // InstanceData (t0)
+				context->VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); // (b1)
+				for (const auto& b : batches) {
+					// PerDraw CB に base と count を設定
+					struct { uint32_t base, count, pad0, pad1; }
+					perDraw{ b.base, b.instanceCount, 0, 0 };
+					D3D11_MAPPED_SUBRESOURCE m{};
+					context->Map(m_perDrawCB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
+					memcpy(m.pData, &perDraw, sizeof(perDraw));
+					context->Unmap(m_perDrawCB.Get(), 0);
+
+					DrawInstanced(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer);
+				}
+			}
 
 			/**
 			 * @brief 保留中の削除を処理する関数の実装

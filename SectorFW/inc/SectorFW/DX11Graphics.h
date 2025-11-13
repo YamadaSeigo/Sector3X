@@ -88,8 +88,15 @@ namespace SFW
 			RenderService* GetRenderService() noexcept {
 				return renderGraph->GetRenderService();
 			}
-
-			void TestInitialize();
+			/**
+			 * @brief 指定した関数オブジェクトに引数を渡して実行する
+			 * @param func RenderGraph,ID3D11RenderTargetView,ID3D11DepthStencilViewを引数に取る関数オブジェクト
+			 */
+			template<typename F>
+			void ExecuteCustomFunc(F&& func)
+			{
+				func(renderGraph.get(), m_renderTargetView.Get(), m_depthStencilView.Get());
+			}
 
 			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }
 			ID3D11DeviceContext* GetDeviceContext() const noexcept { return m_context.Get(); }

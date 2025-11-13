@@ -406,7 +406,6 @@ namespace SFW
 			mutable std::shared_mutex sharedMutex;
 		public:
 			STATIC_SERVICE_TAG
-			DEFINE_UPDATESERVICE_GROUP(GROUP_INPUT) 
 		};
 
 		using I3DPerCameraService = I3DCameraService<Perspective>;

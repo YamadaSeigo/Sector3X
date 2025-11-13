@@ -223,7 +223,7 @@ namespace SFW
 			LevelNode = 2,
 			System = 3,
 			RenderGraph = 0,
-			Pass = 1,
+			GROUP = 1,
 			DrawCommand = 2,
 			DepthMax
 		};

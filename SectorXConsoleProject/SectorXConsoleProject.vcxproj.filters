@@ -102,5 +102,8 @@
     <ClInclude Include="system\SimpleModelRenderSystem.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="app\RenderDefine.h">
+      <Filter>App</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

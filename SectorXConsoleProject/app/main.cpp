@@ -28,6 +28,8 @@ constexpr uint32_t WINDOW_HEIGHT = 720;	// ウィンドウの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
+#include "RenderDefine.h"
+
 enum : uint32_t {
 	Mat_Grass = 1, Mat_Rock = 2, Mat_Dirt = 3, Mat_Snow = 4,
 	Tex_Splat_Control_0 = 10001,
@@ -67,6 +69,63 @@ static bool ResolveTexturePath(uint32_t id, std::string& path, bool& forceSRGB)
 		return true;
 	}
 	return false; // 未登録ID
+}
+
+void InitializeRenderPipeLine(
+	Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
+	ID3D11RenderTargetView* mainRenderTarget,
+	ID3D11DepthStencilView* mainDepthStencilView)
+{
+	using namespace SFW::Graphics;
+
+	std::vector<ID3D11RenderTargetView*> rtvs{ mainRenderTarget };
+
+	auto constantMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::BufferManager>();
+	auto cameraHandle3D = constantMgr->FindByName(DX11::PerCamera3DService::BUFFER_NAME);
+	auto cameraHandle2D = constantMgr->FindByName(DX11::Camera2DService::BUFFER_NAME);
+
+	auto& main3DGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_3D_MAIN]);
+
+	RenderPassDesc<ID3D11RenderTargetView*> passDesc;
+	passDesc.name = "3D";
+	passDesc.rtvs = rtvs;
+	passDesc.dsv = mainDepthStencilView;
+	passDesc.cbvs = { cameraHandle3D };
+	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+	passDesc.blendState = BlendStateID::Opaque;
+
+	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
+
+	/*passDesc.customExecute = nullptr;
+
+	passDesc.name = "Line";
+	passDesc.topology = PrimitiveTopology::LineList;
+	passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+
+	renderGraph->AddPass(passDesc);
+
+
+	passDesc.dsv = nullptr;
+	passDesc.cbvs = { cameraHandle2D };
+	passDesc.name = "Line2D";
+	passDesc.topology = PrimitiveTopology::LineList;
+	passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+
+	renderGraph->AddPass(passDesc);
+
+	passDesc.name = "2D";
+	passDesc.topology = PrimitiveTopology::TriangleList;
+	passDesc.rasterizerState = std::nullopt;
+
+	renderGraph->AddPass(passDesc);*/
+
+
+	//グループとパスの実行順序を設定(現状は登録した順番のインデックスで指定)
+	std::vector<DX11::GraphicsDevice::RenderGraph::PassNode> order = {
+		{ 0, 0 }
+	};
+
+	renderGraph->SetExecutionOrder(order);
 }
 
 int main(void)
@@ -120,19 +179,17 @@ int main(void)
 	Graphics::DX11::Camera2DService dx112DCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	Graphics::I2DCameraService* camera2DService = &dx112DCameraService;
 
-	static SimpleThreadPoolService threadPool;
-
 	auto device = graphics.GetDevice();
 	auto deviceContext = graphics.GetDeviceContext();
 
 	auto renderService = graphics.GetRenderService();
 
-	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &threadPool);
+	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
-	p.cellsX = 1024;
-	p.cellsZ = 1024;
+	p.cellsX = 512 * 2;
+	p.cellsZ = 512 * 2;
 	p.clusterCellsX = 32;
 	p.clusterCellsZ = 32;
 	p.cellSize = 3.0f;
@@ -336,7 +393,9 @@ int main(void)
 	//========================================================================================-
 	using namespace SFW::Graphics;
 
-	graphics.TestInitialize();
+	// レンダーパイプライン初期化関数
+	graphics.ExecuteCustomFunc(InitializeRenderPipeLine);
+
 	auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11::ShaderManager>();
 	DX11::ShaderCreateDesc shaderDesc;
 	shaderDesc.templateID = MaterialTemplateID::PBR;
@@ -412,7 +471,7 @@ int main(void)
 	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
 
 	for (int i = 0; i < 1; ++i) {
-		auto level = std::unique_ptr<Level<QuadTreePartition>>(new Level<QuadTreePartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
+		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("Level" + std::to_string(i), *entityManagerReg, ELevelState::Main));
 
 		// System登録
 		auto& scheduler = level->GetScheduler();
@@ -557,6 +616,8 @@ int main(void)
 	}
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
+
+	static SimpleThreadPool threadPool;
 
 	// メッセージループ
 	WindowHandler::Run([]() {

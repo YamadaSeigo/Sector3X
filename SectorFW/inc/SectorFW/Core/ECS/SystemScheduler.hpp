@@ -114,7 +114,7 @@ namespace SFW
 				// --- バッチごとに並列実行 ---
 				// 例外は各システム内で握り潰さず、ここで個別捕捉するのも可
 				for (const auto& group : batches) {
-					ThreadCountDownLatch latch((int)group.size());
+					ThreadCountDownLatchExternalSync latch(batchMutex, batchCv, (int)group.size());
 
 					// par_unseq: 並列+ベクタライズ許可（MSVCの実装でPPL/並列アルゴ適用）
 					for (auto idx : group)
@@ -159,6 +159,11 @@ namespace SFW
 			std::mutex pendingMutex;
 			//競合のない並列実行グループ（インデックス集合）
 			std::vector<std::vector<size_t>> batches;
+
+			//並列処理の同期用
+			std::mutex batchMutex;
+			std::condition_variable batchCv;
+
 			//追加入替時のみ再構築
 			bool scheduleDirty = true;
 			/**

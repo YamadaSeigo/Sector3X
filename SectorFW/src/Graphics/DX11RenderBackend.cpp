@@ -412,6 +412,14 @@ namespace SFW
 			return S_OK;
 		}
 
+		enum class DepthStencilStateID {
+			Default,          // DepthTest ON, ZWrite ON
+			DepthReadOnly,    // DepthTest ON, ZWrite OFF
+			NoDepth,          // DepthTest OFF, ZWrite OFF
+			// ...
+			MAX_COUNT,        // 有効な深度ステンシルステートの数
+		};
+
 		HRESULT RenderBackend::CreateDepthStencilStates()
 		{
 			//--- 深度テスト
