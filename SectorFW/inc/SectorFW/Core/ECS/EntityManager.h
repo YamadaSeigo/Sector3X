@@ -371,7 +371,7 @@ namespace SFW
 			void MemorySetChunk(ArchetypeChunk* chunk, size_t index, const T& value) noexcept {
 				auto column = chunk->GetColumn<T>();
 				if (!column) [[unlikely]] {
-					LOG_ERROR("Column for component type %d not found in chunk", ComponentTypeRegistry::GetID<T>());
+					LOG_ERROR("コンポーネントタイプ{ %d }がアーキタイプチャンクに見つかりません", ComponentTypeRegistry::GetID<T>());
 					return;
 				}
 
@@ -399,7 +399,7 @@ namespace SFW
 			void MemorySetChunk(ArchetypeChunk* chunk, size_t index, const T& value) {
 				auto column = chunk->GetColumn<T>();
 				if (!column) [[unlikely]] {
-					LOG_ERROR("Column for component type %d not found in chunk", ComponentTypeRegistry::GetID<T>());
+					LOG_ERROR("コンポーネントタイプ{ %d }がアーキタイプチャンクに見つかりません", ComponentTypeRegistry::GetID<T>());
 					return;
 				}
 				size_t capacity = chunk->GetCapacity();

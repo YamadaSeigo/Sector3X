@@ -159,7 +159,7 @@ namespace SFW
 		void EntityManager::CopyEntityColumns(ArchetypeChunk* srcChunk, size_t srcIndex, ArchetypeChunk* dstChunk, size_t dstIndex)
 		{
 			if (srcChunk->GetComponentMask() != dstChunk->GetComponentMask()) {
-				LOG_ERROR("Source and destination chunks have different component masks.");
+				LOG_ERROR("ソースのチャンクとのマスクが一致しません");
 				return;
 			}
 

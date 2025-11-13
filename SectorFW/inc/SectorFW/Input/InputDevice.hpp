@@ -158,6 +158,8 @@ namespace SFW
 			}
 		public:
 			STATIC_SERVICE_TAG
+			//GetKeystateはUIスレッド(WndProcと同じメイン)で呼ばないと危険なので非同期グループ
+			DEFINE_UPDATESERVICE_GROUP(GROUP_SERIAL)
 		};
 	}
 }

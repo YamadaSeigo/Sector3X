@@ -53,8 +53,34 @@ namespace SFW {
 		 */
 		class IUpdateService {
 			virtual void Update(double deltaTime) = 0;
+
+		public:
+			enum Phase : uint16_t {
+				EALRY = 0,
+				NORMAL = 1,
+				LATE = 2,
+				PHASE_MAX
+			};
+
+			enum Group : uint16_t {
+				GROUP_SERIAL, //メインスレッドで直列実行
+				GROUP_GRAPHICS, 
+				GROUP_PHYSICS,
+				GROUP_INPUT,
+				GROUP_AUDIO,
+				GROUP_AI,
+				GROUP_MAX
+			};
+
+		public:
+			static inline constexpr uint16_t updatePhase = EALRY;
+			static inline constexpr uint16_t updateGroup = GROUP_SERIAL;
+			static inline constexpr uint16_t updateOrder = 0;
 		private:
 			std::type_index typeIndex = typeid(IUpdateService);
+			uint16_t phase = 0;
+			uint16_t group = 0;
+			uint16_t order = 0;
 
 			friend class ServiceLocator;
 		};
@@ -63,5 +89,20 @@ namespace SFW {
 		 */
 		template<typename T>
 		static constexpr bool isUpdateService = std::is_base_of_v<IUpdateService, T>;
+
+#define DEFINE_UPDATESERVICE_PHASE(PhaseEnum) \
+			static inline constexpr uint16_t updatePhase = PhaseEnum;
+
+#define DEFINE_UPDATESERVICE_GROUP(GroupEnum) \
+			static inline constexpr uint16_t updateGroup = GroupEnum;
+
+#define DEFINE_UPDATESERVICE_ORDER(OrderValue) \
+			static inline constexpr uint16_t updateOrder = OrderValue;
+
+		// マクロで更新フェーズ、グループ、オーダーを定義
+#define DEFINE_UPDATESERVICE(PhaseEnum, GroupEnum, OrderValue) \
+			DEFINE_UPDATESERVICE_PHASE(PhaseEnum) \
+			DEFINE_UPDATESERVICE_GROUP(GroupEnum) \
+			DEFINE_UPDATESERVICE_ORDER(OrderValue)
 	}
 }

@@ -16,11 +16,6 @@
 #include "../../Util/TypeChecker.hpp"
  //#include "Input/InputService.h"
 
-// 並列サービス更新を有効にするかどうかの定義
-#ifndef SFW_ENABLE_PARALLEL_SERVICE_UPDATE
-//#define SFW_ENABLE_PARALLEL_SERVICE_UPDATE
-#endif
-
 namespace SFW
 {
 	namespace ECS
@@ -45,6 +40,7 @@ namespace SFW
 		public:
 			/**
 			 * @brief コンストラクタ
+			 * @param executor 更新処理の際の並列ために使用するスレッドプール
 			 * @detail 複数回生成すると実行時エラー
 			 */
 			template<PointerType... Service>
@@ -53,8 +49,13 @@ namespace SFW
 				assert(!created && "ServiceLocator instance already created.");
 				created = true;
 
+				plan_ = std::make_shared<ExecPlan>();
+
 				(AllRegisterStaticServiceWithArg<std::remove_pointer_t<Service>>(service), ...);
+
+				RebuildPlan_NeedLock();
 			}
+
 			/**
 			 * @brief　コピーコンストラクタを削除
 			 */
@@ -88,6 +89,8 @@ namespace SFW
 				std::unique_lock<std::shared_mutex> lock(*mapMutex);
 				initialized = true;
 				(AllRegisterStaticService<Services>(), ...);
+
+				RebuildPlan_NeedLock();
 			}
 			/**
 			 * @brief 動的サービスの登録を行う
@@ -131,6 +134,8 @@ namespace SFW
 					}
 					services.erase(iter);
 				}
+
+				RebuildPlan_NeedLock();
 			}
 			/**
 			 * @brief サービスを取得する
@@ -159,24 +164,34 @@ namespace SFW
 			/**
 			 * @brief サービスの更新を行う
 			 */
-			void UpdateService(double deltaTime) {
-				std::shared_lock<std::shared_mutex> lock(*mapMutex);
-#if defined(SFW_ENABLE_PARALLEL_SERVICE_UPDATE)
-				std::for_each(
-					std::execution::par,                // 並列実行
-					updateServices.begin(),
-					updateServices.end(),
-					[deltaTime](IUpdateService* s) noexcept {
-						if (s) s->Update(deltaTime);
-					}
-				);
-#else
-				for (IUpdateService* s : updateServices) {
-					if (s) s->Update(deltaTime);
-
+			void UpdateService(double dt) {
+				// ロック不要：不変 plan_ を読むだけ
+				auto p = plan_;                 // shared_ptr のコピーは lock-free
+				if (!p) {
+					// 初回だけ保険（通常は初期化で構築済み）
+					std::shared_lock<std::shared_mutex> lk(*mapMutex);
+					// Executor 取得や束ね直しは行わず、直列フォールバックでも良いが
+					// プラン未構築なら何もしないか、旧直列ループに退避してもOK
+					for (auto* s : updateServices) if (s) s->Update(dt); // フォールバック
+					return;
 				}
-#endif
+				for (const auto& phase : plan_->phases) {
+					// 1) group==0 の“直列レーン”をメインスレッドで順に実行
+					for (auto* s : phase.serialLane) s->Update(dt);
+
+					// 2) 残りのグループは“グループ間並列・グループ内直列”
+					std::for_each(std::execution::par, phase.parallelGroups.begin(), phase.parallelGroups.end(),
+						[dt](const ExecPlan::GroupPlan& g) {
+							// グループ内は order 順に直列
+							for (IUpdateService* s : g.serial) {
+								s->Update(dt);
+							}
+						}
+					);
+					// ここで暗黙に同期（for_each の完了をもってフェーズ・バリア）
+				}
 			}
+
 		private:
 			/**
 			 * @brief サービスを登録する(静的なサービス限定、引数あり)
@@ -191,6 +206,9 @@ namespace SFW
 				if constexpr (isUpdateService<T>) {
 					IUpdateService* updateService = static_cast<IUpdateService*>(service);
 					updateService->typeIndex = typeid(T);
+					updateService->phase = T::updatePhase;
+					updateService->group = T::updateGroup;
+					updateService->order = T::updateOrder;
 					updateServices.push_back(updateService);
 				}
 
@@ -214,6 +232,9 @@ namespace SFW
 				if constexpr (isUpdateService<T>) {
 					IUpdateService* updateService = static_cast<IUpdateService*>(service.get());
 					updateService->typeIndex = typeid(T);
+					updateService->phase = T::updatePhase;
+					updateService->group = T::updateGroup;
+					updateService->order = T::updateOrder;
 					updateServices.push_back(updateService);
 				}
 
@@ -243,10 +264,15 @@ namespace SFW
 				if constexpr (isUpdateService<T>) {
 					IUpdateService* updateService = static_cast<IUpdateService*>(service.get());
 					updateService->typeIndex = typeid(T);
+					updateService->phase = T::updatePhase;
+					updateService->group = T::updateGroup;
+					updateService->order = T::updateOrder;
 					updateServices.push_back(updateService);
 				}
 
 				services[typeid(T)] = Location{ service.get(),updateIndex,T::isStatic };
+
+				RebuildPlan_NeedLock();
 			}
 
 			/**
@@ -258,6 +284,64 @@ namespace SFW
 				return services.find(typeid(T)) != services.end();
 			}
 			/**
+			 * @brief UpdateServiceから実行プランを再構築する
+			 */
+			void RebuildPlan_NeedLock() {
+
+				// 登録済み UpdateEntry をフェーズ→グループ→order で束ね直す
+				// ここは、前回案の通り UpdateEntry ベクタを持っている前提
+				std::vector<UpdateEntry> entries;
+				entries.reserve(updateServices.size());
+				for (auto* s : updateServices) {
+					if (!s) continue;
+					UpdateEntry e{};
+					e.ptr = s;
+					e.typeIndex = s->typeIndex;              // 既存コードが設定済み :contentReference[oaicite:4]{index=4}
+					e.phase = s->phase;
+					e.group = s->group;
+					e.order = s->order;
+					entries.push_back(e);
+				}
+				uint16_t minPhase = UINT16_MAX, maxPhase = 0;
+				for (auto& e : entries) { minPhase = (std::min)(minPhase, e.phase); maxPhase = (std::max)(maxPhase, e.phase); }
+				if (entries.empty()) { return; }
+
+				plan_->phases.resize(size_t(maxPhase - minPhase + 1));
+				// group id は密でない可能性あり → まず grouping
+				std::unordered_map<uint16_t, std::vector<UpdateEntry>> tmpGroups;
+
+				for (uint16_t ph = minPhase; ph <= maxPhase; ++ph) {
+					// フェーズ内：group==0 は“直列レーン”、group>=1 は“並列グループ”
+					std::unordered_map<uint16_t, std::vector<UpdateEntry>> groups;
+					std::vector<UpdateEntry> lane0;
+					for (auto& e : entries) if (e.phase == ph) {
+						if (e.group == 0) lane0.push_back(e);
+						else groups[e.group].push_back(e);
+					}
+
+					auto& phase = plan_->phases[size_t(ph - minPhase)];
+
+					// lane0 は order 昇順で直列実行
+					std::sort(lane0.begin(), lane0.end(), [](auto& a, auto& b) { return a.order < b.order; });
+					phase.serialLane.clear();
+					phase.serialLane.reserve(lane0.size());
+					for (auto& e : lane0) phase.serialLane.push_back(e.ptr);
+
+					// group>=1 は各グループ内を order ソート → parallelGroups に入れる
+					phase.parallelGroups.clear();
+					phase.parallelGroups.reserve(groups.size());
+					for (auto& kv : groups) {
+						auto& vec = kv.second;
+						std::sort(vec.begin(), vec.end(), [](auto& a, auto& b) { return a.order < b.order; });
+						ExecPlan::GroupPlan gp;
+						gp.serial.reserve(vec.size());
+						for (auto& e : vec) gp.serial.push_back(e.ptr);
+						phase.parallelGroups.push_back(std::move(gp));
+					}
+				}
+			}
+
+			/**
 			 * @brief サービスマップ(Get関数で対象の型にcastする)
 			 */
 			std::unordered_map<std::type_index, Location> services;
@@ -267,7 +351,27 @@ namespace SFW
 			bool initialized = false;
 			//サービスマップへのアクセス同期
 			std::unique_ptr<std::shared_mutex> mapMutex;
+
+			struct UpdateEntry {
+				IUpdateService* ptr{};
+				std::type_index typeIndex = typeid(void);
+				uint16_t phase = 0;
+				uint16_t group = 0;
+				uint16_t order = 0;
+			};
+
+			// 実行プラン（不変オブジェクトとして共有）
+			struct ExecPlan {
+				struct GroupPlan { std::vector<IUpdateService*> serial; };      // グループ内は直列
+				struct PhasePlan {
+					std::vector<IUpdateService*> serialLane; // group==0 を直列で実行
+					std::vector<GroupPlan> parallelGroups;  // group>=1 を並列グループとして実行
+				};
+				std::vector<PhasePlan> phases;
+			};
 			// 更新サービスのリスト
+			std::shared_ptr<ExecPlan> plan_;    // 毎フレーム読み取りのみ
+
 			std::vector<IUpdateService*> updateServices;
 		};
 	}

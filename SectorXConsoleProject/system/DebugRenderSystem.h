@@ -184,7 +184,7 @@ public:
 		auto psoManager = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
 		auto bufferManager = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
 		if (!psoManager->IsValid(psoLineHandle)) {
-			LOG_ERROR("PSOHandle is not valid in ShapeDimsRenderSystem");
+			LOG_ERROR("PSOHandle ‚ª—LŒø‚È’l‚Å‚Í‚ ‚è‚Ü‚¹‚ñ");
 			return;
 		}
 

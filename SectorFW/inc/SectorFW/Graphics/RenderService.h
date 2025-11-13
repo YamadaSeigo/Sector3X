@@ -227,6 +227,7 @@ namespace SFW
 			std::function<void(RenderService*)> preDrawFunc = nullptr;
 		public:
 			STATIC_SERVICE_TAG
+			DEFINE_UPDATESERVICE_GROUP(GROUP_GRAPHICS)
 		};
 
 		// AABBFrontFaceQuad を 2トライで提出できるバッチに変換

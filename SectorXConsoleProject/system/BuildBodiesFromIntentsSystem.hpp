@@ -91,12 +91,12 @@ public:
 	void SetContext(const ServiceLocator& serviceLocator) noexcept {
 		ps = serviceLocator.Get<Physics::PhysicsService>();
 		if (!ps) {
-			LOG_ERROR("PhysicsService not found in BuildBodiesFromIntentsSystem");
+			LOG_ERROR("PhysicsServiceがサービスとして登録されていません");
 			return;
 		}
 		reg = serviceLocator.Get<SpatialChunkRegistry>();
 		if (!reg) {
-			LOG_ERROR("EntityManagerRegistry not found in BuildBodiesFromIntentsSystem");
+			LOG_ERROR("EntityManagerRegistryがサービスとして登録されていま");
 			return;
 		}
 	}

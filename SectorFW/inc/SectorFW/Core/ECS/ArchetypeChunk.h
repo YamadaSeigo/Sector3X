@@ -58,12 +58,12 @@ namespace SFW
 				ComponentTypeID id = ComponentTypeRegistry::GetID<T>();
 				auto it = layout.infoIdx.find(id);
 				if (it == layout.infoIdx.end()) [[unlikely]] {
-					LOG_ERROR("Component type ID %d not found in layout", id);
+					LOG_ERROR("コンポーネントID{ %d }がレイアウトに見つかりません", id);
 					return std::nullopt; // or throw an exception
 				}
 				auto info = layout.info[it->second].get(0);
 				if (!info) [[unlikely]] {
-					LOG_ERROR("Component type ID %d not found info", id);
+					LOG_ERROR("コンポーネントID{ %d }がレイアウト情報に見つかりません", id);
 					return std::nullopt;
 				}
 

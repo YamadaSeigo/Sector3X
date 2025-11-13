@@ -246,7 +246,7 @@ public:
 						float s_occ;
 						int ll = Graphics::SelectLodByPixels(areaFrec, mesh.lodThresholds, lodCount, prevLod, kp->vp.width, kp->vp.height, -5.0f, &s_occ);
 						if (ll < 0 || ll > 3) [[unlikely]] {
-							LOG_ERROR("LOD selection out of range: %d", ll);
+							LOG_ERROR("LOD が範囲外です: %d", ll);
 							ll = 0;
 						}
 						lodBits.set(subMeshIdx, (uint8_t)ll);
@@ -290,7 +290,7 @@ public:
 
 						subMeshIdx++;
 						if (subMeshIdx >= 16) [[unlikely]] {
-							LOG_ERROR("Too many subMeshes in model asset {%d}", modelAsset.ref().subMeshes.size());
+							LOG_ERROR("モデルのサブメッシュ数が多すぎます {%d}", modelAsset.ref().subMeshes.size());
 							return;
 						}
 					}

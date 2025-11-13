@@ -19,7 +19,7 @@ namespace SFW
 				// 飽和させるか、エラー処理
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("RenderQueue::ProducerSession::AllocInstance: instance pool overflow (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("一フレームの最大インスタンス数をオーバフローしました (max {%d})", rq->maxInstancesPerFrame);
 			}
 			rq->sharedInstanceArena->Data(slot)[idx] = inst;
 			return InstanceIndex{ idx };
@@ -38,7 +38,7 @@ namespace SFW
 				// 飽和させるか、エラー処理
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("RenderQueue::ProducerSession::AllocInstance: instance pool overflow (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("一フレームの最大インスタンス数をオーバフローしました (max {%d})", rq->maxInstancesPerFrame);
 			}
 			rq->sharedInstanceArena->Data(slot)[idx] = std::move(inst);
 			return InstanceIndex{ idx };
@@ -55,7 +55,7 @@ namespace SFW
 				// 飽和させるか、エラー処理
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("RenderQueue::ProducerSession::AllocInstance: instance pool overflow (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("一フレームの最大インスタンス数をオーバフローしました (max {%d})", rq->maxInstancesPerFrame);
 			}
 			rq->sharedInstanceArena->Data(slot)[idx] = inst;
 			return InstanceIndex{ idx };
@@ -72,7 +72,7 @@ namespace SFW
 				// 飽和させるか、エラー処理
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("RenderQueue::ProducerSession::AllocInstance: instance pool overflow (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("一フレームの最大インスタンス数をオーバフローしました (max {%d})", rq->maxInstancesPerFrame);
 			}
 			rq->sharedInstanceArena->Data(slot)[idx] = std::move(inst);
 			return InstanceIndex{ idx };
@@ -89,14 +89,14 @@ namespace SFW
 				// 飽和させるか、エラー処理
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("RenderQueue::ProducerSession::AllocInstance: instance pool overflow (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("一フレームの最大インスタンス数をオーバフローしました (max {%d})", rq->maxInstancesPerFrame);
 			}
 			return InstanceIndex{ idx };
 		}
 		void RenderQueue::ProducerSession::MemsetInstancePool(InstanceIndex index, const InstancePool& inst) noexcept
 		{
 			if (index.index < 0 || index.index >= rq->maxInstancesPerFrame) [[unlikely]] {
-				LOG_ERROR("RenderQueue::ProducerSession::MemsetInstancePool: instance index out of range (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("instance indexが正常な範囲ではありません (max {%d})", rq->maxInstancesPerFrame);
 				return;
 			}
 
@@ -135,12 +135,12 @@ namespace SFW
 
 			if (toWrite == 0) {
 				// 満杯
-				LOG_ERROR("RenderQueue::AllocInstancesFromWorldSoA: instance pool overflow (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("一フレームの最大インスタンス数をオーバフローしました (max {%d})", rq->maxInstancesPerFrame);
 				return 0;
 			}
 			if (toWrite < W.count) {
 				// 入り切らなかった分がある（ログのみ）
-				LOG_ERROR("RenderQueue::AllocInstancesFromWorldSoA: truncated {%d} -> {%d} (pool max {%d})",
+				LOG_ERROR("インスタンスとして登録できなかった分があります {%d} -> {%d} (pool max {%d})",
 					W.count, toWrite, rq->maxInstancesPerFrame);
 			}
 

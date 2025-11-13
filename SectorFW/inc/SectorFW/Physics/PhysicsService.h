@@ -281,6 +281,7 @@ namespace SFW
 			PhysicsSnapshot m_currSnapshot; // åªÉtÉåÅ[ÉÄ
 		public:
 			STATIC_SERVICE_TAG
+			DEFINE_UPDATESERVICE_GROUP(GROUP_PHYSICS)
 		};
 	}
 }

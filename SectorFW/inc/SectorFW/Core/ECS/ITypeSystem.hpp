@@ -132,16 +132,15 @@ namespace SFW
 					for (size_t i = 0; i < n; ++i) fn(i);
 				}
 				else {
-					const unsigned hw = (std::max)(1u, std::thread::hardware_concurrency());
 					const unsigned targetTasks = (unsigned)(std::min<size_t>)(
 						(std::max<size_t>)(1, (n + (kChunksPerTask - 1)) / kChunksPerTask),
-						exec ? (unsigned)exec->Concurrency() : hw);
+						exec ? (unsigned)exec->Concurrency() : (std::max)(1u, std::thread::hardware_concurrency()));
 					const size_t block = (n + targetTasks - 1) / targetTasks;
 
 					std::exception_ptr first_ex = nullptr;
 					std::mutex ex_mtx;
 
-					if (exec) {
+					if (exec) [[likely]] {
 						CountDownLatch latch((int)targetTasks);
 						for (unsigned t = 0; t < targetTasks; ++t) {
 							const size_t begin = t * block;

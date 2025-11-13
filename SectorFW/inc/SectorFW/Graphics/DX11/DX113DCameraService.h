@@ -50,6 +50,7 @@ namespace SFW
 						currentSlot = frameIdx % RENDER_BUFFER_COUNT;
 
 						auto deltaMove = moveVec * static_cast<float>(deltaTime);
+
 						Math::Vec3f r, u, f;
 						Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
 						{
