@@ -55,7 +55,7 @@ namespace SFW
 			 * @brief すべてのシステムを更新する関数
 			 * @param partition 対象のパーティション
 			 */
-			void UpdateAll(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) {
+			void UpdateAll(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
 				// --- pending の取り込み（ロック最小化） ---
 				std::vector<std::unique_ptr<ISystem<Partition>>> newly; // ローカル退避
 				newly.reserve(16);
@@ -114,14 +114,20 @@ namespace SFW
 				// --- バッチごとに並列実行 ---
 				// 例外は各システム内で握り潰さず、ここで個別捕捉するのも可
 				for (const auto& group : batches) {
+					ThreadCountDownLatch latch((int)group.size());
+
 					// par_unseq: 並列+ベクタライズ許可（MSVCの実装でPPL/並列アルゴ適用）
-					std::for_each(std::execution::par_unseq, group.begin(), group.end(),
-						[&](size_t idx) noexcept {
+					for (auto idx : group)
+					{
+						//idxはコピーキャプチャじゃないと破棄される
+						executor->Submit([&, idx]() noexcept {
 							// 可能なら no-throw Update を用意、あるいはここでtry/catch
-							updateSystems[idx]->Update(partition, levelCtx, serviceLocator);
-						}
-					);
-					// 同バッチ内は並列、次バッチは暗黙にバリア
+							updateSystems[idx]->Update(partition, levelCtx, serviceLocator, executor);
+							latch.CountDown();
+							});
+					}
+
+					latch.Wait();
 				}
 			}
 

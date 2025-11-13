@@ -16,6 +16,8 @@
 #include "../../Util/TypeChecker.hpp"
  //#include "Input/InputService.h"
 
+#include "../ThreadPoolService.h"
+
 namespace SFW
 {
 	namespace ECS
@@ -164,7 +166,7 @@ namespace SFW
 			/**
 			 * @brief サービスの更新を行う
 			 */
-			void UpdateService(double dt) {
+			void UpdateService(double dt, IThreadExecutor* executor) {
 				// ロック不要：不変 plan_ を読むだけ
 				auto p = plan_;                 // shared_ptr のコピーは lock-free
 				if (!p) {
@@ -176,19 +178,25 @@ namespace SFW
 					return;
 				}
 				for (const auto& phase : plan_->phases) {
-					// 1) group==0 の“直列レーン”をメインスレッドで順に実行
-					for (auto* s : phase.serialLane) s->Update(dt);
 
-					// 2) 残りのグループは“グループ間並列・グループ内直列”
-					std::for_each(std::execution::par, phase.parallelGroups.begin(), phase.parallelGroups.end(),
-						[dt](const ExecPlan::GroupPlan& g) {
+					// group>=1のグループを並列で更新
+					ThreadCountDownLatch latch((int)phase.parallelGroups.size());
+					for (auto& g : phase.parallelGroups)
+					{
+						executor->Submit([&g, &latch, dt]() {
 							// グループ内は order 順に直列
 							for (IUpdateService* s : g.serial) {
 								s->Update(dt);
 							}
-						}
-					);
-					// ここで暗黙に同期（for_each の完了をもってフェーズ・バリア）
+							latch.CountDown();
+							});
+					}
+
+					// group==0 の“直列レーン”をメインスレッドで順に実行
+					for (auto* s : phase.serialLane) s->Update(dt);
+
+					//並列更新待ち
+					latch.Wait();
 				}
 			}
 

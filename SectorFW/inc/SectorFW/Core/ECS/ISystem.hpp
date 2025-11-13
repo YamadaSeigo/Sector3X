@@ -80,7 +80,7 @@ namespace SFW
 			 * @param partition 対象のパーティション
 			 * @param serviceLocator サービズロケーター
 			 */
-			virtual void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) = 0;
+			virtual void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) = 0;
 			/**
 			 * @brief システムの終了関数
 			 * @param partition 対象のパーティション

@@ -126,7 +126,7 @@ namespace SFW
 
 			// 先頭の匿名namespace内の RunIndexRange を置き換え
 			template<bool kParallel, class IndexFn>
-			static inline void RunIndexRange(size_t n, IndexFn&& fn, IExecutor* exec = nullptr)
+			static inline void RunIndexRange(size_t n, IndexFn&& fn, IThreadExecutor* exec = nullptr)
 			{
 				if constexpr (!kParallel) {
 					for (size_t i = 0; i < n; ++i) fn(i);
@@ -141,7 +141,7 @@ namespace SFW
 					std::mutex ex_mtx;
 
 					if (exec) [[likely]] {
-						CountDownLatch latch((int)targetTasks);
+						ThreadCountDownLatch latch((int)targetTasks);
 						for (unsigned t = 0; t < targetTasks; ++t) {
 							const size_t begin = t * block;
 							if (begin >= n) { latch.CountDown(); continue; }
@@ -194,7 +194,7 @@ namespace SFW
 			template<class Last>
 			struct tail_is_executor_impl<Last>
 				: std::bool_constant<std::is_convertible_v<
-				std::remove_reference_t<Last>, IExecutor*>> {};     // 1個 → それが末尾
+				std::remove_reference_t<Last>, IThreadExecutor*>> {};     // 1個 → それが末尾
 
 			template<class First, class... Rest>
 			struct tail_is_executor_impl<First, Rest...>
@@ -215,11 +215,11 @@ namespace SFW
 			template<class... Extra>
 			auto SplitTailExecutor(Extra&&... extra) {
 				if constexpr (sizeof...(Extra) == 0) {
-					return std::pair(std::tuple<>{}, (IExecutor*)nullptr);
+					return std::pair(std::tuple<>{}, (IThreadExecutor*)nullptr);
 				}
 				else {
 					using Last = std::remove_reference_t<last_t<Extra...>>;
-					if constexpr (std::is_convertible_v<Last, IExecutor*>) {
+					if constexpr (std::is_convertible_v<Last, IThreadExecutor*>) {
 						// 末尾が IExecutor* → それは抜く
 						// tuple の末尾だけ落とすためのヘルパ
 						auto drop_last = []<class... Es>(std::tuple<Es...> && tp) {
@@ -232,14 +232,14 @@ namespace SFW
 						// まず全部をタプル化
 						auto all = std::tuple<Extra...>(std::forward<Extra>(extra)...);
 						// 末尾 = executor
-						auto exec = static_cast<IExecutor*>(std::get<sizeof...(Extra) - 1>(all));
+						auto exec = static_cast<IThreadExecutor*>(std::get<sizeof...(Extra) - 1>(all));
 						// 末尾を落としたタプル
 						auto trimmed = drop_last(std::move(all));
 						return std::pair(std::move(trimmed), exec);
 					}
 					else {
 						// 末尾が executor でない → そのまま全渡し
-						return std::pair(std::tuple<Extra...>(std::forward<Extra>(extra)...), (IExecutor*)nullptr);
+						return std::pair(std::tuple<Extra...>(std::forward<Extra>(extra)...), (IThreadExecutor*)nullptr);
 					}
 				}
 			}
@@ -493,9 +493,9 @@ namespace SFW
 			/**
 			 * @brief システムの更新関数
 			 * @param partition パーティションの参照
-			 * @detail 自身のコンテキストを使用して、UpdateImplを呼び出す
+			 * @detail 自身のシステムのコンテキストを使用して、UpdateImplを呼び出す
 			 */
-			void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) override {
+			void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override {
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
 						// 静的サービスを使用する場合、サービスロケーターから直接取得

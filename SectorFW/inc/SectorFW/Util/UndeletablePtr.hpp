@@ -28,17 +28,17 @@ namespace SFW
 		 * @brief　実体化
 		 * @return T* ポインタ
 		 */
-		T* operator->() const noexcept { return ptr; }
+		inline T* operator->() const noexcept { return ptr; }
 		/**
 		 * @brief 参照演算子
 		 * @return T& 参照
 		 */
-		T& operator*()  const noexcept { return *ptr; }
+		inline T& operator*()  const noexcept { return *ptr; }
 		/**
 		 * @brief ポインタを取得する関数
 		 * @return T* ポインタ
 		 */
-		T* get() const noexcept { return ptr; }
+		inline T* get() const noexcept { return ptr; }
 
 		/**
 		 * @brief  deleteを防ぐため、明示的なdeleteを禁止

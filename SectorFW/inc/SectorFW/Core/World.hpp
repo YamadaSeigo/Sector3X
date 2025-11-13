@@ -59,7 +59,7 @@ namespace SFW
 		 * @brief すべてのレベルを更新する関数。
 		 * @param deltaTime デルタタイム（秒）
 		 */
-		void UpdateAllLevels(double deltaTime) {
+		void UpdateAllLevels(double deltaTime, IThreadExecutor* executor) {
 #ifdef _ENABLE_IMGUI
 			{
 				auto g = Debug::BeginTreeWrite(); // lock & back buffer
@@ -71,33 +71,48 @@ namespace SFW
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
 			static std::vector<std::future<void>> futures;
+			std::vector<std::function<void(ECS::ServiceLocator&, double, IThreadExecutor*)>> mainLevelFunc;
+			std::vector<std::function<void(ECS::ServiceLocator&, double, IThreadExecutor*)>> subLevelFunc;
+
 			std::apply([&](auto&... levelVecs)
 				{
-					(..., [](decltype(levelVecs)& vecs, const ECS::ServiceLocator& locator, double delta) {
+					(..., [&](auto& vecs, auto& mainFunc, auto& subFunc) {
 						for (auto& level : vecs) {
 							if (level->GetState() == ELevelState::Main) {
-								futures.emplace_back(std::async(std::launch::async, [&level, &locator, delta]() {
-									level->Update(locator, delta);
-									}));
+								mainFunc.push_back([&level](auto& locator, double delta, auto* te) {
+									level->Update(locator, delta, te);
+									});
 							}
 							else if (level->GetState() == ELevelState::Sub) {
-								futures.emplace_back(std::async(std::launch::async, [&level, &locator, delta]() {
-									level->UpdateLimited(locator, delta);
-									}));
+								subFunc.push_back([&level](auto& locator, double delta, auto* te) {
+									level->UpdateLimited(locator, delta, te);
+									});
 							}
 						}
-						}(levelVecs, serviceLocator, deltaTime));
+						}(levelVecs, mainLevelFunc, subLevelFunc));
 				}, levelSets);
 
-			for (auto& f : futures) f.get();
-			futures.clear();
+			ThreadCountDownLatch latch((int)mainLevelFunc.size());
+			//メインのレベルの更新処理を並行で実行
+			for (auto& f : mainLevelFunc)
+			{
+				executor->Submit([&]() {
+					f(serviceLocator, deltaTime, executor);
+					latch.CountDown();
+					});
+			}
+
+			//サブレベルの更新処理実行
+			for (auto& f : subLevelFunc) f(serviceLocator, deltaTime, executor);
+
+			latch.Wait();
 		}
 		/**
 		 * @brief サービスロケーターのサービスを更新する関数
 		 * @param deltaTime デルタタイム（秒）
 		 */
-		void UpdateServiceLocator(double deltaTime) {
-			serviceLocator.UpdateService(deltaTime);
+		void UpdateServiceLocator(double deltaTime, IThreadExecutor* executor) {
+			serviceLocator.UpdateService(deltaTime, executor);
 		}
 		/**
 		 * @brief サービスロケーターを取得する関数

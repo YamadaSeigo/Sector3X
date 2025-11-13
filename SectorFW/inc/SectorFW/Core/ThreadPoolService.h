@@ -10,51 +10,76 @@
 
 namespace SFW
 {
-    struct IExecutor {
-        virtual ~IExecutor() = default;
+    struct IThreadExecutor {
+        virtual ~IThreadExecutor() = default;
         virtual void Submit(std::function<void()> job) = 0;
         virtual size_t Concurrency() const = 0;
     };
 
-    class SimpleThreadPoolService final : public IExecutor {
+    class SimpleThreadPoolService final : public IThreadExecutor {
     public:
         explicit SimpleThreadPoolService(size_t n = std::thread::hardware_concurrency())
             : stop_(false)
+            , busy_(0)
         {
             if (n == 0) n = 1;
 
-			LOG_INFO("SimpleThreadPoolService: starting with {%d} threads", n);
+            LOG_INFO("SimpleThreadPoolService: starting with {%d} threads", n);
             workers_.reserve(n);
             for (size_t i = 0; i < n; ++i) {
                 workers_.emplace_back([this] {
+                    tls_inPool_ = true;
                     for (;;) {
                         std::function<void()> job;
                         {
                             std::unique_lock lk(m_);
                             cv_.wait(lk, [&] { return stop_ || !q_.empty(); });
-                            if (stop_ && q_.empty()) return;
-                            job = std::move(q_.front()); q_.pop();
+                            if (stop_ && q_.empty())
+                                return;
+                            job = std::move(q_.front());
+                            q_.pop();
                         }
+
+                        busy_.fetch_add(1, std::memory_order_relaxed);
+                        ++tls_depth_;
                         job();
+                        --tls_depth_;
+                        busy_.fetch_sub(1, std::memory_order_relaxed);
                     }
                     });
             }
         }
+
         ~SimpleThreadPoolService() override {
             {
                 std::lock_guard lk(m_);
                 stop_ = true;
             }
             cv_.notify_all();
-            for (auto& w : workers_) w.join();
+            for (auto& w : workers_)
+                w.join();
         }
+
         void Submit(std::function<void()> job) override {
+            // プール内からのネストした Submit で、
+            // かつ全ワーカーがビジーなら、その場で実行
+            if (tls_inPool_
+                && tls_depth_ > 0
+                && busy_.load(std::memory_order_relaxed) >= static_cast<int>(workers_.size())) {
+
+                ++tls_depth_;
+                job();
+                --tls_depth_;
+                return;
+            }
+
             {
                 std::lock_guard lk(m_);
                 q_.push(std::move(job));
             }
             cv_.notify_one();
         }
+
         size_t Concurrency() const override { return workers_.size(); }
 
     private:
@@ -63,13 +88,19 @@ namespace SFW
         std::queue<std::function<void()>> q_;
         std::vector<std::thread> workers_;
         bool stop_;
+
+        std::atomic<int> busy_;
+
+        inline static thread_local int  tls_depth_ = 0;
+        inline static thread_local bool tls_inPool_ = false;
+
     public:
         STATIC_SERVICE_TAG
     };
 
-    class CountDownLatch {
+    class ThreadCountDownLatch {
     public:
-        explicit CountDownLatch(int count) : count_(count) {}
+        explicit ThreadCountDownLatch(int count) : count_(count) {}
         void CountDown() {
             std::lock_guard lk(m_);
             if (--count_ == 0) cv_.notify_all();

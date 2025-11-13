@@ -107,7 +107,7 @@ namespace SFW
 		/**
 		 * @brief 更新処理
 		 */
-		void Update(const ECS::ServiceLocator& serviceLocator, double deltaTime) {
+		void Update(const ECS::ServiceLocator& serviceLocator, double deltaTime, IThreadExecutor* executor) {
 #ifdef _ENABLE_IMGUI
 			{
 				auto g = Debug::BeginTreeWrite(); // lock & back buffer
@@ -125,7 +125,7 @@ namespace SFW
 				partition.Update(deltaTime);
 			}
 
-			scheduler.UpdateAll(partition, levelCtx, serviceLocator);
+			scheduler.UpdateAll(partition, levelCtx, serviceLocator, executor);
 
 			//書くスレッドでチャンクを跨いだ移動を実行
 			BudgetMover::Accessor::MoverFlush(levelCtx.mover, *serviceLocator.Get<SpatialChunkRegistry>(), 2000);
@@ -141,7 +141,7 @@ namespace SFW
 		/**
 		 * @brief 限定的な更新処理
 		 */
-		void UpdateLimited(const ECS::ServiceLocator& serviceLocator, double deltaTime) {
+		void UpdateLimited(const ECS::ServiceLocator& serviceLocator, double deltaTime, IThreadExecutor* executor) {
 #ifdef _ENABLE_IMGUI
 			{
 				auto g = Debug::BeginTreeWrite(); // lock & back buffer
@@ -154,7 +154,7 @@ namespace SFW
 #endif
 			// 限定的なSystemだけを実行（例：位置補間やフェードアウト処理）
 			for (auto& sys : limitedSystems) {
-				sys->Update(partition, levelCtx, serviceLocator);
+				sys->Update(partition, levelCtx, serviceLocator, executor);
 			}
 		}
 		/**

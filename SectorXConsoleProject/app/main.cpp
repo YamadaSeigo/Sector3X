@@ -120,7 +120,7 @@ int main(void)
 	Graphics::DX11::Camera2DService dx112DCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	Graphics::I2DCameraService* camera2DService = &dx112DCameraService;
 
-	SimpleThreadPoolService threadPool;
+	static SimpleThreadPoolService threadPool;
 
 	auto device = graphics.GetDevice();
 	auto deviceContext = graphics.GetDeviceContext();
@@ -561,7 +561,7 @@ int main(void)
 	// メッセージループ
 	WindowHandler::Run([]() {
 		// ここにメインループの処理を書く
-		gameEngine.MainLoop();
+		gameEngine.MainLoop(&threadPool);
 		});
 
 	return WindowHandler::Destroy();

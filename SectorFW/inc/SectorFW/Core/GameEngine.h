@@ -69,10 +69,10 @@ namespace SFW
 		 * @param fpsControl FPS制御クラスのインスタンス
 		 * @details FPS制御クラスを使用して、メインループを実行します。
 		 */
-		void MainLoop()
+		void MainLoop(IThreadExecutor* executor)
 		{
 			// 更新処理、描画処理を呼び出す
-			Update(m_frameTimer.GetDeltaTime());
+			Update(m_frameTimer.GetDeltaTime(), executor);
 			Draw();
 
 			//経過時間を計算と待機
@@ -84,11 +84,11 @@ namespace SFW
 		 * @param delta_time 前回実行されてからの経過時間
 		 * @details 更新処理を実行します。
 		 */
-		void Update(double delta_time)
+		void Update(double delta_time, IThreadExecutor* executor)
 		{
-			m_world.UpdateServiceLocator(delta_time);
+			m_world.UpdateServiceLocator(delta_time, executor);
 
-			m_world.UpdateAllLevels(delta_time);
+			m_world.UpdateAllLevels(delta_time, executor);
 		}
 		/**
 		 * @brief 描画処理
