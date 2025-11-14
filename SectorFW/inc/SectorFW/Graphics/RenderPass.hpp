@@ -20,7 +20,6 @@ namespace SFW
 		 */
 		template<typename RTV, typename SRV, typename Buffer>
 		struct RenderPass {
-			std::string name;
 			std::vector<RTV> rtvs; // RenderTargetViewハンドル
 			void* dsv = nullptr; // DepthStencilViewハンドル
 			RenderQueue* queue;
@@ -53,7 +52,6 @@ namespace SFW
 			 * @param customExecute カスタム描画関数（FullscreenQuadなど）
 			 */
 			RenderPass(
-				const std::string& name,
 				const std::vector<RTV>& rtvs,
 				void* dsv,
 				RenderQueue* queue,
@@ -64,8 +62,7 @@ namespace SFW
 				const std::vector<BufferHandle>& cbvs = {},
 				std::optional<PSOHandle> psoOverride = std::nullopt,
 				std::function<void(uint64_t)> customExecute = nullptr)
-				: name(name)
-				, rtvs(rtvs)
+				: rtvs(rtvs)
 				, dsv(dsv)
 				, queue(queue)
 				, topology(topology)
@@ -83,8 +80,7 @@ namespace SFW
 			 * @return RenderPass&& ムーブされたRenderPass
 			 */
 			RenderPass(RenderPass&& other) noexcept
-				: name(std::move(other.name))
-				, rtvs(std::move(other.rtvs))
+				: rtvs(std::move(other.rtvs))
 				, dsv(other.dsv)
 				, queue(std::move(other.queue))
 				, topology(other.topology)
@@ -103,7 +99,6 @@ namespace SFW
 			 */
 			RenderPass& operator=(RenderPass&& other) noexcept {
 				if (this != &other) {
-					name = std::move(other.name);
 					rtvs = std::move(other.rtvs);
 					dsv = other.dsv;
 					queue = other.queue;
@@ -131,7 +126,6 @@ namespace SFW
 		 */
 		template<typename RTV>
 		struct RenderPassDesc {
-			std::string name;
 			std::vector<RTV> rtvs; // RenderTargetViewハンドル
 			void* dsv = nullptr; // DepthStencilViewハンドル
 			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // プリミティブトポロジ

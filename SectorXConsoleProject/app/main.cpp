@@ -84,15 +84,32 @@ void InitializeRenderPipeLine(
 	auto cameraHandle3D = constantMgr->FindByName(DX11::PerCamera3DService::BUFFER_NAME);
 	auto cameraHandle2D = constantMgr->FindByName(DX11::Camera2DService::BUFFER_NAME);
 
+	auto shaderMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::ShaderManager>();
+	auto psoMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::PSOManager>();
+
+	DX11::ShaderCreateDesc shaderDesc;
+	shaderDesc.vsPath = L"assets/shader/VS_ZPrepass.cso";
+	shaderDesc.psPath = L"assets/shader/PS_ZPrepass.cso";
+	ShaderHandle shaderHandle;
+	shaderMgr->Add(shaderDesc, shaderHandle);
+	DX11::PSOCreateDesc psoDesc;
+	psoDesc.shader = shaderHandle;
+	PSOHandle psoHandle;
+	psoMgr->Add(psoDesc, psoHandle);
+
 	auto& main3DGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_3D_MAIN]);
 
 	RenderPassDesc<ID3D11RenderTargetView*> passDesc;
-	passDesc.name = "3D";
-	passDesc.rtvs = rtvs;
 	passDesc.dsv = mainDepthStencilView;
 	passDesc.cbvs = { cameraHandle3D };
-	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 	passDesc.blendState = BlendStateID::Opaque;
+	passDesc.psoOverride = psoHandle;
+	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
+
+	passDesc.rtvs = rtvs;
+	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
+	passDesc.psoOverride = std::nullopt;
+	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
@@ -122,7 +139,8 @@ void InitializeRenderPipeLine(
 
 	//グループとパスの実行順序を設定(現状は登録した順番のインデックスで指定)
 	std::vector<DX11::GraphicsDevice::RenderGraph::PassNode> order = {
-		{ 0, 0 }
+		{ 0, 0 },
+		{ 0, 1 }
 	};
 
 	renderGraph->SetExecutionOrder(order);
@@ -188,8 +206,8 @@ int main(void)
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
-	p.cellsX = 512 * 2;
-	p.cellsZ = 512 * 2;
+	p.cellsX = 512 * 1;
+	p.cellsZ = 512 * 1;
 	p.clusterCellsX = 32;
 	p.clusterCellsZ = 32;
 	p.cellSize = 3.0f;
@@ -373,6 +391,7 @@ int main(void)
 			uint32_t height = (uint32_t)resolution.y;
 
 			graphics.SetDefaultRenderTarget();
+			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
 			graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
 
 			// フレームの先頭 or Terrainパスの先頭で 1回だけ：
@@ -501,8 +520,8 @@ int main(void)
 			p.cellsX * p.cellSize,
 			p.cellsZ * p.cellSize
 		};
-		for (int j = 0; j < 200; ++j) {
-			for (int k = 0; k < 200; ++k) {
+		for (int j = 0; j < 100; ++j) {
+			for (int k = 0; k < 100; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
 					float scaleXZ = 10.0f;
@@ -554,8 +573,8 @@ int main(void)
 		// Entity生成
 		uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
 		uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
-		for (int j = 0; j < 100; ++j) {
-			for (int k = 0; k < 100; ++k) {
+		for (int j = 0; j < 50; ++j) {
+			for (int k = 0; k < 50; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
 					//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };

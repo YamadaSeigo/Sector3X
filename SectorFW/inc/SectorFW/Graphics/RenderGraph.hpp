@@ -116,7 +116,6 @@ namespace SFW
 				uint16_t viewBit       // このパス用のビット
 			) {
 				passes.push_back(std::make_unique<PassType>(
-					desc.name,
 					desc.rtvs,
 					desc.dsv,
 					group.queue,              // 同じキューを共有

@@ -15,14 +15,12 @@ constexpr const char* PassGroupName[GROUP_MAX] = {
 };
 
 enum Pass3DMain : uint16_t {
-	PASS_3DMAIN_ZPREPASS,
-	PASS_3DMAIN_OPAQUE,
-	PASS_3DMAIN_LINE,
-	PASS_3DMAIN_MAX
+	PASS_3DMAIN_ZPREPASS = 1u << 0,
+	PASS_3DMAIN_OPAQUE = 1u << 1,
+	PASS_3DMAIN_LINE = 1u << 2,
 };
 
 enum PassUI : uint16_t {
-	PASS_UI_MAIN,
-	PASS_UI_MAX
+	PASS_UI_MAIN = 1u << 0,
 };
 

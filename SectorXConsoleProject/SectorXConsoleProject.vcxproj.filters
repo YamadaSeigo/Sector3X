@@ -59,6 +59,12 @@
     <FxCompile Include="shader\PS_TerrainClustered.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\VS_ZPrepass.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_ZPrepass.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\GlobalTypes.hlsli">

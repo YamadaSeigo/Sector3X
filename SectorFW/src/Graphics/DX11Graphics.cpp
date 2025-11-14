@@ -324,6 +324,16 @@ namespace SFW
 			backend->SetRenderTargets({m_renderTargetView.Get()}, m_depthStencilView.Get());
 		}
 
+		void GraphicsDevice::SetBlendState(BlendStateID state)
+		{
+			backend->SetBlendState(state);
+		}
+
+		void GraphicsDevice::SetDepthStencilState(DepthStencilStateID state)
+		{
+			backend->SetDepthStencilState(state);
+		}
+
 		void GraphicsDevice::SetRasterizerState(RasterizerStateID state)
 		{
 			backend->SetRasterizerState(state);

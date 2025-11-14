@@ -128,8 +128,8 @@ public:
 				};
 
 				//カメラに近い順にソート
-				std::vector<uint32_t> order;
-				BuildOrder_FixedRadix16(soaTf, kp->cp.x, kp->cp.y, kp->cp.z, nearClip, 1000.0f, order);
+				//std::vector<uint32_t> order;
+				//BuildOrder_FixedRadix16(soaTf, kp->cp.x, kp->cp.y, kp->cp.z, nearClip, 1000.0f, order);
 				//BuildFrontK_Strict(soaTf, kp->cp.x, kp->cp.y, kp->cp.z, 6, order);
 
 				Math::MTransformSoA mtf = {
@@ -150,12 +150,11 @@ public:
 				producer.AllocInstancesFromWorldSoA(worldMtxSoA, instanceIndices.data());
 
 				for (size_t i = 0; i < entityCount; ++i) {
-					uint32_t idx = order[i];
-					const auto& WVP = WVPs[idx];
+					const auto& WVP = WVPs[i];
 
-					auto& modelComp = model.value()[idx];
+					auto& modelComp = model.value()[i];
 
-					auto instanceIdx = instanceIndices[idx];
+					auto instanceIdx = instanceIndices[i];
 					auto& lodBits = modelComp.prevLODBits;
 
 					//モデルアセットを取得
@@ -207,7 +206,7 @@ public:
 						{
 							if (mesh.instance.HasData()) [[unlikely]] {
 								LOG_INFO("model has instance matrix!");
-								Graphics::SharedInstanceArena::InstancePool instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtxSoA.AoS(idx), mesh.instance.worldMtx)};
+								Graphics::SharedInstanceArena::InstancePool instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtxSoA.AoS(i), mesh.instance.worldMtx)};
 								cmd.instanceIndex = producer.AllocInstance(instance);
 								ndc = Math::ProjectAABBToNdc_Fast(WVP * mesh.instance.worldMtx, mesh.aabb);
 								areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);
@@ -263,7 +262,7 @@ public:
 							{
 								size_t occCount = mesh.occluder.meltAABBs.size();
 								std::vector<Math::AABB3f> occAABB(occCount);
-								Math::Matrix3x4f worldMtx = worldMtxSoA.AoS(idx);
+								Math::Matrix3x4f worldMtx = worldMtxSoA.AoS(i);
 								for (auto j = 0; j < occCount; ++j)
 								{
 									occAABB[j] = Math::TransformAABB_Affine(worldMtx, mesh.occluder.meltAABBs[j]);
@@ -288,7 +287,7 @@ public:
 						cmd.material = mesh.material.index;
 						cmd.pso = mesh.pso.index;
 
-						cmd.viewMask |= PASS_3DMAIN_OPAQUE;
+						cmd.viewMask |= PASS_3DMAIN_ZPREPASS | PASS_3DMAIN_OPAQUE;
 
 						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
 						producer.Push(std::move(cmd));
