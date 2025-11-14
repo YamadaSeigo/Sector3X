@@ -104,10 +104,10 @@ void InitializeRenderPipeLine(
 	passDesc.cbvs = { cameraHandle3D };
 	passDesc.blendState = BlendStateID::Opaque;
 	passDesc.psoOverride = psoHandle;
-	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
+	//renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
 
 	passDesc.rtvs = rtvs;
-	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
+	//passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
 	passDesc.psoOverride = std::nullopt;
 	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
@@ -140,7 +140,7 @@ void InitializeRenderPipeLine(
 	//グループとパスの実行順序を設定(現状は登録した順番のインデックスで指定)
 	std::vector<DX11::GraphicsDevice::RenderGraph::PassNode> order = {
 		{ 0, 0 },
-		{ 0, 1 }
+		//{ 0, 1 }
 	};
 
 	renderGraph->SetExecutionOrder(order);

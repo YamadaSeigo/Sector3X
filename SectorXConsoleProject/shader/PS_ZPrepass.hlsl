@@ -3,7 +3,7 @@ struct VSOutputPos
     float4 clip : SV_POSITION;
 };
 
-float4 main(VSOutputPos input) : SV_TARGET
+void main(VSOutputPos input)
 {
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+
 }

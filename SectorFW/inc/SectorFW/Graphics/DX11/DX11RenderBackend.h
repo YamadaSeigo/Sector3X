@@ -146,7 +146,7 @@ namespace SFW
 			 * @param usePSORasterizer PSOのラスタライザーステートを使用するかどうか
 			 */
 			template<typename VecT>
-			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, bool usePSORasterizer)
+			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::optional<PSOHandle> psoOverride, bool usePSORasterizer)
 			{
 				struct DrawBatch {
 					uint32_t mesh;
@@ -161,30 +161,61 @@ namespace SFW
 				size_t i = 0;
 				size_t cmdCount = cmds.size();
 				std::vector<DrawBatch> batches;
-				while (i < cmdCount) {
-					auto currentPSO = cmds[i].pso;
-					auto currentMat = cmds[i].material;
+				if (psoOverride.has_value()) {
+					// PSOオーバーライドがある場合、すべて同じPSOで描画する
+					uint32_t overriddenPSO = psoOverride.value().index;
+					while (i < cmdCount) {
+						auto currentMat = cmds[i].material;
 
-					uint32_t currentMesh = cmds[i].mesh;
-					uint32_t instanceCount = 0;
+						uint32_t currentMesh = cmds[i].mesh;
+						uint32_t instanceCount = 0;
 
-					const uint32_t base = m_idxHead;        // このドローの index 先頭
+						const uint32_t base = m_idxHead;        // このドローの index 先頭
 
-					// 1) 同PSO/Mat/Mesh を束ねつつ、index を SRV に“直接”書く
-					auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
+						// 1) 同PSO/Mat/Mesh を束ねつつ、index を SRV に“直接”書く
+						auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
 
-					// 同じPSO + Material + Meshをまとめる
-					while (i < cmdCount &&
-						cmds[i].pso == currentPSO &&
-						cmds[i].material == currentMat &&
-						cmds[i].mesh == currentMesh &&
-						instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
-						dst[instanceCount++] = cmds[i].instanceIndex.index; // ← 直接書く = instances[idx];
-						++i;
+						// 同じPSO + Material + Meshをまとめる
+						while (i < cmdCount &&
+							cmds[i].material == currentMat &&
+							cmds[i].mesh == currentMesh &&
+							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
+							dst[instanceCount++] = cmds[i].instanceIndex.index; // ← 直接書く = instances[idx];
+							++i;
+						}
+						m_idxHead += instanceCount;
+
+						batches.emplace_back(currentMesh, currentMat, overriddenPSO, base, instanceCount);
 					}
-					m_idxHead += instanceCount;
+				}
+				else
+				{
 
-					batches.emplace_back(currentMesh, currentMat, currentPSO, base, instanceCount);
+					while (i < cmdCount) {
+						auto currentPSO = cmds[i].pso;
+						auto currentMat = cmds[i].material;
+
+						uint32_t currentMesh = cmds[i].mesh;
+						uint32_t instanceCount = 0;
+
+						const uint32_t base = m_idxHead;        // このドローの index 先頭
+
+						// 1) 同PSO/Mat/Mesh を束ねつつ、index を SRV に“直接”書く
+						auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
+
+						// 同じPSO + Material + Meshをまとめる
+						while (i < cmdCount &&
+							cmds[i].pso == currentPSO &&
+							cmds[i].material == currentMat &&
+							cmds[i].mesh == currentMesh &&
+							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
+							dst[instanceCount++] = cmds[i].instanceIndex.index; // ← 直接書く = instances[idx];
+							++i;
+						}
+						m_idxHead += instanceCount;
+
+						batches.emplace_back(currentMesh, currentMat, currentPSO, base, instanceCount);
+					}
 				}
 
 				EndIndexStream();
@@ -210,7 +241,7 @@ namespace SFW
 			 * @param usePSORasterizer PSOのラスタライザーステートを使用するかどうか
 			 */
 			template<typename VecT>
-			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::vector<uint32_t> indices,std::optional<PSOHandle> psoOverride,  bool usePSORasterizer)
+			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::vector<uint32_t>& indices,std::optional<PSOHandle> psoOverride,  bool usePSORasterizer)
 			{
 				struct DrawBatch {
 					uint32_t mesh;

@@ -206,6 +206,7 @@ namespace SFW
 						uint16_t mask = gs.cmds[ci].viewMask;
 						for (size_t pi = 0; pi < g.passes.size(); ++pi) {
 							auto* pass = g.passes[pi];
+
 							if (mask & pass->viewBit)
 								gs.views[pi].push_back(ci);
 						}

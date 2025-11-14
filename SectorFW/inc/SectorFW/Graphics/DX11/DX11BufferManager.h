@@ -76,6 +76,8 @@ namespace SFW
 			BufferManager, BufferHandle, BufferCreateDesc, BufferData>
 		{
 		public:
+			static constexpr inline uint32_t MAX_PENDING_UPDATE_NUM = 1024;
+
 			/**
 			 * @brief コンストラクタ
 			 * @param device DX11のデバイス
@@ -203,21 +205,27 @@ namespace SFW
 			 * @param desc バッファ作成記述子
 			 */
 			void UpdateBuffer(const BufferUpdateDesc& desc, uint16_t slot) {
-				pendingUpdates[slot].push_back(desc);
+				uint32_t count = pendingCount[slot].fetch_add(1, std::memory_order_acq_rel);
+				if (count >= MAX_PENDING_UPDATE_NUM) {
+					//LOG_ERROR("最大更新処理数に達しました");
+					return;
+				}
+
+				pendingUpdates[slot][count] = desc;
 			}
 			/**
 			 * @brief 保留中のバッファ更新を処理
 			 */
 			void PendingUpdates(size_t frameIndex) {
+
 				uint16_t slot = frameIndex % RENDER_BUFFER_COUNT;
-				auto& pendings = pendingUpdates[slot];
+				uint32_t count = pendingCount[slot].load(std::memory_order_relaxed);
 
-				if (!pendings.empty()) {
+				if (count > 0) {
+					auto& pendings = pendingUpdates[slot];
 
-					auto it = std::unique(pendings.begin(), pendings.end());
-					pendings.erase(it, pendings.end());
-
-					for (const auto& update : pendings) {
+					for (uint32_t i = 0; i < count; ++i) {
+						auto& update = pendings[i];
 						D3D11_MAPPED_SUBRESOURCE mapped;
 						HRESULT hr = context->Map(update.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 						if (SUCCEEDED(hr)) [[likely]] {
@@ -230,7 +238,7 @@ namespace SFW
 						if (update.data && update.isDelete) delete update.data;
 					}
 
-					pendings.clear();
+					pendingCount[slot].store(0, std::memory_order_release);
 				}
 			}
 
@@ -261,7 +269,9 @@ namespace SFW
 
 			std::unordered_map<uint32_t, BufferCacheKey> handleToCacheKey; // key: handle.index
 
-			std::vector<BufferUpdateDesc> pendingUpdates[RENDER_BUFFER_COUNT]; // 更新待ちのデータ
+			std::mutex pendingMutex[RENDER_BUFFER_COUNT];
+			std::atomic<uint32_t> pendingCount[RENDER_BUFFER_COUNT]{ 0 };
+			BufferUpdateDesc pendingUpdates[RENDER_BUFFER_COUNT][MAX_PENDING_UPDATE_NUM]; // 更新待ちのデータ
 		};
 	}
 }

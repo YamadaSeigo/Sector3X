@@ -572,6 +572,39 @@ namespace SFW
 			 */
 			ProducerSession MakeProducer() { return ProducerSession{ *this }; }
 			ProducerSessionExternal MakeProducer(ProducerSessionExternal::SmallBuf& buf) { return ProducerSessionExternal{ *this, buf }; }
+
+			/**
+			 * @brief Submit は「全ワーカーが FlushAll 済み」バリアの後に呼ぶ
+			 * @param out DrawCommandのバッファポインタ。
+			 * @param size outバッファのサイズ。ここまでしか描画コマンドを返さない
+			 */
+			void Submit(uint32_t slot, DrawCommand* out, size_t size) {
+				auto& q = *queues[slot];
+				if (!ctoken[slot]) ctoken[slot].emplace(q); // 初回だけ生成して再利用
+
+				auto pTmp = tmp.data();
+
+				size_t n;
+				size_t count = 0;
+				while ((n = q.try_dequeue_bulk(*ctoken[slot], pTmp, DRAWCOMMAND_TMPBUF_SIZE)) != 0) {
+					auto old = count;
+					count += n;                // 先にサイズだけ伸ばす（再確保は reserve 済みで起きない前提）
+					bool end = false;
+					if (count >= size) {
+						n = size - old;
+						end = true;
+					}
+					if constexpr (std::is_trivially_copyable_v<DrawCommand>) {
+						std::memcpy(out + count, pTmp, n * sizeof(DrawCommand));
+					}
+					else {
+						std::move(pTmp, pTmp + n, out + count);
+					}
+
+					if (end) break;
+				}
+				sortContext.Sort(out);
+			}
 			/**
 			 * @brief Submit は「全ワーカーが FlushAll 済み」バリアの後に呼ぶ
 			 * @param out DrawCommand コンテナ（呼び出し側で確保して渡す）
