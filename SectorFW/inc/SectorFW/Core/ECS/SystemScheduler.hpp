@@ -58,7 +58,7 @@ namespace SFW
 			void UpdateAll(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
 				// --- pending の取り込み（ロック最小化） ---
 				std::vector<std::unique_ptr<ISystem<Partition>>> newly; // ローカル退避
-				newly.reserve(16);
+				//newly.reserve(16);
 
 				if (!pendingSystems.empty()) {
 					std::scoped_lock lk(pendingMutex);
@@ -114,10 +114,12 @@ namespace SFW
 				// --- バッチごとに並列実行 ---
 				// 例外は各システム内で握り潰さず、ここで個別捕捉するのも可
 				for (const auto& group : batches) {
-					ThreadCountDownLatchExternalSync latch(batchMutex, batchCv, (int)group.size());
+					ThreadCountDownLatchExternalSync latch(batchMutex, batchCv, (int)group.parallel.size());
+
+					std::vector<uint32_t> serialIndices;
 
 					// par_unseq: 並列+ベクタライズ許可（MSVCの実装でPPL/並列アルゴ適用）
-					for (auto idx : group)
+					for (auto idx : group.parallel)
 					{
 						//idxはコピーキャプチャじゃないと破棄される
 						executor->Submit([&, idx]() noexcept {
@@ -125,6 +127,12 @@ namespace SFW
 							updateSystems[idx]->Update(partition, levelCtx, serviceLocator, executor);
 							latch.CountDown();
 							});
+					}
+
+					// 直列実行部分
+					for (auto idx : group.serial)
+					{
+						updateSystems[idx]->Update(partition, levelCtx, serviceLocator, executor);
 					}
 
 					latch.Wait();
@@ -157,8 +165,14 @@ namespace SFW
 			std::vector<std::unique_ptr<ISystem<Partition>>> pendingSystems;
 			//保留中のシステムを管理するためのミューテックス
 			std::mutex pendingMutex;
+
+			struct Group {
+				std::vector<uint32_t> serial;
+				std::vector<uint32_t> parallel;
+			};
+
 			//競合のない並列実行グループ（インデックス集合）
-			std::vector<std::vector<size_t>> batches;
+			std::vector<Group> batches;
 
 			//並列処理の同期用
 			std::mutex batchMutex;
@@ -189,23 +203,43 @@ namespace SFW
 				batches.reserve(updateSystems.size() / 2 + 1);
 
 				// Greedy coloring 的に最初に入れられるバッチへ突っ込む
-				for (size_t i = 0; i < updateSystems.size(); ++i) {
+				for (uint32_t i = 0; i < updateSystems.size(); ++i) {
 					const auto& ai = accessList[i];
 					bool placed = false;
 					for (auto& group : batches) {
 						bool ok = true;
 						// そのバッチ内と競合しないか確認（早期break）
-						for (size_t j : group) {
+						for (size_t j : group.serial) {
 							const auto& aj = accessList[j];
 							if (Conflicts(ai, aj) || Conflicts(aj, ai)) {
 								ok = false; break;
 							}
 						}
-						if (ok) { group.push_back(i); placed = true; break; }
+						if (!ok) continue;
+
+						for (size_t j : group.parallel) {
+							const auto& aj = accessList[j];
+							if (Conflicts(ai, aj) || Conflicts(aj, ai)) {
+								ok = false; break;
+							}
+						}
+						if (ok) {
+							bool isParallel = updateSystems[i]->IsParallelUpdate();
+							if (isParallel)
+								group.parallel.push_back(i);
+							else
+								group.serial.push_back(i);;
+							placed = true;
+							break;
+						}
 					}
 					if (!placed) {
 						batches.emplace_back();
-						batches.back().push_back(i);
+						bool isParallel = updateSystems[i]->IsParallelUpdate();
+						if (isParallel)
+							batches.back().parallel.push_back(i);
+						else
+							batches.back().serial.push_back(i);
 					}
 				}
 				scheduleDirty = false;

@@ -1154,6 +1154,12 @@ namespace SFW {
             const Vec3<T>& target,
             const Vec3<T>& up) noexcept
         {
+			if (eye == target) {
+				assert(false && "MakeLookAtMatrixLH: eye and target are the same.");
+
+				return Matrix<4, 4, T>::Identity();
+			}
+
             const Vec3<T> z = (target - eye).normalized();   // forward (+Z)
             const Vec3<T> x = up.cross(z).normalized();      // right
             const Vec3<T> y = z.cross(x);                    // up (再直交)
@@ -1251,7 +1257,7 @@ namespace SFW {
             m[1][1] = T(2) / (t - b);
             m[0][3] = -(r + l) / (r - l);
             m[1][3] = -(t + b) / (t - b);
-            m[3][3] = T(1);                 // ★ w' = 1
+            m[3][3] = T(1);                 // w' = 1
 
             if constexpr (H == Handedness::LH) {
                 if constexpr (Z == ClipZRange::ZeroToOne) {

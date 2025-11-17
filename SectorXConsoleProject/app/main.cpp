@@ -4,6 +4,7 @@
 #include <SectorFW/Core/ChunkCrossingMove.hpp>
 #include <SectorFW/DX11WinTerrainHelper.h>
 #include <SectorFW/Graphics/DX11/DX11BlockRevertHelper.h>
+#include <SectorFW/Graphics/DX11/DX11ShadowMapService.h>
 #include <SectorFW/Graphics/TerrainOccluderExtraction.h>
 
 //System
@@ -74,7 +75,8 @@ static bool ResolveTexturePath(uint32_t id, std::string& path, bool& forceSRGB)
 void InitializeRenderPipeLine(
 	Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
 	ID3D11RenderTargetView* mainRenderTarget,
-	ID3D11DepthStencilView* mainDepthStencilView)
+	ID3D11DepthStencilView* mainDepthStencilView,
+	std::function<void(uint64_t)> depthCustomFunc)
 {
 	using namespace SFW::Graphics;
 
@@ -89,7 +91,9 @@ void InitializeRenderPipeLine(
 
 	DX11::ShaderCreateDesc shaderDesc;
 	shaderDesc.vsPath = L"assets/shader/VS_ZPrepass.cso";
-	shaderDesc.psPath = L"assets/shader/PS_ZPrepass.cso";
+	//PSを指定しないことでDepthOnlyのPSOを作成
+	//shaderDesc.psPath = L"assets/shader/PS_ZPrepass.cso";
+
 	ShaderHandle shaderHandle;
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	DX11::PSOCreateDesc psoDesc;
@@ -104,12 +108,14 @@ void InitializeRenderPipeLine(
 	passDesc.cbvs = { cameraHandle3D };
 	passDesc.blendState = BlendStateID::Opaque;
 	passDesc.psoOverride = psoHandle;
-	//renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
+	passDesc.customExecute = depthCustomFunc;
+	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
 
 	passDesc.rtvs = rtvs;
-	//passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
+	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
 	passDesc.psoOverride = std::nullopt;
 	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+	passDesc.customExecute = nullptr;
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
@@ -140,7 +146,7 @@ void InitializeRenderPipeLine(
 	//グループとパスの実行順序を設定(現状は登録した順番のインデックスで指定)
 	std::vector<DX11::GraphicsDevice::RenderGraph::PassNode> order = {
 		{ 0, 0 },
-		//{ 0, 1 }
+		{ 0, 1 }
 	};
 
 	renderGraph->SetExecutionOrder(order);
@@ -202,7 +208,9 @@ int main(void)
 
 	auto renderService = graphics.GetRenderService();
 
-	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService);
+	Graphics::LightShadowService lightShadowService;
+
+	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &lightShadowService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
@@ -214,6 +222,7 @@ int main(void)
 	p.heightScale = 60.0f;
 	p.frequency = 1.0f / 96.0f * 1.0f;
 	p.seed = 20251112;
+	p.offset.y -= 40.0f;
 
 	std::vector<float> heightMap;
 	SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);
@@ -248,12 +257,17 @@ int main(void)
 		outIndexPool, outLodRanges, outLodBase, outLodCount);
 
 	Graphics::DX11::BlockReservedContext blockRevert;
-	blockRevert.Init(graphics.GetDevice(),
+	ok = blockRevert.Init(graphics.GetDevice(),
 		L"assets/shader/CS_TerrainClustered.cso",
+		L"assets/shader/CS_TerrainClusteredShadow.cso",
 		L"assets/shader/CS_WriteArgs.cso",
+		L"assets/shader/CS_WriteArgsShadow.cso",
 		L"assets/shader/VS_TerrainClustered.cso",
+		L"assets/shader/VS_TerrainClusteredDepth.cso",
 		L"assets/shader/PS_TerrainClustered.cso",
 		/*maxVisibleIndices*/ (UINT)terrain.indexPool.size());
+
+	assert(ok && "Failed BlockRevert Init");
 
 	blockRevert.BuildLodSrvs(graphics.GetDevice(), outLodRanges, outLodBase, outLodCount);
 
@@ -314,6 +328,13 @@ int main(void)
 	// GPUリソースを作る/更新
 	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
 	Graphics::DX11::BuildOrUpdateTerrainGridCB(device, deviceContext, cp);
+
+	Graphics::DX11::ShadowMapService shadowMapService;
+	Graphics::DX11::ShadowMapConfig shadowMapConfig;
+	shadowMapConfig.width = WINDOW_WIDTH;
+	shadowMapConfig.height = WINDOW_HEIGHT;
+	ok = shadowMapService.Initialize(device, shadowMapConfig);
+	assert(ok && "Failed ShadowMapService Initialize");
 
 	auto terrainUpdateFunc = [map, perCameraService, &terrain](Graphics::RenderService* renderService)
 		{
@@ -378,7 +399,7 @@ int main(void)
 			Graphics::DispatchToMOC(MyMOCRender, trisC, width, height);
 		};
 
-	auto testClusterFunc = [&graphics, deviceContext, perCameraService, matRes, splatRes, cp, &blockRevert](Graphics::RenderService* renderService)
+	auto testClusterFunc = [&, deviceContext, perCameraService, matRes, splatRes, cp](Graphics::RenderService* renderService)
 		{
 			auto viewProj = perCameraService->GetCameraBufferData().viewProj;
 			auto camPos = perCameraService->GetEyePos();
@@ -390,7 +411,6 @@ int main(void)
 			uint32_t width = (uint32_t)resolution.x;
 			uint32_t height = (uint32_t)resolution.y;
 
-			graphics.SetDefaultRenderTarget();
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
 			graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
 
@@ -401,8 +421,51 @@ int main(void)
 			deviceContext->PSSetShaderResources(24, 1, &splatSrv);       // t24
 			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t25, b10
 
-			auto world = Math::Matrix4x4f::Identity();
-			blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height, 400.0f, 160.0f);
+			static constexpr auto world = Math::Matrix4x4f::Identity();
+			//blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height, 400.0f, 160.0f);
+
+			static Graphics::DX11::BlockReservedContext::ShadowDepthParams shadowParams{};
+
+			shadowParams.mainDSV = graphics.GetMainDepthStencilView().Get();
+			memcpy(shadowParams.mainViewProj, viewProj.data(), sizeof(shadowParams.mainViewProj));
+			memcpy(shadowParams.mainFrustumPlanes, frustumPlanes.data(), sizeof(shadowParams.mainFrustumPlanes));
+			auto& cascadeDSV = shadowMapService.GetCascadeDSV();
+			for (int c = 0; c < Graphics::kMaxShadowCascades; ++c) {
+				shadowParams.cascadeDSV[c] = cascadeDSV[c].Get();
+			}
+			auto& cascade = lightShadowService.GetCascades();
+			memcpy(shadowParams.lightViewProj, cascade.lightViewProj.data(), sizeof(shadowParams.lightViewProj));
+			memcpy(shadowParams.cascadeFrustumPlanes, cascade.frustumWS.data(), sizeof(shadowParams.cascadeFrustumPlanes));
+
+			shadowParams.screenW = WINDOW_WIDTH;
+			shadowParams.screenH = WINDOW_HEIGHT;
+
+			// シャドウマップ用のCB/SRV/サンプラーを解除
+			constexpr ID3D11Buffer* nullBuffer = nullptr;
+			deviceContext->PSSetConstantBuffers(5, 1, &nullBuffer);
+			constexpr ID3D11ShaderResourceView* nullSRV = nullptr;
+			deviceContext->PSSetShaderResources(7, 1, &nullSRV);
+			constexpr ID3D11SamplerState* nullSampler = nullptr;
+			deviceContext->PSSetSamplers(1, 1, &nullSampler);
+
+			shadowMapService.ClearDepthBuffer(deviceContext);
+
+			blockRevert.RunShadowDepth(deviceContext, shadowParams, world.data());
+		};
+
+	auto drawTerrainColor = [&, deviceContext](uint64_t frame)
+		{
+			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
+
+			//CBの5,SRVの7,Samplerの1にバインド
+			shadowMapService.BindShadowPSResources(deviceContext, 5, 7, 1);
+
+			shadowMapService.UpdateShadowCascadeCB(deviceContext, lightShadowService);
+
+			blockRevert.RunColor(deviceContext,
+				graphics.GetMainRenderTargetView().Get(),
+				graphics.GetMainDepthStencilView().Get()
+			);
 		};
 
 	renderService->SetCustomUpdateFunction(std::move(terrainUpdateFunc));
@@ -413,13 +476,20 @@ int main(void)
 	using namespace SFW::Graphics;
 
 	// レンダーパイプライン初期化関数
-	graphics.ExecuteCustomFunc(InitializeRenderPipeLine);
+	graphics.ExecuteCustomFunc([&](
+		Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
+		ID3D11RenderTargetView* mainRenderTarget,
+		ID3D11DepthStencilView* mainDepthStencilView)
+		{
+			InitializeRenderPipeLine(renderGraph, mainRenderTarget, mainDepthStencilView, drawTerrainColor);
+		}
+	);
 
 	auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11::ShaderManager>();
 	DX11::ShaderCreateDesc shaderDesc;
 	shaderDesc.templateID = MaterialTemplateID::PBR;
-	shaderDesc.vsPath = L"assets/shader/VS_Default.cso";
-	shaderDesc.psPath = L"assets/shader/PS_Default.cso";
+	shaderDesc.vsPath = L"assets/shader/VS_ShadowDepth.cso";
+	shaderDesc.psPath = L"assets/shader/PS_ShadowColor.cso";
 	ShaderHandle shaderHandle;
 	shaderMgr->Add(shaderDesc, shaderHandle);
 
@@ -584,6 +654,7 @@ int main(void)
 					{
 						float y0 = heightMap[Graphics::TerrainClustered::VIdx(gridX, gridZ, p.cellsX + 1)];
 						location.y = y0 * p.heightScale;
+						location += p.offset;
 					}
 
 					auto chunk = level->GetChunk(location);

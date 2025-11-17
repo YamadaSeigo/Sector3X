@@ -32,6 +32,8 @@ namespace SFW
 			friend class ECS::ServiceLocator;
 		public:
 			struct CameraBuffer {
+				Math::Matrix4x4f view;      // VS用（ワールド→ビュー）
+				Math::Matrix4x4f proj;      // VS用（ビュー→クリップ）
 				Math::Matrix4x4f viewProj;  // VS用（世界→クリップ）
 				// 必要に応じて逆行列など追加可
 			};
@@ -210,7 +212,7 @@ namespace SFW
 				const float top = center.y + worldH * 0.5f;
 				const float bottom = center.y - worldH * 0.5f;
 
-				Math::Matrix4x4f proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(
+				cameraBuffer[slot].proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(
 					left, right, bottom, top, nearClip, farClip);
 
 				// 2) View 行列
@@ -218,9 +220,9 @@ namespace SFW
 				Math::Matrix4x4f T = Math::MakeTranslationMatrix(Math::Vec3f{ -center.x, -center.y, 0.0f });
 				Math::Matrix4x4f R = Math::MakeRotationMatrix(Math::Quatf::FromEuler(0.0f, 0.0f, -rotZ));
 
-				Math::Matrix4x4f view = T * R;
+				cameraBuffer[slot].view = T * R;
 
-				cameraBuffer[slot].viewProj = proj * view;
+				cameraBuffer[slot].viewProj = cameraBuffer[slot].proj * cameraBuffer[slot].view;
 
 				// 逆行列（座標変換ユーティリティ用）
 				cameraBufferInv = Math::Inverse(cameraBuffer[slot].viewProj); // 実装がなければ適宜追加

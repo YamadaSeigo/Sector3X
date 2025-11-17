@@ -107,7 +107,7 @@ namespace SFW
 			}
 
 			template<typename VecT>
-			void ExecuteDrawIndexedInstanced(const VecT& cmds, std::vector<uint32_t>& indices, std::optional<PSOHandle> psoOverride = std::nullopt, bool usePSORastarizer = true) {
+			void ExecuteDrawIndexedInstanced(const VecT& cmds, std::span<const uint32_t> indices, std::optional<PSOHandle> psoOverride = std::nullopt, bool usePSORastarizer = true) {
 				static_cast<Derived*>(this)->ExecuteDrawIndexedInstancedImpl(cmds, indices, psoOverride, usePSORastarizer);
 			}
 			/**

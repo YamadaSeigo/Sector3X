@@ -241,7 +241,7 @@ namespace SFW
 			 * @param usePSORasterizer PSOのラスタライザーステートを使用するかどうか
 			 */
 			template<typename VecT>
-			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::vector<uint32_t>& indices,std::optional<PSOHandle> psoOverride,  bool usePSORasterizer)
+			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::span<const uint32_t> indices,std::optional<PSOHandle> psoOverride,  bool usePSORasterizer)
 			{
 				struct DrawBatch {
 					uint32_t mesh;

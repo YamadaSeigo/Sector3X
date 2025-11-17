@@ -747,7 +747,7 @@ namespace SFW {
 
             // 高さ 0..1 → ワールドY： y = h * heightScale + heightOffset
             m.heightScale = p.heightScale;
-            m.heightOffset = 0.0f;
+            m.heightOffset = p.offset.y;
 
             // タイル境界での外挿は避けたいので基本はクランプ
             m.clampUV = true;

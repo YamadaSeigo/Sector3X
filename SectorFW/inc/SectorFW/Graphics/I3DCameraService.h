@@ -29,6 +29,8 @@ namespace SFW
 		* @brief　カメラバッファの構造体
 		*/
 		struct CameraBuffer {
+			Math::Matrix4x4f view;
+			Math::Matrix4x4f proj;
 			Math::Matrix4x4f viewProj;
 		};
 
@@ -247,6 +249,13 @@ namespace SFW
 				return Math::Vec2f{ right - left, bottom - top };
 			}
 
+			Math::Matrix4x4f MakeViewMatrix() const {
+				std::shared_lock lock(sharedMutex);
+				Math::Vec3f r, u, f;
+				Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
+				return Math::MakeLookAtMatrixLH(eye, target, u);
+			}
+
 			Math::Matrix4x4f MakeProjectionMatrix() const noexcept {
 				std::shared_lock lock(sharedMutex);
 				Math::Matrix4x4f proj;
@@ -310,6 +319,14 @@ namespace SFW
 			 */
 			const CameraBuffer& GetCameraBufferData() const noexcept {
 				return cameraBuffer[currentSlot];
+			}
+			/**
+			 * @brief カメラバッファの更新が必要かどうかを取得
+			 * @return bool 更新が必要な場合はtrue、そうでなければfalse
+			 */
+			bool IsUpdateBuffer() const noexcept {
+				std::shared_lock lock(sharedMutex);
+				return isUpdateBuffer;
 			}
 		private:
 			virtual void Update(double deltaTime) override {

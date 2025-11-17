@@ -5,7 +5,7 @@ class CameraSystem : public ITypeSystem<
 	CameraSystem<Partition>,
 	Partition,
 	ComponentAccess<>,//アクセスするコンポーネントの指定
-	ServiceContext<InputService, Graphics::I3DPerCameraService, Graphics::I2DCameraService>> {//受け取るサービスの指定
+	ServiceContext<InputService, Graphics::I3DPerCameraService, Graphics::I2DCameraService, Graphics::LightShadowService>> {//受け取るサービスの指定
 	//using Accessor = ComponentAccessor<>;
 
 	static constexpr float MOVE_SPEED_WHEEL_RATE = 0.5f;
@@ -14,7 +14,8 @@ public:
 	void UpdateImpl(Partition& partition,
 		UndeletablePtr<InputService> inputService,
 		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService,
-		UndeletablePtr<Graphics::I2DCameraService> camera2DService) {
+		UndeletablePtr<Graphics::I2DCameraService> camera2DService,
+		UndeletablePtr<Graphics::LightShadowService> lightShadowService) {
 		int mouseWheelV, mouseWheelH;
 		inputService->GetMouseWheel(mouseWheelV, mouseWheelH);
 
@@ -55,7 +56,20 @@ public:
 			perCameraService->Move(perCameraService->GetForward() * moveSpeed * (float)mouseWheelV);
 			camera2DService->Zoom((float)mouseWheelV);
 		}
+
+		if (perCameraService->IsUpdateBuffer())
+		{
+			Graphics::CameraParams camParams;
+			camParams.view = perCameraService->MakeViewMatrix();
+			camParams.position = perCameraService->GetEyePos();
+			camParams.nearPlane = perCameraService->GetNearClip();
+			camParams.farPlane = perCameraService->GetFarClip();
+			camParams.fovY = perCameraService->GetFOV();
+			camParams.aspect = perCameraService->GetAspectRatio();
+			lightShadowService->UpdateCascade(camParams, cascadeSceneAABB);
+		}
 	}
 private:
 	float moveSpeed = 1.0f;
+	Math::AABB3f cascadeSceneAABB = { {0,-500.0f,0},{5000.0f,500.0f,5000.0f} };
 };

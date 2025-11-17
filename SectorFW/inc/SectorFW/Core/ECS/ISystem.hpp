@@ -92,6 +92,15 @@ namespace SFW
 			 * @return AccessInfo アクセス情報
 			 */
 			virtual AccessInfo GetAccessInfo() const noexcept = 0;
+
+			/**
+			 * @brief 並列にUpdateが実行されるか？
+			 * @return 並列に実行される場合true
+			 */
+			virtual constexpr bool IsParallelUpdate() const noexcept {
+				return false;
+			}
+
 			/**
 			 * @brief デストラクタ
 			 */

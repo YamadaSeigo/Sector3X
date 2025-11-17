@@ -1,4 +1,4 @@
-#include "GlobalTypes.hlsli"
+#include "_GlobalTypes.hlsli"
 
 struct VSInputPos
 {

@@ -109,6 +109,7 @@ namespace SFW
 		{
 			MaterialTemplateID templateID = MaterialTemplateID::MAX_COUNT;
 			InputBindingMode bindingMode;
+			bool isPSBind = true;
 			{
 				auto pso = psoManager->GetDirect(psoIdx);
 
@@ -121,8 +122,11 @@ namespace SFW
 
 				auto shader = shaderManager->Get(pso.ref().shader);
 				context->VSSetShader(shader.ref().vs.Get(), nullptr, 0);
-				context->PSSetShader(shader.ref().ps.Get(), nullptr, 0);
+				auto& ps = shader.ref().ps;
+				isPSBind = (ps != nullptr);
 
+				context->PSSetShader(ps.Get(), nullptr, 0);
+					
 				templateID = shader.ref().templateID;
 				bindingMode = shader.ref().bindingMode;
 			}
@@ -136,13 +140,20 @@ namespace SFW
 				}
 
 				// テクスチャSRVバインド
-				MaterialManager::BindMaterialPSSRVs(context, mat.ref().psSRV);
 				MaterialManager::BindMaterialVSSRVs(context, mat.ref().vsSRV);
 				// CBVバインド
-				MaterialManager::BindMaterialPSCBVs(context, mat.ref().psCBV);
 				MaterialManager::BindMaterialVSCBVs(context, mat.ref().vsCBV);
-				// サンプラーバインド
-				MaterialManager::BindMaterialSamplers(context, mat.ref().samplerCache);
+
+				
+				if (isPSBind) {
+					// テクスチャSRVバインド
+					MaterialManager::BindMaterialPSSRVs(context, mat.ref().psSRV);
+					// CBVバインド
+					MaterialManager::BindMaterialPSCBVs(context, mat.ref().psCBV);
+
+					// サンプラーバインド
+					MaterialManager::BindMaterialSamplers(context, mat.ref().samplerCache);
+				}
 			}
 			{
 				auto mesh = meshManager->GetDirect(meshIdx);

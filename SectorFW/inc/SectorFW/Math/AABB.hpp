@@ -79,9 +79,50 @@ namespace SFW
 				}
 				return out;
 			}
+
+			// AABB‚ğ–³Œø‰»
+			void invalidate() {
+				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
+					lb[i] = (std::numeric_limits<T>::max)();
+					ub[i] = std::numeric_limits<T>::lowest();
+				}
+			}
 		};
 
 		using AABB2f = AABB<float, Vec2f>;
-		using AABB3f = AABB<float, Vec3f>;		
+		using AABB3f = AABB<float, Vec3f>;
+
+		// ---------------------------------------------------------
+		// AABB “¯m‚ÌŒğ·
+		// ---------------------------------------------------------
+		template<typename T>
+		static AABB<T, Vec3<T>> IntersectAABB(const AABB<T, Vec3<T>>& a, const AABB<T, Vec3<T>>& b)
+		{
+			Math::AABB3f r;
+			r.lb.x = (std::max)(a.lb.x, b.lb.x);
+			r.lb.y = (std::max)(a.lb.y, b.lb.y);
+			r.lb.z = (std::max)(a.lb.z, b.lb.z);
+
+			r.ub.x = (std::min)(a.ub.x, b.ub.x);
+			r.ub.y = (std::min)(a.ub.y, b.ub.y);
+			r.ub.z = (std::min)(a.ub.z, b.ub.z);
+
+			if (r.lb.x > r.ub.x || r.lb.y > r.ub.y || r.lb.z > r.ub.z)
+			{
+				// Œğ·‚È‚µ ¨ “K“–‚É a ‚ğ•Ô‚·‚©A‹óAABB‚É‚·‚é
+				return a;
+			}
+			return r;
+		}
+
+		template<typename T>
+		static inline void ExpandAABB(AABB<T, Vec3<T>>& b, const Vec3<T>& p) {
+			b.lb.x = (std::min)(b.lb.x, p.x);
+			b.lb.y = (std::min)(b.lb.y, p.y);
+			b.lb.z = (std::min)(b.lb.z, p.z);
+			b.ub.x = (std::max)(b.ub.x, p.x);
+			b.ub.y = (std::max)(b.ub.y, p.y);
+			b.ub.z = (std::max)(b.ub.z, p.z);
+		}
 	}
 }

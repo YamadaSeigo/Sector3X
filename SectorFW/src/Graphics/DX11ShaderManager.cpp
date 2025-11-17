@@ -67,8 +67,16 @@ namespace SFW
 
 			shader.vsBlob = vsBlob;
 
+			// === Reflection (VS for InputLayout) ===
+			ReflectInputLayout(vsBlob.Get(), shader.inputLayoutDesc, shader.inputLayoutSemanticNames, shader);
+
+			// === Reflection (VS for bindings) ===
+			ReflectShaderResources(vsBlob.Get(), shader.vsBindings);
+
 			// === Compile PS ===
 			Microsoft::WRL::ComPtr<ID3DBlob> psBlob;
+			if (desc.psPath.empty()) return shader; // ピクセルシェーダー無し許容
+
 			hr = D3DReadFileToBlob(desc.psPath.c_str(), psBlob.GetAddressOf());
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to compile pixel shader: %s", desc.psPath.c_str());
@@ -80,12 +88,6 @@ namespace SFW
 				LOG_ERROR("Failed to create pixel shader: %s", desc.psPath.c_str());
 				assert(false && "Failed to create pixel shader");
 			}
-
-			// === Reflection (VS for InputLayout) ===
-			ReflectInputLayout(vsBlob.Get(), shader.inputLayoutDesc, shader.inputLayoutSemanticNames, shader);
-
-			// === Reflection (VS for bindings) ===
-			ReflectShaderResources(vsBlob.Get(), shader.vsBindings);
 
 			// === Reflection (PS for bindings) ===
 			ReflectShaderResources(psBlob.Get(), shader.psBindings);

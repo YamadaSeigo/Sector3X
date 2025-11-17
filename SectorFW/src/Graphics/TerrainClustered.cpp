@@ -135,11 +135,11 @@ namespace SFW {
             GenerateHeights(H, t.vertsX, t.vertsZ, p);
 
             // 2) 頂点（位置・法線・UV）
-            BuildVertices(t.vertices, H, t.vertsX, t.vertsZ, p.cellSize, p.heightScale);
+            BuildVertices(t.vertices, H, t.vertsX, t.vertsZ, p.cellSize, p.heightScale, p.offset);
 
             // 3) クラスターを作って IndexPool に連結
             BuildClusters(t.indexPool, t.clusters, t.clustersX, t.clustersZ,
-                H, p.cellsX, p.cellsZ, p.clusterCellsX, p.clusterCellsZ, p.cellSize, p.heightScale);
+                H, p.cellsX, p.cellsZ, p.clusterCellsX, p.clusterCellsZ, p.cellSize, p.heightScale, p.offset);
 
             if (outMap != nullptr) *outMap = std::move(H);
 
@@ -153,13 +153,13 @@ namespace SFW {
             t.vertsZ = hf.vertsZ;
 
             // 1) 頂点生成（既存関数）
-            BuildVertices(t.vertices, hf.H01, t.vertsX, t.vertsZ, p.cellSize, p.heightScale);
+            BuildVertices(t.vertices, hf.H01, t.vertsX, t.vertsZ, p.cellSize, p.heightScale, p.offset);
 
             // 2) クラスター生成（既存関数）
             const uint32_t cellsX = t.vertsX - 1, cellsZ = t.vertsZ - 1;
             BuildClusters(t.indexPool, t.clusters, t.clustersX, t.clustersZ,
                 hf.H01, cellsX, cellsZ, p.clusterCellsX, p.clusterCellsZ,
-                p.cellSize, p.heightScale);
+                p.cellSize, p.heightScale, p.offset);
 
             return t;
         }
@@ -651,7 +651,8 @@ namespace SFW {
         void TerrainClustered::BuildVertices(std::vector<TerrainVertex>& outVtx,
             const std::vector<float>& H,
             uint32_t vx, uint32_t vz,
-            float cellSize, float heightScale)
+            float cellSize, float heightScale,
+            Math::Vec3f offset)
         {
             outVtx.resize(vx * vz);
 
@@ -661,7 +662,7 @@ namespace SFW {
                 for (uint32_t x = 0; x < vx; ++x) {
                     float y = H[VIdx(x, z, vx)] * heightScale;
                     TerrainVertex& v = outVtx[VIdx(x, z, vx)];
-                    v.pos = make3(x * cellSize, y, z * cellSize);
+                    v.pos = make3(x * cellSize, y, z * cellSize) + offset;
                     v.uv = make2(float(x) / (vx - 1), float(z) / (vz - 1));
                     v.nrm = make3(0, 1, 0); // 後で法線を計算
                 }
@@ -699,7 +700,8 @@ namespace SFW {
             const std::vector<float>& H,
             uint32_t cellsX, uint32_t cellsZ,
             uint32_t clusterCellsX, uint32_t clusterCellsZ,
-            float cellSize, float heightScale)
+            float cellSize, float heightScale,
+            Math::Vec3f offset)
         {
             // クラスター個数
             outClustersX = (cellsX + clusterCellsX - 1) / clusterCellsX;
@@ -743,7 +745,7 @@ namespace SFW {
                             float Xw = float(x) * cellSize;
                             float Zw = float(z) * cellSize;
                             // XZ はワールド座標でなくセルインデックス基準。必要なら scale/offset を持ち込む
-                            ExpandAABB(bounds, make3(Xw, Yw, Zw));
+                            ExpandAABB(bounds, make3(Xw, Yw, Zw) + offset);
                         }
                     }
 

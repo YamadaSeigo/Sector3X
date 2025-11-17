@@ -51,6 +51,8 @@ namespace SFW
 			Vec2 operator*(T s) const noexcept { return Vec2(x * s, y * s); }
 			Vec2 operator/(T s) const noexcept { return Vec2(x / s, y / s); }
 
+			bool operator==(const Vec2& rhs) const noexcept { return x == rhs.x && y == rhs.y; }
+
 			T dot(const Vec2& rhs) const noexcept { return x * rhs.x + y * rhs.y; }
 
 			T length() const noexcept { return std::sqrt(dot(*this)); }
@@ -100,13 +102,19 @@ namespace SFW
 			Vec3& operator/=(const Vec3& rhs) noexcept { assert(rhs.x != 0 && rhs.y != 0 && rhs.z != 0); x /= rhs.x; y /= rhs.y; z /= rhs.z; return *this; }
 			Vec3& operator/=(T s) noexcept { assert(s != 0); x /= s; y /= s; z /= s; return *this; }
 
+			bool operator==(const Vec3& rhs) const noexcept { return x == rhs.x && y == rhs.y && z == rhs.z; }
+
 			T dot(const Vec3& rhs) const noexcept { return x * rhs.x + y * rhs.y + z * rhs.z; }
 
 			T length() const noexcept { return std::sqrt(dot(*this)); }
 
 			Vec3 normalized() const noexcept {
 				T len = length();
-				assert(len != 0);
+				if (len == 0) {
+					assert(false && "Zero-length vector cannot be normalized.");
+					return *this;
+				}
+
 				return *this * (T(1) / len);
 			}
 
@@ -118,6 +126,26 @@ namespace SFW
 				);
 			}
 		};
+
+		// ---------------- Vec3 ê≥ãKâªÇÃà¿ëSî≈ ----------------
+		template<typename T>
+		static Vec2<T> NormalizeSafe(const Vec2<T>& v, const Vec2<T>& fallback)
+		{
+			float lenSq = v.length(); // Vector.hpp Ç…çáÇÌÇπÇƒ
+			if (lenSq <= 1e-8f)
+				return fallback;
+			return v / std::sqrt(lenSq);
+		}
+
+		// ---------------- Vec3 ê≥ãKâªÇÃà¿ëSî≈ ----------------
+		template<typename T>
+		static Vec3<T> NormalizeSafe(const Vec3<T>& v, const Vec3<T>& fallback)
+		{
+			float lenSq = v.length(); // Vector.hpp Ç…çáÇÌÇπÇƒ
+			if (lenSq <= 1e-8f)
+				return fallback;
+			return v / std::sqrt(lenSq);
+		}
 
 		// ãKñÒÉ^ÉO
 		struct RH_ZBackward {}; // ó·: OpenGLïó (âEéËån, +ZÇ™âú Å® forward = (0,0,-1))

@@ -31,9 +31,6 @@ namespace SFW
 {
 	namespace ECS
 	{
-		//前方宣言
-		template<typename Derived, typename Partition, typename AccessSpec, typename ContextSpec>
-		class ITypeSystem;
 		/**
 		 * @brief StartImplのオーバーロードをチェックするコンセプト
 		 */
@@ -258,6 +255,10 @@ namespace SFW
 			}
 		}
 
+		//前方宣言
+		template<typename Derived, typename Partition, typename AccessSpec, typename ContextSpec, IsParallel ParallelUpdate = IsParallel{false}>
+		class ITypeSystem;
+
 		/**
 		 * @brief ECSシステムのインターフェース
 		 * @tparam Derived CRTPで継承する派生クラス
@@ -265,8 +266,8 @@ namespace SFW
 		 * @tparam AccessTypes アクセスするコンポーネントの型
 		 * @tparam Services サービスの型
 		 */
-		template<typename Derived, typename Partition, typename... AccessTypes, typename... Services>
-		class ITypeSystem<Derived, Partition, ComponentAccess<AccessTypes...>, ServiceContext<Services...>> : public ISystem<Partition> {
+		template<typename Derived, typename Partition, typename... AccessTypes, typename... Services, IsParallel ParallelUpdate>
+		class ITypeSystem<Derived, Partition, ComponentAccess<AccessTypes...>, ServiceContext<Services...>, ParallelUpdate> : public ISystem<Partition> {
 
 		protected:
 			using AccessorTuple = ComponentAccess<AccessTypes...>::Tuple;
@@ -481,7 +482,7 @@ namespace SFW
 			 * @param partition パーティションの参照
 			 * @detail 自身のコンテキストを使用して、StartImplを呼び出す
 			 */
-			void Start(const ServiceLocator& serviceLocator) override {
+			void Start(const ServiceLocator& serviceLocator) override final {
 				if constexpr (HasStartImpl<Derived, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
 						// 静的サービスを使用する場合、サービスロケーターから直接取得
@@ -508,7 +509,7 @@ namespace SFW
 			 * @param partition パーティションの参照
 			 * @detail 自身のシステムのコンテキストを使用して、UpdateImplを呼び出す
 			 */
-			void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override {
+			void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override final{
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
 						// 静的サービスを使用する場合、サービスロケーターから直接取得
@@ -583,7 +584,7 @@ namespace SFW
 			 * @param partition パーティションの参照
 			 * @detail 自身のコンテキストを使用して、StartImplを呼び出す
 			 */
-			void End(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) override {
+			void End(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) override final {
 				if constexpr (HasEndImpl<Derived, Partition, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
 						// 静的サービスを使用する場合、サービスロケーターから直接取得
@@ -629,8 +630,15 @@ namespace SFW
 			 * @brief システムのアクセス情報を取得する関数
 			 * @return AccessInfo アクセス情報
 			 */
-			constexpr AccessInfo GetAccessInfo() const noexcept override {
+			constexpr AccessInfo GetAccessInfo() const noexcept override final {
 				return ComponentAccess<AccessTypes...>::GetAccessInfo();
+			}
+			/**
+			 * @brief システムの並列更新可能かを取得する関数
+			 * @return bool 並列更新可能な場合はtrue
+			 */
+			constexpr bool IsParallelUpdate() const noexcept override final {
+				return ParallelUpdate.v;
 			}
 		private:
 

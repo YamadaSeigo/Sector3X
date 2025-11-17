@@ -477,6 +477,12 @@
     <ClInclude Include="inc\SectorFW\Graphics\HeightmapBake.h">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\LightShadowService.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShadowMapService.h">
+      <Filter>Inc\Graphics\DX11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">
@@ -993,6 +999,9 @@
       <Filter>Src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\TerrainClustered.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DX11ShadowMapService.cpp">
       <Filter>Src\Graphics</Filter>
     </ClCompile>
   </ItemGroup>

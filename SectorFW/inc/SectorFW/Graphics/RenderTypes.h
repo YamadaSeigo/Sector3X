@@ -105,12 +105,12 @@ namespace SFW
 
 			// ここが“空白の活用”パート（合計 8B）
 			uint32_t cbOffsetDiv256;   // 動的CBリングの 256B 単位オフセット（DX12/11.1 等で使える）
-			uint16_t viewMask;         // 例: 16 ビュー/パス（影カスケード / ステレオ / MRT パスの選別）
+			uint16_t viewMask;         // 例: 16 ビュー/パス（例: 影カスケード / ステレオ / MRT パスの選別）
 			uint8_t  flags;            // 小さなフラグ群（下に定義）
 			uint8_t  userTag;          // 任意のラベル/デバッグ/可視化タグ
 
 			DrawCommand() : sortKey(0), mesh(0), material(0), pso(0), instanceIndex{ 0 },
-				cbOffsetDiv256(0), viewMask(0xFFFF), flags(0), userTag(0) {
+				cbOffsetDiv256(0), viewMask(0), flags(0), userTag(0) {
 			}
 
 			// 便利ヘルパ

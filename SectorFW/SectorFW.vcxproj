@@ -76,6 +76,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11RenderBackend.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11SamplerManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShaderManager.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShadowMapService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11TextureManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\_dx11inc.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX12\dx12inc.h" />
@@ -84,6 +85,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\I2DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\I3DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\IGraphicsDevice.hpp" />
+    <ClInclude Include="inc\SectorFW\Graphics\LightShadowService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\LODPolicy.h" />
     <ClInclude Include="inc\SectorFW\Graphics\OccluderToolkit.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderBackend.hpp" />
@@ -181,6 +183,7 @@
     <ClCompile Include="src\Graphics\DX11PSOManager.cpp" />
     <ClCompile Include="src\Graphics\DX11RenderBackend.cpp" />
     <ClCompile Include="src\Graphics\DX11ShaderManager.cpp" />
+    <ClCompile Include="src\Graphics\DX11ShadowMapService.cpp" />
     <ClCompile Include="src\Graphics\DX11TextureManager.cpp" />
     <ClCompile Include="src\Graphics\DX12Graphics.cpp" />
     <ClCompile Include="src\Graphics\LODPolicy.cpp" />

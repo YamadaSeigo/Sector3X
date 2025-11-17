@@ -64,8 +64,10 @@ namespace SFW
 							target = eye + f * focusDist;
 						}
 
-						auto view = Math::MakeLookAtMatrixLH(eye, target, u);  // 新しい u を使用
-						auto proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, nearClip, farClip);
+						auto& buffer = cameraBuffer[currentSlot];
+
+						buffer.view = Math::MakeLookAtMatrixLH(eye, target, u);  // 新しい u を使用
+						buffer.proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, nearClip, farClip);
 
 						BufferUpdateDesc cbUpdateDesc;
 						{
@@ -73,8 +75,7 @@ namespace SFW
 							cbUpdateDesc.buffer = data.ref().buffer;
 						}
 
-						auto& buffer = cameraBuffer[currentSlot];
-						buffer.viewProj = proj * view; // ビュー投影行列
+						buffer.viewProj = buffer.proj * buffer.view; // ビュー投影行列
 						cbUpdateDesc.data = &buffer;
 						cbUpdateDesc.isDelete = false; // 更新時は削除しない
 
@@ -137,8 +138,9 @@ namespace SFW
 							}
 						}
 
-						auto view = Math::MakeLookAtMatrixLH(eye, target, u);
-						auto proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, bottom, top, nearClip, farClip);
+						auto& buffer = cameraBuffer[currentSlot];
+						buffer.view = Math::MakeLookAtMatrixLH(eye, target, u);
+						buffer.proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, bottom, top, nearClip, farClip);
 
 						BufferUpdateDesc cbUpdateDesc;
 						{
@@ -147,8 +149,8 @@ namespace SFW
 						}
 
 						currentSlot = frameIdx % RENDER_BUFFER_COUNT;
-						auto& buffer = cameraBuffer[currentSlot];
-						buffer.viewProj = proj * view; // ビュー投影行列
+						
+						buffer.viewProj = buffer.proj * buffer.view; // ビュー投影行列
 						cbUpdateDesc.data = &buffer;
 						cbUpdateDesc.isDelete = false; // 更新時は削除しない
 

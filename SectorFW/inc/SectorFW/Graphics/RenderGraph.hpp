@@ -8,6 +8,8 @@
 #pragma once
 
 #include <optional>
+#include <span>
+#include <bit>
 
 #include "RenderPass.hpp"
 #include "RenderQueue.h"
@@ -47,6 +49,17 @@ namespace SFW
 			struct PassNode {
 				uint32_t groupIndex;  // GroupA or GroupB …
 				uint32_t passIndex;   // そのグループ内の何番目のPassか
+			};
+
+			struct PassViewRange {
+				uint32_t offset; // indices[] の何番目から
+				uint32_t count;  // 何個分
+			};
+
+			struct GroupState {
+				std::vector<DrawCommand> cmds;          // Submit結果
+				std::vector<uint32_t>    indices;       // 全パス共通の index バッファ
+				std::vector<PassViewRange> ranges;      // [pass] → (offset,count)
 			};
 
 			/**
@@ -107,6 +120,10 @@ namespace SFW
 				auto* rq = renderService.renderQueues.back().get();
 
 				groups.push_back(PassGroup{ name, rq, {} });
+
+				// groups と groupStates を同じサイズに揃える
+				groupStates.resize(groups.size());
+
 				return groups.back();
 			}
 
@@ -174,17 +191,15 @@ namespace SFW
 
 				renderService.CallPreDrawCustomFunc(); // カスタム関数の更新
 
-				struct GroupState {
-					std::vector<DrawCommand> cmds;          // Submitで取り出した共通コマンド
-					std::vector<std::vector<uint32_t>> views; // パスごとの index リスト
-				};
-
-				std::vector<GroupState> groupStates(groups.size());
-
-				// 1) グループごとに Submit して cmds を埋める
+				// グループごとに Submit して cmds を埋める
 				for (size_t gi = 0; gi < groups.size(); ++gi) {
 					auto& g = groups[gi];
 					auto& gs = groupStates[gi];
+
+					// 中身だけ消す。capacity は保持される。
+					gs.cmds.clear();
+					gs.indices.clear();
+					gs.ranges.clear();
 
 					g.queue->Submit(prevSlot, gs.cmds);   // ここで1回だけ取り出す
 
@@ -199,16 +214,52 @@ namespace SFW
 					} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif // _ENABLE_IMGUI
 
-					gs.views.resize(g.passes.size());
+					const size_t passCount = g.passes.size();
+					gs.ranges.resize(passCount);
 
-					// 2) パスごとに index を振り分け
+					if (gs.cmds.empty() || passCount == 0) {
+						return;
+					}
+
+					// --- 1st pass: 各パスがいくつ index を持つかカウント ---
+					std::vector<uint32_t> counts(passCount, 0);
+
 					for (uint32_t ci = 0; ci < (uint32_t)gs.cmds.size(); ++ci) {
-						uint16_t mask = gs.cmds[ci].viewMask;
-						for (size_t pi = 0; pi < g.passes.size(); ++pi) {
-							auto* pass = g.passes[pi];
+						uint16_t m = gs.cmds[ci].viewMask;
+						while (m > 0) {
+							uint16_t p = std::countr_zero(m);
 
-							if (mask & pass->viewBit)
-								gs.views[pi].push_back(ci);
+							m &= (m - 1);                        // 最下位の1ビットを落とす
+
+							//passIndex がそのままbitならこれでOK
+							counts[p]++;  // C++20 (MSVCなら _tzcnt_u32 など)
+						}
+					}
+
+					// --- 2nd: prefix-sum でオフセット決定 ---
+					uint32_t total = 0;
+					for (size_t p = 0; p < passCount; ++p) {
+						gs.ranges[p].offset = total;
+						gs.ranges[p].count = counts[p];
+						total += counts[p];
+					}
+
+					gs.indices.resize(total);       // ここだけ 1回の確保
+
+					// カーソル（書き込み位置）
+					std::vector<uint32_t> cursor(passCount);
+					for (size_t p = 0; p < passCount; ++p)
+						cursor[p] = gs.ranges[p].offset;
+
+					// --- 3rd: 実際に index を突っ込む ---
+					for (uint32_t ci = 0; ci < (uint32_t)gs.cmds.size(); ++ci) {
+						uint16_t m = gs.cmds[ci].viewMask;
+						while (m > 0) {
+							uint16_t p = std::countr_zero(m);
+
+							m &= (m - 1);                        // 最下位の1ビットを落とす
+
+							gs.indices[cursor[p]++] = ci;
 						}
 					}
 				}
@@ -218,10 +269,12 @@ namespace SFW
 					auto& gs = groupStates[node.groupIndex];
 
 					auto* pass = g.passes[node.passIndex];
-					auto& indices = gs.views[node.passIndex];
+					const auto& r = gs.ranges[node.passIndex];
+					if (r.count == 0) return;
 
-					if (indices.empty())
-						continue;
+					// このパス用の indexView
+					auto* idxBegin = gs.indices.data() + r.offset;
+					auto* idxEnd = idxBegin + r.count;
 
 					// パス固有の状態をセット
 					backend.SetPrimitiveTopology(pass->topology);
@@ -234,7 +287,7 @@ namespace SFW
 					backend.BindGlobalCBVs(pass->cbvs);
 
 					// 共通cmds + このパスの indexビューで描画
-					backend.ExecuteDrawIndexedInstanced(gs.cmds, indices, pass->psoOverride, !useRasterizer);
+					backend.ExecuteDrawIndexedInstanced(gs.cmds, std::span<const uint32_t>(idxBegin, idxEnd), pass->psoOverride, !useRasterizer);
 
 					if (pass->customExecute)
 						pass->customExecute(currentFrame);
@@ -331,6 +384,8 @@ namespace SFW
 			std::vector<PassGroup> groups;                 // グループ
 
 			std::vector<PassNode> executionOrder;
+
+			std::vector<GroupState> groupStates;
 
 			RenderService renderService; // レンダーサービスのインスタンス
 			uint64_t currentFrame = 0; // 現在のフレーム番号 RenderGraphの描画前に更新している

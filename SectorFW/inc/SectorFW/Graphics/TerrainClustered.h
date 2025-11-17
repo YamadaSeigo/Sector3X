@@ -37,6 +37,8 @@ namespace SFW {
             // クラスター設定（セル基準）
             uint32_t clusterCellsX = 32; // クラスターの幅（セル数）
             uint32_t clusterCellsZ = 32; // クラスターの高さ（セル数）
+
+			Math::Vec3f offset = Math::Vec3f(0.0f, 0.0f, 0.0f); // ワールドオフセット
         };
 
         struct TerrainClustered {
@@ -146,7 +148,8 @@ namespace SFW {
             static void BuildVertices(std::vector<TerrainVertex>& outVtx,
                 const std::vector<float>& H,
                 uint32_t vx, uint32_t vz,
-                float cellSize, float heightScale);
+                float cellSize, float heightScale,
+                Math::Vec3f offset = { 0,0,0 });
 
             static void BuildClusters(std::vector<uint32_t>& outIndexPool,
                 std::vector<ClusterRange>& outClusters,
@@ -154,16 +157,8 @@ namespace SFW {
                 const std::vector<float>& H,
                 uint32_t cellsX, uint32_t cellsZ,
                 uint32_t clusterCellsX, uint32_t clusterCellsZ,
-                float cellSize, float heightScale);
-
-            static inline void ExpandAABB(Math::AABB3f& b, const Math::Vec3f& p) {
-                b.lb.x = (std::min)(b.lb.x, p.x);
-                b.lb.y = (std::min)(b.lb.y, p.y);
-                b.lb.z = (std::min)(b.lb.z, p.z);
-                b.ub.x = (std::max)(b.ub.x, p.x);
-                b.ub.y = (std::max)(b.ub.y, p.y);
-                b.ub.z = (std::max)(b.ub.z, p.z);
-            }
+                float cellSize, float heightScale,
+                Math::Vec3f offset = { 0,0,0 });
         };
     }
 } // namespace SFW

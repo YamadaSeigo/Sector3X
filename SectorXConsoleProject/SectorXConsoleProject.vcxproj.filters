@@ -62,12 +62,27 @@
     <FxCompile Include="shader\VS_ZPrepass.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\PS_ZPrepass.hlsl">
+    <FxCompile Include="shader\CS_WriteArgsShadow.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CS_TerrainClusteredShadow.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_TerrainClusteredDepth.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_ShadowColor.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_ShadowDepth.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\GlobalTypes.hlsli">
+    <None Include="shader\_GlobalTypes.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shader\_ShadowTypes.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

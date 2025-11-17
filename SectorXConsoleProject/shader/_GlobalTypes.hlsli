@@ -1,6 +1,10 @@
 
+#include "_ShadowTypes.hlsli"
+
 cbuffer ViewProjectionBuffer : register(b0)
 {
+    row_major float4x4 uView;
+    row_major float4x4 uProj;
     row_major float4x4 uViewProj;
 };
 
@@ -35,9 +39,27 @@ cbuffer LightingCB : register(b3)
     uint gPointLightCount; // 16B
 };
 
+#define NUM_CASCADES 4
+
+// カスケード情報（DX11ShadowMapService::CBShadowCascadesData と揃える）
+cbuffer CBShadowCascades : register(b5)
+{
+    row_major float4x4 gLightViewProj[NUM_CASCADES]; // kMaxShadowCascades = 4
+
+//***********************************************************************************************
+    //NUM_CASCADESが増えたらループアンローラーが働かなくなるので注意
+//***********************************************************************************************
+    float4 gCascadeSplits; // Camera の view-space 距離 (splitFar)
+
+
+    uint gCascadeCount;
+    float3 _pad;
+};
+
+
 //======================================================
-//コンスタントバッファのスロット４以降は、個別にセットしてもオケ!
-//テクスチャバッファの場合は,t6以降はオケ!
+//コンスタントバッファのスロット5以降は、個別にセットしてもオケ!
+//テクスチャバッファの場合は,t7以降はオケ!
 //======================================================
 
 // フレーム単位：全インスタンスのワールド行列（48B/個）
@@ -69,7 +91,13 @@ struct PointLight
 
 StructuredBuffer<PointLight> gPointLights : register(t5);
 
+// シャドウマップ (Texture2DArray)
+Texture2DArray<float> gShadowMap : register(t7);
+
 SamplerState gSampler : register(s0);
+
+// 比較サンプラ（ShadowMapService が作っているもの）
+SamplerComparisonState gShadowSampler : register(s1);
 
 /*
 ===固定セマンティクス一覧=========================================

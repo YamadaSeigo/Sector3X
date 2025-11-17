@@ -22,7 +22,9 @@ class ModelRenderSystem : public ITypeSystem<
 	ModelRenderSystem<Partition>,
 	Partition,
 	ComponentAccess<Read<TransformSoA>, Write<CModel>>,//アクセスするコンポーネントの指定
-	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService>>{//受け取るサービスの指定
+	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService>,//受け取るサービスの指定
+	IsParallel{ true } > { //Updateを並列化する
+
 	using Accessor = ComponentAccessor<Read<TransformSoA>, Write<CModel>>;
 public:
 

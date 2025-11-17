@@ -63,7 +63,7 @@ namespace SFW::Math {
 		R abs_tol = R(0)) noexcept {
 		const R ar = static_cast<R>(a), br = static_cast<R>(b);
 		const R diff = std::abs(ar - br);
-		const R limit = std::max(abs_tol, rel_tol * std::max(std::abs(ar), std::abs(br)));
+		const R limit = (std::max)(abs_tol, rel_tol * (std::max)(std::abs(ar), std::abs(br)));
 		return diff <= limit;
 	}
 
