@@ -39,7 +39,6 @@ cbuffer LightingCB : register(b3)
     uint gPointLightCount; // 16B
 };
 
-#define NUM_CASCADES 4
 
 // カスケード情報（DX11ShadowMapService::CBShadowCascadesData と揃える）
 cbuffer CBShadowCascades : register(b5)
@@ -117,3 +116,208 @@ struct VSInput
     float3 normal : NORMAL;
     float2 uv : TEXCOORD;
 };
+
+//==================================================
+// ヘルパー：カスケード選択
+//==================================================
+
+uint ChooseCascade(float viewDepth)
+{
+    // viewDepth はカメラ view-space の Z（LHなら +Z が前）、
+    // gCascadeSplits[i] には LightShadowService の splitFar[i] を入れる想定
+
+    uint idx = 0;
+
+    // gCascadeCount-1 まで比較し、閾値を超えたら次のカスケードへ
+    [unroll]
+    for (uint i = 0; i < NUM_CASCADES - 1; ++i)
+    {
+        if (i < gCascadeCount - 1)
+        {
+            // viewDepth が split を超えたらインデックスを進める
+            idx += (viewDepth > gCascadeSplits[i]) ? 1u : 0u;
+        }
+    }
+
+    return min(idx, gCascadeCount - 1);
+}
+
+float DebugShadowDepth(float3 worldPos, uint cascade)
+{
+    float4 shadowPos = mul(gLightViewProj[cascade], float4(worldPos, 1.0f));
+    shadowPos.xyz /= shadowPos.w;
+
+    float2 uv = shadowPos.xy * 0.5f + 0.5f;
+
+    if (uv.x < 0 || uv.y < 0 || uv.x > 1 || uv.y > 1)
+        return 1.0f;
+
+    uv.y = 1.0f - uv.y;
+
+    float z = shadowPos.z;
+
+    // uv, z を 0..1 にクランプ（とりあえず範囲外チェックは外す）
+    uv = saturate(uv);
+    z = saturate(z);
+
+    // 深度バッファの中身をそのまま読む
+    float depthTex = gShadowMap.SampleLevel(
+        gSampler,
+        float3(uv, cascade),
+        0
+    ).r;
+
+    return depthTex; // これをそのまま色として返してみる
+}
+
+float SampleShadow(float3 worldPos, float viewDepth)
+{
+    // どのカスケードを使うか
+    uint cascade = ChooseCascade(viewDepth);
+
+    // 対応するライトVPでライト空間へ変換
+    float4 shadowPos = mul(gLightViewProj[cascade], float4(worldPos, 1.0f));
+
+    // NDC に正規化
+    shadowPos.xyz /= shadowPos.w;
+
+    // LH + ZeroToOne の正射影を使っている前提:
+    // x,y: -1..1, z: 0..1 になるよう Projection を作っておく。
+    float2 uv = shadowPos.xy * 0.5f + 0.5f;
+    float z = shadowPos.z;
+
+    // カスケード外なら影なし
+    if (uv.x < 0.0f || uv.x > 1.0f ||
+        uv.y < 0.0f || uv.y > 1.0f ||
+        z < 0.0f || z > 1.0f)
+    {
+        return 1.0f; // 完全にライトが当たっている扱い
+    }
+    
+    uv.y = 1.0f - uv.y; // テクスチャ座標系に変換
+
+    // 深度バイアス（アーティファクトを見ながら調整）
+    const float depthBias = 0.1f;
+
+    // PCF のサンプル範囲
+    // （シャドウマップの解像度は C++ 側から逆数を渡してもよい）
+    const float2 texelSize = 1.0f / float2(960.0f, 720.0f);
+    const int kernelRadius = 1; // 3x3 PCF
+
+    float shadow = 0.0f;
+    int count = 0;
+
+    // Comparison Sampler を使った 3x3 PCF
+    [unroll]
+    for (int dy = -kernelRadius; dy <= kernelRadius; ++dy)
+    {
+        [unroll]
+        for (int dx = -kernelRadius; dx <= kernelRadius; ++dx)
+        {
+            float2 offset = float2(dx, dy) * texelSize;
+
+            shadow += gShadowMap.SampleCmpLevelZero(
+                gShadowSampler,
+                float3(uv + offset, cascade),
+                z - depthBias
+            );
+            ++count;
+        }
+    }
+
+    shadow /= max(count, 1);
+
+    return shadow; // 1 = 影なし, 0 = 完全に影
+}
+
+// viewDepth: view-space Z
+// returns: baseIdx, nextIdx, blendFactor
+void EvaluateCascade(float viewDepth,
+                     out uint baseIdx,
+                     out uint nextIdx,
+                     out float blend)
+{
+    // gCascadeSplits: splitFar[0..N-1]
+    baseIdx = 0;
+    [unroll]
+    for (uint i = 0; i < gCascadeCount - 1; ++i)
+    {
+        if (viewDepth > gCascadeSplits[i])
+            baseIdx = i + 1;
+    }
+
+    nextIdx = min(baseIdx + 1u, gCascadeCount - 1u);
+
+    // ブレンド開始距離（view-space）
+    const float blendRange = 5.0f; // 調整ポイント（単位は view-space Z）
+
+    if (baseIdx == gCascadeCount - 1)
+    {
+        blend = 0.0f;
+        return;
+    }
+
+    float splitNear = gCascadeSplits[baseIdx];
+    float splitFar = gCascadeSplits[nextIdx];
+
+    // baseIdx の far 付近でブレンド
+    float start = splitFar - blendRange;
+    float t = saturate((viewDepth - start) / blendRange);
+
+    blend = t; // 0 → base, 1 → next
+}
+
+float SampleShadowCascade(float3 worldPos, uint cascade)
+{
+    float4 shadowPos = mul(float4(worldPos, 1.0f), gLightViewProj[cascade]);
+    shadowPos.xyz /= shadowPos.w;
+
+    float2 uv = shadowPos.xy * 0.5f + 0.5f;
+    float z = shadowPos.z;
+
+    uv.y = 1.0f - uv.y;
+
+    if (uv.x < 0.0f || uv.x > 1.0f ||
+        uv.y < 0.0f || uv.y > 1.0f ||
+        z < 0.0f || z > 1.0f)
+    {
+        return 1.0f;
+    }
+
+    const float2 texelSize = 1.0f / float2(960.0f, 720.0f);
+    const float depthBias = 0.0005f;
+    const int kernelRadius = 1;
+
+    float shadow = 0.0f;
+    int count = 0;
+
+    [unroll]
+    for (int dy = -kernelRadius; dy <= kernelRadius; ++dy)
+    {
+        [unroll]
+        for (int dx = -kernelRadius; dx <= kernelRadius; ++dx)
+        {
+            float2 offset = float2(dx, dy) * texelSize;
+            shadow += gShadowMap.SampleCmpLevelZero(
+                gShadowSampler,
+                float3(uv + offset, cascade),
+                z - depthBias
+            );
+            ++count;
+        }
+    }
+
+    return shadow / max(count, 1);
+}
+
+float SampleShadowLerp(float3 worldPos, float viewDepth)
+{
+    uint idx0, idx1;
+    float blend;
+    EvaluateCascade(viewDepth, idx0, idx1, blend);
+
+    float s0 = SampleShadowCascade(worldPos, idx0);
+    float s1 = SampleShadowCascade(worldPos, idx1);
+
+    return lerp(s0, s1, blend);
+}

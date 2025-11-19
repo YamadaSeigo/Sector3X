@@ -289,7 +289,7 @@ public:
 						cmd.material = mesh.material.index;
 						cmd.pso = mesh.pso.index;
 
-						cmd.viewMask |= PASS_3DMAIN_ZPREPASS | PASS_3DMAIN_OPAQUE;
+						cmd.viewMask |= /*PASS_3DMAIN_ZPREPASS | */PASS_3DMAIN_OPAQUE;
 
 						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
 						producer.Push(std::move(cmd));

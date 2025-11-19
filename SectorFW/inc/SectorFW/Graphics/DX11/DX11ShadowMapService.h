@@ -51,13 +51,19 @@ namespace SFW
                 }
 			}
 
-			void BindShadowPSResources(ID3D11DeviceContext* context,
+            void BindShadowPSShadowMap(ID3D11DeviceContext* context,
+                UINT shadowMapSRVSlot = 0
+            )
+            {
+                context->PSSetShaderResources(shadowMapSRVSlot, 1, m_shadowSRV.GetAddressOf());
+            }
+
+			void BindShadowResources(ID3D11DeviceContext* context,
                 UINT shadowDataCBSlot = 0,
-                UINT shadowMapSRVSlot = 0,
                 UINT samplerSlot = 0) const
 			{
-				context->PSSetConstantBuffers(shadowDataCBSlot, 1, m_cbShadowCascades.GetAddressOf());
-				context->PSSetShaderResources(shadowMapSRVSlot, 1, m_shadowSRV.GetAddressOf());
+				context->VSSetConstantBuffers(shadowDataCBSlot, 1, m_cbShadowCascades.GetAddressOf());
+                context->PSSetConstantBuffers(shadowDataCBSlot, 1, m_cbShadowCascades.GetAddressOf());
 				context->PSSetSamplers(samplerSlot, 1, m_shadowSampler.GetAddressOf());
 			}
 

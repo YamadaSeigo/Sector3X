@@ -112,7 +112,7 @@ void InitializeRenderPipeLine(
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
 
 	passDesc.rtvs = rtvs;
-	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
+	//passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
 	passDesc.psoOverride = std::nullopt;
 	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 	passDesc.customExecute = nullptr;
@@ -214,8 +214,8 @@ int main(void)
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
-	p.cellsX = 512 * 1;
-	p.cellsZ = 512 * 1;
+	p.cellsX = 256 * 1;
+	p.cellsZ = 256 * 1;
 	p.clusterCellsX = 32;
 	p.clusterCellsZ = 32;
 	p.cellSize = 3.0f;
@@ -401,7 +401,7 @@ int main(void)
 
 	auto testClusterFunc = [&, deviceContext, perCameraService, matRes, splatRes, cp](Graphics::RenderService* renderService)
 		{
-			auto viewProj = perCameraService->GetCameraBufferData().viewProj;
+			//auto viewProj = perCameraService->GetCameraBufferData().viewProj;
 			auto camPos = perCameraService->GetEyePos();
 			Math::Frustumf frustumPlanes
 				//Math::Frustumf::MakeFrustumPlanes_WorldSpace_Oriented(viewProj.data(), camPos.data, frustumPlanes.data());
@@ -427,7 +427,8 @@ int main(void)
 			static Graphics::DX11::BlockReservedContext::ShadowDepthParams shadowParams{};
 
 			shadowParams.mainDSV = graphics.GetMainDepthStencilView().Get();
-			memcpy(shadowParams.mainViewProj, viewProj.data(), sizeof(shadowParams.mainViewProj));
+			shadowParams.mainView = perCameraService->MakeViewMatrix();
+			shadowParams.mainProj = perCameraService->MakeProjectionMatrix();
 			memcpy(shadowParams.mainFrustumPlanes, frustumPlanes.data(), sizeof(shadowParams.mainFrustumPlanes));
 			auto& cascadeDSV = shadowMapService.GetCascadeDSV();
 			for (int c = 0; c < Graphics::kMaxShadowCascades; ++c) {
@@ -450,6 +451,9 @@ int main(void)
 
 			shadowMapService.ClearDepthBuffer(deviceContext);
 
+			//CBの5, Samplerの1にバインド
+			shadowMapService.BindShadowResources(deviceContext, 5, 1);
+
 			blockRevert.RunShadowDepth(deviceContext, shadowParams, world.data());
 		};
 
@@ -457,8 +461,9 @@ int main(void)
 		{
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
 
-			//CBの5,SRVの7,Samplerの1にバインド
-			shadowMapService.BindShadowPSResources(deviceContext, 5, 7, 1);
+			graphics.SetDefaultRenderTarget();
+
+			shadowMapService.BindShadowPSShadowMap(deviceContext, 7);
 
 			shadowMapService.UpdateShadowCascadeCB(deviceContext, lightShadowService);
 
@@ -512,13 +517,16 @@ int main(void)
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
 
 	modelDesc.path = "assets/model/StylizedNatureMegaKit/Clover_1.gltf";
+	modelDesc.viewMax = 200.0f;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
 	modelDesc.path = "assets/model/FantasyTree.gltf";
 	modelDesc.buildOccluders = false;
+	modelDesc.viewMax = 1000.0f;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 	modelDesc.instancesPeak = 10000;
+	modelDesc.viewMax = 200.0f;
 	modelDesc.path = "assets/model/GrassPatch.glb";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
 
@@ -590,8 +598,8 @@ int main(void)
 			p.cellsX * p.cellSize,
 			p.cellsZ * p.cellSize
 		};
-		for (int j = 0; j < 100; ++j) {
-			for (int k = 0; k < 100; ++k) {
+		for (int j = 0; j < 32; ++j) {
+			for (int k = 0; k < 32; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
 					float scaleXZ = 10.0f;
@@ -643,8 +651,8 @@ int main(void)
 		// Entity生成
 		uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
 		uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
-		for (int j = 0; j < 50; ++j) {
-			for (int k = 0; k < 50; ++k) {
+		for (int j = 0; j < 10; ++j) {
+			for (int k = 0; k < 10; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
 					//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };

@@ -1,3 +1,5 @@
+#include "_GlobalTypes.hlsli"
+
 // t25: GPU 側とレイアウト完全一致
 struct ClusterParam
 {
@@ -16,8 +18,6 @@ Texture2D gLayer3 : register(t23);
 Texture2DArray gSplat : register(t24); // クラスタごとの重み (RGBA) を slice で参照
 StructuredBuffer<ClusterParam> gClusters : register(t25); // 全クラスタのパラメータ表
 
-SamplerState gSamp : register(s0);
-
 // b14: グリッド定数（DX11BlockRevertHelper::TerrainGridCB と一致）
 cbuffer TerrainGridCB : register(b10)
 {
@@ -25,8 +25,8 @@ cbuffer TerrainGridCB : register(b10)
     float2 gCellSizeXZ; // 1クラスタのサイズ (x,z)
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
-    uint _pad0;
-    uint _pad1;
+    uint _pad00;
+    uint _pad11;
 };
 
 // VS 出力（worldPos を追加）
@@ -35,6 +35,7 @@ struct VSOut
     float4 pos : SV_Position;
     float2 uv : TEXCOORD0; // 地形の基礎UV（0..1）
     float3 worldPos : TEXCOORD1; // 少なくとも x,z を使用
+    float viewDepth : TEXCOORD2;
     float3 nrm : NORMAL0; // 必要なら
 };
 
@@ -77,7 +78,7 @@ float4 main(VSOut i) : SV_Target
     // 2) スプラット重み：Texture2DArray なら slice 指定
     //    通常は p.splatST=(1,1), p.splatOffset=(0,0) 固定でOK
     float2 suv = uvC * p.splatST + p.splatOffset;
-    float4 w = gSplat.Sample(gSamp, float3(suv, p.splatSlice));
+    float4 w = gSplat.Sample(gSampler, float3(suv, p.splatSlice));
     w = saturate(w);
     w /= max(1e-5, dot(w, 1));
 
@@ -85,10 +86,23 @@ float4 main(VSOut i) : SV_Target
     // 3) 素材4：連続感が欲しければ world ベースでタイルするのがおすすめ
     //    例: ワールドXZをスケール（完全にクラスタ無関係の連続タイル）
     //float2 uvWorld = i.worldPos.xz; // 必要に応じて / overallScale
-    float4 c0 = gLayer0.Sample(gSamp, suv * p.layerTiling[0]);
-    float4 c1 = gLayer1.Sample(gSamp, suv * p.layerTiling[1]);
-    float4 c2 = gLayer2.Sample(gSamp, suv * p.layerTiling[2]);
-    float4 c3 = gLayer3.Sample(gSamp, suv * p.layerTiling[3]);
+    float4 c0 = gLayer0.Sample(gSampler, suv * p.layerTiling[0]);
+    float4 c1 = gLayer1.Sample(gSampler, suv * p.layerTiling[1]);
+    float4 c2 = gLayer2.Sample(gSampler, suv * p.layerTiling[2]);
+    float4 c3 = gLayer3.Sample(gSampler, suv * p.layerTiling[3]);
 
-    return c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
+    uint cascade = ChooseCascade(i.viewDepth);
+
+    float4 shadowPos = mul(gLightViewProj[cascade], float4(i.worldPos, 1.0f));
+
+    float shadow = DebugShadowDepth(i.worldPos, cascade);
+
+    //float shadow = SampleShadow(i.worldPos, i.viewDepth);
+
+    float shadowBias = 1.0f;
+    if (shadowPos.z - shadow > 0.1f)
+        shadowBias = 0.5f;
+    //if (shadow < 0.1f)
+
+    return (c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a) * shadowBias;
 }

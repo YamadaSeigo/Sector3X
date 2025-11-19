@@ -156,6 +156,7 @@ namespace SFW {
                 for (size_t i = 0; i < R; ++i) {
                     for (size_t j = 0; j < C; ++j) {
                         T s = T(0);
+
                         for (size_t k = 0; k < K; ++k) s += A.m[i][k] * B.m[k][j];
                         out.m[i][j] = s;
                     }

@@ -5,9 +5,10 @@ struct VS_OUT
     float4 posH : SV_Position;
     float3 worldPos : TEXCOORD0;
     float3 normalWS : TEXCOORD1;
-    float viewDepth : TEXCOORD2; // Å© Ç±ÇÍÇ PS Ç≈égÇ§
+    float viewDepth : TEXCOORD2;
     float2 uv : TEXCOORD3;
 };
+
 
 VS_OUT main(VSInput input, uint instId : SV_InstanceID)
 {

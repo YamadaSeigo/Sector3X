@@ -10,6 +10,24 @@ class CameraSystem : public ITypeSystem<
 
 	static constexpr float MOVE_SPEED_WHEEL_RATE = 0.5f;
 public:
+	void StartImpl(
+		UndeletablePtr<InputService> inputService,
+		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService,
+		UndeletablePtr<Graphics::I2DCameraService> camera2DService,
+		UndeletablePtr<Graphics::LightShadowService> lightShadowService
+	)
+	{
+		Graphics::CameraParams camParams;
+		camParams.view = perCameraService->MakeViewMatrix();
+		camParams.position = perCameraService->GetEyePos();
+		camParams.nearPlane = perCameraService->GetNearClip();
+		camParams.farPlane = perCameraService->GetFarClip();
+		camParams.fovY = perCameraService->GetFOV();
+		camParams.aspect = perCameraService->GetAspectRatio();
+
+		lightShadowService->UpdateCascade(camParams, cascadeSceneAABB);
+	}
+
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
 		UndeletablePtr<InputService> inputService,
@@ -66,6 +84,9 @@ public:
 			camParams.farPlane = perCameraService->GetFarClip();
 			camParams.fovY = perCameraService->GetFOV();
 			camParams.aspect = perCameraService->GetAspectRatio();
+
+			auto dirLight = lightShadowService->GetDirectionalLight();
+
 			lightShadowService->UpdateCascade(camParams, cascadeSceneAABB);
 		}
 	}

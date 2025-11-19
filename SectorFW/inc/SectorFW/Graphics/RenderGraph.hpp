@@ -270,7 +270,12 @@ namespace SFW
 
 					auto* pass = g.passes[node.passIndex];
 					const auto& r = gs.ranges[node.passIndex];
-					if (r.count == 0) return;
+					if (r.count == 0) {
+						if (pass->customExecute)
+							pass->customExecute(currentFrame);
+
+						continue;
+					}
 
 					// このパス用の indexView
 					auto* idxBegin = gs.indices.data() + r.offset;

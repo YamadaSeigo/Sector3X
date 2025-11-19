@@ -5,6 +5,7 @@ struct VSOut
     float4 pos : SV_Position;
     float2 uv : TEXCOORD0; // 地形の基礎UV（0..1）
     float3 worldPos : TEXCOORD1; // 少なくとも x,z を使用
+    float viewDepth : TEXCOORD2;
     float3 nrm : NORMAL0; // 必要なら
 };
 
@@ -13,6 +14,8 @@ struct VSOut
 
 cbuffer VSParams : register(b10)
 {
+    row_major float4x4 View;
+    row_major float4x4 Proj;
     row_major float4x4 ViewProj;
     row_major float4x4 World;
 };
@@ -31,6 +34,7 @@ VSOut main(uint vtxId : SV_VertexID)
 
     float4 wp = mul(World, float4(p, 1));
     VSOut o;
+    o.viewDepth = mul(View, wp).z;
     o.pos = mul(ViewProj, wp);
     o.uv = uv;
     o.worldPos = wp.xyz;
