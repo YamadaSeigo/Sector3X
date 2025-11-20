@@ -193,7 +193,7 @@ float SampleShadow(float3 worldPos, float viewDepth)
     {
         return 1.0f; // 完全にライトが当たっている扱い
     }
-    
+
     uv.y = 1.0f - uv.y; // テクスチャ座標系に変換
 
     // 深度バイアス（アーティファクトを見ながら調整）
@@ -230,43 +230,44 @@ float SampleShadow(float3 worldPos, float viewDepth)
     return shadow; // 1 = 影なし, 0 = 完全に影
 }
 
-// viewDepth: view-space Z
-// returns: baseIdx, nextIdx, blendFactor
-void EvaluateCascade(float viewDepth,
-                     out uint baseIdx,
-                     out uint nextIdx,
-                     out float blend)
+struct CascadeInfo
 {
-    // gCascadeSplits: splitFar[0..N-1]
-    baseIdx = 0;
+    uint idx0;
+    uint idx1;
+    float t; // 0..1 でブレンド
+};
+
+CascadeInfo ChooseCascadeBlend(float viewDepth)
+{
+    CascadeInfo r;
+
+    // どのカスケードに属するか探す
+    uint c = 0;
     [unroll]
-    for (uint i = 0; i < gCascadeCount - 1; ++i)
+    for (uint i = 0; i < gCascadeCount; ++i)
     {
-        if (viewDepth > gCascadeSplits[i])
-            baseIdx = i + 1;
+        if (viewDepth < gCascadeSplits[i])
+        {
+            c = i;
+            break;
+        }
     }
 
-    nextIdx = min(baseIdx + 1u, gCascadeCount - 1u);
+    // 手前側
+    uint c0 = c > 0 ? c - 1 : 0;
+    // 奥側
+    uint c1 = c;
 
-    // ブレンド開始距離（view-space）
-    const float blendRange = 5.0f; // 調整ポイント（単位は view-space Z）
+    float d0 = gCascadeSplits[c0];
+    float d1 = gCascadeSplits[c1];
 
-    if (baseIdx == gCascadeCount - 1)
-    {
-        blend = 0.0f;
-        return;
-    }
+    float t = saturate((viewDepth - d0) / (d1 - d0));
 
-    float splitNear = gCascadeSplits[baseIdx];
-    float splitFar = gCascadeSplits[nextIdx];
-
-    // baseIdx の far 付近でブレンド
-    float start = splitFar - blendRange;
-    float t = saturate((viewDepth - start) / blendRange);
-
-    blend = t; // 0 → base, 1 → next
+    r.idx0 = c0;
+    r.idx1 = c1;
+    r.t = t;
+    return r;
 }
-
 float SampleShadowCascade(float3 worldPos, uint cascade)
 {
     float4 shadowPos = mul(float4(worldPos, 1.0f), gLightViewProj[cascade]);
@@ -312,12 +313,10 @@ float SampleShadowCascade(float3 worldPos, uint cascade)
 
 float SampleShadowLerp(float3 worldPos, float viewDepth)
 {
-    uint idx0, idx1;
-    float blend;
-    EvaluateCascade(viewDepth, idx0, idx1, blend);
+    CascadeInfo ci = ChooseCascadeBlend(viewDepth);
 
-    float s0 = SampleShadowCascade(worldPos, idx0);
-    float s1 = SampleShadowCascade(worldPos, idx1);
+    float sh0 = SampleShadowCascade(worldPos, ci.idx0);
+    float sh1 = SampleShadowCascade(worldPos, ci.idx1);
 
-    return lerp(s0, s1, blend);
+    return lerp(sh0, sh1, ci.t);
 }

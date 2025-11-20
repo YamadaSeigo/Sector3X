@@ -24,8 +24,8 @@
 
 #define WINDOW_NAME "SectorX Console Project"
 
-constexpr uint32_t WINDOW_WIDTH = 960;	// ウィンドウの幅
-constexpr uint32_t WINDOW_HEIGHT = 720;	// ウィンドウの高さ
+constexpr uint32_t WINDOW_WIDTH = 1920 / 2;	// ウィンドウの幅
+constexpr uint32_t WINDOW_HEIGHT = 1080 / 2;	// ウィンドウの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
@@ -219,7 +219,7 @@ int main(void)
 	p.clusterCellsX = 32;
 	p.clusterCellsZ = 32;
 	p.cellSize = 3.0f;
-	p.heightScale = 60.0f;
+	p.heightScale = 80.0f;
 	p.frequency = 1.0f / 96.0f * 1.0f;
 	p.seed = 20251112;
 	p.offset.y -= 40.0f;

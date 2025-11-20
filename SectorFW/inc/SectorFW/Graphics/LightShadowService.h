@@ -45,7 +45,7 @@ namespace SFW
             Math::Vec3f position;  // カメラ位置（World）
             float nearPlane = 0.1f;
             float farPlane = 1000.0f;
-            float fovY = 60.0f;   // ラジアン
+            float fovY = Math::Deg2Rad(60.0f);   // ラジアン
             float aspect = 16.0f / 9.0f;
         };
 
@@ -73,10 +73,11 @@ namespace SFW
         public:
             struct CascadeConfig
             {
-                std::uint32_t cascadeCount = 4;   // 1〜kMaxShadowCascades
-                float         shadowDistance = 200.0f; // カメラからの最大影距離
-                float         lambda = 0.5f;   // 0 = 線形, 1 = 対数, その中間
-                float         worldExtent = 500.0f; // ライト正射影の最大サイズ（安全マージン）
+                std::uint32_t   cascadeCount = 4;   // 1〜kMaxShadowCascades
+                float           shadowDistance = 100.0f; // カメラからの最大影距離
+                float           lambda = 0.5f;   // 0 = 線形, 1 = 対数, その中間
+                float           maxWorldExtent = 500.0f; // ライト正射影の最大サイズ（安全マージン）
+				float           casterExtrusion = 100.0f; // 影キャスターをライト方向に押し出す距離
             };
 
             LightShadowService() = default;
@@ -191,16 +192,25 @@ namespace SFW
                 // ライト方向（正規化）
                 Vec3f lightDir = NormalizeSafe(m_directional.directionWS, Vec3f(0.0f, -1.0f, 0.0f));
 
-                // --------------------------------------------------
-                // 1) カスケードごとの WS AABB と、その union を求める
-                // --------------------------------------------------
+                // カスケードごとのワールド AABB
                 std::array<Math::AABB3f, kMaxShadowCascades> cascadeBoundsWS;
-
-                Math::AABB3f unionBoundsWS;
-                unionBoundsWS.invalidate();
 
                 float prevSplit = cam.nearPlane;
 
+                // View の逆行列を使ってワールドへ
+                Math::Matrix4x4f camWorldMtx = Inverse(cam.view);
+
+                // キャスター押し出し量
+                float maxCasterDist = m_cascadeCfg.casterExtrusion;
+                Vec3f pad = Vec3f(
+                    std::fabs(lightDir.x),
+                    std::fabs(lightDir.y),
+                    std::fabs(lightDir.z)
+                ) * maxCasterDist;
+
+                // --------------------------------------------------
+                // 1) カスケードごとの WS AABB を計算
+                // --------------------------------------------------
                 for (std::uint32_t i = 0; i < m_cascadeCount; ++i)
                 {
                     float splitDist = m_splitDistances[i];
@@ -209,92 +219,61 @@ namespace SFW
                     m_cascades.splitFar[i] = splitDist;
 
                     // このカスケードのカメラ視錐台スライスを WS AABB に
-                    Math::AABB3f cascadeAABBWS = ComputeCascadeSliceAABBWS(cam, prevSplit, splitDist);
+                    Math::AABB3f cascadeAABBWS =
+                        ComputeCascadeSliceAABBWS(cam, camWorldMtx, prevSplit, splitDist);
 
                     // シーン AABB との交差で少しタイトに
                     Math::AABB3f tightWS = IntersectAABB(cascadeAABBWS, sceneBounds);
 
-                    cascadeBoundsWS[i] = tightWS;
+                    // 安全のためワールド最大サイズでクランプ
+                    tightWS.shrinkExtent(m_cascadeCfg.maxWorldExtent);
 
-                    // union を更新
-                    unionBoundsWS.expandToInclude(tightWS);
+                    cascadeBoundsWS[i] = tightWS;
 
                     prevSplit = splitDist;
                 }
 
                 // --------------------------------------------------
-                // 2) unionBoundsWS から共通ライトビューを 1 回だけ構築
-                // --------------------------------------------------
-                Math::Matrix4x4f lightView;
-                BuildLightView(lightDir, unionBoundsWS, lightView);
-
-                // --------------------------------------------------
-                // 3) 各カスケードのライト空間 AABB を計算
-                // --------------------------------------------------
-                struct LSBounds
-                {
-                    Math::Vec3f center;
-                    Math::Vec3f extents;
-                };
-                LSBounds lsBounds[kMaxShadowCascades];
-
-                for (std::uint32_t i = 0; i < m_cascadeCount; ++i)
-                {
-                    Math::AABB3f lsAABB = lightView * cascadeBoundsWS[i];
-
-                    Math::Vec3f minLS = lsAABB.lb;
-                    Math::Vec3f maxLS = lsAABB.ub;
-
-                    Math::Vec3f center = (minLS + maxLS) * 0.5f;
-                    Math::Vec3f extents = (maxLS - minLS) * 0.5f;
-
-                    lsBounds[i].center = center;
-                    lsBounds[i].extents = extents;
-                }
-
-                // 基準となる XY 中心（ここではカスケード 0 の中心）
-                Math::Vec3f baseCenterLS = lsBounds[0].center;
-
-                // --------------------------------------------------
-                // 4) XY 中心をそろえて、元の AABB を内包するよう extents を広げる
+                // 2) カスケードごとに独立したライトビュー / オルソを構築
                 // --------------------------------------------------
                 for (std::uint32_t i = 0; i < m_cascadeCount; ++i)
                 {
-                    const Math::Vec3f& centerLS = lsBounds[i].center;
-                    const Math::Vec3f& extentsLS = lsBounds[i].extents;
+                    const Math::AABB3f& boundsWS = cascadeBoundsWS[i];
 
-                    // XY の中心差分
-                    float dx = centerLS.x - baseCenterLS.x;
-                    float dy = centerLS.y - baseCenterLS.y;
+                    // カスケード i 用のライトビュー
+                    Math::Matrix4x4f lightView;
+                    BuildLightView(lightDir, boundsWS, lightView);
 
-                    // このくらい広げれば、中心を baseCenter にずらしても
-                    // 元の AABB を必ず内包できる
-                    float ex = extentsLS.x + std::fabs(dx);
-                    float ey = extentsLS.y + std::fabs(dy);
-                    float ez = extentsLS.z; // Z はカスケードごとに維持
+                    // カスケード i の WS AABB をライト空間に変換
+                    Math::AABB3f lsAABB = lightView * boundsWS;
 
-                    // 中心は XY を共通化、Z は各カスケードのものを維持
-                    Math::Vec3f alignedCenter(baseCenterLS.x, baseCenterLS.y, centerLS.z);
+                    // そのライト空間 AABB をちょうど覆う Ortho
+                    Math::Matrix4x4f lightProj;
+                    BuildLightOrtho(lsAABB, lightProj);
 
-                    Math::Vec3f minLS = alignedCenter - Math::Vec3f(ex, ey, ez);
-                    Math::Vec3f maxLS = alignedCenter + Math::Vec3f(ex, ey, ez);
-
-                    Math::AABB3f alignedAABB;
-                    alignedAABB.lb = minLS;
-                    alignedAABB.ub = maxLS;
-
-                    // すべてのカスケードで同じ View を使用
+                    // 記録
                     m_cascades.lightView[i] = lightView;
+                    m_cascades.lightProj[i] = lightProj;
+                    m_cascades.lightViewProj[i] = lightProj * lightView;
 
-                    // Ortho は AABB から構築（既存の BuildLightOrtho を再利用）
-                    BuildLightOrtho(alignedAABB, m_cascades.lightProj[i]);
 
-                    // ViewProj
-                    m_cascades.lightViewProj[i] = m_cascades.lightProj[i] * m_cascades.lightView[i];
+					//フラスタムだけライト方向へ押し出し
+                    Math::AABB3f casterBoundsWS = boundsWS;
+
+                    // キャスター押し出し分をマージンとして追加
+                    casterBoundsWS.lb -= pad;
+                    casterBoundsWS.ub += pad;
+
+                    // シーン AABB との交差で少しタイトに
+                    Math::AABB3f tightWS = IntersectAABB(casterBoundsWS, sceneBounds);
+
+                    lsAABB = lightView * tightWS;
+
+                    BuildLightOrtho(lsAABB, lightProj);
 
                     // カリング用フラスタム & WS Bounds を保存
-                    m_cascades.frustumWS[i] = BuildFrustumFromMatrix(m_cascades.lightViewProj[i]);
-                    m_cascades.boundsWS[i] = cascadeBoundsWS[i];
+                    m_cascades.frustumWS[i] = BuildFrustumFromMatrix(lightProj * lightView);
+                    m_cascades.boundsWS[i] = boundsWS;
                 }
             }
 
@@ -304,7 +283,7 @@ namespace SFW
            //  - [sliceNear, sliceFar] の範囲のフラスタム8頂点を計算し、
            //  - それをワールドに戻して AABB を作る
            // ---------------------------------------------------------
-            Math::AABB3f ComputeCascadeSliceAABBWS(const CameraParams& cam, float sliceNear, float sliceFar) const
+            Math::AABB3f ComputeCascadeSliceAABBWS(const CameraParams& cam, const Math::Matrix4x4f& camWorldMtx, float sliceNear, float sliceFar) const
             {
                 using namespace Math;
 
@@ -312,15 +291,12 @@ namespace SFW
                 std::array<Vec3f, 8> cornersVS;
                 BuildCameraFrustumCornersVS(cam, sliceNear, sliceFar, cornersVS);
 
-                // View の逆行列を使ってワールドへ
-                Matrix4x4f invView = Inverse(cam.view);
-
                 AABB3f result;
                 result.invalidate();
 
                 for (const Vec3f& pVS : cornersVS)
                 {
-                    Vec3f pWS = TransformPoint(invView, pVS);
+                    Vec3f pWS = TransformPoint(camWorldMtx, pVS);
                     result.expandToInclude(pWS); // AABB に点を追加
                 }
                 return result;
@@ -408,7 +384,7 @@ namespace SFW
 
                 float radius = (std::max)(ext.x, (std::max)(ext.y, ext.z));
 
-                Math::Vec3f eye = center - lightDirWS * radius * 20.0f;
+                Math::Vec3f eye = center - lightDirWS * radius * 2.0f;
                 Math::Vec3f target = center;
                 Math::Vec3f up(0.0f, 1.0f, 0.0f);
 

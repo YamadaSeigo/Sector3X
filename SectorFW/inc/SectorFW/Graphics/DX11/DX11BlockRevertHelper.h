@@ -513,6 +513,10 @@ namespace SFW::Graphics::DX11 {
 
         struct ShadowDepthParams
         {
+            // カスケード
+            UINT cascadeCount = kMaxShadowCascades;
+            UINT  lodLevels = 3;
+
             // メインカメラ
             ID3D11DepthStencilView* mainDSV = nullptr;
             //D3D11_VIEWPORT          mainViewport{};
@@ -520,8 +524,6 @@ namespace SFW::Graphics::DX11 {
             Math::Matrix4x4f        mainProj;
             float                   mainFrustumPlanes[6][4];
 
-            // カスケード
-            UINT cascadeCount = kMaxShadowCascades;
             ID3D11DepthStencilView* cascadeDSV[kMaxShadowCascades] = {};
             //D3D11_VIEWPORT          cascadeViewport[kMaxShadowCascades]{};
             float                   lightViewProj[kMaxShadowCascades][16];
@@ -534,7 +536,9 @@ namespace SFW::Graphics::DX11 {
             // LOD パラメータ
             float lodT0px = 400.f;
             float lodT1px = 160.f;
-            UINT  lodLevels = 3;
+
+            float shadowLodT0px = 800.f;
+            float shadowLodT1px = 320.f;
         };
 
         void RunShadowDepth(
@@ -603,8 +607,8 @@ namespace SFW::Graphics::DX11 {
                     csp->ScreenSize[1] = (float)p.screenH;
                     csp->LodPxThreshold_Main[0] = p.lodT0px;
                     csp->LodPxThreshold_Main[1] = p.lodT1px;
-                    csp->LodPxThreshold_Shadow[0] = p.lodT0px;
-                    csp->LodPxThreshold_Shadow[1] = p.lodT1px;
+                    csp->LodPxThreshold_Shadow[0] = p.shadowLodT0px;
+                    csp->LodPxThreshold_Shadow[1] = p.shadowLodT1px;
                     ctx->Unmap(cbCSShadow.Get(), 0);
                     ctx->CSSetConstantBuffers(4, 1, cbCSShadow.GetAddressOf());
                 }

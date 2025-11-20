@@ -23,22 +23,22 @@ namespace SFW
 			AABB(const VecT& lower_bound_, const VecT& upper_bound_) : lb(lower_bound_), ub(upper_bound_) {}
 
 			// 幅・高さ・奥行き（フルサイズ）
-			VecT size() const {
+			VecT size() const noexcept {
 				return ub - lb;
 			}
 
 			// 中心
-			VecT center() const {
+			VecT center() const noexcept {
 				return (lb + ub) * T(0.5);
 			}
 
 			// 半サイズ（half-extent）
-			VecT extent() const {
+			VecT extent() const noexcept {
 				return (ub - lb) * T(0.5);
 			}
 
 			// 点を内包？
-			bool contains(const VecT& point) const {
+			bool contains(const VecT& point) const noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (point[i] < lb[i] || point[i] > ub[i]) return false;
 				}
@@ -46,7 +46,7 @@ namespace SFW
 			}
 
 			// 交差？
-			bool intersects(const AABB& other) const {
+			bool intersects(const AABB& other) const noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (ub[i] < other.lb[i] || lb[i] > other.ub[i]) return false;
 				}
@@ -54,7 +54,7 @@ namespace SFW
 			}
 
 			// 点で拡張
-			void expandToInclude(const VecT& point) {
+			void expandToInclude(const VecT& point) noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (point[i] < lb[i]) lb[i] = point[i];
 					if (point[i] > ub[i]) ub[i] = point[i];
@@ -62,16 +62,28 @@ namespace SFW
 			}
 
 			// AABBで拡張
-			void expandToInclude(const AABB& other) {
+			void expandToInclude(const AABB& other) noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (other.lb[i] < lb[i]) lb[i] = other.lb[i];
 					if (other.ub[i] > ub[i]) ub[i] = other.ub[i];
 				}
 			}
 
+			//extentをlimit以下に縮小
+			void shrinkExtent(const T limit) noexcept {
+				const VecT ext = extent();
+				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
+					if (ext[i] > limit) {
+						T center = (lb[i] + ub[i]) * T(0.5);
+						lb[i] = center - limit;
+						ub[i] = center + limit;
+					}
+				}
+			}
+
 			// 2つのAABBの和（外接最小AABB）を返すユーティリティ
 			template<typename T, typename VecT>
-			static AABB<T, VecT> Union(const AABB<T, VecT>& a, const AABB<T, VecT>& b) {
+			static AABB<T, VecT> Union(const AABB<T, VecT>& a, const AABB<T, VecT>& b) noexcept {
 				AABB<T, VecT> out;
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					out.lb[i] = (std::min)(a.lb[i], b.lb[i]);
@@ -81,7 +93,7 @@ namespace SFW
 			}
 
 			// AABBを無効化
-			void invalidate() {
+			void invalidate() noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					lb[i] = (std::numeric_limits<T>::max)();
 					ub[i] = std::numeric_limits<T>::lowest();
@@ -96,7 +108,7 @@ namespace SFW
 		// AABB 同士の交差
 		// ---------------------------------------------------------
 		template<typename T>
-		static AABB<T, Vec3<T>> IntersectAABB(const AABB<T, Vec3<T>>& a, const AABB<T, Vec3<T>>& b)
+		static AABB<T, Vec3<T>> IntersectAABB(const AABB<T, Vec3<T>>& a, const AABB<T, Vec3<T>>& b) noexcept
 		{
 			Math::AABB3f r;
 			r.lb.x = (std::max)(a.lb.x, b.lb.x);
@@ -116,7 +128,7 @@ namespace SFW
 		}
 
 		template<typename T>
-		static inline void ExpandAABB(AABB<T, Vec3<T>>& b, const Vec3<T>& p) {
+		static inline void ExpandAABB(AABB<T, Vec3<T>>& b, const Vec3<T>& p) noexcept {
 			b.lb.x = (std::min)(b.lb.x, p.x);
 			b.lb.y = (std::min)(b.lb.y, p.y);
 			b.lb.z = (std::min)(b.lb.z, p.z);
