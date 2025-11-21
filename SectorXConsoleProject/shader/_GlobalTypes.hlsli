@@ -197,11 +197,11 @@ float SampleShadow(float3 worldPos, float viewDepth)
     uv.y = 1.0f - uv.y; // テクスチャ座標系に変換
 
     // 深度バイアス（アーティファクトを見ながら調整）
-    const float depthBias = 0.1f;
+    const float depthBias = 0.0005f;
 
     // PCF のサンプル範囲
     // （シャドウマップの解像度は C++ 側から逆数を渡してもよい）
-    const float2 texelSize = 1.0f / float2(960.0f, 720.0f);
+    const float2 texelSize = 1.0f / float2(860.0f, 540.0f);
     const int kernelRadius = 1; // 3x3 PCF
 
     float shadow = 0.0f;
@@ -286,7 +286,8 @@ float SampleShadowCascade(float3 worldPos, uint cascade)
     }
 
     const float2 texelSize = 1.0f / float2(960.0f, 720.0f);
-    const float depthBias = 0.0005f;
+
+    const float depthBias = 0.0f;
     const int kernelRadius = 1;
 
     float shadow = 0.0f;

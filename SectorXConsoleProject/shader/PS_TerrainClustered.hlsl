@@ -68,7 +68,7 @@ float4 NormalizeWeights(float4 w)
 // === PS（ワンドロー本体） ===
 float4 main(VSOut i) : SV_Target
 {
-    // ピクセルの worldPos.xz → クラスタID
+    // ピクセルの worldPos.xz -> クラスタID
     uint cid = ComputeClusterId(i.worldPos.xz);
     ClusterParam p = gClusters[cid];
 
@@ -95,16 +95,19 @@ float4 main(VSOut i) : SV_Target
 
     float4 shadowPos = mul(gLightViewProj[cascade], float4(i.worldPos, 1.0f));
 
-    //float shadow = DebugShadowDepth(i.worldPos, cascade);
+    float shadow = DebugShadowDepth(i.worldPos, cascade);
 
-    float shadow = SampleShadow(i.worldPos, i.viewDepth);
+    //float shadow = SampleShadow(i.worldPos, i.viewDepth);
 
-    //return float4(shadow, 0, 0, 1);
+    return float4(shadowPos.z - shadow, 0, 0, 1);
 
     float shadowBias = 1.0f;
     //if (shadowPos.z - shadow > 0.1f)
-    if (shadow < 0.8f)
-        shadowBias = 0.1f + 0.5f * cascade / NUM_CASCADES;
+    if (shadow < 0.0f)
+        shadowBias = 0.5f;
 
-    return (c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a) * shadowBias;
+    float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
+    final.rgb *= shadowBias;
+
+    return final;
 }

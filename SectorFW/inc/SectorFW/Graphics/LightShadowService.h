@@ -73,6 +73,7 @@ namespace SFW
         public:
             struct CascadeConfig
             {
+				Math::Vec2f shadowMapResolution = Math::Vec2f(2048.0f, 2048.0f); // シャドウマップ解像度
                 std::uint32_t   cascadeCount = 4;   // 1〜kMaxShadowCascades
                 float           shadowDistance = 100.0f; // カメラからの最大影距離
                 float           lambda = 0.5f;   // 0 = 線形, 1 = 対数, その中間
@@ -238,7 +239,7 @@ namespace SFW
                 // --------------------------------------------------
                 for (std::uint32_t i = 0; i < m_cascadeCount; ++i)
                 {
-                    const Math::AABB3f& boundsWS = cascadeBoundsWS[i];
+                    Math::AABB3f& boundsWS = cascadeBoundsWS[i];
 
                     // カスケード i 用のライトビュー
                     Math::Matrix4x4f lightView;
@@ -246,6 +247,27 @@ namespace SFW
 
                     // カスケード i の WS AABB をライト空間に変換
                     Math::AABB3f lsAABB = lightView * boundsWS;
+
+					Math::Vec3f center = lsAABB.center();
+					Math::Vec3f extents = lsAABB.extent();
+
+                    // ライト空間 AABB の extents
+                    float ex = extents.x;
+                    float ey = extents.y;
+
+                    // 世界空間1テクセルあたりのサイズ
+                    float worldUnitPerTexelX = (ex * 2.0f) / m_cascadeCfg.shadowMapResolution.x;
+                    float worldUnitPerTexelY = (ey * 2.0f) / m_cascadeCfg.shadowMapResolution.y;
+
+                    // AABB 中心をテクセル単位にスナップ
+                    Vec3f snappedCenter;
+                    snappedCenter.x = floor(center.x / worldUnitPerTexelX + 0.5f) * worldUnitPerTexelX;
+                    snappedCenter.y = floor(center.y / worldUnitPerTexelY + 0.5f) * worldUnitPerTexelY;
+                    snappedCenter.z = center.z; // Z はスナップしない
+
+                    // スナップ後の中心で AABB を再計算
+                    lsAABB.lb = snappedCenter - extents;
+                    lsAABB.ub = snappedCenter + extents;
 
                     // そのライト空間 AABB をちょうど覆う Ortho
                     Math::Matrix4x4f lightProj;
@@ -413,7 +435,6 @@ namespace SFW
 
             // ---------------------------------------------------------
             // ViewProj から Frustum を作る
-            //  - Frustum.hpp に「行列からフラスタムを作る」関数があるならそれを使ってください
             // ---------------------------------------------------------
             static Math::Frustumf BuildFrustumFromMatrix(const Math::Matrix4x4f& viewProj)
             {

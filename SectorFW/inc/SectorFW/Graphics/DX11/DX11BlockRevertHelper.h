@@ -208,6 +208,7 @@ namespace SFW::Graphics::DX11 {
         ComPtr<ID3D11VertexShader>  vs;          // TerrainPull VS (vertex-pull)
         ComPtr<ID3D11VertexShader>  vsDepth;
         ComPtr<ID3D11PixelShader>   ps;          // Terrain PS
+        ComPtr<ID3D11PixelShader>   psDepth;          // Depth PS
         ComPtr<ID3DBlob>            vsBlob;      // for IASetInputLayout(nullptr)
 
         // Constant buffers
@@ -258,6 +259,7 @@ namespace SFW::Graphics::DX11 {
             const wchar_t* vsPath,
 			const wchar_t* vsDepthPath,
             const wchar_t* psPath,
+			const wchar_t* psDepthPath,
             UINT maxVisibleIndices_)
         {
             HRESULT hr;
@@ -326,6 +328,12 @@ namespace SFW::Graphics::DX11 {
             hr = D3DReadFileToBlob(psPath, psBlob.GetAddressOf());
             if (FAILED(hr)) return false;
             hr = dev->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, &ps);
+            if (FAILED(hr)) return false;
+
+            psBlob.Reset();
+            hr = D3DReadFileToBlob(psDepthPath, psBlob.GetAddressOf());
+            if (FAILED(hr)) return false;
+            hr = dev->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, &psDepth);
             if (FAILED(hr)) return false;
 
 
@@ -731,7 +739,7 @@ namespace SFW::Graphics::DX11 {
                 ctx->VSSetConstantBuffers(10, 1, cbVSShadow.GetAddressOf());
 
                 ctx->VSSetShader(vsShadow.Get(), nullptr, 0);
-                ctx->PSSetShader(nullptr, nullptr, 0);
+                ctx->PSSetShader(psDepth.Get(), nullptr, 0);
 
                 ID3D11ShaderResourceView* vsSRVs[] = {
                     posSRV.Get(),

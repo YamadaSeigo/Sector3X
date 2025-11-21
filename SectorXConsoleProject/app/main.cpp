@@ -92,7 +92,7 @@ void InitializeRenderPipeLine(
 	DX11::ShaderCreateDesc shaderDesc;
 	shaderDesc.vsPath = L"assets/shader/VS_ZPrepass.cso";
 	//PSを指定しないことでDepthOnlyのPSOを作成
-	//shaderDesc.psPath = L"assets/shader/PS_ZPrepass.cso";
+	//shaderDesc.psPath = L"assets/shader/PS_DepthOnly.cso";
 
 	ShaderHandle shaderHandle;
 	shaderMgr->Add(shaderDesc, shaderHandle);
@@ -209,6 +209,8 @@ int main(void)
 	auto renderService = graphics.GetRenderService();
 
 	Graphics::LightShadowService lightShadowService;
+	Graphics::LightShadowService::CascadeConfig cascadeConfig;
+	cascadeConfig.shadowMapResolution = Math::Vec2f(float(WINDOW_WIDTH), float(WINDOW_HEIGHT));
 
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &lightShadowService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
@@ -265,6 +267,7 @@ int main(void)
 		L"assets/shader/VS_TerrainClustered.cso",
 		L"assets/shader/VS_TerrainClusteredDepth.cso",
 		L"assets/shader/PS_TerrainClustered.cso",
+		L"assets/shader/PS_DepthOnly.cso",
 		/*maxVisibleIndices*/ (UINT)terrain.indexPool.size());
 
 	assert(ok && "Failed BlockRevert Init");
@@ -598,55 +601,55 @@ int main(void)
 			p.cellsX * p.cellSize,
 			p.cellsZ * p.cellSize
 		};
-		for (int j = 0; j < 32; ++j) {
-			for (int k = 0; k < 32; ++k) {
-				for (int n = 0; n < 1; ++n) {
-					//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
-					float scaleXZ = 10.0f;
-					float scaleY = 10.0f;
-					Math::Vec3f location = { float(j) * scaleXZ * 2.0f, 0, float(k) * scaleXZ * 2.0f };
-					auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
-					location = pose.pos;
-					int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
-					int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
+		//for (int j = 0; j < 32; ++j) {
+		//	for (int k = 0; k < 32; ++k) {
+		//		for (int n = 0; n < 1; ++n) {
+		//			//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
+		//			float scaleXZ = 10.0f;
+		//			float scaleY = 10.0f;
+		//			Math::Vec3f location = { float(j) * scaleXZ * 2.0f, 0, float(k) * scaleXZ * 2.0f };
+		//			auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
+		//			location = pose.pos;
+		//			int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
+		//			int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
 
-					int byteIndex = col * 4 + row * cpuSplatImage.stride;
-					if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
-						continue;
-					}
+		//			int byteIndex = col * 4 + row * cpuSplatImage.stride;
+		//			if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
+		//				continue;
+		//			}
 
-					int modelIdx = 3;
-					auto splatR = cpuSplatImage.bytes[byteIndex];
-					if (splatR < 32) {
-						continue; // 草が薄い場所はスキップ
-					}
-					location.y -= (1.0f - splatR / 255.0f) * 3.0f;
+		//			int modelIdx = 3;
+		//			auto splatR = cpuSplatImage.bytes[byteIndex];
+		//			if (splatR < 32) {
+		//				continue; // 草が薄い場所はスキップ
+		//			}
+		//			location.y -= (1.0f - splatR / 255.0f) * 3.0f;
 
-					auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
+		//			auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 
-					auto chunk = level->GetChunk(location);
-					auto key = chunk.value()->GetNodeKey();
-					SpatialMotionTag tag{};
-					tag.handle = { key, chunk.value() };
+		//			auto chunk = level->GetChunk(location);
+		//			auto key = chunk.value()->GetNodeKey();
+		//			SpatialMotionTag tag{};
+		//			tag.handle = { key, chunk.value() };
 
-					//float scale = 1.0f;
-					auto id = level->AddEntity(
-						TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-						CModel{ modelAssetHandle[modelIdx] },
-						Physics::BodyComponent{},
-						Physics::PhysicsInterpolation(
-							location, // 初期位置
-							rot // 初期回転
-						),
-						sphereDims.value(),
-						tag
-					);
-					/*if (id) {
-						ps->EnqueueCreateIntent(id.value(), sphere, key);
-					}*/
-				}
-			}
-		}
+		//			//float scale = 1.0f;
+		//			auto id = level->AddEntity(
+		//				TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
+		//				CModel{ modelAssetHandle[modelIdx] },
+		//				Physics::BodyComponent{},
+		//				Physics::PhysicsInterpolation(
+		//					location, // 初期位置
+		//					rot // 初期回転
+		//				),
+		//				sphereDims.value(),
+		//				tag
+		//			);
+		//			/*if (id) {
+		//				ps->EnqueueCreateIntent(id.value(), sphere, key);
+		//			}*/
+		//		}
+		//	}
+		//}
 
 		// Entity生成
 		uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
