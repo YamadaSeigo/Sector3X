@@ -15,24 +15,40 @@ struct CModel
 	Packed2Bits32 prevOCCBits = {};
 	bool occluded = false;
 	bool temporalSkip = false;
+	bool castShadow = false;
 };
 
 template<typename Partition>
 class ModelRenderSystem : public ITypeSystem<
 	ModelRenderSystem<Partition>,
 	Partition,
-	ComponentAccess<Read<TransformSoA>, Write<CModel>>,//アクセスするコンポーネントの指定
-	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService>,//受け取るサービスの指定
-	IsParallel{ true } > { //Updateを並列化する
-
+	//アクセスするコンポーネントの指定
+	ComponentAccess<
+		Read<TransformSoA>,
+		Write<CModel>
+	>,
+	//受け取るサービスの指定
+	ServiceContext<
+		Graphics::RenderService,
+		Graphics::I3DPerCameraService,
+		Graphics::LightShadowService
+	>,
+	//Updateを並列化する
+	IsParallel{ true }
+	>
+{
 	using Accessor = ComponentAccessor<Read<TransformSoA>, Write<CModel>>;
 public:
 
 	static constexpr inline uint32_t MAX_OCCLUDER_AABB_NUM  = 64;
 
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, UndeletablePtr<IThreadExecutor> threadPool, UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::I3DPerCameraService> cameraService) {
+	void UpdateImpl(Partition& partition,
+		UndeletablePtr<IThreadExecutor> threadPool,
+		UndeletablePtr<Graphics::RenderService> renderService,
+		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
+		UndeletablePtr<Graphics::LightShadowService> lightShadowService)
+	{
 		//機能を制限したRenderQueueを取得
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
@@ -44,7 +60,7 @@ public:
 		auto viewProj = cameraService->GetCameraBufferData().viewProj;
 		auto resolution = cameraService->GetResolution();
 
-		const Graphics::Viewport vp = { (int)resolution.x, (int)resolution.y, cameraService->GetFOV() };
+		const Graphics::OccluderViewport vp = { (int)resolution.x, (int)resolution.y, cameraService->GetFOV() };
 
 		std::vector<Graphics::QuadCandidate> outQuad;
 		uint32_t aabbCount = occluderAABBCount.exchange(0, std::memory_order_acquire);
@@ -73,6 +89,7 @@ public:
 
 		struct KernelParams {
 			Graphics::RenderService* renderService;
+			Graphics::LightShadowService* lightShadowService;
 			Graphics::DX11::ModelAssetManager* modelMgr;
 			Graphics::DX11::MeshManager* meshMgr;
 			Graphics::DX11::MaterialManager* materialMgr;
@@ -84,7 +101,7 @@ public:
 			Math::Vec3f camForward;
 			std::atomic<uint32_t>& occAABBCount;
 			Math::AABB3f* occAABBs;
-			Graphics::Viewport vp;
+			Graphics::OccluderViewport vp;
 			bool drawOcc;
 		};
 
@@ -95,6 +112,7 @@ public:
 
 		KernelParams kp = {
 			renderService.get(),
+			lightShadowService.get(),
 			modelManager,
 			meshManager,
 			materialManager,
@@ -171,9 +189,11 @@ public:
 
 						Math::NdcRectWithW ndc;
 						float depth = 0.0f;
+						Math::Vec3f centerWS;
+
 						//バウンディングスフィアで高速早期判定
 						//※WVPがLHのZeroToOne深度範囲を仮定(そうでない場合はZDepthは正確ではない)
-						if (!mesh.bs.IsVisible_WVP_CamBasis_Fast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth)) continue;
+						if (!mesh.bs.IsVisible_WVP_CamBasis_ExactFast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth, &centerWS)) continue;
 
 						ndc.valid = true;
 						int lodCount = (int)mesh.lods.size();
@@ -289,7 +309,20 @@ public:
 						cmd.material = mesh.material.index;
 						cmd.pso = mesh.pso.index;
 
-						cmd.viewMask |= /*PASS_3DMAIN_ZPREPASS | */PASS_3DMAIN_OPAQUE;
+						cmd.viewMask |= PASS_3DMAIN_ZPREPASS | PASS_3DMAIN_OPAQUE;
+
+						if (modelComp.castShadow)
+						{
+							auto centerVec = centerWS - kp->cp;
+							float camDepth = centerVec.dot(kp->camForward);
+							float maxRadius = mesh.bs.radius * (std::max)(mtf.sx[i], (std::max)(mtf.sy[i], mtf.sz[i]));
+							auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(camDepth - maxRadius, camDepth + maxRadius);
+
+							for (uint32_t ci = cascades.first; ci <= cascades.second; ++ci)
+							{
+								cmd.viewMask |= (PASS_3DMAIN_CASCADE0 << ci);
+							}
+						}
 
 						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
 						producer.Push(std::move(cmd));

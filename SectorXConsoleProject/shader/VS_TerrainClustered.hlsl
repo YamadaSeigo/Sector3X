@@ -34,10 +34,10 @@ VSOut main(uint vtxId : SV_VertexID)
 
     float4 wp = mul(World, float4(p, 1));
     VSOut o;
+    o.worldPos = wp.xyz;
     o.viewDepth = mul(View, wp).z;
     o.pos = mul(ViewProj, wp);
     o.uv = uv;
-    o.worldPos = wp.xyz;
     o.nrm = normalize(mul(World, float4(n, 0)).xyz);
 
     return o;

@@ -491,7 +491,7 @@ namespace SFW {
                 const Mat4& WVP,
                 const Vec3& camRight, const Vec3& camUp, const Vec3& camForward,
                 NDC* outNDC,
-                T* depth = nullptr) const noexcept
+                T* depth = nullptr, Vec3* outWP = nullptr) const noexcept
             {
                 using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
@@ -571,6 +571,10 @@ namespace SFW {
                 }
                 if (depth) *depth = cw; // 互換用
 
+                if (outWP) {
+					*outWP = { cx, cy, cz };
+                }
+
                 return x_overlap && y_overlap && z_overlap;
             }
 
@@ -578,7 +582,7 @@ namespace SFW {
             bool IsVisible_WVP_CamBasis_Fast(
                 const Mat4& WVP,
                 const Vec3& camRight, const Vec3& camUp, const Vec3& camForward,
-                NDC* outNDC, T* depth = nullptr) const noexcept
+                NDC* outNDC, T* depth = nullptr, Vec3* outWP = nullptr) const noexcept
             {
                 using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
@@ -655,8 +659,126 @@ namespace SFW {
                 }
                 if (depth) *depth = cw;
 
+                if (outWP) {
+                    *outWP = { cx, cy, cz };
+                }
+
                 return x_overlap && y_overlap && z_overlap;
             }
+
+            template<class NDC>
+            bool IsVisible_WVP_CamBasis_ExactFast(
+                const Matrix4x4f& WVP,
+                const Vec3& camRight, const Vec3& camUp, const Vec3& camForward,
+                NDC* outNDC, float* depth = nullptr, Vec3* outWP = nullptr) const noexcept
+            {
+                using ::SFW::Math::MulPoint_RowMajor_ColVec;
+
+                // 1) center を clip に
+                float cx, cy, cz, cw;
+                MulPoint_RowMajor_ColVec(WVP, center.x, center.y, center.z, cx, cy, cz, cw);
+
+                // 2) WVP の線形部分を「方向ベクトル用」に使う
+                auto dir_to_clip = [&](const Vec3& v,
+                    float& dx, float& dy, float& dz, float& dw) {
+                        dx = WVP.m00 * v.x + WVP.m01 * v.y + WVP.m02 * v.z;
+                        dy = WVP.m10 * v.x + WVP.m11 * v.y + WVP.m12 * v.z;
+                        dz = WVP.m20 * v.x + WVP.m21 * v.y + WVP.m22 * v.z;
+                        dw = WVP.m30 * v.x + WVP.m31 * v.y + WVP.m32 * v.z;
+                    };
+
+                float dRx, dRy, dRz, dRw; dir_to_clip(camRight, dRx, dRy, dRz, dRw);
+                float dUx, dUy, dUz, dUw; dir_to_clip(camUp, dUx, dUy, dUz, dUw);
+                float dFx, dFy, dFz, dFw; dir_to_clip(camForward, dFx, dFy, dFz, dFw);
+
+                auto safe_div = [](float a, float b) {
+                    const float eps = 1e-6f;
+                    return a / ((std::fabs(b) < eps) ? (b < 0 ? -eps : eps) : b);
+                    };
+
+                // 3) center の NDC
+                const float ndc_cx = safe_div(cx, cw);
+                const float ndc_cy = safe_div(cy, cw);
+                const float ndc_cz = safe_div(cz, cw);
+
+                // 4) ±Right / ±Up / ±Forward を「中心＋方向×radius」で生成して NDC へ
+                auto ndc_from_clip = [&](float x, float y, float z, float w,
+                    float& ox, float& oy, float& oz) {
+                        ox = safe_div(x, w);
+                        oy = safe_div(y, w);
+                        oz = safe_div(z, w);
+                    };
+
+                // Right
+                float rpx, rpy, rpz, rpw;
+                float rmx, rmy, rmz, rmw;
+                rpx = cx + radius * dRx; rpy = cy + radius * dRy; rpz = cz + radius * dRz; rpw = cw + radius * dRw;
+                rmx = cx - radius * dRx; rmy = cy - radius * dRy; rmz = cz - radius * dRz; rmw = cw - radius * dRw;
+
+                float ndc_rp_x, ndc_rp_y, ndc_rp_z;
+                float ndc_rm_x, ndc_rm_y, ndc_rm_z;
+                ndc_from_clip(rpx, rpy, rpz, rpw, ndc_rp_x, ndc_rp_y, ndc_rp_z);
+                ndc_from_clip(rmx, rmy, rmz, rmw, ndc_rm_x, ndc_rm_y, ndc_rm_z);
+
+                // Up
+                float upx, upy, upz, upw;
+                float umx, umy, umz, umw;
+                upx = cx + radius * dUx; upy = cy + radius * dUy; upz = cz + radius * dUz; upw = cw + radius * dUw;
+                umx = cx - radius * dUx; umy = cy - radius * dUy; umz = cz - radius * dUz; umw = cw - radius * dUw;
+
+                float ndc_up_y, ndc_um_y, dummy;
+                ndc_from_clip(upx, upy, upz, upw, dummy, ndc_up_y, dummy);
+                ndc_from_clip(umx, umy, umz, umw, dummy, ndc_um_y, dummy);
+
+                // Forward
+                float fpx, fpy, fpz, fpw;
+                float fmx, fmy, fmz, fmw;
+                fpx = cx + radius * dFx; fpy = cy + radius * dFy; fpz = cz + radius * dFz; fpw = cw + radius * dFw;
+                fmx = cx - radius * dFx; fmy = cy - radius * dFy; fmz = cz - radius * dFz; fmw = cw - radius * dFw;
+
+                float ndc_fp_z, ndc_fm_z;
+                ndc_from_clip(fpx, fpy, fpz, fpw, dummy, dummy, ndc_fp_z);
+                ndc_from_clip(fmx, fmy, fmz, fmw, dummy, dummy, ndc_fm_z);
+
+                // 5) スクリーン半径
+                const float r_ndc_x = (std::max)(std::fabs(ndc_rp_x - ndc_cx),
+                    std::fabs(ndc_rm_x - ndc_cx));
+                const float r_ndc_y = (std::max)(std::fabs(ndc_up_y - ndc_cy),
+                    std::fabs(ndc_um_y - ndc_cy));
+                const float r_ndc = (std::max)(r_ndc_x, r_ndc_y);
+
+                const float xmin = ndc_cx - r_ndc;
+                const float xmax = ndc_cx + r_ndc;
+                const float ymin = ndc_cy - r_ndc;
+                const float ymax = ndc_cy + r_ndc;
+
+                // 6) z 範囲（center と ±Forward）
+                const float zmin_est = (std::min)((std::min)(ndc_cz, ndc_fm_z), ndc_fp_z);
+                const float zmax_est = (std::max)((std::max)(ndc_cz, ndc_fm_z), ndc_fp_z);
+
+                const bool x_overlap = !(xmax < -1.0f || xmin > 1.0f);
+                const bool y_overlap = !(ymax < -1.0f || ymin > 1.0f);
+                const bool z_overlap = !(zmax_est < 0.0f || zmin_est > 1.0f);
+
+                if (outNDC) {
+                    outNDC->xmin = xmin; outNDC->xmax = xmax;
+                    outNDC->ymin = ymin; outNDC->ymax = ymax;
+
+                    const float raw_minw = (std::min)(
+                        (std::min)((std::min)(cw, rpw), (std::min)(rmw, upw)),
+                        (std::min)(umw, (std::min)(fpw, fmw)));
+                    const float epsW = 1e-6f;
+                    outNDC->wmin = (raw_minw < epsW) ? epsW : raw_minw;
+                }
+                if (depth) *depth = cw;
+
+                if (outWP) {
+					*outWP = { cx, cy, cz };
+                }
+
+                return x_overlap && y_overlap && z_overlap;
+            }
+
 
         };
 

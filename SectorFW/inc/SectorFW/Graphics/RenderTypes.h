@@ -213,5 +213,53 @@ namespace SFW
 		 * @brief シェーダバリアントID型
 		 */
 		using ShaderVariantID = uint32_t;
+
+		/**
+		 * @brief バッファバインドスロット構造体
+		 */
+		struct BindSlotBuffer {
+			uint32_t slot = 0;
+			BufferHandle handle = {};
+
+			BindSlotBuffer(BufferHandle h) : handle(h) {}
+			BindSlotBuffer(uint32_t slot, BufferHandle h) : slot(slot), handle(h) {}
+
+			BindSlotBuffer& operator=(const BufferHandle& h) {
+				handle = h;
+				return *this;
+			}
+		};
+
+		/**
+		 * @brief ビューポート構造体
+		 */
+		struct Viewport {
+			float topLeftX = 0.0f;
+			float topLeftY = 0.0f;
+			float width = 0.0f;
+			float height = 0.0f;
+			float minDepth = 0.0f;
+			float maxDepth = 1.0f;
+		};
+
+		/**
+		 * @brief デフォルトのビュー・ハンドル管理構造体
+		 */
+		template<typename T>
+		struct DefaultViewHandle {
+			using type = std::add_pointer_t<std::remove_pointer_t<T>>;
+
+			DefaultViewHandle() = default;
+			DefaultViewHandle(type p) : ptr(p) {}
+
+			DefaultViewHandle& operator=(type p) {
+				ptr = p;
+				return *this;
+			}
+
+			type Get() const { return ptr; }
+		private:
+			type ptr = nullptr;
+		};
 	}
 }

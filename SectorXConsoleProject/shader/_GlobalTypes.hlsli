@@ -52,7 +52,7 @@ cbuffer CBShadowCascades : register(b5)
 
 
     uint gCascadeCount;
-    float3 _pad;
+    float3 gCascadeDirection;
 };
 
 
@@ -142,11 +142,8 @@ uint ChooseCascade(float viewDepth)
     return min(idx, gCascadeCount - 1);
 }
 
-float DebugShadowDepth(float3 worldPos, uint cascade)
+float GetShadowMapDepth(float3 shadowPos, uint cascade)
 {
-    float4 shadowPos = mul(gLightViewProj[cascade], float4(worldPos, 1.0f));
-    shadowPos.xyz /= shadowPos.w;
-
     float2 uv = shadowPos.xy * 0.5f + 0.5f;
 
     if (uv.x < 0 || uv.y < 0 || uv.x > 1 || uv.y > 1)
@@ -154,17 +151,13 @@ float DebugShadowDepth(float3 worldPos, uint cascade)
 
     uv.y = 1.0f - uv.y;
 
-    float z = shadowPos.z;
-
     // uv, z を 0..1 にクランプ（とりあえず範囲外チェックは外す）
     uv = saturate(uv);
-    z = saturate(z);
 
     // 深度バッファの中身をそのまま読む
-    float depthTex = gShadowMap.SampleLevel(
+    float depthTex = gShadowMap.Sample(
         gSampler,
-        float3(uv, cascade),
-        0
+        float3(uv, cascade)
     ).r;
 
     return depthTex; // これをそのまま色として返してみる
@@ -177,9 +170,6 @@ float SampleShadow(float3 worldPos, float viewDepth)
 
     // 対応するライトVPでライト空間へ変換
     float4 shadowPos = mul(gLightViewProj[cascade], float4(worldPos, 1.0f));
-
-    // NDC に正規化
-    shadowPos.xyz /= shadowPos.w;
 
     // LH + ZeroToOne の正射影を使っている前提:
     // x,y: -1..1, z: 0..1 になるよう Projection を作っておく。
@@ -197,11 +187,11 @@ float SampleShadow(float3 worldPos, float viewDepth)
     uv.y = 1.0f - uv.y; // テクスチャ座標系に変換
 
     // 深度バイアス（アーティファクトを見ながら調整）
-    const float depthBias = 0.0005f;
+    const float depthBias = 0.1f * (cascade);
 
     // PCF のサンプル範囲
     // （シャドウマップの解像度は C++ 側から逆数を渡してもよい）
-    const float2 texelSize = 1.0f / float2(860.0f, 540.0f);
+    const float2 texelSize = 1.0f / float2(1024.0f, 1024.0f * 6);
     const int kernelRadius = 1; // 3x3 PCF
 
     float shadow = 0.0f;
@@ -271,7 +261,6 @@ CascadeInfo ChooseCascadeBlend(float viewDepth)
 float SampleShadowCascade(float3 worldPos, uint cascade)
 {
     float4 shadowPos = mul(float4(worldPos, 1.0f), gLightViewProj[cascade]);
-    shadowPos.xyz /= shadowPos.w;
 
     float2 uv = shadowPos.xy * 0.5f + 0.5f;
     float z = shadowPos.z;

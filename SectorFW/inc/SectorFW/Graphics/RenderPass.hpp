@@ -8,6 +8,7 @@
 #pragma once
 
 #include <functional>
+#include <vector>
 
 #include "RenderQueue.h"
 
@@ -18,16 +19,28 @@ namespace SFW
 		/**
 		 * @brief 描画するパスごとの設定を定義する構造体
 		 */
-		template<typename RTV, typename SRV, typename Buffer>
+		template<typename RTV, typename DSV, typename SRV, typename Buffer,
+			typename RTVHandle = DefaultViewHandle<RTV>,
+			typename DSVHandle = DefaultViewHandle<DSV>>
 		struct RenderPass {
-			std::vector<RTV> rtvs; // RenderTargetViewハンドル
-			void* dsv = nullptr; // DepthStencilViewハンドル
+
+			// ハンドル型（スマートポインタ／生ポインタなど）
+			using RTVHandleT = RTVHandle;
+			using DSVHandleT = DSVHandle;
+
+			static_assert(std::is_default_constructible_v<RTVHandleT>, "RTVHandle must be default constructible");
+			static_assert(std::is_default_constructible_v<DSVHandleT>, "DSVHandle must be default constructible");
+
+			std::vector<RTVHandleT> rtvs; // RenderTargetViewハンドル
+			std::vector<RTV> rtvsRaw; // 生のRTVポインタ配列（内部処理用）
+			DSVHandleT dsv = nullptr; // DepthStencilViewハンドル
 			RenderQueue* queue;
 			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // プリミティブトポロジ
 			std::optional<RasterizerStateID> rasterizerState = std::nullopt; // ラスタライザーステートID
 			BlendStateID blendState = BlendStateID::Opaque; // ブレンドステートID
 			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // 深度ステンシルステートID
-			std::vector<BufferHandle> cbvs; // 定数バッファハンドルのリスト
+			std::optional<std::vector<BindSlotBuffer>> cbvs; // 定数バッファハンドルのリスト
+			std::optional<Viewport> viewport = std::nullopt; // ビューポートのオーバーライド
 			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
 			std::function<void(uint64_t)> customExecute; // FullscreenQuadなど
 
@@ -52,14 +65,15 @@ namespace SFW
 			 * @param customExecute カスタム描画関数（FullscreenQuadなど）
 			 */
 			RenderPass(
-				const std::vector<RTV>& rtvs,
-				void* dsv,
+				const std::vector<RTVHandleT>& rtvs,
+				DSVHandleT dsv,
 				RenderQueue* queue,
 				PrimitiveTopology topology = PrimitiveTopology::TriangleList,
 				std::optional<RasterizerStateID> rasterizerState = std::nullopt,
 				BlendStateID blendState = BlendStateID::Opaque,
 				DepthStencilStateID depthStencilState = DepthStencilStateID::Default,
-				const std::vector<BufferHandle>& cbvs = {},
+				std::optional<std::vector<BindSlotBuffer>> cbvs = std::nullopt,
+				std::optional<Viewport> viewport = std::nullopt,
 				std::optional<PSOHandle> psoOverride = std::nullopt,
 				std::function<void(uint64_t)> customExecute = nullptr)
 				: rtvs(rtvs)
@@ -70,8 +84,14 @@ namespace SFW
 				, blendState(blendState)
 				, depthStencilState(depthStencilState)
 				, cbvs(cbvs)
+				, viewport(viewport)
 				, psoOverride(psoOverride)
 				, customExecute(customExecute) {
+
+				rtvsRaw.resize(rtvs.size());
+				for (size_t i = 0; i < rtvs.size(); ++i) {
+					rtvsRaw[i] = rtvs[i].Get();
+				}
 			}
 
 			/**
@@ -86,10 +106,16 @@ namespace SFW
 				, topology(other.topology)
 				, rasterizerState(other.rasterizerState)
 				, cbvs(std::move(other.cbvs))
+				, viewport(other.viewport)
 				, psoOverride(other.psoOverride)
 				, customExecute(std::move(other.customExecute)) {
 				other.dsv = nullptr; // 安全のためヌルクリア
 				queue = other.queue;
+
+				rtvsRaw.resize(rtvs.size());
+				for (size_t i = 0; i < rtvs.size(); ++i) {
+					rtvsRaw[i] = rtvs[i].Get();
+				}
 			}
 
 			/**
@@ -106,9 +132,15 @@ namespace SFW
 					topology = other.topology;
 					rasterizerState = other.rasterizerState;
 					cbvs = std::move(other.cbvs);
+					viewport = other.viewport;
 					psoOverride = other.psoOverride;
 					customExecute = std::move(other.customExecute);
 					other.dsv = nullptr;
+
+					rtvsRaw.resize(rtvs.size());
+					for (size_t i = 0; i < rtvs.size(); ++i) {
+						rtvsRaw[i] = rtvs[i].Get();
+					}
 				}
 				return *this;
 			}
@@ -124,15 +156,24 @@ namespace SFW
 		 * @brief レンダーパスの設定を定義する構造体
 		 * @detial ラスタライズを指定しない場合PSOで指定したラスタライズを使用する
 		 */
-		template<typename RTV>
+		template<typename RTV, typename DSV, template <typename> class ViewHandle = DefaultViewHandle>
 		struct RenderPassDesc {
-			std::vector<RTV> rtvs; // RenderTargetViewハンドル
-			void* dsv = nullptr; // DepthStencilViewハンドル
+
+			// ハンドル型（スマートポインタ／生ポインタなど）
+			using RTVHandleT = ViewHandle<std::remove_pointer_t<RTV>>;
+			using DSVHandleT = ViewHandle<std::remove_pointer_t<DSV>>;
+
+			static_assert(std::is_default_constructible_v<RTVHandleT>, "RTVHandle must be default constructible");
+			static_assert(std::is_default_constructible_v<DSVHandleT>, "DSVHandle must be default constructible");
+
+			std::vector<RTVHandleT> rtvs; // RenderTargetViewハンドル
+			DSVHandleT dsv = nullptr; // DepthStencilViewハンドル
 			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // プリミティブトポロジ
 			std::optional<RasterizerStateID> rasterizerState = std::nullopt; // ラスタライザーステートID
 			BlendStateID blendState = BlendStateID::Opaque; // ブレンドステートID
 			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // 深度ステンシルステートID
-			std::vector<BufferHandle> cbvs; // 定数バッファハンドルのリスト
+			std::optional<std::vector<BindSlotBuffer>> cbvs; // 定数バッファハンドルのリスト
+			std::optional<Viewport> viewport = std::nullopt; // ビューポート設定
 			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
 			std::function<void(uint64_t)> customExecute; // FullscreenQuadなど
 		};

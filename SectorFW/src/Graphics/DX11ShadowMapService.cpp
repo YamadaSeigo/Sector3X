@@ -68,17 +68,17 @@ namespace SFW
                 dsvDesc.Texture2DArray.FirstArraySlice = i;
                 hr = device->CreateDepthStencilView(m_shadowTex.Get(), &dsvDesc, &m_cascadeDSV[i]);
                 if (FAILED(hr)) return false;
-
-                // Viewport もここで設定しておく
-                D3D11_VIEWPORT vp{};
-                vp.TopLeftX = 0.0f;
-                vp.TopLeftY = 0.0f;
-                vp.Width = static_cast<float>(m_config.width);
-                vp.Height = static_cast<float>(m_config.height);
-                vp.MinDepth = 0.0f;
-                vp.MaxDepth = 1.0f;
-                m_cascadeViewport[i] = vp;
             }
+
+            // Viewport もここで設定しておく
+            D3D11_VIEWPORT vp{};
+            vp.TopLeftX = 0.0f;
+            vp.TopLeftY = 0.0f;
+            vp.Width = static_cast<float>(m_config.width);
+            vp.Height = static_cast<float>(m_config.height);
+            vp.MinDepth = 0.0f;
+            vp.MaxDepth = 1.0f;
+            m_cascadeViewport = vp;
 
             // ---------- 3) SRV ----------
             D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -116,14 +116,14 @@ namespace SFW
                 D3D11_RASTERIZER_DESC rsDesc = {};
                 rsDesc.FillMode = D3D11_FILL_SOLID;
                 rsDesc.CullMode = D3D11_CULL_BACK; // 必要に応じて FRONT/ NONE
-                rsDesc.FrontCounterClockwise = FALSE;
-                rsDesc.DepthBias = 1000;   // 要調整
-                rsDesc.SlopeScaledDepthBias = 1.0f;   // 要調整
-                rsDesc.DepthBiasClamp = 0.0f;
-                rsDesc.DepthClipEnable = TRUE;
-                rsDesc.ScissorEnable = FALSE;
-                rsDesc.MultisampleEnable = FALSE;
-                rsDesc.AntialiasedLineEnable = FALSE;
+                rsDesc.FrontCounterClockwise = TRUE;
+                //rsDesc.DepthBias = 1000;   // 要調整
+                //rsDesc.SlopeScaledDepthBias = 1.0f;   // 要調整
+                //rsDesc.DepthBiasClamp = 0.0f;
+                //rsDesc.DepthClipEnable = FALSE;
+                //rsDesc.ScissorEnable = FALSE;
+                //rsDesc.MultisampleEnable = FALSE;
+                //rsDesc.AntialiasedLineEnable = FALSE;
 
                 hr = device->CreateRasterizerState(&rsDesc, &m_shadowRS);
                 if (FAILED(hr)) return false;

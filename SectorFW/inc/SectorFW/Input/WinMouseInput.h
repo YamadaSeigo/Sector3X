@@ -31,8 +31,8 @@ namespace SFW
 			/**
 			 * @brief Raw Inputの登録と解除
 			 * @param enable 有効化するかどうか
-			 * @param noLegacy レガシーメッセージを無効化するかどうか
-			 * @param capture キャプチャモードにするかどうか
+			 * @param noLegacy レガシーメッセージ(WM_MOUSEMOVEなど)を無効化するかどうか
+			 * @param capture キャプチャモード(有効中は他のウィンドウを触れない)にするかどうか
 			 */
 			void RegisterRawInput(bool enable, bool noLegacy = true, bool capture = true);
 			/**

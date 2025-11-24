@@ -8,7 +8,7 @@
 #pragma once
 
 #include "_dx11inc.h"
-#include "Util/ResouceManagerBase.hpp"
+#include "../../Util/ResouceManagerBase.hpp"
 #include <unordered_map>
 #include <string>
 #include <typeindex>

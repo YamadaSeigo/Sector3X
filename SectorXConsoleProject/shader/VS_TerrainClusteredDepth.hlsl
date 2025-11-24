@@ -1,8 +1,8 @@
 
 // ========================= COMMON TYPES =========================
-struct VSOut
+struct VSOutDepthOnly
 {
-    float4 pos : SV_Position;
+    float4 pos : SV_POSITION;
 };
 
 
@@ -18,13 +18,13 @@ StructuredBuffer<uint> VisibleIndices : register(t20);
 StructuredBuffer<float3> Pos : register(t21);
 
 
-VSOut main(uint vtxId : SV_VertexID)
+VSOutDepthOnly main(uint vtxId : SV_VertexID)
 {
     uint idx = VisibleIndices[vtxId];
     float3 p = Pos[idx];
 
     float4 wp = mul(World, float4(p, 1));
-    VSOut o;
+    VSOutDepthOnly o;
     o.pos = mul(ViewProj, wp);
 
     return o;

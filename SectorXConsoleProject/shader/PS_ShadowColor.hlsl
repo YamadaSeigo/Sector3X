@@ -16,20 +16,11 @@ float4 main(PSInputDepth input) : SV_TARGET
 
     float4 shadowPos = mul(gLightViewProj[cascade], float4(input.worldPos, 1.0f));
 
-    //shadowPos.xyz = shadowPos.xyz * 0.5f + 0.5f;
-
-    //return float4(shadowPos.x, 0, shadowPos.z, 1);
-
-    float shadow = DebugShadowDepth(input.worldPos, cascade);
+    float shadow = GetShadowMapDepth(shadowPos.xyz, cascade);
 
     float shadowBias = 1.0f;
-    if (shadowPos.z - shadow > 0.1f)
-        shadowBias = 0.5f;
-
-    // カスケードシャドウのサンプル
-    //float shadow = SampleShadow(input.worldPos, input.viewDepth);
-
-    //return float4(shadow, 0/*(float) cascade / NUM_CASCADES*/, 0, 1);
+    if (shadowPos.z - shadow > 0.001f)
+        shadowBias = 0.8f;
 
     if (hasBaseColorTex == 0)
         return baseColorFactor * shadowBias;

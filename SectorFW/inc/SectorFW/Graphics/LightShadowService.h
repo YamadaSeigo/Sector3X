@@ -24,7 +24,7 @@ namespace SFW
         // -------------------------------------------------------------
         struct DirectionalLight
         {
-            Math::Vec3f directionWS = Math::Vec3f(0.0f, -sin(Math::Deg2Rad(10.0f)), -cos(Math::Deg2Rad(10.0f))); // ワールド空間
+            Math::Vec3f directionWS = Math::Vec3f(cos(Math::Deg2Rad(10.0f)), -sin(Math::Deg2Rad(10.0f)), 0.0f); // ワールド空間
             Math::Vec3f color = Math::Vec3f(1.0f, 1.0f, 1.0f);
             float intensity = 1.0f;
             bool  castsShadow = true;
@@ -73,12 +73,12 @@ namespace SFW
         public:
             struct CascadeConfig
             {
-				Math::Vec2f shadowMapResolution = Math::Vec2f(2048.0f, 2048.0f); // シャドウマップ解像度
+				Math::Vec2f shadowMapResolution = Math::Vec2f(1920.0f, 1080.0f); // シャドウマップ解像度
                 std::uint32_t   cascadeCount = 4;   // 1〜kMaxShadowCascades
-                float           shadowDistance = 100.0f; // カメラからの最大影距離
+                float           shadowDistance = 200.0f; // カメラからの最大影距離
                 float           lambda = 0.5f;   // 0 = 線形, 1 = 対数, その中間
-                float           maxWorldExtent = 500.0f; // ライト正射影の最大サイズ（安全マージン）
-				float           casterExtrusion = 100.0f; // 影キャスターをライト方向に押し出す距離
+                float           maxWorldExtent = 1000.0f; // ライト正射影の最大サイズ（安全マージン）
+				float           casterExtrusion = 500.0f; // 影キャスターをライト方向に押し出す距離
             };
 
             LightShadowService() = default;
@@ -133,6 +133,43 @@ namespace SFW
 				std::shared_lock lock(m_updateMutex);
 				return m_splitDistances;
 			}
+
+			uint32_t GetCascadeIndex(float viewDist) const
+            {
+				std::shared_lock lock(m_updateMutex);
+				for (std::uint32_t i = 0; i < m_cascadeCount; ++i)
+				{
+                    if (viewDist < m_splitDistances[i]) return i;
+				}
+				return m_cascadeCount - 1;
+            }
+
+			std::pair<uint32_t, uint32_t> GetCascadeIndexRangeUnlock(float min, float max) const
+            {
+				max = (std::max)(max, min);
+
+				uint32_t first = 0;
+				uint32_t last = 0;
+                uint32_t i = 0;
+                for (i; i < m_cascadeCount; ++i)
+                {
+                    if (min < m_splitDistances[i])
+                    {
+                        first = i;
+                        break;
+                    }
+                }
+				for (i; i < m_cascadeCount; ++i)
+				{
+					if (max < m_splitDistances[i])
+					{
+						last = i;
+						break;
+					}
+				}
+
+				return { first, last };
+            }
 
             // ---------------------------------------------------------
            // カスケード更新
@@ -239,63 +276,75 @@ namespace SFW
                 // --------------------------------------------------
                 for (std::uint32_t i = 0; i < m_cascadeCount; ++i)
                 {
-                    Math::AABB3f& boundsWS = cascadeBoundsWS[i];
+                    const Math::AABB3f& recvBoundsWS = cascadeBoundsWS[i];
 
-                    // カスケード i 用のライトビュー
+                    // まずは「受け側（レシーバ）の AABB」からライトビューを決める
                     Math::Matrix4x4f lightView;
-                    BuildLightView(lightDir, boundsWS, lightView);
+                    BuildLightView(lightDir, recvBoundsWS, lightView);
 
-                    // カスケード i の WS AABB をライト空間に変換
-                    Math::AABB3f lsAABB = lightView * boundsWS;
+                    // --- ライト空間に変換してテクセルスナップ -----------------
+                    Math::AABB3f recvLS = lightView * recvBoundsWS;
 
-					Math::Vec3f center = lsAABB.center();
-					Math::Vec3f extents = lsAABB.extent();
+                    Math::Vec3f centerLS = recvLS.center();
+                    Math::Vec3f extentsLS = recvLS.extent(); // XY はライト空間の幅・高さ
 
-                    // ライト空間 AABB の extents
-                    float ex = extents.x;
-                    float ey = extents.y;
+                    float shadowSizeX = (float)m_cascadeCfg.shadowMapResolution.x;
+                    float shadowSizeY = (float)m_cascadeCfg.shadowMapResolution.y;
 
-                    // 世界空間1テクセルあたりのサイズ
-                    float worldUnitPerTexelX = (ex * 2.0f) / m_cascadeCfg.shadowMapResolution.x;
-                    float worldUnitPerTexelY = (ey * 2.0f) / m_cascadeCfg.shadowMapResolution.y;
+                    float texelSizeX = (extentsLS.x * 2.0f) / shadowSizeX;
+                    float texelSizeY = (extentsLS.y * 2.0f) / shadowSizeY;
 
-                    // AABB 中心をテクセル単位にスナップ
-                    Vec3f snappedCenter;
-                    snappedCenter.x = floor(center.x / worldUnitPerTexelX + 0.5f) * worldUnitPerTexelX;
-                    snappedCenter.y = floor(center.y / worldUnitPerTexelY + 0.5f) * worldUnitPerTexelY;
-                    snappedCenter.z = center.z; // Z はスナップしない
+                    Math::Vec3f snappedCenterLS;
+                    snappedCenterLS.x =
+                        std::floor(centerLS.x / texelSizeX + 0.5f) * texelSizeX;
+                    snappedCenterLS.y =
+                        std::floor(centerLS.y / texelSizeY + 0.5f) * texelSizeY;
+                    snappedCenterLS.z = centerLS.z; // Z はそのまま
 
-                    // スナップ後の中心で AABB を再計算
-                    lsAABB.lb = snappedCenter - extents;
-                    lsAABB.ub = snappedCenter + extents;
+                    //スナップオフ
+                    snappedCenterLS = centerLS;
+
+                    // XY だけスナップしたライト空間 AABB（受け側）
+                    Math::AABB3f recvSnappedLS;
+                    recvSnappedLS.lb =
+                        snappedCenterLS - Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
+                    recvSnappedLS.ub =
+                        snappedCenterLS + Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
+
+                    // --- キャスター用に Z だけ押し出す -----------------------
+                    Math::AABB3f casterWS = recvBoundsWS;
+                    casterWS.lb -= pad;
+                    casterWS.ub += pad;
+
+                    Math::AABB3f casterTightWS = IntersectAABB(casterWS, sceneBounds);
+                    Math::AABB3f casterLS = lightView * casterTightWS;
+
+                    // 最終ライト空間 AABB:
+                    //   XY = スナップ済み受け側、Z = キャスターで決まった near/far
+                    Math::AABB3f finalLS;
+                    finalLS.lb = Math::Vec3f(
+                        recvSnappedLS.lb.x,
+                        recvSnappedLS.lb.y,
+                        casterLS.lb.z
+                    );
+                    finalLS.ub = Math::Vec3f(
+                        recvSnappedLS.ub.x,
+                        recvSnappedLS.ub.y,
+                        casterLS.ub.z
+                    );
 
                     // そのライト空間 AABB をちょうど覆う Ortho
                     Math::Matrix4x4f lightProj;
-                    BuildLightOrtho(lsAABB, lightProj);
+                    BuildLightOrtho(finalLS, lightProj);
 
                     // 記録
                     m_cascades.lightView[i] = lightView;
                     m_cascades.lightProj[i] = lightProj;
                     m_cascades.lightViewProj[i] = lightProj * lightView;
 
-
-					//フラスタムだけライト方向へ押し出し
-                    Math::AABB3f casterBoundsWS = boundsWS;
-
-                    // キャスター押し出し分をマージンとして追加
-                    casterBoundsWS.lb -= pad;
-                    casterBoundsWS.ub += pad;
-
-                    // シーン AABB との交差で少しタイトに
-                    Math::AABB3f tightWS = IntersectAABB(casterBoundsWS, sceneBounds);
-
-                    lsAABB = lightView * tightWS;
-
-                    BuildLightOrtho(lsAABB, lightProj);
-
                     // カリング用フラスタム & WS Bounds を保存
-                    m_cascades.frustumWS[i] = BuildFrustumFromMatrix(lightProj * lightView);
-                    m_cascades.boundsWS[i] = boundsWS;
+                    m_cascades.frustumWS[i] = BuildFrustumFromMatrix(m_cascades.lightViewProj[i]);
+                    m_cascades.boundsWS[i] = recvBoundsWS;
                 }
             }
 
@@ -402,11 +451,8 @@ namespace SFW
             static void BuildLightView(const Math::Vec3f& lightDirWS, const Math::AABB3f& boundsWS, Math::Matrix4x4f& outView)
             {
                 Math::Vec3f center = boundsWS.center(); // AABB.hpp に合わせて
-                Math::Vec3f ext = boundsWS.extent();   // 半サイズ
 
-                float radius = (std::max)(ext.x, (std::max)(ext.y, ext.z));
-
-                Math::Vec3f eye = center - lightDirWS * radius * 2.0f;
+                Math::Vec3f eye = center - lightDirWS;
                 Math::Vec3f target = center;
                 Math::Vec3f up(0.0f, 1.0f, 0.0f);
 

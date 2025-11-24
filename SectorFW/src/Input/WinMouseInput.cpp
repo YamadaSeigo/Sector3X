@@ -142,7 +142,7 @@ namespace SFW
 			if (captured) {
 				while (ShowCursor(FALSE) >= 0) {}
 				Reclip();
-				RegisterRawInput(true, /*noLegacy=*/true,  /*capture=*/true); // ƒŒƒKƒV[’â~
+				RegisterRawInput(true, /*noLegacy=*/true,  /*capture=*/false); // ƒŒƒKƒV[’â~
 				SetCapture(hwnd);
 				SetFocus(hwnd);
 			}

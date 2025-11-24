@@ -6,6 +6,7 @@
 #include <SectorFW/Math/Rectangle.hpp>
 
 #include <SectorFW/Graphics/OccluderToolkit.h>
+#include <SectorFW/Graphics/LightShadowService.h>
 
 #include "ModelRenderSystem.h"
 
@@ -46,8 +47,21 @@ template<typename Partition>
 class DebugRenderSystem : public ITypeSystem<
 	DebugRenderSystem<Partition>,
 	Partition,
-	ComponentAccess<Read<Physics::ShapeDims>, Read<Physics::PhysicsInterpolation>, Read<TransformSoA>, Read<CModel>>,//アクセスするコンポーネントの指定
-	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService, Graphics::I2DCameraService>>{//受け取るサービスの指定
+	//アクセスするコンポーネントの指定
+	ComponentAccess<
+		Read<Physics::ShapeDims>,
+		Read<Physics::PhysicsInterpolation>,
+		Read<TransformSoA>,
+		Read<CModel>
+	>,
+	//受け取るサービスの指定
+	ServiceContext<
+		Graphics::RenderService,
+		Graphics::I3DPerCameraService,
+		Graphics::I2DCameraService,
+		Graphics::LightShadowService
+	>>
+{
 	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<Physics::PhysicsInterpolation>>;
 	using ModelAccessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
 
@@ -59,9 +73,12 @@ class DebugRenderSystem : public ITypeSystem<
 
 	static constexpr inline uint32_t DRAW_LINE_CHUNK_COUNT = 12;
 public:
-	void StartImpl(UndeletablePtr<Graphics::RenderService> renderService,
+	void StartImpl(
+		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
-		UndeletablePtr<Graphics::I2DCameraService>) {
+		UndeletablePtr<Graphics::I2DCameraService>,
+		UndeletablePtr<Graphics::LightShadowService>)
+	{
 		using namespace Graphics;
 		using namespace Debug;
 
@@ -142,10 +159,17 @@ public:
 
 		auto texMgr = renderService->GetResourceManager<DX11::TextureManager>();
 
+		auto resolution = camera3DService->GetResolution();
+
+		uint32_t width = (UINT)resolution.x;
+		uint32_t height = (UINT)resolution.y;
+
+		mocDepth.resize(width * height);
+
 		Graphics::DX11::TextureRecipe recipe =
 		{
-		.width = 960,
-		.height = 720,
+		.width = width,
+		.height = height,
 		.format = DXGI_FORMAT_R32_FLOAT,
 		.mipLevels = 1,
 		.arraySize = 1,
@@ -154,7 +178,7 @@ public:
 		.cpuAccessFlags = 0,
 		.miscFlags = 0,
 		.initialData = mocDepth.data(),
-		.initialRowPitch = 960 * 4
+		.initialRowPitch = (UINT)width * sizeof(UINT)
 		};
 
 		texMgr->Add({
@@ -165,20 +189,20 @@ public:
 
 		Graphics::DX11::MaterialCreateDesc matDesc;
 		matDesc.shader = mocShaderHandle;
-		matDesc.psSRV[10] = mocTexHandle; // TEX6 にセット
+		matDesc.psSRV[10] = mocTexHandle; // TEX10 にセット
 		auto matMgr = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
 		matMgr->Add(matDesc, mocMaterialHandle);
 	}
 
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService,
+	void UpdateImpl(Partition& partition,
+		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
-		UndeletablePtr<Graphics::I2DCameraService> camera2DService) {
+		UndeletablePtr<Graphics::I2DCameraService> camera2DService,
+		UndeletablePtr<Graphics::LightShadowService> lightShadowService)
+	{
 		//機能を制限したRenderQueueを取得
-		auto defaultSession = renderService->GetProducerSession("3D");
-		auto draw3DLineSession = renderService->GetProducerSession("Line");
-		auto draw2DSession = renderService->GetProducerSession("2D");
-		auto draw2DLineSession = renderService->GetProducerSession("Line2D");
+		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto* meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 		auto psoManager = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
@@ -196,10 +220,26 @@ public:
 
 		Math::Vec2f resolution = camera2DService->GetVirtualResolution();
 
-		const Graphics::Viewport vp = { (int)resolution.x, (int)resolution.y, fov };
+		const Graphics::OccluderViewport vp = { (int)resolution.x, (int)resolution.y, fov };
 
 		auto line3DCount = partition.CullChunkLine(fru, cameraPos, 200.0f,
 			line3DVertices.get(), MAX_CAPACITY_3DLINE, DRAW_LINE_CHUNK_COUNT);
+
+		const auto& cascade = lightShadowService->GetCascades();
+		uint32_t cascadeCount = (uint32_t)cascade.boundsWS.size();
+		for (uint32_t i = 0; i < cascadeCount; ++i)
+		{
+			const auto& aabb = cascade.boundsWS[i];
+			float t = (float(i) / float(cascadeCount - 1));
+			auto lineVertex = Math::MakeAABBLineVertices(aabb, Math::LerpColor(0xFF0000FF, 0x0000FFFF, t));
+			size_t newLineSize = lineVertex.size();
+			if (line3DCount + newLineSize > MAX_CAPACITY_3DLINE) {
+				break;
+			}
+			for (auto& l : lineVertex) {
+				line3DVertices.get()[line3DCount++] = { l.pos, l.rgba };
+			}
+		}
 
 		uint32_t line2DCount = 0;
 
@@ -380,16 +420,18 @@ public:
 		bufferManager->UpdateBuffer(vbUpdateDesc, slot);
 
 		Graphics::DrawCommand cmd;
-		cmd.instanceIndex = draw3DLineSession.AllocInstance({ Math::Matrix4x4f::Identity() });
+		cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
 		cmd.mesh = line3DHandle.index;
 		cmd.material = 0;
 		cmd.pso = psoLineHandle.index;
 		cmd.sortKey = 0; // 適切なソートキーを設定
-		draw3DLineSession.Push(cmd);
+		cmd.viewMask = PASS_UI_3DLINE;
+		uiSession.Push(cmd);
 
-		cmd.instanceIndex = draw2DLineSession.AllocInstance({ Math::Matrix4x4f::Identity() });
+		cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
 		cmd.mesh = line2DHandle.index;
-		draw2DLineSession.Push(cmd);
+		cmd.viewMask = PASS_UI_LINE;
+		uiSession.Push(cmd);
 
 		this->ForEachFrustumChunkWithAccessor<ShapeDimsAccessor>([](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh)
 			{
@@ -413,6 +455,7 @@ public:
 						cmd.material = 0;
 						cmd.pso = pso;
 						cmd.sortKey = 0; // 適切なソートキーを設定
+						cmd.viewMask = PASS_UI_3DLINE;
 						queue->Push(std::move(cmd));
 						break;
 					}
@@ -424,6 +467,7 @@ public:
 						cmd.material = 0;
 						cmd.pso = pso;
 						cmd.sortKey = 0; // 適切なソートキーを設定
+						cmd.viewMask = PASS_UI_3DLINE;
 						queue->Push(std::move(cmd));
 						break;
 					}
@@ -431,22 +475,25 @@ public:
 						break;
 					}
 				}
-			}, partition, fru, meshManager, &draw3DLineSession, psoLineHandle.index, boxHandle.index, sphereHandle.index);
+			}, partition, fru, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereHandle.index);
 
 		renderService->GetDepthBuffer(mocDepth);
 
 		Graphics::DX11::TextureManager* texMgr = renderService->GetResourceManager<Graphics::DX11::TextureManager>();
-		texMgr->UpdateTexture(mocTexHandle, mocDepth.data(), 960 * 4);
+
+
+		texMgr->UpdateTexture(mocTexHandle, mocDepth.data(), (UINT)(camera3DService->GetResolution().x) * sizeof(float));
 
 		Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(300.0f, -220.0f, 0.0f));
 		Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 320.0f, 240.0f, 1.0f });
 
-		cmd.instanceIndex = draw2DSession.AllocInstance(transMat * scaleMat);
+		cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
 		cmd.mesh = meshManager->GetSpriteQuadHandle().index;
 		cmd.pso = psoMOCHandle.index;
 		cmd.material = mocMaterialHandle.index;
+		cmd.viewMask = PASS_UI_LINE;
 
-		draw2DSession.Push(std::move(cmd));
+		uiSession.Push(std::move(cmd));
 	}
 private:
 	Graphics::PSOHandle psoLineHandle = {};
@@ -459,7 +506,7 @@ private:
 	Graphics::TextureHandle mocTexHandle = {};
 	Graphics::MaterialHandle mocMaterialHandle = {};
 
-	std::vector<float> mocDepth = std::vector<float>(960 * 720, 0.2f);
+	std::vector<float> mocDepth;
 
 	Graphics::MeshHandle boxHandle = {}; // デフォルトメッシュ（立方体）
 	Graphics::MeshHandle sphereHandle = {}; // デフォルトメッシュ（球）

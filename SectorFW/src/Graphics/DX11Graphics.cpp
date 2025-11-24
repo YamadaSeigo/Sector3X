@@ -145,14 +145,13 @@ namespace SFW
 			m_context->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), nullptr);
 
 			// ビューポート設定
-			D3D11_VIEWPORT vp = {};
-			vp.Width = static_cast<FLOAT>(width);
-			vp.Height = static_cast<FLOAT>(height);
-			vp.MinDepth = 0.0f;
-			vp.MaxDepth = 1.0f;
-			vp.TopLeftX = 0;
-			vp.TopLeftY = 0;
-			m_context->RSSetViewports(1, &vp);
+			m_viewport.Width = static_cast<FLOAT>(width);
+			m_viewport.Height = static_cast<FLOAT>(height);
+			m_viewport.MinDepth = 0.0f;
+			m_viewport.MaxDepth = 1.0f;
+			m_viewport.TopLeftX = 0;
+			m_viewport.TopLeftY = 0;
+			m_context->RSSetViewports(1, &m_viewport);
 
 			// 深度ステンシルバッファの作成
 			D3D11_TEXTURE2D_DESC depthDesc = {};

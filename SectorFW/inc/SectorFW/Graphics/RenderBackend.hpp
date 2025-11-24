@@ -19,14 +19,14 @@ namespace SFW
 		/**
 		 * @brief レンダリングバックエンドの基底クラス。CRTPを使用して派生クラスで実装を強制する。
 		 */
-		template<typename Derived, PointerType RTV, PointerType SRV, PointerType Buffer>
+		template<typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template<typename> class ViewHandle>
 		class RenderBackendBase {
 		public:
 			/**
 			 * @brief RenderGraphにリソースマネージャーを追加する関数
 			 * @param graph レンダーグラフの参照
 			 */
-			void AddResourceManagerToRenderService(RenderGraph<Derived, RTV, SRV, Buffer>& graph) {
+			void AddResourceManagerToRenderService(RenderGraph<Derived, RTV, DSV, SRV, Buffer, ViewHandle>& graph) {
 				static_cast<Derived*>(this)->AddResourceManagerToRenderServiceImpl(graph);
 			}
 			/**
@@ -85,8 +85,15 @@ namespace SFW
 			 * @brief グローバル定数バッファビューをバインドする関数
 			 * @param cbvs 定数バッファビューの配列
 			 */
-			void BindGlobalCBVs(const std::vector<BufferHandle>& cbvs) {
+			void BindGlobalCBVs(const std::vector<BindSlotBuffer>& cbvs) {
 				static_cast<Derived*>(this)->BindGlobalCBVsImpl(cbvs);
+			}
+			/**
+			 * @brief ビューポートを設定する関数
+			 * @param vp ビューポート情報
+			 */
+			void SetViewport(const Viewport& vp) {
+				static_cast<Derived*>(this)->SetViewportImpl(vp);
 			}
 			/**
 			 * @brief フレームごとのインスタンスデータをアップロードする関数

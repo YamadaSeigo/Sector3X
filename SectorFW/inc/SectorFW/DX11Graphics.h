@@ -36,7 +36,7 @@ namespace SFW
 		class GraphicsDevice : public IGraphicsDevice<GraphicsDevice>
 		{
 		public:
-			using RenderGraph = RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>;
+			using RenderGraph = RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr>;
 
 			/**
 			 * @brief コンストラクタ
@@ -97,7 +97,7 @@ namespace SFW
 			template<typename F>
 			void ExecuteCustomFunc(F&& func)
 			{
-				func(renderGraph.get(), m_renderTargetView.Get(), m_depthStencilView.Get());
+				func(renderGraph.get(), m_renderTargetView, m_depthStencilView);
 			}
 
 			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }
@@ -109,6 +109,11 @@ namespace SFW
 			ComPtr<ID3D11DepthStencilView> GetMainDepthStencilView() const noexcept {
 				return m_depthStencilView;
 			}
+
+			const D3D11_VIEWPORT& GetMainViewport() const noexcept {
+				return m_viewport;
+			}
+
 		private:
 			// ===== レンダースレッド実装 =====
 			struct RenderSubmit {
@@ -152,6 +157,8 @@ namespace SFW
 			ComPtr<ID3D11Texture2D> m_depthStencilBuffer;
 			// デフォルトの深度ステンシルビュー
 			ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+
+			D3D11_VIEWPORT m_viewport{};
 
 			std::unique_ptr<MeshManager> meshManager;
 			std::unique_ptr<ShaderManager> shaderManager;

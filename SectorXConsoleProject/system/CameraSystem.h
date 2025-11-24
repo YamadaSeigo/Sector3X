@@ -4,8 +4,16 @@ template<typename Partition>
 class CameraSystem : public ITypeSystem<
 	CameraSystem<Partition>,
 	Partition,
-	ComponentAccess<>,//アクセスするコンポーネントの指定
-	ServiceContext<InputService, Graphics::I3DPerCameraService, Graphics::I2DCameraService, Graphics::LightShadowService>> {//受け取るサービスの指定
+	//アクセスするコンポーネントの指定
+	ComponentAccess<>,
+	//受け取るサービスの指定
+	ServiceContext<
+		InputService,
+		Graphics::I3DPerCameraService,
+		Graphics::I2DCameraService,
+		Graphics::LightShadowService>
+	>
+{
 	//using Accessor = ComponentAccessor<>;
 
 	static constexpr float MOVE_SPEED_WHEEL_RATE = 0.5f;
@@ -75,7 +83,62 @@ public:
 			camera2DService->Zoom((float)mouseWheelV);
 		}
 
-		if (perCameraService->IsUpdateBuffer())
+
+		bool updateCascade = false;
+		//方向ライトの回転（本来はカメラシステムでやるべきではない。デバッグのためにとりあえず）
+		if (inputService->IsKeyPressed(Input::Key::L))
+		{
+			const float lightRotateSpeed = Math::Deg2Rad(1.0f);
+
+			auto dirLight = lightShadowService->GetDirectionalLight();
+
+			if (inputService->IsKeyPressed(Input::Key::Left))
+			{
+				updateCascade = true;
+
+				auto dir = dirLight.directionWS;
+
+				dirLight.directionWS = {
+					cos(lightRotateSpeed) * dir.x - sin(lightRotateSpeed) * dir.z,
+					dirLight.directionWS.y,
+					sin(lightRotateSpeed) * dir.x + cos(lightRotateSpeed) * dir.z,
+				};
+			}
+			if (inputService->IsKeyPressed(Input::Key::Right))
+			{
+				updateCascade = true;
+				auto dir = dirLight.directionWS;
+				dirLight.directionWS = {
+					cos(-lightRotateSpeed) * dir.x - sin(-lightRotateSpeed) * dir.z,
+					dirLight.directionWS.y,
+					sin(-lightRotateSpeed) * dir.x + cos(-lightRotateSpeed) * dir.z,
+				};
+			}
+			if (inputService->IsKeyPressed(Input::Key::Up))
+			{
+				updateCascade = true;
+				auto dir = dirLight.directionWS;
+				dirLight.directionWS = {
+					dirLight.directionWS.x,
+					cos(lightRotateSpeed) * dir.y - sin(lightRotateSpeed) * dir.z,
+					sin(lightRotateSpeed) * dir.y + cos(lightRotateSpeed) * dir.z,
+				};
+			}
+			if (inputService->IsKeyPressed(Input::Key::Down))
+			{
+				updateCascade = true;
+				auto dir = dirLight.directionWS;
+				dirLight.directionWS = {
+					dirLight.directionWS.x,
+					cos(-lightRotateSpeed) * dir.y - sin(-lightRotateSpeed) * dir.z,
+					sin(-lightRotateSpeed) * dir.y + cos(-lightRotateSpeed) * dir.z,
+				};
+			}
+
+			lightShadowService->SetDirectionalLight(dirLight);
+		}
+
+		if (perCameraService->IsUpdateBuffer() || updateCascade)
 		{
 			Graphics::CameraParams camParams;
 			camParams.view = perCameraService->MakeViewMatrix();
@@ -84,8 +147,6 @@ public:
 			camParams.farPlane = perCameraService->GetFarClip();
 			camParams.fovY = perCameraService->GetFOV();
 			camParams.aspect = perCameraService->GetAspectRatio();
-
-			auto dirLight = lightShadowService->GetDirectionalLight();
 
 			lightShadowService->UpdateCascade(camParams, cascadeSceneAABB);
 		}

@@ -261,7 +261,7 @@ void SFW::Graphics::QuadToTrianglesCCW(uint16_t outIdx[6]) {
 // -----------------------------------------------------------------------------
 // (C) screen size measures + SIMD projection
 // -----------------------------------------------------------------------------
-float SFW::Graphics::EstimateMaxScreenDiameterPx(const AABB3f& b, const Vec3f& camPos, const Viewport& vp)
+float SFW::Graphics::EstimateMaxScreenDiameterPx(const AABB3f& b, const Vec3f& camPos, const OccluderViewport& vp)
 {
     const Vec3f c = (b.lb + b.ub) * 0.5f;
     const Vec3f e = (b.ub - b.lb) * 0.5f;
@@ -435,7 +435,7 @@ int SFW::Graphics::SelectOccluderQuads_SIMD(
 {
     out.clear();
     out.reserve(aabbs.size());
-    const Viewport vp{ vpW, vpH, 1.0f };
+    const OccluderViewport vp{ vpW, vpH, 1.0f };
     const OccluderPolicy P = GetPolicy(lod);
 
     for (const auto& b : aabbs) {
@@ -610,7 +610,7 @@ int SFW::Graphics::SelectOccluderQuads_AVX2(
     const size_t aabbCount,
     const Vec3f& camPos,
     const Mat4f& VP,
-    const Viewport& vp,
+    const OccluderViewport& vp,
     OccluderLOD lod,
     std::vector<QuadCandidate>& out)
 {

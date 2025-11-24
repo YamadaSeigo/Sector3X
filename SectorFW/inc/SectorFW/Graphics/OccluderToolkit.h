@@ -69,13 +69,13 @@ namespace SFW {
         void QuadToTrianglesCCW(uint16_t outIdx[6]);
 
         // ----- Screen-space helpers -----
-        struct Viewport {
+        struct OccluderViewport {
             int   width = 0;
             int   height = 0;
             float fovY = 1.0f; // radians (coarse estimate only)
         };
 
-        float EstimateMaxScreenDiameterPx(const Math::AABB3f& b, const Math::Vec3f& camPos, const Viewport& vp);
+        float EstimateMaxScreenDiameterPx(const Math::AABB3f& b, const Math::Vec3f& camPos, const OccluderViewport& vp);
 
         // Project a quad -> screen AABB area (px^2), optionally returns screen AABB and mean NDC depth.
         // SIMD/AVX2 acceleration is implemented in .cpp when possible.
@@ -121,7 +121,7 @@ namespace SFW {
 			const size_t aabbCount,
             const Math::Vec3f& camPos,
             const Math::Matrix4x4f& VP,
-            const Viewport& vp,
+            const OccluderViewport& vp,
             OccluderLOD lod,
             std::vector<QuadCandidate>& out);
 

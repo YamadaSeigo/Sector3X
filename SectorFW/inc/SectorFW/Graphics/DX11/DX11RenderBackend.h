@@ -37,7 +37,7 @@ namespace SFW
 		/**
 		 * @brief DirectX 11レンダリングバックエンドクラス.
 		 */
-		class RenderBackend : public RenderBackendBase<RenderBackend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*> {
+		class RenderBackend : public RenderBackendBase<RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr> {
 		public:
 			/**
 			 * @brief ひと描画命令当たりのインスタンスデータの最大数
@@ -66,7 +66,7 @@ namespace SFW
 			 * @param graph レンダーグラフ
 			 */
 			void AddResourceManagerToRenderServiceImpl(
-				RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>& graph);
+				RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr>& graph);
 			/**
 			 * @brief プリミティブトポロジーを設定する関数
 			 * @param topology プリミティブトポロジー
@@ -119,15 +119,24 @@ namespace SFW
 			 * @brief 共通のコンスタントバッファをバインドする関数
 			 * @param cbvs コンスタントバッファの配列
 			 */
-			void BindGlobalCBVsImpl(const std::vector<BufferHandle>& cbvs) {
-				std::vector<ID3D11Buffer*> buffers;
-				buffers.reserve(cbvs.size());
+			void BindGlobalCBVsImpl(const std::vector<BindSlotBuffer>& cbvs) {
 				for (const auto& cb : cbvs) {
-					auto d = cbManager->Get(cb);
-					buffers.push_back(d.ref().buffer.Get());
+					auto d = cbManager->Get(cb.handle);
+					context->VSSetConstantBuffers(cb.slot, 1, d.ref().buffer.GetAddressOf());
 				}
-				context->VSSetConstantBuffers(0, (UINT)buffers.size(), buffers.data());
 			}
+
+			void SetViewportImpl(const Viewport& vp) {
+				D3D11_VIEWPORT d3dvp{};
+				d3dvp.TopLeftX = vp.topLeftX;
+				d3dvp.TopLeftY = vp.topLeftY;
+				d3dvp.Width = vp.width;
+				d3dvp.Height = vp.height;
+				d3dvp.MinDepth = vp.minDepth;
+				d3dvp.MaxDepth = vp.maxDepth;
+				context->RSSetViewports(1, &d3dvp);
+			}
+
 			/**
 			 * @brief インスタンスデータをフレーム前にアップロードする関数
 			 * @param framePool インスタンスデータの配列

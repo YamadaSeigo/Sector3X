@@ -34,10 +34,10 @@ namespace SFW
 		/**
 		 * @brief RenderPassごとに管理して描画を行うクラス
 		 */
-		template<typename Backend, PointerType RTV, PointerType SRV, PointerType Buffer>
+		template<typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template <typename> class ViewHandle>
 		class RenderGraph {
 		public:
-			using PassType = RenderPass<RTV, SRV, Buffer>;
+			using PassType = RenderPass<RTV, DSV, SRV, Buffer, ViewHandle<std::remove_pointer_t<RTV>>, ViewHandle<std::remove_pointer_t<DSV>>>;
 			static constexpr uint16_t kFlights = RENDER_BUFFER_COUNT; // フレームインフライト数
 
 			struct PassGroup {
@@ -78,7 +78,7 @@ namespace SFW
 			 * @brief RenderPassの追加
 			 * @param desc レンダーパスの詳細
 			 */
-			void AddPass(RenderPassDesc<RTV>& desc) {
+			void AddPass(RenderPassDesc<RTV, DSV, ViewHandle>& desc) {
 				std::unique_lock lock(*renderService.queueMutex);
 
 				renderService.renderQueues.emplace_back(std::make_unique<RenderQueue>(renderService.produceSlot, sharedInstanceArena.get(), MAX_INSTANCES_PER_FRAME));
@@ -94,6 +94,7 @@ namespace SFW
 					desc.blendState,
 					desc.depthStencilState,
 					desc.cbvs,
+					desc.viewport,
 					desc.psoOverride,
 					desc.customExecute));
 
@@ -129,7 +130,7 @@ namespace SFW
 
 			PassType& AddPassToGroup(
 				PassGroup& group,
-				const RenderPassDesc<RTV>& desc,
+				const RenderPassDesc<RTV, DSV, ViewHandle>& desc,
 				uint16_t viewBit       // このパス用のビット
 			) {
 				passes.push_back(std::make_unique<PassType>(
@@ -141,6 +142,7 @@ namespace SFW
 					desc.blendState,
 					desc.depthStencilState,
 					desc.cbvs,
+					desc.viewport,
 					desc.psoOverride,
 					desc.customExecute
 				));
@@ -217,9 +219,7 @@ namespace SFW
 					const size_t passCount = g.passes.size();
 					gs.ranges.resize(passCount);
 
-					if (gs.cmds.empty() || passCount == 0) {
-						return;
-					}
+					if (gs.cmds.empty() || passCount == 0) continue;
 
 					// --- 1st pass: 各パスがいくつ index を持つかカウント ---
 					std::vector<uint32_t> counts(passCount, 0);
@@ -288,8 +288,13 @@ namespace SFW
 						backend.SetRasterizerState(*pass->rasterizerState);
 					backend.SetBlendState(pass->blendState);
 					backend.SetDepthStencilState(pass->depthStencilState);
-					backend.SetRenderTargets(pass->rtvs, pass->dsv);
-					backend.BindGlobalCBVs(pass->cbvs);
+					backend.SetRenderTargets(pass->rtvsRaw, pass->dsv.Get());
+
+					if (pass->cbvs.has_value())
+						backend.BindGlobalCBVs(pass->cbvs.value());
+
+					if (pass->viewport.has_value())
+						backend.SetViewport(pass->viewport.value());
 
 					// 共通cmds + このパスの indexビューで描画
 					backend.ExecuteDrawIndexedInstanced(gs.cmds, std::span<const uint32_t>(idxBegin, idxEnd), pass->psoOverride, !useRasterizer);

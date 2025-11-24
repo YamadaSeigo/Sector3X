@@ -47,7 +47,7 @@ namespace SFW
 		 */
 		struct RenderService : public ECS::IUpdateService
 		{
-			template<typename Backend, PointerType RTV, PointerType SRV, PointerType Buffer>
+			template<typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template <typename> class ViewHandle>
 			friend class RenderGraph;
 			/**
 			 * @brief コンストラクタ
@@ -105,7 +105,7 @@ namespace SFW
 			 * @param buf バッファ
 			 * @return　RenderQueue::ProducerSession レンダークエリのプロデューサーセッション
 			 */
-			RenderQueue::ProducerSessionExternal GetProducerSession(const std::string& groupName, 
+			RenderQueue::ProducerSessionExternal GetProducerSession(const std::string& groupName,
 				RenderQueue::ProducerSessionExternal::SmallBuf& buf)
 			{
 				std::shared_lock lock(*queueMutex);

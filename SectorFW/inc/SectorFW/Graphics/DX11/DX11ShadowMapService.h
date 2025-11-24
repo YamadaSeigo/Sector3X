@@ -25,7 +25,7 @@ namespace SFW
             float lightViewProj[kMaxShadowCascades][16]{}; // row-major
             float splitDepths[kMaxShadowCascades] = {};
             std::uint32_t cascadeCount = kMaxShadowCascades;
-            float pad[3] = {};
+            float dir[3] = {};
         };
 
         /// DirectX11 用のシャドウ・リソース管理サービス
@@ -65,6 +65,12 @@ namespace SFW
 				context->VSSetConstantBuffers(shadowDataCBSlot, 1, m_cbShadowCascades.GetAddressOf());
                 context->PSSetConstantBuffers(shadowDataCBSlot, 1, m_cbShadowCascades.GetAddressOf());
 				context->PSSetSamplers(samplerSlot, 1, m_shadowSampler.GetAddressOf());
+				context->RSSetState(m_shadowRS.Get());
+			}
+
+			void BindShadowRasterizer(ID3D11DeviceContext* context) const
+			{
+				context->RSSetState(m_shadowRS.Get());
 			}
 
 			void UpdateShadowCascadeCB(ID3D11DeviceContext* context,
@@ -90,6 +96,7 @@ namespace SFW
 					auto& cascade = lightShadowService.GetCascades();
                     std::memcpy(dst->lightViewProj, cascade.lightViewProj.data(), sizeof(dst->lightViewProj));
 					std::memcpy(dst->splitDepths, lightShadowService.GetSplitDistances().data(), sizeof(float) * m_cascadeCount);
+					std::memcpy(dst->dir, &lightShadowService.GetDirectionalLight().directionWS, sizeof(float) * 3);
 					dst->cascadeCount = m_cascadeCount;
                     context->Unmap(m_cbShadowCascades.Get(), 0);
                 }
@@ -131,9 +138,9 @@ namespace SFW
                 return m_cascadeDSV[i].Get();
             }
 
-            const D3D11_VIEWPORT& GetCascadeViewport(std::uint32_t i) const noexcept
+            const D3D11_VIEWPORT& GetCascadeViewport() const noexcept
             {
-                return m_cascadeViewport[i];
+                return m_cascadeViewport;
             }
 
             const ShadowMapConfig& GetConfig() const noexcept { return m_config; }
@@ -153,8 +160,8 @@ namespace SFW
             // 全スライスまとめて参照する SRV
             ComPtr<ID3D11ShaderResourceView> m_shadowSRV;
 
-            // 各カスケードのビューポート
-            std::array<D3D11_VIEWPORT, kMaxShadowCascades> m_cascadeViewport{};
+            // カスケードのビューポート
+            D3D11_VIEWPORT m_cascadeViewport{};
 
             // 比較サンプラ（シャドウフェッチ用）
             ComPtr<ID3D11SamplerState> m_shadowSampler;

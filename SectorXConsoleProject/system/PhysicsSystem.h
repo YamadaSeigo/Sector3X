@@ -12,8 +12,19 @@ template<typename Partition>
 class PhysicsSystem : public ITypeSystem<
 	PhysicsSystem<Partition>,
 	Partition,
-	ComponentAccess<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>, Read<Physics::BodyComponent>, Write<SpatialMotionTag>>,//アクセスするコンポーネントの指定
-	ServiceContext<Physics::PhysicsService, SpatialChunkRegistry>>{//受け取るサービスの指定
+	//アクセスするコンポーネントの指定
+	ComponentAccess<
+		Write<TransformSoA>, 
+		Write<Physics::PhysicsInterpolation>, 
+		Read<Physics::BodyComponent>, 
+		Write<SpatialMotionTag>
+	>,
+	//受け取るサービスの指定
+	ServiceContext<
+		Physics::PhysicsService, 
+		SpatialChunkRegistry>
+	>
+{
 	using Accessor = ComponentAccessor<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>, Read<Physics::BodyComponent>, Write<SpatialMotionTag>>;
 public:
 	//指定したサービスを関数の引数として受け取る

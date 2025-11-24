@@ -24,8 +24,12 @@
 
 #define WINDOW_NAME "SectorX Console Project"
 
-constexpr uint32_t WINDOW_WIDTH = 1920 / 2;	// ウィンドウの幅
-constexpr uint32_t WINDOW_HEIGHT = 1080 / 2;	// ウィンドウの高さ
+//4の倍数
+constexpr uint32_t WINDOW_WIDTH = uint32_t(1920 / 1.5f);	// ウィンドウの幅
+constexpr uint32_t WINDOW_HEIGHT = uint32_t(1080 / 1.5f);	// ウィンドウの高さ
+
+constexpr uint32_t SHADOW_MAP_WIDTH = 1024;	// シャドウマップの幅
+constexpr uint32_t SHADOW_MAP_HEIGHT = 1024 * 6;	// シャドウマップの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
@@ -74,25 +78,27 @@ static bool ResolveTexturePath(uint32_t id, std::string& path, bool& forceSRGB)
 
 void InitializeRenderPipeLine(
 	Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
-	ID3D11RenderTargetView* mainRenderTarget,
-	ID3D11DepthStencilView* mainDepthStencilView,
-	std::function<void(uint64_t)> depthCustomFunc)
+	ComPtr<ID3D11RenderTargetView>& mainRenderTarget,
+	ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
+	std::function<void(uint64_t)> drawTerrainColor,
+	Graphics::DX11::ShadowMapService shadowMapService)
 {
 	using namespace SFW::Graphics;
 
-	std::vector<ID3D11RenderTargetView*> rtvs{ mainRenderTarget };
+	std::vector<ComPtr<ID3D11RenderTargetView>> rtvs{ mainRenderTarget };
 
-	auto constantMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::BufferManager>();
-	auto cameraHandle3D = constantMgr->FindByName(DX11::PerCamera3DService::BUFFER_NAME);
-	auto cameraHandle2D = constantMgr->FindByName(DX11::Camera2DService::BUFFER_NAME);
+	auto bufferMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::BufferManager>();
+	auto cameraHandle3D = bufferMgr->FindByName(DX11::PerCamera3DService::BUFFER_NAME);
+	auto cameraHandle2D = bufferMgr->FindByName(DX11::Camera2DService::BUFFER_NAME);
 
 	auto shaderMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::ShaderManager>();
 	auto psoMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::PSOManager>();
 
-	DX11::ShaderCreateDesc shaderDesc;
-	shaderDesc.vsPath = L"assets/shader/VS_ZPrepass.cso";
+	auto& main3DGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_3D_MAIN]);
+
 	//PSを指定しないことでDepthOnlyのPSOを作成
-	//shaderDesc.psPath = L"assets/shader/PS_DepthOnly.cso";
+	DX11::ShaderCreateDesc shaderDesc;
+	shaderDesc.vsPath = L"assets/shader/VS_CascadeDepth.cso";
 
 	ShaderHandle shaderHandle;
 	shaderMgr->Add(shaderDesc, shaderHandle);
@@ -101,52 +107,113 @@ void InitializeRenderPipeLine(
 	PSOHandle psoHandle;
 	psoMgr->Add(psoDesc, psoHandle);
 
-	auto& main3DGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_3D_MAIN]);
-
-	RenderPassDesc<ID3D11RenderTargetView*> passDesc;
-	passDesc.dsv = mainDepthStencilView;
-	passDesc.cbvs = { cameraHandle3D };
+	RenderPassDesc<ID3D11RenderTargetView*, ID3D11DepthStencilView*, ComPtr> passDesc;
 	passDesc.blendState = BlendStateID::Opaque;
 	passDesc.psoOverride = psoHandle;
-	passDesc.customExecute = depthCustomFunc;
+
+	struct CascadeIndex {
+		UINT index;
+		UINT padding[3];
+	};
+
+	const auto& cascadeDSVs = shadowMapService.GetCascadeDSV();
+
+	auto cascadeCount = cascadeDSVs.size();
+
+	DX11::BufferCreateDesc cbDesc;
+	cbDesc.size = sizeof(CascadeIndex);
+	for (UINT i = 0; i < cascadeCount; ++i)
+	{
+		cbDesc.name = "CascadeIndexCB_" + std::to_string(i);
+		CascadeIndex data;
+		data.index = i;
+
+		cbDesc.initialData = &data;
+		BufferHandle cascadeIndexHandle;
+		bufferMgr->Add(cbDesc, cascadeIndexHandle);
+		passDesc.cbvs = { BindSlotBuffer{11, cascadeIndexHandle} };
+
+		passDesc.dsv = cascadeDSVs[i];
+
+		if (i == 0)
+		{
+			Viewport vp;
+			vp.width = (float)SHADOW_MAP_WIDTH;
+			vp.height = (float)SHADOW_MAP_HEIGHT;
+
+			passDesc.viewport = vp;
+		}
+		else
+		{
+			passDesc.viewport = std::nullopt;
+		}
+
+		renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_CASCADE0 << i);
+	}
+
+	shaderDesc.vsPath = L"assets/shader/VS_ZPrepass.cso";
+
+	shaderMgr->Add(shaderDesc, shaderHandle);
+	psoDesc.shader = shaderHandle;
+	psoMgr->Add(psoDesc, psoHandle);
+
+	Viewport vp;
+	vp.width = (float)WINDOW_WIDTH;
+	vp.height = (float)WINDOW_HEIGHT;
+	passDesc.viewport = vp;
+
+	passDesc.dsv = mainDepthStencilView;
+	passDesc.cbvs = { BindSlotBuffer{cameraHandle3D} };
+	passDesc.psoOverride = psoHandle;
+	passDesc.customExecute = drawTerrainColor;
+
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
 
 	passDesc.rtvs = rtvs;
-	//passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
+	passDesc.dsv = mainDepthStencilView;
+	passDesc.cbvs = std::nullopt;
 	passDesc.psoOverride = std::nullopt;
-	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+	passDesc.viewport = std::nullopt;
+	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
 	passDesc.customExecute = nullptr;
+	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
-	/*passDesc.customExecute = nullptr;
+	auto& UIGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_UI]);
 
-	passDesc.name = "Line";
+	passDesc.viewport = std::nullopt;
+	passDesc.customExecute = nullptr;
+
 	passDesc.topology = PrimitiveTopology::LineList;
 	passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
-	renderGraph->AddPass(passDesc);
-
+	renderGraph->AddPassToGroup(UIGroup, passDesc, PASS_UI_3DLINE);
 
 	passDesc.dsv = nullptr;
 	passDesc.cbvs = { cameraHandle2D };
-	passDesc.name = "Line2D";
 	passDesc.topology = PrimitiveTopology::LineList;
 	passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
-	renderGraph->AddPass(passDesc);
+	renderGraph->AddPassToGroup(UIGroup, passDesc, PASS_UI_LINE);
 
-	passDesc.name = "2D";
 	passDesc.topology = PrimitiveTopology::TriangleList;
 	passDesc.rasterizerState = std::nullopt;
 
-	renderGraph->AddPass(passDesc);*/
+	renderGraph->AddPassToGroup(UIGroup, passDesc, PASS_UI_MAIN);
 
 
 	//グループとパスの実行順序を設定(現状は登録した順番のインデックスで指定)
 	std::vector<DX11::GraphicsDevice::RenderGraph::PassNode> order = {
 		{ 0, 0 },
-		{ 0, 1 }
+		{ 0, 1 },
+		{ 0, 2 },
+		{ 0, 3 },
+		{ 0, 4 },
+		{ 0, 5 },
+		{ 1, 0 },
+		{ 1, 1 },
+		{ 1, 2 }
 	};
 
 	renderGraph->SetExecutionOrder(order);
@@ -208,9 +275,11 @@ int main(void)
 
 	auto renderService = graphics.GetRenderService();
 
+
 	Graphics::LightShadowService lightShadowService;
 	Graphics::LightShadowService::CascadeConfig cascadeConfig;
-	cascadeConfig.shadowMapResolution = Math::Vec2f(float(WINDOW_WIDTH), float(WINDOW_HEIGHT));
+	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
+	lightShadowService.SetCascadeConfig(cascadeConfig);
 
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &lightShadowService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
@@ -267,7 +336,6 @@ int main(void)
 		L"assets/shader/VS_TerrainClustered.cso",
 		L"assets/shader/VS_TerrainClusteredDepth.cso",
 		L"assets/shader/PS_TerrainClustered.cso",
-		L"assets/shader/PS_DepthOnly.cso",
 		/*maxVisibleIndices*/ (UINT)terrain.indexPool.size());
 
 	assert(ok && "Failed BlockRevert Init");
@@ -334,8 +402,8 @@ int main(void)
 
 	Graphics::DX11::ShadowMapService shadowMapService;
 	Graphics::DX11::ShadowMapConfig shadowMapConfig;
-	shadowMapConfig.width = WINDOW_WIDTH;
-	shadowMapConfig.height = WINDOW_HEIGHT;
+	shadowMapConfig.width = SHADOW_MAP_WIDTH;
+	shadowMapConfig.height = SHADOW_MAP_HEIGHT;
 	ok = shadowMapService.Initialize(device, shadowMapConfig);
 	assert(ok && "Failed ShadowMapService Initialize");
 
@@ -415,7 +483,7 @@ int main(void)
 			uint32_t height = (uint32_t)resolution.y;
 
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
-			graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
+			//graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
 
 			// フレームの先頭 or Terrainパスの先頭で 1回だけ：
 			Graphics::DX11::BindCommonMaterials(deviceContext, matRes);
@@ -457,18 +525,26 @@ int main(void)
 			//CBの5, Samplerの1にバインド
 			shadowMapService.BindShadowResources(deviceContext, 5, 1);
 
-			blockRevert.RunShadowDepth(deviceContext, shadowParams, world.data());
+
+			blockRevert.RunShadowDepth(deviceContext, shadowParams,
+				world.data(), &shadowMapService.GetCascadeViewport());
+
+			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 		};
 
 	auto drawTerrainColor = [&, deviceContext](uint64_t frame)
 		{
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
+			graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
 
+			//書き込みと読み込みを両立させないために、デフォルトのレンダーターゲットに戻す
 			graphics.SetDefaultRenderTarget();
 
 			shadowMapService.BindShadowPSShadowMap(deviceContext, 7);
 
 			shadowMapService.UpdateShadowCascadeCB(deviceContext, lightShadowService);
+
+			shadowMapService.BindShadowRasterizer(deviceContext);
 
 			blockRevert.RunColor(deviceContext,
 				graphics.GetMainRenderTargetView().Get(),
@@ -486,10 +562,10 @@ int main(void)
 	// レンダーパイプライン初期化関数
 	graphics.ExecuteCustomFunc([&](
 		Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
-		ID3D11RenderTargetView* mainRenderTarget,
-		ID3D11DepthStencilView* mainDepthStencilView)
+		ComPtr<ID3D11RenderTargetView>& mainRenderTarget,
+		ComPtr<ID3D11DepthStencilView>& mainDepthStencilView)
 		{
-			InitializeRenderPipeLine(renderGraph, mainRenderTarget, mainDepthStencilView, drawTerrainColor);
+			InitializeRenderPipeLine(renderGraph, mainRenderTarget, mainDepthStencilView, drawTerrainColor, shadowMapService);
 		}
 	);
 
@@ -601,55 +677,55 @@ int main(void)
 			p.cellsX * p.cellSize,
 			p.cellsZ * p.cellSize
 		};
-		//for (int j = 0; j < 32; ++j) {
-		//	for (int k = 0; k < 32; ++k) {
-		//		for (int n = 0; n < 1; ++n) {
-		//			//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
-		//			float scaleXZ = 10.0f;
-		//			float scaleY = 10.0f;
-		//			Math::Vec3f location = { float(j) * scaleXZ * 2.0f, 0, float(k) * scaleXZ * 2.0f };
-		//			auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
-		//			location = pose.pos;
-		//			int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
-		//			int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
+		for (int j = 0; j < 32; ++j) {
+			for (int k = 0; k < 32; ++k) {
+				for (int n = 0; n < 1; ++n) {
+					//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
+					float scaleXZ = 10.0f;
+					float scaleY = 10.0f;
+					Math::Vec3f location = { float(j) * scaleXZ * 2.0f, 0, float(k) * scaleXZ * 2.0f };
+					auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
+					location = pose.pos;
+					int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
+					int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
 
-		//			int byteIndex = col * 4 + row * cpuSplatImage.stride;
-		//			if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
-		//				continue;
-		//			}
+					int byteIndex = col * 4 + row * cpuSplatImage.stride;
+					if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
+						continue;
+					}
 
-		//			int modelIdx = 3;
-		//			auto splatR = cpuSplatImage.bytes[byteIndex];
-		//			if (splatR < 32) {
-		//				continue; // 草が薄い場所はスキップ
-		//			}
-		//			location.y -= (1.0f - splatR / 255.0f) * 3.0f;
+					int modelIdx = 3;
+					auto splatR = cpuSplatImage.bytes[byteIndex];
+					if (splatR < 32) {
+						continue; // 草が薄い場所はスキップ
+					}
+					location.y -= (1.0f - splatR / 255.0f) * 3.0f;
 
-		//			auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
+					auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 
-		//			auto chunk = level->GetChunk(location);
-		//			auto key = chunk.value()->GetNodeKey();
-		//			SpatialMotionTag tag{};
-		//			tag.handle = { key, chunk.value() };
+					auto chunk = level->GetChunk(location);
+					auto key = chunk.value()->GetNodeKey();
+					SpatialMotionTag tag{};
+					tag.handle = { key, chunk.value() };
 
-		//			//float scale = 1.0f;
-		//			auto id = level->AddEntity(
-		//				TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-		//				CModel{ modelAssetHandle[modelIdx] },
-		//				Physics::BodyComponent{},
-		//				Physics::PhysicsInterpolation(
-		//					location, // 初期位置
-		//					rot // 初期回転
-		//				),
-		//				sphereDims.value(),
-		//				tag
-		//			);
-		//			/*if (id) {
-		//				ps->EnqueueCreateIntent(id.value(), sphere, key);
-		//			}*/
-		//		}
-		//	}
-		//}
+					//float scale = 1.0f;
+					auto id = level->AddEntity(
+						TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
+						CModel{ modelAssetHandle[modelIdx] },
+						Physics::BodyComponent{},
+						Physics::PhysicsInterpolation(
+							location, // 初期位置
+							rot // 初期回転
+						),
+						sphereDims.value(),
+						tag
+					);
+					/*if (id) {
+						ps->EnqueueCreateIntent(id.value(), sphere, key);
+					}*/
+				}
+			}
+		}
 
 		// Entity生成
 		uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
@@ -676,9 +752,12 @@ int main(void)
 					float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
 					//float scale = 1.0f;
 					auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 },Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
+					auto modelComp = CModel{ modelAssetHandle[modelIdx] };
+					modelComp.castShadow = true;
+
 					auto id = level->AddEntity(
 						TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale)},
-						CModel{ modelAssetHandle[modelIdx] },
+						modelComp,
 						Physics::BodyComponent{},
 						Physics::PhysicsInterpolation(
 							location, // 初期位置

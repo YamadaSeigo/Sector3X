@@ -43,7 +43,7 @@ namespace SFW
 				"Backend requires valid device, context, and managers.");
 		}
 
-		void RenderBackend::AddResourceManagerToRenderServiceImpl(RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11ShaderResourceView*, ID3D11Buffer*>& graph)
+		void RenderBackend::AddResourceManagerToRenderServiceImpl(RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr>& graph)
 		{
 			graph.RegisterResourceManager<MeshManager>(meshManager);
 			graph.RegisterResourceManager<MaterialManager>(materialManager);
@@ -126,7 +126,7 @@ namespace SFW
 				isPSBind = (ps != nullptr);
 
 				context->PSSetShader(ps.Get(), nullptr, 0);
-					
+
 				templateID = shader.ref().templateID;
 				bindingMode = shader.ref().bindingMode;
 			}
@@ -144,7 +144,7 @@ namespace SFW
 				// CBVバインド
 				MaterialManager::BindMaterialVSCBVs(context, mat.ref().vsCBV);
 
-				
+
 				if (isPSBind) {
 					// テクスチャSRVバインド
 					MaterialManager::BindMaterialPSSRVs(context, mat.ref().psSRV);

@@ -17,13 +17,13 @@ namespace SFW
 	namespace Math
 	{
 		template<typename T>
-		T Deg2Rad(T degrees) {
+		constexpr T Deg2Rad(T degrees) {
 			static constexpr T DEG_TO_RAD = std::numbers::pi_v<T> / static_cast<T>(180);
 			return degrees * DEG_TO_RAD;
 		}
 
 		template<typename T>
-		T Rad2Deg(T radians) {
+		constexpr T Rad2Deg(T radians) {
 			static constexpr T RAD_TO_DEG = static_cast<T>(180) / std::numbers::pi_v<T>;
 			return radians * RAD_TO_DEG;
 		}
