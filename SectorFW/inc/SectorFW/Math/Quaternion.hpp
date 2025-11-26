@@ -35,6 +35,8 @@ namespace SFW
 			}
 			Quat Normalized() const noexcept { Quat q = *this; q.Normalize(); return q; }
 
+			static Quat Identity() noexcept { return Quat(0, 0, 0, 1); }
+
 			// オイラー（ピッチ= X, ヨー= Y, ロール= Z : 適用順は Yaw→Pitch→Roll を想定）
 			static Quat FromEuler(T pitch, T yaw, T roll) noexcept {
 				const T h = T(0.5);

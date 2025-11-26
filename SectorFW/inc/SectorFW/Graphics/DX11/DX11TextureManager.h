@@ -71,14 +71,14 @@ namespace SFW
 			uint32_t     height = 0;
 			DXGI_FORMAT  format = DXGI_FORMAT_R8G8B8A8_UNORM;
 			uint32_t     mipLevels = 1;     // 0 のときはフルチェーン（自動）にして作成
-			uint32_t     arraySize = 1;
+			uint32_t     arraySize = 1;		// テクスチャの枚数
 			D3D11_USAGE  usage = D3D11_USAGE_DEFAULT;
 			UINT         bindFlags = D3D11_BIND_SHADER_RESOURCE; // 必要なら RT/UA も可
 			UINT         cpuAccessFlags = 0;                      // DYNAMIC で Map したい場合など
 			UINT         miscFlags = 0;                           // 例: D3D11_RESOURCE_MISC_TEXTURECUBE / GENERATE_MIPS
 			// 初期データ（トップミップのみ・省略可）
-			const void* initialData = nullptr;
-			UINT         initialRowPitch = 0;
+			const void* initialData = nullptr;	//初期化データ
+			UINT         initialRowPitch = 0;	//バイト単位の行サイズ
 		};
 
 		/**

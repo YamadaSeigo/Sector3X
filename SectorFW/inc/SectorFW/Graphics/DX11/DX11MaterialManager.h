@@ -23,6 +23,7 @@ namespace SFW
 		 */
 		struct MaterialCreateDesc {
 			ShaderHandle shader = {};
+			bool isBindVSSampler{ false }; // 頂点シェーダーでサンプラーを使用するかどうか
 			std::unordered_map<UINT, TextureHandle> psSRV;
 			std::unordered_map<UINT, TextureHandle> vsSRV;
 			std::unordered_map<UINT, BufferHandle> psCBV; // CBVバインディング
@@ -40,6 +41,100 @@ namespace SFW
 			UINT count = 0;
 			std::vector<CacheType> contiguousViews;
 			std::vector<std::pair<UINT, CacheType>> individualViews;
+
+			/**
+			 * @brief バインディングを追加または上書きする
+			 * @param bind 追加または上書きするバインディング情報のペア (スロット番号, バインディングオブジェクト)
+			 */
+			void PushOrOverwrite(std::pair<UINT, CacheType> bind) {
+				if (count == 0 || valid == false)
+				{
+					contiguousViews.clear();
+					individualViews.clear();
+
+					valid = true;
+					contiguous = true;
+					minSlot = bind.first;
+					count = 1;
+					contiguousViews.push_back(bind.second);
+					return;
+				}
+
+				if (contiguous)
+				{
+					auto slot = bind.first;
+					auto maxSlot = minSlot + count;
+					// 範囲内なら上書き
+					if (minSlot <= slot && slot < maxSlot)
+					{
+						contiguousViews[slot - minSlot] = bind.second;
+					}
+					//範囲外だけど連続的(先頭)
+					else if (slot == (std::max)(minSlot, (UINT)1) - 1)
+					{
+						contiguousViews.resize(contiguousViews.size() + 1);
+						for (int i = (int)contiguousViews.size() - 1; i > 0; --i)
+						{
+							contiguousViews[i] = contiguousViews[i - 1];
+						}
+						contiguousViews[0] = bind.second;
+						minSlot = slot;
+					}
+					//範囲外だけど連続的(末尾)
+					else if (slot == maxSlot)
+					{
+						contiguousViews.push_back(bind.second);
+						count++;
+					}
+					//範囲外で連続的でない
+					else
+					{
+						contiguous = false;
+						for (UINT i = minSlot; i < maxSlot; ++i)
+						{
+							individualViews.emplace_back(i, contiguousViews[i - minSlot]);
+						}
+						contiguousViews.clear();
+						individualViews.emplace_back(slot, bind.second);
+						minSlot = (std::min)(minSlot, slot);
+						count++;
+					}
+				}
+				else
+				{
+
+					std::bitset<128> usedSlots;
+					for (auto i = 0; i < individualViews.size(); ++i)
+					{
+						// 既存のスロットなら上書き
+						if (individualViews[i].first == bind.first)
+						{
+							individualViews[i].second = bind.second;
+							return;
+						}
+						usedSlots.set(individualViews[i].first);
+					}
+
+					individualViews.emplace_back(bind.first, bind.second);
+					count++;
+					usedSlots.set(bind.first);
+					minSlot = (std::min)(minSlot, bind.first);
+					auto maxSlot = minSlot + count;
+					for (UINT i = minSlot; i <= maxSlot; ++i) {
+						if (!usedSlots.test(i)) {
+							return; // 連続でない
+						}
+					}
+
+					// 連続になった
+					contiguous = true;
+					contiguousViews.resize(count);
+					for (const auto& [slot, view] : individualViews) {
+						contiguousViews[slot - minSlot] = view;
+					}
+					individualViews.clear();
+				}
+			}
 		};
 
 		using MaterialBindingCacheSRV = MaterialBindingCache<ID3D11ShaderResourceView*>;
@@ -51,6 +146,7 @@ namespace SFW
 		struct MaterialData {
 			MaterialTemplateID templateID;
 			ShaderHandle shader;
+			bool isBindVSSampler{ false }; // 頂点シェーダーでサンプラーを使用するかどうか
 			MaterialBindingCacheSRV psSRV, vsSRV;
 			MaterialBindingCacheCBV psCBV, vsCBV; // CBVバインディングキャッシュ
 			MaterialBindingCacheSampler samplerCache; // サンプラーバインディングキャッシュ
@@ -126,7 +222,8 @@ namespace SFW
 			 * @param ctx デバイスコンテキスト
 			 * @param cache バインディングキャッシュ
 			 */
-			static void BindMaterialSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache);
+			static void BindMaterialPSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache);
+			static void BindMaterialVSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache);
 		private:
 			MaterialBindingCacheSRV BuildBindingCacheSRV(
 				const std::vector<ShaderResourceBinding>& bindings,

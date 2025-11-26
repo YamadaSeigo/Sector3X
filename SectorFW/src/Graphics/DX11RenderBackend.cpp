@@ -134,7 +134,7 @@ namespace SFW
 				auto mat = materialManager->GetDirect(matIdx);
 
 				// マテリアルバインド
-				if (mat.ref().templateID != templateID) {
+				if (mat.ref().templateID != templateID) [[unlikely]] {
 					LOG_ERROR("Incompatible Material-Shader: Template mismatch.");
 					return;
 				}
@@ -144,6 +144,10 @@ namespace SFW
 				// CBVバインド
 				MaterialManager::BindMaterialVSCBVs(context, mat.ref().vsCBV);
 
+				if (mat.ref().isBindVSSampler) {
+					// サンプラーバインド
+					MaterialManager::BindMaterialVSSamplers(context, mat.ref().samplerCache);
+				}
 
 				if (isPSBind) {
 					// テクスチャSRVバインド
@@ -152,7 +156,7 @@ namespace SFW
 					MaterialManager::BindMaterialPSCBVs(context, mat.ref().psCBV);
 
 					// サンプラーバインド
-					MaterialManager::BindMaterialSamplers(context, mat.ref().samplerCache);
+					MaterialManager::BindMaterialPSSamplers(context, mat.ref().samplerCache);
 				}
 			}
 			{

@@ -358,7 +358,7 @@ namespace SFW
 						auto psShader = shaderMgr.Get(shaderHandle);
 						const auto& psBindings = psShader.ref().psBindings;
 						for (const auto& b : psBindings) {
-							if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
+							if (b.type == D3D_SIT_CBUFFER && b.name == GlobalMaterialBindName) {
 								psCBVMap[b.bindPoint] = matCB;
 							}
 						}
@@ -366,7 +366,7 @@ namespace SFW
 						auto vsShader = shaderMgr.Get(shaderHandle);
 						const auto& vsBindings = vsShader.ref().vsBindings;
 						for (const auto& b : vsBindings) {
-							if (b.type == D3D_SIT_CBUFFER && b.name == "MaterialCB") {
+							if (b.type == D3D_SIT_CBUFFER && b.name == GlobalMaterialBindName) {
 								vsCBVMap[b.bindPoint] = matCB;
 							}
 						}
@@ -415,7 +415,7 @@ namespace SFW
 						SamplerHandle samp = samplerManager.AddWithDesc(sampDesc);
 
 						for (const auto& b : psBindings)
-							if (b.type == D3D_SIT_SAMPLER && b.name == "gSampler")
+							if (b.type == D3D_SIT_SAMPLER && b.name == GlobalSamplerBindName)
 								samplerMap[b.bindPoint] = samp;
 					}
 

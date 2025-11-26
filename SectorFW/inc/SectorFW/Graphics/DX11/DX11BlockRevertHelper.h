@@ -1552,7 +1552,7 @@ namespace SFW::Graphics::DX11 {
         return true;
     }
 
-        // t15 と b2 のバインド（ワンドロー前に一度だけ）
+     // t15 と b2 のバインド（ワンドロー前に一度だけ）
     inline void BindClusterParamsForOneCall(ID3D11DeviceContext* ctx,
         const ClusterParamsGPU& P)
     {

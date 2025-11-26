@@ -62,8 +62,12 @@ namespace SFW
 		struct BufferUpdateDesc {
 			ComPtr<ID3D11Buffer> buffer;
 			const void* data = nullptr;
-			size_t size = {};
+			size_t size = (std::numeric_limits<size_t>::max)();
 			bool isDelete = true;
+
+			bool isValid() const {
+				return buffer != nullptr && data != nullptr && size != (std::numeric_limits<size_t>::max)();
+			}
 
 			bool operator==(const BufferUpdateDesc& other) const {
 				return buffer.Get() == other.buffer.Get();
@@ -228,6 +232,8 @@ namespace SFW
 
 					for (uint32_t i = 0; i < count; ++i) {
 						auto& update = pendings[i];
+						assert(update.isValid() && "バッファの更新情報が正しくありません");
+
 						D3D11_MAPPED_SUBRESOURCE mapped;
 						HRESULT hr = context->Map(update.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 						if (SUCCEEDED(hr)) [[likely]] {

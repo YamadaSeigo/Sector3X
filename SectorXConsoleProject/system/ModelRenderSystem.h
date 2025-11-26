@@ -201,7 +201,7 @@ public:
 
 						//バウンディングスフィアで高速早期判定
 						//※WVPがLHのZeroToOne深度範囲を仮定(そうでない場合はZDepthは正確ではない)
-						if (!mesh.bs.IsVisible_WVP_CamBasis_ExactFast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth)) continue;
+						if (!mesh.bs.IsVisible_WVP_CamBasis_Fast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth)) continue;
 
 						ndc.valid = true;
 						int lodCount = (int)mesh.lods.size();

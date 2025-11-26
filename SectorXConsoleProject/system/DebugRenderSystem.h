@@ -178,7 +178,7 @@ public:
 		.cpuAccessFlags = 0,
 		.miscFlags = 0,
 		.initialData = mocDepth.data(),
-		.initialRowPitch = (UINT)width * sizeof(UINT)
+		.initialRowPitch = (UINT)width * sizeof(float)
 		};
 
 		texMgr->Add({

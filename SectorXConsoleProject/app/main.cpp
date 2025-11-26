@@ -591,6 +591,7 @@ int main(void)
 	shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	PSOHandle windGrassPSOHandle;
+	psoDesc.shader = shaderHandle;
 	psoMgr->Add(psoDesc, windGrassPSOHandle);
 
 	ModelAssetHandle modelAssetHandle[5];
@@ -622,13 +623,55 @@ int main(void)
 	modelDesc.path = "assets/model/GrassPatch.glb";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
 
-	auto data = modelAssetMgr->GetWrite(modelAssetHandle[3]);
-	auto& submesh = data.ref().subMeshes;
-	auto windCBHandle = grassService.GetBufferHandle();
-	for (auto& mesh : submesh)
+	// 草のマテリアルに草揺れ用CBVをセット
 	{
-		auto matData = materialMgr->GetWrite(mesh.material);
-		matData.ref().vsCBV.
+		//HeightMapを16bitテクスチャとして作成
+		size_t heightMapSize = heightMap.size();
+		std::vector<uint16_t> height16(heightMapSize);
+		// 0.0～1.0 の高さを 16bit に変換
+		for (int i = 0; i < heightMapSize; ++i)
+		{
+			float h01 = heightMap[i]; // 0.0～1.0 の高さ
+			h01 = std::clamp(h01, 0.0f, 1.0f);
+			height16[i] = static_cast<uint16_t>(h01 * 65535.0f + 0.5f); // 丸め
+		}
+
+		DX11::TextureCreateDesc texDesc;
+		DX11::TextureRecipe recipeDesc;
+		recipeDesc.width = p.cellsX + 1;
+		recipeDesc.height = p.cellsZ + 1;
+		recipeDesc.format = DXGI_FORMAT_R16_UNORM;
+		recipeDesc.usage = D3D11_USAGE_IMMUTABLE;
+		recipeDesc.initialData = height16.data();
+		recipeDesc.initialRowPitch = recipeDesc.width * (16 / 8);
+
+		texDesc.recipe = &recipeDesc;
+		Graphics::TextureHandle heightTexHandle;
+		auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
+		textureMgr->Add(texDesc, heightTexHandle);
+
+		auto data = modelAssetMgr->GetWrite(modelAssetHandle[3]);
+		auto& submesh = data.ref().subMeshes;
+		auto windCBHandle = grassService.GetBufferHandle();
+		auto cbData = bufferMgr->Get(windCBHandle);
+		auto heightTexData = textureMgr->Get(heightTexHandle);
+		for (auto& mesh : submesh)
+		{
+			auto matData = materialMgr->GetWrite(mesh.material);
+			//参照カウントを増やしておく
+			bufferMgr->AddRef(windCBHandle);
+			//直接定数バッファをセット
+			matData.ref().vsCBV.PushOrOverwrite({ 10, cp.cbGrid.Get() });
+			matData.ref().vsCBV.PushOrOverwrite({ 11, cbData.ref().buffer.Get()});
+			matData.ref().usedCBBuffers.push_back(windCBHandle);
+			//高さテクスチャもセット
+			textureMgr->AddRef(heightTexHandle);
+			matData.ref().vsSRV.PushOrOverwrite({ 10, heightTexData.ref().srv.Get() });
+			matData.ref().usedTextures.push_back(heightTexHandle);
+
+			//頂点シェーダーにもバインドする設定にする
+			matData.ref().isBindVSSampler = true;
+		}
 	}
 
 	modelDesc.instancesPeak = 100;
@@ -654,7 +697,7 @@ int main(void)
 		auto data = modelAssetMgr->Get(modelAssetHandle[3]);
 		auto aabb = data.ref().subMeshes[0].aabb;
 		grassAnchor.reserve(4);
-		float bias = 0.8f;
+		float bias = 0.2f;
 		grassAnchor.push_back({ aabb.lb.x * bias, aabb.lb.z * bias });
 		grassAnchor.push_back({ aabb.lb.x * bias, aabb.ub.z * bias });
 		grassAnchor.push_back({ aabb.ub.x * bias, aabb.lb.z * bias });
@@ -704,11 +747,17 @@ int main(void)
 			for (int k = 0; k < 32; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
-					float scaleXZ = 10.0f;
-					float scaleY = 10.0f;
-					Math::Vec3f location = { float(j) * scaleXZ * 2.0f, 0, float(k) * scaleXZ * 2.0f };
-					auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
-					location = pose.pos;
+					float scaleXZ = 20.0f;
+					float scaleY = 20.0f;
+					Math::Vec2f offsetXZ = { 26.0f,26.0f };
+					Math::Vec3f location = { float(j) * scaleXZ + offsetXZ.x , 0, float(k) * scaleXZ + offsetXZ.y };
+					//auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
+					//location = pose.pos;
+
+					float height = 0.0f;
+					terrain.SampleHeightNormalBilinear(location.x, location.z, height);
+					location.y = height + 2.0f;
+
 					int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
 					int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
 
@@ -722,9 +771,10 @@ int main(void)
 					if (splatR < 32) {
 						continue; // 草が薄い場所はスキップ
 					}
-					location.y -= (1.0f - splatR / 255.0f) * 3.0f;
+					//　薄いほど高さを下げる
+					location.y -= (1.0f - splatR / 255.0f) * 4.0f;
 
-					auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
+					auto rot = Math::Quatf::Identity();//Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();
@@ -753,48 +803,48 @@ int main(void)
 		// Entity生成
 		uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
 		uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
-		for (int j = 0; j < 10; ++j) {
-			for (int k = 0; k < 10; ++k) {
-				for (int n = 0; n < 1; ++n) {
-					Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
-					//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
-					auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
-					auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
-					if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
-					{
-						float y0 = heightMap[Graphics::TerrainClustered::VIdx(gridX, gridZ, p.cellsX + 1)];
-						location.y = y0 * p.heightScale;
-						location += p.offset;
-					}
+		//for (int j = 0; j < 10; ++j) {
+		//	for (int k = 0; k < 10; ++k) {
+		//		for (int n = 0; n < 1; ++n) {
+		//			Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
+		//			//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
+		//			auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
+		//			auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
+		//			if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
+		//			{
+		//				float y0 = heightMap[Graphics::TerrainClustered::VIdx(gridX, gridZ, p.cellsX + 1)];
+		//				location.y = y0 * p.heightScale;
+		//				location += p.offset;
+		//			}
 
-					auto chunk = level->GetChunk(location);
-					auto key = chunk.value()->GetNodeKey();
-					SpatialMotionTag tag{};
-					tag.handle = { key, chunk.value() };
-					int modelIdx = dist(rng);
-					float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
-					//float scale = 1.0f;
-					auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 },Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
-					auto modelComp = CModel{ modelAssetHandle[modelIdx] };
-					modelComp.castShadow = true;
+		//			auto chunk = level->GetChunk(location);
+		//			auto key = chunk.value()->GetNodeKey();
+		//			SpatialMotionTag tag{};
+		//			tag.handle = { key, chunk.value() };
+		//			int modelIdx = dist(rng);
+		//			float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
+		//			//float scale = 1.0f;
+		//			auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 },Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
+		//			auto modelComp = CModel{ modelAssetHandle[modelIdx] };
+		//			modelComp.castShadow = true;
 
-					auto id = level->AddEntity(
-						TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale)},
-						modelComp,
-						Physics::BodyComponent{},
-						Physics::PhysicsInterpolation(
-							location, // 初期位置
-							Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-						),
-						sphereDims.value(),
-						tag
-					);
-					/*if (id) {
-						ps->EnqueueCreateIntent(id.value(), sphere, key);
-					}*/
-				}
-			}
-		}
+		//			auto id = level->AddEntity(
+		//				TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale)},
+		//				modelComp,
+		//				Physics::BodyComponent{},
+		//				Physics::PhysicsInterpolation(
+		//					location, // 初期位置
+		//					Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+		//				),
+		//				sphereDims.value(),
+		//				tag
+		//			);
+		//			/*if (id) {
+		//				ps->EnqueueCreateIntent(id.value(), sphere, key);
+		//			}*/
+		//		}
+		//	}
+		//}
 
 
 

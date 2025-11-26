@@ -52,6 +52,7 @@ namespace SFW
 		MaterialData MaterialManager::CreateResource(const MaterialCreateDesc& desc, MaterialHandle h)
 		{
 			MaterialData mat{};
+			mat.isBindVSSampler = desc.isBindVSSampler;
 
 			std::unordered_map<UINT, ID3D11ShaderResourceView*> psSRVMap;
 			for (const auto& [slot, texHandle] : desc.psSRV) {
@@ -168,11 +169,17 @@ namespace SFW
 			if (cache.contiguous) ctx->VSSetConstantBuffers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, cbv] : cache.individualViews) ctx->VSSetConstantBuffers(slot, 1, &cbv);
 		}
-		void MaterialManager::BindMaterialSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache)
+		void MaterialManager::BindMaterialPSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache)
 		{
 			if (!cache.valid) return; // キャッシュが無効なら何もしない
 			if (cache.contiguous) ctx->PSSetSamplers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, sampler] : cache.individualViews) ctx->PSSetSamplers(slot, 1, &sampler);
+		}
+		void MaterialManager::BindMaterialVSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache)
+		{
+			if (!cache.valid) return; // キャッシュが無効なら何もしない
+			if (cache.contiguous) ctx->VSSetSamplers(cache.minSlot, cache.count, cache.contiguousViews.data());
+			else for (auto& [slot, sampler] : cache.individualViews) ctx->VSSetSamplers(slot, 1, &sampler);
 		}
 		MaterialBindingCacheSRV MaterialManager::BuildBindingCacheSRV(const std::vector<ShaderResourceBinding>& bindings, const std::unordered_map<UINT, ID3D11ShaderResourceView*>& srvMap)
 		{
