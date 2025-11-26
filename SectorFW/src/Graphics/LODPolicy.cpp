@@ -12,7 +12,7 @@ namespace SFW::Graphics {
         th.baseW = baseW; th.baseH = baseH;
 
         // base[ ] は “基準解像度での画面面積比” のラフ目安（LOD0/1/2の境界）
-        constexpr float baseFrac[3] = { 0.10f, 0.05f, 0.01f };
+        constexpr float baseFrac[3] = { 0.20f, 0.05f, 0.01f };
 
         // 係数 k：たくさん出る/遠近幅広い→早めに落とす（大きく）
         float perfPush =

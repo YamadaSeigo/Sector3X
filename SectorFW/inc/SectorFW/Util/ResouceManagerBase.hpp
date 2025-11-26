@@ -242,7 +242,7 @@ namespace SFW
 		 * @param h チェックするハンドル
 		 * @return bool 有効な場合はtrue、そうでない場合はfalse
 		 */
-		bool IsValid(HandleType h) const {
+		bool IsValid(HandleType h) const noexcept {
 			return h.index < slots.size() &&
 				slots[h.index].generation == h.generation &&
 				slots[h.index].alive;

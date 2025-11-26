@@ -17,6 +17,7 @@
 #include "system/TestMoveSystem.h"
 #include "system/CleanModelSystem.h"
 #include "system/SimpleModelRenderSystem.h"
+#include "GrassMovementService.h"
 #include <string>
 
 //デバッグ用
@@ -171,10 +172,10 @@ void InitializeRenderPipeLine(
 
 	passDesc.rtvs = rtvs;
 	passDesc.dsv = mainDepthStencilView;
-	passDesc.cbvs = std::nullopt;
+	passDesc.cbvs = { BindSlotBuffer{cameraHandle3D} };
 	passDesc.psoOverride = std::nullopt;
-	passDesc.viewport = std::nullopt;
-	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
+	passDesc.viewport = vp;
+	//passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
 	passDesc.customExecute = nullptr;
 	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
@@ -275,13 +276,15 @@ int main(void)
 
 	auto renderService = graphics.GetRenderService();
 
-
 	Graphics::LightShadowService lightShadowService;
 	Graphics::LightShadowService::CascadeConfig cascadeConfig;
 	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
 	lightShadowService.SetCascadeConfig(cascadeConfig);
 
-	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService, ortCameraService, camera2DService, &lightShadowService);
+	GrassMovementService grassService(bufferMgr);
+
+	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService,
+		ortCameraService, camera2DService, &lightShadowService, &grassService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
@@ -396,7 +399,7 @@ int main(void)
 		/*cellSize=*/{ p.clusterCellsX * p.cellSize, p.clusterCellsZ * p.cellSize },
 		/*dimX=*/terrain.clustersX, /*dimZ=*/terrain.clustersZ, cp);
 
-	// GPUリソースを作る/更新
+	// 地形のクラスター専用GPUリソースを作る/初期更新
 	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
 	Graphics::DX11::BuildOrUpdateTerrainGridCB(device, deviceContext, cp);
 
@@ -570,6 +573,8 @@ int main(void)
 	);
 
 	auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11::ShaderManager>();
+
+	//デフォルト描画のPSO生成
 	DX11::ShaderCreateDesc shaderDesc;
 	shaderDesc.templateID = MaterialTemplateID::PBR;
 	shaderDesc.vsPath = L"assets/shader/VS_ShadowDepth.cso";
@@ -579,19 +584,26 @@ int main(void)
 
 	DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
 	auto psoMgr = graphics.GetRenderService()->GetResourceManager<DX11::PSOManager>();
-	PSOHandle psoHandle;
-	psoMgr->Add(psoDesc, psoHandle);
+	PSOHandle defualtPSOHandle;
+	psoMgr->Add(psoDesc, defualtPSOHandle);
+
+	//草の揺れ用PSO生成
+	shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
+	shaderMgr->Add(shaderDesc, shaderHandle);
+	PSOHandle windGrassPSOHandle;
+	psoMgr->Add(psoDesc, windGrassPSOHandle);
 
 	ModelAssetHandle modelAssetHandle[5];
 
 	auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
+	auto materialMgr = graphics.GetRenderService()->GetResourceManager<DX11::MaterialManager>();
 	// モデルアセットの読み込み
 	DX11::ModelAssetCreateDesc modelDesc;
 	modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_1.gltf";
-	modelDesc.pso = psoHandle;
+	modelDesc.pso = defualtPSOHandle;
 	modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
 	modelDesc.instancesPeak = 1000;
-	modelDesc.viewMax = 1000.0f;
+	modelDesc.viewMax = 400.0f;
 
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
 
@@ -601,13 +613,23 @@ int main(void)
 
 	modelDesc.path = "assets/model/FantasyTree.gltf";
 	modelDesc.buildOccluders = false;
-	modelDesc.viewMax = 1000.0f;
+	modelDesc.viewMax = 400.0f;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 	modelDesc.instancesPeak = 10000;
 	modelDesc.viewMax = 200.0f;
+	modelDesc.pso = windGrassPSOHandle;
 	modelDesc.path = "assets/model/GrassPatch.glb";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
+
+	auto data = modelAssetMgr->GetWrite(modelAssetHandle[3]);
+	auto& submesh = data.ref().subMeshes;
+	auto windCBHandle = grassService.GetBufferHandle();
+	for (auto& mesh : submesh)
+	{
+		auto matData = materialMgr->GetWrite(mesh.material);
+		matData.ref().vsCBV.
+	}
 
 	modelDesc.instancesPeak = 100;
 	modelDesc.path = "assets/model/StylizedNatureMegaKit/Grass_Wispy_Short.gltf";
@@ -653,6 +675,7 @@ int main(void)
 		auto& scheduler = level->GetScheduler();
 
 		scheduler.AddSystem<ModelRenderSystem>(world.GetServiceLocator());
+
 		//scheduler.AddSystem<SimpleModelRenderSystem>(world.GetServiceLocator());
 		scheduler.AddSystem<CameraSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<TestMoveSystem>(world.GetServiceLocator());

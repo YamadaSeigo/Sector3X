@@ -8,6 +8,9 @@
 
 #include "../app/RenderDefine.h"
 
+//描画系のこのクラスでいったんバッファの更新
+#include "../app/GrassMovementService.h"
+
 struct CModel
 {
 	Graphics::ModelAssetHandle handle;
@@ -17,6 +20,7 @@ struct CModel
 	bool temporalSkip = false;
 	bool castShadow = false;
 };
+
 
 template<typename Partition>
 class ModelRenderSystem : public ITypeSystem<
@@ -31,7 +35,8 @@ class ModelRenderSystem : public ITypeSystem<
 	ServiceContext<
 		Graphics::RenderService,
 		Graphics::I3DPerCameraService,
-		Graphics::LightShadowService
+		Graphics::LightShadowService,
+		GrassMovementService
 	>,
 	//Updateを並列化する
 	IsParallel{ true }
@@ -47,8 +52,12 @@ public:
 		UndeletablePtr<IThreadExecutor> threadPool,
 		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
-		UndeletablePtr<Graphics::LightShadowService> lightShadowService)
+		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
+		UndeletablePtr<GrassMovementService> grassService)
 	{
+		//草のバッファの更新
+		grassService->UpdateBufferToGPU(renderService->GetProduceSlot());
+
 		//機能を制限したRenderQueueを取得
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
@@ -189,11 +198,10 @@ public:
 
 						Math::NdcRectWithW ndc;
 						float depth = 0.0f;
-						Math::Vec3f centerWS;
 
 						//バウンディングスフィアで高速早期判定
 						//※WVPがLHのZeroToOne深度範囲を仮定(そうでない場合はZDepthは正確ではない)
-						if (!mesh.bs.IsVisible_WVP_CamBasis_ExactFast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth, &centerWS)) continue;
+						if (!mesh.bs.IsVisible_WVP_CamBasis_ExactFast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth)) continue;
 
 						ndc.valid = true;
 						int lodCount = (int)mesh.lods.size();
@@ -309,20 +317,28 @@ public:
 						cmd.material = mesh.material.index;
 						cmd.pso = mesh.pso.index;
 
-						cmd.viewMask |= PASS_3DMAIN_ZPREPASS | PASS_3DMAIN_OPAQUE;
+						cmd.viewMask |= PASS_3DMAIN_OPAQUE;
 
-						if (modelComp.castShadow)
+#ifdef ENABLE_PREPASS_AND_SHADOW
+						if (ll < 2)
 						{
-							auto centerVec = centerWS - kp->cp;
-							float camDepth = centerVec.dot(kp->camForward);
-							float maxRadius = mesh.bs.radius * (std::max)(mtf.sx[i], (std::max)(mtf.sy[i], mtf.sz[i]));
-							auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(camDepth - maxRadius, camDepth + maxRadius);
+							cmd.viewMask |= PASS_3DMAIN_ZPREPASS;
 
-							for (uint32_t ci = cascades.first; ci <= cascades.second; ++ci)
+							if (modelComp.castShadow)
 							{
-								cmd.viewMask |= (PASS_3DMAIN_CASCADE0 << ci);
+								Math::Vec3f centerWS = Math::Vec3f{ mtf.px[i], mtf.py[i], mtf.pz[i] } + mesh.bs.center;
+								auto centerVec = centerWS - kp->cp;
+								float camDepth = centerVec.dot(kp->camForward);
+								float maxRadius = mesh.bs.radius * (std::max)(mtf.sx[i], (std::max)(mtf.sy[i], mtf.sz[i]));
+								auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(camDepth - maxRadius, camDepth + maxRadius);
+
+								for (uint32_t ci = cascades.first; ci <= cascades.second; ++ci)
+								{
+									cmd.viewMask |= (PASS_3DMAIN_CASCADE0 << ci);
+								}
 							}
 						}
+#endif
 
 						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
 						producer.Push(std::move(cmd));

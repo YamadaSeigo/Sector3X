@@ -41,8 +41,8 @@ namespace SFW
         // -------------------------------------------------------------
         struct CameraParams
         {
-            Math::Matrix4x4f view;      // カメラの View 行列
-            Math::Vec3f position;  // カメラ位置（World）
+            Math::Matrix4x4f view = {};      // カメラの View 行列
+            Math::Vec3f position = {};  // カメラ位置（World）
             float nearPlane = 0.1f;
             float farPlane = 1000.0f;
             float fovY = Math::Deg2Rad(60.0f);   // ラジアン

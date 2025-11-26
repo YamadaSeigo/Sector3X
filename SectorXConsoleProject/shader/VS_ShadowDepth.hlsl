@@ -1,5 +1,12 @@
 #include "_GlobalTypes.hlsli"
 
+struct VSInput
+{
+    float3 position : POSITION;
+    float3 normal : NORMAL;
+    float2 uv : TEXCOORD;
+};
+
 struct VS_OUT
 {
     float4 posH : SV_Position;

@@ -490,8 +490,7 @@ namespace SFW {
             bool IsVisible_WVP_CamBasis(
                 const Mat4& WVP,
                 const Vec3& camRight, const Vec3& camUp, const Vec3& camForward,
-                NDC* outNDC,
-                T* depth = nullptr, Vec3* outWP = nullptr) const noexcept
+                NDC* outNDC, T* depth = nullptr) const noexcept
             {
                 using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
@@ -571,10 +570,6 @@ namespace SFW {
                 }
                 if (depth) *depth = cw; // 互換用
 
-                if (outWP) {
-					*outWP = { cx, cy, cz };
-                }
-
                 return x_overlap && y_overlap && z_overlap;
             }
 
@@ -582,7 +577,7 @@ namespace SFW {
             bool IsVisible_WVP_CamBasis_Fast(
                 const Mat4& WVP,
                 const Vec3& camRight, const Vec3& camUp, const Vec3& camForward,
-                NDC* outNDC, T* depth = nullptr, Vec3* outWP = nullptr) const noexcept
+                NDC* outNDC, T* depth = nullptr) const noexcept
             {
                 using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
@@ -659,10 +654,6 @@ namespace SFW {
                 }
                 if (depth) *depth = cw;
 
-                if (outWP) {
-                    *outWP = { cx, cy, cz };
-                }
-
                 return x_overlap && y_overlap && z_overlap;
             }
 
@@ -670,7 +661,8 @@ namespace SFW {
             bool IsVisible_WVP_CamBasis_ExactFast(
                 const Matrix4x4f& WVP,
                 const Vec3& camRight, const Vec3& camUp, const Vec3& camForward,
-                NDC* outNDC, float* depth = nullptr, Vec3* outWP = nullptr) const noexcept
+                NDC* outNDC, float* depth = nullptr
+            ) const noexcept
             {
                 using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
@@ -771,10 +763,6 @@ namespace SFW {
                     outNDC->wmin = (raw_minw < epsW) ? epsW : raw_minw;
                 }
                 if (depth) *depth = cw;
-
-                if (outWP) {
-					*outWP = { cx, cy, cz };
-                }
 
                 return x_overlap && y_overlap && z_overlap;
             }

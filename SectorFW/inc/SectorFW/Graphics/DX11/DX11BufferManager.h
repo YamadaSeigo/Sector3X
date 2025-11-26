@@ -138,6 +138,8 @@ namespace SFW
 					bd.StructureByteStride = desc.structureByteStride;
 				}
 
+				assert(desc.bindFlags != D3D11_BIND_CONSTANT_BUFFER || desc.size % 16 == 0 && "定数バッファのサイズが16倍数ではありません");
+
 				HRESULT hr;
 				if (desc.initialData == nullptr) {
 					if (bd.Usage == D3D11_USAGE_IMMUTABLE) {
@@ -204,7 +206,7 @@ namespace SFW
 			 * @brief バッファの内容を遅延で更新するためにキューに追加
 			 * @param desc バッファ作成記述子
 			 */
-			void UpdateBuffer(const BufferUpdateDesc& desc, uint16_t slot) {
+			void UpdateBuffer(const BufferUpdateDesc& desc, uint16_t slot) noexcept {
 				uint32_t count = pendingCount[slot].fetch_add(1, std::memory_order_acq_rel);
 				if (count >= MAX_PENDING_UPDATE_NUM) {
 					//LOG_ERROR("最大更新処理数に達しました");
