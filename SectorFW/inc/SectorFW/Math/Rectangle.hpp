@@ -54,14 +54,14 @@ namespace SFW::Math {
         std::vector<Vec2f> MakeLineVertex() const noexcept
         {
             std::vector<Vec2f> out(8);
-            out.push_back({ x0, y0 });
-            out.push_back({ x1, y0 });
-            out.push_back({ x1, y0 });
-            out.push_back({ x1, y1 });
-            out.push_back({ x1, y1 });
-            out.push_back({ x0, y1 });
-            out.push_back({ x0, y1 });
-            out.push_back({ x0, y0 });
+			out[0] = { x0, y0 };
+			out[1] = { x1, y0 };
+			out[2] = { x1, y0 };
+			out[3] = { x1, y1 };
+			out[4] = { x1, y1 };
+			out[5] = { x0, y1 };
+			out[6] = { x0, y1 };
+			out[7] = { x0, y0 };
             return out;
         }
     };

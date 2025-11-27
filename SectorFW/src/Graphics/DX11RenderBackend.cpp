@@ -74,7 +74,7 @@ namespace SFW
 			}
 		}
 
-		void RenderBackend::SetRasterizerStateImpl(RasterizerStateID state)
+		void RenderBackend::SetRasterizerStateImpl(RasterizerStateID state) const
 		{
 			if (state < RasterizerStateID(0) || state >= RasterizerStateID::MAX_COUNT) {
 				LOG_ERROR("Invalid RasterizerStateID: %d", static_cast<int>(state));
@@ -105,7 +105,7 @@ namespace SFW
 			modelAssetManager->ProcessDeferredDeletes(currentFrame);
 		}
 
-		void RenderBackend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer)
+		void RenderBackend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer) const
 		{
 			MaterialTemplateID templateID = MaterialTemplateID::MAX_COUNT;
 			InputBindingMode bindingMode;
@@ -184,7 +184,7 @@ namespace SFW
 			}
 		}
 
-		void RenderBackend::BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx)
+		void RenderBackend::BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx) const
 		{
 			// PSO ‚Ì InputLayoutDesc ‚©‚ç•K—v slot ‚ð’Šo
 			UINT minSlot = UINT_MAX, maxSlot = 0;
@@ -232,7 +232,7 @@ namespace SFW
 			context->IASetVertexBuffers(minSlot, (UINT)bufs.size(), bufs.data(), strides.data(), offs.data());
 		}
 
-		void RenderBackend::BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx)
+		void RenderBackend::BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx) const
 		{
 			// Žæ“¾
 			auto pso = psoManager->GetDirect(psoIdx);

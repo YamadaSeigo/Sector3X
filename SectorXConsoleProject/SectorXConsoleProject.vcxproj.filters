@@ -86,6 +86,9 @@
     <FxCompile Include="shader\VS_WindGrass.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\VS_Sky.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\_GlobalTypes.hlsli">

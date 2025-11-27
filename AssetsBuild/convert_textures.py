@@ -32,19 +32,20 @@ ASSET_DIR.mkdir(parents=True, exist_ok=True)
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ルール: ファイル名のサフィックスごとにフォーマットを決定
-def choose_format(fname: str):
-    lname = fname.lower()
+# ※拡張子を除いた名前（stem）で判定するように変更
+def choose_format(stem: str):
+    lname = stem.lower()
 
-    if lname.endswith(("_c.png", "_albedo.png", "_diffuse.png")):
+    if lname.endswith(("_c", "_albedo", "_diffuse")):
         # カラー系 → sRGB
         return ["-f", "BC7_UNORM_SRGB", "-srgb"]
-    elif lname.endswith(("_n.png", "_normal.png")):
+    elif lname.endswith(("_n", "_normal")):
         # 法線マップ → リニア (BC5)
         return ["-f", "BC5_UNORM"]
-    elif lname.endswith(("_r.png", "_m.png", "_ao.png")):
+    elif lname.endswith(("_r", "_m", "_ao")):
         # Roughness/Metallic/AO → リニア (BC4)
         return ["-f", "BC4_UNORM"]
-    elif lname.endswith(("_e.png", "_emissive.png")):
+    elif lname.endswith(("_e", "_emissive")):
         # Emissive → sRGB
         return ["-f", "BC7_UNORM_SRGB", "-srgb"]
     else:
@@ -62,7 +63,8 @@ def convert_texture(src: Path, dst_dir: Path):
             print(f"[SKIP] {src.name} (already up-to-date)")
             return  # スキップ
 
-    fmt_args = choose_format(src.name)
+    # 拡張子を除いたファイル名で判定
+    fmt_args = choose_format(src.stem)
     cmd = [
         str(TEXCONV),
         "-m", "0",        # 全ミップ生成
@@ -78,13 +80,17 @@ def convert_texture(src: Path, dst_dir: Path):
 
 
 def main():
-    # 再帰的に PNG を探す
-    for png in ASSET_DIR.rglob("*.png"):
-        rel_path = png.relative_to(ASSET_DIR).parent
-        dst_dir = OUT_DIR / rel_path
-        dst_dir.mkdir(parents=True, exist_ok=True)
+    # 対象拡張子を増やす: PNG / JPG / JPEG
+    exts = [".png", ".jpg", ".jpeg"]
 
-        convert_texture(png, dst_dir)
+    for ext in exts:
+        # 再帰的に該当拡張子を探す
+        for tex in ASSET_DIR.rglob(f"*{ext}"):
+            rel_path = tex.relative_to(ASSET_DIR).parent
+            dst_dir = OUT_DIR / rel_path
+            dst_dir.mkdir(parents=True, exist_ok=True)
+
+            convert_texture(tex, dst_dir)
 
 if __name__ == "__main__":
     main()

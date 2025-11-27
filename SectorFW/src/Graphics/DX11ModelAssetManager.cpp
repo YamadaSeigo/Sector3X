@@ -380,31 +380,92 @@ namespace SFW
 										map[b.bindPoint] = h;
 							};
 
+						auto MakeTextureDescFromCgltfTexture =
+							[&](const cgltf_texture* tex, bool forceSRGB) -> std::optional<TextureCreateDesc>
+							{
+								if (!tex || !tex->image) return std::nullopt;
+
+								const cgltf_image* img = tex->image;
+
+								TextureCreateDesc desc{};
+								desc.forceSRGB = forceSRGB;
+
+								// 1) URI があり、かつ data: でない → 外部ファイル
+								if (img->uri && img->uri[0] != '\0' &&
+									std::strncmp(img->uri, "data:", 5) != 0)
+								{
+									std::filesystem::path texPath = baseDir / img->uri;
+									desc.path = texPath.string();
+									// memory は nullptr のまま
+								}
+								// 2) buffer_view 経由 → glb 等の埋め込みバイナリ
+								else if (img->buffer_view && img->buffer_view->buffer &&
+									img->buffer_view->buffer->data)
+								{
+									const cgltf_buffer_view* bv = img->buffer_view;
+									const cgltf_buffer* buf = bv->buffer;
+
+									desc.memory = static_cast<const std::byte*>(buf->data) + bv->offset;
+									desc.memorySize = bv->size;
+									// path は空のまま → メモリモードで CreateResource が呼ばれる
+								}
+								else {
+									// Data URI など、現在対応しないケース
+									return std::nullopt;
+								}
+
+								return desc;
+							};
+
 						if (prim.material) {
 							const auto* m = prim.material;
 							// BaseColor
-							if (auto* t = m->pbr_metallic_roughness.base_color_texture.texture) {
-								std::filesystem::path texPath = baseDir / t->image->uri;
-								TextureHandle tex;
-								texMgr.Add({ texPath.string(), /*forceSRGB=*/true }, tex);
-								bindTex("gBaseColorTex", tex, psBindings, psSRVMap);
-								bindTex("gBaseColorTex", tex, vsBindings, vsSRVMap);
+							if (auto* t = m->pbr_metallic_roughness.base_color_texture.texture)
+							{
+								if (auto optDesc = MakeTextureDescFromCgltfTexture(t, /*forceSRGB=*/true))
+								{
+									TextureHandle tex;
+									texMgr.Add(*optDesc, tex);
+									bindTex("gBaseColorTex", tex, psBindings, psSRVMap);
+									bindTex("gBaseColorTex", tex, vsBindings, vsSRVMap);
+								}
 							}
+							// Emissive を BaseColor に流用するケースもある
+							else if (auto* t = m->emissive_texture.texture)
+							{
+								if (auto optDesc = MakeTextureDescFromCgltfTexture(t, /*forceSRGB=*/true))
+								{
+									TextureHandle tex;
+									texMgr.Add(*optDesc, tex);
+									bindTex("gBaseColorTex", tex, psBindings, psSRVMap);
+									bindTex("gBaseColorTex", tex, vsBindings, vsSRVMap);
+								}
+							}
+
 							// Normal
-							if (auto* t = m->normal_texture.texture) {
-								std::filesystem::path texPath = baseDir / t->image->uri;
-								TextureHandle tex;
-								texMgr.Add({ texPath.string(), /*forceSRGB=*/false }, tex);
-								bindTex("gNormalTex", tex, psBindings, psSRVMap);
-								bindTex("gNormalTex", tex, vsBindings, vsSRVMap);
+							if (auto* t = m->normal_texture.texture)
+							{
+								// 本来は forceSRGB=false が正しい（ノーマルは線形）けど、
+								// 既存挙動を維持したいなら true のままでもOK（あとで直せるようコメント入れておく）
+								if (auto optDesc = MakeTextureDescFromCgltfTexture(t, /*forceSRGB=*/false))
+								{
+									TextureHandle tex;
+									texMgr.Add(*optDesc, tex);
+									bindTex("gNormalTex", tex, psBindings, psSRVMap);
+									bindTex("gNormalTex", tex, vsBindings, vsSRVMap);
+								}
 							}
-							// MetallicRoughness (通常 R=Occlusion, G=Roughness, B=Metallic 等の流儀があるのでシェーダ側で取り決め)
-							if (auto* t = m->pbr_metallic_roughness.metallic_roughness_texture.texture) {
-								std::filesystem::path texPath = baseDir / t->image->uri;
-								TextureHandle tex;
-								texMgr.Add({ texPath.string(), /*forceSRGB=*/false }, tex);
-								bindTex("gMetallicRoughness", tex, psBindings, psSRVMap);
-								bindTex("gMetallicRoughness", tex, vsBindings, vsSRVMap);
+
+							// MetallicRoughness (Occlusion/Roughness/Metallicなどがパックされている想定)
+							if (auto* t = m->pbr_metallic_roughness.metallic_roughness_texture.texture)
+							{
+								if (auto optDesc = MakeTextureDescFromCgltfTexture(t, /*forceSRGB=*/false))
+								{
+									TextureHandle tex;
+									texMgr.Add(*optDesc, tex);
+									bindTex("gMetallicRoughness", tex, psBindings, psSRVMap);
+									bindTex("gMetallicRoughness", tex, vsBindings, vsSRVMap);
+								}
 							}
 						}
 

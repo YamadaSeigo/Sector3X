@@ -86,11 +86,19 @@ namespace SFW
 		 */
 		struct TextureCreateDesc {
 			std::string path;
-			bool forceSRGB = false;
-			bool convertDSS = true;
-
+			
 			// --- 解像度を指定して生成する場合（path が空）----
 			TextureRecipe* recipe = nullptr; //指定しない場合はnullptr(必須ではない)
+
+			// メモリ上の圧縮画像から作るモード
+			const void* memory = nullptr;   // PNG/JPG/DDS 等のバイナリ(必須ではない)
+			size_t      memorySize = 0;     // テクスチャサイズ(メモリデータから生成する場合)
+			enum class MemoryHint {
+				Auto, DDS, TGA, HDR, WIC
+			} memoryHint = MemoryHint::Auto;
+
+			bool forceSRGB = false;
+			bool convertDSS = true;
 		};
 		/**
 		 * @brief DirectX 11のテクスチャデータを格納する構造体

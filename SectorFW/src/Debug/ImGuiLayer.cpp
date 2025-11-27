@@ -1,4 +1,6 @@
-// ImGuiLayer.cpp
+ï»¿// ImGuiLayer.cpp
+#include <map>
+
 #include "Debug/ImGuiLayer.h"
 #include "Debug/UIBus.h"
 #include "Debug/PerfHUD.h"
@@ -32,7 +34,7 @@ namespace SFW
 			io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 			io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 			io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
-			//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;    // ”CˆÓiŠeƒoƒbƒNƒGƒ“ƒh‚Ì‘Î‰‚ª•K—vj
+			//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;    // ä»»æ„ï¼ˆå„ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã®å¯¾å¿œãŒå¿…è¦ï¼‰
 
 			ImGui::StyleColorsDark();
 			return backend_->Init(info);
@@ -54,7 +56,7 @@ namespace SFW
 			for (auto& s : bus.logQ.drain()) logBuf.push_back(std::move(s));
 			ImGui::Begin("Log"); for (auto& s : logBuf) ImGui::TextUnformatted(s.c_str()); ImGui::End();
 
-			// --- ƒcƒŠ[ƒXƒiƒbƒvƒVƒ‡ƒbƒg‚ğ”½‰f ---
+			// --- ãƒ„ãƒªãƒ¼ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆã‚’åæ˜  ---
 			bus.tree.swap(); // back<->front
 			const auto& tree = bus.tree.read();
 
@@ -64,34 +66,30 @@ namespace SFW
 			{
 				const auto& it = tree.items[i];
 
-				// 1) ‚¢‚Ü•`‚­ƒm[ƒh‚æ‚è[‚­gŠJ‚¢‚Ä‚¢‚éhŠK‘w‚Í•Â‚¶‚é
+				// 1) ã„ã¾æããƒãƒ¼ãƒ‰ã‚ˆã‚Šæ·±ãâ€œé–‹ã„ã¦ã„ã‚‹â€éšå±¤ã¯é–‰ã˜ã‚‹
 				while (openDepth > (int)it.depth) { ImGui::TreePop(); --openDepth; }
 
-				// 2) e‚ª•Â‚¶‚Ä‚¢‚éƒTƒuƒcƒŠ[‚ÍƒXƒLƒbƒvipre-order ‚ğ‘z’èj
+				// 2) è¦ªãŒé–‰ã˜ã¦ã„ã‚‹ã‚µãƒ–ãƒ„ãƒªãƒ¼ã¯ã‚¹ã‚­ãƒƒãƒ—ï¼ˆpre-order ã‚’æƒ³å®šï¼‰
 				if ((int)it.depth > openDepth) {
-					// e‚ª•Â‚¶‚Ä‚¢‚é‚±‚Ìƒm[ƒh‚Í•\¦‚µ‚È‚¢
+					// è¦ªãŒé–‰ã˜ã¦ã„ã‚‹ï¼ã“ã®ãƒãƒ¼ãƒ‰ã¯è¡¨ç¤ºã—ãªã„
 					continue;
 				}
 
 				ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanFullWidth;
 				if (it.leaf) flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 
-				// opened==true ‚Ì‚¾‚¯“à•”‚Å Push ‚³‚ê‚éiŒã‚Å TreePop ‚ª•K—vj
+				// opened==true ã®æ™‚ã ã‘å†…éƒ¨ã§ Push ã•ã‚Œã‚‹ï¼ˆï¼å¾Œã§ TreePop ãŒå¿…è¦ï¼‰
 				const bool opened = ImGui::TreeNodeEx((void*)(uintptr_t)it.id, flags, "%s", it.label.c_str());
 
-				// Leaf+NoTreePushOnOpen ‚Í opened ‚Å‚à Push ‚³‚ê‚È‚¢‚Ì‚ÅAopenDepth ‚ğ‘‚â‚³‚È‚¢
+				// Leaf+NoTreePushOnOpen ã¯ opened ã§ã‚‚ Push ã•ã‚Œãªã„ã®ã§ã€openDepth ã‚’å¢—ã‚„ã•ãªã„
 				if (!it.leaf && opened) {
-					++openDepth; // gÀÛ‚É Push ‚³‚ê‚½h‚Æ‚«‚¾‚¯ƒJƒEƒ“ƒg
+					++openDepth; // â€œå®Ÿéš›ã« Push ã•ã‚ŒãŸâ€ã¨ãã ã‘ã‚«ã‚¦ãƒ³ãƒˆ
 				}
 			}
-			// 3) c‚Á‚Ä‚¢‚é•ª‚¾‚¯•Â‚¶‚éiPush ‚³‚ê‚½”‚¾‚¯j
+			// 3) æ®‹ã£ã¦ã„ã‚‹åˆ†ã ã‘é–‰ã˜ã‚‹ï¼ˆPush ã•ã‚ŒãŸæ•°ã ã‘ï¼‰
 			while (openDepth > 0) { ImGui::TreePop(); --openDepth; }
 			ImGui::End();
 
-			const auto& t = bus.snap.read();
-			ImGui::Begin("Telemetry");
-			ImGui::Text("cpu=%.2f gpu=%.2f", t.cpu, t.gpu);
-			ImGui::End();
 
 			ImGuiIO& io = ImGui::GetIO();
 			ImGui::Begin("MouseDebug");
@@ -101,52 +99,72 @@ namespace SFW
 				io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
 
 			// ================================
-		   // DebugVars ƒEƒBƒ“ƒhƒE
+		   // DebugVars ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
 		   // ================================
 			{
-				// ‚Ü‚¸“o˜^ƒLƒ…[‚©‚ç UI ‘¤ƒoƒbƒtƒ@‚Éæ‚è‚İ
+				ImGui::Begin("DebugVars");
+
+				// 1. UIãƒãƒƒãƒ•ã‚¡ã« drain
 				for (auto& c : bus.debugControlRegisterQ.drain()) {
 					bus.debugControls.push_back(std::move(c));
 				}
 
-				ImGui::Begin("DebugVars");
-				for (auto& c : bus.debugControls)
+				// 2. ã‚«ãƒ†ã‚´ãƒªã”ã¨ã«ä¸€è¦§ã‚’ä½œæˆ
+				std::map<std::string, std::vector<DebugControl*>> groups;
+				for (auto& c : bus.debugControls) {
+					groups[c.category].push_back(&c);
+				}
+
+				// 3. Tree æ§‹é€ ã¨ã—ã¦æã
+				for (auto& g : groups)
 				{
-					switch (c.kind)
+					const std::string& category = g.first;
+					auto& items = g.second;
+
+					// â–¼ or â–¶ ã‚’æã
+					if (ImGui::TreeNode(category.c_str()))
 					{
-					case DebugControlKind::DC_SLIDERFLOAT:
-					{
-						float v = c.f_value;
-						if (ImGui::DragFloat(c.label.c_str(), &v, c.f_speed, c.f_min, c.f_max))
+						for (DebugControl* ctrl : items)
 						{
-							c.f_value = v;
-							if (c.onChangeF) c.onChangeF(v); // w’è‚³‚ê‚½ƒR[ƒ‹ƒoƒbƒN‚É‘ã“ü‚³‚¹‚é
+							switch (ctrl->kind)
+							{
+							case DebugControlKind::DC_SLIDERFLOAT:
+							{
+								float v = ctrl->f_value;
+								if (ImGui::DragFloat(ctrl->label.c_str(), &v, ctrl->f_speed, ctrl->f_min, ctrl->f_max))
+								{
+									ctrl->f_value = v;
+									if (ctrl->onChangeF) ctrl->onChangeF(v);
+								}
+								break;
+							}
+							case DebugControlKind::DC_SLIDERINT:
+							{
+								int v = ctrl->i_value;
+								if (ImGui::DragInt(ctrl->label.c_str(), &v, ctrl->f_speed, ctrl->i_min, ctrl->i_max))
+								{
+									ctrl->i_value = v;
+									if (ctrl->onChangeI) ctrl->onChangeI(v);
+								}
+								break;
+							}
+							case DebugControlKind::DC_CHECKBOX:
+							{
+								bool v = ctrl->b_value;
+								if (ImGui::Checkbox(ctrl->label.c_str(), &v))
+								{
+									ctrl->b_value = v;
+									if (ctrl->onChangeB) ctrl->onChangeB(v);
+								}
+								break;
+							}
+							}
 						}
-						break;
-					}
-					case DebugControlKind::DC_SLIDERINT:
-					{
-						int v = c.i_value;
-						if (ImGui::DragInt(c.label.c_str(), &v, c.f_speed, c.i_min, c.i_max))
-						{
-							c.i_value = v;
-							if (c.onChangeI) c.onChangeI(v);
-						}
-						break;
-					}
-					case DebugControlKind::DC_CHECKBOX:
-					{
-						bool v = c.b_value;
-						if (ImGui::Checkbox(c.label.c_str(), &v))
-						{
-							c.b_value = v;
-							if (c.onChangeB) c.onChangeB(v);
-						}
-						break;
-					}
-					default: break;
+
+						ImGui::TreePop();
 					}
 				}
+
 				ImGui::End();
 			}
 

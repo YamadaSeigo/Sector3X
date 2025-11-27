@@ -179,6 +179,7 @@ namespace SFW
 
 		struct DebugControl {
 			DebugControlKind kind{};
+			std::string category = "Default";
 			std::string      label;
 
 			// 現在値（UI側で保持）
@@ -213,8 +214,14 @@ namespace SFW
 
 		/**
 		 * @brief ImGui の SliderFloat + コールバック.
+		 * @param label ラベル名
+		 * @param initialValue 初期値
+		 * @param minValue　上限
+		 * @param maxValue　下限
+		 * @param speed　スライダーの速度
 		 */
 		void RegisterDebugSliderFloat(
+			const std::string& category,
 			const std::string& label,
 			float initialValue,
 			float minValue,
@@ -231,6 +238,7 @@ namespace SFW
 		 * @param speed　スライダーの速度
 		 */
 		inline void BindDebugSliderFloat(
+			const std::string& category,
 			const std::string& label,
 			float* target,
 			float minValue,
@@ -239,14 +247,30 @@ namespace SFW
 		{
 			if (!target) return;
 			RegisterDebugSliderFloat(
+				category,
 				label,
 				*target,
 				minValue,
 				maxValue,
 				speed,
-				[target](float v) { *target = v; } // ★ ここで代入
+				[target](float v) { *target = v; } // ここで代入
 			);
 		}
+
+#ifdef _ENABLE_IMGUI
+
+#define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange) \
+	SFW::Debug::RegisterDebugSliderFloat(category, label, initialValue, minValue, maxValue, speed, onChange)
+
+#define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed) \
+	SFW::Debug::BindDebugSliderFloat(category, label, target, minValue, maxValue, speed)
+
+#else //! _ENABLE_IMGUI
+
+#define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange) 
+#define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed)
+
+#endif // _ENABLE_IMGUI
 
 		/**
 		 * @brief ライフサイクル（起動時 / 終了時に呼ぶ）

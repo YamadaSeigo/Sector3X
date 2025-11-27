@@ -103,6 +103,10 @@ namespace SFW
 			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }
 			ID3D11DeviceContext* GetDeviceContext() const noexcept { return m_context.Get(); }
 
+			const RenderBackend* const GetBackend() const noexcept {
+				return backend.get();
+			}
+
 			ComPtr<ID3D11RenderTargetView> GetMainRenderTargetView() const noexcept {
 				return m_renderTargetView;
 			}

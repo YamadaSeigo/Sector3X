@@ -83,7 +83,7 @@ namespace SFW
 			 * @brief ラスタライザーステートを設定する関数
 			 * @param state ラスタライザーステートID
 			 */
-			void SetRasterizerStateImpl(RasterizerStateID state);
+			void SetRasterizerStateImpl(RasterizerStateID state) const;
 			/**
 			 * @brief デプスステンシルステートを設定する関数
 			 * @param state デプスステンシルステートID
@@ -336,10 +336,18 @@ namespace SFW
 			 */
 			void ProcessDeferredDeletesImpl(uint64_t currentFrame);
 
+			/**
+			 * @brief インスタンスドローを実行する関数
+			 * @param meshIdx メッシュインデックス
+			 * @param matIdx マテリアルインデックス
+			 * @param psoIdx PSOインデックス
+			 * @param count インスタンス数
+			 * @param usePSORasterizer PSOのラスタライザーステートを使用するかどうか
+			 */
+			void DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer) const;
 		private:
-			void DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer);
-			void BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx);
-			void BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx);
+			void BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx) const;
+			void BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx) const;
 
 			HRESULT CreateInstanceBuffer();
 			HRESULT CreateRasterizerStates();

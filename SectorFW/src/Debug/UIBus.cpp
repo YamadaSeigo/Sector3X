@@ -41,6 +41,7 @@ namespace SFW
 	    // デバッグコントロール登録実装
 	    // ================================
 		void RegisterDebugSliderFloat(
+			const std::string& category,
 			const std::string& label,
 			float initialValue,
 			float minValue,
@@ -53,6 +54,7 @@ namespace SFW
 
 			DebugControl c;
 			c.kind = DebugControlKind::DC_SLIDERFLOAT;
+			c.category = category;
 			c.label = label;
 			c.f_value = initialValue;
 			c.f_min = minValue;

@@ -281,7 +281,7 @@ namespace SFW
 		//限定的なシステムのリスト
 		//限定的な更新対象のシステムを格納します。
 		std::vector<std::unique_ptr<SystemType>> limitedSystems;
-		//パーティション
+		//分割クラスのインスタンス
 		Partition partition;
 		//EntityManagerRegistryの参照
 		SpatialChunkRegistry& entityManagerReg;

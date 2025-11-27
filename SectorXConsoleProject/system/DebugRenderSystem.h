@@ -181,11 +181,10 @@ public:
 		.initialRowPitch = (UINT)width * sizeof(float)
 		};
 
-		texMgr->Add({
-		.path = "",                 // ←空で"生成モード"
-		.forceSRGB = false,         // 無視されます
-		.recipe = &recipe           // レシピを指定
-			}, mocTexHandle);
+		DX11::TextureCreateDesc texDesc;
+		texDesc.forceSRGB = false;
+		texDesc.recipe = &recipe;
+		texMgr->Add(texDesc, mocTexHandle);
 
 		Graphics::DX11::MaterialCreateDesc matDesc;
 		matDesc.shader = mocShaderHandle;
@@ -282,13 +281,16 @@ public:
 					std::vector<uint32_t> lineColors;
 					for (const auto& mesh : modelAsset.ref().subMeshes) {
 						Math::Rectangle rect = Math::ProjectAABBToScreenRect(mesh.aabb, viewProj * worldMtx, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
-						auto rectLines = rect.MakeLineVertex();
-						if ((size_t)line2DCount + rectLines.size() > MAX_CAPACITY_2DLINE) {
-							overflow = true;
-							break;
-						}
-						for (auto& l : rectLines) {
-							line2DVertices.get()[line2DCount++] = { Math::Vec3f(l.x, l.y, 5.0f), rgbaRect };
+						if (rect.Area() > 0.0f)
+						{
+							auto rectLines = rect.MakeLineVertex();
+							if ((size_t)line2DCount + rectLines.size() > MAX_CAPACITY_2DLINE) {
+								overflow = true;
+								break;
+							}
+							for (auto& l : rectLines) {
+								line2DVertices.get()[line2DCount++] = { Math::Vec3f(l.x, l.y, 5.0f), rgbaRect };
+							}
 						}
 
 						constexpr bool showOccAABB = false;
@@ -416,7 +418,7 @@ public:
 		meshManager->SetIndexCount(line2DHandle, (uint32_t)line2DCount);
 		vbUpdateDesc.data = line2DVertices.get();
 		vbUpdateDesc.size = sizeof(Debug::LineVertex) * line2DCount;
-		vbUpdateDesc.isDelete = false; // 更新時は削除
+		vbUpdateDesc.isDelete = false; // 更新時は削除しない
 		bufferManager->UpdateBuffer(vbUpdateDesc, slot);
 
 		Graphics::DrawCommand cmd;
@@ -491,7 +493,7 @@ public:
 		cmd.mesh = meshManager->GetSpriteQuadHandle().index;
 		cmd.pso = psoMOCHandle.index;
 		cmd.material = mocMaterialHandle.index;
-		cmd.viewMask = PASS_UI_LINE;
+		cmd.viewMask = PASS_UI_MAIN;
 
 		uiSession.Push(std::move(cmd));
 	}

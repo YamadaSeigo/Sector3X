@@ -302,10 +302,56 @@ namespace SFW {
                 return out;
             }
 
+            // B) メモリから圧縮画像を読む
+            if (desc.memory && desc.memorySize > 0) {
+                TexMetadata meta{};
+                ScratchImage img{};
+                HRESULT hr = E_FAIL;
+
+                // ヒントに応じて呼び分け
+                using MH = TextureCreateDesc::MemoryHint;
+                MH hint = desc.memoryHint;
+
+                if (hint == MH::DDS) {
+					auto* pMemory = static_cast<const std::byte*>(desc.memory);
+                    hr = LoadFromDDSMemory(pMemory, desc.memorySize, DDS_FLAGS_NONE, & meta, img);
+                }
+                else if (hint == MH::TGA) {
+					auto* pMemory = static_cast<const uint8_t*>(desc.memory);
+                    hr = LoadFromTGAMemory(pMemory, desc.memorySize, &meta, img);
+                }
+                else if (hint == MH::HDR) {
+					auto* pMemory = static_cast<const std::byte*>(desc.memory);
+                    hr = LoadFromHDRMemory(pMemory, desc.memorySize, &meta, img);
+                }
+                else {
+                    // Auto/WIC はとりあえず WIC に投げる
+                    WIC_FLAGS flags = WIC_FLAGS_FORCE_RGB;
+                    if (desc.forceSRGB) flags |= WIC_FLAGS_FORCE_SRGB;
+                    hr = LoadFromWICMemory(static_cast<const std::byte*>(desc.memory), desc.memorySize, flags, &meta, img);
+                }
+
+                if (FAILED(hr)) throw std::runtime_error("Failed to load image from memory.");
+
+                EnsureMipChain(img, meta, desc.forceSRGB, maxGeneratedMips_);
+
+                ComPtr<ID3D11Resource> tex;
+                hr = CreateTexture(device, img.GetImages(), img.GetImageCount(), meta, tex.GetAddressOf());
+                if (FAILED(hr)) throw std::runtime_error("CreateTexture from memory failed.");
+
+                ComPtr<ID3D11ShaderResourceView> srv = CreateSRV(tex.Get(), meta, device, desc.forceSRGB);
+
+                TextureData out{};
+                out.path.clear();       // メモリ由来なのでパス無し
+                out.srv = std::move(srv);
+                out.resource = std::move(tex);
+                return out;
+            }
+
 			assert(desc.recipe != nullptr && "not reference of recipe instance"); // recipe 必須
 
             //==============================
-            // B) パス無し：解像度から生成
+            // C) パス無し：解像度から生成
             //==============================
             D3D11_TEXTURE2D_DESC td{};
             td.Width = desc.recipe->width;

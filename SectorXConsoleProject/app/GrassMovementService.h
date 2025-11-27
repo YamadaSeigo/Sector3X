@@ -30,6 +30,12 @@ public:
 		cd.initialData = &m_grassWindCB;
 
 		bufferMgr->Add(cd, hBuffer);
+
+		// ƒfƒoƒbƒOUI“o˜^
+        BIND_DEBUG_SLIDER_FLOAT("Wind", "BladeHeightLocal", &m_grassWindCB.BladeHeightLocal, 0.0f, 10.0f, 0.01f);
+        BIND_DEBUG_SLIDER_FLOAT("Wind", "Amplitude", &m_grassWindCB.WindAmplitude, 0.0f, 100.0f, 0.1f);
+        BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionX", &m_grassWindCB.WindDirXZ.x, -1.0f, 1.0f, 0.01f);
+        BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionZ", &m_grassWindCB.WindDirXZ.y, -1.0f, 1.0f, 0.01f);
     }
 
 	void Update(double deltaTime) noexcept override
