@@ -107,7 +107,7 @@ namespace SFW
 					// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
 					std::string systemName = updateSystems[i]->derived_name();
 					std::string partitionName = typeid(Partition).name();
-					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::System, /*leaf=*/true, std::string(systemName.begin() + 6, systemName.end() - (partitionName.size() + 2)) });
+					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_SYSTEM, /*leaf=*/true, std::string(systemName.begin() + 6, systemName.end() - (partitionName.size() + 2)) });
 				} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
 

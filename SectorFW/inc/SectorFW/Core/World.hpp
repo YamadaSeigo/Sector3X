@@ -67,7 +67,7 @@ namespace SFW
 				frame.items.clear();
 
 				// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::World, /*leaf=*/false, "World" });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_WORLD, /*leaf=*/false, "World" });
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
 			static std::vector<std::future<void>> futures;

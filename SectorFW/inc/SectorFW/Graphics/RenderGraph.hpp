@@ -182,7 +182,7 @@ namespace SFW
 					auto& frame = g.data();
 
 					// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::RenderGraph, /*leaf=*/false, "RenderGraph" });
+					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_RENDERGRAPH, /*leaf=*/false, "RenderGraph" });
 				} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif // _ENABLE_IMGUI
 
@@ -211,8 +211,8 @@ namespace SFW
 						auto& frame = guard.data();
 
 						// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::GROUP, /*leaf=*/false, "Group : " + g.name });
-						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::DrawCommand, /*leaf=*/true, "DrawCommand : " + std::to_string(gs.cmds.size()) });
+						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_GROUP, /*leaf=*/false, "Group : " + g.name });
+						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_DRAWCOMMAND, /*leaf=*/true, "DrawCommand : " + std::to_string(gs.cmds.size()) });
 					} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif // _ENABLE_IMGUI
 

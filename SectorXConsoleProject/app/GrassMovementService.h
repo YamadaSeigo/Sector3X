@@ -18,7 +18,7 @@ public:
 		float    PhaseSpread = 3.14159f;            // ブレードごとの位相の広がり
         float    BladeHeightLocal = 1.0f;           // ローカル空間でのブレード高さ
 		float    WindSpeed = 1.0f;                  // 風速
-		float    WindAmplitude = 10.0f;              // 風の振幅
+		float    WindAmplitude = 50.0f;              // 風の振幅
 		Math::Vec2f   WindDirXZ = { 1.0f, 0.3f };   // 風向き(XZ平面)
     };
 

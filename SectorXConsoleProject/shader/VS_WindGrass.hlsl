@@ -54,28 +54,36 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     row_major float3x4 world = gInstanceMats[pooledIndex].M;
 
     float3x3 R = (float3x3) world;
-    float3 t = float3(world._m03, world._m13, world._m23);
+    float3 baseWorldPos = float3(world._m03, world._m13, world._m23);
 
     VSOutput output;
-    float3 wp = mul(R, input.position) + t;
+    float3 wp = mul(R, input.position) + baseWorldPos;
 
     float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
-    float2 heightMapUV = (t.xz - gOriginXZ) / terrainSize;
+    float2 heightMapUV = (baseWorldPos.xz - gOriginXZ) / terrainSize;
     float centerHeight = gHeightMap.SampleLevel(gSampler, heightMapUV, 0);
     float2 localUV = (wp.xz - gOriginXZ) / terrainSize;
     float localHeight = gHeightMap.SampleLevel(gSampler, localUV, 0);
     wp.y += (localHeight - centerHeight) * 70.0f;
 
-     // ---- 疑似ノイズ（インスタンス単位） ----
-    float2 noisePos = t.xz * gNoiseFreq;
+   // ---- 1) 全体をまとめる“大きな揺れ” ----
+   // 空間周波数をかなり低くして「大きなうねり」
+    float bigSpatial = dot(baseWorldPos.xz, gWindDirXZ * 0.03f);
+
+   // GrassMovementService 側でグルーブさせた Time を使う前提
+    float bigPhase = bigSpatial + gTime * gWindSpeed;
+    float bigWave = sin(bigPhase); // -1..1
+
+   // ---- 2) 個々の“ゆらぎ”用の小さいノイズ ----
+    float2 noisePos = baseWorldPos.xz * gNoiseFreq; // gNoiseFreq は 0.1 とか
     float noise01 = PseudoNoise2D(noisePos);
     float noiseN11 = noise01 * 2.0f - 1.0f;
-    float phaseOffset = noiseN11 * gPhaseSpread;
 
-    // ---- 位相 ----
-    float spatialTerm = dot(t.xz, gWindDirXZ);
-    float phase = spatialTerm + gTime * gWindSpeed + phaseOffset;
-    float wave = sin(phase);
+   // 小さい振幅で “バラつき” だけを付ける
+    float smallWave = noiseN11; // -1..1 のまま使うか、sin(noiseN11*定数)でもOK
+
+   // ---- 3) 合成 ----
+    float wave = bigWave * 0.9f + smallWave * 0.1f;
 
     // ---- 高さ割合（ローカルYでOK）----
     float heightFactor = 0.0f;

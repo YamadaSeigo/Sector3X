@@ -36,6 +36,32 @@ namespace SFW
 
 		UiSnapshot::WriteGuard BeginTelemetryWrite() { return GetUIBus().snap.beginWrite(); }
 		UiTreeSnapshot::WriteGuard BeginTreeWrite() { return GetUIBus().tree.beginWrite(); }
+
+		// ================================
+	    // デバッグコントロール登録実装
+	    // ================================
+		void RegisterDebugSliderFloat(
+			const std::string& label,
+			float initialValue,
+			float minValue,
+			float maxValue,
+			float speed,
+			std::function<void(float)> onChange)
+		{
+			auto& bus = GetUIBus();
+			if (!bus.alive.load(std::memory_order_acquire)) return;
+
+			DebugControl c;
+			c.kind = DebugControlKind::DC_SLIDERFLOAT;
+			c.label = label;
+			c.f_value = initialValue;
+			c.f_min = minValue;
+			c.f_max = maxValue;
+			c.f_speed = speed;
+			c.onChangeF = std::move(onChange);
+
+			bus.debugControlRegisterQ.push(std::move(c));
+		}
 	}
 
 #ifdef _ENABLE_IMGUI

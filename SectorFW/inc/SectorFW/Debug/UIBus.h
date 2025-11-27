@@ -11,6 +11,7 @@
 #include <deque>
 #include <vector>
 #include <string>
+#include <functional>
 
 namespace SFW
 {
@@ -166,6 +167,31 @@ namespace SFW
 			TreeFrame front_{}, back_{};
 		};
 
+		// ================================
+		// デバッグコントロール用の定義
+		// ================================
+		enum class DebugControlKind {
+			DC_SLIDERFLOAT,
+			DC_SLIDERINT,
+			DC_CHECKBOX,
+			DC_MAX
+		};
+
+		struct DebugControl {
+			DebugControlKind kind{};
+			std::string      label;
+
+			// 現在値（UI側で保持）
+			float f_value = 0.f, f_min = 0.f, f_max = 1.f, f_speed = 0.1f;
+			int   i_value = 0, i_min = 0, i_max = 100;
+			bool  b_value = false;
+
+			// 値変更時に呼ばれるコールバック
+			std::function<void(float)> onChangeF;
+			std::function<void(int)>   onChangeI;
+			std::function<void(bool)>  onChangeB;
+		};
+
 		/**
 		 * @brief バス本体（ここだけをグローバルにする）
 		 */
@@ -176,11 +202,51 @@ namespace SFW
 			UiQueue<std::string> logQ;
 			UiSnapshot          snap;
 			UiTreeSnapshot       tree;
+
+			UiQueue<DebugControl> debugControlRegisterQ; // 登録キュー
+			std::vector<DebugControl> debugControls;     // UIスレッド側で保持
 		};
 		/**
 		 * @brief グローバルUIバスの取得
 		 */
 		UIBus& GetUIBus();
+
+		/**
+		 * @brief ImGui の SliderFloat + コールバック.
+		 */
+		void RegisterDebugSliderFloat(
+			const std::string& label,
+			float initialValue,
+			float minValue,
+			float maxValue,
+			float speed,
+			std::function<void(float)> onChange);
+
+		/**
+		 * @brief 変数ポインタを直接バインドする簡易版.
+		 * @param label ラベル名
+		 * @param target 設定する変数のポインタ
+		 * @param minValue　上限
+		 * @param maxValue　下限
+		 * @param speed　スライダーの速度
+		 */
+		inline void BindDebugSliderFloat(
+			const std::string& label,
+			float* target,
+			float minValue,
+			float maxValue,
+			float speed = 0.1f)
+		{
+			if (!target) return;
+			RegisterDebugSliderFloat(
+				label,
+				*target,
+				minValue,
+				maxValue,
+				speed,
+				[target](float v) { *target = v; } // ★ ここで代入
+			);
+		}
 
 		/**
 		 * @brief ライフサイクル（起動時 / 終了時に呼ぶ）
@@ -218,14 +284,14 @@ namespace SFW
 		 * @brief ワールドのデバッグツリーの深さ
 		 */
 		enum WorldTreeDepth : uint32_t {
-			World = 0,
-			Level = 1,
-			LevelNode = 2,
-			System = 3,
-			RenderGraph = 0,
-			GROUP = 1,
-			DrawCommand = 2,
-			DepthMax
+			TREEDEPTH_WORLD = 0,
+			TREEDEPTH_LEVEL = 1,
+			TREEDEPTH_LEVELNODE = 2,
+			TREEDEPTH_SYSTEM = 3,
+			TREEDEPTH_RENDERGRAPH = 0,
+			TREEDEPTH_GROUP = 1,
+			TREEDEPTH_DRAWCOMMAND = 2,
+			TREEDEPTH_MAX
 		};
 	}
 }

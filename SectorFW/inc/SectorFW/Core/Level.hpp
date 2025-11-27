@@ -114,10 +114,10 @@ namespace SFW
 				auto& frame = g.data();
 
 				// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Level, /*leaf=*/false, "Level : " + std::to_string(levelCtx.id) });
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/true, "Partition : " + std::string(typeid(Partition).name()).substr(6) });
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/false, "System" });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVEL, /*leaf=*/false, "Level : " + std::to_string(levelCtx.id) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "Partition : " + std::string(typeid(Partition).name()).substr(6) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/false, "System" });
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
 
@@ -148,8 +148,8 @@ namespace SFW
 				auto& frame = g.data();
 
 				// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::Level, /*leaf=*/true, "Limited Level : " + std::to_string(levelCtx.id) });
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::LevelNode, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVEL, /*leaf=*/true, "Limited Level : " + std::to_string(levelCtx.id) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
 			// 限定的なSystemだけを実行（例：位置補間やフェードアウト処理）

@@ -100,6 +100,56 @@ namespace SFW
 			ImGui::Text("FramebufferScale: %.2f, %.2f",
 				io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
 
+			// ================================
+		   // DebugVars ウィンドウ
+		   // ================================
+			{
+				// まず登録キューから UI 側バッファに取り込み
+				for (auto& c : bus.debugControlRegisterQ.drain()) {
+					bus.debugControls.push_back(std::move(c));
+				}
+
+				ImGui::Begin("DebugVars");
+				for (auto& c : bus.debugControls)
+				{
+					switch (c.kind)
+					{
+					case DebugControlKind::DC_SLIDERFLOAT:
+					{
+						float v = c.f_value;
+						if (ImGui::DragFloat(c.label.c_str(), &v, c.f_speed, c.f_min, c.f_max))
+						{
+							c.f_value = v;
+							if (c.onChangeF) c.onChangeF(v); // 指定されたコールバックに代入させる
+						}
+						break;
+					}
+					case DebugControlKind::DC_SLIDERINT:
+					{
+						int v = c.i_value;
+						if (ImGui::DragInt(c.label.c_str(), &v, c.f_speed, c.i_min, c.i_max))
+						{
+							c.i_value = v;
+							if (c.onChangeI) c.onChangeI(v);
+						}
+						break;
+					}
+					case DebugControlKind::DC_CHECKBOX:
+					{
+						bool v = c.b_value;
+						if (ImGui::Checkbox(c.label.c_str(), &v))
+						{
+							c.b_value = v;
+							if (c.onChangeB) c.onChangeB(v);
+						}
+						break;
+					}
+					default: break;
+					}
+				}
+				ImGui::End();
+			}
+
 			ImGui::End();
 		}
 

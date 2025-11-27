@@ -577,8 +577,8 @@ int main(void)
 	//デフォルト描画のPSO生成
 	DX11::ShaderCreateDesc shaderDesc;
 	shaderDesc.templateID = MaterialTemplateID::PBR;
-	shaderDesc.vsPath = L"assets/shader/VS_ShadowDepth.cso";
-	shaderDesc.psPath = L"assets/shader/PS_ShadowColor.cso";
+	shaderDesc.vsPath = L"assets/shader/VS_Default.cso";
+	shaderDesc.psPath = L"assets/shader/PS_Default.cso";
 	ShaderHandle shaderHandle;
 	shaderMgr->Add(shaderDesc, shaderHandle);
 
@@ -772,7 +772,7 @@ int main(void)
 						continue; // 草が薄い場所はスキップ
 					}
 					//　薄いほど高さを下げる
-					location.y -= (1.0f - splatR / 255.0f) * 4.0f;
+					location.y -= (1.0f - splatR / 255.0f) * 10.0f;
 
 					auto rot = Math::Quatf::Identity();//Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 
