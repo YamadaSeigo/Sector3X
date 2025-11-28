@@ -200,11 +200,19 @@ namespace SFW
 			float baseColorFactor[4] = { 1,1,1,1 };
 			float metallicFactor = 1.0f;
 			float roughnessFactor = 1.0f;
-			float hasBaseColorTex = 0.0f;
-			float hasNormalTex = 0.0f;
-			float hasMRRTex = 0.0f;
-			float _pad[3] = { 0,0,0 }; // 16B境界
+			uint32_t hasFlags = 0; // フラグビットフィールド
+			float padding; // 16バイトアライメント用パディング
+
+			enum HasFlagsBits : uint32_t {
+				HasBaseColorTex			= 1u << 0,
+				HasNormalTex			= 1u << 1,
+				HasMetallicRoughnessTex = 1u << 2,
+				HasEmissiveTex			= 1u << 3,
+				// ...
+			};
 		};
+
+
 		/**
 		 * @brief シェーダステージ列挙型
 		 */

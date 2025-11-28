@@ -334,9 +334,10 @@ namespace SFW
 						pbrCB.roughnessFactor = (float)m->pbr_metallic_roughness.roughness_factor;
 
 						// テクスチャ有無フラグ
-						pbrCB.hasBaseColorTex = (m->pbr_metallic_roughness.base_color_texture.texture) ? 1.0f : 0.0f;
-						pbrCB.hasNormalTex = (m->normal_texture.texture) ? 1.0f : 0.0f;
-						pbrCB.hasMRRTex = (m->pbr_metallic_roughness.metallic_roughness_texture.texture) ? 1.0f : 0.0f;
+						pbrCB.hasFlags |= (m->pbr_metallic_roughness.base_color_texture.texture) ? PBRMaterialCB::HasFlagsBits::HasBaseColorTex : 0u;
+						pbrCB.hasFlags |= (m->normal_texture.texture) ? PBRMaterialCB::HasFlagsBits::HasNormalTex : 0u;
+						pbrCB.hasFlags |= (m->pbr_metallic_roughness.metallic_roughness_texture.texture) ? PBRMaterialCB::HasFlagsBits::HasMetallicRoughnessTex : 0u;
+						pbrCB.hasFlags |= (m->emissive_texture.texture) ? PBRMaterialCB::HasFlagsBits::HasEmissiveTex : 0u;
 					}
 
 					// 2) マテリアルCBを作成（内容キャッシュで自動重複排除）
@@ -358,7 +359,7 @@ namespace SFW
 						auto psShader = shaderMgr.Get(shaderHandle);
 						const auto& psBindings = psShader.ref().psBindings;
 						for (const auto& b : psBindings) {
-							if (b.type == D3D_SIT_CBUFFER && b.name == GlobalMaterialBindName) {
+							if (b.type == D3D_SIT_CBUFFER && b.name == gMaterialBindName) {
 								psCBVMap[b.bindPoint] = matCB;
 							}
 						}
@@ -366,7 +367,7 @@ namespace SFW
 						auto vsShader = shaderMgr.Get(shaderHandle);
 						const auto& vsBindings = vsShader.ref().vsBindings;
 						for (const auto& b : vsBindings) {
-							if (b.type == D3D_SIT_CBUFFER && b.name == GlobalMaterialBindName) {
+							if (b.type == D3D_SIT_CBUFFER && b.name == gMaterialBindName) {
 								vsCBVMap[b.bindPoint] = matCB;
 							}
 						}
@@ -426,22 +427,11 @@ namespace SFW
 								{
 									TextureHandle tex;
 									texMgr.Add(*optDesc, tex);
-									bindTex("gBaseColorTex", tex, psBindings, psSRVMap);
-									bindTex("gBaseColorTex", tex, vsBindings, vsSRVMap);
+									bindTex(gBaseColorTexBindName, tex, psBindings, psSRVMap);
+									bindTex(gBaseColorTexBindName, tex, vsBindings, vsSRVMap);
 								}
 							}
-							// Emissive を BaseColor に流用するケースもある
-							else if (auto* t = m->emissive_texture.texture)
-							{
-								if (auto optDesc = MakeTextureDescFromCgltfTexture(t, /*forceSRGB=*/true))
-								{
-									TextureHandle tex;
-									texMgr.Add(*optDesc, tex);
-									bindTex("gBaseColorTex", tex, psBindings, psSRVMap);
-									bindTex("gBaseColorTex", tex, vsBindings, vsSRVMap);
-								}
-							}
-
+							
 							// Normal
 							if (auto* t = m->normal_texture.texture)
 							{
@@ -451,8 +441,8 @@ namespace SFW
 								{
 									TextureHandle tex;
 									texMgr.Add(*optDesc, tex);
-									bindTex("gNormalTex", tex, psBindings, psSRVMap);
-									bindTex("gNormalTex", tex, vsBindings, vsSRVMap);
+									bindTex(gNormalTexBindName, tex, psBindings, psSRVMap);
+									bindTex(gNormalTexBindName, tex, vsBindings, vsSRVMap);
 								}
 							}
 
@@ -463,8 +453,20 @@ namespace SFW
 								{
 									TextureHandle tex;
 									texMgr.Add(*optDesc, tex);
-									bindTex("gMetallicRoughness", tex, psBindings, psSRVMap);
-									bindTex("gMetallicRoughness", tex, vsBindings, vsSRVMap);
+									bindTex(gMetallicRoughnessBindName, tex, psBindings, psSRVMap);
+									bindTex(gMetallicRoughnessBindName, tex, vsBindings, vsSRVMap);
+								}
+							}
+
+							// Emissive
+							if (auto* t = m->emissive_texture.texture)
+							{
+								if (auto optDesc = MakeTextureDescFromCgltfTexture(t, /*forceSRGB=*/true))
+								{
+									TextureHandle tex;
+									texMgr.Add(*optDesc, tex);
+									bindTex(gEmissiveTexBindName, tex, psBindings, psSRVMap);
+									bindTex(gEmissiveTexBindName, tex, vsBindings, vsSRVMap);
 								}
 							}
 						}
@@ -476,7 +478,7 @@ namespace SFW
 						SamplerHandle samp = samplerManager.AddWithDesc(sampDesc);
 
 						for (const auto& b : psBindings)
-							if (b.type == D3D_SIT_SAMPLER && b.name == GlobalSamplerBindName)
+							if (b.type == D3D_SIT_SAMPLER && b.name == gSamplerBindName)
 								samplerMap[b.bindPoint] = samp;
 					}
 

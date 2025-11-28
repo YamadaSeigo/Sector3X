@@ -107,6 +107,76 @@ namespace SFW
 					w * q.w - x * q.x - y * q.y - z * q.z
 				);
 			}
+
+			// q = swing * twist となるように、
+			// 指定軸 axis 周りの回転(twist)と、それ以外の回転(swing)に分解する。
+			// axis はワールド/ローカルどちらの軸かは呼び出し側の解釈次第。
+			// 単位クォータニオン前提（不安なら Normalize() してから呼ぶ）
+			void DecomposeSwingTwist(const Vec3<T>& axis,
+				Quat& outSwing,
+				Quat& outTwist) const noexcept
+			{
+				// axis を正規化
+				Vec3<T> n = axis;
+				{
+					const T len = std::sqrt(n.x * n.x + n.y * n.y + n.z * n.z);
+					const T eps = std::numeric_limits<T>::epsilon();
+					if (len <= eps) {
+						// 軸がゼロベクトルなら分解不能なので、
+						// twist = identity, swing = this として返す
+						outTwist = Quat(T(0), T(0), T(0), T(1));
+						outSwing = *this;
+						return;
+					}
+					const T invLen = T(1) / len;
+					n.x *= invLen; n.y *= invLen; n.z *= invLen;
+				}
+
+				// q のベクトル部
+				const Vec3<T> v{ x, y, z };
+
+				// v を軸 n に射影
+				const T projLen = n.x * v.x + n.y * v.y + n.z * v.z;
+				const Vec3<T> proj{ n.x * projLen, n.y * projLen, n.z * projLen };
+
+				// twist: スカラー部はそのまま、ベクトル部を axis 方向だけにしたクォータニオン
+				Quat twist{ proj.x, proj.y, proj.z, w };
+
+				// proj がほぼゼロなら「軸周りの回転はほぼ無い」とみなして identity
+				const T projLenSq = proj.x * proj.x + proj.y * proj.y + proj.z * proj.z;
+				if (projLenSq <= std::numeric_limits<T>::epsilon()) {
+					twist = Quat(T(0), T(0), T(0), T(1));
+				}
+				else {
+					twist.Normalize();
+				}
+
+				// swing = q * conj(twist)
+				const Quat conjTwist(-twist.x, -twist.y, -twist.z, twist.w);
+				Quat swing = (*this) * conjTwist;
+				swing.Normalize();
+
+				outSwing = swing;
+				outTwist = twist;
+			}
+
+			// 指定軸まわりの回転成分（twist）だけを残す
+			Quat KeepTwist(const Vec3<T>& axis) const noexcept
+			{
+				Quat swing, twist;
+				DecomposeSwingTwist(axis, swing, twist);
+				return twist;
+			}
+
+
+			// 指定軸 axis 周りの回転成分(twist)だけを除去したクォータニオンを返す。
+			// -> swing だけを返す
+			Quat RemoveTwist(const Vec3<T>& axis) const noexcept
+			{
+				Quat swing, twist;
+				DecomposeSwingTwist(axis, swing, twist);
+				return swing;
+			}
 		};
 
 		using Quatf = Quat<float>;

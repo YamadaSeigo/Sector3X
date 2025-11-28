@@ -7,7 +7,13 @@ namespace SFW
 	{
 		std::optional<PSOHandle> PSOManager::FindExisting(const PSOCreateDesc& desc) noexcept {
 			auto it = shaderToPSO_.find(desc.shader.index);
-			if (it != shaderToPSO_.end()) return it->second;
+			if (it != shaderToPSO_.end()) {
+				auto& slot = slots[it->second.index];
+				if (slot.alive && slot.data.rasterizerState == desc.rasterizerState)
+				{
+					return it->second;
+				}
+			}
 			return std::nullopt;
 		}
 

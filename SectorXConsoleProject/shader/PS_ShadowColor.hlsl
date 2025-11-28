@@ -22,7 +22,7 @@ float4 main(PSInputDepth input) : SV_TARGET
     if (shadowPos.z - shadow > 0.001f)
         shadowBias = 0.8f;
 
-    if (hasBaseColorTex == 0)
+    if ((hasFlags & FLAG_HAS_BASECOLORTEX) == 0u)
         return baseColorFactor * shadowBias;
 
     float4 baseColor = gBaseColorTex.Sample(gSampler, input.uv);

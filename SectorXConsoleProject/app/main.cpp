@@ -51,7 +51,7 @@ struct MaterialRecord {
 static std::unordered_map<uint32_t, MaterialRecord> gMaterials = {
 	{ Mat_Grass, { "assets/texture/terrain/grass.png", true } },
 	{ Mat_Rock,  { "assets/texture/terrain/small+rocks+ground.jpg",  true } },
-	{ Mat_Dirt,  { "assets/texture/terrain/dirt4.png.preview.jpg",  true } },
+	{ Mat_Dirt,  { "assets/texture/terrain/DirtHight.png",  true } },
 	{ Mat_Snow,  { "assets/texture/terrain/snow.png",  true } },
 };
 
@@ -175,10 +175,11 @@ void InitializeRenderPipeLine(
 	shaderDesc.psPath = L"assets/shader/PS_Default.cso";
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	psoDesc.shader = shaderHandle;
+	psoDesc.rasterizerState = RasterizerStateID::SolidCullNone;
 	psoMgr->Add(psoDesc, psoHandle);
 
 	DX11::ModelAssetCreateDesc modelDesc;
-	modelDesc.path = "assets/model/skydome_in_the_cloud.gltf";
+	modelDesc.path = "assets/model/SkyStars.gltf";
 	modelDesc.pso = psoHandle;
 	modelDesc.rhFlipZ = true;
 	ModelAssetHandle skyboxModelHandle;
@@ -609,10 +610,14 @@ int main(void)
 	ShaderHandle shaderHandle;
 	shaderMgr->Add(shaderDesc, shaderHandle);
 
-	DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
 	auto psoMgr = graphics.GetRenderService()->GetResourceManager<DX11::PSOManager>();
-	PSOHandle defualtPSOHandle;
-	psoMgr->Add(psoDesc, defualtPSOHandle);
+	DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
+	PSOHandle cullingPSOHandle;
+	psoMgr->Add(psoDesc, cullingPSOHandle);
+
+	psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
+	PSOHandle cullNonePSOHandle;
+	psoMgr->Add(psoDesc, cullNonePSOHandle);
 
 	//草の揺れ用PSO生成
 	shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
@@ -631,27 +636,42 @@ int main(void)
 	// モデルアセットの読み込み
 	DX11::ModelAssetCreateDesc modelDesc;
 	modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_1.gltf";
-	modelDesc.pso = defualtPSOHandle;
+	modelDesc.pso = cullingPSOHandle;
 	modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
 	modelDesc.instancesPeak = 1000;
 	modelDesc.viewMax = 400.0f;
 
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
 
-	modelDesc.path = "assets/model/StylizedNatureMegaKit/Clover_1.gltf";
+	modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
 	modelDesc.viewMax = 200.0f;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
-	modelDesc.path = "assets/model/FantasyTree.gltf";
+	modelDesc.path = "assets/model/Stylized/Tree01.gltf";
 	modelDesc.buildOccluders = false;
 	modelDesc.viewMax = 600.0f;
+	modelDesc.pso = cullNonePSOHandle;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
-	modelDesc.instancesPeak = 10000;
-	modelDesc.viewMax = 50.0f;
-	modelDesc.pso = windGrassPSOHandle;
-	modelDesc.path = "assets/model/StylizedGrass.glb";
+	modelDesc.instancesPeak = 100;
+	modelDesc.viewMax = 100.0f;
+	modelDesc.pso = cullingPSOHandle;
+	modelDesc.path = "assets/model/Stylized/WhiteCosmos.gltf";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
+
+	modelDesc.instancesPeak = 100;
+	modelDesc.viewMax = 100.0f;
+	modelDesc.pso = cullingPSOHandle;
+	modelDesc.path = "assets/model/Stylized/YellowCosmos.gltf";
+	modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
+
+	ModelAssetHandle grassModelHandle;
+
+	modelDesc.instancesPeak = 10000;
+	modelDesc.viewMax = 100.0f;
+	modelDesc.pso = windGrassPSOHandle;
+	modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
+	modelAssetMgr->Add(modelDesc, grassModelHandle);
 
 	// 草のマテリアルに草揺れ用CBVをセット
 	{
@@ -680,7 +700,7 @@ int main(void)
 		auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
 		textureMgr->Add(texDesc, heightTexHandle);
 
-		auto data = modelAssetMgr->GetWrite(modelAssetHandle[3]);
+		auto data = modelAssetMgr->GetWrite(grassModelHandle);
 		auto& submesh = data.ref().subMeshes;
 		auto windCBHandle = grassService.GetBufferHandle();
 		auto cbData = bufferMgr->Get(windCBHandle);
@@ -701,12 +721,10 @@ int main(void)
 
 			//頂点シェーダーにもバインドする設定にする
 			matData.ref().isBindVSSampler = true;
+
+			mesh.lodThresholds.Tpx[0] *= 2.0f; // LOD調整
 		}
 	}
-
-	modelDesc.instancesPeak = 100;
-	modelDesc.path = "assets/model/StylizedNatureMegaKit/Grass_Wispy_Short.gltf";
-	modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
 
 
 	//========================================================================================-
@@ -715,16 +733,16 @@ int main(void)
 	std::mt19937_64 rng(rd());
 
 	// 例: A=50%, B=30%, C=20% のつもりで重みを設定（整数でも実数でもOK）
-	std::array<int, 3> weights{ 5, 10, 5 };
+	std::array<int, 5> weights{ 2, 8, 5, 5, 5 };
 	std::discrete_distribution<int> dist(weights.begin(), weights.end());
 
-	float modelScaleBase[3] = { 2.5f,1.5f,2.5f};
-	int modelScaleRange[3] = { 150,25,25};
-	int modelRotRange[3] = { 360,360,360};
+	float modelScaleBase[5] = { 2.5f,1.5f,2.5f, 1.5f,1.5f};
+	int modelScaleRange[5] = { 150,25,25, 25,25};
+	int modelRotRange[5] = { 360,360,360, 360,360};
 
 	std::vector<Math::Vec2f> grassAnchor;
 	{
-		auto data = modelAssetMgr->Get(modelAssetHandle[3]);
+		auto data = modelAssetMgr->Get(grassModelHandle);
 		auto aabb = data.ref().subMeshes[0].aabb;
 		grassAnchor.reserve(4);
 		float bias = 0.8f;
@@ -796,15 +814,15 @@ int main(void)
 						continue;
 					}
 
-					int modelIdx = 3;
 					auto splatR = cpuSplatImage.bytes[byteIndex];
-					if (splatR < 32) {
+					if (splatR < 20) {
 						continue; // 草が薄い場所はスキップ
 					}
 					//　薄いほど高さを下げる
-					location.y -= (1.0f - splatR / 255.0f) * 4.0f;
+					location.y -= powf((1.0f - splatR / 255.0f), 2);
 
 					auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
+					rot.KeepTwist(pose.up);
 
 					auto chunk = level->GetChunk(location);
 					auto key = chunk.value()->GetNodeKey();
@@ -814,7 +832,7 @@ int main(void)
 					//float scale = 1.0f;
 					auto id = level->AddEntity(
 						TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-						CModel{ modelAssetHandle[modelIdx] },
+						CModel{ grassModelHandle },
 						Physics::BodyComponent{},
 						Physics::PhysicsInterpolation(
 							location, // 初期位置
@@ -833,8 +851,8 @@ int main(void)
 		// Entity生成
 		uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
 		uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
-		for (int j = 0; j < 10; ++j) {
-			for (int k = 0; k < 10; ++k) {
+		for (int j = 0; j < 100; ++j) {
+			for (int k = 0; k < 100; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
 					//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };

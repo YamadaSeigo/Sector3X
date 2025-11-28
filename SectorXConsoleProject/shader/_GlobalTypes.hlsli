@@ -18,13 +18,16 @@ cbuffer PerDraw : register(b1)
 cbuffer MaterialCB : register(b2)
 {
     float4 baseColorFactor; // glTF baseColorFactor
-    float metallicFactor; // glTF metallicFactor
-    float roughnessFactor; // glTF roughnessFactor
-    float hasBaseColorTex; // 1 or 0
-    float hasNormalTex; // 1 or 0
-    float hasMRRTex; // 1 or 0 (MetallicRoughness)
-    float3 _pad_; // 16B境界合わせ
+    float metallicFactor;   // glTF metallicFactor
+    float roughnessFactor;  // glTF roughnessFactor
+    uint hasFlags;          // フラグビット群
+    float _pad_;            // 16B 境界揃え
 };
+
+static const uint FLAG_HAS_BASECOLORTEX     = 1u << 0;
+static const uint FLAG_HAS_NORMALTEX        = 1u << 1;
+static const uint FLAG_HAS_MRRTEX           = 1u << 2;
+static const uint FLAG_HAS_EMISSIVETEX      = 1u << 3;
 
 cbuffer LightingCB : register(b3)
 {
@@ -58,7 +61,7 @@ cbuffer CBShadowCascades : register(b5)
 
 //======================================================
 //コンスタントバッファのスロット5以降は、個別にセットしてもオケ!
-//テクスチャバッファの場合は,t7以降はオケ!
+//テクスチャバッファの場合は,t9以降はオケ!
 //======================================================
 
 // フレーム単位：全インスタンスのワールド行列（48B/個）
@@ -71,11 +74,19 @@ StructuredBuffer<InstanceMat> gInstanceMats : register(t0);
 // ドロー単位：このメッシュで使うインスタンスの “参照インデックス” 群
 StructuredBuffer<uint> gInstIndices : register(t1);
 
+//AssetModelManagerのバインド名と合わせる
+//=====================================================
 Texture2D gBaseColorTex : register(t2);
 
 Texture2D gNormalTex : register(t3);
 
 Texture2D gMetallicRoughness : register(t4);
+
+Texture2D gEmissiveTex : register(t5);
+//=====================================================
+
+// シャドウマップ (Texture2DArray)
+Texture2DArray<float> gShadowMap : register(t7);
 
 struct PointLight
 {
@@ -88,10 +99,7 @@ struct PointLight
     float2 _padPL0; // 8B (16B 境界揃え)
 };
 
-StructuredBuffer<PointLight> gPointLights : register(t5);
-
-// シャドウマップ (Texture2DArray)
-Texture2DArray<float> gShadowMap : register(t7);
+StructuredBuffer<PointLight> gPointLights : register(t8);
 
 SamplerState gSampler : register(s0);
 

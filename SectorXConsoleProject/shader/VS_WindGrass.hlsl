@@ -83,7 +83,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     float smallWave = noiseN11; // -1..1 のまま使うか、sin(noiseN11*定数)でもOK
 
    // ---- 3) 合成 ----
-    float wave = bigWave * 0.7f + smallWave * 0.3f;
+    float wave = bigWave * 0.5f + smallWave * 0.5f;
 
     // ---- 高さ割合（ローカルYでOK）----
     float heightFactor = 0.0f;

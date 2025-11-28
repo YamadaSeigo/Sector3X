@@ -9,9 +9,13 @@ struct PSInput
 
 float4 main(PSInput input) : SV_TARGET
 {
-    if (hasBaseColorTex == 0)
-        return baseColorFactor;
+    float4 baseColor = baseColorFactor;
+    if ((hasFlags & FLAG_HAS_BASECOLORTEX) != 0u)
+        baseColor *= gBaseColorTex.Sample(gSampler, input.uv);
 
-    float4 baseColor = gBaseColorTex.Sample(gSampler, input.uv);
-    return baseColor * baseColorFactor;
+    float4 emissionColor = float4(0, 0, 0, 0);
+    if ((hasFlags & FLAG_HAS_EMISSIVETEX) != 0u)
+        emissionColor = gEmissiveTex.Sample(gSampler, input.uv);
+
+    return baseColor + emissionColor;
 }

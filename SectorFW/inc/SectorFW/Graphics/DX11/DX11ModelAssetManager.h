@@ -92,8 +92,16 @@ namespace SFW
 		class ModelAssetManager : public
 			ResourceManagerBase<ModelAssetManager, ModelAssetHandle, ModelAssetCreateDesc, ModelAssetData> {
 		public:
-			static inline constexpr const char* GlobalMaterialBindName = "MaterialCB";
-			static inline constexpr const char* GlobalSamplerBindName = "gSampler";
+
+			//シェーダーのバインド名と合わせる
+			//===========================================================================================
+			static inline constexpr const char* gMaterialBindName = "MaterialCB";
+			static inline constexpr const char* gSamplerBindName = "gSampler";
+			static inline constexpr const char* gBaseColorTexBindName = "gBaseColorTex";
+			static inline constexpr const char* gNormalTexBindName = "gNormalTex";
+			static inline constexpr const char* gMetallicRoughnessBindName = "gMetallicRoughness";
+			static inline constexpr const char* gEmissiveTexBindName = "gEmissiveTex";
+			//===========================================================================================
 
 			ModelAssetManager(
 				MeshManager& meshMgr,
