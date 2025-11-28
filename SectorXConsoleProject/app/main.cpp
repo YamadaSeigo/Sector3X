@@ -620,7 +620,9 @@ int main(void)
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	PSOHandle windGrassPSOHandle;
 	psoDesc.shader = shaderHandle;
+	psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
 	psoMgr->Add(psoDesc, windGrassPSOHandle);
+	psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
 
 	ModelAssetHandle modelAssetHandle[5];
 
@@ -646,7 +648,7 @@ int main(void)
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 	modelDesc.instancesPeak = 10000;
-	modelDesc.viewMax = 200.0f;
+	modelDesc.viewMax = 50.0f;
 	modelDesc.pso = windGrassPSOHandle;
 	modelDesc.path = "assets/model/StylizedGrass.glb";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
@@ -753,7 +755,7 @@ int main(void)
 		//scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
-		scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
+		//scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
 		//scheduler.AddSystem<CleanModelSystem>(world.GetServiceLocator());
 
 		auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
@@ -775,10 +777,10 @@ int main(void)
 			for (int k = 0; k < 100; ++k) {
 				for (int n = 0; n < 1; ++n) {
 					//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
-					float scaleXZ = 10.0f;
-					float scaleY = 10.0f;
-					Math::Vec2f offsetXZ = { 10.0f,10.0f };
-					Math::Vec3f location = { float(j) * scaleXZ + offsetXZ.x , 0, float(k) * scaleXZ + offsetXZ.y };
+					float scaleXZ = 15.0f;
+					float scaleY = 15.0f;
+					Math::Vec2f offsetXZ = { 7.0f,7.0f };
+					Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
 					auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
 					//location = pose.pos;
 
@@ -800,7 +802,7 @@ int main(void)
 						continue; // 草が薄い場所はスキップ
 					}
 					//　薄いほど高さを下げる
-					location.y -= (1.0f - splatR / 255.0f) * 1.0f;
+					location.y -= (1.0f - splatR / 255.0f) * 4.0f;
 
 					auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 

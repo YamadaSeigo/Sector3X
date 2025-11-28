@@ -281,6 +281,7 @@ public:
 							LOG_ERROR("LOD ‚ª”ÍˆÍŠO‚Å‚·: %d", ll);
 							ll = 0;
 						}
+						if (ll > 0) continue;
 
 						lodBits.set(subMeshIdx, (uint8_t)ll);
 
