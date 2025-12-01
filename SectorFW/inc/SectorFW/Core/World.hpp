@@ -52,6 +52,8 @@ namespace SFW
 		 */
 		template<typename T>
 		void AddLevel(std::unique_ptr<Level<T>>&& level) {
+			level->Load();
+
 			//level->RegisterAllChunks(reg);
 			std::get<std::vector<std::unique_ptr<Level<T>>>>(levelSets).push_back(std::move(level));
 		}

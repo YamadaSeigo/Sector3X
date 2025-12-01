@@ -47,6 +47,9 @@ namespace SFW
 		 */
 		struct RenderService : public ECS::IUpdateService
 		{
+			using UpdateFuncType = void(*)(RenderService*);
+			using PreDrawFuncType = void(*)(RenderService*);
+
 			template<typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template <typename> class ViewHandle>
 			friend class RenderGraph;
 			/**
@@ -206,15 +209,15 @@ namespace SFW
 			* @ brief Updateカスタム関数の設定
 			* @ param func カスタム関数
 			 */
-			void SetCustomUpdateFunction(std::function<void(RenderService*)>&& func) noexcept {
-				updateFunc = std::move(func);
+			void SetCustomUpdateFunction(UpdateFuncType func) noexcept {
+				updateFunc = func;
 			}
 			/**
 			* @ brief 描画前ドローカスタム関数の設定
 			* @ param func カスタム関数
 			 */
-			void SetCustomPreDrawFunction(std::function<void(RenderService*)>&& func) noexcept {
-				preDrawFunc = std::move(func);
+			void SetCustomPreDrawFunction(PreDrawFuncType func) noexcept {
+				preDrawFunc = func;
 			}
 		private:
 			template<typename ResourceType>
@@ -241,8 +244,8 @@ namespace SFW
 
 			std::atomic<uint16_t> produceSlot{ 0 };
 
-			std::function<void(RenderService*)> updateFunc = nullptr;
-			std::function<void(RenderService*)> preDrawFunc = nullptr;
+			UpdateFuncType updateFunc = nullptr;
+			PreDrawFuncType preDrawFunc = nullptr;
 		public:
 			STATIC_SERVICE_TAG
 			DEFINE_UPDATESERVICE_GROUP(GROUP_GRAPHICS)

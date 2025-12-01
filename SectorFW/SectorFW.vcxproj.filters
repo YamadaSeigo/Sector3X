@@ -483,6 +483,9 @@
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShadowMapService.h">
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\VoidPartition.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">

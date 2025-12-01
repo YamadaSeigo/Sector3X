@@ -16,6 +16,8 @@ namespace SFW
 {
 	namespace Graphics
 	{
+		using PassCustomFuncType = void(*)(uint64_t);
+
 		/**
 		 * @brief 描画するパスごとの設定を定義する構造体
 		 */
@@ -42,7 +44,7 @@ namespace SFW
 			std::optional<std::vector<BindSlotBuffer>> cbvs; // 定数バッファハンドルのリスト
 			std::optional<Viewport> viewport = std::nullopt; // ビューポートのオーバーライド
 			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
-			std::function<void(uint64_t)> customExecute; // FullscreenQuadなど
+			PassCustomFuncType customExecute = nullptr;	// カスタム描画関数（FullscreenQuadなど）
 
 			// このパスが見る viewMask のビット
 			uint16_t viewBit = 0;   // 例: 1<<0=ZPre, 1<<1=Opaque, 1<<2=ID...
@@ -75,7 +77,7 @@ namespace SFW
 				std::optional<std::vector<BindSlotBuffer>> cbvs = std::nullopt,
 				std::optional<Viewport> viewport = std::nullopt,
 				std::optional<PSOHandle> psoOverride = std::nullopt,
-				std::function<void(uint64_t)> customExecute = nullptr)
+				PassCustomFuncType customExecute = nullptr)
 				: rtvs(rtvs)
 				, dsv(dsv)
 				, queue(queue)
@@ -108,7 +110,7 @@ namespace SFW
 				, cbvs(std::move(other.cbvs))
 				, viewport(other.viewport)
 				, psoOverride(other.psoOverride)
-				, customExecute(std::move(other.customExecute)) {
+				, customExecute(other.customExecute) {
 				other.dsv = nullptr; // 安全のためヌルクリア
 				queue = other.queue;
 
@@ -134,7 +136,7 @@ namespace SFW
 					cbvs = std::move(other.cbvs);
 					viewport = other.viewport;
 					psoOverride = other.psoOverride;
-					customExecute = std::move(other.customExecute);
+					customExecute = other.customExecute;
 					other.dsv = nullptr;
 
 					rtvsRaw.resize(rtvs.size());
@@ -175,7 +177,7 @@ namespace SFW
 			std::optional<std::vector<BindSlotBuffer>> cbvs; // 定数バッファハンドルのリスト
 			std::optional<Viewport> viewport = std::nullopt; // ビューポート設定
 			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
-			std::function<void(uint64_t)> customExecute; // FullscreenQuadなど
+			PassCustomFuncType customExecute = nullptr; // FullscreenQuadなど
 		};
 	}
 }

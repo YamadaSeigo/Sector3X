@@ -118,7 +118,7 @@ namespace SFW
 
 					std::vector<uint32_t> serialIndices;
 
-					// par_unseq: 並列+ベクタライズ許可（MSVCの実装でPPL/並列アルゴ適用）
+					// 並列実行部分
 					for (auto idx : group.parallel)
 					{
 						//idxはコピーキャプチャじゃないと破棄される

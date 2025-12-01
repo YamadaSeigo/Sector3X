@@ -104,6 +104,13 @@ namespace SFW
 		 * @brief LevelIDの取得関数
 		 */
 		LevelID GetID() const noexcept { return levelCtx.id; }
+
+		virtual void Load() {
+			if (loadingFunc) {
+				loadingFunc(this);
+			}
+		}
+
 		/**
 		 * @brief 更新処理
 		 */
@@ -266,6 +273,11 @@ namespace SFW
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept {
 			return partition.GetChunk(location, entityManagerReg, this->levelCtx.id, policy);
 		}
+
+		template<typename Func>
+		void SetLoadingFunc(Func&& func) {
+			loadingFunc = std::move(func);
+		}
 	private:
 		//レベルの世代を生成するための静的なアトミック変数
 		//レベルごとに一意な世代を生成するために使用されます。
@@ -285,5 +297,7 @@ namespace SFW
 		Partition partition;
 		//EntityManagerRegistryの参照
 		SpatialChunkRegistry& entityManagerReg;
+
+		std::function<void(Level<Partition>*)> loadingFunc;
 	};
 }
