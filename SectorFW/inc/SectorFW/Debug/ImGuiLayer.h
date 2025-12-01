@@ -27,7 +27,7 @@ namespace SFW
 		public:
 			/**
 			 * @brief コンストラクタ
-			 * @detail UIBus.cppで実装
+			 * @details UIBus.cppで実装
 			 * @param backend
 			 * @return
 			 */

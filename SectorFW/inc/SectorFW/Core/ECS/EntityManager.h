@@ -108,7 +108,7 @@ namespace SFW
 			/**
 			 * @brief エンティティからコンポーネントを取得する関数
 			 * @param id エンティティID
-			 * @detail コンポーネントが見つからない場合nullptrを返す
+			 * @details コンポーネントが見つからない場合nullptrを返す
 			 * @return T* コンポーネントのポインタ
 			 */
 			template<typename T>
@@ -133,7 +133,7 @@ namespace SFW
 			/**
 			 * @brief エンティティにコンポーネントを追加する関数
 			 * @param id エンティティID
-			 * @detail ※archetypeの移動があるため高負荷
+			 * @details ※archetypeの移動があるため高負荷
 			 * @param value 追加するコンポーネントの値
 			 */
 			template<typename T>
@@ -209,7 +209,7 @@ namespace SFW
 
 			/**
 			 * @brief エンティティからコンポーネントを削除する関数
-			 * @detail ※Archetypeを移動する処理があるので高負荷
+			 * @details ※Archetypeを移動する処理があるので高負荷
 			 * @param id エンティティID
 			 */
 			template<typename T>
@@ -480,7 +480,7 @@ namespace SFW
 			 * @param id エンティティID
 			 * @param index チャンク内のインデックス
 			 * @param value 格納するコンポーネントの値
-			 * @detail まばらなコンポーネントかどうかで処理を分ける
+			 * @details まばらなコンポーネントかどうかで処理を分ける
 			 */
 			template<typename T>
 			void StoreComponent(ArchetypeChunk* chunk, EntityID id, size_t index, const T& value) {
@@ -508,7 +508,7 @@ namespace SFW
 			ArchetypeManager archetypeManager;
 			/**
 			 * @brief エンティティの位置を管理するマップ
-			 * @detail EntityIDをキーに、EntityLocationを値とするマップ
+			 * @details EntityIDをキーに、EntityLocationを値とするマップ
 			 */
 			std::unordered_map<EntityID, EntityLocation> locations;
 			//locations の並行アクセスを守るロック（読取多数・書込少数を想定）

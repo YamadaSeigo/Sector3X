@@ -201,7 +201,7 @@ namespace SFW
 						? D3D11_INPUT_PER_INSTANCE_DATA : D3D11_INPUT_PER_VERTEX_DATA;
 					e.InstanceDataStepRate = (e.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) ? 1 : 0;
 
-					// 既知の圧縮形式に揃える（あなたの固定マップに合わせて）
+					// 既知の圧縮形式に揃える（固定マップに合わせて）
 					if (s == "TANGENT")         e.Format = DXGI_FORMAT_R8G8B8A8_SNORM;
 					else if (s == "NORMAL")     e.Format = DXGI_FORMAT_R8G8B8A8_SNORM;
 					else if (IsTexcoord(s))     e.Format = DXGI_FORMAT_R16G16_FLOAT; // TEXCOORD*, half2
@@ -217,21 +217,21 @@ namespace SFW
 			// 4. モード判定は “IA入力だけ” を基準に行う
 			auto& sd = currentShaderData;
 			sd.requiredInputs = std::move(required);
-			sd.bindingMode = allKnown ? InputBindingMode::AutoStreams
-				: (!overrides_.empty() ? InputBindingMode::OverrideMap
-					: InputBindingMode::LegacyManual);
+			sd.bindingMode = allKnown ? InputBindingMode::BINDMODE_AUTOSTREAMS
+				: (!overrides_.empty() ? InputBindingMode::BINDMODE_OVERRIDEMAP
+					: InputBindingMode::BINDMODE_LEGACYMANUAL);
 		}
 
 		unsigned int ShaderManager::DecideInputSlotFromSemantic(std::string_view name, unsigned int semanticIndex) noexcept
 		{
 			// ざっくり規約：
-				// POSITION        -> slot 0
-				// TANGENT		   -> slot 1（同VB内オフセットで共存可）
-				// NORMAL		   -> slot 5（R8G8B8A8_SNORMのため,わける）
-				// TEXCOORD*       -> slot 2（uv0/uv1 もここ）
-				// BLEND*          -> slot 3（スキニング）
-				// INSTANCE_*      -> slot 4 以降でも良いが、簡単に 1 に寄せたいならここで固定しない
-				// 今回は INSTANCE_* は Reflect 内で PER_INSTANCE に切替＋slot=1固定にする（既存挙動に沿う）
+			// POSITION        -> slot 0
+			// TANGENT		   -> slot 1（同VB内オフセットで共存可）
+			// NORMAL		   -> slot 5（R8G8B8A8_SNORMのため,わける）
+			// TEXCOORD*       -> slot 2（uv0/uv1 もここ）
+			// BLEND*          -> slot 3（スキニング）
+			// INSTANCE_*      -> slot 4 以降でも良いが、簡単に 1 に寄せたいならここで固定しない
+			// 今回は INSTANCE_* は Reflect 内で PER_INSTANCE に切替＋slot=1固定にする（既存挙動に沿う）
 			if (name == "POSITION") return 0;
 			if (name == "TANGENT") return 1;  // TANGENT: slot1
 			if (name == "NORMAL")  return 5;  // NORMAL : slot5（VBを分けた場合）

@@ -9,7 +9,7 @@
 #include "../app/RenderDefine.h"
 
 //描画系のこのクラスでいったんバッファの更新
-#include "../app/GrassMovementService.h"
+#include "../app/WindMovementService.h"
 
 struct CModel
 {
@@ -36,7 +36,7 @@ class ModelRenderSystem : public ITypeSystem<
 		Graphics::RenderService,
 		Graphics::I3DPerCameraService,
 		Graphics::LightShadowService,
-		GrassMovementService
+		WindMovementService
 	>,
 	//Updateを並列化する
 	IsParallel{ true }
@@ -53,7 +53,7 @@ public:
 		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
 		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
-		UndeletablePtr<GrassMovementService> grassService)
+		UndeletablePtr<WindMovementService> grassService)
 	{
 		//草のバッファの更新
 		grassService->UpdateBufferToGPU(renderService->GetProduceSlot());

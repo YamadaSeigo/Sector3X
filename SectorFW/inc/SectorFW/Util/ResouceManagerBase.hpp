@@ -269,7 +269,7 @@ namespace SFW
 		}
 		/**
 		 * @brief 派生が使うユーティリティ
-		 * @detail 指定したインデックスのスロットを死んでいる状態にする（ProcessDeferredDeletes での最終破棄までの間に使う）
+		 * @details 指定したインデックスのスロットを死んでいる状態にする（ProcessDeferredDeletes での最終破棄までの間に使う）
 		 * @param index スロットインデックス
 		 */
 		void MarkDead(uint32_t index) {
@@ -278,7 +278,7 @@ namespace SFW
 		}
 		/**
 		 * @brief 派生が使うユーティリティ
-		 * @detail 指定したインデックスのスロットを即時に解放する（ProcessDeferredDeletes での最終破棄までの間に使う）
+		 * @details 指定したインデックスのスロットを即時に解放する（ProcessDeferredDeletes での最終破棄までの間に使う）
 		 * @param index スロットインデックス
 		 */
 		void FreeIndex(uint32_t index) {

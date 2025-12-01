@@ -453,7 +453,7 @@ namespace SFW
 			/**
 			 * @brief  UpdateImpl関数を保持しているか？
 			 * @return 保持している場合はtrue
-			 * @detail ISystemのIsUpdateable関数を隠蔽
+			 * @details ISystemのIsUpdateable関数を隠蔽
 			 */
 			static constexpr bool IsUpdateable() noexcept {
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) return true;
@@ -462,7 +462,7 @@ namespace SFW
 			/**
 			 * @brief  UpdateImpl関数を保持しているか？
 			 * @return 保持している場合はtrue
-			 * @detail ISystemのIsUpdateable関数を隠蔽
+			 * @details ISystemのIsUpdateable関数を隠蔽
 			 */
 			static constexpr bool IsEndSystem() noexcept {
 				if constexpr (HasEndImpl<Derived, Partition, Services...>) return true;
@@ -480,7 +480,7 @@ namespace SFW
 			/**
 			 * @brief システムの開始関数
 			 * @param partition パーティションの参照
-			 * @detail 自身のコンテキストを使用して、StartImplを呼び出す
+			 * @details 自身のコンテキストを使用して、StartImplを呼び出す
 			 */
 			void Start(const ServiceLocator& serviceLocator) override final {
 				if constexpr (HasStartImpl<Derived, Services...>) {
@@ -507,7 +507,7 @@ namespace SFW
 			/**
 			 * @brief システムの更新関数
 			 * @param partition パーティションの参照
-			 * @detail 自身のシステムのコンテキストを使用して、UpdateImplを呼び出す
+			 * @details 自身のシステムのコンテキストを使用して、UpdateImplを呼び出す
 			 */
 			void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override final{
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
@@ -582,7 +582,7 @@ namespace SFW
 			/**
 			 * @brief システムの終了関数
 			 * @param partition パーティションの参照
-			 * @detail 自身のコンテキストを使用して、StartImplを呼び出す
+			 * @details 自身のコンテキストを使用して、StartImplを呼び出す
 			 */
 			void End(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) override final {
 				if constexpr (HasEndImpl<Derived, Partition, Services...>) {

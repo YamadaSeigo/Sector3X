@@ -16,7 +16,7 @@ namespace SFW
 		/**
 		 * @brief まばらなコンポーネントを管理するクラス
 		 * @tparam T コンポーネントの型
-		 * @detail EntityIDをキーにして、まばらなコンポーネントを管理します。
+		 * @details EntityIDをキーにして、まばらなコンポーネントを管理します。
 		 */
 		template<typename T>
 		class SparseComponentStore {

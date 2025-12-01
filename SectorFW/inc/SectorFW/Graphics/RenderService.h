@@ -43,7 +43,7 @@ namespace SFW
 
 		/**
 		 * @brief Systemが依存するレンダーサービスを管理するクラス
-		 * @detail MOCのインスタンスを管理する
+		 * @details MOCのインスタンスを管理する
 		 */
 		struct RenderService : public ECS::IUpdateService
 		{
@@ -75,7 +75,7 @@ namespace SFW
 			}
 			/**
 			 * @brief カスタム関数の更新
-			 * @detail RenderGraphで呼び出される
+			 * @details RenderGraphで呼び出される
 			 */
 			void CallPreDrawCustomFunc() noexcept
 			{

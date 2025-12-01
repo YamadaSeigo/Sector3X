@@ -45,7 +45,7 @@ namespace SFW
 		static inline constexpr double coalesceInterval = 10.0;
 		/**
 		 * @brief コンストラクタ
-		 * @detail PartitionConceptに合わせるためにworldBlockZを指定しない場合はXと同じになる
+		 * @details PartitionConceptに合わせるためにworldBlockZを指定しない場合はXと同じになる
 		 * @param worldBlocksX X方向のブロックサイズ
 		 * @param worldBlocksY Y方向のブロックサイズ
 		 * @param minLeafSize 葉チャンク（SpatialChunk）の最小サイズ（ワールド単位）

@@ -42,7 +42,7 @@ namespace SFW
 			/**
 			 * @brief コンストラクタ
 			 * @param mask コンポーネントマスク
-			 * @detail maskからレイアウトを取得し、チャンクの容量を設定します。
+			 * @details maskからレイアウトを取得し、チャンクの容量を設定します。
 			 */
 			ArchetypeChunk(ComponentMask mask) : layout(ComponentLayoutRegistry::GetLayout(mask)),
 				componentMask(mask) {

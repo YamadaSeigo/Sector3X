@@ -23,7 +23,7 @@ namespace SFW
 	{
 		/**
 		 * @brief コンポーネントの型IDとメタ情報を管理するクラス
-		 * @detail コンポーネントIDからサイズやアライメントなどのメタ情報を動的に取得するために定義
+		 * @details コンポーネントIDからサイズやアライメントなどのメタ情報を動的に取得するために定義
 		 */
 		struct ComponentMeta {
 			struct Structure {

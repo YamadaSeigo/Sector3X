@@ -108,8 +108,9 @@ namespace SFW
 		void RenderBackend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer) const
 		{
 			MaterialTemplateID templateID = MaterialTemplateID::MAX_COUNT;
-			InputBindingMode bindingMode;
 			bool isPSBind = true;
+			UINT indexCount = 0;
+			UINT startIndex = 0;
 			{
 				auto pso = psoManager->GetDirect(psoIdx);
 
@@ -128,7 +129,32 @@ namespace SFW
 				context->PSSetShader(ps.Get(), nullptr, 0);
 
 				templateID = shader.ref().templateID;
-				bindingMode = shader.ref().bindingMode;
+
+				auto mesh = meshManager->GetDirect(meshIdx);
+				context->IASetIndexBuffer(mesh.ref().ib.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+				indexCount = mesh.ref().indexCount;
+				startIndex = mesh.ref().startIndex;
+
+				using BindFunc = void(RenderBackend::*)(
+					ShaderManager::LockedResource<ShaderData, std::shared_lock>& ,
+					MeshManager::LockedResource<MeshData, std::shared_lock>&) const;
+
+				static constexpr BindFunc pBindFunctions[(uint8_t)InputBindingMode::BINDMODE_MAX] =
+				{
+					&RenderBackend::BindMeshVertexStreamsForPSO,
+					&RenderBackend::BindMeshVertexStreamsFromOverrides,
+					&RenderBackend::BindMeshVertexStreamsForLegacyPSO
+				};
+
+				auto bindingMode = shader.ref().bindingMode;
+				if (bindingMode < InputBindingMode::BINDMODE_MAX) {
+					(this->*pBindFunctions[(uint8_t)bindingMode])(shader, mesh);
+				}
+				else {
+					LOG_ERROR("Invalid InputBindingMode: %d", static_cast<int>(bindingMode));
+					return;
+				}
 			}
 			{
 				auto mat = materialManager->GetDirect(matIdx);
@@ -159,46 +185,23 @@ namespace SFW
 					MaterialManager::BindMaterialPSSamplers(context, mat.ref().samplerCache);
 				}
 			}
-			{
-				auto mesh = meshManager->GetDirect(meshIdx);
-				context->IASetIndexBuffer(mesh.ref().ib.Get(), DXGI_FORMAT_R32_UINT, 0);
 
-				switch (bindingMode) {
-				case InputBindingMode::AutoStreams:
-					BindMeshVertexStreamsForPSO(meshIdx, psoIdx);     // 既存の自動ストリーム
-					break;
-				case InputBindingMode::OverrideMap:
-					BindMeshVertexStreamsFromOverrides(meshIdx, psoIdx); // overrides_/attribMap 準拠でセット（簡易でAutoStreamsと共通でもOK）
-					break;
-				case InputBindingMode::LegacyManual:
-				default: {
-					// 旧: 単一AoS VB だけをslot=0に
-					ID3D11Buffer* buf = mesh.ref().vbs[0].Get(); // 互換の単一VB
-					UINT stride = mesh.ref().stride ? mesh.ref().stride : mesh.ref().strides[0];
-					UINT off = 0;
-					context->IASetVertexBuffers(0, 1, &buf, &stride, &off);
-				} break;
-				}
-
-				context->DrawIndexedInstanced(mesh.ref().indexCount, (UINT)count, mesh.ref().startIndex, 0, 0);
-			}
+			context->DrawIndexedInstanced(indexCount, (UINT)count, startIndex, 0, 0);
 		}
 
-		void RenderBackend::BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx) const
+		void RenderBackend::BindMeshVertexStreamsForPSO(
+			ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader,
+			MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const
 		{
 			// PSO の InputLayoutDesc から必要 slot を抽出
 			UINT minSlot = UINT_MAX, maxSlot = 0;
 			std::bitset<8> needed{};
-			{
-				auto pso = psoManager->GetDirect(psoIdx);
-				auto shader = shaderManager->GetDirect(pso.ref().shader.index);
-				for (auto& e : shader.ref().inputLayoutDesc) {
-					// インスタンス用は別（今回は slot=4 を想定）
-					if (e.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) continue;
-					needed.set(e.InputSlot);
-					minSlot = (std::min)(minSlot, e.InputSlot);
-					maxSlot = (std::max)(maxSlot, e.InputSlot);
-				}
+			for (auto& e : shader.ref().inputLayoutDesc) {
+				// インスタンス用は別（今回は slot=4 を想定）
+				if (e.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) continue;
+				needed.set(e.InputSlot);
+				minSlot = (std::min)(minSlot, e.InputSlot);
+				maxSlot = (std::max)(maxSlot, e.InputSlot);
 			}
 			if (minSlot == UINT_MAX) return; // 頂点入力なし（理論上ありえないが）
 
@@ -209,36 +212,30 @@ namespace SFW
 			strides.reserve(bufs.capacity());
 			offs.reserve(bufs.capacity());
 
-			{
-				auto mesh = meshManager->GetDirect(meshIdx);
-				for (UINT s = minSlot; s <= maxSlot; ++s) {
-					if (needed.test(s) && mesh.ref().usedSlots.test(s) && mesh.ref().vbs[s]) {
-						bufs.push_back(mesh.ref().vbs[s].Get());
-						strides.push_back(mesh.ref().strides[s]);
-						offs.push_back(mesh.ref().offsets[s]);
-					}
-					else {
-						// gapを埋めるために null を入れる必要はない（StartSlot=minSlot、NumBuffers=bufs.size() で詰めて渡す）
-						// ただし InputLayout は slot番号を見ているので、“詰め替え”はできない。
-						// → よって gap を作らないように、基本は slot 0..N の設計にしておく。
-						// ここでは簡単のため、gap があれば nullptr を入れて維持する。
-						bufs.push_back(nullptr);
-						strides.push_back(0);
-						offs.push_back(0);
-					}
+			for (UINT s = minSlot; s <= maxSlot; ++s) {
+				if (needed.test(s) && mesh.ref().usedSlots.test(s) && mesh.ref().vbs[s]) {
+					bufs.push_back(mesh.ref().vbs[s].Get());
+					strides.push_back(mesh.ref().strides[s]);
+					offs.push_back(mesh.ref().offsets[s]);
+				}
+				else {
+					// gapを埋めるために null を入れる必要はない（StartSlot=minSlot、NumBuffers=bufs.size() で詰めて渡す）
+					// ただし InputLayout は slot番号を見ているので、“詰め替え”はできない。
+					// → よって gap を作らないように、基本は slot 0..N の設計にしておく。
+					// ここでは簡単のため、gap があれば nullptr を入れて維持する。
+					bufs.push_back(nullptr);
+					strides.push_back(0);
+					offs.push_back(0);
 				}
 			}
 
 			context->IASetVertexBuffers(minSlot, (UINT)bufs.size(), bufs.data(), strides.data(), offs.data());
 		}
 
-		void RenderBackend::BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx) const
+		void RenderBackend::BindMeshVertexStreamsFromOverrides(
+			ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader,
+			MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const
 		{
-			// 取得
-			auto pso = psoManager->GetDirect(psoIdx);
-			auto shader = shaderManager->Get(pso.ref().shader);
-			auto mesh = meshManager->GetDirect(meshIdx);
-
 			// この関数は「VS の最終 InputLayout（= 反射＋オーバーライド反映済み）」を信用して
 			//  そこに書かれた InputSlot のレンジを連続で IA にセットします。
 			UINT minSlot = UINT_MAX, maxSlot = 0;
@@ -295,6 +292,15 @@ namespace SFW
 
 			// 連続レンジで一気にセット（gap は nullptr/0 を渡す）
 			context->IASetVertexBuffers(minSlot, num, bufs.data(), strides.data(), offs.data());
+		}
+
+		void RenderBackend::BindMeshVertexStreamsForLegacyPSO(ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader, MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const
+		{
+			// 旧: 単一AoS VB だけをslot=0に
+			ID3D11Buffer* buf = mesh.ref().vbs[0].Get(); // 互換の単一VB
+			UINT stride = mesh.ref().stride ? mesh.ref().stride : mesh.ref().strides[0];
+			UINT off = 0;
+			context->IASetVertexBuffers(0, 1, &buf, &stride, &off);
 		}
 
 		HRESULT RenderBackend::CreateInstanceBuffer()

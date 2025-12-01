@@ -49,7 +49,7 @@ namespace SFW
 
 		/**
 		 * @brief システムのインターフェース
-		 * @detail 分割のクラスを指定する
+		 * @details 分割のクラスを指定する
 		 * @tparam Partition パーティションの型
 		 */
 		template<typename Partition>

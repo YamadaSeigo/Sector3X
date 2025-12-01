@@ -20,12 +20,12 @@ namespace SFW
 	public:
 		/**
 		 * @brief 空間チャンクのサイズを定義する型
-		 * @detail 32ビット符号なし整数を使用
+		 * @details 32ビット符号なし整数を使用
 		 */
 		typedef uint32_t SizeType;
 		/**
 		 * @brief コンストラクタ
-		 * @detail EntityManagerの初期化も行っている
+		 * @details EntityManagerの初期化も行っている
 		 */
 		SpatialChunk() :entityManager(std::make_unique<ECS::EntityManager>()) {}
 		/**

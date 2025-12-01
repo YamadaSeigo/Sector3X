@@ -19,7 +19,7 @@ namespace SFW
 	{
 		/**
 		 * @brief コンポーネントのデータにアクセスするためのレイアウトを定義する構造体
-		 * @detail コンポーネントの型IDとインデックス、コンポーネントのoffsetとstrideを格納します。
+		 * @details コンポーネントの型IDとインデックス、コンポーネントのoffsetとstrideを格納します。
 		 */
 		struct ComponentLayout
 		{
@@ -43,7 +43,7 @@ namespace SFW
 			/**
 			 * @brief 新しいコンポーネントレイアウトを追加します。
 			 * @param mask コンポーネントマスク
-			 * @detail マスクに含まれるコンポーネントのメタ情報を基にレイアウトを計算します。
+			 * @details マスクに含まれるコンポーネントのメタ情報を基にレイアウトを計算します。
 			 */
 			static void AddNewComponentLayout(const ComponentMask& mask);
 			//コンポーネントレイアウトを格納するマップ

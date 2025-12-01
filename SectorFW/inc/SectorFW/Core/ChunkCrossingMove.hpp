@@ -334,8 +334,8 @@ namespace SFW
 	};
 	/**
 	 * @brief 即時→ディファード版 MoveIfCrossed（移送はキューへ）
-	 * @detail * Flush をフレーム末に呼んで実際に動かす
-	 * @detail スレッド終わりに必ず BudgetMover::PublishTLS() を呼ぶこと
+	 * @details * Flush をフレーム末に呼んで実際に動かす
+	 * @details スレッド終わりに必ず BudgetMover::PublishTLS() を呼ぶこと
 	 */
 	template<class Partition>
 	inline bool MoveIfCrossed_Deferred(ECS::EntityID id,

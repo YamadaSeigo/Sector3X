@@ -23,7 +23,7 @@ namespace SFW
 		/**
 		 * @brief シェーダーハンドルの型
 		 */
-		enum class InputBindingMode { AutoStreams, LegacyManual, OverrideMap };
+		enum class InputBindingMode : uint8_t { BINDMODE_AUTOSTREAMS, BINDMODE_OVERRIDEMAP, BINDMODE_LEGACYMANUAL, BINDMODE_MAX };
 		/**
 		 * @brief セマンティクキーを表す構造体
 		 */
@@ -81,7 +81,7 @@ namespace SFW
 			std::vector<ShaderResourceBinding> psBindings; // SRV / CBV info
 			std::vector<ShaderResourceBinding> vsBindings; // SRV / CBV info
 
-			InputBindingMode bindingMode = InputBindingMode::AutoStreams;
+			InputBindingMode bindingMode = InputBindingMode::BINDMODE_AUTOSTREAMS;
 			std::vector<SemanticKey> requiredInputs;
 		};
 		/**

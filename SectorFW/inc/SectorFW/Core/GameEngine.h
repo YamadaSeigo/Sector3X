@@ -35,7 +35,7 @@ namespace SFW
 	/**
 	 * @brief ゲームエンジン
 	 * @class GameEngine
-	 * @details ゲームロジックを実行するクラス
+	 * @detailss ゲームロジックを実行するクラス
 	 */
 	template<GraphicsType Graphics, typename... LevelTypes>
 	class GameEngine final : NonCopyable
@@ -47,7 +47,7 @@ namespace SFW
 		 * @brief コンストラクタ
 		 * @param fps フレームレート
 		 * @param graphicsDevice グラフィックデバイス
-		 * @details FPS制御クラスを初期化し、グラフィックデバイスを設定します。
+		 * @detailss FPS制御クラスを初期化し、グラフィックデバイスを設定します。
 		 */
 		explicit GameEngine(Graphics&& graphicsDevice, WorldType&& world, double fps = 60.0)
 			: m_graphicsDevice(std::move(graphicsDevice)), m_world(std::move(world))
@@ -67,7 +67,7 @@ namespace SFW
 		/**
 		 * @brief メインループ
 		 * @param fpsControl FPS制御クラスのインスタンス
-		 * @details FPS制御クラスを使用して、メインループを実行します。
+		 * @detailss FPS制御クラスを使用して、メインループを実行します。
 		 */
 		void MainLoop(IThreadExecutor* executor)
 		{
@@ -82,7 +82,7 @@ namespace SFW
 		/**
 		 * @brief 更新処理
 		 * @param delta_time 前回実行されてからの経過時間
-		 * @details 更新処理を実行します。
+		 * @detailss 更新処理を実行します。
 		 */
 		void Update(double delta_time, IThreadExecutor* executor)
 		{
@@ -93,7 +93,7 @@ namespace SFW
 		/**
 		 * @brief 描画処理
 		 * @param delta_time 前回実行されてからの経過時間
-		 * @details 描画処理を実行します。
+		 * @detailss 描画処理を実行します。
 		 */
 		void Draw()
 		{

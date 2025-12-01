@@ -31,7 +31,7 @@ namespace SFW
 		/**
 		 * @brief フレーム当たりの最大インスタンス数
 		 */
-		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = 98304;
+		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = 98304 * 2;
 		/**
 		 * @brief パス当たりの最大インスタンスインデックス数
 		 */
@@ -368,7 +368,7 @@ namespace SFW
 		public:
 			/**
 			 * @brief 生産者セッション-ユーザーに渡す用（thread_localを使わない）
-			 * @detail 外部からバッファを渡す
+			 * @details 外部からバッファを渡す
 			 */
 			class ProducerSessionExternal {
 
@@ -468,7 +468,7 @@ namespace SFW
 				size_t AllocInstancesFromWorldSoA(const Math::Matrix3x4fSoA& wSoa, InstanceIndex* outIdx = nullptr);
 				/**
 				 * @brief 次に割り当てられるインスタンスインデックス
-				 * @detail 実際にフレーム当たりのインスタンス数が増える
+				 * @details 実際にフレーム当たりのインスタンス数が増える
 				 */
 				[[nodiscard]] InstanceIndex NextInstanceIndex();
 				/**

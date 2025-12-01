@@ -147,7 +147,8 @@ namespace SFW
 			const std::vector<std::array<uint8_t, 4>>& skinIdx,
 			const std::vector<std::array<uint8_t, 4>>& skinWgt,
 			const std::vector<uint32_t>& indices,
-			MeshData& out)
+			MeshData& out,
+			NormalWCustomFunc customFunc)
 		{
 			out = {};
 			out.path = pathW;
@@ -172,8 +173,23 @@ namespace SFW
 
 			}
 			if (!normals.empty()) {
-				for (auto& n : normals) {
-					packedNrm.push_back(PackSnorm8x4(n.x, n.y, n.z, 0.0f)); // w は未使用
+				if (customFunc != nullptr)
+				{
+					std::vector<float> wList = customFunc(positions);
+					if (wList.size() != normals.size()) {
+						LOG_ERROR("カスタムw成分のリストと法線リストのサイズが一致しません。");
+					}
+
+					for (auto i = 0; i < normals.size();++i) {
+						const auto& n = normals[i];
+						packedNrm.push_back(PackSnorm8x4(n.x, n.y, n.z, wList[i])); // w はカスタム関数で取得
+					}
+				}
+				else
+				{
+					for (auto& n : normals) {
+						packedNrm.push_back(PackSnorm8x4(n.x, n.y, n.z, 0.0f)); // w は未使用
+					}
 				}
 			}
 
@@ -266,10 +282,11 @@ namespace SFW
 			const std::vector<std::array<uint8_t, 4>>& skinIdx,
 			const std::vector<std::array<uint8_t, 4>>& skinWgt,
 			const std::vector<uint32_t>& indices,
-			MeshHandle& outHandle)
+			MeshHandle& outHandle,
+			NormalWCustomFunc customFunc)
 		{
 			MeshData data;
-			if (!CreateFromGLTF_SoA_R8Snorm(sourcePath, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, data))
+			if (!CreateFromGLTF_SoA_R8Snorm(sourcePath, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, data, customFunc))
 				return false;
 
 			// ResourceManagerBase に data を登録

@@ -52,6 +52,14 @@ namespace SFW
 			Vec2 operator/(T s) const noexcept { return Vec2(x / s, y / s); }
 
 			bool operator==(const Vec2& rhs) const noexcept { return x == rhs.x && y == rhs.y; }
+			bool operator!=(const Vec2& rhs) const noexcept { return !(*this == rhs); }
+			bool operator<(const Vec2& rhs) const noexcept {
+				if (x != rhs.x) return x < rhs.x;
+				return y < rhs.y;
+			}
+			bool operator<=(const Vec2& rhs) const noexcept { return *this < rhs || *this == rhs; }
+			bool operator>(const Vec2& rhs) const noexcept { return !(*this <= rhs); }
+			bool operator>=(const Vec2& rhs) const noexcept { return !(*this < rhs); }
 
 			T dot(const Vec2& rhs) const noexcept { return x * rhs.x + y * rhs.y; }
 
@@ -103,6 +111,16 @@ namespace SFW
 			Vec3& operator/=(T s) noexcept { assert(s != 0); x /= s; y /= s; z /= s; return *this; }
 
 			bool operator==(const Vec3& rhs) const noexcept { return x == rhs.x && y == rhs.y && z == rhs.z; }
+
+			bool operator!=(const Vec3& rhs) const noexcept { return !(*this == rhs); }
+			bool operator<(const Vec3& rhs) const noexcept {
+				if (x != rhs.x) return x < rhs.x;
+				if (y != rhs.y) return y < rhs.y;
+				return z < rhs.z;
+			}
+			bool operator<=(const Vec3& rhs) const noexcept { return *this < rhs || *this == rhs; }
+			bool operator>(const Vec3& rhs) const noexcept { return !(*this <= rhs); }
+			bool operator>=(const Vec3& rhs) const noexcept { return !(*this < rhs); }
 
 			T dot(const Vec3& rhs) const noexcept { return x * rhs.x + y * rhs.y + z * rhs.z; }
 
@@ -207,8 +225,24 @@ namespace SFW
 			const T& operator[](size_t i) const noexcept { return data[i]; }
 
 			Vec4 operator+(const Vec4& rhs) const noexcept { return Vec4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w); }
+			Vec4& operator+=(const Vec4& rhs) noexcept { x += rhs.x; y += rhs.y; z += rhs.z; w += rhs.w; return *this; }
 			Vec4 operator-(const Vec4& rhs) const noexcept { return Vec4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w); }
+			Vec4& operator-=(const Vec4& rhs) noexcept { x -= rhs.x; y -= rhs.y; z -= rhs.z; w -= rhs.w; return *this; }
 			Vec4 operator*(T s) const noexcept { return Vec4(x * s, y * s, z * s, w * s); }
+			Vec4& operator*=(T s) noexcept { x *= s; y *= s; z *= s; w *= s; return *this; }
+			Vec4 operator/(T s) const noexcept { return Vec4(x / s, y / s, z / s, w / s); }
+			Vec4& operator/=(T s) noexcept { x /= s; y /= s; z /= s; w /= s; return *this; }
+			bool operator==(const Vec4& rhs) const noexcept { return x == rhs.x && y == rhs.y && z == rhs.z && w == rhs.w; }
+			bool operator!=(const Vec4& rhs) const noexcept { return !(*this == rhs); }
+			bool operator<(const Vec4& rhs) const noexcept {
+				if (x != rhs.x) return x < rhs.x;
+				if (y != rhs.y) return y < rhs.y;
+				if (z != rhs.z) return z < rhs.z;
+				return w < rhs.w;
+			}
+			bool operator<=(const Vec4& rhs) const noexcept { return *this < rhs || *this == rhs; }
+			bool operator>(const Vec4& rhs) const noexcept { return !(*this <= rhs); }
+			bool operator>=(const Vec4& rhs) const noexcept { return !(*this < rhs); }
 
 			T dot(const Vec4& rhs) const noexcept { return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w; }
 

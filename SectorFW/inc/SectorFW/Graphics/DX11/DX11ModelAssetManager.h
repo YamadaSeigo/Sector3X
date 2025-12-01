@@ -50,6 +50,9 @@ namespace SFW
 			float meltStopRatio = 0.3f;   // meltの停止しきい（小AABB生成を抑える目安。0.1～0.7）
 			float minWorldSizeM = 1.0f;    // 小さすぎるモデルはOccluder対象外（対角長[m]）
 			float minThicknessRatio = 0.01f;// 最小厚み比。これ未満は超薄板として減点
+
+			//法線のw成分のカスタム関数
+			MeshManager::NormalWCustomFunc pCustomNomWFunc = nullptr;
 		};
 
 		using LodThresholds = SFW::Graphics::LodThresholdsPx; // ピクセル基準
@@ -178,9 +181,11 @@ namespace SFW
 				ModelAssetData::SubmeshLOD& outMesh,
 				std::vector<uint32_t>& outIdx,
 				MeshManager::RemappedStreams& outStreams,
+				const ModelAssetCreateDesc& desc,
 				bool buildClusters = false,
 				bool hasNormal = true,
-				bool hasUV = true);
+				bool hasUV = true
+				);
 
 			// 返すのは LOD1..N 用のレシピ（LOD0は常に原型）
 			static std::vector<LodRecipe> BuildLodRecipes(const AssetStats& a);

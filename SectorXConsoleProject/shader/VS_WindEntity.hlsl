@@ -1,9 +1,5 @@
 #include "_GlobalTypes.hlsli"
 
-/**
-草を揺らす処理と地形の高さに一致させる処理を同じシェーダーで行っている
-**/
-
 cbuffer TerrainGridCB : register(b10)
 {
     float2 gOriginXZ; // ワールド座標の基準 (x,z)
@@ -25,12 +21,10 @@ cbuffer WindCB : register(b11)
     float2 gWindDirXZ; // XZ 平面の風向き (正規化済み)
 };
 
-Texture2D<float> gHeightMap : register(t10);
-
 struct VSInput
 {
     float3 position : POSITION;
-    float4 normal : NORMAL; //wに揺れの重さをいれる
+    float4 normal : NORMAL;
     float2 uv : TEXCOORD;
 };
 
@@ -63,13 +57,6 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     VSOutput output;
     float3 wp = mul(R, input.position) + baseWorldPos;
 
-    float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
-    float2 cHeightMapUV = (baseWorldPos.xz - gOriginXZ) / terrainSize;
-    float terrainHeight = gHeightMap.SampleLevel(gSampler, cHeightMapUV, 0);
-    float2 lHeightMapUV = (wp.xz - gOriginXZ) / terrainSize;
-    float localHeight = gHeightMap.SampleLevel(gSampler, lHeightMapUV, 0);
-    wp.y += (localHeight - terrainHeight) * 70.0f;
-
    // ---- 1) 全体をまとめる“大きな揺れ” ----
    // 空間周波数をかなり低くして「大きなうねり」
     float bigSpatial = dot(baseWorldPos.xz, gWindDirXZ * 0.03f);
@@ -85,14 +72,14 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
    // 小さい振幅で “バラつき” だけを付ける
     float smallPhase = noiseN11 + gTime * gWindSpeed;
-    float smallWave = sin(smallPhase); 
+    float smallWave = sin(smallPhase);
 
    // ---- 3) 合成 ----
     float wave = bigWave * gBigWaveWeight + smallWave * (1.0f - gBigWaveWeight);
 
-    float weight = input.normal.w;
+    float weight = saturate(input.normal.w);
 
-    float swayAmount = gWindAmplitude * terrainHeight * wave * weight;
+    float swayAmount = gWindAmplitude * wave * weight;
     float3 windDir3 = float3(gWindDirXZ.x, 0.0f, gWindDirXZ.y);
     wp += windDir3 * swayAmount;
 

@@ -24,7 +24,7 @@ namespace SFW
 	{
 		/**
 		 * @brief Systemが依存するサービスを管理するクラス
-		 * @detail 内部でshared_mutexを使用しているのでムーブのみ許可する
+		 * @details 内部でshared_mutexを使用しているのでムーブのみ許可する
 		 */
 		class ServiceLocator {
 			struct Location {
@@ -43,7 +43,7 @@ namespace SFW
 			/**
 			 * @brief コンストラクタ
 			 * @param executor 更新処理の際の並列ために使用するスレッドプール
-			 * @detail 複数回生成すると実行時エラー
+			 * @details 複数回生成すると実行時エラー
 			 */
 			template<PointerType... Service>
 			explicit ServiceLocator(Service... service)

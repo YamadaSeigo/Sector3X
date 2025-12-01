@@ -11,12 +11,12 @@
 /**
 * @namespace 名前空間Sample
 * @brief 名前空間の説明
-* @details 詳細な説明がある場合はここに書く
+* @detailss 詳細な説明がある場合はここに書く
 */
 namespace Sample {
 	/**
 	* @brief クラスの説明
-	* @details 詳細なクラスの説明
+	* @detailss 詳細なクラスの説明
 	*/
 	class CSampleClass {
 	public:
@@ -32,7 +32,7 @@ namespace Sample {
 		/**
 		* @fn int func
 		* @brief 関数の簡単な関数
-		* @details 詳細な説明がある場合にはここに書く
+		* @detailss 詳細な説明がある場合にはここに書く
 		*/
 		int func();
 	};

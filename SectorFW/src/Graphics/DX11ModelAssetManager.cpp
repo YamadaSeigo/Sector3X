@@ -282,7 +282,7 @@ namespace SFW
 					// =============================================================================
 					const std::wstring srcW = canonicalPath.wstring() + L"#" + std::to_wstring(meshIndex++);
 					bool ok = meshMgr.AddFromSoA_R8Snorm(
-						srcW, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, sub.lods[0].mesh);
+						srcW, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, sub.lods[0].mesh, desc.pCustomNomWFunc);
 					if (!ok) {
 						assert(false && "MeshManager::AddFromSoA_R8Snorm failed");
 						continue;
@@ -310,7 +310,9 @@ namespace SFW
 							skinWgt.empty() ? nullptr : &skinWgt,
 							recipes[li - 1], meshMgr, tag,
 							sub.lods[li], idx, rs,
-							/*buildClusters=*/true);
+							desc,
+							/*buildClusters=*/true
+							);
 						constexpr float kMinImprove = 0.98f; // 最低でも 2% 減っていて欲しい。満たせない場合に限り打ち切り
 						if (!ok || (float(idx.size()) >= float(beforeIndexCount) * kMinImprove)) {
 							lodLevelNum = li;
@@ -431,7 +433,7 @@ namespace SFW
 									bindTex(gBaseColorTexBindName, tex, vsBindings, vsSRVMap);
 								}
 							}
-							
+
 							// Normal
 							if (auto* t = m->normal_texture.texture)
 							{
@@ -702,6 +704,7 @@ namespace SFW
 			ModelAssetData::SubmeshLOD& outMesh,
 			std::vector<uint32_t>& outIdx,
 			MeshManager::RemappedStreams& outStreams,
+			const ModelAssetCreateDesc& desc,
 			bool buildClusters,
 			bool hasNormal,
 			bool hasUV)
@@ -855,7 +858,7 @@ namespace SFW
 				outStreams.positions, outStreams.normals,
 				outStreams.tangents, outStreams.tex0,
 				outStreams.skinIdx, outStreams.skinWgt,
-				outIdx, outMesh.mesh))
+				outIdx, outMesh.mesh, desc.pCustomNomWFunc))
 				return false;
 
 #ifdef USE_MESHOPTIMIZER

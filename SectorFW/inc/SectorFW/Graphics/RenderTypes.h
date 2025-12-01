@@ -51,7 +51,7 @@ namespace SFW
 		struct ModelAssetHandle { uint32_t index; uint32_t generation; };
 		/**
 		 * @brief インスタンスデータ構造体
-		 * @detail m[3][3]が0.0fならインスタンスデータを保持していない
+		 * @details m[3][3]が0.0fならインスタンスデータを保持していない
 		 */
 		struct InstanceData
 		{
@@ -92,8 +92,8 @@ namespace SFW
 
 		/**
 		 * @brief 描画コマンド構造体
-		 * @detail DrawCommand は index のみでOK（軽量・32B化しやすい）。
-		 * @detail 条件：フレーム短命 + Pin / Unpin + in - flight 制御 + 投入時の generation 検証。
+		 * @details DrawCommand は index のみでOK（軽量・32B化しやすい）。
+		 * @details 条件：フレーム短命 + Pin / Unpin + in - flight 制御 + 投入時の generation 検証。
 		 */
 		struct DrawCommand {
 			uint64_t sortKey;          // 0..63: ソートキー（PSO/材質/メッシュ/深度バケツ等をパック）

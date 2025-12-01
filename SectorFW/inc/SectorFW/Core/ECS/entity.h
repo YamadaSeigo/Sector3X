@@ -14,7 +14,7 @@ namespace SFW
 		/**
 		 * @brief 最大エンティティ数
 		 */
-		static inline constexpr size_t MAX_ENTITY_NUM = 100000;
+		static inline constexpr size_t MAX_ENTITY_NUM = 500000;
 
 		/**
 		 * @brief EntityのIDを表す構造体

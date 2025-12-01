@@ -28,3 +28,7 @@
  //#include <unordered_set>
 
 #include "Math/Vector.hpp"
+
+namespace SFW {
+	struct NoneType {};
+}

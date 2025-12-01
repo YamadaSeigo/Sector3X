@@ -18,7 +18,7 @@ public:
 	using time_point = std::chrono::time_point<clock>;
 	/**
 	 * @brief コンストラクタ
-	 * @detail タイマーを初期化し、開始時間を設定します。
+	 * @details タイマーを初期化し、開始時間を設定します。
 	 */
 	FrameTimer() noexcept
 		: startTime(clock::now()),

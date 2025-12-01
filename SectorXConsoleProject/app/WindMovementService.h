@@ -6,33 +6,33 @@
 //==============================================================
 // 依存関係的によくないがコンパクトにするためにDX11BufferManager(バッファ更新)に依存
 //==============================================================
-class GrassMovementService : public SFW::ECS::IUpdateService
+class WindMovementService : public SFW::ECS::IUpdateService
 {
 public:
 	using BufferManager = SFW::Graphics::DX11::BufferManager;
 
-    struct GrassWindCB
+    struct WindCB
     {
 		float    Time = 0.0f;                       // 経過時間
 		float    NoiseFreq = 0.05f;                 // ノイズ周波数
 		float    PhaseSpread = 3.14159f;            // ブレードごとの位相の広がり
-        float    BladeHeightLocal = 1.2f;           // ローカル空間でのブレード高さ
+        float    BigWaveWeight = 0.3f;              // おおきな波(全体)の重み
 		float    WindSpeed = 1.0f;                  // 風速
-		float    WindAmplitude = 50.0f;              // 風の振幅
+		float    WindAmplitude = 1.0f;              // 風の振幅
 		Math::Vec2f   WindDirXZ = { 1.0f, 0.3f };   // 風向き(XZ平面)
     };
 
-    GrassMovementService(BufferManager* bufferMgr) : bufferMgr(bufferMgr)
+    WindMovementService(BufferManager* bufferMgr) : bufferMgr(bufferMgr)
     {
         Graphics::DX11::BufferCreateDesc cd;
 		cd.name = "GrassWindCB";
-		cd.size = sizeof(GrassWindCB);
+		cd.size = sizeof(WindCB);
 		cd.initialData = &m_grassWindCB;
 
 		bufferMgr->Add(cd, hBuffer);
 
 		// デバッグUI登録
-        BIND_DEBUG_SLIDER_FLOAT("Wind", "BladeHeightLocal", &m_grassWindCB.BladeHeightLocal, 0.0f, 10.0f, 0.01f);
+        BIND_DEBUG_SLIDER_FLOAT("Wind", "BigWaveWeight", &m_grassWindCB.BigWaveWeight, 0.0f, 1.0f, 0.01f);
         BIND_DEBUG_SLIDER_FLOAT("Wind", "Amplitude", &m_grassWindCB.WindAmplitude, 0.0f, 100.0f, 0.1f);
         BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionX", &m_grassWindCB.WindDirXZ.x, -1.0f, 1.0f, 0.01f);
         BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionZ", &m_grassWindCB.WindDirXZ.y, -1.0f, 1.0f, 0.01f);
@@ -70,7 +70,7 @@ public:
         Graphics::DX11::BufferUpdateDesc updDesc;
         auto data = bufferMgr->Get(hBuffer);
         updDesc.buffer = data.ref().buffer;
-		updDesc.size = sizeof(GrassWindCB);
+		updDesc.size = sizeof(WindCB);
         updDesc.data = &m_grassWindCB;
         updDesc.isDelete = false;
         bufferMgr->UpdateBuffer(updDesc, slot);
@@ -80,13 +80,71 @@ public:
         return hBuffer;
     }
 
+    static std::vector<float> ComputeGrassWeight(const std::vector<Math::Vec3f>& vertices)
+    {
+		float minY = +FLT_MAX;
+		float maxY = -FLT_MAX;
+        for (const auto v : vertices) {
+            minY = (std::min)(minY, v.y);
+            maxY = (std::max)(maxY, v.y);
+        }
+		float height = (std::max)(0.0001f, maxY - minY);
+		std::vector<float> weights;
+		weights.reserve(vertices.size());
+		for (const auto v : vertices) {
+			float t = (v.y - minY) / height; // 0..1 高くなるほど大きく
+			float w = std::pow(t, 2.0f); // 高さに応じて二次曲線的に増加.しなやかにカーブ
+			weights.push_back(w);
+		}
+		return weights;
+    }
+
+    static std::vector<float> ComputeTreeWeight(const std::vector<Math::Vec3f>& vertices)
+    {
+        // 最大と最小の座標
+        float minY = +FLT_MAX;
+        float maxY = -FLT_MAX;
+        for (const auto v : vertices) {
+            minY = (std::min)(minY, v.y);
+            maxY = (std::max)(maxY, v.y);
+        }
+        float height = (std::max)(0.0001f, maxY - minY);
+
+        // 簡易的に「幹の軸 = 上方向」と仮定
+        Math::Vec3f trunkAxis = Math::Vec3f(0, 1, 0);
+
+        // 幹の中心線からの最大半径を測る
+        float maxRadius = 0.0f;
+        for (auto v : vertices) {
+            float t = (v.y - minY) / height;    // 軸方向の正規化位置
+            Math::Vec3f proj = Math::Vec3f(0, minY + t * height, 0); // 超雑な投影（0,y,0）
+            float r = (v - proj).length();
+            maxRadius = (std::max)(maxRadius, r);
+        }
+        maxRadius = (std::max)(maxRadius, 0.0001f);
+
+        std::vector<float> weights;
+        weights.reserve(vertices.size());
+        for (auto v : vertices) {
+            float t = (v.y - minY) / height; // 0..1 高くなるほど大きく
+            Math::Vec3f proj = Math::Vec3f(0, minY + t * height, 0);
+            float r = (v - proj).length() / maxRadius; // 0..1 幹から遠いほど大きく
+
+            // 高さと半径をミックス
+            float w = std::pow(t, 2.0f) * 0.2f + std::pow(r, 2.0f) * 0.8f;
+            w = std::clamp(w, 0.0f, 1.0f);
+            weights.push_back(w);
+        }
+        return weights;
+    }
+
 private:
 
     // 内部状態
     double m_rawTime = 0.0;  // 単純な経過時間
     double m_phaseTime = 0.0;  // グルーブした「位相用の時間」
 
-	GrassWindCB m_grassWindCB{};
+	WindCB m_grassWindCB{};
     Graphics::BufferHandle hBuffer;
 	BufferManager* bufferMgr = nullptr;
 

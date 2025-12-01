@@ -41,21 +41,29 @@ struct VSOut
 
 
 // ユーティリティ
-uint ComputeClusterId(float2 worldXZ)
+// rel: 「何セル目か」を表す連続座標 (0..gDimX, 0..gDimZ)
+struct ClusterCoord
 {
-    float2 rel = (worldXZ - gOriginXZ) / gCellSizeXZ;
-    int2 ij = int2(floor(rel + 1e-6)); // 浮動小数の境界誤差対策
-    ij = clamp(ij, int2(0, 0), int2(int(gDimX) - 1, int(gDimZ) - 1));
-    return uint(ij.y) * gDimX + uint(ij.x);
-}
+    uint id;
+    float2 localUV; // 0..1
+};
 
-// セル内 0..1 の局所UVを作る
-float2 ComputeClusterLocalUV(float2 worldXZ)
+ClusterCoord ComputeCluster(float2 worldXZ)
 {
-    float2 rel = (worldXZ - gOriginXZ) / gCellSizeXZ; // 何セル目か
-    float2 fracUV = frac(rel); // 0..1
-    // 端の境界処理が気になるなら微小オフセットで 1.0 にならないようにする等の調整可
-    return fracUV;
+    ClusterCoord r;
+
+    float2 rel = (worldXZ - gOriginXZ) / gCellSizeXZ;
+
+    // セル index
+    int2 ij = int2(floor(rel + 1e-6)); // ここでだけ epsilon をかける
+    ij = clamp(ij, int2(0, 0), int2(int(gDimX) - 1, int(gDimZ) - 1));
+    r.id = uint(ij.y) * gDimX + uint(ij.x);
+
+    // 同じ rel から localUV を求める
+    float2 cellBase = float2(ij);
+    r.localUV = rel - cellBase; // = frac(rel) と同じ意味
+
+    return r;
 }
 
 float4 NormalizeWeights(float4 w)
@@ -69,11 +77,11 @@ float4 NormalizeWeights(float4 w)
 float4 main(VSOut i) : SV_Target
 {
     // ピクセルの worldPos.xz -> クラスタID
-    uint cid = ComputeClusterId(i.worldPos.xz);
-    ClusterParam p = gClusters[cid];
+    ClusterCoord c = ComputeCluster(i.worldPos.xz);
+    uint cid = c.id;
+    float2 uvC = c.localUV;
 
-   // 1) クラスタ局所UV 0..1
-    float2 uvC = ComputeClusterLocalUV(i.worldPos.xz);
+    ClusterParam p = gClusters[cid];
 
     // 2) スプラット重み：Texture2DArray なら slice 指定
     //    通常は p.splatST=(1,1), p.splatOffset=(0,0) 固定でOK
@@ -101,17 +109,8 @@ float4 main(VSOut i) : SV_Target
 
     float shadow = GetShadowMapDepth(shadowPos.xyz, cascade);
 
-    //return float4(i.worldPos.xyz / 100.0f, 1.0f);
-
-    //return float4((cascade + 1) / float(NUM_CASCADES), 0, 0, 1);
-
-    //float shadow = SampleShadow(i.worldPos, i.viewDepth);
-
-    //return float4(pow(shadow, 2), 0, 0, 1);
-
     float shadowBias = 1.0f;
     if (shadowPos.z - shadow > 0.01f)
-    //if (shadow <= 0.25f)
         shadowBias = 0.8f;
 
     float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;

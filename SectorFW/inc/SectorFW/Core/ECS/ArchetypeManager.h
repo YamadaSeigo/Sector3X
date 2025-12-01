@@ -21,7 +21,7 @@ namespace SFW
 		public:
 			/**
 			 * @brief 対象のマスクに対応するアーキタイプを取得または作成します。
-			 * @detail maskにSparseComponentを入れてはいけない
+			 * @details maskにSparseComponentを入れてはいけない
 			 * @param mask 対象のコンポーネントマスク
 			 * @return 対象のアーキタイプポインタ
 			 */

@@ -15,6 +15,7 @@
 #include <bitset>
 #include <vector>
 #include <unordered_map>
+#include <functional>
 
  // MeshOptimizerを使う場合は定義
 #define USE_MESHOPTIMIZER
@@ -71,6 +72,10 @@ namespace SFW
 		 */
 		class MeshManager : public ResourceManagerBase<MeshManager, MeshHandle, MeshCreateDesc, MeshData> {
 		public:
+			//法線のw成分を生成するためのカスタム関数型
+			// 引数: 位置配列、戻り値: w成分配列
+			using NormalWCustomFunc = std::vector<float>(*)(const std::vector<Math::Vec3f>&);
+
 			// ====== LOD 生成や再インデックスで使う公開ユーティリティ ======
 						// 頂点ストリームを一括でリマップした結果を保持する簡易構造体
 			struct RemappedStreams {
@@ -137,9 +142,10 @@ namespace SFW
 				const std::vector<std::array<uint8_t, 4>>& skinIdx,     // optional
 				const std::vector<std::array<uint8_t, 4>>& skinWgt,     // optional (0..255, 後述)
 				const std::vector<uint32_t>& indices,
-				MeshData& out);
+				MeshData& out,
+				NormalWCustomFunc customFunc = nullptr);
 			/**
-			 * @brief CreateFromGLTF_SoA_R8Snorm用のラッパー関数
+			 * @brief CreateFromGLTF_SoA_R8Snorm用のラッパー関数(重複チャックなし)
 			 * @param pathW メッシュの元ファイルパス（キャッシュ用）
 			 * @param positions   : float3（そのまま）
 			 * @param normals     : float3 → R8G8B8A8_SNORM（w=0）
@@ -160,7 +166,8 @@ namespace SFW
 				const std::vector<std::array<uint8_t, 4>>& skinIdx,
 				const std::vector<std::array<uint8_t, 4>>& skinWgt,
 				const std::vector<uint32_t>& indices,
-				MeshHandle& outHandle);
+				MeshHandle& outHandle,
+				NormalWCustomFunc customFunc = nullptr);
 
 			// meshoptimizer の remap を各ストリームへ適用（存在するストリームのみ処理）
 			static void ApplyRemapToStreams(

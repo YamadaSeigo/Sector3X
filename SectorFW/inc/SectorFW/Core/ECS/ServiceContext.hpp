@@ -13,7 +13,7 @@ namespace SFW {
 	namespace ECS {
 		/**
 		 * @brief サービスの静的な型を定義するテンプレート
-		 * @detail サービスの型に対して、静的なisStaticメンバーを定義します。
+		 * @details サービスの型に対して、静的なisStaticメンバーを定義します。
 		 * @tparam Services... サービスの型リスト
 		 */
 		template<typename... Services>
@@ -26,18 +26,18 @@ namespace SFW {
 
 		/**
 		 * @brief サービスの型を定義するマクロ
-		 * @detail サービスの型に対して、静的なisStaticメンバーを定義します。
+		 * @details サービスの型に対して、静的なisStaticメンバーを定義します。
 		 */
 #define STATIC_SERVICE_TAG static constexpr bool isStatic = true;
 		 /**
 		  * @brief 動的サービスの型を定義するマクロ
-		  * @detail 動的サービスの型に対して、静的なisStaticメンバーを定義します。
+		  * @details 動的サービスの型に対して、静的なisStaticメンバーを定義します。
 		  */
 #define DYNAMIC_SERVICE_TAG static constexpr bool isStatic = false;
 
 		  /**
 		   * @brief Systemに注入されるサービスのコンテキストを定義するテンプレート
-		   * @detail サービスの型をタプルとして保持します。
+		   * @details サービスの型をタプルとして保持します。
 		   * @tparam Services... サービスの型リスト
 		   */
 		template<typename... Services>
@@ -49,7 +49,7 @@ namespace SFW {
 		};
 		/**
 		 * @brief 更新サービスのインターフェース
-		 * @detail 使用する場合は対象のサービスに継承させる
+		 * @details 使用する場合は対象のサービスに継承させる
 		 */
 		class IUpdateService {
 			virtual void Update(double deltaTime) = 0;

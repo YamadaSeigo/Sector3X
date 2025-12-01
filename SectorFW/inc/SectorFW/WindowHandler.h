@@ -25,19 +25,19 @@ namespace SFW
 	/**
 	 * @brief ウィンドウハンドラ
 	 * @class WindowHandler
-	 * @details ウィンドウ管理クラス(マルチウィンドウ非対応)
+	 * @detailss ウィンドウ管理クラス(マルチウィンドウ非対応)
 	 */
 	class WindowHandler final : NonCopyable
 	{
 	public:
 		/**
 		 * @brief コンストラクタ
-		 * @details ウィンドウの作成も同時に行う
+		 * @detailss ウィンドウの作成も同時に行う
 		 */
 		WindowHandler() = delete;
 		/**
 		 * @brief デストラクタ
-		 * @details ウィンドウの破棄
+		 * @detailss ウィンドウの破棄
 		 */
 		~WindowHandler() = default;
 
@@ -184,13 +184,13 @@ namespace SFW
 		/**
 		 * @brief ウィンドウのメッセージループ
 		 * @param pLoop ループ処理関数ポインタ
-		 * @details メッセージが無ければ、ループ処理を実行
+		 * @detailss メッセージが無ければ、ループ処理を実行
 		 */
 		static void Run(void(*pLoop)());
 
 		/**
 		 * @brief ウィンドウの破棄
-		 * @details ウィンドウの破棄
+		 * @detailss ウィンドウの破棄
 		 */
 		static int Destroy()
 		{
@@ -237,7 +237,7 @@ namespace SFW
 
 		/**
 		 * @brief コンソールウィンドウの作成
-		 * @details コンソールウィンドウを作成する
+		 * @detailss コンソールウィンドウを作成する
 		 */
 		static void CreateConsoleWindow();
 	private:

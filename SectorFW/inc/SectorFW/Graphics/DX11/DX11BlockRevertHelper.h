@@ -1831,7 +1831,9 @@ namespace SFW::Graphics::DX11 {
         uint32_t clustersX, uint32_t clustersZ,
         const std::vector<TextureHandle>& handles,
         AllocateSplatIdFn allocId,
-        QueryLayerTilingFn queryLayer = nullptr)
+        QueryLayerTilingFn queryLayer = nullptr,
+        Math::Vec2f splatUVScale = {1.0f,1.0f},
+        Math::Vec2f splatUVOffset = {0.0f,0.0f})
     {
         const size_t N = size_t(clustersX) * clustersZ;
         if (handles.size() != N) return;
@@ -1855,8 +1857,8 @@ namespace SFW::Graphics::DX11 {
 
                 }
                 // スプラットUV（必要に応じて）
-                sm.splatUVScaleU = 1.0f; sm.splatUVScaleV = 1.0f;
-                sm.splatUVOffsetU = 0.0f; sm.splatUVOffsetV = 0.0f;
+                sm.splatUVScaleU = splatUVScale.x; sm.splatUVScaleV = splatUVScale.y;
+                sm.splatUVOffsetU = splatUVOffset.x; sm.splatUVOffsetV = splatUVOffset.x;
 
             }
 

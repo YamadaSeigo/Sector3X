@@ -66,12 +66,12 @@ namespace SFW
 			void ClearImpl(const FLOAT clearColor[4]);
 			/**
 			 * @brief 描画を実行する関数
-			 * @details RenderGraphを使用して描画を実行します。
+			 * @detailss RenderGraphを使用して描画を実行します。
 			 */
 			void DrawImpl();
 			/**
 			 * @brief 描画を実行する関数
-			 * @details RenderGraphを使用して描画を実行します。
+			 * @detailss RenderGraphを使用して描画を実行します。
 			 * @param renderGraph RenderGraphの参照
 			 */
 			void PresentImpl();

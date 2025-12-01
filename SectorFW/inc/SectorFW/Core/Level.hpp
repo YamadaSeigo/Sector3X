@@ -132,7 +132,7 @@ namespace SFW
 		}
 		/**
 		 * @brief I—¹ˆ—
-		 * @detail SystemScheduler‚ÌSystem‚ÌEndŠÖ”‚ğŒÄ‚Ño‚·
+		 * @details SystemScheduler‚ÌSystem‚ÌEndŠÖ”‚ğŒÄ‚Ño‚·
 		 */
 		void Clean(const ECS::ServiceLocator& serviceLocator) {
 			scheduler.CleanSystem(partition, levelCtx, serviceLocator);

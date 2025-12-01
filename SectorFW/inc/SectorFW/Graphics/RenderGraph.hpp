@@ -64,7 +64,7 @@ namespace SFW
 
 			/**
 			 * @brief コンストラクタ
-			 * @detail RenderGraphにResouceManagerの追加を行う
+			 * @details RenderGraphにResouceManagerの追加を行う
 			 * @param backend レンダーバックエンド
 			 */
 			explicit RenderGraph(Backend& backend, MOC* moc) : backend(backend), renderService(moc) {

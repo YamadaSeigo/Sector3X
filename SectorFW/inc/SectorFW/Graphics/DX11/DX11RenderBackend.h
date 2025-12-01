@@ -346,8 +346,9 @@ namespace SFW
 			 */
 			void DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer) const;
 		private:
-			void BindMeshVertexStreamsForPSO(uint32_t meshIdx, uint32_t psoIdx) const;
-			void BindMeshVertexStreamsFromOverrides(uint32_t meshIdx, uint32_t psoIdx) const;
+			void BindMeshVertexStreamsForPSO(ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader, MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const;
+			void BindMeshVertexStreamsFromOverrides(ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader, MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const;
+			void BindMeshVertexStreamsForLegacyPSO(ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader, MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const;
 
 			HRESULT CreateInstanceBuffer();
 			HRESULT CreateRasterizerStates();

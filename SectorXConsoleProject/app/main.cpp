@@ -17,7 +17,7 @@
 #include "system/TestMoveSystem.h"
 #include "system/CleanModelSystem.h"
 #include "system/SimpleModelRenderSystem.h"
-#include "GrassMovementService.h"
+#include "WindMovementService.h"
 #include <string>
 
 //デバッグ用
@@ -309,7 +309,7 @@ int main(void)
 	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
 	lightShadowService.SetCascadeConfig(cascadeConfig);
 
-	GrassMovementService grassService(bufferMgr);
+	WindMovementService grassService(bufferMgr);
 
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService,
 		ortCameraService, camera2DService, &lightShadowService, &grassService);
@@ -407,7 +407,9 @@ int main(void)
 		};
 	Graphics::DX11::AssignClusterSplatsFromHandles(terrain, terrain.clustersX, terrain.clustersZ, handles,
 		[](Graphics::TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid) { return (0x70000000u + cid); },
-		/*queryLayer*/nullptr);
+		/*queryLayer*/nullptr,
+		//サンプリングでクラスターの境界に線が発生する問題をとりあえずScaleとOffsetで解決
+		{0.985f, 0.985f}, {0.0015f, 0.0015f});
 
 	Graphics::DX11::SplatArrayResources splatRes;
 	Graphics::DX11::InitSplatArrayResources(device, splatRes, terrain.clusters.size());
@@ -461,7 +463,7 @@ int main(void)
 			hopt.gridLod.targetCellPx = 128.f;
 			// 高さバイアス
 			hopt.bias.baseDown = 0.05f;  // 常に5cm下げる
-			hopt.bias.slopeK = 0.20f;  // 斜面で追加ダウン
+			hopt.bias.slopeK = 0.00f;  // 斜面で追加ダウン
 
 			// ---- 画面占有率・LOD 等 ----
 			Graphics::OccluderExtractOptions opt{};
@@ -501,7 +503,7 @@ int main(void)
 			Graphics::DispatchToMOC(MyMOCRender, trisC, width, height);
 		};
 
-	auto testClusterFunc = [&, deviceContext, perCameraService, matRes, splatRes, cp](Graphics::RenderService* renderService)
+	auto ClusterDrawDepthFunc = [&, deviceContext, perCameraService, matRes](Graphics::RenderService* renderService)
 		{
 			//auto viewProj = perCameraService->GetCameraBufferData().viewProj;
 			auto camPos = perCameraService->GetEyePos();
@@ -514,17 +516,8 @@ int main(void)
 			uint32_t height = (uint32_t)resolution.y;
 
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
-			//graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
-
-			// フレームの先頭 or Terrainパスの先頭で 1回だけ：
-			Graphics::DX11::BindCommonMaterials(deviceContext, matRes);
-
-			ID3D11ShaderResourceView* splatSrv = splatRes.splatArraySRV.Get();
-			deviceContext->PSSetShaderResources(24, 1, &splatSrv);       // t24
-			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t25, b10
 
 			static constexpr auto world = Math::Matrix4x4f::Identity();
-			//blockRevert.Run(deviceContext, frustumPlanes.data(), viewProj.data(), world.data(), width, height, 400.0f, 160.0f);
 
 			static Graphics::DX11::BlockReservedContext::ShadowDepthParams shadowParams{};
 
@@ -563,10 +556,17 @@ int main(void)
 			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 		};
 
-	auto drawTerrainColor = [&, deviceContext](uint64_t frame)
+	auto drawTerrainColor = [&, deviceContext, splatRes, cp](uint64_t frame)
 		{
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
 			graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
+
+			// フレームの先頭 or Terrainパスの先頭で 1回だけ：
+			Graphics::DX11::BindCommonMaterials(deviceContext, matRes);
+
+			ID3D11ShaderResourceView* splatSrv = splatRes.splatArraySRV.Get();
+			deviceContext->PSSetShaderResources(24, 1, &splatSrv);       // t24
+			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t25, b10
 
 			//書き込みと読み込みを両立させないために、デフォルトのレンダーターゲットに戻す
 			graphics.SetDefaultRenderTarget();
@@ -584,7 +584,7 @@ int main(void)
 		};
 
 	renderService->SetCustomUpdateFunction(std::move(terrainUpdateFunc));
-	renderService->SetCustomPreDrawFunction(std::move(testClusterFunc));
+	renderService->SetCustomPreDrawFunction(std::move(ClusterDrawDepthFunc));
 
 	//デバッグ用の初期化
 	//========================================================================================-
@@ -612,8 +612,8 @@ int main(void)
 
 	auto psoMgr = graphics.GetRenderService()->GetResourceManager<DX11::PSOManager>();
 	DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
-	PSOHandle cullingPSOHandle;
-	psoMgr->Add(psoDesc, cullingPSOHandle);
+	PSOHandle cullDefaultPSOHandle;
+	psoMgr->Add(psoDesc, cullDefaultPSOHandle);
 
 	psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
 	PSOHandle cullNonePSOHandle;
@@ -629,6 +629,14 @@ int main(void)
 	psoMgr->Add(psoDesc, windGrassPSOHandle);
 	psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
 
+	shaderDesc.vsPath = L"assets/shader/VS_WindEntity.cso";
+	shaderMgr->Add(shaderDesc, shaderHandle);
+	PSOHandle cullNoneWindEntityPSOHandle;
+	psoDesc.shader = shaderHandle;
+	psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
+	psoMgr->Add(psoDesc, cullNoneWindEntityPSOHandle);
+	psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
+
 	ModelAssetHandle modelAssetHandle[5];
 
 	auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
@@ -636,7 +644,7 @@ int main(void)
 	// モデルアセットの読み込み
 	DX11::ModelAssetCreateDesc modelDesc;
 	modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_1.gltf";
-	modelDesc.pso = cullingPSOHandle;
+	modelDesc.pso = cullDefaultPSOHandle;
 	modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
 	modelDesc.instancesPeak = 1000;
 	modelDesc.viewMax = 400.0f;
@@ -645,23 +653,27 @@ int main(void)
 
 	modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
 	modelDesc.viewMax = 200.0f;
+	modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
+	modelDesc.pso = cullNoneWindEntityPSOHandle;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
 	modelDesc.path = "assets/model/Stylized/Tree01.gltf";
 	modelDesc.buildOccluders = false;
 	modelDesc.viewMax = 600.0f;
-	modelDesc.pso = cullNonePSOHandle;
+	modelDesc.pso = cullNoneWindEntityPSOHandle;
+	modelDesc.pCustomNomWFunc = WindMovementService::ComputeTreeWeight;
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 	modelDesc.instancesPeak = 100;
 	modelDesc.viewMax = 100.0f;
-	modelDesc.pso = cullingPSOHandle;
+	modelDesc.pso = cullNoneWindEntityPSOHandle;
+	modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
 	modelDesc.path = "assets/model/Stylized/WhiteCosmos.gltf";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
 
 	modelDesc.instancesPeak = 100;
 	modelDesc.viewMax = 100.0f;
-	modelDesc.pso = cullingPSOHandle;
+	modelDesc.pso = cullNoneWindEntityPSOHandle;
 	modelDesc.path = "assets/model/Stylized/YellowCosmos.gltf";
 	modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
 
@@ -670,8 +682,10 @@ int main(void)
 	modelDesc.instancesPeak = 10000;
 	modelDesc.viewMax = 100.0f;
 	modelDesc.pso = windGrassPSOHandle;
+	modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
 	modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
 	modelAssetMgr->Add(modelDesc, grassModelHandle);
+	modelDesc.pCustomNomWFunc = nullptr;
 
 	// 草のマテリアルに草揺れ用CBVをセット
 	{
@@ -797,7 +811,7 @@ int main(void)
 					//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
 					float scaleXZ = 15.0f;
 					float scaleY = 15.0f;
-					Math::Vec2f offsetXZ = { 7.0f,7.0f };
+					Math::Vec2f offsetXZ = { 12.0f,12.0f };
 					Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
 					auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
 					//location = pose.pos;

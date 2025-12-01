@@ -284,6 +284,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="shader\VS_WindEntity.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="shader\VS_WindGrass.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
@@ -302,7 +308,7 @@
     <None Include="shader\_ShadowTypes.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app\GrassMovementService.h" />
+    <ClInclude Include="app\WindMovementService.h" />
     <ClInclude Include="app\Packed2Bits32.h" />
     <ClInclude Include="app\RenderDefine.h" />
     <ClInclude Include="app\stdafx.h" />
