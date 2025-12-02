@@ -642,7 +642,7 @@ int main(void)
 	{
 		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("OpenField", *entityManagerReg, ELevelState::Main));
 
-		level->SetLoadingFunc([&](Level<Grid2DPartition>* pLevel) {
+		world.AddLevel(std::move(level), [&](std::add_pointer_t<decltype(world)> pWorld, Level<Grid2DPartition>* pLevel) {
 
 			//地形の処理を開始
 			isExecuteCustomFunc.store(true, std::memory_order_relaxed);
@@ -960,8 +960,6 @@ int main(void)
 			//	ps->EnqueueCreateIntent(id.value(), box, chunk.value()->GetNodeKey());
 			//}
 			});
-
-		world.AddLevel(std::move(level));
 		//world.LoadLevel("OpenField");
 	}
 

@@ -17,6 +17,17 @@ namespace SFW
 	 */
 	template<typename... LevelTypes>
 	class World {
+
+		template<typename T>
+		using LevelLoadingFunc = std::function<void(World<LevelTypes...>*, Level<T>*)>;
+
+		template<typename T>
+		struct LevelHolder
+		{
+			std::unique_ptr<Level<T>> level;
+			LevelLoadingFunc<T> loadingFunc;
+		};
+
 	public:
 		/**
 		 * @brief コンストラクタ
@@ -52,12 +63,31 @@ namespace SFW
 		 * @param level 追加するレベルの右辺値参照
 		 */
 		template<typename T>
-		void AddLevel(std::unique_ptr<Level<T>>&& level) {
+		void AddLevel(std::unique_ptr<Level<T>> level) {
 
 			static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
 
-			//level->RegisterAllChunks(reg);
-			std::get<std::vector<std::unique_ptr<Level<T>>>>(levelSets).push_back(std::move(level));
+			auto& vec = std::get<std::vector<LevelHolder<T>>>(levelSets);
+			vec.emplace_back(LevelHolder<T>{
+				.level = std::move(level),
+				.loadingFunc = [](World<LevelTypes...>*, Level<T>*) {}
+			});
+		}
+		/**
+		 * @brief レベルを追加する関数
+		 * @param level 追加するレベルの右辺値参照
+		 * @param loadingFunc レベルのロード時に呼び出される関数
+		 */
+		template<typename T>
+		void AddLevel(std::unique_ptr<Level<T>> level, LevelLoadingFunc<T>&& loadingFunc) {
+
+			static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
+
+			auto& vec = std::get<std::vector<LevelHolder<T>>>(levelSets);
+			vec.emplace_back(LevelHolder<T>{
+				.level = std::move(level),
+				.loadingFunc = std::move(loadingFunc)
+			});
 		}
 
 
@@ -75,13 +105,14 @@ namespace SFW
 			// 指定された名前のレベルをすべてロードする
 			auto loadFunc = [&](auto& vecs)
 				{
-					for (auto& level : vecs)
+					for (auto& holder : vecs)
 					{
+						auto& level = holder.level;
 						if (level->GetName() == levelName) {
 #ifdef _DEBUG
 							find = true;
 #endif
-							level->Load();
+							holder.loadingFunc(this, level.get());
 						}
 					}
 				};
@@ -111,14 +142,14 @@ namespace SFW
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_WORLD, /*leaf=*/false, "World" });
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
-			static std::vector<std::future<void>> futures;
 			std::vector<std::function<void(ECS::ServiceLocator&, double, IThreadExecutor*)>> mainLevelFunc;
 			std::vector<std::function<void(ECS::ServiceLocator&, double, IThreadExecutor*)>> subLevelFunc;
 
 			std::apply([&](auto&... levelVecs)
 				{
 					(..., [&](auto& vecs, auto& mainFunc, auto& subFunc) {
-						for (auto& level : vecs) {
+						for (auto& holder : vecs) {
+							auto& level = holder.level;
 							if (level->GetState() == ELevelState::Main) {
 								mainFunc.push_back([&level](auto& locator, double delta, auto* te) {
 									level->Update(locator, delta, te);
@@ -137,10 +168,20 @@ namespace SFW
 			//メインのレベルの更新処理を並行で実行
 			for (auto& f : mainLevelFunc)
 			{
-				executor->Submit([&]() {
-					f(serviceLocator, deltaTime, executor);
-					latch.CountDown();
-					});
+				// コンテナの要素 f をタスク用に move
+				auto task = std::move(f);
+
+				executor->Submit(
+					[task = std::move(task),        // 「ラムダへの move キャプチャ」
+					this,
+					deltaTime,
+					executor,
+					&latch]() mutable
+					{
+						task(serviceLocator, deltaTime, executor);
+						latch.CountDown();
+					}
+				);
 			}
 
 			//サブレベルの更新処理実行
@@ -163,7 +204,8 @@ namespace SFW
 			return serviceLocator;
 		}
 	private:
-		std::tuple<std::vector<std::unique_ptr<Level<LevelTypes>>>...> levelSets;
+		std::tuple<std::vector<LevelHolder<LevelTypes>>...> levelSets;
+		//std::tuple<std::vector<std::unique_ptr<Level<LevelTypes>>>...> levelSets;
 		ECS::ServiceLocator serviceLocator;
 	};
 }

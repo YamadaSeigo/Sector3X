@@ -116,12 +116,6 @@ namespace SFW
 		 */
 		LevelID GetID() const noexcept { return levelCtx.id; }
 
-		virtual void Load() {
-			if (loadingFunc) {
-				loadingFunc(this);
-			}
-		}
-
 		/**
 		 * @brief 更新処理
 		 */
@@ -286,10 +280,6 @@ namespace SFW
 			return partition.GetChunk(location, entityManagerReg, this->levelCtx.id, policy);
 		}
 
-		template<typename Func>
-		void SetLoadingFunc(Func&& func) {
-			loadingFunc = std::move(func);
-		}
 	private:
 		//レベルのコンテキスト
 		LevelContext levelCtx;
@@ -306,7 +296,5 @@ namespace SFW
 		Partition partition;
 		//EntityManagerRegistryの参照
 		SpatialChunkRegistry& entityManagerReg;
-
-		std::function<void(Level<Partition>*)> loadingFunc;
 	};
 }
