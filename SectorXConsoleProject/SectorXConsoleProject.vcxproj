@@ -320,6 +320,7 @@
     <ClInclude Include="system\ModelRenderSystem.h" />
     <ClInclude Include="system\PhysicsSystem.h" />
     <ClInclude Include="system\SimpleModelRenderSystem.h" />
+    <ClInclude Include="system\SpriteRenderSystem.h" />
     <ClInclude Include="system\TestMoveSystem.h" />
     <ClInclude Include="system\VoidSystem.h" />
   </ItemGroup>

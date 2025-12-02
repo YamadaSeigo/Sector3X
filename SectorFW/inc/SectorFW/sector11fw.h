@@ -23,6 +23,7 @@
 #include "Core/Grid3DPartition.h"
 #include "Core/QuadTreePartition.h"
 #include "Core/OctreePartition.h"
+#include "Core/VoidPartition.h"
 
 #include "Core/build_order.h"
 

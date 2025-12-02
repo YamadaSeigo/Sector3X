@@ -108,7 +108,9 @@ namespace SFW
 				info.display_h = (int)height;
 				info.dpi_scale = 1.0f; // •K—v‚È‚çæ“¾‚µ‚Ä“ü‚ê‚é
 
-				m_imguiLayer->Init(info);
+				bool ok = m_imguiLayer->Init(info);
+				assert(ok && "Imgui‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½");
+
 				frameSec = 1.0f / (float)fps;
 #endif // _ENABLE_IMGUI
 			}

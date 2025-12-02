@@ -56,6 +56,17 @@ namespace SFW
 	static constexpr ChunkSizeType DefaultChunkWidth = 32; // デフォルトのチャンクカラムサイズ
 
 	static constexpr float DefaultChunkCellSize = 128.0f; // デフォルトのチャンクサイズ
+
+	//各型のLevel間でIDを共有するためにそとに逃がす
+	class LelveIDManager {
+		//レベルの世代を生成するための静的なアトミック変数
+		//レベルごとに一意な世代を生成するために使用されます。
+		static inline std::atomic<LevelID> nextID;
+
+		template<PartitionConcept Partition>
+		friend class Level;
+	};
+
 	/**
 	 * @brief レベル(シーン単位)を定義するクラス
 	 * @tparam Partition パーティションの型
@@ -82,7 +93,7 @@ namespace SFW
 		) noexcept
 			: name(name), state(state), entityManagerReg(reg),
 			partition(_chunkWidth, _chunkHeight, _chunkCellSize) {
-			levelCtx.id = LevelID(nextID.fetch_add(1, std::memory_order_relaxed));
+			levelCtx.id = LevelID(LelveIDManager::nextID.fetch_add(1, std::memory_order_relaxed));
 			partition.RegisterAllChunks(reg, levelCtx.id);
 		}
 		/**
@@ -97,7 +108,7 @@ namespace SFW
 				Args&&... args) noexcept
 			: name(name), state(state), entityManagerReg(reg),
 			partition(std::forward<Args>(args)...) {
-			levelCtx.id = LevelID(nextID.fetch_add(1, std::memory_order_relaxed));
+			levelCtx.id = LevelID(LelveIDManager::nextID.fetch_add(1, std::memory_order_relaxed));
 			partition.RegisterAllChunks(reg, levelCtx.id);
 		}
 		/**
@@ -121,7 +132,8 @@ namespace SFW
 				auto& frame = g.data();
 
 				// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVEL, /*leaf=*/false, "Level : " + std::to_string(levelCtx.id) });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVEL, /*leaf=*/false, "Level : " + name });
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "Id : " + std::to_string(levelCtx.id) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "Partition : " + std::string(typeid(Partition).name()).substr(6) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/false, "System" });
@@ -279,9 +291,6 @@ namespace SFW
 			loadingFunc = std::move(func);
 		}
 	private:
-		//レベルの世代を生成するための静的なアトミック変数
-		//レベルごとに一意な世代を生成するために使用されます。
-		static inline std::atomic<LevelID> nextID;
 		//レベルのコンテキスト
 		LevelContext levelCtx;
 		//レベルの名前

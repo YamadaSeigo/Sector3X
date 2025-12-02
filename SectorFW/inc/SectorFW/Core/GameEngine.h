@@ -35,7 +35,7 @@ namespace SFW
 	/**
 	 * @brief ゲームエンジン
 	 * @class GameEngine
-	 * @detailss ゲームロジックを実行するクラス
+	 * @details ゲームロジックを実行するクラス
 	 */
 	template<GraphicsType Graphics, typename... LevelTypes>
 	class GameEngine final : NonCopyable
@@ -47,7 +47,7 @@ namespace SFW
 		 * @brief コンストラクタ
 		 * @param fps フレームレート
 		 * @param graphicsDevice グラフィックデバイス
-		 * @detailss FPS制御クラスを初期化し、グラフィックデバイスを設定します。
+		 * @details FPS制御クラスを初期化し、グラフィックデバイスを設定します。
 		 */
 		explicit GameEngine(Graphics&& graphicsDevice, WorldType&& world, double fps = 60.0)
 			: m_graphicsDevice(std::move(graphicsDevice)), m_world(std::move(world))
@@ -67,7 +67,7 @@ namespace SFW
 		/**
 		 * @brief メインループ
 		 * @param fpsControl FPS制御クラスのインスタンス
-		 * @detailss FPS制御クラスを使用して、メインループを実行します。
+		 * @details FPS制御クラスを使用して、メインループを実行します。
 		 */
 		void MainLoop(IThreadExecutor* executor)
 		{
@@ -78,11 +78,18 @@ namespace SFW
 			//経過時間を計算と待機
 			m_frameTimer.Tick();
 		}
+		/**
+		 * @brief Worldのインスタンスを取得する
+		 */
+		WorldType& GetWorld() noexcept
+		{
+			return m_world;
+		}
 	private:
 		/**
 		 * @brief 更新処理
 		 * @param delta_time 前回実行されてからの経過時間
-		 * @detailss 更新処理を実行します。
+		 * @details 更新処理を実行します。
 		 */
 		void Update(double delta_time, IThreadExecutor* executor)
 		{
@@ -93,7 +100,7 @@ namespace SFW
 		/**
 		 * @brief 描画処理
 		 * @param delta_time 前回実行されてからの経過時間
-		 * @detailss 描画処理を実行します。
+		 * @details 描画処理を実行します。
 		 */
 		void Draw()
 		{

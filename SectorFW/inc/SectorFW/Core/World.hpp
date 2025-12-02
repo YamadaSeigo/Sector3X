@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Level.hpp"
+#include "../Util/TypeChecker.hpp"
 
 namespace SFW
 {
@@ -52,11 +53,49 @@ namespace SFW
 		 */
 		template<typename T>
 		void AddLevel(std::unique_ptr<Level<T>>&& level) {
-			level->Load();
+
+			static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
 
 			//level->RegisterAllChunks(reg);
 			std::get<std::vector<std::unique_ptr<Level<T>>>>(levelSets).push_back(std::move(level));
 		}
+
+
+		/**
+		 * @brief 指定したレベルのロード関数を呼び出す関数
+		 * @param levelName ロードするレベルの名前
+		 * @details 全レベルの名前と比較して一致するものを探す
+		 */
+		void LoadLevel(const std::string levelName)
+		{
+#ifdef _DEBUG
+			bool find = false;
+#endif
+
+			// 指定された名前のレベルをすべてロードする
+			auto loadFunc = [&](auto& vecs)
+				{
+					for (auto& level : vecs)
+					{
+						if (level->GetName() == levelName) {
+#ifdef _DEBUG
+							find = true;
+#endif
+							level->Load();
+						}
+					}
+				};
+
+			std::apply([&](auto&... levelVecs)
+				{
+					(..., loadFunc(levelVecs));
+				}, levelSets);
+
+#ifdef _DEBUG
+			if (!find) LOG_WARNING("指定されたレベルが見つかりませんでした {%s}", levelName.c_str());
+#endif
+		}
+
 		/**
 		 * @brief すべてのレベルを更新する関数。
 		 * @param deltaTime デルタタイム（秒）

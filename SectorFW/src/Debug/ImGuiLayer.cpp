@@ -158,6 +158,27 @@ namespace SFW
 								}
 								break;
 							}
+							case DebugControlKind::DC_BUTTON:
+							{
+								if (ImGui::Button(ctrl->label.c_str()))
+								{
+									if (ctrl->onChangeB) ctrl->onChangeB(true);
+								}
+								break;
+							}
+							case DebugControlKind::DC_STRING:
+							{
+								// textBuf をそのまま使う
+								if (ImGui::InputText(ctrl->label.c_str(),
+									ctrl->textBuf,
+									DebugControl::TextBufSize))
+								{
+									if (ctrl->onChangeText) {
+										ctrl->onChangeText(std::string(ctrl->textBuf));
+									}
+								}
+								break;
+							}
 							}
 						}
 

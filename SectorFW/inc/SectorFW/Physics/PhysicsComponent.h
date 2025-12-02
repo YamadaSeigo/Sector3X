@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include "SectorFW/Math/Vector.hpp"
-#include "SectorFW/Math/Quaternion.hpp"
+#include "../Math/Vector.hpp"
+#include "../Math/Quaternion.hpp"
 
-#include "SectorFW/Core/ECS/component.hpp"
+#include "../Core/ECS/component.hpp"
 
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Body/BodyID.h>

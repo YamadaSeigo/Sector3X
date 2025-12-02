@@ -64,6 +64,45 @@ namespace SFW
 
 			bus.debugControlRegisterQ.push(std::move(c));
 		}
+
+		void RegisterDebugButton(
+			const std::string& category,
+			const std::string& label,
+			std::function<void(bool)> onChange)
+		{
+			auto& bus = GetUIBus();
+			if (!bus.alive.load(std::memory_order_acquire)) return;
+
+			DebugControl c;
+			c.kind = DebugControlKind::DC_BUTTON;
+			c.category = category;
+			c.label = label;
+			c.onChangeB = std::move(onChange);
+
+			bus.debugControlRegisterQ.push(std::move(c));
+		}
+
+		void RegisterDebugText(
+			const std::string& category,
+			const std::string& label,
+			const std::string& initial,
+			std::function<void(std::string)> onChange)
+		{
+			auto& bus = GetUIBus();
+			if (!bus.alive.load(std::memory_order_acquire)) return;
+
+			DebugControl c;
+			c.kind = DebugControlKind::DC_STRING;
+			c.category = category;
+			c.label = label;
+			c.onChangeText = std::move(onChange);
+
+			// 初期文字列をバッファにコピー
+			std::snprintf(c.textBuf, DebugControl::TextBufSize, "%s", initial.c_str());
+
+			bus.debugControlRegisterQ.push(std::move(c));
+		}
+
 	}
 
 #ifdef _ENABLE_IMGUI

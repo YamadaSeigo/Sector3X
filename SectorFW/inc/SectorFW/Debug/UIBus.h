@@ -174,6 +174,8 @@ namespace SFW
 			DC_SLIDERFLOAT,
 			DC_SLIDERINT,
 			DC_CHECKBOX,
+			DC_BUTTON,
+			DC_STRING,
 			DC_MAX
 		};
 
@@ -187,10 +189,15 @@ namespace SFW
 			int   i_value = 0, i_min = 0, i_max = 100;
 			bool  b_value = false;
 
+			// 文字列用のバッファ（簡単のため固定長）
+			static constexpr size_t TextBufSize = 256;
+			char textBuf[TextBufSize] = {};
+
 			// 値変更時に呼ばれるコールバック
 			std::function<void(float)> onChangeF;
 			std::function<void(int)>   onChangeI;
 			std::function<void(bool)>  onChangeB;
+			std::function<void(std::string)>  onChangeText;
 		};
 
 		/**
@@ -257,6 +264,34 @@ namespace SFW
 			);
 		}
 
+		void RegisterDebugButton(
+			const std::string& category,
+			const std::string& label,
+			std::function<void(bool)> onChange);
+
+		// 例: UIBus.h
+		void RegisterDebugText(
+			const std::string& category,
+			const std::string& label,
+			const std::string& initial,
+			std::function<void(std::string)> onChange);
+
+		// 変数ポインタを直接バインドする簡易版
+		inline void BindDebugText(
+			const std::string& category,
+			const std::string& label,
+			std::string* target)
+		{
+			if (!target) return;
+			RegisterDebugText(
+				category,
+				label,
+				*target,
+				[target](std::string v) { *target = std::move(v); }
+			);
+		}
+
+
 #ifdef _ENABLE_IMGUI
 
 #define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange) \
@@ -265,10 +300,18 @@ namespace SFW
 #define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed) \
 	SFW::Debug::BindDebugSliderFloat(category, label, target, minValue, maxValue, speed)
 
+#define REGISTER_DEBUG_BUTTON(category, label, onChange)\
+	SFW::Debug::RegisterDebugButton(category, label, onChange)
+
+#define BIND_DEBUG_TEXT(category, label, target)\
+	SFW::Debug::BindDebugText(category, label, target);
+
 #else //! _ENABLE_IMGUI
 
 #define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange) 
 #define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed)
+#define REGISTER_DEBUG_BUTTON(category, label, onChange)
+#define BIND_DEBUG_TEXT(category, label, target)
 
 #endif // _ENABLE_IMGUI
 

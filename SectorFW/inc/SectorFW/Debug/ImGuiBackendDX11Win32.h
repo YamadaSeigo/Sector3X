@@ -57,7 +57,8 @@ namespace SFW
 				ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 				// Viewports —LŒø‚È‚ç
 				auto& io = ImGui::GetIO();
-				if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+				if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+				{
 					ImGui::UpdatePlatformWindows();
 					ImGui::RenderPlatformWindowsDefault();
 				}

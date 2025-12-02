@@ -144,5 +144,8 @@
     <ClInclude Include="app\WindMovementService.h">
       <Filter>App</Filter>
     </ClInclude>
+    <ClInclude Include="system\SpriteRenderSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

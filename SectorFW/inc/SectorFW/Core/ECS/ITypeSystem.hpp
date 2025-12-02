@@ -142,6 +142,7 @@ namespace SFW
 					for (size_t i = 0; i < n; ++i) fn(i);
 				}
 				else {
+					//あまりのスレッド数から一スレッド当たりのタスク数を決める
 					const unsigned targetTasks = (unsigned)(std::min<size_t>)(
 						(std::max<size_t>)(1, (n + (kChunksPerTask - 1)) / kChunksPerTask),
 						exec ? (unsigned)exec->Concurrency() : (std::max)(1u, std::thread::hardware_concurrency()));
@@ -720,7 +721,7 @@ namespace SFW
 #endif
 				}
 #endif
-
+				//指定したインデックスのチャンクを更新する
 				auto body = [&](size_t i) {
 					auto* ch = chunks[i];
 					ComponentAccessor<Ts...> acc(ch);

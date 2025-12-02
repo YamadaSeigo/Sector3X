@@ -247,6 +247,9 @@ namespace SFW
 				double gpuScore = (std::min)(1.0, gpuSec / m_gpuTimeBudget); // 0..1
 				Debug::PublishGpu(float(gpuScore));             // UIBusへ
 			}
+
+			//Imguiのためにメインのターゲットに戻す
+			SetDefaultRenderTarget();
 #endif
 		}
 
@@ -322,6 +325,7 @@ namespace SFW
 		{
 			backend->SetRenderTargets({m_renderTargetView.Get()}, m_depthStencilView.Get());
 		}
+
 
 		void GraphicsDevice::SetBlendState(BlendStateID state)
 		{

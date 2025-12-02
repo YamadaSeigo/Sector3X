@@ -17,6 +17,7 @@
 #include "system/TestMoveSystem.h"
 #include "system/CleanModelSystem.h"
 #include "system/SimpleModelRenderSystem.h"
+#include "system/SpriteRenderSystem.h"
 #include "WindMovementService.h"
 #include <string>
 
@@ -76,6 +77,9 @@ static bool ResolveTexturePath(uint32_t id, std::string& path, bool& forceSRGB)
 	}
 	return false; // 未登録ID
 }
+
+//カスタム関数を実行するかのフラグ
+static std::atomic<bool> isExecuteCustomFunc = false;
 
 void InitializeRenderPipeLine(
 	Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
@@ -197,6 +201,9 @@ void InitializeRenderPipeLine(
 	static auto renderBackend = graphics->GetBackend();
 
 	static auto skyboxDraw = [](uint64_t frame) {
+		bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
+		if (!execute) return;
+
 		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
 		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
 		};
@@ -446,11 +453,9 @@ int main(void)
 	ok = shadowMapService.Initialize(device, shadowMapConfig);
 	assert(ok && "Failed ShadowMapService Initialize");
 
-	static std::atomic<bool> isExecuteTerrainFunc = false;
-
 	auto terrainUpdateFunc = [](Graphics::RenderService* renderService)
 		{
-			bool execute = isExecuteTerrainFunc.load(std::memory_order_relaxed);
+			bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 			if (!execute) return;
 
 			auto viewProj = perCameraService->GetCameraBufferData().viewProj;
@@ -516,7 +521,7 @@ int main(void)
 
 	auto ClusterDrawDepthFunc = [](Graphics::RenderService* renderService)
 		{
-			bool execute = isExecuteTerrainFunc.load(std::memory_order_relaxed);
+			bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 			if (!execute) return;
 
 			//auto viewProj = perCameraService->GetCameraBufferData().viewProj;
@@ -574,7 +579,7 @@ int main(void)
 
 	auto drawTerrainColor = [](uint64_t frame)
 		{
-			bool execute = isExecuteTerrainFunc.load(std::memory_order_relaxed);
+			bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 			if (!execute) return;
 
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
@@ -625,8 +630,14 @@ int main(void)
 	Graphics::DX11::CpuImage cpuSplatImage;
 	Graphics::DX11::ReadTexture2DToCPU(device, deviceContext, sheetTex.Get(), cpuSplatImage);
 
-	World<Grid2DPartition, QuadTreePartition> world(std::move(serviceLocator));
+	World<Grid2DPartition, QuadTreePartition, VoidPartition> world(std::move(serviceLocator));
 	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
+
+	{
+		auto level = std::unique_ptr<Level<VoidPartition>>(new Level<VoidPartition>("Title", *entityManagerReg, ELevelState::Main));
+
+		world.AddLevel(std::move(level));
+	}
 
 	{
 		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("OpenField", *entityManagerReg, ELevelState::Main));
@@ -634,7 +645,7 @@ int main(void)
 		level->SetLoadingFunc([&](Level<Grid2DPartition>* pLevel) {
 
 			//地形の処理を開始
-			isExecuteTerrainFunc.store(true, std::memory_order_relaxed);
+			isExecuteCustomFunc.store(true, std::memory_order_relaxed);
 
 			auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
 
@@ -951,10 +962,20 @@ int main(void)
 			});
 
 		world.AddLevel(std::move(level));
+		//world.LoadLevel("OpenField");
 	}
 
-
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
+
+	//シーンロードのデバッグコールバック登録
+	static std::string loadLevelName;
+
+	BIND_DEBUG_TEXT("Load", "levelName", &loadLevelName);
+
+	REGISTER_DEBUG_BUTTON("Load", "exe", [](bool) {
+		gameEngine.GetWorld().LoadLevel(loadLevelName);
+		});
+
 
 	static SimpleThreadPool threadPool;
 
