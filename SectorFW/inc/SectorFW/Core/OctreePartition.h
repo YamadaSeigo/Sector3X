@@ -338,6 +338,18 @@ namespace SFW
 			return written;
 		}
 		/**
+		 * @brief チャンクのクリア
+		 */
+		void CleanChunk()
+		{
+			m_global.CleanAllEntity();
+
+			forEachLeaf([&](Node& lf) {
+				lf.chunk.GetEntityManager().CleanAllEntity();
+				});
+		}
+
+		/**
 		 * @brief 指定点を含む葉を（必要なら分割しながら）必ず返す
 		 * @param p ワールド座標系の点
 		 * @return 点 p を含む葉チャンク（SpatialChunk）

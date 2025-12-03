@@ -19,13 +19,161 @@ namespace SFW
 	class World {
 
 		template<typename T>
-		using LevelLoadingFunc = std::function<void(World<LevelTypes...>*, Level<T>*)>;
+		using LevelCustomFunc = std::function<void(World<LevelTypes...>*, Level<T>*)>;
 
+	public:
 		template<typename T>
 		struct LevelHolder
 		{
 			std::unique_ptr<Level<T>> level;
-			LevelLoadingFunc<T> loadingFunc;
+			LevelCustomFunc<T> loadingFunc;
+			LevelCustomFunc<T> cleanFunc;
+		};
+
+		struct Session
+		{
+			Session(World<LevelTypes...>& _world) : world(_world) {}
+
+			/**
+		 * @brief レベルを追加する関数
+		 * @param level 追加するレベルの右辺値参照
+		 */
+			template<typename T>
+			void AddLevel(std::unique_ptr<Level<T>> level) {
+
+				static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
+
+				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
+				vec.emplace_back(LevelHolder<T>{
+					.level = std::move(level)
+				});
+			}
+			/**
+			 * @brief レベルを追加する関数
+			 * @param level 追加するレベルの右辺値参照
+			 * @param customFunc レベルのロード時やアンロード時に呼び出される関数
+			 */
+			template<typename T, typename... Func>
+			void AddLevel(std::unique_ptr<Level<T>> level, Func&&... customFunc) {
+
+				static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
+
+				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
+				vec.emplace_back(LevelHolder<T>{
+					std::move(level),
+					std::move(customFunc)...
+				});
+			}
+
+
+			/**
+			 * @brief 指定したレベルのロード関数を呼び出す関数
+			 * @param levelName ロードするレベルの名前
+			 * @details 全レベルの名前と比較して一致するものを探す
+			 */
+			void LoadLevel(const std::string levelName)
+			{
+#ifdef _DEBUG
+				bool find = false;
+#endif
+
+				// 指定された名前のレベルをすべてロードする
+				auto loadFunc = [&](auto& vecs)
+					{
+						for (auto& holder : vecs)
+						{
+							auto& level = holder.level;
+							if (level->GetName() == levelName) {
+#ifdef _DEBUG
+								find = true;
+#endif
+								if (holder.loadingFunc) {
+									holder.loadingFunc(&world, level.get());
+								}
+							}
+						}
+					};
+
+				std::apply([&](auto&... levelVecs)
+					{
+						(..., loadFunc(levelVecs));
+					}, world.levelSets);
+
+#ifdef _DEBUG
+				if (!find) LOG_WARNING("指定されたレベルが見つかりませんでした {%s}", levelName.c_str());
+#endif
+			}
+
+			void CleanLevel(const std::string levelName)
+			{
+#ifdef _DEBUG
+				bool find = false;
+#endif
+
+				// 指定された名前のレベルをすべてロードする
+				auto cleanFunc = [&](auto& vecs)
+					{
+						for (auto& holder : vecs)
+						{
+							auto& level = holder.level;
+							if (level->GetName() == levelName) {
+#ifdef _DEBUG
+								find = true;
+#endif
+								level->Clean(world.serviceLocator);
+								if (holder.cleanFunc) {
+									holder.cleanFunc(&world, level.get());
+								}
+							}
+						}
+					};
+
+				std::apply([&](auto&... levelVecs)
+					{
+						(..., cleanFunc(levelVecs));
+					}, world.levelSets);
+
+#ifdef _DEBUG
+				if (!find) LOG_WARNING("指定されたレベルが見つかりませんでした {%s}", levelName.c_str());
+#endif
+			}
+		private:
+			World<LevelTypes...>& world;
+		};
+
+		class IRequestCommand
+		{
+		public:
+			virtual void Execute(Session* pWorldSession) = 0;
+		};
+		/*
+		* @brief Systemなどの下層からWorldに対してのリクエストを受け付ける
+		*/
+		class RequestService
+		{
+		public:
+			/*
+			* @brief コマンドをリクエストに追加する
+			*/
+			void PushCommand(std::unique_ptr<IRequestCommand> cmd) {
+				requests.push_back(std::move(cmd));
+			}
+			// すべてのコマンドを実行する関数
+			// WorldでLevelを更新する前に呼び出す
+			void FlashAllCommand(World<LevelTypes...>* pWorld) {
+
+				if (requests.empty()) return;
+
+				auto session = pWorld->GetSession();
+
+				for (auto& cmd : requests) {
+					cmd->Execute(&session);
+				}
+
+				requests.clear();
+			}
+		private:
+			std::vector<std::unique_ptr<IRequestCommand>> requests;
 		};
 
 	public:
@@ -58,80 +206,13 @@ namespace SFW
 			}
 			return *this;
 		}
-		/**
-		 * @brief レベルを追加する関数
-		 * @param level 追加するレベルの右辺値参照
-		 */
-		template<typename T>
-		void AddLevel(std::unique_ptr<Level<T>> level) {
-
-			static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
-
-			auto& vec = std::get<std::vector<LevelHolder<T>>>(levelSets);
-			vec.emplace_back(LevelHolder<T>{
-				.level = std::move(level),
-				.loadingFunc = [](World<LevelTypes...>*, Level<T>*) {}
-			});
-		}
-		/**
-		 * @brief レベルを追加する関数
-		 * @param level 追加するレベルの右辺値参照
-		 * @param loadingFunc レベルのロード時に呼び出される関数
-		 */
-		template<typename T>
-		void AddLevel(std::unique_ptr<Level<T>> level, LevelLoadingFunc<T>&& loadingFunc) {
-
-			static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
-
-			auto& vec = std::get<std::vector<LevelHolder<T>>>(levelSets);
-			vec.emplace_back(LevelHolder<T>{
-				.level = std::move(level),
-				.loadingFunc = std::move(loadingFunc)
-			});
-		}
-
-
-		/**
-		 * @brief 指定したレベルのロード関数を呼び出す関数
-		 * @param levelName ロードするレベルの名前
-		 * @details 全レベルの名前と比較して一致するものを探す
-		 */
-		void LoadLevel(const std::string levelName)
-		{
-#ifdef _DEBUG
-			bool find = false;
-#endif
-
-			// 指定された名前のレベルをすべてロードする
-			auto loadFunc = [&](auto& vecs)
-				{
-					for (auto& holder : vecs)
-					{
-						auto& level = holder.level;
-						if (level->GetName() == levelName) {
-#ifdef _DEBUG
-							find = true;
-#endif
-							holder.loadingFunc(this, level.get());
-						}
-					}
-				};
-
-			std::apply([&](auto&... levelVecs)
-				{
-					(..., loadFunc(levelVecs));
-				}, levelSets);
-
-#ifdef _DEBUG
-			if (!find) LOG_WARNING("指定されたレベルが見つかりませんでした {%s}", levelName.c_str());
-#endif
-		}
 
 		/**
 		 * @brief すべてのレベルを更新する関数。
 		 * @param deltaTime デルタタイム（秒）
 		 */
 		void UpdateAllLevels(double deltaTime, IThreadExecutor* executor) {
+
 #ifdef _ENABLE_IMGUI
 			{
 				auto g = Debug::BeginTreeWrite(); // lock & back buffer
@@ -194,6 +275,9 @@ namespace SFW
 		 * @param deltaTime デルタタイム（秒）
 		 */
 		void UpdateServiceLocator(double deltaTime, IThreadExecutor* executor) {
+			//下層からリクエストされたコマンドを実行
+			requestService.FlashAllCommand(this);
+
 			serviceLocator.UpdateService(deltaTime, executor);
 		}
 		/**
@@ -203,9 +287,17 @@ namespace SFW
 		const ECS::ServiceLocator& GetServiceLocator() const noexcept {
 			return serviceLocator;
 		}
+		/*
+		* @brief Worldへのセッション(レベルの追加など)を取得する関数
+		* @return Session Worldのセッションオブジェクト
+		*/
+		[[nodiscard]] Session GetSession() {
+			return Session(*this);
+		}
 	private:
 		std::tuple<std::vector<LevelHolder<LevelTypes>>...> levelSets;
 		//std::tuple<std::vector<std::unique_ptr<Level<LevelTypes>>>...> levelSets;
 		ECS::ServiceLocator serviceLocator;
+		RequestService requestService;
 	};
 }

@@ -57,7 +57,10 @@ namespace SFW
 
 				(..., StoreComponent(chunk, id, index, components));
 
-				locations[id] = EntityLocation{ chunk, index };
+				{
+					std::unique_lock lock(locationsMutex);
+					locations[id] = EntityLocation{ chunk, index };
+				}
 				return id;
 			}
 			/**
@@ -79,7 +82,10 @@ namespace SFW
 
 				(..., StoreComponent(chunk, id, index, components));
 
-				locations[id] = EntityLocation{ chunk, index };
+				{
+					std::unique_lock lock(locationsMutex);
+					locations[id] = EntityLocation{ chunk, index };
+				}
 				return id;
 			}
 			/**
@@ -87,6 +93,11 @@ namespace SFW
 			 * @param id 削除するエンティティのID
 			 */
 			void DestroyEntity(EntityID id);
+
+			/**
+			 * @brief すべてのエンティティの削除
+			 */
+			void CleanAllEntity();
 			/**
 			 * @brief エンティティにコンポ―ネントがあるかどうかを確認する関数
 			 * @param id エンティティID
@@ -95,9 +106,12 @@ namespace SFW
 			template<typename T>
 			bool HasComponent(EntityID id) const noexcept {
 				ComponentTypeID typeID = ComponentTypeRegistry::GetID<T>();
-				if (locations.contains(id)) {
-					const ComponentMask& mask = GetMask(id);
-					return mask.test(typeID);
+				{
+					std::shared_lock<std::shared_mutex> lock(locationsMutex);
+					if (locations.contains(id)) {
+						const ComponentMask& mask = GetMask(id);
+						return mask.test(typeID);
+					}
 				}
 				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
 					return GetSparseStore<T>().Has(id);

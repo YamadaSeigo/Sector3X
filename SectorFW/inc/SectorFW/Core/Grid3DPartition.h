@@ -317,6 +317,23 @@ namespace SFW
 			grid(cx, cy, cz) = std::move(newCell);
 		}
 
+
+		/*
+		* @brief チャンクをリセットする
+		*/
+		void CleanChunk()
+		{
+			globalEntityManager.CleanAllEntity();
+
+			auto cx = grid.width();
+			auto cy = grid.height();
+			auto cz = grid.depth();
+			for (auto it = grid.begin(); it != grid.end(); ++it)
+			{
+				it->GetEntityManager().CleanAllEntity();
+			}
+		}
+
 	private:
 		inline SpatialChunkKey MakeGrid3DKey(LevelID level, int32_t gx, int32_t gy, int32_t gz, uint16_t gen = 0)
 		{

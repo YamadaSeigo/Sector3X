@@ -38,6 +38,17 @@ namespace SFW
 			entityAllocator.Destroy(id);
 		}
 
+		void EntityManager::CleanAllEntity()
+		{
+			archetypeManager = {};
+
+			{
+				std::unique_lock lock(locationsMutex);
+				locations.clear();
+			}
+			sparseStores.clear();
+		}
+
 		void EntityManager::MoveAllSparseTo(EntityManager& dst)
 		{
 			for (auto& [_, w] : sparseStores) w->MoveAllTo(dst);

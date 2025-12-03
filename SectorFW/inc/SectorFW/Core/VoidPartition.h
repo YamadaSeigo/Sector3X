@@ -45,6 +45,11 @@ namespace SFW
 			return 0;
 		}
 
+		void CleanChunk()
+		{
+			m_chunk.GetEntityManager().CleanAllEntity();
+		}
+
 	private:
 		SpatialChunk m_chunk;
 	};

@@ -630,335 +630,352 @@ int main(void)
 	Graphics::DX11::CpuImage cpuSplatImage;
 	Graphics::DX11::ReadTexture2DToCPU(device, deviceContext, sheetTex.Get(), cpuSplatImage);
 
-	World<Grid2DPartition, QuadTreePartition, VoidPartition> world(std::move(serviceLocator));
+	SFW::World<Grid2DPartition, QuadTreePartition, VoidPartition> world(std::move(serviceLocator));
 	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
 
 	{
 		auto level = std::unique_ptr<Level<VoidPartition>>(new Level<VoidPartition>("Title", *entityManagerReg, ELevelState::Main));
 
-		world.AddLevel(std::move(level));
+		auto worldSession = world.GetSession();
+		worldSession.AddLevel(std::move(level));
 	}
 
 	{
-		auto level = std::unique_ptr<Level<Grid2DPartition>>(new Level<Grid2DPartition>("OpenField", *entityManagerReg, ELevelState::Main));
+		using OpenFieldLevel = SFW::Level<Grid2DPartition>;
 
-		world.AddLevel(std::move(level), [&](std::add_pointer_t<decltype(world)> pWorld, Level<Grid2DPartition>* pLevel) {
+		auto level = std::unique_ptr<OpenFieldLevel>(new OpenFieldLevel("OpenField", *entityManagerReg, ELevelState::Main));
 
-			//地形の処理を開始
-			isExecuteCustomFunc.store(true, std::memory_order_relaxed);
+		auto worldSession = world.GetSession();
+		worldSession.AddLevel(
+			std::move(level),
+			//ロード時
+			[&](std::add_pointer_t<decltype(world)> pWorld, OpenFieldLevel* pLevel) {
 
-			auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
+				//地形の処理を開始
+				isExecuteCustomFunc.store(true, std::memory_order_relaxed);
 
-			auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11::ShaderManager>();
+				auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
 
-			//デフォルト描画のPSO生成
-			DX11::ShaderCreateDesc shaderDesc;
-			shaderDesc.templateID = MaterialTemplateID::PBR;
-			shaderDesc.vsPath = L"assets/shader/VS_Default.cso";
-			shaderDesc.psPath = L"assets/shader/PS_Default.cso";
-			ShaderHandle shaderHandle;
-			shaderMgr->Add(shaderDesc, shaderHandle);
+				auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11::ShaderManager>();
 
-			auto psoMgr = graphics.GetRenderService()->GetResourceManager<DX11::PSOManager>();
-			DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
-			PSOHandle cullDefaultPSOHandle;
-			psoMgr->Add(psoDesc, cullDefaultPSOHandle);
+				//デフォルト描画のPSO生成
+				DX11::ShaderCreateDesc shaderDesc;
+				shaderDesc.templateID = MaterialTemplateID::PBR;
+				shaderDesc.vsPath = L"assets/shader/VS_Default.cso";
+				shaderDesc.psPath = L"assets/shader/PS_Default.cso";
+				ShaderHandle shaderHandle;
+				shaderMgr->Add(shaderDesc, shaderHandle);
 
-			psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
-			PSOHandle cullNonePSOHandle;
-			psoMgr->Add(psoDesc, cullNonePSOHandle);
+				auto psoMgr = graphics.GetRenderService()->GetResourceManager<DX11::PSOManager>();
+				DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
+				PSOHandle cullDefaultPSOHandle;
+				psoMgr->Add(psoDesc, cullDefaultPSOHandle);
 
-			//草の揺れ用PSO生成
-			shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
-			shaderDesc.psPath = L"assets/shader/PS_ShadowColor.cso";
-			shaderMgr->Add(shaderDesc, shaderHandle);
-			PSOHandle windGrassPSOHandle;
-			psoDesc.shader = shaderHandle;
-			psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
-			psoMgr->Add(psoDesc, windGrassPSOHandle);
-			psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
+				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
+				PSOHandle cullNonePSOHandle;
+				psoMgr->Add(psoDesc, cullNonePSOHandle);
 
-			shaderDesc.vsPath = L"assets/shader/VS_WindEntity.cso";
-			shaderMgr->Add(shaderDesc, shaderHandle);
-			PSOHandle cullNoneWindEntityPSOHandle;
-			psoDesc.shader = shaderHandle;
-			psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
-			psoMgr->Add(psoDesc, cullNoneWindEntityPSOHandle);
-			psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
+				//草の揺れ用PSO生成
+				shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
+				shaderDesc.psPath = L"assets/shader/PS_ShadowColor.cso";
+				shaderMgr->Add(shaderDesc, shaderHandle);
+				PSOHandle windGrassPSOHandle;
+				psoDesc.shader = shaderHandle;
+				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
+				psoMgr->Add(psoDesc, windGrassPSOHandle);
+				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
 
-			ModelAssetHandle modelAssetHandle[5];
+				shaderDesc.vsPath = L"assets/shader/VS_WindEntity.cso";
+				shaderMgr->Add(shaderDesc, shaderHandle);
+				PSOHandle cullNoneWindEntityPSOHandle;
+				psoDesc.shader = shaderHandle;
+				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
+				psoMgr->Add(psoDesc, cullNoneWindEntityPSOHandle);
+				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
 
-			auto materialMgr = graphics.GetRenderService()->GetResourceManager<DX11::MaterialManager>();
-			// モデルアセットの読み込み
-			DX11::ModelAssetCreateDesc modelDesc;
-			modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_1.gltf";
-			modelDesc.pso = cullDefaultPSOHandle;
-			modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
-			modelDesc.instancesPeak = 1000;
-			modelDesc.viewMax = 400.0f;
+				ModelAssetHandle modelAssetHandle[5];
 
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
+				auto materialMgr = graphics.GetRenderService()->GetResourceManager<DX11::MaterialManager>();
+				// モデルアセットの読み込み
+				DX11::ModelAssetCreateDesc modelDesc;
+				modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_1.gltf";
+				modelDesc.pso = cullDefaultPSOHandle;
+				modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
+				modelDesc.instancesPeak = 1000;
+				modelDesc.viewMax = 400.0f;
 
-			modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
-			modelDesc.viewMax = 200.0f;
-			modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
-			modelDesc.pso = cullNoneWindEntityPSOHandle;
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
+				modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
 
-			modelDesc.path = "assets/model/Stylized/Tree01.gltf";
-			modelDesc.buildOccluders = false;
-			modelDesc.viewMax = 600.0f;
-			modelDesc.pso = cullNoneWindEntityPSOHandle;
-			modelDesc.pCustomNomWFunc = WindMovementService::ComputeTreeWeight;
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
+				modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
+				modelDesc.viewMax = 200.0f;
+				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.pso = cullNoneWindEntityPSOHandle;
+				modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
-			modelDesc.instancesPeak = 100;
-			modelDesc.viewMax = 100.0f;
-			modelDesc.pso = cullNoneWindEntityPSOHandle;
-			modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
-			modelDesc.path = "assets/model/Stylized/WhiteCosmos.gltf";
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
+				modelDesc.path = "assets/model/Stylized/Tree01.gltf";
+				modelDesc.buildOccluders = false;
+				modelDesc.viewMax = 600.0f;
+				modelDesc.pso = cullNoneWindEntityPSOHandle;
+				modelDesc.pCustomNomWFunc = WindMovementService::ComputeTreeWeight;
+				modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
-			modelDesc.instancesPeak = 100;
-			modelDesc.viewMax = 100.0f;
-			modelDesc.pso = cullNoneWindEntityPSOHandle;
-			modelDesc.path = "assets/model/Stylized/YellowCosmos.gltf";
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
+				modelDesc.instancesPeak = 100;
+				modelDesc.viewMax = 100.0f;
+				modelDesc.pso = cullNoneWindEntityPSOHandle;
+				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.path = "assets/model/Stylized/WhiteCosmos.gltf";
+				modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
 
-			ModelAssetHandle grassModelHandle;
+				modelDesc.instancesPeak = 100;
+				modelDesc.viewMax = 100.0f;
+				modelDesc.pso = cullNoneWindEntityPSOHandle;
+				modelDesc.path = "assets/model/Stylized/YellowCosmos.gltf";
+				modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
 
-			modelDesc.instancesPeak = 10000;
-			modelDesc.viewMax = 100.0f;
-			modelDesc.pso = windGrassPSOHandle;
-			modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
-			modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
-			modelAssetMgr->Add(modelDesc, grassModelHandle);
-			modelDesc.pCustomNomWFunc = nullptr;
+				ModelAssetHandle grassModelHandle;
 
-			// 草のマテリアルに草揺れ用CBVをセット
-			{
-				//HeightMapを16bitテクスチャとして作成
-				size_t heightMapSize = heightMap.size();
-				std::vector<uint16_t> height16(heightMapSize);
-				// 0.0～1.0 の高さを 16bit に変換
-				for (int i = 0; i < heightMapSize; ++i)
+				modelDesc.instancesPeak = 10000;
+				modelDesc.viewMax = 100.0f;
+				modelDesc.pso = windGrassPSOHandle;
+				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
+				modelAssetMgr->Add(modelDesc, grassModelHandle);
+				modelDesc.pCustomNomWFunc = nullptr;
+
+				// 草のマテリアルに草揺れ用CBVをセット
 				{
-					float h01 = heightMap[i]; // 0.0～1.0 の高さ
-					h01 = std::clamp(h01, 0.0f, 1.0f);
-					height16[i] = static_cast<uint16_t>(h01 * 65535.0f + 0.5f); // 丸め
-				}
+					//HeightMapを16bitテクスチャとして作成
+					size_t heightMapSize = heightMap.size();
+					std::vector<uint16_t> height16(heightMapSize);
+					// 0.0～1.0 の高さを 16bit に変換
+					for (int i = 0; i < heightMapSize; ++i)
+					{
+						float h01 = heightMap[i]; // 0.0～1.0 の高さ
+						h01 = std::clamp(h01, 0.0f, 1.0f);
+						height16[i] = static_cast<uint16_t>(h01 * 65535.0f + 0.5f); // 丸め
+					}
 
-				DX11::TextureCreateDesc texDesc;
-				DX11::TextureRecipe recipeDesc;
-				recipeDesc.width = p.cellsX + 1;
-				recipeDesc.height = p.cellsZ + 1;
-				recipeDesc.format = DXGI_FORMAT_R16_UNORM;
-				recipeDesc.usage = D3D11_USAGE_IMMUTABLE;
-				recipeDesc.initialData = height16.data();
-				recipeDesc.initialRowPitch = recipeDesc.width * (16 / 8);
+					DX11::TextureCreateDesc texDesc;
+					DX11::TextureRecipe recipeDesc;
+					recipeDesc.width = p.cellsX + 1;
+					recipeDesc.height = p.cellsZ + 1;
+					recipeDesc.format = DXGI_FORMAT_R16_UNORM;
+					recipeDesc.usage = D3D11_USAGE_IMMUTABLE;
+					recipeDesc.initialData = height16.data();
+					recipeDesc.initialRowPitch = recipeDesc.width * (16 / 8);
 
-				texDesc.recipe = &recipeDesc;
-				Graphics::TextureHandle heightTexHandle;
-				auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
-				textureMgr->Add(texDesc, heightTexHandle);
+					texDesc.recipe = &recipeDesc;
+					Graphics::TextureHandle heightTexHandle;
+					auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
+					textureMgr->Add(texDesc, heightTexHandle);
 
-				auto data = modelAssetMgr->GetWrite(grassModelHandle);
-				auto& submesh = data.ref().subMeshes;
-				auto windCBHandle = grassService.GetBufferHandle();
-				auto cbData = bufferMgr->Get(windCBHandle);
-				auto heightTexData = textureMgr->Get(heightTexHandle);
-				for (auto& mesh : submesh)
-				{
-					auto matData = materialMgr->GetWrite(mesh.material);
-					//参照カウントを増やしておく
-					bufferMgr->AddRef(windCBHandle);
-					//直接定数バッファをセット
-					matData.ref().vsCBV.PushOrOverwrite({ 10, cp.cbGrid.Get() });
-					matData.ref().vsCBV.PushOrOverwrite({ 11, cbData.ref().buffer.Get() });
-					matData.ref().usedCBBuffers.push_back(windCBHandle);
-					//高さテクスチャもセット
-					textureMgr->AddRef(heightTexHandle);
-					matData.ref().vsSRV.PushOrOverwrite({ 10, heightTexData.ref().srv.Get() });
-					matData.ref().usedTextures.push_back(heightTexHandle);
+					auto data = modelAssetMgr->GetWrite(grassModelHandle);
+					auto& submesh = data.ref().subMeshes;
+					auto windCBHandle = grassService.GetBufferHandle();
+					auto cbData = bufferMgr->Get(windCBHandle);
+					auto heightTexData = textureMgr->Get(heightTexHandle);
+					for (auto& mesh : submesh)
+					{
+						auto matData = materialMgr->GetWrite(mesh.material);
+						//参照カウントを増やしておく
+						bufferMgr->AddRef(windCBHandle);
+						//直接定数バッファをセット
+						matData.ref().vsCBV.PushOrOverwrite({ 10, cp.cbGrid.Get() });
+						matData.ref().vsCBV.PushOrOverwrite({ 11, cbData.ref().buffer.Get() });
+						matData.ref().usedCBBuffers.push_back(windCBHandle);
+						//高さテクスチャもセット
+						textureMgr->AddRef(heightTexHandle);
+						matData.ref().vsSRV.PushOrOverwrite({ 10, heightTexData.ref().srv.Get() });
+						matData.ref().usedTextures.push_back(heightTexHandle);
 
-					//頂点シェーダーにもバインドする設定にする
-					matData.ref().isBindVSSampler = true;
+						//頂点シェーダーにもバインドする設定にする
+						matData.ref().isBindVSSampler = true;
 
-					mesh.lodThresholds.Tpx[0] *= 2.0f; // LOD調整
-				}
-			}
-
-			std::random_device rd;
-			std::mt19937_64 rng(rd());
-
-			// 例: A=50%, B=30%, C=20% のつもりで重みを設定（整数でも実数でもOK）
-			std::array<int, 5> weights{ 2, 8, 5, 5, 5 };
-			std::discrete_distribution<int> dist(weights.begin(), weights.end());
-
-			float modelScaleBase[5] = { 2.5f,1.5f,2.5f, 1.5f,1.5f };
-			int modelScaleRange[5] = { 150,25,25, 25,25 };
-			int modelRotRange[5] = { 360,360,360, 360,360 };
-
-			std::vector<Math::Vec2f> grassAnchor;
-			{
-				auto data = modelAssetMgr->Get(grassModelHandle);
-				auto aabb = data.ref().subMeshes[0].aabb;
-				grassAnchor.reserve(4);
-				float bias = 0.8f;
-				grassAnchor.push_back({ aabb.lb.x * bias, aabb.lb.z * bias });
-				grassAnchor.push_back({ aabb.lb.x * bias, aabb.ub.z * bias });
-				grassAnchor.push_back({ aabb.ub.x * bias, aabb.lb.z * bias });
-				grassAnchor.push_back({ aabb.ub.x * bias, aabb.ub.z * bias });
-			}
-
-			// System登録
-			auto& scheduler = pLevel->GetScheduler();
-
-			scheduler.AddSystem<ModelRenderSystem>(world.GetServiceLocator());
-
-			//scheduler.AddSystem<SimpleModelRenderSystem>(world.GetServiceLocator());
-			scheduler.AddSystem<CameraSystem>(world.GetServiceLocator());
-			//scheduler.AddSystem<TestMoveSystem>(world.GetServiceLocator());
-			//scheduler.AddSystem<PhysicsSystem>(world.GetServiceLocator());
-			//scheduler.AddSystem<BuildBodiesFromIntentsSystem>(world.GetServiceLocator());
-			//scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(world.GetServiceLocator());
-			//scheduler.AddSystem<DebugRenderSystem>(world.GetServiceLocator());
-			//scheduler.AddSystem<CleanModelSystem>(world.GetServiceLocator());
-
-			auto ps = world.GetServiceLocator().Get<Physics::PhysicsService>();
-			auto sphere = ps->MakeSphere(0.5f);//ps->MakeBox({ 0.5f, 0.5f, 0.5f }); // Box形状を生成
-			auto sphereDims = ps->GetShapeDims(sphere);
-
-			auto box = ps->MakeBox({ 1000.0f,0.5f, 1000.0f });
-			auto boxDims = ps->GetShapeDims(box);
-
-			Math::Vec3f src = { 0.0f,50.0f,0.0f };
-			Math::Vec3f dst = src;
-
-			//草Entity生成
-			Math::Vec2f terrainScale = {
-				p.cellsX * p.cellSize,
-				p.cellsZ * p.cellSize
-			};
-			for (int j = 0; j < 100; ++j) {
-				for (int k = 0; k < 100; ++k) {
-					for (int n = 0; n < 1; ++n) {
-						//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
-						float scaleXZ = 15.0f;
-						float scaleY = 15.0f;
-						Math::Vec2f offsetXZ = { 12.0f,12.0f };
-						Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
-						auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
-						//location = pose.pos;
-
-						float height = 0.0f;
-						terrain.SampleHeightNormalBilinear(location.x, location.z, height);
-						location.y = height;
-
-						int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
-						int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
-
-						int byteIndex = col * 4 + row * cpuSplatImage.stride;
-						if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
-							continue;
-						}
-
-						auto splatR = cpuSplatImage.bytes[byteIndex];
-						if (splatR < 20) {
-							continue; // 草が薄い場所はスキップ
-						}
-						//　薄いほど高さを下げる
-						location.y -= powf((1.0f - splatR / 255.0f), 2);
-
-						auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
-						rot.KeepTwist(pose.up);
-
-						auto chunk = pLevel->GetChunk(location);
-						auto key = chunk.value()->GetNodeKey();
-						SpatialMotionTag tag{};
-						tag.handle = { key, chunk.value() };
-
-						//float scale = 1.0f;
-						auto id = pLevel->AddEntity(
-							TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-							CModel{ grassModelHandle },
-							Physics::BodyComponent{},
-							Physics::PhysicsInterpolation(
-								location, // 初期位置
-								rot // 初期回転
-							),
-							sphereDims.value(),
-							tag
-						);
-						/*if (id) {
-							ps->EnqueueCreateIntent(id.value(), sphere, key);
-						}*/
+						mesh.lodThresholds.Tpx[0] *= 2.0f; // LOD調整
 					}
 				}
-			}
 
-			// Entity生成
-			uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
-			uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
-			for (int j = 0; j < 100; ++j) {
-				for (int k = 0; k < 100; ++k) {
-					for (int n = 0; n < 1; ++n) {
-						Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
-						//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
-						auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
-						auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
-						if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
-						{
-							float y0 = heightMap[Graphics::TerrainClustered::VIdx(gridX, gridZ, p.cellsX + 1)];
-							location.y = y0 * p.heightScale;
-							location += p.offset;
+				std::random_device rd;
+				std::mt19937_64 rng(rd());
+
+				// 例: A=50%, B=30%, C=20% のつもりで重みを設定（整数でも実数でもOK）
+				std::array<int, 5> weights{ 2, 8, 5, 5, 5 };
+				std::discrete_distribution<int> dist(weights.begin(), weights.end());
+
+				float modelScaleBase[5] = { 2.5f,1.5f,2.5f, 1.5f,1.5f };
+				int modelScaleRange[5] = { 150,25,25, 25,25 };
+				int modelRotRange[5] = { 360,360,360, 360,360 };
+
+				std::vector<Math::Vec2f> grassAnchor;
+				{
+					auto data = modelAssetMgr->Get(grassModelHandle);
+					auto aabb = data.ref().subMeshes[0].aabb;
+					grassAnchor.reserve(4);
+					float bias = 0.8f;
+					grassAnchor.push_back({ aabb.lb.x * bias, aabb.lb.z * bias });
+					grassAnchor.push_back({ aabb.lb.x * bias, aabb.ub.z * bias });
+					grassAnchor.push_back({ aabb.ub.x * bias, aabb.lb.z * bias });
+					grassAnchor.push_back({ aabb.ub.x * bias, aabb.ub.z * bias });
+				}
+
+				// System登録
+				auto& scheduler = pLevel->GetScheduler();
+
+				const auto& serviceLocator = pWorld->GetServiceLocator();
+
+				scheduler.AddSystem<ModelRenderSystem>(serviceLocator);
+
+				//scheduler.AddSystem<SimpleModelRenderSystem>(serviceLocator);
+				scheduler.AddSystem<CameraSystem>(serviceLocator);
+				//scheduler.AddSystem<TestMoveSystem>(serviceLocator);
+				//scheduler.AddSystem<PhysicsSystem>(serviceLocator);
+				//scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
+				//scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
+				//scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
+				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
+
+				auto ps = serviceLocator.Get<Physics::PhysicsService>();
+				auto sphere = ps->MakeSphere(0.5f);//ps->MakeBox({ 0.5f, 0.5f, 0.5f }); // Box形状を生成
+				auto sphereDims = ps->GetShapeDims(sphere);
+
+				auto box = ps->MakeBox({ 1000.0f,0.5f, 1000.0f });
+				auto boxDims = ps->GetShapeDims(box);
+
+				Math::Vec3f src = { 0.0f,50.0f,0.0f };
+				Math::Vec3f dst = src;
+
+				//草Entity生成
+				Math::Vec2f terrainScale = {
+					p.cellsX * p.cellSize,
+					p.cellsZ * p.cellSize
+				};
+
+				auto levelSession = pLevel->GetSession();
+
+				for (int j = 0; j < 100; ++j) {
+					for (int k = 0; k < 100; ++k) {
+						for (int n = 0; n < 1; ++n) {
+							//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
+							float scaleXZ = 15.0f;
+							float scaleY = 15.0f;
+							Math::Vec2f offsetXZ = { 12.0f,12.0f };
+							Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
+							auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
+							//location = pose.pos;
+
+							float height = 0.0f;
+							terrain.SampleHeightNormalBilinear(location.x, location.z, height);
+							location.y = height;
+
+							int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
+							int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
+
+							int byteIndex = col * 4 + row * cpuSplatImage.stride;
+							if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
+								continue;
+							}
+
+							auto splatR = cpuSplatImage.bytes[byteIndex];
+							if (splatR < 20) {
+								continue; // 草が薄い場所はスキップ
+							}
+							//　薄いほど高さを下げる
+							location.y -= powf((1.0f - splatR / 255.0f), 2);
+
+							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
+							rot.KeepTwist(pose.up);
+
+							auto chunk = pLevel->GetChunk(location);
+							auto key = chunk.value()->GetNodeKey();
+							SpatialMotionTag tag{};
+							tag.handle = { key, chunk.value() };
+
+							//float scale = 1.0f;
+							auto id = levelSession.AddEntity(
+								TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
+								CModel{ grassModelHandle },
+								Physics::BodyComponent{},
+								Physics::PhysicsInterpolation(
+									location, // 初期位置
+									rot // 初期回転
+								),
+								sphereDims.value(),
+								tag
+							);
+							/*if (id) {
+								ps->EnqueueCreateIntent(id.value(), sphere, key);
+							}*/
 						}
-
-						auto chunk = pLevel->GetChunk(location);
-						auto key = chunk.value()->GetNodeKey();
-						SpatialMotionTag tag{};
-						tag.handle = { key, chunk.value() };
-						int modelIdx = dist(rng);
-						float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
-						//float scale = 1.0f;
-						auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
-						auto modelComp = CModel{ modelAssetHandle[modelIdx] };
-						modelComp.castShadow = true;
-
-						auto id = pLevel->AddEntity(
-							TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
-							modelComp,
-							Physics::BodyComponent{},
-							Physics::PhysicsInterpolation(
-								location, // 初期位置
-								Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-							),
-							sphereDims.value(),
-							tag
-						);
-						/*if (id) {
-							ps->EnqueueCreateIntent(id.value(), sphere, key);
-						}*/
 					}
 				}
-			}
 
-			//Physics::BodyComponent staticBody{};
-			//staticBody.isStatic = Physics::BodyType::Static; // staticにする
-			//auto id = level->AddEntity(
-			//	TransformSoA{ 10.0f,-10.0f, 10.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
-			//	CModel{ modelAssetHandle },
-			//	staticBody,
-			//	Physics::PhysicsInterpolation(
-			//		Math::Vec3f{ 10.0f,-10.0f, 10.0f }, // 初期位置
-			//		Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-			//	),
-			//	boxDims.value()
-			//);
-			//if (id) {
-			//	auto chunk = level->GetChunk({ 0.0f,-100.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
-			//	ps->EnqueueCreateIntent(id.value(), box, chunk.value()->GetNodeKey());
-			//}
+				// Entity生成
+				uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
+				uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
+				for (int j = 0; j < 100; ++j) {
+					for (int k = 0; k < 100; ++k) {
+						for (int n = 0; n < 1; ++n) {
+							Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
+							//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
+							auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
+							auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
+							if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
+							{
+								float y0 = heightMap[Graphics::TerrainClustered::VIdx(gridX, gridZ, p.cellsX + 1)];
+								location.y = y0 * p.heightScale;
+								location += p.offset;
+							}
+
+							auto chunk = pLevel->GetChunk(location);
+							auto key = chunk.value()->GetNodeKey();
+							SpatialMotionTag tag{};
+							tag.handle = { key, chunk.value() };
+							int modelIdx = dist(rng);
+							float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
+							//float scale = 1.0f;
+							auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
+							auto modelComp = CModel{ modelAssetHandle[modelIdx] };
+							modelComp.castShadow = true;
+
+							auto id = levelSession.AddEntity(
+								TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
+								modelComp,
+								Physics::BodyComponent{},
+								Physics::PhysicsInterpolation(
+									location, // 初期位置
+									Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+								),
+								sphereDims.value(),
+								tag
+							);
+							/*if (id) {
+								ps->EnqueueCreateIntent(id.value(), sphere, key);
+							}*/
+						}
+					}
+				}
+
+				//Physics::BodyComponent staticBody{};
+				//staticBody.isStatic = Physics::BodyType::Static; // staticにする
+				//auto id = level->AddEntity(
+				//	TransformSoA{ 10.0f,-10.0f, 10.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
+				//	CModel{ modelAssetHandle },
+				//	staticBody,
+				//	Physics::PhysicsInterpolation(
+				//		Math::Vec3f{ 10.0f,-10.0f, 10.0f }, // 初期位置
+				//		Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+				//	),
+				//	boxDims.value()
+				//);
+				//if (id) {
+				//	auto chunk = level->GetChunk({ 0.0f,-100.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
+				//	ps->EnqueueCreateIntent(id.value(), box, chunk.value()->GetNodeKey());
+				//}
+			},
+			//アンロード時
+			[&](std::add_pointer_t<decltype(world)> pWorld, OpenFieldLevel* pLevel)
+			{
+				isExecuteCustomFunc.store(false, std::memory_order_relaxed);
 			});
 		//world.LoadLevel("OpenField");
 	}
@@ -966,15 +983,22 @@ int main(void)
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
 
 	//シーンロードのデバッグコールバック登録
-	static std::string loadLevelName;
+	{
+		static std::string loadLevelName;
 
-	BIND_DEBUG_TEXT("Load", "levelName", &loadLevelName);
+		BIND_DEBUG_TEXT("Level", "Name", &loadLevelName);
 
-	REGISTER_DEBUG_BUTTON("Load", "exe", [](bool) {
-		gameEngine.GetWorld().LoadLevel(loadLevelName);
-		});
+		REGISTER_DEBUG_BUTTON("Level", "load", [](bool) {
+			auto worldSession = gameEngine.GetWorld().GetSession();
+			worldSession.LoadLevel(loadLevelName);
+			});
 
-
+		REGISTER_DEBUG_BUTTON("Level", "clean", [](bool) {
+			auto worldSession = gameEngine.GetWorld().GetSession();
+			worldSession.CleanLevel(loadLevelName);
+			});
+	}
+	//スレッドプールクラス
 	static SimpleThreadPool threadPool;
 
 	// メッセージループ

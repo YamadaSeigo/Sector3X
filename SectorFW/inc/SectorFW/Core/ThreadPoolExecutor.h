@@ -18,6 +18,7 @@ namespace SFW
 
     class SimpleThreadPool final : public IThreadExecutor {
     public:
+        //RenderThraedのためがスレッドを1つ使っているので-1する
         explicit SimpleThreadPool(size_t n = std::thread::hardware_concurrency() - 1)
             : stop_(false)
             , busy_(0)

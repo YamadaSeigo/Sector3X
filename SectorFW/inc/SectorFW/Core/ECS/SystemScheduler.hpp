@@ -154,6 +154,18 @@ namespace SFW
 						sys->End(partition, levelCtx, serviceLocator);
 					}
 				}
+
+				{
+					std::unique_lock lockPending(pendingMutex);
+					systems.clear();
+					updateSystems.clear();
+					accessList.clear();
+					pendingSystems.clear();
+				}
+				{
+					std::unique_lock lockBatck(batchMutex);
+					batches.clear();
+				}
 			}
 		private:
 			std::vector<std::unique_ptr<ISystem<Partition>>> systems;

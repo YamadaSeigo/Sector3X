@@ -312,6 +312,18 @@ namespace SFW
 			reg.RegisterOwner(newCell.GetNodeKey(), &newCell);
 			grid(cx, cy) = std::move(newCell);
 		}
+		/*
+		* @brief チャンクをリセットする
+		*/
+		void CleanChunk()
+		{
+			auto cx = grid.width();
+			auto cy = grid.height();
+			for (auto it = grid.begin(); it != grid.end(); ++it)
+			{
+				it->GetEntityManager().CleanAllEntity();
+			}
+		}
 	private:
 		/**
 		 * @brief 2Dグリッドのチャンクキーを作成します。

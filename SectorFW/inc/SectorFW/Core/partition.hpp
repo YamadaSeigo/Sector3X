@@ -55,6 +55,8 @@ namespace SFW
 		{ t.CullChunksNear(fr, cp) } -> std::same_as<std::vector<SpatialChunk*>>;
 		//チャンクのワイヤーフレームを取得
 		{ t.CullChunkLine(fr, cp, hy, outLine, lineCapacity, displayCount) } -> std::same_as<uint32_t>;
+		//チャンクをクリアする
+		{ t.CleanChunk() }->std::same_as<void>;
 	};
 	/**
 	 * @brief 更新可能なパーティションを識別するコンセプト

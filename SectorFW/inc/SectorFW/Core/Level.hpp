@@ -79,6 +79,88 @@ namespace SFW
 		using TransformType = CTransform; // Transformコンポーネントの型
 
 	public:
+		struct Session
+		{
+			Session(Level<Partition>& _level, std::shared_mutex& _m) : level(_level), lock(_m) {}
+
+			/**
+			 * @brief エンティティを追加する関数
+			 * @param ...components 追加するコンポーネントの可変引数
+			 * @return std::optional<ECS::EntityID> エンティティIDのオプション
+			 * @details 外部から専有ロックする必要がある。Systemで呼び出すとデッドロックの危険性あり
+			 */
+			template<typename... Components>
+			std::optional<ECS::EntityID> AddEntity(const Components&... components)
+			{
+				using namespace ECS;
+
+				ComponentMask mask;
+				(SetMask<Components>(mask), ...);
+
+				// Transformコンポーネントが存在するかどうかをチェック
+				ComponentTypeID typeID = ComponentTypeRegistry::GetID<TransformType>();
+				bool hasTransform = mask.test(typeID);
+
+				EntityID id = EntityID::Invalid();
+
+				//Transformコンポーネントが存在する場合、パーティションからチャンクを取得
+				if (hasTransform)
+				{
+					auto transform = extract_first_of_type<TransformType>(components...);
+					if (transform)
+					{
+						auto chunk = level.partition.GetChunk(transform->location, level.entityManagerReg, level.levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transformの位置に基づいてチャンクを取得
+						if (chunk)
+						{
+							id = (*chunk)->GetEntityManager().AddEntity<Components...>(mask, components...);
+						}
+					}
+				}
+				// Transformコンポーネントが存在しない場合、グローバルエンティティマネージャーを使用
+				else
+				{
+					id = level.partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
+				}
+
+				// エンティティIDが無効な場合はエラーをログ出力
+				if (!id.IsValid()) {
+					LOG_ERROR("EntityID is not Valid : %d", id.index);
+					return std::nullopt; // エンティティの追加に失敗した場合
+				}
+
+				return id;
+			}
+			/**
+			 * @brief グローバルエンティティを追加する関数
+			 * @param ...components 追加するコンポーネントの可変引数
+			 * @return std::optional<ECS::EntityID> エンティティIDのオプション
+			 * @details 外部から専有ロックする必要がある。Systemで呼び出すとデッドロックの危険性あり
+			 */
+			template<typename... Components>
+			std::optional<ECS::EntityID> AddGlobalEntity(const Components&... components)
+			{
+				using namespace ECS;
+
+				ComponentMask mask;
+				(SetMask<Components>(mask), ...);
+
+				EntityID id = EntityID::Invalid();
+
+				id = level.partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
+
+				// エンティティIDが無効な場合はエラーをログ出力
+				if (!id.IsValid()) {
+					LOG_ERROR("EntityID is not Valid : %d", id.index);
+					return std::nullopt; // エンティティの追加に失敗した場合
+				}
+
+				return id;
+			}
+		private:
+			Level<Partition>& level;
+			std::unique_lock<std::shared_mutex> lock;
+		};
+	public:
 		/**
 		 * @brief コンストラクタ
 		 * @param name レベルの名前
@@ -133,6 +215,7 @@ namespace SFW
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/false, "System" });
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
+			std::shared_lock lock(updateEntityMutex);
 
 			if constexpr (HasPartitionUpdate<Partition>) {
 				partition.Update(deltaTime);
@@ -148,7 +231,12 @@ namespace SFW
 		 * @details SystemSchedulerのSystemのEnd関数を呼び出す
 		 */
 		void Clean(const ECS::ServiceLocator& serviceLocator) {
+			std::unique_lock lock(updateEntityMutex);
+
 			scheduler.CleanSystem(partition, levelCtx, serviceLocator);
+
+			//チャンクをクリア
+			partition.CleanChunk();
 		}
 
 		/**
@@ -165,81 +253,12 @@ namespace SFW
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
+			std::shared_lock lock(updateEntityMutex);
+
 			// 限定的なSystemだけを実行（例：位置補間やフェードアウト処理）
 			for (auto& sys : limitedSystems) {
 				sys->Update(partition, levelCtx, serviceLocator, executor);
 			}
-		}
-		/**
-		 * @brief エンティティを追加する関数
-		 * @param ...components 追加するコンポーネントの可変引数
-		 * @return std::optional<ECS::EntityID> エンティティIDのオプション
-		 */
-		template<typename... Components>
-		std::optional<ECS::EntityID> AddEntity(const Components&... components)
-		{
-			using namespace ECS;
-
-			ComponentMask mask;
-			(SetMask<Components>(mask), ...);
-
-			// Transformコンポーネントが存在するかどうかをチェック
-			ComponentTypeID typeID = ComponentTypeRegistry::GetID<TransformType>();
-			bool hasTransform = mask.test(typeID);
-
-			EntityID id = EntityID::Invalid();
-
-			//Transformコンポーネントが存在する場合、パーティションからチャンクを取得
-			if (hasTransform)
-			{
-				auto transform = extract_first_of_type<TransformType>(components...);
-				if (transform)
-				{
-					auto chunk = partition.GetChunk(transform->location, entityManagerReg, this->levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transformの位置に基づいてチャンクを取得
-					if (chunk)
-					{
-						id = (*chunk)->GetEntityManager().AddEntity<Components...>(mask, components...);
-					}
-				}
-			}
-			// Transformコンポーネントが存在しない場合、グローバルエンティティマネージャーを使用
-			else
-			{
-				id = partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
-			}
-
-			// エンティティIDが無効な場合はエラーをログ出力
-			if (!id.IsValid()) {
-				LOG_ERROR("EntityID is not Valid : %d", id.index);
-				return std::nullopt; // エンティティの追加に失敗した場合
-			}
-
-			return id;
-		}
-		/**
-		 * @brief グローバルエンティティを追加する関数
-		 * @param ...components 追加するコンポーネントの可変引数
-		 * @return std::optional<ECS::EntityID> エンティティIDのオプション
-		 */
-		template<typename... Components>
-		std::optional<ECS::EntityID> AddGlobalEntity(const Components&... components)
-		{
-			using namespace ECS;
-
-			ComponentMask mask;
-			(SetMask<Components>(mask), ...);
-
-			EntityID id = EntityID::Invalid();
-
-			id = partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
-
-			// エンティティIDが無効な場合はエラーをログ出力
-			if (!id.IsValid()) {
-				LOG_ERROR("EntityID is not Valid : %d", id.index);
-				return std::nullopt; // エンティティの追加に失敗した場合
-			}
-
-			return id;
 		}
 
 		/**
@@ -279,6 +298,14 @@ namespace SFW
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location, EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept {
 			return partition.GetChunk(location, entityManagerReg, this->levelCtx.id, policy);
 		}
+		/**
+		 * @brief Entityを更新するためのクラス取得
+		 * @return std::shared_mutex& mutex
+		 */
+		[[nodiscard]] Session GetSession()
+		{
+			return Session{*this, this->updateEntityMutex };
+		}
 
 	private:
 		//レベルのコンテキスト
@@ -294,6 +321,8 @@ namespace SFW
 		std::vector<std::unique_ptr<SystemType>> limitedSystems;
 		//分割クラスのインスタンス
 		Partition partition;
+		//Entityを変更する際
+		std::shared_mutex updateEntityMutex;
 		//EntityManagerRegistryの参照
 		SpatialChunkRegistry& entityManagerReg;
 	};

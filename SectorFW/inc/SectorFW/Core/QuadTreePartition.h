@@ -287,6 +287,18 @@ namespace SFW
 			return written;
 		}
 
+		/**
+		 * @brief チャンクのクリア
+		 */
+		void CleanChunk()
+		{
+			m_global.CleanAllEntity();
+
+			forEachLeaf([&](Node& lf) {
+				lf.chunk.GetEntityManager().CleanAllEntity();
+				});
+		}
+
 		SpatialChunk* EnsureLeafForPoint(Math::Vec3f p)
 		{
 			if (!inBounds(p.x, p.z)) {
