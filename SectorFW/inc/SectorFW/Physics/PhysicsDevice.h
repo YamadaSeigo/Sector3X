@@ -25,6 +25,7 @@
 #include <Jolt/Physics/Body/BodyInterface.h>
 #include <Jolt/Core/JobSystemThreadPool.h>
 #include <Jolt/Core/TempAllocator.h>
+#include <Jolt/Physics/Character/CharacterVirtual.h>
 
 #include "../Core/ECS/EntityManager.h"
 #include "../Core/RegistryTypes.h"
@@ -171,6 +172,9 @@ namespace SFW
 			std::mutex m_pendingContactsMutex;
 			std::vector<PendingRayHit> m_pendingRayHits;
 
+			// Entity -> CharacterVirtual
+			std::unordered_map<Entity, JPH::Ref<JPH::CharacterVirtual>> m_characters;
+
 			bool m_initialized = false;
 
 			// ---- ‚±‚±‚©‚ç‰º‚ÍŽÀ‘•‚ÌƒtƒbƒN ----
@@ -184,6 +188,10 @@ namespace SFW
 			void ApplySetCollisionMask(const SetCollisionMaskCmd& c);
 			void ApplySetObjectLayer(const SetObjectLayerCmd& c);
 			void ApplyRayCast(const RayCastCmd& c);
+			void ApplyCreateCharacter(const CreateCharacterCmd& c);
+			void ApplySetCharacterVelocity(const SetCharacterVelocityCmd& c);
+			void ApplySetCharacterRotation(const SetCharacterRotationCmd& c);
+			void ApplyTeleportCharacter(const TeleportCharacterCmd& c);
 
 			const IShapeResolver* m_shapeResolver = nullptr;
 

@@ -102,6 +102,33 @@ namespace SFW
 			float    maxDist;
 		};
 
+		// プレイヤーキャラ生成コマンド
+		struct CreateCharacterCmd {
+			Entity e;
+			ShapeHandle shape;   // カプセルなど
+			Mat34f worldTM;      // 初期位置 + 回転
+			uint16_t objectLayer;   // キャラ用 ObjectLayer
+			float maxSlopeDeg = 45.0f;
+		};
+
+		// キャラの線形速度を設定
+		struct SetCharacterVelocityCmd {
+			Entity e;
+			Vec3f  v;
+		};
+
+		// キャラの向きを設定（Y軸回転だけで良いなら yaw でもOK）
+		struct SetCharacterRotationCmd {
+			Entity e;
+			Quatf  rot;
+		};
+
+		// 必要ならテレポートも
+		struct TeleportCharacterCmd {
+			Entity e;
+			Mat34f worldTM;
+		};
+
 		/**
 		 * @brief PhysicsCommand（コマンド総合型）
 		 */
@@ -109,7 +136,8 @@ namespace SFW
 			CreateBodyCmd, DestroyBodyCmd, TeleportCmd,
 			SetLinearVelocityCmd, SetAngularVelocityCmd, AddImpulseCmd,
 			SetKinematicTargetCmd, SetCollisionMaskCmd, SetObjectLayerCmd,
-			RayCastCmd
+			RayCastCmd, CreateCharacterCmd, SetCharacterVelocityCmd,
+			SetCharacterRotationCmd, TeleportCharacterCmd
 		>;
 
 		// ========= 形状記述子群 =========
@@ -161,6 +189,10 @@ namespace SFW
 		struct ShapeCreateDesc {
 			ShapeDesc   shape;
 			ShapeScale  scale;     // オプション
+			 //物理シェイプのローカルオフセット（ボディ原点からのシフト）
+			Vec3f localOffset{ 0.0f, 0.0f, 0.0f };
+			// 物理シェイプのローカル回転（ボディローカル）
+			Quatf localRotation = Quatf::Identity(); // なければ {0,0,0,1} でもOK
 			// 必要ならマテリアル等を追加
 		};
 	}

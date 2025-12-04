@@ -108,6 +108,11 @@ namespace SFW
 			float r = 0.0f;           // 半径など
 			float halfHeight = 0.0f;  // 半高さ
 
+			// --- DecoratedShape 用のローカル変換 ---
+			Math::Vec3f localOffset{ 0.0f, 0.0f, 0.0f };   // RotatedTranslated の position
+			float localRotation[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //アライメントの都合で配列で持つ
+			bool hasLocalTransform = false; // RotatedTranslated 等で飾られているか
+
 			uint8_t type = Type::Box;
 		};
 	}

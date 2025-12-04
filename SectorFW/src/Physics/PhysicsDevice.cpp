@@ -96,6 +96,10 @@ namespace SFW::Physics {
 			else if constexpr (std::is_same_v<C, SetCollisionMaskCmd>)   ApplySetCollisionMask(c);
 			else if constexpr (std::is_same_v<C, SetObjectLayerCmd>)     ApplySetObjectLayer(c);
 			else if constexpr (std::is_same_v<C, RayCastCmd>)            ApplyRayCast(c);
+			else if constexpr (std::is_same_v<C, CreateCharacterCmd>)       ApplyCreateCharacter(c);
+			else if constexpr (std::is_same_v<C, SetCharacterVelocityCmd>)  ApplySetCharacterVelocity(c);
+			else if constexpr (std::is_same_v<C, SetCharacterRotationCmd>)  ApplySetCharacterRotation(c);
+			else if constexpr (std::is_same_v<C, TeleportCharacterCmd>)     ApplyTeleportCharacter(c);
 			}, cmd);
 	}
 
@@ -251,6 +255,53 @@ namespace SFW::Physics {
 		m_pendingRayHits.emplace_back(r);
 	}
 
+	void PhysicsDevice::ApplyCreateCharacter(const CreateCharacterCmd& c)
+	{
+		// ShapeManager から JPH::Shape を解決
+		JPH::RefConst<JPH::Shape> shape = ResolveShape(c.shape);
+		if (!shape) return;
+
+		JPH::CharacterVirtualSettings settings;
+		settings.mShape = shape;
+		settings.mUp = JPH::Vec3::sAxisY();
+		settings.mMaxSlopeAngle = JPH::DegreesToRadians(c.maxSlopeDeg);
+		// 必要に応じて SupportingVolume や MaxStrength など設定
+
+		JPH::Vec3 pos = ToJVec3(c.worldTM.pos);
+		JPH::Quat rot = ToJQuat(c.worldTM.rot);
+
+		// CharacterVirtual は PhysicsSystem を使って広義の「ワールド」と衝突検出する
+		auto* system = &m_physics;
+
+		JPH::Ref<JPH::CharacterVirtual> ch =
+			new JPH::CharacterVirtual(&settings, pos, rot, system);
+
+		m_characters[c.e] = ch;
+	}
+
+	void PhysicsDevice::ApplySetCharacterVelocity(const SetCharacterVelocityCmd& c)
+	{
+		auto it = m_characters.find(c.e);
+		if (it == m_characters.end()) return;
+		it->second->SetLinearVelocity(ToJVec3(c.v));
+	}
+
+	void PhysicsDevice::ApplySetCharacterRotation(const SetCharacterRotationCmd& c)
+	{
+		auto it = m_characters.find(c.e);
+		if (it == m_characters.end()) return;
+		it->second->SetRotation(ToJQuat(c.rot));
+	}
+
+	void PhysicsDevice::ApplyTeleportCharacter(const TeleportCharacterCmd& c)
+	{
+		auto it = m_characters.find(c.e);
+		if (it == m_characters.end()) return;
+		it->second->SetPosition(ToJVec3(c.worldTM.pos));
+		it->second->SetRotation(ToJQuat(c.worldTM.rot));
+	}
+
+
 	// ===== Step =====
 	void PhysicsDevice::Step(float fixed_dt, int substeps) {
 		m_physics.Update(
@@ -259,6 +310,32 @@ namespace SFW::Physics {
 			m_tempAlloc,
 			m_jobs    // ここで内部が並列化
 		);
+
+		// 2. CharacterVirtual のステップ
+		if (!m_characters.empty())
+		{
+			// Gravity は PhysicsSystem から取る
+			JPH::Vec3 gravity = m_physics.GetGravity();
+
+			// フィルタはプロジェクトのレイヤ設計に合わせて
+			JPH::DefaultBroadPhaseLayerFilter bpFilter(g_ovsbFilter, Layers::MOVING/*キャラ用BroadPhaseLayer*/);
+			JPH::DefaultObjectLayerFilter     objFilter(g_pairFilter, Layers::MOVING/*キャラが衝突する ObjectLayer 組み合わせ*/);
+			JPH::BodyFilter                   bodyFilter;
+			JPH::ShapeFilter                  shapeFilter;
+
+			for (auto& [e, ch] : m_characters)
+			{
+				ch->Update(
+					fixed_dt,
+					gravity,
+					bpFilter,
+					objFilter,
+					bodyFilter,
+					shapeFilter,
+					*m_tempAlloc
+				);
+			}
+		}
 	}
 
 	// ===== Snapshot =====
@@ -295,6 +372,12 @@ namespace SFW::Physics {
 				});
 		}
 		m_pendingRayHits.clear();
+
+		for (auto& [e, ch] : m_characters) {
+			Vec3f p = FromJVec3(ch->GetPosition());
+			Quatf q = FromJQuat(ch->GetRotation());
+			out.poses.push_back(Pose{ e, p, q });
+		}
 	}
 
 	void PhysicsDevice::ReadPosesBatch(const PoseBatchView& v)

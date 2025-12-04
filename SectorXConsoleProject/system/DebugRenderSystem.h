@@ -43,6 +43,11 @@ void MakeSphereCrossLines(float radius, uint32_t segments,
 	std::vector<uint32_t>& outIndices,
 	bool addXY = true, bool addYZ = true, bool addXZ = true);
 
+void MakeCapsuleLines(float radius, float halfHeight,
+	uint32_t meridianSegments, uint32_t ringSegments,
+	std::vector<Debug::LineVertex>& outVerts,
+	std::vector<uint32_t>& outIndices);
+
 template<typename Partition>
 class DebugRenderSystem : public ITypeSystem<
 	DebugRenderSystem<Partition>,
@@ -102,8 +107,11 @@ public:
 		std::vector<LineVertex> sphereVerts;
 		std::vector<uint32_t> sphereIndices;
 
+		constexpr float radius = 0.5f;
+		constexpr uint32_t segment = 4;
+
 		//MakeSphere(0.5f, 8, 8, sphereVerts, sphereIndices);
-		MakeSphereCrossLines(0.5f, 16, sphereVerts, sphereIndices, true, true, true);
+		MakeSphereCrossLines(radius, segment * 4, sphereVerts, sphereIndices, true, true, true);
 		DX11::MeshCreateDesc sphereDesc{
 			.vertices = sphereVerts.data(),
 			.vSize = (uint32_t)sphereVerts.size() * sizeof(LineVertex),
@@ -112,8 +120,35 @@ public:
 			.iSize = (uint32_t)sphereIndices.size() * sizeof(uint32_t),
 			.sourcePath = L"__internal__/Sphere"
 		};
-
 		meshMgr->Add(sphereDesc, sphereHandle);
+
+		std::vector<LineVertex> capsuleLineVerts;
+		std::vector<uint32_t> capsuleLineIndices;
+		{
+			capsuleLineVerts.reserve(segment * 2);
+			capsuleLineIndices.reserve(segment * 2);
+			for (int i = 0; i < segment; ++i)
+			{
+				float rad = Math::tau_v<float> / segment * i;
+				float rx = cos(rad) * radius;
+				float rz = sin(rad) * radius;
+				capsuleLineVerts.push_back({ {rx, 0.5f, rz} });
+				capsuleLineVerts.push_back({ { rx, -0.5f, rz } });
+
+				capsuleLineIndices.push_back(i * 2 + 0);
+				capsuleLineIndices.push_back(i * 2 + 1);
+			}
+		}
+
+		DX11::MeshCreateDesc capsuleLineDesc{
+		.vertices = capsuleLineVerts.data(),
+		.vSize = (uint32_t)capsuleLineVerts.size() * sizeof(LineVertex),
+		.stride = sizeof(LineVertex),
+		.indices = capsuleLineIndices.data(),
+		.iSize = (uint32_t)capsuleLineIndices.size() * sizeof(uint32_t),
+		.sourcePath = L"__internal__/CapsuleLine"
+		};
+		meshMgr->Add(capsuleLineDesc, capsuleLineHandle);
 
 		auto shaderMgr = renderService->GetResourceManager<DX11::ShaderManager>();
 		DX11::ShaderCreateDesc shaderDesc;
@@ -469,7 +504,7 @@ public:
 
 		if (drawShapeDims)
 		{
-			this->ForEachFrustumChunkWithAccessor<ShapeDimsAccessor>([](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh)
+			this->ForEachFrustumChunkWithAccessor<ShapeDimsAccessor>([](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
 				{
 					auto shapeDims = accessor.Get<Read<Physics::ShapeDims>>();
 					auto interp = accessor.Get<Read<Physics::PhysicsInterpolation>>();
@@ -483,7 +518,8 @@ public:
 
 						auto& d = shapeDims.value()[i];
 						switch (d.type) {
-						case Physics::ShapeDims::Type::Box: {
+						case Physics::ShapeDims::Type::Box:
+						{
 							auto mtx = transMtx * rotMtx * Math::MakeScalingMatrix(d.dims);
 							Graphics::DrawCommand cmd;
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
@@ -495,7 +531,8 @@ public:
 							queue->Push(std::move(cmd));
 							break;
 						}
-						case Physics::ShapeDims::Type::Sphere: {
+						case Physics::ShapeDims::Type::Sphere:
+						{
 							auto mtx = transMtx * rotMtx * Math::MakeScalingMatrix(Math::Vec3f(d.r * 2)); // 球は均一スケーリング
 							Graphics::DrawCommand cmd;
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
@@ -507,11 +544,46 @@ public:
 							queue->Push(std::move(cmd));
 							break;
 						}
+						case Physics::ShapeDims::Type::Capsule:
+						{
+							auto offset = d.localOffset;
+							offset.y += d.halfHeight;
+							auto offsetMtx = Math::MakeTranslationMatrix(offset);
+							auto scaleMtx = Math::MakeScalingMatrix(Math::Vec3f(d.r * 2));
+							auto instMtx = transMtx * rotMtx;
+							auto mtx = instMtx * offsetMtx * scaleMtx; // 球は均一スケーリング
+							Graphics::DrawCommand cmd;
+							cmd.instanceIndex = queue->AllocInstance({ mtx });
+							cmd.mesh = sphereMesh;
+							cmd.material = 0;
+							cmd.pso = pso;
+							cmd.sortKey = 0; // 適切なソートキーを設定
+							cmd.viewMask = PASS_UI_3DLINE;
+							queue->Push(std::move(cmd));
+
+							offset = d.localOffset;
+							offset.y -= d.halfHeight;
+							offsetMtx = Math::MakeTranslationMatrix(offset);
+							mtx = instMtx * offsetMtx * scaleMtx;
+							cmd.instanceIndex = queue->AllocInstance({ mtx });
+							queue->Push(std::move(cmd));
+
+							// 真ん中の線
+							offset = d.localOffset;
+							offsetMtx = Math::MakeTranslationMatrix(offset);
+							scaleMtx = Math::MakeScalingMatrix(Math::Vec3f(d.r * 2, d.halfHeight * 2, d.r * 2));
+							mtx = instMtx * offsetMtx * scaleMtx;
+							cmd.mesh = capsuleLineMesh;
+							cmd.instanceIndex = queue->AllocInstance({ mtx });
+							queue->Push(std::move(cmd));
+
+							break;
+						}
 						default:
 							break;
 						}
 					}
-				}, partition, fru, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereHandle.index);
+				}, partition, fru, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereHandle.index, capsuleLineHandle.index);
 		}
 
 		if (drawMOCDepth)
@@ -543,7 +615,7 @@ private:
 	bool drawModelRect = false;
 	bool drawOcclutionRect = false;
 	bool drawCascadeAABB = false;
-	bool drawShapeDims = false;
+	bool drawShapeDims = true;
 	bool drawMOCDepth = false;
 
 	Graphics::PSOHandle psoLineHandle = {};
@@ -560,4 +632,5 @@ private:
 
 	Graphics::MeshHandle boxHandle = {}; // デフォルトメッシュ（立方体）
 	Graphics::MeshHandle sphereHandle = {}; // デフォルトメッシュ（球）
+	Graphics::MeshHandle capsuleLineHandle = {}; //カプセルの真ん中の直線
 };

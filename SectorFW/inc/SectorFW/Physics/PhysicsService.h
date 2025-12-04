@@ -49,6 +49,14 @@ namespace SFW
 				m_device.SetShapeResolver(m_mgr);
 			}
 			/**
+			 * @brief 指定した形状を生成する
+			 * @param desc 形状生成記述子
+			 * @return ShapeHandle 生成された形状のハンドル
+			 */
+			[[nodiscard]] ShapeHandle MakeShape(const ShapeCreateDesc& desc) {
+				ShapeHandle h; m_mgr->Add(desc, h); return h;
+			}
+			/**
 			 * @brief Box 形状を生成する
 			 * @param he ボックスサイズの半分の長さ（Vec3f）
 			 * @param s スケール（デフォルトは {1,1,1}）
@@ -162,6 +170,23 @@ namespace SFW
 			 * @param maxDist 最大距離
 			 */
 			bool RayCast(uint32_t reqId, Vec3f o, Vec3f dir, float maxDist) { return Enqueue(RayCastCmd{ reqId, o, dir, maxDist }); }
+			
+			bool CreateCharacter(const CreateCharacterCmd& c) {
+				return Enqueue(c);
+			}
+
+			bool SetCharacterVelocity(Entity e, Vec3f v) {
+				return Enqueue(SetCharacterVelocityCmd{ e, v });
+			}
+
+			bool SetCharacterRotation(Entity e, const Quatf& q) {
+				return Enqueue(SetCharacterRotationCmd{ e, q });
+			}
+
+			bool TeleportCharacter(Entity e, const Mat34f& tm) {
+				return Enqueue(TeleportCharacterCmd{ e, tm });
+			}
+
 			/**
 			 * @brief 物理シミュレーションを更新する（IUpdateService 実装）
 			 * @param dt 可変フレーム時間（ゲームループから呼ぶ）

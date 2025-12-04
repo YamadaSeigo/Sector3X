@@ -39,16 +39,16 @@ public:
 			)
 			{
 				auto transform = accessor.Get<Write<TransformSoA>>();
-				if (!transform) { LOG_ERROR("TransformSoA component not found in PhysicsSystem"); return; }
+				if (!transform) [[unlikely]] { LOG_ERROR("TransformSoA component not found in PhysicsSystem"); return; }
 
 				auto interpolation = accessor.Get<Write<Physics::PhysicsInterpolation>>();
-				if (!interpolation) { LOG_ERROR("PhysicsInterpolation component not found in PhysicsSystem"); return; }
+				if (!interpolation) [[unlikely]] { LOG_ERROR("PhysicsInterpolation component not found in PhysicsSystem"); return; }
 
 				auto bodyComponent = accessor.Get<Read<Physics::BodyComponent>>();
-				if (!bodyComponent) { LOG_ERROR("BodyComponent not found in PhysicsSystem"); return; }
+				if (!bodyComponent) [[unlikely]] { LOG_ERROR("BodyComponent not found in PhysicsSystem"); return; }
 
 				auto motionTag = accessor.Get<Write<SpatialMotionTag>>();
-				if (!motionTag) { LOG_ERROR("SpatialMotionTag component not found in PhysicsSystem"); return; }
+				if (!motionTag) [[unlikely]] { LOG_ERROR("SpatialMotionTag component not found in PhysicsSystem"); return; }
 
 				size_t size = sizeof(float) * entityCount;
 				memcpy(interpolation->ppx(), interpolation->cpx(), size);
@@ -105,7 +105,8 @@ public:
 					transform->qw()[i] = nlerpQ.w;
 
 					Math::Vec3f newPos = { transform->px()[i], transform->py()[i], transform->pz()[i] };
-					Math::Vec3f vel = { (interpolation->cpx()[i] - interpolation->ppx()[i]) / (1.0f / 60.0f),
+					Math::Vec3f vel = {
+						(interpolation->cpx()[i] - interpolation->ppx()[i]) / (1.0f / 60.0f),
 						(interpolation->cpy()[i] - interpolation->ppy()[i]) / (1.0f / 60.0f),
 						(interpolation->cpz()[i] - interpolation->ppz()[i]) / (1.0f / 60.0f) };
 

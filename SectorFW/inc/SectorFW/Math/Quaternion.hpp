@@ -18,7 +18,10 @@ namespace SFW
 	{
 		template<typename T>
 		struct alignas(sizeof(T) == 8 ? 32 : 16) Quat {
-			T x, y, z, w;
+			union {
+				struct { T x, y, z, w; };
+				T v[4];
+			};
 
 			Quat() noexcept : x(0), y(0), z(0), w(1) {}
 			Quat(T x, T y, T z, T w) noexcept : x(x), y(y), z(z), w(w) {}

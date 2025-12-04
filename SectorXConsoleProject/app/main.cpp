@@ -751,7 +751,10 @@ int main(void)
 					nullptr,
 					[&](Math::Vec3f scale)
 					{
-						return ps->MakeCapsule(1, 0.2f, Physics::ShapeScale{ scale });
+						Physics::ShapeCreateDesc shapeDesc;
+						shapeDesc.shape = Physics::CapsuleDesc{ 10.0f,1.0f };
+						shapeDesc.localOffset.y = 10.0f;
+						return ps->MakeShape(shapeDesc);
 					},
 					nullptr,
 					nullptr
@@ -897,8 +900,8 @@ int main(void)
 				// Entity生成
 				uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
 				uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
-				for (int j = 0; j < 100; ++j) {
-					for (int k = 0; k < 100; ++k) {
+				for (int j = 0; j < 10; ++j) {
+					for (int k = 0; k < 10; ++k) {
 						for (int n = 0; n < 1; ++n) {
 							Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
 							//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
@@ -928,7 +931,9 @@ int main(void)
 								Physics::BodyComponent staticBody{};
 								staticBody.isStatic = Physics::BodyType::Static; // staticにする
 								auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
+#ifdef _DEBUG
 								auto shapeDims = ps->GetShapeDims(shapeHandle);
+#endif
 								auto id = levelSession.AddEntity(
 									TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
 									modelComp,
@@ -937,7 +942,9 @@ int main(void)
 										location, // 初期位置
 										Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
 									),
+#ifdef _DEBUG
 									shapeDims.value(),
+#endif
 									tag
 								);
 								if (id) {
@@ -955,11 +962,75 @@ int main(void)
 					}
 				}
 
+				//プレイヤー生成
+				{
+					Math::Vec3f playerStartPos = { 10.0f, 0.0f, 10.0f };
+
+					auto playerShape = ps->MakeCapsule(2.0f, 1.0f);
+#ifdef _DEBUG
+					auto playerDims = ps->GetShapeDims(playerShape);
+#endif
+
+					auto chunk = pLevel->GetChunk(playerStartPos, EOutOfBoundsPolicy::ClampToEdge);
+					auto key = chunk.value()->GetNodeKey();
+					SpatialMotionTag tag{};
+					tag.handle = { key, chunk.value() };
+
+					Physics::BodyComponent playerBody{};
+					//playerBody.isStatic = Physics::BodyType::Dynamic; // 動的にする
+					auto id = levelSession.AddEntity(
+						TransformSoA{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
+						playerBody,
+						Physics::PhysicsInterpolation(
+							playerStartPos, // 初期位置
+							Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+						),
+#ifdef _DEBUG
+						playerDims.value(),
+#endif
+						tag
+					);
+					if (id) {
+
+						ps->EnqueueCreateIntent(id.value(), playerShape, key);
+					}
+				}
+
+				//地形コリジョン生成
+				{
+					Physics::ShapeCreateDesc terrainShapeDesc;
+					terrainShapeDesc.shape = Physics::HeightFieldDesc{
+						.sizeX = (int)p.cellsX + 1,
+						.sizeY = (int)p.cellsZ + 1,
+						.samples = heightMap,
+						.scaleY = p.heightScale,
+						.cellSizeX = p.cellSize,
+						.cellSizeY = p.cellSize
+					};
+					auto terrainShape = ps->MakeShape(terrainShapeDesc);
+					Physics::BodyComponent staticBody{};
+					staticBody.isStatic = Physics::BodyType::Static; // staticにする
+					auto id = levelSession.AddEntity(
+						TransformSoA{ 0.0f, 0.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
+						staticBody,
+						Physics::PhysicsInterpolation(
+							Math::Vec3f{ 0.0f,-40.0f, 0.0f }, // 初期位置
+							Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+						)
+					);
+					if (id) {
+						auto chunk = pLevel->GetChunk({ 0.0f, -40.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
+						ps->EnqueueCreateIntent(id.value(), terrainShape, chunk.value()->GetNodeKey());
+					}
+				}
+
+				//auto boxHandle = ps->MakeBox(Math::Vec3f(1000.0f,1.0f,1000.0f));
+				//auto boxDims = ps->GetShapeDims(boxHandle);
 				//Physics::BodyComponent staticBody{};
 				//staticBody.isStatic = Physics::BodyType::Static; // staticにする
-				//auto id = level->AddEntity(
+				//auto id = levelSession.AddEntity(
 				//	TransformSoA{ 10.0f,-10.0f, 10.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
-				//	CModel{ modelAssetHandle },
+				//	CModel{ modelAssetHandle[0]},
 				//	staticBody,
 				//	Physics::PhysicsInterpolation(
 				//		Math::Vec3f{ 10.0f,-10.0f, 10.0f }, // 初期位置
@@ -968,8 +1039,8 @@ int main(void)
 				//	boxDims.value()
 				//);
 				//if (id) {
-				//	auto chunk = level->GetChunk({ 0.0f,-100.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
-				//	ps->EnqueueCreateIntent(id.value(), box, chunk.value()->GetNodeKey());
+				//	auto chunk = pLevel->GetChunk({ 0.0f,-100.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
+				//	ps->EnqueueCreateIntent(id.value(), boxHandle, chunk.value()->GetNodeKey());
 				//}
 			},
 			//アンロード時
@@ -980,7 +1051,7 @@ int main(void)
 	}
 
 	//初めのレベルをロード
-	//world.GetSession().LoadLevel("OpenField");
+	world.GetSession().LoadLevel("OpenField");
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
 

@@ -210,3 +210,115 @@ void MakeSphereCrossLines(float radius, uint32_t segments,
 	if (addYZ) AppendCircle(radius, segments, CirclePlane::YZ, outVerts, outIndices, 0.0f, 0.0f); // 子午線
 	if (addXY) AppendCircle(radius, segments, CirclePlane::XY, outVerts, outIndices);             // 直交子午線
 }
+
+// カプセルの縦ループ（XY / ZY）の生成
+// axisPlaneXY = true なら XY 平面 (z=0)、false なら ZY 平面 (x=0)
+void AppendCapsuleMeridianLoop(float radius, float halfHeight, uint32_t segments,
+	bool axisPlaneXY,
+	std::vector<Debug::LineVertex>& verts,
+	std::vector<uint32_t>& idx)
+{
+	using Vec3 = Math::Vec3f;
+
+	// 半円2つ＋直線2本 なので、最低 8 セグメントくらい欲しい
+	segments = std::max<uint32_t>(segments, 8u);
+
+	// 「上半円」「下半円」「右の直線」「左の直線」を
+	// だいたい同じくらいの分割数にしたいので 4 で割る
+	uint32_t quarter = segments / 4u;
+	if (quarter == 0) quarter = 1;
+	segments = quarter * 4u; // 4の倍数に丸める
+
+	const uint32_t base = static_cast<uint32_t>(verts.size());
+
+	// 2D の (u, y) でカプセル断面を作ってから XY / ZY に埋め込む
+	auto addPoint = [&](float u, float y)
+		{
+			float x, z;
+			if (axisPlaneXY) {
+				// XY 平面 (z = 0)
+				x = u;
+				z = 0.0f;
+			}
+			else {
+				// ZY 平面 (x = 0)
+				x = 0.0f;
+				z = u;
+			}
+			verts.push_back({ Vec3{ x, y, z }, 0xFFFFFFFF });
+		};
+
+	const float PI = std::numbers::pi_v<float>;
+
+	// 1) 右側の直線：y = -halfHeight → +halfHeight, u = +radius
+	for (uint32_t i = 0; i < quarter; ++i) {
+		float t = i / float(quarter); // 0..1
+		float y = -halfHeight + (2.0f * halfHeight) * t;
+		addPoint(+radius, y);
+	}
+
+	// 2) 上半円：中心 (0, +halfHeight)、角度 -90°→+90°
+	//    angle = -PI/2 .. +PI/2
+	for (uint32_t i = 0; i < quarter; ++i) {
+		float t = i / float(quarter); // 0..1
+		float angle = -0.5f * PI + PI * t; // -90°→+90°
+		float u = radius * std::cos(angle);
+		float y = +halfHeight + radius * std::sin(angle);
+		addPoint(u, y);
+	}
+
+	// 3) 左側の直線：y = +halfHeight → -halfHeight, u = -radius
+	for (uint32_t i = 0; i < quarter; ++i) {
+		float t = i / float(quarter); // 0..1
+		float y = +halfHeight - (2.0f * halfHeight) * t;
+		addPoint(-radius, y);
+	}
+
+	// 4) 下半円：中心 (0, -halfHeight)、角度 +90°→+270°
+	//    angle = +PI/2 .. +3PI/2
+	for (uint32_t i = 0; i < quarter; ++i) {
+		float t = i / float(quarter); // 0..1
+		float angle = +0.5f * PI + PI * t; // +90°→+270°
+		float u = radius * std::cos(angle);
+		float y = -halfHeight + radius * std::sin(angle);
+		addPoint(u, y);
+	}
+
+	// インデックス（閉ループ）
+	const uint32_t count = static_cast<uint32_t>(verts.size()) - base;
+	idx.reserve(idx.size() + count * 2);
+	for (uint32_t i = 0; i < count; ++i) {
+		const uint32_t a = base + i;
+		const uint32_t b = base + ((i + 1) % count);
+		idx.push_back(a);
+		idx.push_back(b);
+	}
+}
+
+// カプセル全体のラインを生成
+// radius: 半径
+// halfHeight: 円柱部分の半分の高さ（カプセル全体の高さは 2*halfHeight + 2*radius）
+void MakeCapsuleLines(float radius, float halfHeight,
+	uint32_t meridianSegments, uint32_t ringSegments,
+	std::vector<Debug::LineVertex>& outVerts,
+	std::vector<uint32_t>& outIndices)
+{
+	outVerts.clear();
+	outIndices.clear();
+
+	// XY 平面の縦ループ（z = 0）
+	AppendCapsuleMeridianLoop(radius, halfHeight, meridianSegments,
+		/*axisPlaneXY=*/true, outVerts, outIndices);
+
+	// ZY 平面の縦ループ（x = 0）
+	AppendCapsuleMeridianLoop(radius, halfHeight, meridianSegments,
+		/*axisPlaneXY=*/false, outVerts, outIndices);
+
+	// XZ 平面の円：上と下（半球と円柱の境目）
+	// AppendCircle のシグネチャにデフォルト引数がある前提
+	AppendCircle(radius, ringSegments, CirclePlane::XZ,
+		outVerts, outIndices, +halfHeight, 0.0f); // 上側円 (y = +halfHeight)
+
+	AppendCircle(radius, ringSegments, CirclePlane::XZ,
+		outVerts, outIndices, -halfHeight, 0.0f); // 下側円 (y = -halfHeight)
+}
