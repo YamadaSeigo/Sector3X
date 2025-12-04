@@ -51,6 +51,21 @@ float PseudoNoise2D(float2 p)
     return frac(sin(h) * 43758.5453123);
 }
 
+// かなり軽い 2D ハッシュ（整数演算ベース）
+float Hash2D(float2 p)
+{
+    // 適当な整数に変換
+    uint2 n = uint2(floor(p)) * uint2(374761393u, 668265263u);
+    uint h = n.x ^ n.y;
+
+    h ^= h >> 13;
+    h *= 1274126177u;
+    h ^= h >> 16;
+
+    // 0..1 に正規化 (1/2^32)
+    return h * (1.0 / 4294967296.0);
+}
+
 VSOutput main(VSInput input, uint instId : SV_InstanceID)
 {
     uint pooledIndex = gInstIndices[gIndexBase + instId]; //間接参照
@@ -80,7 +95,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
    // ---- 2) 個々の“ゆらぎ”用の小さいノイズ ----
     float2 noisePos = baseWorldPos.xz * gNoiseFreq; // gNoiseFreq は 0.1 とか
-    float noise01 = PseudoNoise2D(noisePos);
+    float noise01 = Hash2D(noisePos);
     float noiseN11 = noise01 * 2.0f - 1.0f;
 
    // 小さい振幅で “バラつき” だけを付ける

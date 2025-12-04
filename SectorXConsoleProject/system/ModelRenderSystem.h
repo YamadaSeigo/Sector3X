@@ -170,7 +170,7 @@ public:
 				// ワールド行列を一括生成
 				std::vector<float> worldMtxBuffer(12 * entityCount);
 				Math::Matrix3x4fSoA worldMtxSoA(worldMtxBuffer.data(), entityCount);
-				Math::BuildWorldMatrixSoA_FromTransformSoA(mtf, worldMtxSoA);
+				Math::BuildWorldMatrixSoA_FromTransformSoA(mtf, worldMtxSoA, false);
 
 				std::vector<Math::Matrix4x4f> WVPs(entityCount);
 				Math::Mul4x4x3x4_Batch_To4x4_AVX2_RowCombine_SoA(kp->viewProj, worldMtxSoA, WVPs.data());
@@ -201,7 +201,13 @@ public:
 
 						//バウンディングスフィアで高速早期判定
 						//※WVPがLHのZeroToOne深度範囲を仮定(そうでない場合はZDepthは正確ではない)
-						if (!mesh.bs.IsVisible_WVP_CamBasis_Fast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth)) continue;
+						//カメラの軸にWVPの回転成分を反映させないために、radiusだけworld空間にしておく
+						//(スケールの一番大きいものを反映しているため可視判定もすこし通りやすくなる)
+						float bsRadiusWS = mesh.bs.radius * (std::max)(mtf.sx[i], (std::max)(mtf.sy[i], mtf.sz[i]));
+						if (!Math::BoundingSpheref::IsVisible_LocalCenter_WorldRadius(WVP, kp->viewProj, mesh.bs.center, bsRadiusWS, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth))
+							continue;
+
+						//if (!mesh.bs.IsVisible_WVP_CamBasis_Fast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth)) continue;
 
 						ndc.valid = true;
 						int lodCount = (int)mesh.lods.size();

@@ -264,6 +264,26 @@ namespace SFW
 			);
 		}
 
+		void RegisterDebugCheckBox(
+			const std::string& category,
+			const std::string& label,
+			bool initialValue,
+			std::function<void(bool)> onChange);
+
+		inline void BindDebugCheckBox(
+			const std::string& category,
+			const std::string& label,
+			bool* target)
+		{
+			if (!target) return;
+			RegisterDebugCheckBox(
+				category,
+				label,
+				*target,
+				[target](bool v) { *target = v; }
+			);
+		}
+
 		void RegisterDebugButton(
 			const std::string& category,
 			const std::string& label,
@@ -300,6 +320,12 @@ namespace SFW
 #define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed) \
 	SFW::Debug::BindDebugSliderFloat(category, label, target, minValue, maxValue, speed)
 
+#define REGISTER_DEBUG_CHECKBOX(category, label, initialValue, onChange) \
+	SFW::Debug::RegisterDebugCheckBox(category, label, initialValue, onChange)
+
+#define BIND_DEBUG_CHECKBOX(category, label, target) \
+	SFW::Debug::BindDebugCheckBox(category, label, target)
+
 #define REGISTER_DEBUG_BUTTON(category, label, onChange)\
 	SFW::Debug::RegisterDebugButton(category, label, onChange)
 
@@ -310,6 +336,8 @@ namespace SFW
 
 #define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange) 
 #define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed)
+#define REGISTER_DEBUG_CHECKBOX(category, label, initialValue, onChange)
+#define BIND_DEBUG_CHECKBOX(category, label, target)
 #define REGISTER_DEBUG_BUTTON(category, label, onChange)
 #define BIND_DEBUG_TEXT(category, label, target)
 

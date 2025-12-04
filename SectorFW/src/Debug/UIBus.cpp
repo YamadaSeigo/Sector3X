@@ -65,6 +65,21 @@ namespace SFW
 			bus.debugControlRegisterQ.push(std::move(c));
 		}
 
+		void RegisterDebugCheckBox(const std::string& category, const std::string& label, bool initialValue, std::function<void(bool)> onChange)
+		{
+			auto& bus = GetUIBus();
+			if (!bus.alive.load(std::memory_order_acquire)) return;
+
+			DebugControl c;
+			c.kind = DebugControlKind::DC_CHECKBOX;
+			c.category = category;
+			c.label = label;
+			c.b_value = initialValue;
+			c.onChangeB = std::move(onChange);
+
+			bus.debugControlRegisterQ.push(std::move(c));
+		}
+
 		void RegisterDebugButton(
 			const std::string& category,
 			const std::string& label,

@@ -707,16 +707,16 @@ int main(void)
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
 
 				modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
+				modelDesc.buildOccluders = false;
 				modelDesc.viewMax = 200.0f;
 				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
 				modelDesc.path = "assets/model/Stylized/Tree01.gltf";
-				modelDesc.buildOccluders = false;
 				modelDesc.viewMax = 600.0f;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
-				modelDesc.pCustomNomWFunc = WindMovementService::ComputeTreeWeight;
+				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 				modelDesc.instancesPeak = 100;
@@ -831,7 +831,7 @@ int main(void)
 				//scheduler.AddSystem<PhysicsSystem>(serviceLocator);
 				//scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
 				//scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
-				//scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
+				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
 
 				auto ps = serviceLocator.Get<Physics::PhysicsService>();
@@ -879,8 +879,9 @@ int main(void)
 							if (splatR < 20) {
 								continue; // 草が薄い場所はスキップ
 							}
+
 							//　薄いほど高さを下げる
-							location.y -= powf((1.0f - splatR / 255.0f), 2);
+							location.y -= (1.0f - splatR / 255.0f) * 2.0f - 1.0f;
 
 							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 							rot.KeepTwist(pose.up);
@@ -977,8 +978,10 @@ int main(void)
 			{
 				isExecuteCustomFunc.store(false, std::memory_order_relaxed);
 			});
-		//world.LoadLevel("OpenField");
 	}
+
+	//初めのレベルをロード
+	world.GetSession().LoadLevel("OpenField");
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
 
