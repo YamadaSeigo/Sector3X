@@ -39,7 +39,7 @@ namespace SFW
 		 */
 		struct CreateBodyCmd {
 			Entity      e{};
-			SpatialChunkKey  owner{};     // ★ ManagerKey に拡張
+			SpatialChunkKey  owner{};     // ManagerKey に拡張
 			ShapeHandle shape;
 			Mat34f     worldTM;
 			float      density{ 1000.0f };
@@ -136,7 +136,7 @@ namespace SFW
 		 * @brief 凸包
 		 */
 		struct ConvexHullDesc {
-			std::vector<Vec3f> points;  // 凸包頂点候補（重複OK・Jolt側で整理）
+			const std::vector<Vec3f>& points;  // 凸包頂点候補（重複OK・Jolt側で整理）
 			float maxConvexRadius = 0.05f; // シュリンク半径（狭間隔クエリのロバスト性向上）
 			float hullTolerance = 0.005f;
 		};
@@ -152,6 +152,8 @@ namespace SFW
 		 */
 		struct ShapeScale {
 			Vec3f s{ 1,1,1 }; // (1,1,1) ならスケール無し
+			ShapeScale() = default;
+			ShapeScale(Vec3f _s) :s(_s) {}
 		};
 		/**
 		 * @brief 形状生成記述子(ShapeCreateDesc)

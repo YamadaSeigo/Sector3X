@@ -29,9 +29,11 @@ public:
 		using namespace SFW::Physics;
 
 		std::vector<PhysicsService::CreateIntent> intents;
-		ps->ConsumeCreateIntents(intents);
+		ps->SwapCreateIntents(intents);
 		if (intents.empty()) return;
 
+		bool stop = false;
+		size_t createCount = 0;
 		for (const auto& in : intents) {
 			auto chunk = reg->ResolveOwner(in.owner);
 			if (chunk == nullptr) {
@@ -84,7 +86,23 @@ public:
 			cmd.broadphase = 0;
 			cmd.kinematic = kinematic;
 
-			ps->CreateBody(cmd); // コマンドキューへ（固定Δtで一括適用）
+			bool ok = ps->CreateBody(cmd); // コマンドキューへ（固定Δtで一括適用）
+			if (!ok) {
+				stop = true;
+				break;
+			}
+
+			createCount++;
+		}
+
+		if (stop)
+		{
+			//生成済みのintent削除
+			if (createCount > 0)
+				intents.erase(intents.begin(), intents.begin() + (createCount - 1));
+
+			//未生成のintentを戻す
+			ps->SwapCreateIntents(intents);
 		}
 	}
 

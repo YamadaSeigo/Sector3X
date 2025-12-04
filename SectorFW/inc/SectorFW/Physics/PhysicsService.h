@@ -68,8 +68,19 @@ namespace SFW
 			}
 			/**
 			 * @brief カプセル形状を生成する
-			 * @param pts カプセルの両端の位置（Vec3f[2]）
-			 * @param r カプセルの半径
+			 * @param halfHeight 半分の高さ
+			 * @param radius 球の半径
+			 * @param s スケール（デフォルトは {1,1,1}）
+			 * @return ShapeHandle 生成された球形状のハンドル
+			 */
+			[[nodiscard]] ShapeHandle MakeCapsule(float halfHeight, float radius, ShapeScale s = { {1,1,1} })
+			{
+				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ CapsuleDesc{halfHeight, radius}, s }, h); return h;
+			}
+			/**
+			 * @brief 凸形状を生成する
+			 * @param pts 凸形状を作成する頂点群
+			 * @param r  シュリンク半径（デフォルトは 0.05f）
 			 * @param tol 許容誤差（デフォルトは 0.005f）
 			 * @return ShapeHandle 生成されたカプセル形状のハンドル
 			 */
@@ -88,61 +99,61 @@ namespace SFW
 			 * @brief 物理ボディを作成するコマンドをキューに追加する
 			 * @param c 作成コマンド
 			 */
-			void CreateBody(const CreateBodyCmd& c) { Enqueue(c); }
+			bool CreateBody(const CreateBodyCmd& c) { return Enqueue(c); }
 			/**
 			 * @brief 物理ボディを破棄するコマンドをキューに追加する
 			 * @param e 破棄するエンティティ
 			 */
-			void DestroyBody(Entity e) { Enqueue(DestroyBodyCmd{ e }); }
+			bool DestroyBody(Entity e) { return Enqueue(DestroyBodyCmd{ e }); }
 			/**
 			 * @brief 物理ボディをテレポートするコマンドをキューに追加する
 			 * @param e テレポートするエンティティ
 			 * @param tm テレポート先の変換行列
 			 * @param wake テレポート後に起こすかどうか（デフォルトは true）
 			 */
-			void Teleport(Entity e, const Mat34f& tm, bool wake = true) { Enqueue(TeleportCmd{ e, wake, tm }); }
+			bool Teleport(Entity e, const Mat34f& tm, bool wake = true) { return Enqueue(TeleportCmd{ e, wake, tm }); }
 			/**
 			 * @brief 物理ボディの線形速度を設定するコマンドをキューに追加する
 			 * @param e 設定するエンティティ
 			 * @param v 設定する線形速度（Vec3f）
 			 */
-			void SetLinearVelocity(Entity e, Vec3f v) { Enqueue(SetLinearVelocityCmd{ e, v }); }
+			bool SetLinearVelocity(Entity e, Vec3f v) { return Enqueue(SetLinearVelocityCmd{ e, v }); }
 			/**
 			 * @brief 物理ボディの角速度を設定するコマンドをキューに追加する
 			 * @param e 設定するエンティティ
 			 * @param w 設定する角速度（Vec3f）
 			 */
-			void SetAngularVelocity(Entity e, Vec3f w) { Enqueue(SetAngularVelocityCmd{ e, w }); }
+			bool SetAngularVelocity(Entity e, Vec3f w) { return Enqueue(SetAngularVelocityCmd{ e, w }); }
 			/**
 			 * @brief 物理ボディにインパルスを加えるコマンドをキューに追加する
 			 * @param e インパルスを加えるエンティティ
 			 * @param p 加えるインパルス（Vec3f）
 			 * @param at インパルスを加える位置（ワールド座標、デフォルトはボディ中心）
 			 */
-			void AddImpulse(Entity e, Vec3f p, std::optional<Vec3f> at = std::nullopt) {
+			bool AddImpulse(Entity e, Vec3f p, std::optional<Vec3f> at = std::nullopt) {
 				AddImpulseCmd cmd{ e, p, {}, false };
 				if (at) { cmd.atWorldPos = *at; cmd.useAtPos = true; }
-				Enqueue(cmd);
+				return Enqueue(cmd);
 			}
 			/**
 			 * @brief 物理ボディにトルクを加えるコマンドをキューに追加する
 			 * @param e トルクを加えるエンティティ
 			 * @param tm 加えるトルク（Vec3f）
 			 */
-			void SetKinematicTarget(Entity e, const Mat34f& tm) { Enqueue(SetKinematicTargetCmd{ e, tm }); }
+			bool SetKinematicTarget(Entity e, const Mat34f& tm) { return Enqueue(SetKinematicTargetCmd{ e, tm }); }
 			/**
 			 * @brief 物理ボディの衝突マスクを設定するコマンドをキューに追加する
 			 * @param e 設定するエンティティ
 			 * @param mask 設定する衝突マスク
 			 */
-			void SetCollisionMask(Entity e, uint32_t mask) { Enqueue(SetCollisionMaskCmd{ e, mask }); }
+			bool SetCollisionMask(Entity e, uint32_t mask) { return Enqueue(SetCollisionMaskCmd{ e, mask }); }
 			/**
 			 * @brief 物理ボディのレイヤーを設定するコマンドをキューに追加する
 			 * @param e 設定するエンティティ
 			 * @param layer レイヤー
 			 * @param broad ブロードフェーズレイヤー
 			 */
-			void SetObjectLayer(Entity e, uint16_t layer, uint16_t broad) { Enqueue(SetObjectLayerCmd{ e, layer, broad }); }
+			bool SetObjectLayer(Entity e, uint16_t layer, uint16_t broad) { return Enqueue(SetObjectLayerCmd{ e, layer, broad }); }
 			/**
 			 * @brief レイキャストを実行するコマンドをキューに追加する
 			 * @param reqId リクエストID（応答時に返される）
@@ -150,7 +161,7 @@ namespace SFW
 			 * @param dir 方向ベクトル（正規化されていること、Vec3f）
 			 * @param maxDist 最大距離
 			 */
-			void RayCast(uint32_t reqId, Vec3f o, Vec3f dir, float maxDist) { Enqueue(RayCastCmd{ reqId, o, dir, maxDist }); }
+			bool RayCast(uint32_t reqId, Vec3f o, Vec3f dir, float maxDist) { return Enqueue(RayCastCmd{ reqId, o, dir, maxDist }); }
 			/**
 			 * @brief 物理シミュレーションを更新する（IUpdateService 実装）
 			 * @param dt 可変フレーム時間（ゲームループから呼ぶ）
@@ -217,7 +228,7 @@ namespace SFW
 			 * @brief 生成インテントを取り出す（Body 作成要求用
 			 * @param out 取り出し先のベクター
 			 */
-			void ConsumeCreateIntents(std::vector<CreateIntent>& out) {
+			void SwapCreateIntents(std::vector<CreateIntent>& out) {
 				std::scoped_lock lk(m_intentMutex);
 				out.swap(m_createIntents); // O(1)
 			}
@@ -251,10 +262,10 @@ namespace SFW
 			}
 		private:
 			template<class T>
-			void Enqueue(const T& c) {
-				PhysicsCommand cmd = c;
+			bool Enqueue(const T& c) {
+				const PhysicsCommand& cmd = c;
 				// 失敗（満杯）の場合はリトライ or 一時的にブロッキングに切替など、運用ポリシー次第
-				while (!m_queue.push(cmd)) { /* backoff/yield */ }
+				return m_queue.push(cmd);
 			}
 
 			void DrainAllToDevice() {

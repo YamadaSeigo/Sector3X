@@ -716,7 +716,7 @@ int main(void)
 				modelDesc.path = "assets/model/Stylized/Tree01.gltf";
 				modelDesc.viewMax = 600.0f;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
-				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.pCustomNomWFunc = WindMovementService::ComputeTreeWeight;
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 				modelDesc.instancesPeak = 100;
@@ -741,6 +741,21 @@ int main(void)
 				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
 				modelAssetMgr->Add(modelDesc, grassModelHandle);
 				modelDesc.pCustomNomWFunc = nullptr;
+
+				const auto& serviceLocator = pWorld->GetServiceLocator();
+				auto ps = serviceLocator.Get<Physics::PhysicsService>();
+
+				std::function<Physics::ShapeHandle(Math::Vec3f)> makeShapeHandleFunc[5] =
+				{
+					nullptr,
+					nullptr,
+					[&](Math::Vec3f scale)
+					{
+						return ps->MakeCapsule(1, 0.2f, Physics::ShapeScale{ scale });
+					},
+					nullptr,
+					nullptr
+				};
 
 				// 草のマテリアルに草揺れ用CBVをセット
 				{
@@ -821,28 +836,16 @@ int main(void)
 				// System登録
 				auto& scheduler = pLevel->GetScheduler();
 
-				const auto& serviceLocator = pWorld->GetServiceLocator();
-
 				scheduler.AddSystem<ModelRenderSystem>(serviceLocator);
 
 				//scheduler.AddSystem<SimpleModelRenderSystem>(serviceLocator);
 				scheduler.AddSystem<CameraSystem>(serviceLocator);
 				//scheduler.AddSystem<TestMoveSystem>(serviceLocator);
-				//scheduler.AddSystem<PhysicsSystem>(serviceLocator);
-				//scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
-				//scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
+				scheduler.AddSystem<PhysicsSystem>(serviceLocator);
+				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
+				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
-
-				auto ps = serviceLocator.Get<Physics::PhysicsService>();
-				auto sphere = ps->MakeSphere(0.5f);//ps->MakeBox({ 0.5f, 0.5f, 0.5f }); // Box形状を生成
-				auto sphereDims = ps->GetShapeDims(sphere);
-
-				auto box = ps->MakeBox({ 1000.0f,0.5f, 1000.0f });
-				auto boxDims = ps->GetShapeDims(box);
-
-				Math::Vec3f src = { 0.0f,50.0f,0.0f };
-				Math::Vec3f dst = src;
 
 				//草Entity生成
 				Math::Vec2f terrainScale = {
@@ -855,13 +858,11 @@ int main(void)
 				for (int j = 0; j < 100; ++j) {
 					for (int k = 0; k < 100; ++k) {
 						for (int n = 0; n < 1; ++n) {
-							//Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
 							float scaleXZ = 15.0f;
 							float scaleY = 15.0f;
 							Math::Vec2f offsetXZ = { 12.0f,12.0f };
 							Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
 							auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
-							//location = pose.pos;
 
 							float height = 0.0f;
 							terrain.SampleHeightNormalBilinear(location.x, location.z, height);
@@ -885,27 +886,10 @@ int main(void)
 
 							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 							rot.KeepTwist(pose.up);
-
-							auto chunk = pLevel->GetChunk(location);
-							auto key = chunk.value()->GetNodeKey();
-							SpatialMotionTag tag{};
-							tag.handle = { key, chunk.value() };
-
-							//float scale = 1.0f;
 							auto id = levelSession.AddEntity(
 								TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-								CModel{ grassModelHandle },
-								Physics::BodyComponent{},
-								Physics::PhysicsInterpolation(
-									location, // 初期位置
-									rot // 初期回転
-								),
-								sphereDims.value(),
-								tag
+								CModel{ grassModelHandle }
 							);
-							/*if (id) {
-								ps->EnqueueCreateIntent(id.value(), sphere, key);
-							}*/
 						}
 					}
 				}
@@ -927,10 +911,6 @@ int main(void)
 								location += p.offset;
 							}
 
-							auto chunk = pLevel->GetChunk(location);
-							auto key = chunk.value()->GetNodeKey();
-							SpatialMotionTag tag{};
-							tag.handle = { key, chunk.value() };
 							int modelIdx = dist(rng);
 							float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
 							//float scale = 1.0f;
@@ -938,20 +918,39 @@ int main(void)
 							auto modelComp = CModel{ modelAssetHandle[modelIdx] };
 							modelComp.castShadow = true;
 
-							auto id = levelSession.AddEntity(
-								TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
-								modelComp,
-								Physics::BodyComponent{},
-								Physics::PhysicsInterpolation(
-									location, // 初期位置
-									Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-								),
-								sphereDims.value(),
-								tag
-							);
-							/*if (id) {
-								ps->EnqueueCreateIntent(id.value(), sphere, key);
-							}*/
+							if (makeShapeHandleFunc[modelIdx] != nullptr)
+							{
+								auto chunk = pLevel->GetChunk(location);
+								auto key = chunk.value()->GetNodeKey();
+								SpatialMotionTag tag{};
+								tag.handle = { key, chunk.value() };
+
+								Physics::BodyComponent staticBody{};
+								staticBody.isStatic = Physics::BodyType::Static; // staticにする
+								auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
+								auto shapeDims = ps->GetShapeDims(shapeHandle);
+								auto id = levelSession.AddEntity(
+									TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
+									modelComp,
+									staticBody,
+									Physics::PhysicsInterpolation(
+										location, // 初期位置
+										Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+									),
+									shapeDims.value(),
+									tag
+								);
+								if (id) {
+									ps->EnqueueCreateIntent(id.value(), shapeHandle, key);
+								}
+							}
+							else
+							{
+								levelSession.AddEntity(
+									TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
+									modelComp
+								);
+							}
 						}
 					}
 				}
@@ -981,7 +980,7 @@ int main(void)
 	}
 
 	//初めのレベルをロード
-	world.GetSession().LoadLevel("OpenField");
+	//world.GetSession().LoadLevel("OpenField");
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
 
