@@ -18,6 +18,7 @@
 #include "system/CleanModelSystem.h"
 #include "system/SimpleModelRenderSystem.h"
 #include "system/SpriteRenderSystem.h"
+#include "system/PlayerSystem.h"
 #include "WindMovementService.h"
 #include <string>
 
@@ -752,8 +753,8 @@ int main(void)
 					[&](Math::Vec3f scale)
 					{
 						Physics::ShapeCreateDesc shapeDesc;
-						shapeDesc.shape = Physics::CapsuleDesc{ 10.0f,1.0f };
-						shapeDesc.localOffset.y = 10.0f;
+						shapeDesc.shape = Physics::CapsuleDesc{ 8.0f,1.0f };
+						shapeDesc.localOffset.y = 8.0f;
 						return ps->MakeShape(shapeDesc);
 					},
 					nullptr,
@@ -858,109 +859,109 @@ int main(void)
 
 				auto levelSession = pLevel->GetSession();
 
-				for (int j = 0; j < 100; ++j) {
-					for (int k = 0; k < 100; ++k) {
-						for (int n = 0; n < 1; ++n) {
-							float scaleXZ = 15.0f;
-							float scaleY = 15.0f;
-							Math::Vec2f offsetXZ = { 12.0f,12.0f };
-							Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
-							auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
-
-							float height = 0.0f;
-							terrain.SampleHeightNormalBilinear(location.x, location.z, height);
-							location.y = height;
-
-							int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
-							int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
-
-							int byteIndex = col * 4 + row * cpuSplatImage.stride;
-							if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
-								continue;
-							}
-
-							auto splatR = cpuSplatImage.bytes[byteIndex];
-							if (splatR < 20) {
-								continue; // 草が薄い場所はスキップ
-							}
-
-							//　薄いほど高さを下げる
-							location.y -= (1.0f - splatR / 255.0f) * 2.0f - 1.0f;
-
-							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
-							rot.KeepTwist(pose.up);
-							auto id = levelSession.AddEntity(
-								TransformSoA{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-								CModel{ grassModelHandle }
-							);
-						}
-					}
-				}
-
-				// Entity生成
-				uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
-				uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
-				for (int j = 0; j < 10; ++j) {
-					for (int k = 0; k < 10; ++k) {
-						for (int n = 0; n < 1; ++n) {
-							Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
-							//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
-							auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
-							auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
-							if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
-							{
-								float y0 = heightMap[Graphics::TerrainClustered::VIdx(gridX, gridZ, p.cellsX + 1)];
-								location.y = y0 * p.heightScale;
-								location += p.offset;
-							}
-
-							int modelIdx = dist(rng);
-							float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
-							//float scale = 1.0f;
-							auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
-							auto modelComp = CModel{ modelAssetHandle[modelIdx] };
-							modelComp.castShadow = true;
-
-							if (makeShapeHandleFunc[modelIdx] != nullptr)
-							{
-								auto chunk = pLevel->GetChunk(location);
-								auto key = chunk.value()->GetNodeKey();
-								SpatialMotionTag tag{};
-								tag.handle = { key, chunk.value() };
-
-								Physics::BodyComponent staticBody{};
-								staticBody.isStatic = Physics::BodyType::Static; // staticにする
-								auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
-#ifdef _DEBUG
-								auto shapeDims = ps->GetShapeDims(shapeHandle);
-#endif
-								auto id = levelSession.AddEntity(
-									TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
-									modelComp,
-									staticBody,
-									Physics::PhysicsInterpolation(
-										location, // 初期位置
-										Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-									),
-#ifdef _DEBUG
-									shapeDims.value(),
-#endif
-									tag
-								);
-								if (id) {
-									ps->EnqueueCreateIntent(id.value(), shapeHandle, key);
-								}
-							}
-							else
-							{
-								levelSession.AddEntity(
-									TransformSoA{ location, rot, Math::Vec3f(scale,scale,scale) },
-									modelComp
-								);
-							}
-						}
-					}
-				}
+//				for (int j = 0; j < 100; ++j) {
+//					for (int k = 0; k < 100; ++k) {
+//						for (int n = 0; n < 1; ++n) {
+//							float scaleXZ = 15.0f;
+//							float scaleY = 15.0f;
+//							Math::Vec2f offsetXZ = { 12.0f,12.0f };
+//							Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
+//							auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
+//
+//							float height = 0.0f;
+//							terrain.SampleHeightNormalBilinear(location.x, location.z, height);
+//							location.y = height;
+//
+//							int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
+//							int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
+//
+//							int byteIndex = col * 4 + row * cpuSplatImage.stride;
+//							if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
+//								continue;
+//							}
+//
+//							auto splatR = cpuSplatImage.bytes[byteIndex];
+//							if (splatR < 20) {
+//								continue; // 草が薄い場所はスキップ
+//							}
+//
+//							//　薄いほど高さを下げる
+//							location.y -= (1.0f - splatR / 255.0f) * 2.0f - 1.0f;
+//
+//							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
+//							rot.KeepTwist(pose.up);
+//							auto id = levelSession.AddEntity(
+//								CTransform{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
+//								CModel{ grassModelHandle }
+//							);
+//						}
+//					}
+//				}
+//
+//				// Entity生成
+//				uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
+//				uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
+//				for (int j = 0; j < 10; ++j) {
+//					for (int k = 0; k < 10; ++k) {
+//						for (int n = 0; n < 1; ++n) {
+//							Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
+//							//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
+//							auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
+//							auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
+//							if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
+//							{
+//								float y0 = heightMap[Graphics::TerrainClustered::VIdx(gridX, gridZ, p.cellsX + 1)];
+//								location.y = y0 * p.heightScale;
+//								location += p.offset;
+//							}
+//
+//							int modelIdx = dist(rng);
+//							float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
+//							//float scale = 1.0f;
+//							auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
+//							auto modelComp = CModel{ modelAssetHandle[modelIdx] };
+//							modelComp.castShadow = true;
+//
+//							if (makeShapeHandleFunc[modelIdx] != nullptr)
+//							{
+//								auto chunk = pLevel->GetChunk(location);
+//								auto key = chunk.value()->GetNodeKey();
+//								SpatialMotionTag tag{};
+//								tag.handle = { key, chunk.value() };
+//
+//								Physics::BodyComponent staticBody{};
+//								staticBody.isStatic = Physics::BodyType::Static; // staticにする
+//								auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
+//#ifdef _DEBUG
+//								auto shapeDims = ps->GetShapeDims(shapeHandle);
+//#endif
+//								auto id = levelSession.AddEntity(
+//									CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
+//									modelComp,
+//									staticBody,
+//									Physics::PhysicsInterpolation(
+//										location, // 初期位置
+//										Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+//									),
+//#ifdef _DEBUG
+//									shapeDims.value(),
+//#endif
+//									tag
+//								);
+//								if (id) {
+//									ps->EnqueueCreateIntent(id.value(), shapeHandle, key);
+//								}
+//							}
+//							else
+//							{
+//								levelSession.AddEntity(
+//									CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
+//									modelComp
+//								);
+//							}
+//						}
+//					}
+//				}
 
 				//プレイヤー生成
 				{
@@ -970,29 +971,28 @@ int main(void)
 #ifdef _DEBUG
 					auto playerDims = ps->GetShapeDims(playerShape);
 #endif
-
-					auto chunk = pLevel->GetChunk(playerStartPos, EOutOfBoundsPolicy::ClampToEdge);
+					/*auto chunk = pLevel->GetChunk(playerStartPos, EOutOfBoundsPolicy::ClampToEdge);
 					auto key = chunk.value()->GetNodeKey();
 					SpatialMotionTag tag{};
-					tag.handle = { key, chunk.value() };
+					tag.handle = { key, chunk.value() };*/
 
-					Physics::BodyComponent playerBody{};
+					//Physics::BodyComponent playerBody{};
 					//playerBody.isStatic = Physics::BodyType::Dynamic; // 動的にする
-					auto id = levelSession.AddEntity(
-						TransformSoA{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
-						playerBody,
-						Physics::PhysicsInterpolation(
-							playerStartPos, // 初期位置
-							Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-						),
+					auto id = levelSession.AddGlobalEntity(
+						CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
+						PlayerComponent{},
 #ifdef _DEBUG
-						playerDims.value(),
+						playerDims.value()
 #endif
-						tag
 					);
 					if (id) {
+						Physics::CreateCharacterCmd c;
+						c.shape = playerShape;
+						c.worldTM.pos = playerStartPos;
+						c.objectLayer = Physics::Layers::MOVING;
 
-						ps->EnqueueCreateIntent(id.value(), playerShape, key);
+						ps->CreateCharacter(c);
+						//ps->EnqueueCreateIntent(id.value(), playerShape, key);
 					}
 				}
 
@@ -1011,7 +1011,7 @@ int main(void)
 					Physics::BodyComponent staticBody{};
 					staticBody.isStatic = Physics::BodyType::Static; // staticにする
 					auto id = levelSession.AddEntity(
-						TransformSoA{ 0.0f, 0.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
+						CTransform{ 0.0f, 0.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
 						staticBody,
 						Physics::PhysicsInterpolation(
 							Math::Vec3f{ 0.0f,-40.0f, 0.0f }, // 初期位置
@@ -1029,7 +1029,7 @@ int main(void)
 				//Physics::BodyComponent staticBody{};
 				//staticBody.isStatic = Physics::BodyType::Static; // staticにする
 				//auto id = levelSession.AddEntity(
-				//	TransformSoA{ 10.0f,-10.0f, 10.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
+				//	CTransform{ 10.0f,-10.0f, 10.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
 				//	CModel{ modelAssetHandle[0]},
 				//	staticBody,
 				//	Physics::PhysicsInterpolation(

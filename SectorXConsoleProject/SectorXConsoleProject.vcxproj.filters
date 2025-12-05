@@ -147,5 +147,8 @@
     <ClInclude Include="system\SpriteRenderSystem.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="system\PlayerSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

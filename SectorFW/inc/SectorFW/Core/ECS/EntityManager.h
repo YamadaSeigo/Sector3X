@@ -598,4 +598,27 @@ namespace SFW
 			}
 		};
 	}
+
+	namespace ECS
+	{
+		template<>
+		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(ECS::EntityManager& em) const noexcept
+		{
+			std::vector<ArchetypeChunk*> result;
+			const auto& all = em.GetArchetypeManager().GetAllData();
+			for (const auto& arch : all) {
+				const ComponentMask& mask = arch->GetMask();
+				if ((mask & required) == required && (mask & excluded).none()) {
+					const auto& chunks = arch->GetChunks();
+					// 先に必要分だけまとめて拡張（平均的に再確保を減らす）
+					result.reserve(result.size() + chunks.size());
+					for (const auto& ch : chunks) {
+						result.push_back(ch.get());
+					}
+				}
+			}
+
+			return result;
+		}
+	}
 }

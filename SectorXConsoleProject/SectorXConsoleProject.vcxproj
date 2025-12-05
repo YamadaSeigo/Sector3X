@@ -319,6 +319,7 @@
     <ClInclude Include="system\DebugRenderSystem.h" />
     <ClInclude Include="system\ModelRenderSystem.h" />
     <ClInclude Include="system\PhysicsSystem.h" />
+    <ClInclude Include="system\PlayerSystem.h" />
     <ClInclude Include="system\SimpleModelRenderSystem.h" />
     <ClInclude Include="system\SpriteRenderSystem.h" />
     <ClInclude Include="system\TestMoveSystem.h" />

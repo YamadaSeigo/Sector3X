@@ -276,29 +276,29 @@ namespace SFW::Physics {
 		JPH::Ref<JPH::CharacterVirtual> ch =
 			new JPH::CharacterVirtual(&settings, pos, rot, system);
 
-		m_characters[c.e] = ch;
+		m_characters[c.e] = { ch, c.objectLayer };
 	}
 
 	void PhysicsDevice::ApplySetCharacterVelocity(const SetCharacterVelocityCmd& c)
 	{
 		auto it = m_characters.find(c.e);
 		if (it == m_characters.end()) return;
-		it->second->SetLinearVelocity(ToJVec3(c.v));
+		it->second.ref->SetLinearVelocity(ToJVec3(c.v));
 	}
 
 	void PhysicsDevice::ApplySetCharacterRotation(const SetCharacterRotationCmd& c)
 	{
 		auto it = m_characters.find(c.e);
 		if (it == m_characters.end()) return;
-		it->second->SetRotation(ToJQuat(c.rot));
+		it->second.ref->SetRotation(ToJQuat(c.rot));
 	}
 
 	void PhysicsDevice::ApplyTeleportCharacter(const TeleportCharacterCmd& c)
 	{
 		auto it = m_characters.find(c.e);
 		if (it == m_characters.end()) return;
-		it->second->SetPosition(ToJVec3(c.worldTM.pos));
-		it->second->SetRotation(ToJQuat(c.worldTM.rot));
+		it->second.ref->SetPosition(ToJVec3(c.worldTM.pos));
+		it->second.ref->SetRotation(ToJQuat(c.worldTM.rot));
 	}
 
 
@@ -317,15 +317,16 @@ namespace SFW::Physics {
 			// Gravity は PhysicsSystem から取る
 			JPH::Vec3 gravity = m_physics.GetGravity();
 
-			// フィルタはプロジェクトのレイヤ設計に合わせて
-			JPH::DefaultBroadPhaseLayerFilter bpFilter(g_ovsbFilter, Layers::MOVING/*キャラ用BroadPhaseLayer*/);
-			JPH::DefaultObjectLayerFilter     objFilter(g_pairFilter, Layers::MOVING/*キャラが衝突する ObjectLayer 組み合わせ*/);
 			JPH::BodyFilter                   bodyFilter;
 			JPH::ShapeFilter                  shapeFilter;
 
 			for (auto& [e, ch] : m_characters)
 			{
-				ch->Update(
+				// フィルタはプロジェクトのレイヤ設計に合わせて
+				JPH::DefaultBroadPhaseLayerFilter bpFilter(g_ovsbFilter, ch.layer/*キャラ用BroadPhaseLayer*/);
+				JPH::DefaultObjectLayerFilter     objFilter(g_pairFilter, ch.layer/*キャラが衝突する ObjectLayer 組み合わせ*/);
+
+				ch.ref->Update(
 					fixed_dt,
 					gravity,
 					bpFilter,
@@ -374,8 +375,8 @@ namespace SFW::Physics {
 		m_pendingRayHits.clear();
 
 		for (auto& [e, ch] : m_characters) {
-			Vec3f p = FromJVec3(ch->GetPosition());
-			Quatf q = FromJQuat(ch->GetRotation());
+			Vec3f p = FromJVec3(ch.ref->GetPosition());
+			Quatf q = FromJQuat(ch.ref->GetRotation());
 			out.poses.push_back(Pose{ e, p, q });
 		}
 	}
@@ -485,6 +486,19 @@ namespace SFW::Physics {
 		auto it = m_e2b.find(e);
 		if (it == m_e2b.end()) return std::nullopt;
 		return it->second;
+	}
+
+	bool PhysicsDevice::GetCharacterPose(Entity e, Vec3f& outPos, Quatf& outRot)
+	{
+		auto it = m_characters.find(e);
+		if (it != m_characters.end())
+		{
+			outPos = FromJVec3(it->second.ref->GetPosition());
+			outRot = FromJQuat(it->second.ref->GetRotation());
+			return true;
+		}
+
+		return false;
 	}
 
 	// ===== ContactListenerImpl =====

@@ -67,7 +67,7 @@ class DebugRenderSystem : public ITypeSystem<
 		Graphics::LightShadowService
 	>>
 {
-	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<Physics::PhysicsInterpolation>>;
+	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<CTransform>>;
 	using ModelAccessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
 
 	static constexpr inline uint32_t MAX_CAPACITY_3DLINE = 65536;
@@ -507,14 +507,14 @@ public:
 			this->ForEachFrustumChunkWithAccessor<ShapeDimsAccessor>([](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
 				{
 					auto shapeDims = accessor.Get<Read<Physics::ShapeDims>>();
-					auto interp = accessor.Get<Read<Physics::PhysicsInterpolation>>();
+					auto tf = accessor.Get<Read<CTransform>>();
 
 					if (!shapeDims) return;
-					if (!interp) return;
+					if (!tf) return;
 
 					for (int i = 0; i < entityCount; ++i) {
-						auto transMtx = Math::MakeTranslationMatrix(Math::Vec3f(interp->cpx()[i], interp->cpy()[i], interp->cpz()[i]));
-						auto rotMtx = Math::MakeRotationMatrix(Math::Quatf(interp->crx()[i], interp->cry()[i], interp->crz()[i], interp->crw()[i]));
+						auto transMtx = Math::MakeTranslationMatrix(Math::Vec3f(tf->px()[i], tf->py()[i], tf->pz()[i]));
+						auto rotMtx = Math::MakeRotationMatrix(Math::Quatf(tf->qx()[i], tf->qy()[i], tf->qz()[i], tf->qw()[i]));
 
 						auto& d = shapeDims.value()[i];
 						switch (d.type) {
@@ -559,14 +559,14 @@ public:
 							cmd.pso = pso;
 							cmd.sortKey = 0; // 適切なソートキーを設定
 							cmd.viewMask = PASS_UI_3DLINE;
-							queue->Push(std::move(cmd));
+							queue->Push(cmd);
 
 							offset = d.localOffset;
 							offset.y -= d.halfHeight;
 							offsetMtx = Math::MakeTranslationMatrix(offset);
 							mtx = instMtx * offsetMtx * scaleMtx;
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
-							queue->Push(std::move(cmd));
+							queue->Push(cmd);
 
 							// 真ん中の線
 							offset = d.localOffset;

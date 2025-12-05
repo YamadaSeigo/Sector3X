@@ -103,6 +103,12 @@ namespace SFW
 				// BroadPhaseLayerInterface, Filters, などは後でセットでも可
 			};
 
+			struct CharacterVirtualInfo
+			{
+				JPH::Ref<JPH::CharacterVirtual> ref;
+				uint16_t layer;
+			};
+
 			PhysicsDevice() = default;
 			~PhysicsDevice() { Shutdown(); }
 
@@ -150,6 +156,9 @@ namespace SFW
 				std::scoped_lock lk(m_createdMutex);
 				out.swap(m_created);
 			}
+
+			// キャラクターのポーズ読み出し
+			bool GetCharacterPose(Entity e, Vec3f& outPos, Quatf& outRot);
 		private:
 			// Jolt本体
 			JPH::PhysicsSystem         m_physics;
@@ -173,7 +182,7 @@ namespace SFW
 			std::vector<PendingRayHit> m_pendingRayHits;
 
 			// Entity -> CharacterVirtual
-			std::unordered_map<Entity, JPH::Ref<JPH::CharacterVirtual>> m_characters;
+			std::unordered_map<Entity, CharacterVirtualInfo> m_characters;
 
 			bool m_initialized = false;
 

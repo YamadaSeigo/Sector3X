@@ -56,6 +56,7 @@ namespace SFW
 				(excluded.set(ComponentTypeRegistry::GetID<Ts>()), ...);
 				return *this;
 			}
+
 			/**
 			 * @brief クエリにマッチするアーキタイプチャンクを取得します。
 			 * @param context コンテキストを指定するテンプレート

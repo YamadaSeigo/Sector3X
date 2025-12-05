@@ -187,6 +187,10 @@ namespace SFW
 				return Enqueue(TeleportCharacterCmd{ e, tm });
 			}
 
+			bool ReadCharacterPose(Entity e, Mat34f& outTm) {
+				return m_device.GetCharacterPose(e, outTm.pos, outTm.rot);
+			}
+
 			/**
 			 * @brief 物理シミュレーションを更新する（IUpdateService 実装）
 			 * @param dt 可変フレーム時間（ゲームループから呼ぶ）

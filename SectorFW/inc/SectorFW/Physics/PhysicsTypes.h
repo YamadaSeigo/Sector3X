@@ -107,8 +107,8 @@ namespace SFW
 			Entity e;
 			ShapeHandle shape;   // カプセルなど
 			Mat34f worldTM;      // 初期位置 + 回転
-			uint16_t objectLayer;   // キャラ用 ObjectLayer
 			float maxSlopeDeg = 45.0f;
+			uint16_t objectLayer = 1;   // キャラ用 ObjectLayer
 		};
 
 		// キャラの線形速度を設定
