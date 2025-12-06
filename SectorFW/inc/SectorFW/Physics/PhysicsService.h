@@ -187,8 +187,8 @@ namespace SFW
 				return Enqueue(TeleportCharacterCmd{ e, tm });
 			}
 
-			bool ReadCharacterPose(Entity e, Mat34f& outTm) {
-				return m_device.GetCharacterPose(e, outTm.pos, outTm.rot);
+			std::optional<CharacterPose> ReadCharacterPose(Entity e) {
+				return m_device.GetCharacterPose(e);
 			}
 
 			/**
@@ -202,6 +202,7 @@ namespace SFW
 			// ====== フレーム進行 ======
 			// dt: 可変フレーム時間（ゲームループから呼ぶ）
 			void Tick(float dt) {
+				m_delta = dt;
 				m_accum += dt;
 
 				while (m_accum + 1e-6f >= plan.fixed_dt) { // 浮動誤差対策の微小マージン
@@ -229,6 +230,13 @@ namespace SFW
 			 */
 			float GetAlpha() const {
 				return (plan.fixed_dt > 0.0f) ? (m_accum / plan.fixed_dt) : 0.0f;
+			}
+			/**
+			 * @brief 更新の際に送られてくる dt をそのまま取得
+			 * @return float フレーム時間 dt（秒単位）
+			 */
+			float GetDeltaTime() const {
+				return m_delta;
 			}
 
 			// 現在（最後の fixed step 後）のスナップショット参照を返す
@@ -315,6 +323,7 @@ namespace SFW
 			Plan plan;
 
 			float m_accum = 0.0f;
+			float m_delta = 0.0f;
 
 			PhysicsSnapshot m_snapshot;     // 今回ステップで組み立てた一時
 			PhysicsSnapshot m_prevSnapshot; // 前フレーム

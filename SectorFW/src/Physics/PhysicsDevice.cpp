@@ -488,17 +488,17 @@ namespace SFW::Physics {
 		return it->second;
 	}
 
-	bool PhysicsDevice::GetCharacterPose(Entity e, Vec3f& outPos, Quatf& outRot)
+	std::optional<CharacterPose> PhysicsDevice::GetCharacterPose(Entity e)
 	{
 		auto it = m_characters.find(e);
 		if (it != m_characters.end())
 		{
-			outPos = FromJVec3(it->second.ref->GetPosition());
-			outRot = FromJQuat(it->second.ref->GetRotation());
-			return true;
+			auto chara = it->second.ref;
+			CharacterPose pose(chara);
+			return pose;
 		}
 
-		return false;
+		return std::nullopt;
 	}
 
 	// ===== ContactListenerImpl =====

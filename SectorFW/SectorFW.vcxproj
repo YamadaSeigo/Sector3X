@@ -53,6 +53,7 @@
     <ClInclude Include="inc\SectorFW\Core\ThreadPoolExecutor.h" />
     <ClInclude Include="inc\SectorFW\Core\VoidPartition.h" />
     <ClInclude Include="inc\SectorFW\Core\World.hpp" />
+    <ClInclude Include="inc\SectorFW\Debug\assert_config.h" />
     <ClInclude Include="inc\SectorFW\Debug\DebugType.h" />
     <ClInclude Include="inc\SectorFW\Debug\GPUTimerD3D11.h" />
     <ClInclude Include="inc\SectorFW\Debug\ImGuiBackend.h" />

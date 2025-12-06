@@ -82,6 +82,7 @@ static bool ResolveTexturePath(uint32_t id, std::string& path, bool& forceSRGB)
 //カスタム関数を実行するかのフラグ
 static std::atomic<bool> isExecuteCustomFunc = false;
 
+// 描画のパイプライン初期化
 void InitializeRenderPipeLine(
 	Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
 	Graphics::DX11::GraphicsDevice* graphics,
@@ -849,6 +850,7 @@ int main(void)
 				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
 				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
+				scheduler.AddSystem<PlayerSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
 
 				//草Entity生成
@@ -859,46 +861,46 @@ int main(void)
 
 				auto levelSession = pLevel->GetSession();
 
-//				for (int j = 0; j < 100; ++j) {
-//					for (int k = 0; k < 100; ++k) {
-//						for (int n = 0; n < 1; ++n) {
-//							float scaleXZ = 15.0f;
-//							float scaleY = 15.0f;
-//							Math::Vec2f offsetXZ = { 12.0f,12.0f };
-//							Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
-//							auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
-//
-//							float height = 0.0f;
-//							terrain.SampleHeightNormalBilinear(location.x, location.z, height);
-//							location.y = height;
-//
-//							int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
-//							int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
-//
-//							int byteIndex = col * 4 + row * cpuSplatImage.stride;
-//							if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
-//								continue;
-//							}
-//
-//							auto splatR = cpuSplatImage.bytes[byteIndex];
-//							if (splatR < 20) {
-//								continue; // 草が薄い場所はスキップ
-//							}
-//
-//							//　薄いほど高さを下げる
-//							location.y -= (1.0f - splatR / 255.0f) * 2.0f - 1.0f;
-//
-//							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
-//							rot.KeepTwist(pose.up);
-//							auto id = levelSession.AddEntity(
-//								CTransform{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-//								CModel{ grassModelHandle }
-//							);
-//						}
-//					}
-//				}
-//
-//				// Entity生成
+				//for (int j = 0; j < 100; ++j) {
+				//	for (int k = 0; k < 100; ++k) {
+				//		for (int n = 0; n < 1; ++n) {
+				//			float scaleXZ = 15.0f;
+				//			float scaleY = 15.0f;
+				//			Math::Vec2f offsetXZ = { 12.0f,12.0f };
+				//			Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
+				//			auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
+
+				//			float height = 0.0f;
+				//			terrain.SampleHeightNormalBilinear(location.x, location.z, height);
+				//			location.y = height;
+
+				//			int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
+				//			int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
+
+				//			int byteIndex = col * 4 + row * cpuSplatImage.stride;
+				//			if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
+				//				continue;
+				//			}
+
+				//			auto splatR = cpuSplatImage.bytes[byteIndex];
+				//			if (splatR < 20) {
+				//				continue; // 草が薄い場所はスキップ
+				//			}
+
+				//			//　薄いほど高さを下げる
+				//			location.y -= (1.0f - splatR / 255.0f) * 2.0f - 1.0f;
+
+				//			auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
+				//			rot.KeepTwist(pose.up);
+				//			auto id = levelSession.AddEntity(
+				//				CTransform{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
+				//				CModel{ grassModelHandle }
+				//			);
+				//		}
+				//	}
+				//}
+
+				// Entity生成
 //				uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
 //				uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
 //				for (int j = 0; j < 10; ++j) {
@@ -965,7 +967,7 @@ int main(void)
 
 				//プレイヤー生成
 				{
-					Math::Vec3f playerStartPos = { 10.0f, 0.0f, 10.0f };
+					Math::Vec3f playerStartPos = { 10.0f, 80.0f, 10.0f };
 
 					auto playerShape = ps->MakeCapsule(2.0f, 1.0f);
 #ifdef _DEBUG
@@ -986,7 +988,7 @@ int main(void)
 #endif
 					);
 					if (id) {
-						Physics::CreateCharacterCmd c;
+						Physics::CreateCharacterCmd c(id.value());
 						c.shape = playerShape;
 						c.worldTM.pos = playerStartPos;
 						c.objectLayer = Physics::Layers::MOVING;

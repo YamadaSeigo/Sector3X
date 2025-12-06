@@ -322,11 +322,11 @@ namespace SFW
 				CallArgs&&... args)
 			{
 				auto cullChunks = partition.CullChunks(fru);
-				if (cullChunks.empty()) return;
+				auto& gEM = partition.GetGlobalEntityManager();
 
 				using DefaultAccess = ComponentAccess<AccessTypes...>;
 				ForEachFrustum_impl<Type.v>(static_cast<DefaultAccess*>(nullptr),
-					this, std::forward<F>(func), cullChunks,
+					this, std::forward<F>(func), cullChunks, gEM,
 					std::forward<CallArgs>(args)...);
 			}
 
@@ -339,10 +339,10 @@ namespace SFW
 				CallArgs&&... args)
 			{
 				auto cullChunks = partition.CullChunks(fru);
-				if (cullChunks.empty()) return;
+				auto& gEM = partition.GetGlobalEntityManager();
 
 				ForEachFrustum_impl<Type.v>(static_cast<AccessSpec*>(nullptr),
-					this, std::forward<F>(func), cullChunks,
+					this, std::forward<F>(func), cullChunks, gEM,
 					std::forward<CallArgs>(args)...);
 			}
 
@@ -376,11 +376,11 @@ namespace SFW
 				CallArgs&&... args)
 			{
 				auto cullChunks = partition.CullChunksNear(fru, cp);
-				if (cullChunks.empty()) return;
+				auto& gEM = partition.GetGlobalEntityManager();
 
 				using DefaultAccess = ComponentAccess<AccessTypes...>;
 				ForEachFrustum_impl<Type.v>(static_cast<DefaultAccess*>(nullptr),
-					this, std::forward<F>(func), cullChunks,
+					this, std::forward<F>(func), cullChunks, gEM,
 					std::forward<CallArgs>(args)...);
 			}
 
@@ -394,10 +394,10 @@ namespace SFW
 				CallArgs&&... args)
 			{
 				auto cullChunks = partition.CullChunksNear(fru, cp);
-				if (cullChunks.empty()) return;
+				auto& gEM = partition.GetGlobalEntityManager();
 
 				ForEachFrustum_impl<Type.v>(static_cast<AccessSpec*>(nullptr),
-					this, std::forward<F>(func), cullChunks,
+					this, std::forward<F>(func), cullChunks, gEM,
 					std::forward<CallArgs>(args)...);
 			}
 
@@ -737,16 +737,18 @@ namespace SFW
 
 			// 展開ヘルパ（AccessSpec = ComponentAccess<Ts...> を Ts... に割り出す）
 			template<bool Parallel, class AccessSpec, class Self, class F, class CullChunks, class... Extra>
-			static void ForEachFrustum_impl(Self*, F&&, CullChunks&, Extra&&...) {
+			static void ForEachFrustum_impl(Self*, F&&, CullChunks&, EntityManager&, Extra&&...) {
 				static_assert(sizeof(AccessSpec) == 0, "AccessSpec must be ComponentAccess<...>");
 			}
 
 			template<bool Parallel, template<class...> class CA, class... Ts, class Self, class F, class CullChunks, class... Extra>
-			static void ForEachFrustum_impl(CA<Ts...>*, Self* self, F&& func, CullChunks& cullChunks, Extra&&... extra)
+			static void ForEachFrustum_impl(CA<Ts...>*, Self* self, F&& func, CullChunks& cullChunks, EntityManager& gEM, Extra&&... extra)
 			{
 				Query query;
 				query.With<typename AccessPolicy<Ts>::ComponentType...>();
 				auto chunks = query.MatchingChunks<CullChunks&>(cullChunks);
+				auto globalChunks = query.MatchingChunks<EntityManager&>(gEM);
+				chunks.insert(chunks.end(), globalChunks.begin(), globalChunks.end());
 
 #ifdef _DEBUG
 				if (chunks.empty() && self->matchingChunk) {

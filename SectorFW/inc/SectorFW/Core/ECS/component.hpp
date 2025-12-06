@@ -147,6 +147,8 @@ namespace SFW
 			FOR_EACH(WRAP_DECLTYPE_PTR,SEMICOLON,__VA_ARGS__);\
 			static constexpr auto ptr_tuple = std::make_tuple(WRAP_MEMBER_FOREACH(ToPtr,WRAP_MEMBER_PTR,__VA_ARGS__)); public:\
 			FOR_EACH(DEFINE_GET_FUNCTION,SPACE,__VA_ARGS__)\
-			template<typename... AccessTypes> friend class SFW::ECS::ComponentAccessor;};
+			friend class SFW::ECS::ComponentAccessorBase;};
+
+
 	}
 }

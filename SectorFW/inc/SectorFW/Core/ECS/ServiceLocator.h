@@ -17,6 +17,7 @@
  //#include "Input/InputService.h"
 
 #include "../ThreadPoolExecutor.h"
+#include "../../Debug/assert_config.h"
 
 namespace SFW
 {
@@ -48,7 +49,7 @@ namespace SFW
 			template<PointerType... Service>
 			explicit ServiceLocator(Service... service)
 				: mapMutex(std::make_unique<std::shared_mutex>()) {
-				assert(!created && "ServiceLocator instance already created.");
+				SFW_ASSERT(!created && "ServiceLocator instance already created.");
 				created = true;
 
 				plan_ = std::make_shared<ExecPlan>();
@@ -86,7 +87,7 @@ namespace SFW
 			 */
 			template<typename... Services>
 			void InitAndRegisterStaticService() noexcept {
-				assert(!initialized && "ServiceLocator is already initialized.");
+				SFW_ASSERT(!initialized && "ServiceLocator is already initialized.");
 
 				std::unique_lock<std::shared_mutex> lock(*mapMutex);
 				initialized = true;
@@ -119,7 +120,7 @@ namespace SFW
 					if constexpr (isUpdateService<T>) {
 						auto index = iter->second.updateIndex;
 						if (updateServices.empty() || index >= updateServices.size()) {
-							assert(false && "Invalid update service index.");
+							SFW_ASSERT(false && "Invalid update service index.");
 							return;
 						}
 
@@ -131,7 +132,7 @@ namespace SFW
 							updateServices.pop_back();
 						}
 						else {
-							assert(false && "Update service not found in the update services list.");
+							SFW_ASSERT(false && "Update service not found in the update services list.");
 						}
 					}
 					services.erase(iter);
@@ -151,7 +152,7 @@ namespace SFW
 				std::shared_lock<std::shared_mutex> lock(*mapMutex);
 				auto it = services.find(typeid(T));
 				if (it == services.end()) [[unlikely]] {
-					assert(!T::isStatic && "Static service not registered!");
+					SFW_ASSERT(!T::isStatic && "Static service not registered!");
 					return nullptr;
 				}
 				return static_cast<T*>(it->second.servicePtr);
@@ -208,7 +209,7 @@ namespace SFW
 			template<typename T>
 			void AllRegisterStaticServiceWithArg(T* service) noexcept {
 				static_assert(T::isStatic, "Cannot register dynamic service with argument.");
-				assert((!IsRegistered<T>() && service) && "Cannot register service.");
+				SFW_ASSERT((!IsRegistered<T>() && service) && "Cannot register service.");
 
 				size_t updateIndex = updateServices.size();
 				if constexpr (isUpdateService<T>) {
@@ -230,7 +231,7 @@ namespace SFW
 			template<typename T>
 			void AllRegisterStaticService() noexcept {
 				static_assert(T::isStatic, "Cannot register dynamic service.");
-				assert((!IsRegistered<T>()) && "Cannot re-register static service.");
+				SFW_ASSERT((!IsRegistered<T>()) && "Cannot re-register static service.");
 
 				// ServiceLocator は唯一のインスタンスとして設計されており、
 				// 各サービス型ごとに1つだけ static に保持して問題ない
@@ -257,7 +258,7 @@ namespace SFW
 				static_assert(!T::isStatic, "Cannot re-register static service.");
 
 				if (IsRegistered<T>()) {
-					assert(false && "Service already registered.");
+					SFW_ASSERT(false && "Service already registered.");
 					return;
 				}
 

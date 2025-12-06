@@ -109,6 +109,8 @@ namespace SFW
 			Mat34f worldTM;      // 初期位置 + 回転
 			float maxSlopeDeg = 45.0f;
 			uint16_t objectLayer = 1;   // キャラ用 ObjectLayer
+
+			explicit  CreateCharacterCmd(Entity _e) :e(_e) {}
 		};
 
 		// キャラの線形速度を設定

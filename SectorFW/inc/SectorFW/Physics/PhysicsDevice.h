@@ -74,6 +74,24 @@ namespace SFW
 			size_t count;
 		};
 
+		struct CharacterPose {
+			using GroundState = JPH::CharacterBase::EGroundState;
+
+			explicit CharacterPose(JPH::Ref<JPH::CharacterVirtual> chara) : character(chara) {}
+
+			inline Vec3f GetPosition() const {
+				return FromJVec3(character->GetPosition());
+			}
+			inline Quatf GetRotation() const {
+				return FromJQuat(character->GetRotation());
+			}
+			inline GroundState GetGroundState() const {
+				return character->GetGroundState();
+			}
+		private:
+			JPH::Ref<JPH::CharacterVirtual> character;
+		};
+
 		class PhysicsDevice {
 			struct BodyIDHash {
 				size_t operator()(const JPH::BodyID& id) const noexcept {
@@ -158,7 +176,7 @@ namespace SFW
 			}
 
 			// キャラクターのポーズ読み出し
-			bool GetCharacterPose(Entity e, Vec3f& outPos, Quatf& outRot);
+			std::optional<CharacterPose> GetCharacterPose(Entity e);
 		private:
 			// Jolt本体
 			JPH::PhysicsSystem         m_physics;

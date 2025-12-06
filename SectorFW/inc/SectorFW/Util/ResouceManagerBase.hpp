@@ -50,6 +50,7 @@ namespace SFW
 				: ptr_(other.ptr_), lock_(std::move(other.lock_)) {
 				other.ptr_ = nullptr;
 			}
+			//なかでムーブ代入を使う
 			LockedResource& operator=(LockedResource&& other) noexcept {
 				if (this != &other) {
 					// 先に自分のロックを解放（unique_lock/shared_lock はムーブ代入で自動でやってくれるが念のため順序を明確化）
@@ -112,7 +113,7 @@ namespace SFW
 				return true;
 			}
 
-			// 新規確保
+			// 新規確保(再利用できる場合はそのハンドルを返す)
 			HandleType h = AllocateHandle();
 
 			slots[h.index].data = static_cast<Derived*>(this)->CreateResource(desc, h);
@@ -299,7 +300,7 @@ namespace SFW
 		std::vector<uint32_t> freeList;
 
 	protected:
-		//Get関数のconstを無効にするのmutable
+		//Get関数のためのmutable
 		mutable std::shared_mutex mapMutex;
 	private:
 		// 削除要求キュー

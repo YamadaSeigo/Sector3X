@@ -13,6 +13,7 @@
 
 #include "ArchetypeManager.h"
 #include "SparseComponentStore.hpp"
+#include "Accessor.hpp"
 
 #include "../../Util/TypeChecker.hpp"
 #include "../../Util/AccessWrapper.hpp"
@@ -123,27 +124,123 @@ namespace SFW
 			 * @brief エンティティからコンポーネントを取得する関数
 			 * @param id エンティティID
 			 * @details コンポーネントが見つからない場合nullptrを返す
-			 * @return T* コンポーネントのポインタ
+			 * @details Systemからアクセスする場合は必ずアクセスするコンポーネントに追加する
+			 * @return std::optional<T> コンポーネントの値
 			 */
 			template<typename T>
-			T* GetComponent(EntityID id) noexcept {
+			std::optional<T> ReadComponent(EntityID id) noexcept {
 				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
-					return GetSparseStore<T>().Get(id);
+					if (auto* ptr = GetSparseStore<T>().Get(id)) {
+						return *ptr;
+					}
+					return std::nullopt;
 				}
 
-				ComponentTypeID typeID = ComponentTypeRegistry::GetID<T>();
+				std::shared_lock lock(locationsMutex);
 
-				// locations は共有ロックで読み取り可能
-				{
-					std::shared_lock<std::shared_mutex> lock(locationsMutex);
-					if (!locations.contains(id)) [[unlikely]] return nullptr;
-					const auto it = locations.find(id);
-					const auto loc = it->second; // スナップショット
+				auto it = locations.find(id);
+				if (it == locations.end()) [[unlikely]] {
+					return std::nullopt;
+				}
+
+				const auto loc = it->second;
+
+				// SoA コンポーネント
+				if constexpr (IsSoAComponent<T>) {
+					ComponentAccessor<Read<T>> accessor(loc.chunk);
+					auto soaPtrOpt = accessor.Get<Read<T>>();
+					if (!soaPtrOpt) [[unlikely]] {
+						return std::nullopt;
+					}
+					return ComponentAccessorBase::ConvertSoAToAoSComponent<T>(*soaPtrOpt, loc.index);
+				}
+				// 通常 AoS
+				else {
 					auto col = loc.chunk->GetColumn<T>();
-					if (!col) [[unlikely]] return nullptr;
-					return &col.value()[loc.index];
+					if (!col) [[unlikely]] {
+						return std::nullopt;
+					}
+					return col.value()[loc.index];
 				}
 			}
+			/**
+			 * @brief エンティティのコンポーネントを書き換える関数
+			 * @param id エンティティID
+			 * @param value 書き換えるコンポーネントの値
+			 * @details Systemからアクセスする場合は必ずアクセスするコンポーネントに追加する
+			 */
+			template<typename T>
+			void WriteComponent(EntityID id, const T& value) noexcept
+			{
+				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
+					if (auto* ptr = GetSparseStore<T>().Get(id)) {
+						*ptr = value;
+					}
+					return;
+				}
+
+				std::shared_lock lock(locationsMutex);
+
+				auto it = locations.find(id);
+				if (it == locations.end()) [[unlikely]] {
+					return;
+				}
+
+				const auto loc = it->second;
+				MemorySetChunk<T>(loc.chunk, loc.index, value);
+			}
+
+
+			template<typename T>
+			void ReadWriteComponent(EntityID id, std::function<T(T)>&& f)
+			{
+				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
+					auto* ptr = GetSparseStore<T>().Get(id);
+					if (ptr == nullptr){
+						LOG_ERROR("EntityManager::ReadWriteComponent: Sparse component not found");
+						return;
+					}
+
+					*ptr = f(*ptr);
+				}
+				else {
+					T readValue = {};
+
+					std::shared_lock lock(locationsMutex);
+
+					auto it = locations.find(id);
+					if (it == locations.end()) [[unlikely]] {
+						LOG_ERROR("EntityManager::ReadWriteComponent: Entity not found");
+						return;
+					}
+
+					const auto loc = it->second;
+
+					// SoA コンポーネント
+					if constexpr (IsSoAComponent<T>) {
+						ComponentAccessor<Read<T>> accessor(loc.chunk);
+						auto soaPtrOpt = accessor.Get<Read<T>>();
+						if (!soaPtrOpt) [[unlikely]] {
+							LOG_ERROR("EntityManager::ReadWriteComponent: SoA component not found");
+							return;
+						}
+						readValue = ComponentAccessorBase::ConvertSoAToAoSComponent<T>(*soaPtrOpt, loc.index);
+					}
+					// 通常 AoS
+					else {
+						auto col = loc.chunk->GetColumn<T>();
+						if (!col) [[unlikely]] {
+							LOG_ERROR("EntityManager::ReadWriteComponent: AoS component not found");
+							return;
+						}
+						readValue = col.value()[loc.index];
+					}
+
+					auto writeValue = f(std::move(readValue));
+					MemorySetChunk<T>(loc.chunk, loc.index, writeValue);
+				}
+			}
+
 			/**
 			 * @brief エンティティにコンポーネントを追加する関数
 			 * @param id エンティティID
@@ -313,7 +410,11 @@ namespace SFW
 					auto locOpt = TryGetLocation(id);
 					if (!locOpt) continue;
 					EntityManager* dst = router(id, locOpt->chunk->GetComponentMask());
-					assert(dst != nullptr && "Router must return a valid EntityManager reference");
+					if (dst == nullptr)
+					{
+						LOG_ERROR("Router returned nullptr for EntityID { i: %d, g: %d }", id.index, id.generation);
+						continue;
+					}
 					if (dst == this) continue;
 					if (InsertWithID_ForManagerMove(id, *this, *dst)) { buckets[dst].push_back(id); ++moved; }
 				}
@@ -505,6 +606,7 @@ namespace SFW
 					MemorySetChunk<T>(chunk, index, value);
 				}
 			}
+
 			/**
 			 * @brief スパースを触らずにローカルから除去（ID破棄しない）
 			 * @param id 除去するエンティティのID

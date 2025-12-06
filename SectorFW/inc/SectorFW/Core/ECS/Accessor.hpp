@@ -59,7 +59,7 @@ namespace SFW
 		template<typename T>
 		struct AccessPolicy<Read<T>> {
 			using ComponentType = T;
-			using PointerType = const T*;
+			using PointerType = const typename SoAPtr<T>::type;
 		};
 		/**
 		 * @brief 書き込みアクセスのポリシーを定義するテンプレート
@@ -67,29 +67,12 @@ namespace SFW
 		template<typename T>
 		struct AccessPolicy<Write<T>> {
 			using ComponentType = T;
-			using PointerType = T*;
-		};
-		/**
-		 * @brief SoAコンポーネントの読み取りアクセスのポリシーを定義するテンプレート
-		 */
-		template<IsSoAComponent T>
-		struct AccessPolicy<Read<T>> {
-			using ComponentType = T;
-			using PointerType = const typename SoAPtr<T>::type;
-		};
-		/**
-		 * @brief SoAコンポーネントの書き込みアクセスのポリシーを定義するテンプレート
-		 */
-		template<IsSoAComponent T>
-		struct AccessPolicy<Write<T>> {
-			using ComponentType = T;
 			using PointerType = typename SoAPtr<T>::type;
 		};
-		/**
-		 * @brief 指定したアクセス型に基づいて、コンポーネントにアクセスするためのクラス
-		 */
-		template<typename... AccessTypes>
-		class ComponentAccessor {
+
+		// コンポーネントアクセサーの基底クラス
+		class ComponentAccessorBase
+		{
 			// 判定テンプレート
 			template <typename, typename = std::void_t<>>
 			struct IsToPtr : std::false_type {};
@@ -101,18 +84,39 @@ namespace SFW
 			 * @brief コンストラクタ
 			 * @param chunk アクセスするアーキタイプチャンク
 			 */
-			explicit ComponentAccessor(ArchetypeChunk* chunk) noexcept : chunk(chunk) {}
-			/**
-			 * @brief 指定したアクセス型に対して、コンポーネントを取得する関数
-			 * @tparam AccessType アクセスするコンポーネントの型(AccessInfo.h参照)
-			 * @return　std::optional<PointerType> コンポーネントのポインタ
-			 */
-			template<typename AccessType>
-				requires OneOf<AccessType, AccessTypes...>
-			std::optional<typename AccessPolicy<AccessType>::PointerType> Get() noexcept {
-				using ComponentType = typename AccessPolicy<AccessType>::ComponentType;
-				using PtrType = SoAPtr<ComponentType>::type;
+			explicit ComponentAccessorBase(ArchetypeChunk* chunk) noexcept : chunk(chunk) {}
 
+			/**
+			 * @brief SoAコンポーネントをAoSコンポーネントに変換する関数
+			 * @tparam T SoAコンポーネントの型
+			 * @param index 変換するインデックス
+			 * @return T AoSコンポーネントの値
+			 */
+			template<typename T>
+				requires ECS::IsSoAComponent<T>
+			static T ConvertSoAToAoSComponent(const typename T::ToPtr& p, size_t index) noexcept
+			{
+				T value{};
+				StoreSoAToAoSImpl<T>(
+					p, index, value,
+					std::make_index_sequence<std::tuple_size_v<decltype(T::member_ptr_tuple)>>{}
+				);
+				return value;
+			}
+
+			/**
+			 * @brief チャンクの容量を取得する関数
+			 * @return size_t チャンクの容量
+			 */
+			size_t GetCapacity() const noexcept {
+				return chunk->GetCapacity();
+			}
+
+		protected:
+
+			template<typename AccessType, typename PtrType, typename ComponentType>
+			std::optional<typename AccessPolicy<AccessType>::PointerType> GetComponent()
+			{
 				auto column = chunk->GetColumn<ComponentType>();
 				if (!column) [[unlikely]] return std::nullopt;
 				if constexpr (IsSoAComponent<ComponentType>) {
@@ -129,24 +133,7 @@ namespace SFW
 					return column;
 				}
 			}
-			/**
-			 * @brief requiresに一致しなかったときのフォールバック定義
-			 * @return std::optional<void> 空のオプション
-			 */
-			template<typename AccessType>
-			std::optional<void> Get() noexcept {
-				static_assert(OneOf<AccessType, AccessTypes...>,
-					"Get<AccessType>: AccessType must be one of the AccessTypes... used in this system.");
-				return std::nullopt;
-			}
-			/**
-			 * @brief チャンクの容量を取得する関数
-			 * @return size_t チャンクの容量
-			 */
-			size_t GetCapacity() const noexcept {
-				return chunk->GetCapacity();
-			}
-		private:
+
 			/**
 			 * @brief SoAコンポーネントのメンバーの開始ポインタを取得する関数の実装
 			 * @param base SoAコンポーネントのベースポインタ
@@ -195,8 +182,55 @@ namespace SFW
 			{
 				(GetMemberStartPtrImpl<PtrType, Is>(base, capacity, offset, value), ...);
 			}
+
+			template<typename T, std::size_t... Is>
+			static void StoreSoAToAoSImpl(const typename T::ToPtr& p, size_t index, T& out, std::index_sequence<Is...>) noexcept{
+
+				auto& aos_tuple = T::member_ptr_tuple;			// AoSメンバ変数ポインタ
+				auto& soa_tuple = p.ptr_tuple;					// SoAメンバ変数ポインタ
+
+				((out.*(std::get<Is>(aos_tuple)) =
+					(p.*std::get<Is>(soa_tuple))[index]), ...);
+			}
+		private:
 			// アーキタイプチャンクへのポインタ
 			ArchetypeChunk* chunk;
+		};
+
+		/**
+		 * @brief 指定したアクセス型に基づいて、コンポーネントにアクセスするためのクラス
+		 */
+		template<typename... AccessTypes>
+		class ComponentAccessor : public ComponentAccessorBase {
+		public:
+			/**
+			 * @brief コンストラクタ
+			 * @param chunk アクセスするアーキタイプチャンク
+			 */
+			explicit ComponentAccessor(ArchetypeChunk* chunk) noexcept : ComponentAccessorBase(chunk){}
+			/**
+			 * @brief 指定したアクセス型に対して、コンポーネントを取得する関数
+			 * @tparam AccessType アクセスするコンポーネントの型(AccessInfo.h参照)
+			 * @return　std::optional<PointerType> コンポーネントのポインタ
+			 */
+			template<typename AccessType>
+				requires OneOf<AccessType, AccessTypes...>
+			std::optional<typename AccessPolicy<AccessType>::PointerType> Get() noexcept {
+				using ComponentType = typename AccessPolicy<AccessType>::ComponentType;
+				using PtrType = SoAPtr<ComponentType>::type;
+
+				return GetComponent<AccessType, PtrType, ComponentType>();
+			}
+			/**
+			 * @brief requiresに一致しなかったときのフォールバック定義
+			 * @return std::optional<void> 空のオプション
+			 */
+			template<typename AccessType>
+			std::optional<void> Get() noexcept {
+				static_assert(OneOf<AccessType, AccessTypes...>,
+					"Get<AccessType>: AccessType must be one of the AccessTypes... used in this system.");
+				return std::nullopt;
+			}
 		};
 	}
 }

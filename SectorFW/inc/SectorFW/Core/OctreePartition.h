@@ -584,8 +584,8 @@ namespace SFW
 		Node* descendToLeaf(Node& cur, float x, float y, float z, bool createIfMissing)
 		{
 			auto posFn = [](ECS::EntityID id, ECS::EntityManager& mgr) -> std::optional<Math::Vec3f> {
-				auto tf = mgr.GetComponent<CTransform>(id);
-				if (tf == nullptr) return std::nullopt;
+				auto tf = mgr.ReadComponent<CTransform>(id);
+				if (!tf.has_value()) return std::nullopt;
 				return tf->location;
 				};
 

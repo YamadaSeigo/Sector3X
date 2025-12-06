@@ -10,7 +10,6 @@
 #include <unordered_map>
 #include <vector>
 #include <memory>
-#include <cassert>
 #include <bit>
 
 #include "entity.h"
@@ -19,6 +18,7 @@
 
 #include "Util/alignment.h"
 #include "Debug/logger.h"
+#include "Debug/assert_config.h"
 
 namespace SFW
 {
@@ -46,7 +46,7 @@ namespace SFW
 			 */
 			ArchetypeChunk(ComponentMask mask) : layout(ComponentLayoutRegistry::GetLayout(mask)),
 				componentMask(mask) {
-				assert(layout.capacity > 0 && "Chunk capacity must be greater than 0");
+				SFW_ASSERT(layout.capacity > 0 && "Chunk capacity must be greater than 0");
 				entities.resize(layout.capacity);
 			}
 			/**

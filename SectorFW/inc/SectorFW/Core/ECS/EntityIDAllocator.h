@@ -10,8 +10,9 @@
 #include <atomic>
 #include <vector>
 #include <cstdint>
-#include <cassert>
+
 #include "../external/concurrentqueue/concurrentqueue.h"
+#include "../../Debug/assert_config.h"
 #include "entity.h"
 
 namespace SFW
@@ -70,10 +71,8 @@ namespace SFW
 
 				// Reuse the index
 				bool success = freeQueue.try_enqueue(id.index);
-				if (!success) [[unlikely]] {
-					// Free queue full → ID leak（無視してもよい or ログ出力）
-					assert(false && "EntityIDAllocator: Free queue is full, ID leak occurred.");
-				}
+				// Free queue full → ID leak（無視してもよい or ログ出力）
+				SFW_ASSERT(success && "EntityIDAllocator: Free queue is full, ID leak occurred.");
 			}
 			/**
 			 * @brief エンティティIDが有効かどうかを確認する関数

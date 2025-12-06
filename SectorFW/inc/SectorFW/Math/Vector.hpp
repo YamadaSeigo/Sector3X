@@ -155,6 +155,42 @@ namespace SFW
 			return v / std::sqrt(lenSq);
 		}
 
+		template<typename T>
+		static Vec2<T> Lerp(const Vec2<T>& a, const Vec2<T>& b, float t) noexcept {
+			return a * (T(1) - T(t)) + b * T(t);
+		}
+
+		template<typename T>
+		static Vec3<T> Lerp(const Vec3<T>& a, const Vec3<T>& b, float t) noexcept {
+			return a * (T(1) - T(t)) + b * T(t);
+		}
+
+		template<typename T>
+		static T Dot(const Vec3<T>& a, const Vec3<T>& b) noexcept {
+			return a.x * b.x + a.y * b.y + a.z * b.z;
+		}
+
+		template<typename T>
+		static Vec3<T> Cross(const Vec3<T>& a, const Vec3<T>& b) noexcept {
+			return Vec3<T>(
+				a.y * b.z - a.z * b.y,
+				a.z * b.x - a.x * b.z,
+				a.x * b.y - a.y * b.x
+			);
+		}
+
+		template<typename T>
+		static T Length(const Vec3<T>& v) noexcept {
+			return std::sqrt(Dot(v, v));
+		}
+
+		template<typename T>
+		static Vec3<T> Normalize(const Vec3<T>& v) noexcept {
+			T len = Length(v);
+			assert(len != 0);
+			return v / len;
+		}
+
 		// ---------------- Vec3 ê≥ãKâªÇÃà¿ëSî≈ ----------------
 		template<typename T>
 		static Vec3<T> NormalizeSafe(const Vec3<T>& v, const Vec3<T>& fallback)
@@ -163,6 +199,13 @@ namespace SFW
 			if (lenSq <= 1e-8f)
 				return fallback;
 			return v / std::sqrt(lenSq);
+		}
+
+		template<typename T>
+		static float AngleBetween(const Vec3<T>& a, const Vec3<T>& b) noexcept {
+			T dotProd = Dot(a.normalized(), b.normalized());
+			dotProd = std::clamp(dotProd, T(-1), T(1)); // êîílåÎç∑ñhé~
+			return std::acos(dotProd); // ÉâÉWÉAÉì
 		}
 
 		// ãKñÒÉ^ÉO

@@ -11,6 +11,7 @@
 
 #include "component.hpp"
 #include "../../Util/OneOrMore.hpp"
+#include "../../Debug/assert_config.h"
 
 namespace SFW
 {
@@ -115,7 +116,7 @@ namespace SFW
 				}
 
 				ComponentTypeID id = GetID<T>();
-				assert(id < MaxComponents && "Exceeded maximum number of components. should define 'MAX_COMPONENTS_NUM'");
+				SFW_ASSERT(id < MaxComponents && "Exceeded maximum number of components. should define 'MAX_COMPONENTS_NUM'");
 
 				OneOrMore<ComponentMeta::Structure> meta_structures;
 
@@ -139,6 +140,16 @@ namespace SFW
 
 				meta[id] = { meta_structures ,is_sparse_component_v<T> ,is_soa_component_v<T> };
 			}
+
+			/**
+			 * @brief コンポーネントが登録されているか確認します。
+			 */
+			template<typename T>
+			static bool IsRegistered() noexcept {
+				ComponentTypeID id = GetID<T>();
+				return meta.contains(id);
+			}
+
 			/**
 			 * @brief SoA タプルの全要素が trivially copyable か確認する補助
 			 */
