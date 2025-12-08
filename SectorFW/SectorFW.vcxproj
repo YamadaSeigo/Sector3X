@@ -117,6 +117,7 @@
     <ClInclude Include="inc\SectorFW\Physics\IShapeResolver.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsComponent.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsContactListener.h" />
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsConvexHullLoader.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsDevice.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsDevice_Util.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsLayers.h" />

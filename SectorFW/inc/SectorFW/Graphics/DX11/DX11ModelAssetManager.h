@@ -20,6 +20,9 @@
 #include "../../Util/PathView.hpp"
 
 
+ //クラスターをモデルアセットマネージャー側で構築するかどうかの定義
+//#define BUILD_CLUSTERS_FOR_MODEL_ASSET_MANAGER
+
 namespace SFW
 {
 	namespace Graphics::DX11
@@ -62,7 +65,9 @@ namespace SFW
 
 			struct SubmeshLOD {
 				MeshHandle mesh = {};                // このLODのメッシュ（VB/IB）
+#ifdef BUILD_CLUSTERS_FOR_MODEL_ASSET_MANAGER
 				std::vector<MeshManager::ClusterInfo> clusters; // このLODのクラスタ（meshlets）
+#endif
 			};
 
 			struct SubMesh {

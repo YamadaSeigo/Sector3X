@@ -88,13 +88,42 @@ namespace SFW
 			/**
 			 * @brief 凸形状を生成する
 			 * @param pts 凸形状を作成する頂点群
+			 * @param idx 頂点インデックス群
+			 * @param s スケール（デフォルトは {1,1,1}）
 			 * @param r  シュリンク半径（デフォルトは 0.05f）
 			 * @param tol 許容誤差（デフォルトは 0.005f）
 			 * @return ShapeHandle 生成されたカプセル形状のハンドル
 			 */
-			[[nodiscard]] ShapeHandle MakeConvex(const std::vector<Vec3f>& pts, float r = 0.05f, float tol = 0.005f) {
-				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ ConvexHullDesc{pts, r, tol}, {{1,1,1}} }, h); return h;
+			[[nodiscard]] ShapeHandle MakeConvex(const std::vector<Vec3f>& pts, const std::vector<uint32_t>& idx, float r = 0.05f, float tol = 0.005f) {
+				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ ConvexHullDesc{pts, idx, r, tol}, {{1.0f,1.0f,1.0f}} }, h); return h;
 			}
+
+			/**
+			 * @brief 凸形状群から StaticCompoundShape を生成する
+			 * @param hulls 凸形状群
+			 * @param rhFlip 右手系変換が必要なら true
+			 * @param s スケール（デフォルトは {1,1,1}）
+			 * @param r  シュリンク半径（デフォルトは 0.05f）
+			 * @param tol 許容誤差（デフォルトは 0.005f）
+			 * @return ShapeHandle 生成された StaticCompoundShape 形状のハンドル
+			 */
+			[[nodiscard]] ShapeHandle MakeConvexCompound(const std::vector<VHACDHull>& hulls, bool rhFlip = false, ShapeScale s = { {1,1,1} }, float r = 0.05f, float tol = 0.005f) {
+				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ ConvexCompoundDesc{hulls, r, tol, rhFlip}, s }, h); return h;
+			}
+
+			/**
+			 * @brief VHACD バイナリファイルから凸形状群を読み込み、StaticCompoundShape を生成する
+			 * @param path 凸形状バイナリファイルのパス
+			 * @param rhFlip 右手系変換が必要なら true
+			 * @param s スケール（デフォルトは {1,1,1}）
+			 * @param r  シュリンク半径（デフォルトは 0.05f）
+			 * @param tol 許容誤差（デフォルトは 0.005f）
+			 * @return ShapeHandle 生成された StaticCompoundShape 形状のハンドル
+			 */
+			[[nodiscard]] ShapeHandle MakeConvexCompound(const std::string& path, bool rhFlip = false, ShapeScale s = { {1,1,1} }, float r = 0.05f, float tol = 0.005f) {
+				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ ConvexCompoundFileDesc{path, r, tol, rhFlip}, s }, h); return h;
+			}
+
 			/**
 			 * @brief 形状を解放する
 			 * @param h 解放する形状のハンドル
@@ -170,7 +199,7 @@ namespace SFW
 			 * @param maxDist 最大距離
 			 */
 			bool RayCast(uint32_t reqId, Vec3f o, Vec3f dir, float maxDist) { return Enqueue(RayCastCmd{ reqId, o, dir, maxDist }); }
-			
+
 			bool CreateCharacter(const CreateCharacterCmd& c) {
 				return Enqueue(c);
 			}
@@ -295,8 +324,19 @@ namespace SFW
 			 */
 			std::optional<ShapeDims> GetShapeDims(ShapeHandle h) const {
 				auto shape = m_mgr->Resolve(h);
-				return m_mgr->GetShapeDims(shape);
+				return m_mgr->GetShapeDims(shape, h);
 			}
+
+#ifdef CACHE_SHAPE_WIRE_DATA
+			/**
+			 * @brief 形状のワイヤーフレームデータを取得する
+			 * @param h 形状ハンドル
+			 * @return std::optional<WireframeData> ワイヤーフレームデータ（存在しない場合は std::nullopt
+			 */
+			std::optional<ShareWireframeData> GetShapeWireframeData(ShapeHandle h) const {
+				return m_mgr->GetShapeWireframeData(h);
+			}
+#endif
 		private:
 			template<class T>
 			bool Enqueue(const T& c) {

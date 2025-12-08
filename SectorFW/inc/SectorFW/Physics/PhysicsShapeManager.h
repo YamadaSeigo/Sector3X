@@ -9,6 +9,7 @@
 #include "IShapeResolver.h"
 #include "../Util/ResouceManagerBase.hpp"
 #include "PhysicsComponent.h"
+#include "PhysicsConvexHullLoader.h"
 
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Collision/Shape/Shape.h>
@@ -19,11 +20,16 @@
 #include <Jolt/Physics/Collision/Shape/HeightFieldShape.h>
 #include <Jolt/Physics/Collision/Shape/ScaledShape.h>
 #include <Jolt/Physics/Collision/Shape/ConvexHullShape.h>
+#include <Jolt/Physics/Collision/Shape/StaticCompoundShape.h>
 #include <Jolt/Physics/Collision/Shape/RotatedTranslatedShape.h>
 
 #include <variant>
 #include <vector>
 #include <cstdint>
+
+#ifdef _DEBUG
+#define CACHE_SHAPE_WIRE_DATA // ワイヤーフレーム用頂点/インデックスをキャッシュするかどうか
+#endif
 
 namespace SFW
 {
@@ -61,7 +67,20 @@ namespace SFW
 			// ConvexHull summary
 			size_t chash{ 0 };
 			uint32_t pcount{ 0 };
-			enum class Kind : uint8_t { Box, Sphere, Capsule, Mesh, HeightField, ConvexHull } kind{};
+
+			// ConvexCompoundFile summary
+			size_t fileHash{ 0 };   // path のハッシュ
+
+			enum class Kind : uint8_t {
+				Box,
+				Sphere,
+				Capsule,
+				Mesh,
+				HeightField,
+				ConvexHull,
+				ConvexCompound,
+				ConvexCompoundFile
+			} kind{};
 		};
 		// ハッシュと比較（ビット等価）
 		// 浮動小数は「ビット列」をハッシュするのが意図どおり（近似比較は避ける）
@@ -109,6 +128,14 @@ namespace SFW
 					mix(k.hfHash);
 					mix(HashFloatBits(k.scaleY)); mix(HashFloatBits(k.cellX)); mix(HashFloatBits(k.cellY));
 					break;
+				case ShapeKey::Kind::ConvexHull:
+				case ShapeKey::Kind::ConvexCompound:
+					mix(k.chash);
+					mix(k.pcount);
+					break;
+				case ShapeKey::Kind::ConvexCompoundFile:
+					mix(k.fileHash);
+					break;
 				}
 				return h;
 			}
@@ -137,10 +164,76 @@ namespace SFW
 				case ShapeKey::Kind::HeightField:
 					return a.sizeX == b.sizeX && a.sizeY == b.sizeY && a.hfHash == b.hfHash
 						&& a.scaleY == b.scaleY && a.cellX == b.cellX && a.cellY == b.cellY;
+				case ShapeKey::Kind::ConvexHull:
+					return a.chash == b.chash && a.pcount == b.pcount;
+				case ShapeKey::Kind::ConvexCompound:
+					return a.chash == b.chash && a.pcount == b.pcount;
+				case ShapeKey::Kind::ConvexCompoundFile:
+					return a.fileHash == b.fileHash;
 				}
 				return false;
 			}
 		};
+
+#ifdef CACHE_SHAPE_WIRE_DATA
+		struct WireframeData {
+			std::vector<Vec3f> vertices;
+			std::vector<uint32_t> indices;
+		};
+
+		// triIndices: 3 要素で 1 三角形
+		inline WireframeData BuildShapeWireframe(
+			const std::vector<Vec3f>& verts,
+			const std::vector<uint32_t>& triIndices)
+		{
+			WireframeData out;
+			out.vertices = verts; // そのままコピー（もしくは参照を別管理でもOK）
+
+			std::unordered_set<uint64_t> edgeSet;
+			edgeSet.reserve(triIndices.size() * 2);
+
+			auto add_edge = [&](uint32_t a, uint32_t b)
+				{
+					if (a == b) return;
+
+					// 無向エッジとして扱うため (min,max) に正規化
+					uint32_t i0 = (std::min)(a, b);
+					uint32_t i1 = (std::max)(a, b);
+					uint64_t key = (uint64_t(i0) << 32) | uint64_t(i1);
+
+					if (edgeSet.insert(key).second)
+					{
+						// 新規エッジだけ LINELIST インデックスに追加
+						out.indices.push_back(i0);
+						out.indices.push_back(i1);
+					}
+				};
+
+			const size_t triCount = triIndices.size() / 3;
+			for (size_t t = 0; t < triCount; ++t)
+			{
+				uint32_t i0 = triIndices[t * 3 + 0];
+				uint32_t i1 = triIndices[t * 3 + 1];
+				uint32_t i2 = triIndices[t * 3 + 2];
+
+				add_edge(i0, i1);
+				add_edge(i1, i2);
+				add_edge(i2, i0);
+			}
+
+			return out;
+		}
+
+		struct ShareWireframeData {
+			const WireframeData& data;
+
+			ShareWireframeData(const WireframeData& _data, std::shared_mutex& mutex)
+				: data(_data), lk_(mutex){
+			}
+		private:
+			std::shared_lock<std::shared_mutex> lk_;
+		};
+#endif
 
 		// ================== PhysicsShapeManager ==================
 		class PhysicsShapeManager
@@ -185,13 +278,20 @@ namespace SFW
 					// indexToKey_[index] はそのままでも問題ないが、明示的に消すなら：
 					// indexToKey_[index] = ShapeKey{};
 				}
+
+#ifdef CACHE_SHAPE_WIRE_DATA
+				auto wit = wireDataCache_.find(index);
+				if (wit != wireDataCache_.end()) {
+					wireDataCache_.erase(wit);
+				}
+#endif
 			}
 
 			// 実体生成
-			JPH::RefConst<JPH::Shape> CreateResource(const ShapeCreateDesc& desc, ShapeHandle /*h*/) {
+			JPH::RefConst<JPH::Shape> CreateResource(const ShapeCreateDesc& desc, ShapeHandle h) {
 				using namespace JPH;
 
-				// ---- 既存: スケール決定 ----
+				// ---- スケール決定 ----
 				Vec3f scale = desc.scale.s;
 				bool radial = std::holds_alternative<SphereDesc>(desc.shape) || std::holds_alternative<CapsuleDesc>(desc.shape);
 				if (radial && !IsUniformScale(scale)) scale = EnforceUniformScale(scale);
@@ -248,10 +348,15 @@ namespace SFW
 						st.mIndexedTriangles.reserve(d.indices.size() / 3);
 						for (size_t i = 0; i + 2 < d.indices.size(); i += 3)
 							st.mIndexedTriangles.emplace_back(d.indices[i], d.indices[i + 1], d.indices[i + 2]);
+
+#ifdef CACHE_SHAPE_WIRE_DATA
+						wireDataCache_.emplace(h.index,
+							BuildShapeWireframe(d.vertices, d.indices));
+#endif
+
 						auto res = st.Create();
 						if (res.HasError()) return make_rotated_translated(make_scaled(RefConst<Shape>(new BoxShape(Vec3(0.5f, 0.5f, 0.5f)))));
 						RefConst<Shape> base = res.Get();
-						base = make_scaled(base);
 						return make_rotated_translated(base);
 					}
 					else if constexpr (std::is_same_v<T, HeightFieldDesc>) {
@@ -294,6 +399,11 @@ namespace SFW
 						st.mPoints.reserve(d.points.size());
 						for (auto& p : d.points) st.mPoints.emplace_back(p.x, p.y, p.z);
 
+#ifdef CACHE_SHAPE_WIRE_DATA
+						wireDataCache_.emplace(h.index,
+							BuildShapeWireframe(d.points, d.indices));
+#endif
+
 						auto res = st.Create();
 						if (res.HasError()) {
 							RefConst<Shape> base = new BoxShape(Vec3(0.5f, 0.5f, 0.5f));
@@ -301,8 +411,113 @@ namespace SFW
 							return make_rotated_translated(base);
 						}
 						RefConst<Shape> base = res.Get();
-						base = make_scaled(base);
 						return make_rotated_translated(base);
+					}
+					else if constexpr (std::is_same_v<T, ConvexCompoundDesc> || std::is_same_v<T, ConvexCompoundFileDesc>) {
+						using namespace SFW::Physics;
+
+						// 1) バイナリを読み込んで hull 群を取得
+						std::vector<VHACDHull> hulls;
+						if constexpr (std::is_same_v<T, ConvexCompoundDesc>)
+						{
+							hulls = d.hulls;
+							for (auto& hull : hulls)
+							{
+								auto flip_vec3z = [](float& x, float& y, float& z) { x = -x; };
+
+								for (auto& p : hull.points)
+								{
+									p.x *= desc.scale.s.x;
+									p.y *= desc.scale.s.y;
+									p.z *= desc.scale.s.z;
+
+									if (d.rhFlip)
+										flip_vec3z(p.x, p.y, p.z);
+								}
+							}
+						}
+						else
+						{
+							if (!LoadVHACDFile(d.path, hulls, desc.scale.s, d.rhFlip) || hulls.empty()) {
+								// 読み込み失敗 → フォールバック Box
+								RefConst<Shape> base = new BoxShape(Vec3(0.5f, 0.5f, 0.5f));
+								base = make_scaled(base);
+
+								LOG_WARNING("PhysicsShapeManager: Failed to load VHACD file: {%s}", d.path.c_str());
+
+								return make_rotated_translated(base);
+							}
+						}
+
+						// 2) hull が 1つだけなら普通の ConvexHull として処理
+						if (hulls.size() == 1) {
+							ConvexHullShapeSettings hst;
+							hst.mMaxConvexRadius = d.maxConvexRadius;
+							hst.mHullTolerance = d.hullTolerance;
+							hst.mPoints.reserve(hulls[0].points.size());
+							for (auto& p : hulls[0].points)
+								hst.mPoints.emplace_back(p.x, p.y, p.z);
+
+							auto res = hst.Create();
+							if (res.HasError()) {
+								RefConst<Shape> base = new BoxShape(Vec3(0.5f, 0.5f, 0.5f));
+								base = make_scaled(base);
+								return make_rotated_translated(base);
+							}
+							RefConst<Shape> base = res.Get();
+							return make_rotated_translated(base);
+						}
+
+						// 3) hull が複数なら StaticCompoundShape としてまとめる
+						StaticCompoundShapeSettings cs;
+
+						for (auto& h : hulls) {
+							if (h.points.empty()) continue;
+
+							ConvexHullShapeSettings hst;
+							hst.mMaxConvexRadius = d.maxConvexRadius;
+							hst.mHullTolerance = d.hullTolerance;
+							hst.mPoints.reserve(h.points.size());
+							for (auto& p : h.points)
+								hst.mPoints.emplace_back(p.x, p.y, p.z);
+
+							auto res = hst.Create();
+							if (res.HasError()) {
+								// この hull はスキップ（もしくは全体フォールバックにするかは好み）
+								continue;
+							}
+
+							RefConst<Shape> hullShape = res.Get();
+							// 各 hull のローカルオフセットは Python 側で bake 済みと想定し、ここでは (0,0,0)
+							cs.AddShape(Vec3::sZero(), Quat::sIdentity(), hullShape);
+						}
+
+#ifdef CACHE_SHAPE_WIRE_DATA
+						std::vector<Vec3f> allVerts;
+						std::vector<uint32_t> allIndices;
+						for (auto& h : hulls) {
+							auto wf = BuildShapeWireframe(h.points, h.indices); // インデックスは不要
+							uint32_t baseIndex = static_cast<uint32_t>(allVerts.size());
+							allVerts.insert(allVerts.end(), wf.vertices.begin(), wf.vertices.end());
+							allIndices.reserve(allIndices.size() + wf.indices.size());
+							// インデックスは頂点追加分だけオフセットして追加
+							for (auto idx : wf.indices) {
+								allIndices.push_back(baseIndex + idx);
+							}
+						}
+						wireDataCache_.emplace(h.index,
+							WireframeData{ allVerts, allIndices });
+#endif
+
+						auto compRes = cs.Create();
+						if (compRes.HasError()) {
+							RefConst<Shape> base = new BoxShape(Vec3(0.5f, 0.5f, 0.5f));
+							base = make_scaled(base);
+							return make_rotated_translated(base);
+						}
+
+						RefConst<Shape> compound = compRes.Get();
+						return make_rotated_translated(compound);
 					}
 					else {
 						RefConst<Shape> base = new BoxShape(Vec3(0.5f, 0.5f, 0.5f));
@@ -325,7 +540,7 @@ namespace SFW
 			}
 
 
-			std::optional<ShapeDims> GetShapeDims(const JPH::Shape* s) const
+			std::optional<ShapeDims> GetShapeDims(const JPH::Shape* s, ShapeHandle h)
 			{
 				using namespace JPH;
 
@@ -410,6 +625,8 @@ namespace SFW
 					Vec3 d = b.GetSize();
 					out.dims = Math::Vec3f(d.GetX(), d.GetY(), d.GetZ());
 					out.type = ShapeDims::Type::CMHC;
+					out.handle = h;
+					AddRef(h);
 					break;
 				}
 				}
@@ -421,6 +638,15 @@ namespace SFW
 
 				return out;
 			}
+#ifdef CACHE_SHAPE_WIRE_DATA
+			// ワイヤーフレームデータ取得
+			std::optional<ShareWireframeData> GetShapeWireframeData(ShapeHandle h) const {
+				std::shared_lock lk(cacheMutex_);
+				auto it = wireDataCache_.find(h.index);
+				if (it == wireDataCache_.end()) return std::nullopt;
+				return ShareWireframeData(it->second, cacheMutex_);
+			}
+#endif
 
 		private:
 			// Key の生成
@@ -476,6 +702,26 @@ namespace SFW
 						if (!s.points.empty())
 							k.chash = HashBufferContent(s.points.data(), s.points.size() * sizeof(Vec3f));
 					}
+					else if constexpr (std::is_same_v<T, ConvexCompoundDesc>) {
+						k.kind = ShapeKey::Kind::ConvexCompound;
+						// 複数 hull のハッシュをまとめる
+						size_t combinedHash = 0;
+						for (const auto& hull : s.hulls) {
+							if (!hull.points.empty()) {
+								size_t h = HashBufferContent(hull.points.data(), hull.points.size() * sizeof(Vec3f));
+								// 簡易的にミックス
+								combinedHash ^= h + 0x9e3779b97f4a7c15ull + (combinedHash << 6) + (combinedHash >> 2);
+
+								k.pcount += static_cast<uint32_t>(hull.points.size());
+							}
+						}
+						k.chash = combinedHash;
+					}
+					else if constexpr (std::is_same_v<T, ConvexCompoundFileDesc>) {
+						k.kind = ShapeKey::Kind::ConvexCompoundFile;
+						// ファイルパスのハッシュを取る
+						k.fileHash = std::hash<std::string>{}(s.path);
+					}
 					}, d.shape);
 
 				return k;
@@ -486,6 +732,9 @@ namespace SFW
 			mutable std::shared_mutex cacheMutex_;
 			std::unordered_map<ShapeKey, ShapeHandle, ShapeKeyHash, ShapeKeyEq> keyToHandle_;
 			std::vector<ShapeKey> indexToKey_; // index -> key（RemoveFromCaches 用）
+#ifdef CACHE_SHAPE_WIRE_DATA
+			std::unordered_map<uint32_t, WireframeData> wireDataCache_;
+#endif
 		};
 	}
 }

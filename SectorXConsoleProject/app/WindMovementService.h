@@ -138,6 +138,25 @@ public:
         return weights;
     }
 
+    static std::vector<float> ComputeGhostWeight(const std::vector<Math::Vec3f>& vertices)
+    {
+        float minY = +FLT_MAX;
+        float maxY = -FLT_MAX;
+        for (const auto v : vertices) {
+            minY = (std::min)(minY, v.y);
+            maxY = (std::max)(maxY, v.y);
+        }
+        float height = (std::max)(0.0001f, maxY - minY);
+        std::vector<float> weights;
+        weights.reserve(vertices.size());
+        for (const auto v : vertices) {
+            float t = 1.0f - (v.y - minY) / height; // 1..0 高くなるほど小さく
+            float w = std::pow(t, 2.0f); // 高さに応じて二次曲線的に増加.しなやかにカーブ
+            weights.push_back(w);
+        }
+        return weights;
+    }
+
 private:
 
     // 内部状態

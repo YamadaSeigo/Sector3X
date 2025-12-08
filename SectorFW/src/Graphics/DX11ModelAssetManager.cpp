@@ -294,7 +294,9 @@ namespace SFW
 					MeshManager::BuildClustersWithMeshoptimizer(
 						positions, indices,
 						clusters, clusterTris, clusterVerts);
-					sub.lods[0].clusters = std::move(clusters);
+#ifdef BUILD_CLUSTERS_FOR_MODEL_ASSET_MANAGER
+				 	sub.lods[0].clusters = std::move(clusters);
+#endif
 
 					size_t beforeIndexCount = indices.size();
 					// 2) LOD1～N を生成
@@ -869,9 +871,11 @@ namespace SFW
 				MeshManager::BuildClustersWithMeshoptimizer(
 					outStreams.positions, outIdx,
 					clusters, clusterTris, clusterVerts);
+#ifdef BUILD_CLUSTERS_FOR_MODEL_ASSET_MANAGER
 				outMesh.clusters = std::move(clusters);
+#endif // BUILD_CLUSTERS_FOR_MODEL_ASSET_MANAGER
 			}
-#endif
+#endif // USE_MESHOPTIMIZER
 			return true;
 		}
 

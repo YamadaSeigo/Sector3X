@@ -64,7 +64,8 @@ class DebugRenderSystem : public ITypeSystem<
 		Graphics::RenderService,
 		Graphics::I3DPerCameraService,
 		Graphics::I2DCameraService,
-		Graphics::LightShadowService
+		Graphics::LightShadowService,
+		Physics::PhysicsService
 	>>
 {
 	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<CTransform>>;
@@ -82,7 +83,8 @@ public:
 		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
 		UndeletablePtr<Graphics::I2DCameraService>,
-		UndeletablePtr<Graphics::LightShadowService>)
+		UndeletablePtr<Graphics::LightShadowService>,
+		UndeletablePtr <Physics::PhysicsService>)
 	{
 		using namespace Graphics;
 		using namespace Debug;
@@ -243,7 +245,8 @@ public:
 		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
 		UndeletablePtr<Graphics::I2DCameraService> camera2DService,
-		UndeletablePtr<Graphics::LightShadowService> lightShadowService)
+		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
+		UndeletablePtr <Physics::PhysicsService> physicsService)
 	{
 		//機能を制限したRenderQueueを取得
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
@@ -259,7 +262,7 @@ public:
 		auto fru = camera3DService->MakeFrustum();
 
 		auto cameraPos = camera3DService->GetEyePos();
-		const auto& viewProj = camera3DService->GetCameraBufferData().viewProj;
+		const auto viewProj = camera3DService->GetCameraBufferData().viewProj;
 		auto fov = camera3DService->GetFOV();
 
 		Math::Vec2f resolution = camera2DService->GetVirtualResolution();
@@ -450,61 +453,9 @@ public:
 				}, partition, fru);
 		}
 
-		if (line3DCount > 0)
-		{
-			Graphics::DX11::BufferUpdateDesc vbUpdateDesc;
-			{
-				auto lineBuffer = meshManager->Get(line3DHandle);
-				vbUpdateDesc.buffer = lineBuffer.ref().vbs[0];
-			}
-
-			auto slot = renderService->GetProduceSlot();
-
-			meshManager->SetIndexCount(line3DHandle, (uint32_t)line3DCount);
-			vbUpdateDesc.data = line3DVertices.get();
-			vbUpdateDesc.size = sizeof(Debug::LineVertex) * line3DCount;
-			vbUpdateDesc.isDelete = false; // 更新時は削除
-			bufferManager->UpdateBuffer(vbUpdateDesc, slot);
-
-			Graphics::DrawCommand cmd;
-			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
-			cmd.mesh = line3DHandle.index;
-			cmd.material = 0;
-			cmd.pso = psoLineHandle.index;
-			cmd.sortKey = 0; // 本来は適切なソートキーを設定
-			cmd.viewMask = PASS_UI_3DLINE;
-			uiSession.Push(cmd);
-		}
-
-		if (line2DCount > 0)
-		{
-			Graphics::DX11::BufferUpdateDesc vbUpdateDesc;
-			{
-				auto lineBuffer = meshManager->Get(line2DHandle);
-				vbUpdateDesc.buffer = lineBuffer.ref().vbs[0];
-			}
-			meshManager->SetIndexCount(line2DHandle, (uint32_t)line2DCount);
-			vbUpdateDesc.data = line2DVertices.get();
-			vbUpdateDesc.size = sizeof(Debug::LineVertex) * line2DCount;
-			vbUpdateDesc.isDelete = false; // 更新時は削除しない
-
-			auto slot = renderService->GetProduceSlot();
-
-			bufferManager->UpdateBuffer(vbUpdateDesc, slot);
-
-			Graphics::DrawCommand cmd;
-			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
-			cmd.mesh = line2DHandle.index;
-			cmd.material = 0;
-			cmd.pso = psoLineHandle.index;
-			cmd.viewMask = PASS_UI_LINE;
-			cmd.sortKey = 0; // 本来は適切なソートキーを設定
-			uiSession.Push(cmd);
-		}
-
 		if (drawShapeDims)
 		{
-			this->ForEachFrustumChunkWithAccessor<ShapeDimsAccessor>([](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
+			this->ForEachFrustumNearChunkWithAccessor<ShapeDimsAccessor>([&](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
 				{
 					auto shapeDims = accessor.Get<Read<Physics::ShapeDims>>();
 					auto tf = accessor.Get<Read<CTransform>>();
@@ -579,11 +530,34 @@ public:
 
 							break;
 						}
+#ifdef CACHE_SHAPE_WIRE_DATA
+						case  Physics::ShapeDims::Type::CMHC:
+						{
+							auto wireData = physicsService->GetShapeWireframeData(d.handle);
+							if (wireData.has_value())
+							{
+								//とりあえずTransformのScaleを使用する。本来はShapeDimsにスケール情報を持たせるべき
+								auto mtx = transMtx * rotMtx;
+								const Physics::WireframeData& wire = wireData->data;
+								std::vector<Math::Vec3f> worldPos(wire.vertices.size());
+								Math::TransformPoints(mtx, wire.vertices.data(), worldPos.data(), wire.vertices.size());
+								for (size_t vi = 0; vi < wire.indices.size(); vi += 2)
+								{
+									if (line3DCount + 2 > MAX_CAPACITY_3DLINE) break;
+									auto v0 = worldPos[wire.indices[vi + 0]];
+									auto v1 = worldPos[wire.indices[vi + 1]];
+									line3DVertices.get()[line3DCount++] = { v0, 0xffffffff };
+									line3DVertices.get()[line3DCount++] = { v1, 0xffffffff };
+								}
+							}
+							break;
+						}
+#endif
 						default:
 							break;
 						}
 					}
-				}, partition, fru, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereHandle.index, capsuleLineHandle.index);
+				}, partition, fru, cameraPos, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereHandle.index, capsuleLineHandle.index);
 		}
 
 		if (drawMOCDepth)
@@ -607,6 +581,58 @@ public:
 
 			uiSession.Push(std::move(cmd));
 		}
+
+		if (line3DCount > 0)
+		{
+			Graphics::DX11::BufferUpdateDesc vbUpdateDesc;
+			{
+				auto lineBuffer = meshManager->Get(line3DHandle);
+				vbUpdateDesc.buffer = lineBuffer.ref().vbs[0];
+			}
+
+			auto slot = renderService->GetProduceSlot();
+
+			meshManager->SetIndexCount(line3DHandle, (uint32_t)line3DCount);
+			vbUpdateDesc.data = line3DVertices.get();
+			vbUpdateDesc.size = sizeof(Debug::LineVertex) * line3DCount;
+			vbUpdateDesc.isDelete = false; // 更新時は削除
+			bufferManager->UpdateBuffer(vbUpdateDesc, slot);
+
+			Graphics::DrawCommand cmd;
+			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
+			cmd.mesh = line3DHandle.index;
+			cmd.material = 0;
+			cmd.pso = psoLineHandle.index;
+			cmd.sortKey = 0; // 本来は適切なソートキーを設定
+			cmd.viewMask = PASS_UI_3DLINE;
+			uiSession.Push(cmd);
+		}
+
+		if (line2DCount > 0)
+		{
+			Graphics::DX11::BufferUpdateDesc vbUpdateDesc;
+			{
+				auto lineBuffer = meshManager->Get(line2DHandle);
+				vbUpdateDesc.buffer = lineBuffer.ref().vbs[0];
+			}
+			meshManager->SetIndexCount(line2DHandle, (uint32_t)line2DCount);
+			vbUpdateDesc.data = line2DVertices.get();
+			vbUpdateDesc.size = sizeof(Debug::LineVertex) * line2DCount;
+			vbUpdateDesc.isDelete = false; // 更新時は削除しない
+
+			auto slot = renderService->GetProduceSlot();
+
+			bufferManager->UpdateBuffer(vbUpdateDesc, slot);
+
+			Graphics::DrawCommand cmd;
+			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
+			cmd.mesh = line2DHandle.index;
+			cmd.material = 0;
+			cmd.pso = psoLineHandle.index;
+			cmd.viewMask = PASS_UI_LINE;
+			cmd.sortKey = 0; // 本来は適切なソートキーを設定
+			uiSession.Push(cmd);
+		}
 	}
 private:
 	bool drawPartitionBounds = false;
@@ -615,7 +641,7 @@ private:
 	bool drawModelRect = false;
 	bool drawOcclutionRect = false;
 	bool drawCascadeAABB = false;
-	bool drawShapeDims = true;
+	bool drawShapeDims = false;
 	bool drawMOCDepth = false;
 
 	Graphics::PSOHandle psoLineHandle = {};

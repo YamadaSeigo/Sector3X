@@ -88,6 +88,9 @@ namespace SFW
 			inline GroundState GetGroundState() const {
 				return character->GetGroundState();
 			}
+			inline Vec3f GetGroundNormal() const {
+				return FromJVec3(character->GetGroundNormal());
+			}
 		private:
 			JPH::Ref<JPH::CharacterVirtual> character;
 		};

@@ -52,16 +52,23 @@ namespace SFW
 						auto deltaMove = moveVec * static_cast<float>(deltaTime);
 
 						Math::Vec3f r, u, f;
-						Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
 						{
 							std::unique_lock lock(sharedMutex);
-							eye += deltaMove;
-							target += deltaMove;
+
+							Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
+
+							if (rotateMode == RotateMode::FPS) {
+								eye += deltaMove;
+								target = eye + f * focusDist;
+							}
+							else {
+								target += deltaMove;
+								eye = target - f * focusDist;
+							}
+
 							if (dx != 0 || dy != 0) {
 								UpdateCameraFromMouse();   // rot をここで更新
 							}
-
-							target = eye + f * focusDist;
 						}
 
 						auto& buffer = cameraBuffer[currentSlot];
@@ -124,17 +131,21 @@ namespace SFW
 						auto deltaMove = moveVec * static_cast<float>(deltaTime);
 
 						Math::Vec3f r, u, f;
-						Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
 						{
 							std::unique_lock lock(sharedMutex);
-							eye += deltaMove; // カメラ位置を更新
-							target += deltaMove;
+
+							Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
+							if (rotateMode == RotateMode::FPS) {
+								eye += deltaMove;
+								target = eye + f * focusDist;
+							}
+							else {
+								target += deltaMove;
+								eye = target - f * focusDist;
+							}
 
 							if (dx != 0 || dy != 0) {
-								// マウスの動きがある場合はカメラを更新
-								UpdateCameraFromMouse();
-								Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
-								target = eye + f * focusDist; // 注視点を更新
+								UpdateCameraFromMouse();   // rot をここで更新
 							}
 						}
 
@@ -149,7 +160,7 @@ namespace SFW
 						}
 
 						currentSlot = frameIdx % RENDER_BUFFER_COUNT;
-						
+
 						buffer.viewProj = buffer.proj * buffer.view; // ビュー投影行列
 						cbUpdateDesc.data = &buffer;
 						cbUpdateDesc.isDelete = false; // 更新時は削除しない

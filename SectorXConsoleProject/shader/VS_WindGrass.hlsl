@@ -25,6 +25,16 @@ cbuffer WindCB : register(b11)
     float2 gWindDirXZ; // XZ 平面の風向き (正規化済み)
 };
 
+cbuffer GrassFootCB : register(b12)
+{
+    // 最大何個まで踏んでいる領域を考慮するか
+    static const int MAX_FOOT = 4;
+    float4 gFootPosWRadiusWS[MAX_FOOT]; // ワールド座標 (足元 or カプセル中心付近)
+    float gFootStrength; // 全体の曲がり強さ
+    int gFootCount; // 有効な足の数
+    float2 _pad;
+};
+
 Texture2D<float> gHeightMap : register(t10);
 
 struct VSInput
@@ -100,12 +110,58 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
    // 小さい振幅で “バラつき” だけを付ける
     float smallPhase = noiseN11 + gTime * gWindSpeed;
-    float smallWave = sin(smallPhase); 
+    float smallWave = sin(smallPhase);
 
    // ---- 3) 合成 ----
     float wave = bigWave * gBigWaveWeight + smallWave * (1.0f - gBigWaveWeight);
 
     float weight = input.normal.w;
+
+    // --------- ここから「踏まれオフセット」 ----------
+    float3 footOffset = 0.0f;
+
+    // 草の上の方ほどよく倒れるようにするウェイト（既存と同じ）
+    float tipWeight = input.normal.w;
+
+    [unroll]
+    for (int i = 0; i < gFootCount; ++i)
+    {
+        float3 footPos = gFootPosWRadiusWS[i].xyz;
+        float radius = gFootPosWRadiusWS[i].w;
+
+        // XZ 平面上の距離
+        float2 dXZ = wp.xz - footPos.xz;
+        float dist = length(dXZ);
+
+        if (dist < radius)
+        {
+            // 半径内で 0～1 の減衰
+            float t = 1.0f - dist / radius;
+            // 少し滑らかに（内側ほど強く）したいので二乗
+            t *= t;
+
+            // 高さ方向での制限（足よりだいぶ上はあまり動かさない）
+            // footPos.y を地面 or 足裏の高さとして扱う想定
+            float heightRange = 2.5f; // 50cm くらいまで強く影響
+            float dy = wp.y - footPos.y;
+            float hFactor = saturate(1.0f - abs(dy) / heightRange);
+
+            // どの方向に倒すか：足の中心から外側に逃がすイメージ
+            float2 dirXZ = (dist > 1e-3f) ? (dXZ / dist) : float2(0.0f, 0.0f);
+
+            float bend = gFootStrength * t * hFactor * tipWeight;
+
+            // XZ 方向に押し倒す
+            footOffset.xz += dirXZ * bend;
+
+            // 少しだけ下方向にも沈めると「踏みつぶされた感」が出る
+            footOffset.y -= bend * 0.5f;
+        }
+    }
+
+    // 踏まれオフセットを適用
+    wp += footOffset;
+    // --------- ここまで踏まれ処理 ----------
 
     float swayAmount = gWindAmplitude * terrainHeight * wave * weight;
     float3 windDir3 = float3(gWindDirXZ.x, 0.0f, gWindDirXZ.y);

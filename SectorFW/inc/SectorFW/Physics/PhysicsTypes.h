@@ -167,14 +167,40 @@ namespace SFW
 		 */
 		struct ConvexHullDesc {
 			const std::vector<Vec3f>& points;  // 凸包頂点候補（重複OK・Jolt側で整理）
+			const std::vector<uint32_t>& indices; // オプションでインデックス指定（三角形列挙）
 			float maxConvexRadius = 0.05f; // シュリンク半径（狭間隔クエリのロバスト性向上）
 			float hullTolerance = 0.005f;
 		};
+
+		struct VHACDHull
+		{
+			std::vector<Vec3f>   points;   // 頂点群
+			std::vector<uint32_t> indices; // 必要なら保持（今は未使用）
+		};
+
+		struct ConvexCompoundDesc {
+			const std::vector<VHACDHull>& hulls; // 複数凸包の集合
+			float maxConvexRadius = 0.05f;
+			float hullTolerance = 0.005f;
+			bool rhFlip = false; // 右手系変換が必要なら true
+		};
+
+		/**
+		 * @brief VHACD バイナリから StaticCompoundShape を作る用の記述子
+		 *        1ファイル → 1 形状
+		 */
+		struct ConvexCompoundFileDesc {
+			std::string path;       // glb と同じ相対/絶対パスなど、運用ルールに合わせて
+			float maxConvexRadius = 0.05f;
+			float hullTolerance = 0.005f;
+			bool rhFlip = false; // 右手系変換が必要なら true
+		};
+
 		/**
 		 * @brief ShapeDesc（形状記述子総合型）
 		 */
 		using ShapeDesc = std::variant<
-			BoxDesc, SphereDesc, CapsuleDesc, MeshDesc, HeightFieldDesc, ConvexHullDesc
+			BoxDesc, SphereDesc, CapsuleDesc, MeshDesc, HeightFieldDesc, ConvexHullDesc, ConvexCompoundDesc, ConvexCompoundFileDesc
 		>;
 
 		/**

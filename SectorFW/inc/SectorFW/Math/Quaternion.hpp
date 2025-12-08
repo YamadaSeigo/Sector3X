@@ -17,7 +17,7 @@ namespace SFW
 	namespace Math
 	{
 		template<typename T>
-		struct alignas(sizeof(T) == 8 ? 32 : 16) Quat {
+		struct Quat {
 			union {
 				struct { T x, y, z, w; };
 				T v[4];

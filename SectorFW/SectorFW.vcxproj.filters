@@ -489,6 +489,9 @@
     <ClInclude Include="inc\SectorFW\Debug\assert_config.h">
       <Filter>Inc\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsConvexHullLoader.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">

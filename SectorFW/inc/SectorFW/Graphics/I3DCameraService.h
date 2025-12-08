@@ -41,6 +41,11 @@ namespace SFW
 		class I3DCameraService : public ECS::IUpdateService {
 			friend class ECS::ServiceLocator;
 		public:
+			enum RotateMode : uint8_t {
+				FPS,
+				Orbital
+			};
+
 			/**
 			 * @brief コンストラクタ
 			 */
@@ -137,7 +142,11 @@ namespace SFW
 			 * @param distance 焦点距離
 			 */
 			void SetFocusDistance(float distance) noexcept {
+				std::unique_lock lock(sharedMutex);
+
 				focusDist = distance;
+
+				isUpdateBuffer = true;
 			}
 			/**
 			 * @brief マウスの移動量を設定
@@ -159,6 +168,14 @@ namespace SFW
 				std::unique_lock lock(sharedMutex);
 				sensX_rad_per_px = sensX;
 				sensY_rad_per_px = sensY;
+			}
+			/**
+			 * @brief カメラの回転モードを設定
+			 * @param mode 回転モード（FPSまたはOrbital）
+			 */
+			void SetRotateMode(RotateMode mode) noexcept {
+				std::unique_lock lock(sharedMutex);
+				rotateMode = mode;
 			}
 			/**
 			 * @brief カメラの位置を取得
@@ -249,6 +266,11 @@ namespace SFW
 				return Math::Vec2f{ right - left, bottom - top };
 			}
 
+			float GetFocusDistance() const noexcept {
+				std::shared_lock lock(sharedMutex);
+				return focusDist;
+			}
+
 			Math::Matrix4x4f MakeViewMatrix() const {
 				std::shared_lock lock(sharedMutex);
 				Math::Vec3f r, u, f;
@@ -317,8 +339,15 @@ namespace SFW
 			 * @brief カメラバッファのデータを取得
 			 * @return const CameraBuffer& カメラバッファのデータ
 			 */
-			const CameraBuffer& GetCameraBufferData() const noexcept {
+			CameraBuffer GetCameraBufferData() const noexcept {
 				return cameraBuffer[currentSlot];
+			}
+			/**
+			 * @brief 古いカメラバッファのデータを取得
+			 * @return const CameraBuffer& 古いカメラバッファのデータ
+			 */
+			CameraBuffer GetOldCameraBufferData() const noexcept {
+				return cameraBuffer[(currentSlot + 2) % RENDER_BUFFER_COUNT];
 			}
 			/**
 			 * @brief カメラバッファの更新が必要かどうかを取得
@@ -421,6 +450,9 @@ namespace SFW
 			float sensX_rad_per_px = std::numbers::pi_v<float> / 600.0f, sensY_rad_per_px = std::numbers::pi_v<float> / 600.0f;
 			// スレッドセーフ用の共有ミューテックス
 			mutable std::shared_mutex sharedMutex;
+
+			// 回転モード
+			RotateMode rotateMode = RotateMode::FPS;
 		public:
 			STATIC_SERVICE_TAG
 		};

@@ -308,6 +308,7 @@
     <None Include="shader\_ShadowTypes.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="app\PlayerService.h" />
     <ClInclude Include="app\WindMovementService.h" />
     <ClInclude Include="app\Packed2Bits32.h" />
     <ClInclude Include="app\RenderDefine.h" />
@@ -326,9 +327,6 @@
     <ClInclude Include="system\VoidSystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AssetsBuild\AssetsBuild.vcxproj">
-      <Project>{8ccc255a-73c4-4d12-81ec-c86bb282dafe}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\SectorFW\SectorFW.vcxproj">
       <Project>{e76c12c5-969e-4f3d-a106-eae888515965}</Project>
     </ProjectReference>

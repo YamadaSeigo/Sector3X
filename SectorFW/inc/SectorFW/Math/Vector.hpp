@@ -65,6 +65,8 @@ namespace SFW
 
 			T length() const noexcept { return std::sqrt(dot(*this)); }
 
+			T lengthSquared() const noexcept { return dot(*this); }
+
 			Vec2 normalized() const noexcept {
 				T len = length();
 				assert(len != 0);
@@ -126,6 +128,8 @@ namespace SFW
 
 			T length() const noexcept { return std::sqrt(dot(*this)); }
 
+			T lengthSquared() const noexcept { return dot(*this); }
+
 			Vec3 normalized() const noexcept {
 				T len = length();
 				if (len == 0) {
@@ -182,6 +186,11 @@ namespace SFW
 		template<typename T>
 		static T Length(const Vec3<T>& v) noexcept {
 			return std::sqrt(Dot(v, v));
+		}
+
+		template<typename T>
+		static T LengthSquared(const Vec3<T>& v) noexcept {
+			return Dot(v, v);
 		}
 
 		template<typename T>
