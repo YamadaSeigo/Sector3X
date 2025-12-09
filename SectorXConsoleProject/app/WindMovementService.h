@@ -18,7 +18,7 @@ public:
 		float    PhaseSpread = 3.14159f;            // ƒuƒŒ[ƒh‚²‚Æ‚ÌˆÊ‘Š‚ÌL‚ª‚è
         float    BigWaveWeight = 0.3f;              // ‚¨‚¨‚«‚È”g(‘S‘Ì)‚Ìd‚İ
 		float    WindSpeed = 1.0f;                  // •—‘¬
-		float    WindAmplitude = 1.0f;              // •—‚ÌU•
+		float    WindAmplitude = 2.0f;              // •—‚ÌU•
 		Math::Vec2f   WindDirXZ = { 1.0f, 0.3f };   // •—Œü‚«(XZ•½–Ê)
     };
 

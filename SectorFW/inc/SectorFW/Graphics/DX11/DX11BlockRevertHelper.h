@@ -169,13 +169,13 @@ namespace SFW::Graphics::DX11 {
             float LodPxThreshold_Shadow[2] = { 400.0f,160.0f };
         };
 
-        struct VSParams { float View[16]; float Proj[16]; float ViewProj[16]; float World[16]; };
+        struct VSParams { float View[16]; float Proj[16]; float ViewProj[16];};
 
         struct CSParamsCB {
             float planes[6][4]; UINT clusterCount; UINT _pad0, _pad1, _pad2; float VP[16]; float ScreenSize[2]; float LodPxThreshold[2]; UINT LodLevels; UINT _pad3;
         };
 
-        struct VSDepthParams { float ViewProj[16]; float World[16]; };
+        struct VSDepthParams { float View[16]; float Proj[16]; float ViewProj[16]; };
 
         // RAW counter (4B) and ArgsUAV (16B) + DrawIndirect args
         ComPtr<ID3D11Buffer> counterBuf; ComPtr<ID3D11UnorderedAccessView> counterUAV; // 4B RAW
@@ -212,7 +212,8 @@ namespace SFW::Graphics::DX11 {
 
         // Constant buffers
         ComPtr<ID3D11Buffer> cbCS; // CSParams (frustum, VP, screen, LOD)
-        ComPtr<ID3D11Buffer> cbVS; // VSParams (ViewProj, World)
+
+        ComPtr<ID3D11Buffer> cbCameraFrame;
 
         // Slots (VS SRVs)
         UINT slotVisible = 0, slotPos = 1, slotNrm = 2, slotUV = 3;
@@ -345,9 +346,6 @@ namespace SFW::Graphics::DX11 {
                 };
             // CS: planes(6*16=96) + ClusterCount(4*4=16) + VP(64) + Screen(8) + LodThresh(8) + LodLevels(4) = ~196 -> round
             if (!makeCB(sizeof(CSParamsCB), cbCS)) return false;
-            // VS: ViewProj(64) + World(64)
-            if (!makeCB(sizeof(VSParams), cbVS)) return false;
-
 
 			if (!makeCB(sizeof(CSParamsShadowCombined), cbCSShadow)) return false;
 
@@ -431,87 +429,6 @@ namespace SFW::Graphics::DX11 {
             return true;
         }
 
-        // ---------- Per-frame: run compute then draw ----------
-        // frustumPlanes: 6x float4 (inward, normalized) in the same space as AABB (world)
-        // viewProj/world: row_major float4x4
-        void Run(ID3D11DeviceContext* ctx,
-            const float* frustumPlanes,
-            const Math::Matrix4x4f view,
-            const Math::Matrix4x4f proj,
-            const float world[16],
-            UINT screenW, UINT screenH,
-            float lodT0px = 200.f, float lodT1px = 80.f, UINT lodLevels = 3)
-        {
-            // Preconditions: SRVs (indexPool/aabb/lodMeta) are built
-            // 0) Clear counter
-            UINT zeros[4] = { 0,0,0,0 }; ctx->ClearUnorderedAccessViewUint(counterUAV.Get(), zeros);
-
-            // 1) Cull+Write (LOD group reservation)
-            ctx->CSSetShader(csCullWrite.Get(), nullptr, 0);
-            ID3D11ShaderResourceView* srvs[7] = {
-                indexPoolSRV.Get(),
-                clusterRangeSRV.Get(),
-                aabbMinSRV.Get(),
-                aabbMaxSRV.Get(),
-                lodRangesSRV.Get(),
-                lodBaseSRV.Get(),
-                lodCountSRV.Get()
-            };
-            ctx->CSSetShaderResources(0, 7, srvs);
-            ID3D11UnorderedAccessView* uavsCW[2] = { counterUAV.Get(), visibleUAV.Get() }; UINT keep[2] = { 0xFFFFFFFF, 0xFFFFFFFF }; ctx->CSSetUnorderedAccessViews(0, 2, uavsCW, keep);
-            CSParamsCB csp{};
-            memcpy(csp.planes, frustumPlanes, sizeof(float) * 24);
-            csp.clusterCount = clusterCount;
-
-            auto viewProj = proj * view;
-
-            memcpy(csp.VP, viewProj.data(), sizeof(float) * 16);
-            csp.ScreenSize[0] = (float)screenW; csp.ScreenSize[1] = (float)screenH;
-            csp.LodPxThreshold[0] = lodT0px; csp.LodPxThreshold[1] = lodT1px;
-            csp.LodLevels = lodLevels;
-            D3D11_MAPPED_SUBRESOURCE ms{};
-            ctx->Map(cbCS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
-            memcpy(ms.pData, &csp, sizeof(csp));
-            ctx->Unmap(cbCS.Get(), 0);
-            ctx->CSSetConstantBuffers(4, 1, cbCS.GetAddressOf());
-            // 1 cluster = 1 group
-            ctx->Dispatch(clusterCount, 1, 1);
-            ID3D11UnorderedAccessView* nullUAV[2] = { nullptr, nullptr }; UINT zerosInit[2] = { 0,0 }; ctx->CSSetUnorderedAccessViews(0, 2, nullUAV, zerosInit);
-            ID3D11ShaderResourceView* nullSRV7[7] = { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr }; ctx->CSSetShaderResources(0, 7, nullSRV7);
-
-            // 2) Write args
-            ctx->CSSetShader(csWriteArgs.Get(), nullptr, 0);
-            ID3D11UnorderedAccessView* uavsArgs[2] = { counterUAV.Get(), argsUAV.Get() };
-            ctx->CSSetUnorderedAccessViews(0, 2, uavsArgs, keep);
-            ctx->Dispatch(1, 1, 1);
-            ctx->CSSetUnorderedAccessViews(0, 2, nullUAV, zerosInit);
-            ctx->CSSetShader(nullptr, nullptr, 0);
-
-            // 3) Copy ArgsUAV -> Args
-            ctx->CopyResource(argsBuf.Get(), argsUAVBuf.Get());
-
-            // 4) Draw (vertex-pull)
-            ctx->VSSetShader(vs.Get(), nullptr, 0);
-            ctx->PSSetShader(ps.Get(), nullptr, 0);
-
-            VSParams vsp{};
-			memcpy(vsp.View, view.data(), 64);
-			memcpy(vsp.Proj, proj.data(), 64);
-            memcpy(vsp.ViewProj, viewProj.data(), 64);
-            memcpy(vsp.World, world, 64);
-            ctx->Map(cbVS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
-            memcpy(ms.pData, &vsp, sizeof(vsp));
-            ctx->Unmap(cbVS.Get(), 0);
-            ctx->VSSetConstantBuffers(10, 1, cbVS.GetAddressOf());
-            ID3D11ShaderResourceView* vsSrvs[4] = { visibleSRV.Get(), posSRV.Get(), nrmSRV.Get(), uvSRV.Get() };
-            ctx->VSSetShaderResources(20, 4, vsSrvs);
-            ctx->IASetInputLayout(nullptr);
-            ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-            ctx->DrawInstancedIndirect(argsBuf.Get(), 0);
-            ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };
-            ctx->VSSetShaderResources(20, 4, nullVs);
-        }
-
         struct ShadowDepthParams
         {
             // カスケード
@@ -521,8 +438,7 @@ namespace SFW::Graphics::DX11 {
             // メインカメラ
             ID3D11DepthStencilView* mainDSV = nullptr;
             //D3D11_VIEWPORT          mainViewport{};
-            Math::Matrix4x4f        mainView;   // LOD & VS 用
-            Math::Matrix4x4f        mainProj;
+            Math::Matrix4x4f        mainViewProj;   // LOD 用
             float                   mainFrustumPlanes[6][4];
 
             ID3D11DepthStencilView* cascadeDSV[kMaxShadowCascades] = {};
@@ -544,12 +460,14 @@ namespace SFW::Graphics::DX11 {
 
         void RunShadowDepth(
             ID3D11DeviceContext* ctx,
+            ComPtr<ID3D11Buffer> cameraCB,
             const ShadowDepthParams& p,
-            const float world[16],
-			const D3D11_VIEWPORT* cascadeViewport = nullptr,
-            bool updateVSCB = true)
+			const D3D11_VIEWPORT* cascadeViewport = nullptr)
         {
 			if (p.cascadeCount == 0 || p.cascadeCount > kMaxShadowCascades) [[unlikely]] return;
+
+            //一フレームだけ参照をもらう
+            cbCameraFrame = std::move(cameraCB);
 
             // 0) カウンタをクリア
             {
@@ -557,8 +475,6 @@ namespace SFW::Graphics::DX11 {
                 ctx->ClearUnorderedAccessViewUint(counterUAV.Get(), zeros);
 				ctx->ClearUnorderedAccessViewUint(cascadeCountersUAV.Get(), zeros);
             }
-
-            auto mainViewProj = p.mainProj * p.mainView;
 
             // 1) CS_TerrainClusteredCombined で
             //    - visibleBuf（メイン用）
@@ -604,7 +520,7 @@ namespace SFW::Graphics::DX11 {
                     memcpy(csp->CascadeFrustum, p.cascadeFrustumPlanes, sizeof(csp->CascadeFrustum));
                     csp->MaxVisibleIndices = maxVisibleIndices;
                     csp->LodLevels = p.lodLevels;
-                    memcpy(csp->ViewProj, mainViewProj.data(), sizeof(float) * 16);
+                    memcpy(csp->ViewProj, p.mainViewProj.data(), sizeof(float) * 16);
                     csp->ScreenSize[0] = (float)p.screenW;
                     csp->ScreenSize[1] = (float)p.screenH;
                     csp->LodPxThreshold_Main[0] = p.lodT0px;
@@ -682,14 +598,7 @@ namespace SFW::Graphics::DX11 {
                 ctx->OMSetRenderTargets(0, nullptr, p.mainDSV);
                 //ctx->RSSetViewports(1, &p.mainViewport);
 
-                // VS用の定数 (ViewProj=mainVP, World)
-                D3D11_MAPPED_SUBRESOURCE ms{};
-                ctx->Map(cbVS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
-                auto* vsp = reinterpret_cast<VSDepthParams*>(ms.pData);
-                memcpy(vsp->ViewProj, mainViewProj.data(), sizeof(float) * 16);
-                memcpy(vsp->World, world, sizeof(float) * 16);
-                ctx->Unmap(cbVS.Get(), 0);
-                ctx->VSSetConstantBuffers(10, 1, cbVS.GetAddressOf());
+                ctx->VSSetConstantBuffers(10, 1, cbCameraFrame.GetAddressOf());
 
                 ctx->VSSetShader(vsDepth.Get(), nullptr, 0);
                 ctx->PSSetShader(nullptr, nullptr, 0); // DepthOnly
@@ -708,67 +617,55 @@ namespace SFW::Graphics::DX11 {
                 ctx->DrawInstancedIndirect(argsBuf.Get(), 0);
             }
 
-            if (cascadeViewport)
-            {
-				ctx->RSSetViewports(1, cascadeViewport);
-            }
+    //        if (cascadeViewport)
+    //        {
+				//ctx->RSSetViewports(1, cascadeViewport);
+    //        }
 
-            // 5) カスケードシャドウ DepthOnly パス
-            for (UINT ci = 0; ci < p.cascadeCount; ++ci)
-            {
-                ctx->OMSetRenderTargets(0, nullptr, p.cascadeDSV[ci]);
-                //ctx->RSSetViewports(1, &p.cascadeViewport[ci]);
+    //        // 5) カスケードシャドウ DepthOnly パス
+    //        for (UINT ci = 0; ci < p.cascadeCount; ++ci)
+    //        {
+    //            ctx->OMSetRenderTargets(0, nullptr, p.cascadeDSV[ci]);
+    //            //ctx->RSSetViewports(1, &p.cascadeViewport[ci]);
 
-                // LightViewProj + World
-                D3D11_MAPPED_SUBRESOURCE ms{};
-                HRESULT hr = ctx->Map(cbVSShadow.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
-				assert(SUCCEEDED(hr) && "頂点シェーダーの定数バッファのマップオープンに失敗しました");
-                if (SUCCEEDED(hr))
-                {
-                    auto* vsp = reinterpret_cast<VSDepthParams*>(ms.pData);
-                    memcpy(vsp->ViewProj, p.lightViewProj[ci], sizeof(float) * 16);
-                    memcpy(vsp->World, world, sizeof(float) * 16);
+    //            // LightViewProj + World
+    //            D3D11_MAPPED_SUBRESOURCE ms{};
+    //            HRESULT hr = ctx->Map(cbVSShadow.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
+				//assert(SUCCEEDED(hr) && "頂点シェーダーの定数バッファのマップオープンに失敗しました");
+    //            if (SUCCEEDED(hr))
+    //            {
+    //                auto* vsp = reinterpret_cast<VSDepthParams*>(ms.pData);
+    //                //ViewProjしか使用しない
+    //                memcpy(vsp->ViewProj, p.lightViewProj[ci], sizeof(float) * 16);
 
-                    ctx->Unmap(cbVSShadow.Get(), 0);
-                }
+    //                ctx->Unmap(cbVSShadow.Get(), 0);
+    //            }
 
-				//各カスケードごとのoffsetで生成したSRVをセット
-                ctx->VSSetShaderResources(20, 1, shadowVisibleSRV[ci].GetAddressOf());
+				////各カスケードごとのoffsetで生成したSRVをセット
+    //            ctx->VSSetShaderResources(20, 1, shadowVisibleSRV[ci].GetAddressOf());
 
-                ctx->VSSetConstantBuffers(10, 1, cbVSShadow.GetAddressOf());
+    //            ctx->VSSetConstantBuffers(10, 1, cbVSShadow.GetAddressOf());
 
-                ctx->VSSetShader(vsShadow.Get(), nullptr, 0);
-                ctx->PSSetShader(nullptr, nullptr, 0);
+    //            ctx->VSSetShader(vsShadow.Get(), nullptr, 0);
+    //            ctx->PSSetShader(nullptr, nullptr, 0);
 
-                ID3D11ShaderResourceView* vsSRVs[] = {
-                    posSRV.Get(),
-                    //nrmSRV.Get(),
-                    //uvSRV.Get()
-                };
-                ctx->VSSetShaderResources(21, 1, vsSRVs);
+    //            ID3D11ShaderResourceView* vsSRVs[] = {
+    //                posSRV.Get(),
+    //                //nrmSRV.Get(),
+    //                //uvSRV.Get()
+    //            };
+    //            ctx->VSSetShaderResources(21, 1, vsSRVs);
 
-                ctx->IASetInputLayout(nullptr);
-                ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    //            ctx->IASetInputLayout(nullptr);
+    //            ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-                // オフセットでカスケードごとの Args
-                ctx->DrawInstancedIndirect(shadowArgsBuf.Get(), ci * sizeof(D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS));
-            }
+    //            // オフセットでカスケードごとの Args
+    //            ctx->DrawInstancedIndirect(shadowArgsBuf.Get(), ci * sizeof(D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS));
+    //        }
 
 			// 後始末
             constexpr ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };
             ctx->VSSetShaderResources(20, 4, nullVs);
-
-            if (updateVSCB)
-            {
-                D3D11_MAPPED_SUBRESOURCE ms{};
-                ctx->Map(cbVS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
-                auto* vsp = reinterpret_cast<VSParams*>(ms.pData);
-                memcpy(vsp->View, p.mainView.data(), sizeof(float) * 16);
-                memcpy(vsp->Proj, p.mainProj.data(), sizeof(float) * 16);
-                memcpy(vsp->ViewProj, mainViewProj.data(), sizeof(float) * 16);
-                memcpy(vsp->World, world, sizeof(float) * 16);
-                ctx->Unmap(cbVS.Get(), 0);
-            }
         }
 
         void RunColor(ID3D11DeviceContext* ctx,
@@ -777,7 +674,7 @@ namespace SFW::Graphics::DX11 {
         {
             ctx->OMSetRenderTargets(1, &rtv, dsv);
 
-            ctx->VSSetConstantBuffers(10, 1, cbVS.GetAddressOf());
+            ctx->VSSetConstantBuffers(10, 1, cbCameraFrame.GetAddressOf());
 
             ctx->VSSetShader(vs.Get(), nullptr, 0);
             ctx->PSSetShader(ps.Get(), nullptr, 0);
@@ -800,53 +697,10 @@ namespace SFW::Graphics::DX11 {
 
             ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };
             ctx->VSSetShaderResources(20, 4, nullVs);
+
+            //参照を解除する
+            cbCameraFrame.Reset();
         }
-
-        void RunColor(
-            ID3D11DeviceContext* ctx,
-            ID3D11RenderTargetView* rtv,
-            ID3D11DepthStencilView* dsv,
-            const Math::Matrix4x4f view,
-			const Math::Matrix4x4f proj,
-            const float world[16])
-        {
-            ctx->OMSetRenderTargets(1, &rtv, dsv);
-
-            // VS 定数（ViewProj + World）
-            D3D11_MAPPED_SUBRESOURCE ms{};
-            ctx->Map(cbVS.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
-            auto* vsp = reinterpret_cast<VSParams*>(ms.pData);
-            auto viewProj = proj * view;
-            memcpy(vsp->View, view.data(), sizeof(float) * 16);
-            memcpy(vsp->Proj, proj.data(), sizeof(float) * 16);
-            memcpy(vsp->ViewProj, viewProj.data(), sizeof(float) * 16);
-            memcpy(vsp->World, world, sizeof(float) * 16);
-            ctx->Unmap(cbVS.Get(), 0);
-            ctx->VSSetConstantBuffers(10, 1, cbVS.GetAddressOf());
-
-            ctx->VSSetShader(vs.Get(), nullptr, 0);
-            ctx->PSSetShader(ps.Get(), nullptr, 0);
-
-            ID3D11ShaderResourceView* vsSRVs[4] = {
-                visibleSRV.Get(),  // Depth プリパスで作った VisibleIndices_Main
-                posSRV.Get(),
-                nrmSRV.Get(),
-                uvSRV.Get()
-            };
-            ctx->VSSetShaderResources(20, 4, vsSRVs);
-
-            // 必要であれば PS にシャドウマップ SRV / サンプラをセット
-
-            ctx->IASetInputLayout(nullptr);
-            ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-            // ここでは Arg を流用するだけで、CS は呼ばない
-            ctx->DrawInstancedIndirect(argsBuf.Get(), 0);
-
-            ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };
-            ctx->VSSetShaderResources(20, 4, nullVs);
-        }
-
     };
 
     // ------------------------------------------------------------

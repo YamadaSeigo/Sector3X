@@ -33,6 +33,7 @@ public:
 		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
 		UndeletablePtr<InputService> inputService)
 	{
+		Math::Vec3f wishVelocity;
 		Math::Vec2f inputDir(0.0f, 0.0f);
 
 		if (inputService->IsMouseCaptured() && !inputService->IsRButtonPressed())
@@ -49,6 +50,9 @@ public:
 			if (inputService->IsKeyPressed(Input::Key::D)) {
 				inputDir.x += 1.0f;
 			}
+			if (inputService->IsKeyPressed(Input::Key::Space)){
+				wishVelocity = PlayerService::GRAVITY * -PlayerService::HOVER_POWER;
+			}
 		}
 
 		if (inputDir.lengthSquared() > 0.0f) {
@@ -56,16 +60,18 @@ public:
 		}
 		else
 		{
-			return Math::Vec3f(0.0f, 0.0f, 0.0f);
+			return wishVelocity;
 		}
 
 		auto camForward = cameraService->GetForward();
 		Math::Vec3f playerRight = PlayerService::UP.cross(camForward).normalized();
 		Math::Vec3f playerForward = playerRight.cross(PlayerService::UP).normalized();
 
-		Math::Vec3f wishVelocity =
-			playerRight * inputDir.x * PlayerService::MOVE_SPEED + // 横移動速度
-			playerForward * inputDir.y * PlayerService::MOVE_SPEED; // 前後移動速度
+		float boostBias = inputService->IsKeyPressed(Input::Key::LShift) ? PlayerService::BOOST_POWER : 1.0f;
+
+		wishVelocity +=
+			playerRight * inputDir.x * PlayerService::MOVE_SPEED * boostBias + // 横移動速度
+			playerForward * inputDir.y * PlayerService::MOVE_SPEED * boostBias; // 前後移動速度
 
 		return wishVelocity;
 	}
@@ -99,7 +105,17 @@ public:
 		ECS::EntityManager& globalEntityManager = partition.GetGlobalEntityManager();
 
 		auto playerComponents = globalEntityManager.GetSparseComponents<PlayerComponent>();
-		float dt = physicsService->GetDeltaTime();
+		float dt = static_cast<float>(physicsService->GetDeltaTime());
+
+		static bool playerCamera = true;
+		if (inputService->IsKeyTrigger(Input::Key::P))
+		{
+			playerCamera = !playerCamera;
+
+			using RotateMode = Graphics::I3DPerCameraService::RotateMode;
+
+			cameraService->SetRotateMode(playerCamera ? RotateMode::Orbital : RotateMode::FPS);
+		}
 
 		for (auto& player : playerComponents)
 		{
@@ -137,6 +153,8 @@ public:
 
 				comp.currentVelocity = v;
 
+				v.y += wish.y;
+
 				float diff = ShortestAngleDiff(currentYaw, targetYaw); // [-π, π]
 
 				// このフレームで回していい最大角度
@@ -163,7 +181,7 @@ public:
 
 				auto playerPos = pose.value().GetPosition();
 
-				if (!inputService->IsRButtonPressed())
+				if (playerCamera)
 				{
 					// カメラに見てほしい理想位置（少し頭の上とか）
 					const Math::Vec3f desiredTarget = playerPos + cameraOffset;
@@ -176,7 +194,7 @@ public:
 					}
 
 					// === Lerp ベースのスムージング ===
-					const float followSpeed = 8.0f; // 値を大きくすると早く追従、小さくするとヌルヌル
+					const float followSpeed = 6.0f; // 値を大きくすると早く追従、小さくするとヌルヌル
 
 					// フレームレートにそこそこ強い書き方
 					float alpha = 1.0f - std::exp(-followSpeed * dt);  // 0..1
@@ -184,6 +202,10 @@ public:
 
 					// カメラには「スムージング後のターゲット」を渡す
 					cameraService->SetTarget(camState.smoothedTarget);
+
+					long dx, dy;
+					inputService->GetMouseDelta(dx, dy);
+					cameraService->SetMouseDelta(static_cast<float>(dx), static_cast<float>(dy));
 				}
 
 

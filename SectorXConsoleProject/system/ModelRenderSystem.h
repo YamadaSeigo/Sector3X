@@ -217,7 +217,7 @@ public:
 						float areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);
 
 						//¬‚³‚·‚¬‚éê‡‚Í–³‹
-						if (areaFrec <= 0.001f)
+						if (areaFrec <= 0.005f)
 						{
 							continue;
 						}

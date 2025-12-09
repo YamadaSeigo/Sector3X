@@ -47,8 +47,6 @@ public:
 
 		if (inputService->IsRButtonPressed()) {
 
-			perCameraService->SetRotateMode(Graphics::I3DPerCameraService::RotateMode::FPS);
-
 			if (inputService->IsKeyPressed(Input::Key::E)) {
 				perCameraService->Move(Math::LFAxes::up() * moveSpeed);
 			}
@@ -72,25 +70,22 @@ public:
 			if (inputService->IsKeyPressed(Input::Key::D)) {
 				perCameraService->Move(perCameraService->GetRight() * moveSpeed);
 			}
+
+			if (inputService->IsMouseCaptured()) {
+				long dx, dy;
+				inputService->GetMouseDelta(dx, dy);
+				perCameraService->SetMouseDelta(static_cast<float>(dx), static_cast<float>(dy));
+
+				moveSpeed = std::clamp(moveSpeed + (float)mouseWheelV * MOVE_SPEED_WHEEL_RATE * (std::max)(1.0f, moveSpeed / 20.0f), 0.1f, 200.0f);
+			}
 		}
 		else
 		{
-			//perCameraService->SetRotateMode(Graphics::I3DPerCameraService::RotateMode::Orbital);
-
 			if (mouseWheelV != 0) {
 				perCameraService->SetFocusDistance(
 					perCameraService->GetFocusDistance() - (float)mouseWheelV * 0.5f);
 				camera2DService->Zoom((float)mouseWheelV);
 			}
-		}
-
-
-		if (inputService->IsMouseCaptured()) {
-			long dx, dy;
-			inputService->GetMouseDelta(dx, dy);
-			perCameraService->SetMouseDelta(static_cast<float>(dx), static_cast<float>(dy));
-
-			moveSpeed = std::clamp(moveSpeed + (float)mouseWheelV * MOVE_SPEED_WHEEL_RATE * (std::max)(1.0f, moveSpeed / 20.0f), 0.1f, 200.0f);
 		}
 
 		bool updateCascade = false;

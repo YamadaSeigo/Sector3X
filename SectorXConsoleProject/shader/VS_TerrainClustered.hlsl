@@ -17,7 +17,6 @@ cbuffer VSParams : register(b10)
     row_major float4x4 View;
     row_major float4x4 Proj;
     row_major float4x4 ViewProj;
-    row_major float4x4 World;
 };
 
 StructuredBuffer<uint> VisibleIndices : register(t20);
@@ -32,13 +31,13 @@ VSOut main(uint vtxId : SV_VertexID)
     float3 n = Nrm[idx];
     float2 uv = UV[idx];
 
-    float4 wp = mul(World, float4(p, 1));
+    float4 wp = float4(p, 1);
     VSOut o;
     o.worldPos = wp.xyz;
     o.viewDepth = mul(View, wp).z;
     o.pos = mul(ViewProj, wp);
     o.uv = uv;
-    o.nrm = normalize(mul(World, float4(n, 0)).xyz);
+    o.nrm = n;
 
     return o;
 }

@@ -225,23 +225,17 @@ namespace SFW
 			 * @param dt 可変フレーム時間（ゲームループから呼ぶ）
 			 */
 			void Update(double dt) override {
-				// 物理は固定時間ステップで進める
-				Tick(static_cast<float>(dt));
-			}
-			// ====== フレーム進行 ======
-			// dt: 可変フレーム時間（ゲームループから呼ぶ）
-			void Tick(float dt) {
 				m_delta = dt;
-				m_accum += dt;
+				m_accum += static_cast<float>(dt);
 
 				while (m_accum + 1e-6f >= plan.fixed_dt) { // 浮動誤差対策の微小マージン
 					DrainAllToDevice();                   // ここで一括適用
 					m_device.Step(plan.fixed_dt, plan.substeps);
 
 					// スナップショットを組み立てる
-					//m_device.BuildSnapshot(m_snapshot);
-					//m_prevSnapshot = std::move(m_currSnapshot); // 前フレームのスナップショットを保存
-					//m_currSnapshot = std::move(m_snapshot);      // 今回のスナップショットを更新
+					m_device.BuildSnapshot(m_snapshot);
+					m_prevSnapshot = std::move(m_currSnapshot); // 前フレームのスナップショットを保存
+					m_currSnapshot = std::move(m_snapshot);      // 今回のスナップショットを更新
 
 					m_accum -= plan.fixed_dt;
 				}
@@ -264,7 +258,7 @@ namespace SFW
 			 * @brief 更新の際に送られてくる dt をそのまま取得
 			 * @return float フレーム時間 dt（秒単位）
 			 */
-			float GetDeltaTime() const {
+			double GetDeltaTime() const {
 				return m_delta;
 			}
 
@@ -363,7 +357,7 @@ namespace SFW
 			Plan plan;
 
 			float m_accum = 0.0f;
-			float m_delta = 0.0f;
+			double m_delta = 0.0f;
 
 			PhysicsSnapshot m_snapshot;     // 今回ステップで組み立てた一時
 			PhysicsSnapshot m_prevSnapshot; // 前フレーム

@@ -143,7 +143,7 @@ namespace SFW
 			// 物理を1ステップ進める
 			void Step(float fixed_dt, int substeps);
 
-			// スナップショット抽出（poses / contacts / rayHits）
+			// スナップショット抽出（contacts / rayHits）
 			void BuildSnapshot(PhysicsSnapshot& out);
 
 			void ReadPosesBatch(const PoseBatchView& out_soav);

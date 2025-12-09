@@ -99,22 +99,22 @@ float4 main(VSOut i) : SV_Target
     float4 c2 = gLayer2.Sample(gSampler, suv * p.layerTiling[2]);
     float4 c3 = gLayer3.Sample(gSampler, suv * p.layerTiling[3]);
 
-    uint cascade = ChooseCascade(i.viewDepth);
+    //uint cascade = ChooseCascade(i.viewDepth);
 
-    float3 offsetWP = i.worldPos;
-    offsetWP.x += gCascadeDirection.x * 5.0f;
-    offsetWP.z += gCascadeDirection.z * 5.0f;
+    //float3 offsetWP = i.worldPos;
+    //offsetWP.x += gCascadeDirection.x * 5.0f;
+    //offsetWP.z += gCascadeDirection.z * 5.0f;
 
-    float4 shadowPos = mul(gLightViewProj[cascade], float4(offsetWP, 1.0f));
+    //float4 shadowPos = mul(gLightViewProj[cascade], float4(offsetWP, 1.0f));
 
-    float shadow = GetShadowMapDepth(shadowPos.xyz, cascade);
+    //float shadow = GetShadowMapDepth(shadowPos.xyz, cascade);
 
-    float shadowBias = 1.0f;
-    if (shadowPos.z - shadow > 0.01f)
-        shadowBias = 0.8f;
+    //float shadowBias = 1.0f;
+    //if (shadowPos.z - shadow > 0.01f)
+    //    shadowBias = 0.8f;
 
     float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
-    final.rgb *= shadowBias;
+    //final.rgb *= shadowBias;
 
     return final;
 }

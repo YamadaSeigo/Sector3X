@@ -10,8 +10,9 @@ struct VSOutDepthOnly
 
 cbuffer VSParams : register(b10)
 {
+    row_major float4x4 View;
+    row_major float4x4 Proj;
     row_major float4x4 ViewProj;
-    row_major float4x4 World;
 };
 
 StructuredBuffer<uint> VisibleIndices : register(t20);
@@ -23,7 +24,7 @@ VSOutDepthOnly main(uint vtxId : SV_VertexID)
     uint idx = VisibleIndices[vtxId];
     float3 p = Pos[idx];
 
-    float4 wp = mul(World, float4(p, 1));
+    float4 wp = float4(p, 1);
     VSOutDepthOnly o;
     o.pos = mul(ViewProj, wp);
 

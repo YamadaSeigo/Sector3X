@@ -30,8 +30,8 @@
 constexpr uint32_t WINDOW_WIDTH = uint32_t(1920 / 1.5f);	// ウィンドウの幅
 constexpr uint32_t WINDOW_HEIGHT = uint32_t(1080 / 1.5f);	// ウィンドウの高さ
 
-constexpr uint32_t SHADOW_MAP_WIDTH = 1024;	// シャドウマップの幅
-constexpr uint32_t SHADOW_MAP_HEIGHT = 1024 * 6;	// シャドウマップの高さ
+constexpr uint32_t SHADOW_MAP_WIDTH = 1024 / 4;	// シャドウマップの幅
+constexpr uint32_t SHADOW_MAP_HEIGHT = 1024 * 2;	// シャドウマップの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
@@ -177,7 +177,7 @@ void InitializeRenderPipeLine(
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
 
 	shaderDesc.vsPath = L"assets/shader/VS_Sky.cso";
-	shaderDesc.psPath = L"assets/shader/PS_Default.cso";
+	shaderDesc.psPath = L"assets/shader/PS_Unlit.cso";
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	psoDesc.shader = shaderHandle;
 	psoDesc.rasterizerState = RasterizerStateID::SolidCullNone;
@@ -334,8 +334,8 @@ int main(void)
 	Graphics::TerrainBuildParams p;
 	p.cellsX = 256 * 1;
 	p.cellsZ = 256 * 1;
-	p.clusterCellsX = 32;
-	p.clusterCellsZ = 32;
+	p.clusterCellsX = 16;
+	p.clusterCellsZ = 16;
 	p.cellSize = 3.0f;
 	p.heightScale = 80.0f;
 	p.frequency = 1.0f / 96.0f * 1.0f;
@@ -539,13 +539,10 @@ int main(void)
 
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
 
-			static constexpr auto world = Math::Matrix4x4f::Identity();
-
 			static Graphics::DX11::BlockReservedContext::ShadowDepthParams shadowParams{};
 
 			shadowParams.mainDSV = graphics.GetMainDepthStencilView().Get();
-			shadowParams.mainView = perCameraService->MakeViewMatrix();
-			shadowParams.mainProj = perCameraService->MakeProjectionMatrix();
+			shadowParams.mainViewProj = perCameraService->MakeViewProjMatrix();
 			memcpy(shadowParams.mainFrustumPlanes, frustumPlanes.data(), sizeof(shadowParams.mainFrustumPlanes));
 			auto& cascadeDSV = shadowMapService.GetCascadeDSV();
 			for (int c = 0; c < Graphics::kMaxShadowCascades; ++c) {
@@ -573,9 +570,12 @@ int main(void)
 			//CBの5, Samplerの1にバインド
 			shadowMapService.BindShadowResources(deviceContext, 5, 1);
 
+			auto bufMgr = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
+			auto cameraHandle = bufMgr->FindByName(Graphics::DX11::PerCamera3DService::BUFFER_NAME);
+			auto cameraBufData = bufMgr->Get(cameraHandle);
 
-			blockRevert.RunShadowDepth(deviceContext, shadowParams,
-				world.data(), &shadowMapService.GetCascadeViewport());
+			blockRevert.RunShadowDepth(deviceContext, cameraBufData->buffer,
+				shadowParams, &shadowMapService.GetCascadeViewport());
 
 			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 		};
@@ -664,8 +664,8 @@ int main(void)
 				//デフォルト描画のPSO生成
 				DX11::ShaderCreateDesc shaderDesc;
 				shaderDesc.templateID = MaterialTemplateID::PBR;
-				shaderDesc.vsPath = L"assets/shader/VS_Default.cso";
-				shaderDesc.psPath = L"assets/shader/PS_Default.cso";
+				shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
+				shaderDesc.psPath = L"assets/shader/PS_Unlit.cso";
 				ShaderHandle shaderHandle;
 				shaderMgr->Add(shaderDesc, shaderHandle);
 
@@ -679,8 +679,8 @@ int main(void)
 				psoMgr->Add(psoDesc, cullNonePSOHandle);
 
 				//草の揺れ用PSO生成
-				shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
-				shaderDesc.psPath = L"assets/shader/PS_ShadowColor.cso";
+				shaderDesc.vsPath = L"assets/shader/VS_WindGrassUnlit.cso";
+				shaderDesc.psPath = L"assets/shader/PS_Unlit.cso";
 				shaderMgr->Add(shaderDesc, shaderHandle);
 				PSOHandle windGrassPSOHandle;
 				psoDesc.shader = shaderHandle;
@@ -688,7 +688,7 @@ int main(void)
 				psoMgr->Add(psoDesc, windGrassPSOHandle);
 				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
 
-				shaderDesc.vsPath = L"assets/shader/VS_WindEntity.cso";
+				shaderDesc.vsPath = L"assets/shader/VS_WindEntityUnlit.cso";
 				shaderMgr->Add(shaderDesc, shaderHandle);
 				PSOHandle cullNoneWindEntityPSOHandle;
 				psoDesc.shader = shaderHandle;
@@ -758,7 +758,7 @@ int main(void)
 				{
 					[&](Math::Vec3f scale)
 					{
-						return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_1.chullbin", false, scale);
+						return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_1.chullbin", true, scale);
 					},
 					nullptr,
 					[&](Math::Vec3f scale)
@@ -977,9 +977,10 @@ int main(void)
 					}
 				}
 
+
 				//プレイヤー生成
 				{
-					Math::Vec3f playerStartPos = { 10.0f, 40.0f, 10.0f };
+					Math::Vec3f playerStartPos = { 10.0f, 10.0f, 10.0f };
 
 					Physics::ShapeCreateDesc shapeDesc;
 					shapeDesc.shape = Physics::CapsuleDesc{ 2.0f, 1.0f };
@@ -1041,25 +1042,6 @@ int main(void)
 						ps->EnqueueCreateIntent(id.value(), terrainShape, chunk.value()->GetNodeKey());
 					}
 				}
-
-				//auto boxHandle = ps->MakeBox(Math::Vec3f(1000.0f,1.0f,1000.0f));
-				//auto boxDims = ps->GetShapeDims(boxHandle);
-				//Physics::BodyComponent staticBody{};
-				//staticBody.isStatic = Physics::BodyType::Static; // staticにする
-				//auto id = levelSession.AddEntity(
-				//	CTransform{ 10.0f,-10.0f, 10.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
-				//	CModel{ modelAssetHandle[0]},
-				//	staticBody,
-				//	Physics::PhysicsInterpolation(
-				//		Math::Vec3f{ 10.0f,-10.0f, 10.0f }, // 初期位置
-				//		Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-				//	),
-				//	boxDims.value()
-				//);
-				//if (id) {
-				//	auto chunk = pLevel->GetChunk({ 0.0f,-100.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
-				//	ps->EnqueueCreateIntent(id.value(), boxHandle, chunk.value()->GetNodeKey());
-				//}
 			},
 			//アンロード時
 			[&](std::add_pointer_t<decltype(world)> pWorld, OpenFieldLevel* pLevel)

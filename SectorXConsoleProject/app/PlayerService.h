@@ -9,6 +9,8 @@ public:
 	static inline float MOVE_SPEED = 10.0f;
 	static inline float TURN_SPEED = 10.0f;
 	static inline float DEFAULT_FOOT_RADIUS = 3.0f;
+	static inline float BOOST_POWER = 2.0f;
+	static inline float HOVER_POWER = 1.05f;
 
 	struct GrassFootCB
 	{

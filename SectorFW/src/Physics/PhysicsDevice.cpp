@@ -214,6 +214,7 @@ namespace SFW::Physics {
 		rc.mDirection = JPH::Vec3(c.dir.x * c.maxDist, c.dir.y * c.maxDist, c.dir.z * c.maxDist);
 
 		JPH::RayCastResult hit{}; // ioHit（初期値は「最遠」扱い）
+
 		// 単一ヒット版のオーバーロード：RayCastSettings は取りません
 		const bool any = m_physics.GetNarrowPhaseQuery().CastRay(
 			rc,
@@ -341,23 +342,6 @@ namespace SFW::Physics {
 
 	// ===== Snapshot =====
 	void PhysicsDevice::BuildSnapshot(PhysicsSnapshot& out) {
-		// --- Pose 抽出：Entity 登録済みの Body の姿勢を読む ---
-		out.poses.reserve(out.poses.size() + m_e2b.size());
-		for (auto& [e, id] : m_e2b) {
-			// 読み取りロック
-			JPH::BodyLockRead lock(m_physics.GetBodyLockInterface(), id);
-			if (lock.Succeeded()) {
-				const JPH::Body& b = lock.GetBody();
-				// 静的は大抵不要。必要なら条件外す
-				if (b.IsStatic()) continue;
-
-				JMat m = b.GetWorldTransform();
-				// 位置と回転を取り出し
-				Vec3f p = FromJVec3(m.GetTranslation());
-				Quatf q = FromJQuat(b.GetRotation());
-				out.poses.push_back(Pose{ e, p, q });
-			}
-		}
 
 		{
 			// --- Contacts（ContactListener が溜めたものを吐き出す） ---
@@ -367,18 +351,13 @@ namespace SFW::Physics {
 		}
 
 		// --- RayHits ---
+		out.rayHits.reserve(out.rayHits.size() + m_pendingRayHits.size());
 		for (auto& r : m_pendingRayHits) {
 			out.rayHits.push_back(RayCastHitEvent{
 				r.requestId, r.hit, r.entity, r.pos, r.normal, r.distance
 				});
 		}
 		m_pendingRayHits.clear();
-
-		for (auto& [e, ch] : m_characters) {
-			Vec3f p = FromJVec3(ch.ref->GetPosition());
-			Quatf q = FromJQuat(ch.ref->GetRotation());
-			out.poses.push_back(Pose{ e, p, q });
-		}
 	}
 
 	void PhysicsDevice::ReadPosesBatch(const PoseBatchView& v)

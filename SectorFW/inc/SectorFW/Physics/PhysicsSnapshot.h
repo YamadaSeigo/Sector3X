@@ -8,9 +8,9 @@
 #include <vector>
 #include <cstdint>
 
-#include "Core/ECS/entity.h"
-#include "Math/Vector.hpp"
-#include "Math/Quaternion.hpp"
+#include "../Core/ECS/entity.h"
+#include "../Math/Vector.hpp"
+#include "../Math/Quaternion.hpp"
 
 namespace SFW
 {
@@ -49,7 +49,6 @@ namespace SFW
 		 * @brief 物理エンジンのスナップショットデータを表す構造体
 		 */
 		struct PhysicsSnapshot {
-			std::vector<Pose>          poses;       // curr (前フレームは別に保持して補間)
 			std::vector<ContactEvent>  contacts;
 			std::vector<RayCastHitEvent> rayHits;
 		};

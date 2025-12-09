@@ -205,6 +205,23 @@ void main(uint3 groupID : SV_GroupID, uint3 gtid : SV_GroupThreadID)
     // --- LOD 選択 ---
     float sizePx = ProjectedSizePx(bmin, bmax);
 
+    // (例) 1px 未満なら完全カリング
+    static const float MIN_MAIN_PX = 5.0f;
+    static const float MIN_SHADOW_PX = 10.0f;
+
+    if (sizePx < MIN_MAIN_PX)
+    {
+        visibleMain = false;
+    }
+
+    if (sizePx < MIN_SHADOW_PX)
+    {
+    // すべてのカスケードを false にする
+    [unroll]
+        for (int c = 0; c < NUM_CASCADES; ++c)
+            visibleCascade[c] = false;
+    }
+
     uint lodIdxMain = SelectLodPx_Main(sizePx);
     uint lodIdxShadow = SelectLodPx_Shadow(sizePx);
 
@@ -310,6 +327,4 @@ void main(uint3 groupID : SV_GroupID, uint3 gtid : SV_GroupThreadID)
             }
         }
     }
-
-    // ここから先で return するのは OK（もうバリアが出てこないなら）
 }

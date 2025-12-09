@@ -26,10 +26,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\VS_Default.hlsl">
+    <FxCompile Include="shader\VS_Unlit.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\PS_Default.hlsl">
+    <FxCompile Include="shader\PS_Unlit.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_DrawLineList.hlsl">
@@ -90,6 +90,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\VS_WindEntity.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_WindGrassUnlit.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_WindEntityUnlit.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

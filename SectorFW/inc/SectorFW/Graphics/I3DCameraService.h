@@ -144,7 +144,7 @@ namespace SFW
 			void SetFocusDistance(float distance) noexcept {
 				std::unique_lock lock(sharedMutex);
 
-				focusDist = distance;
+				focusDist = (std::max)(1e-6f, distance);
 
 				isUpdateBuffer = true;
 			}
@@ -343,12 +343,13 @@ namespace SFW
 				return cameraBuffer[currentSlot];
 			}
 			/**
-			 * @brief 古いカメラバッファのデータを取得
-			 * @return const CameraBuffer& 古いカメラバッファのデータ
+			 * @brief 遅延分前のカメラバッファのデータを取得
+			 * @return const CameraBuffer& カメラバッファのデータ
 			 */
 			CameraBuffer GetOldCameraBufferData() const noexcept {
-				return cameraBuffer[(currentSlot + 2) % RENDER_BUFFER_COUNT];
+				return cameraBuffer[(currentSlot + (RENDER_BUFFER_COUNT - 1)) % RENDER_BUFFER_COUNT];
 			}
+
 			/**
 			 * @brief カメラバッファの更新が必要かどうかを取得
 			 * @return bool 更新が必要な場合はtrue、そうでなければfalse
@@ -433,7 +434,7 @@ namespace SFW
 			float top = 0.0f;
 
 			// 注視点までの距離
-			float focusDist = 5.0f;
+			float focusDist = 10.0f;
 			// 移動ベクトル
 			Math::Vec3f moveVec = { 0.0f, 0.0f, 0.0f };
 			// ピッチの累積角度（制限用）
@@ -452,7 +453,7 @@ namespace SFW
 			mutable std::shared_mutex sharedMutex;
 
 			// 回転モード
-			RotateMode rotateMode = RotateMode::FPS;
+			RotateMode rotateMode = RotateMode::Orbital;
 		public:
 			STATIC_SERVICE_TAG
 		};
