@@ -74,7 +74,7 @@ public:
 			tm.pos = Vec3f(interp.cpx()[row], interp.cpy()[row], interp.cpz()[row]);
 			tm.rot = Quatf(interp.crx()[row], interp.cry()[row], interp.crz()[row], interp.crw()[row]);
 
-			const uint16_t layer = body.isStatic()[row] ? Layers::NON_MOVING : Layers::MOVING;
+			const uint16_t layer = body.layer()[row] != BodyComponent::invalidLayer ? body.layer()[row] : (body.isStatic()[row] ? Layers::NON_MOVING_RAY_HIT : Layers::MOVING);
 			const bool kinematic = !!body.kinematic()[row];
 
 			CreateBodyCmd cmd{};

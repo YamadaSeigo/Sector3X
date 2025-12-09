@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../app/PlayerService.h"
+#include "../app/RenderDefine.h"
 
 struct PlayerComponent
 {
@@ -21,6 +22,7 @@ class PlayerSystem : public ITypeSystem<
 	ServiceContext<
 		Physics::PhysicsService,
 		Graphics::I3DPerCameraService,
+		Graphics::RenderService,
 		InputService,
 		PlayerService
 	>>{
@@ -99,6 +101,7 @@ public:
 	void UpdateImpl(Partition& partition,
 		UndeletablePtr<Physics::PhysicsService> physicsService,
 		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
+		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<InputService> inputService,
 		UndeletablePtr<PlayerService> playerService)
 	{
@@ -182,6 +185,30 @@ public:
 				if (!pose.has_value()) continue;
 
 				auto playerPos = pose.value().GetPosition();
+				auto playerRot = pose.value().GetRotation();
+
+				auto modelComp = globalEntityManager.ReadComponent<CModel>(entityID);
+
+				if (modelComp.has_value())
+				{
+					auto WorldMtx = Math::MakeTranslationMatrix(playerPos) * Math::MakeRotationMatrix(playerRot);
+					auto session = renderService->GetProducerSession(PassGroupName[GROUP_3D_MAIN]);
+					auto instanceIdx = session.AllocInstance(WorldMtx);
+
+					auto modelMgr = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
+					auto modelData = modelMgr->Get(modelComp.value().handle);
+					for (const auto& subMesh : modelData.ref().subMeshes)
+					{
+						Graphics::DrawCommand cmd;
+						cmd.sortKey = 0;
+						cmd.instanceIndex = instanceIdx;
+						cmd.pso = subMesh.pso.index;
+						cmd.mesh = subMesh.lods[0].mesh.index;
+						cmd.material = subMesh.material.index;
+						cmd.viewMask = PASS_3DMAIN_HIGHLIGHT;
+						session.Push(std::move(cmd));
+					}
+				}
 
 				if (playerCamera)
 				{
@@ -218,6 +245,7 @@ public:
 					RayCastCmd rayCmd;
 					rayCmd.requestId = player.first.index;
 					rayCmd.broadPhaseMask = MakeBPMask(Layers::BPLayers::NON_MOVING) | MakeBPMask(Layers::BPLayers::MOVING);
+					rayCmd.objectLayerMask = MakeObjectLayerMask(Layers::NON_MOVING_RAY_HIT);
 					rayCmd.origin = camState.smoothedTarget;
 					rayCmd.dir = cameraService->GetBackward(); // ƒJƒƒ‰‚ÌŒã‚ë•ûŒü
 					rayCmd.maxDist = cameraDistance;
@@ -232,10 +260,9 @@ public:
 						{
 							if (rayHit.hit)
 							{
-								float focusDist = rayHit.distance - 1.0f; // ­‚µŽè‘O‚É
+								float focusDist = (std::max)(rayHit.distance - 1.0f, 1.0f); // ­‚µŽè‘O‚É
+								cameraService->SetFocusDistance(focusDist);
 								prevCameraHit = 2;
-								if (focusDist > 2.0f)
-									cameraService->SetFocusDistance(focusDist);
 							}
 							else if(prevCameraHit > 0)
 							{
@@ -263,7 +290,7 @@ public:
 				globalEntityManager.ReadWriteComponent<CTransform>(entityID,
 					[&](CTransform tf) {
 						tf.location = playerPos;
-						tf.rotation = pose.value().GetRotation();
+						tf.rotation = playerRot;
 
 						return tf;
 					});

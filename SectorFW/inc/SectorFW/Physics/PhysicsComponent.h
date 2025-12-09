@@ -82,12 +82,14 @@ namespace SFW
 		 * @brief 物理ボディコンポーネント
 		 */
 		struct BodyComponent {
+			static constexpr uint16_t invalidLayer = 0xFFFFu;
+
 			JPH::BodyID body = JPH::BodyID((std::numeric_limits<uint32_t>::max)());   // 生成後にセット（読み取り用）
-			uint16_t    world;  // 所属ワールド
+			uint16_t    layer = invalidLayer;  // 所属ワールド
 			bool        kinematic{ false };
 			uint8_t     isStatic{ BodyType::Dynamic }; // 1: 静的、0: 動的（キネマティック含む）
 
-			DEFINE_SOA(BodyComponent, body, world, kinematic, isStatic)
+			DEFINE_SOA(BodyComponent, body, layer, kinematic, isStatic)
 		};
 		/**
 		 * @brief 形状寸法コンポーネント

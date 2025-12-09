@@ -220,6 +220,19 @@ void InitializeRenderPipeLine(
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
+	shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
+	shaderDesc.psPath = L"assets/shader/PS_HighLight.cso";
+	shaderMgr->Add(shaderDesc, shaderHandle);
+	psoDesc.shader = shaderHandle;
+	psoDesc.rasterizerState = RasterizerStateID::SolidCullBack;
+	psoMgr->Add(psoDesc, psoHandle);
+
+	passDesc.customExecute = nullptr;
+	passDesc.psoOverride = psoHandle;
+	passDesc.blendState = BlendStateID::AlphaBlend;
+	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly_Greater;
+	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_HIGHLIGHT);
+
 	auto& UIGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_UI]);
 
 	passDesc.viewport = std::nullopt;
@@ -227,6 +240,7 @@ void InitializeRenderPipeLine(
 
 	passDesc.topology = PrimitiveTopology::LineList;
 	passDesc.rasterizerState = RasterizerStateID::WireCullNone;
+	passDesc.blendState = BlendStateID::Opaque;
 	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
 
 	renderGraph->AddPassToGroup(UIGroup, passDesc, PASS_UI_3DLINE);
@@ -254,6 +268,7 @@ void InitializeRenderPipeLine(
 		{ 0, 3 },
 		{ 0, 4 },
 		{ 0, 5 },
+		{ 0 ,6 },
 		{ 1, 0 },
 		{ 1, 1 },
 		{ 1, 2 }
@@ -945,6 +960,7 @@ int main(void)
 
 								Physics::BodyComponent staticBody{};
 								staticBody.isStatic = Physics::BodyType::Static; // static‚É‚·‚é
+								staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
 								auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
 #ifdef _DEBUG
 								auto shapeDims = ps->GetShapeDims(shapeHandle);
@@ -1027,11 +1043,12 @@ int main(void)
 						.cellSizeY = p.cellSize
 					};
 					auto terrainShape = ps->MakeShape(terrainShapeDesc);
-					Physics::BodyComponent staticBody{};
-					staticBody.isStatic = Physics::BodyType::Static; // static‚É‚·‚é
+					Physics::BodyComponent terrainBody{};
+					terrainBody.isStatic = Physics::BodyType::Static; // static‚É‚·‚é
+					terrainBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
 					auto id = levelSession.AddEntity(
 						CTransform{ 0.0f, 0.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
-						staticBody,
+						terrainBody,
 						Physics::PhysicsInterpolation(
 							Math::Vec3f{ 0.0f,-40.0f, 0.0f }, // ‰ŠúˆÊ’u
 							Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // ‰Šú‰ñ“]

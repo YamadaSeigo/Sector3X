@@ -117,7 +117,7 @@ namespace SFW::Physics {
 		// MotionType 推定：layerに応じて静的/動的/センサー
 		JPH::EMotionType motion = JPH::EMotionType::Dynamic;
 		if (c.kinematic)                      motion = JPH::EMotionType::Kinematic;
-		else if (c.layer == Layers::NON_MOVING) motion = JPH::EMotionType::Static;
+		else if (c.layer == Layers::NON_MOVING_RAY_HIT || c.layer == Layers::NON_MOVING_RAY_IGNORE) motion = JPH::EMotionType::Static;
 
 		JPH::BodyCreationSettings bc(shape, ToJVec3(c.worldTM.pos), ToJQuat(c.worldTM.rot), motion, c.layer);
 		bc.mFriction = c.friction;

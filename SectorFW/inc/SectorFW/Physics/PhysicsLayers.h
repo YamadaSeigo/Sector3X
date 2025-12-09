@@ -16,10 +16,11 @@ namespace SFW {
 		// タイトル都合で差し替え前提の最小セット
 		namespace Layers {
 			// ObjectLayer（用途別に増やせる）
-			inline static constexpr JPH::ObjectLayer NON_MOVING = 0;
-			inline static constexpr JPH::ObjectLayer MOVING = 1;
-			inline static constexpr JPH::ObjectLayer SENSOR = 2;
-			inline static constexpr uint32_t NUM_LAYERS = 3;
+			inline static constexpr JPH::ObjectLayer NON_MOVING_RAY_HIT = 0;
+			inline static constexpr JPH::ObjectLayer NON_MOVING_RAY_IGNORE = 1;
+			inline static constexpr JPH::ObjectLayer MOVING = 2;
+			inline static constexpr JPH::ObjectLayer SENSOR = 3;
+			inline static constexpr uint32_t NUM_LAYERS = 4;
 
 			// BroadPhaseLayer（小さめの集合分類）
 			class BPLayers final {
@@ -49,7 +50,8 @@ namespace SFW {
 		public:
 			BroadPhaseLayerInterfaceImpl() {
 				//ObjectLayerをBroadPhaseLayerに変換するマッピングを設定
-				m_object_to_broad[(size_t)Layers::NON_MOVING] = Layers::BPLayers::NON_MOVING;
+				m_object_to_broad[(size_t)Layers::NON_MOVING_RAY_HIT] = Layers::BPLayers::NON_MOVING;
+				m_object_to_broad[(size_t)Layers::NON_MOVING_RAY_IGNORE] = Layers::BPLayers::NON_MOVING;
 				m_object_to_broad[(size_t)Layers::MOVING] = Layers::BPLayers::MOVING;
 				m_object_to_broad[(size_t)Layers::SENSOR] = Layers::BPLayers::SENSOR;
 			}
@@ -77,7 +79,7 @@ namespace SFW {
 			virtual bool ShouldCollide(JPH::ObjectLayer layer1, JPH::BroadPhaseLayer layer2) const override {
 				if (layer1 == Layers::SENSOR) return layer2 == Layers::BPLayers::MOVING; // sensorは動く物体のみ検出
 				// 非移動は移動と、移動は非移動＆移動と
-				if (layer1 == Layers::NON_MOVING) return layer2 == Layers::BPLayers::MOVING;
+				if (layer1 == Layers::NON_MOVING_RAY_HIT || layer1 == Layers::NON_MOVING_RAY_IGNORE) return layer2 == Layers::BPLayers::MOVING;
 				if (layer1 == Layers::MOVING)     return layer2 == Layers::BPLayers::NON_MOVING || layer2 == Layers::BPLayers::MOVING;
 				return true;
 			}
@@ -88,7 +90,7 @@ namespace SFW {
 		public:
 			virtual bool ShouldCollide(JPH::ObjectLayer a, JPH::ObjectLayer b) const override {
 				if (a == Layers::SENSOR || b == Layers::SENSOR) return true; // センサーは何でも当たる（Narrow側で無反発に）
-				if (a == Layers::NON_MOVING && b == Layers::NON_MOVING) return false; // 静的×静的は不要
+				if ((a == Layers::NON_MOVING_RAY_HIT || a == Layers::NON_MOVING_RAY_IGNORE) && (b == Layers::NON_MOVING_RAY_HIT || b == Layers::NON_MOVING_RAY_IGNORE)) return false; // 静的×静的は不要
 				return true;
 			}
 		};

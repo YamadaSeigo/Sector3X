@@ -433,13 +433,6 @@ namespace SFW
 			return S_OK;
 		}
 
-		enum class DepthStencilStateID {
-			Default,          // DepthTest ON, ZWrite ON
-			DepthReadOnly,    // DepthTest ON, ZWrite OFF
-			NoDepth,          // DepthTest OFF, ZWrite OFF
-			// ...
-			MAX_COUNT,        // 有効な深度ステンシルステートの数
-		};
 
 		HRESULT RenderBackend::CreateDepthStencilStates()
 		{
@@ -482,7 +475,27 @@ namespace SFW
 				hr = create((size_t)DepthStencilStateID::DepthReadOnly, d); if (FAILED(hr)) return hr;
 			}
 
-			// 3) NoDepth: 深度テストOFF, 書き込みOFF（HUD/デバッグオーバーレイ）
+			// 3) DefaultGreater: 深度テストON, 書き込みON, GraterEqual（不透明/大半の3D）
+			{
+				auto d = ds;
+				d.DepthEnable = TRUE;
+				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+				d.DepthFunc = D3D11_COMPARISON_GREATER;
+				d.StencilEnable = FALSE; // 既定はStencil未使用
+				hr = create((size_t)DepthStencilStateID::Default_Greater, d); if (FAILED(hr)) return hr;
+			}
+
+			// 4) DepthReadOnlyGreater: 深度テストON, 書き込みOFF（スカイボックス/アルファブレンド/ポスト系）
+			{
+				auto d = ds;
+				d.DepthEnable = TRUE;
+				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+				d.DepthFunc = D3D11_COMPARISON_GREATER;
+				d.StencilEnable = FALSE;
+				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Greater, d); if (FAILED(hr)) return hr;
+			}
+
+			// 5) NoDepth: 深度テストOFF, 書き込みOFF（HUD/デバッグオーバーレイ）
 			{
 				auto d = ds;
 				d.DepthEnable = FALSE;
