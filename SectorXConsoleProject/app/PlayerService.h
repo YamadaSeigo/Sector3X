@@ -69,6 +69,7 @@ public:
 	}
 
 	Graphics::BufferHandle GetFootBufferHandle() const noexcept { return hGrassFootCB; }
+
 private:
 	Graphics::DX11::BufferManager* bufferMgr = nullptr;
 

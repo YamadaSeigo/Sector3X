@@ -82,8 +82,6 @@ public:
 		else
 		{
 			if (mouseWheelV != 0) {
-				perCameraService->SetFocusDistance(
-					perCameraService->GetFocusDistance() - (float)mouseWheelV * 0.5f);
 				camera2DService->Zoom((float)mouseWheelV);
 			}
 		}

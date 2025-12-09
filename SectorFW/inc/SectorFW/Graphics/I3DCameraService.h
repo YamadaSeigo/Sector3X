@@ -250,6 +250,15 @@ namespace SFW
 				return (target - eye).normalized();
 			}
 			/**
+			 * @brief カメラの後方方向ベクトルを取得
+			 * @return Math::Vec3f カメラの後方方向ベクトル
+			 */
+			Math::Vec3f GetBackward() const noexcept {
+				std::shared_lock lock(sharedMutex);
+
+				return (eye - target).normalized();
+			}
+			/**
 			 * @brief カメラの右方向ベクトルを取得
 			 * @return Math::Vec3f カメラの右方向ベクトル
 			 */

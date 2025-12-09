@@ -32,6 +32,10 @@ namespace SFW
 			Vec3f pos; Quatf rot; // スケールは Jolt 側の ShapeScale で扱う前提
 		};
 
+		//ヒットさせるLayerを指定するためのマスク
+		using BroadPhaseLayerMask = uint16_t;
+		using ObjectLayerMask = uint32_t;
+
 		// ========= コマンド =========
 
 		/**
@@ -100,6 +104,9 @@ namespace SFW
 			Vec3f    origin;
 			Vec3f    dir;   // 正規化前提
 			float    maxDist;
+			uint32_t ignoreBody = 0xffffffff; // 無視するボディ（オプション）
+			ObjectLayerMask     objectLayerMask = 0xFFFFFFFF; // 全ビットONで全レイヤ
+			BroadPhaseLayerMask broadPhaseMask = 0xFFFF; // 全ビットONで全レイヤ
 		};
 
 		// プレイヤーキャラ生成コマンド
@@ -125,21 +132,36 @@ namespace SFW
 			Quatf  rot;
 		};
 
-		// 必要ならテレポートも
+		// characterをテレポートさせる
 		struct TeleportCharacterCmd {
 			Entity e;
 			Mat34f worldTM;
+		};
+
+		// キャラ破棄コマンド
+		struct DestroyCharacterCmd {
+			Entity e;
 		};
 
 		/**
 		 * @brief PhysicsCommand（コマンド総合型）
 		 */
 		using PhysicsCommand = std::variant<
-			CreateBodyCmd, DestroyBodyCmd, TeleportCmd,
-			SetLinearVelocityCmd, SetAngularVelocityCmd, AddImpulseCmd,
-			SetKinematicTargetCmd, SetCollisionMaskCmd, SetObjectLayerCmd,
-			RayCastCmd, CreateCharacterCmd, SetCharacterVelocityCmd,
-			SetCharacterRotationCmd, TeleportCharacterCmd
+			CreateBodyCmd,
+			DestroyBodyCmd,
+			TeleportCmd,
+			SetLinearVelocityCmd,
+			SetAngularVelocityCmd,
+			AddImpulseCmd,
+			SetKinematicTargetCmd,
+			SetCollisionMaskCmd,
+			SetObjectLayerCmd,
+			RayCastCmd,
+			CreateCharacterCmd,
+			SetCharacterVelocityCmd,
+			SetCharacterRotationCmd,
+			TeleportCharacterCmd,
+			DestroyCharacterCmd
 		>;
 
 		// ========= 形状記述子群 =========

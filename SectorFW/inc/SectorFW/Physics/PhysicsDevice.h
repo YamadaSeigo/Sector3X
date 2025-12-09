@@ -30,6 +30,9 @@
 #include "../Core/ECS/EntityManager.h"
 #include "../Core/RegistryTypes.h"
 
+// キャラクター用 ContactListener を有効化するか
+//#define ENABLE_CHARACTER_CONTACT_LISTENER
+
 namespace SFW
 {
 	namespace Physics
@@ -178,6 +181,12 @@ namespace SFW
 				out.swap(m_created);
 			}
 
+			Entity ResolveCharacterEntity(const JPH::CharacterVirtual* ch) const
+			{
+				auto it = m_charToEntity.find(ch);
+				return (it != m_charToEntity.end()) ? it->second : Entity{};
+			}
+
 			// キャラクターのポーズ読み出し
 			std::optional<CharacterPose> GetCharacterPose(Entity e);
 		private:
@@ -204,6 +213,11 @@ namespace SFW
 
 			// Entity -> CharacterVirtual
 			std::unordered_map<Entity, CharacterVirtualInfo> m_characters;
+			std::unordered_map<const JPH::CharacterVirtual*, Entity>  m_charToEntity; 
+
+#ifdef ENABLE_CHARACTER_CONTACT_LISTENER
+			std::unique_ptr<CharacterContactListenerImpl>             m_characterContactListener;
+#endif
 
 			bool m_initialized = false;
 
@@ -222,6 +236,7 @@ namespace SFW
 			void ApplySetCharacterVelocity(const SetCharacterVelocityCmd& c);
 			void ApplySetCharacterRotation(const SetCharacterRotationCmd& c);
 			void ApplyTeleportCharacter(const TeleportCharacterCmd& c);
+			void ApplyDestroyCharacter(const DestroyCharacterCmd& c);
 
 			const IShapeResolver* m_shapeResolver = nullptr;
 

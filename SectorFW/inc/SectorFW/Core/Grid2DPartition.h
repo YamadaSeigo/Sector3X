@@ -317,6 +317,8 @@ namespace SFW
 		*/
 		void CleanChunk()
 		{
+			globalEntityManager.CleanAllEntity();
+
 			auto cx = grid.width();
 			auto cy = grid.height();
 			for (auto it = grid.begin(); it != grid.end(); ++it)

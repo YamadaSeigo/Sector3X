@@ -200,6 +200,14 @@ namespace SFW
 			 */
 			bool RayCast(uint32_t reqId, Vec3f o, Vec3f dir, float maxDist) { return Enqueue(RayCastCmd{ reqId, o, dir, maxDist }); }
 
+			/**
+			 * @brief レイキャストを実行するコマンドをキューに追加する
+			 * @param c レイキャストコマンド
+			 */
+			bool RayCast(const RayCastCmd& c) {
+				return Enqueue(c);
+			}
+
 			bool CreateCharacter(const CreateCharacterCmd& c) {
 				return Enqueue(c);
 			}
@@ -214,6 +222,10 @@ namespace SFW
 
 			bool TeleportCharacter(Entity e, const Mat34f& tm) {
 				return Enqueue(TeleportCharacterCmd{ e, tm });
+			}
+
+			bool DestroyCharacter(Entity e) {
+				return Enqueue(DestroyCharacterCmd{ e });
 			}
 
 			std::optional<CharacterPose> ReadCharacterPose(Entity e) {

@@ -176,6 +176,8 @@ public:
 
 			//Pose読み込み & 反映
 			{
+				using namespace Physics;
+
 				auto pose = physicsService->ReadCharacterPose(entityID);
 				if (!pose.has_value()) continue;
 
@@ -202,6 +204,51 @@ public:
 
 					// カメラには「スムージング後のターゲット」を渡す
 					cameraService->SetTarget(camState.smoothedTarget);
+
+					static float cameraDistance = cameraService->GetFocusDistance();
+
+					static int prevCameraHit = 0;
+
+					int mouseWheelV, mouseWheelH;
+					inputService->GetMouseWheel(mouseWheelV, mouseWheelH);
+
+					if (mouseWheelV != 0)
+						cameraDistance -= mouseWheelV * 0.5f;
+
+					RayCastCmd rayCmd;
+					rayCmd.requestId = player.first.index;
+					rayCmd.broadPhaseMask = MakeBPMask(Layers::BPLayers::NON_MOVING) | MakeBPMask(Layers::BPLayers::MOVING);
+					rayCmd.origin = camState.smoothedTarget;
+					rayCmd.dir = cameraService->GetBackward(); // カメラの後ろ方向
+					rayCmd.maxDist = cameraDistance;
+
+					float focusDist = cameraDistance;
+					physicsService->RayCast(rayCmd);
+
+					const auto& snapshot = physicsService->CurrentSnapshot();
+					for (const auto& rayHit : snapshot.rayHits)
+					{
+						if (rayHit.requestId == rayCmd.requestId)
+						{
+							if (rayHit.hit)
+							{
+								float focusDist = rayHit.distance - 1.0f; // 少し手前に
+								prevCameraHit = 2;
+								if (focusDist > 2.0f)
+									cameraService->SetFocusDistance(focusDist);
+							}
+							else if(prevCameraHit > 0)
+							{
+								prevCameraHit--;
+							}
+							else
+							{
+								cameraService->SetFocusDistance(cameraDistance);
+							}
+							break;
+						}
+					}
+
 
 					long dx, dy;
 					inputService->GetMouseDelta(dx, dy);

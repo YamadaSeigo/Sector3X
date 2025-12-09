@@ -64,6 +64,10 @@ namespace SFW::Physics {
 		m_contactListener.reset(new MyContactListenerOwner(this));
 		m_physics.SetContactListener(&m_contactListener->listener);
 
+#ifdef ENABLE_CHARACTER_CONTACT_LISTENER
+		m_characterContactListener = std::make_unique<CharacterContactListenerImpl>(this);
+#endif
+
 		return true;
 	}
 
@@ -100,6 +104,7 @@ namespace SFW::Physics {
 			else if constexpr (std::is_same_v<C, SetCharacterVelocityCmd>)  ApplySetCharacterVelocity(c);
 			else if constexpr (std::is_same_v<C, SetCharacterRotationCmd>)  ApplySetCharacterRotation(c);
 			else if constexpr (std::is_same_v<C, TeleportCharacterCmd>)     ApplyTeleportCharacter(c);
+			else if constexpr (std::is_same_v<C, DestroyCharacterCmd>)      ApplyDestroyCharacter(c);
 			}, cmd);
 	}
 
@@ -219,9 +224,9 @@ namespace SFW::Physics {
 		const bool any = m_physics.GetNarrowPhaseQuery().CastRay(
 			rc,
 			hit,
-			JPH::BroadPhaseLayerFilter{}, // 必要なら自前のフィルタを渡す
-			JPH::ObjectLayerFilter{},
-			JPH::BodyFilter{}
+			BroadPhaseLayerFilterMask{c.broadPhaseMask},
+			ObjectLayerFilterMask{c.objectLayerMask},
+			RayBodyFilterIgnoreSelf{ (JPH::BodyID)c.ignoreBody }
 		);
 
 		PendingRayHit r{};
@@ -277,7 +282,14 @@ namespace SFW::Physics {
 		JPH::Ref<JPH::CharacterVirtual> ch =
 			new JPH::CharacterVirtual(&settings, pos, rot, system);
 
+#ifdef ENABLE_CHARACTER_CONTACT_LISTENER
+		ch->SetListener(m_characterContactListener.get());
+#endif
+
 		m_characters[c.e] = { ch, c.objectLayer };
+
+		// CharacterVirtual* -> Entity の逆引き
+		m_charToEntity[ch.GetPtr()] = c.e;
 	}
 
 	void PhysicsDevice::ApplySetCharacterVelocity(const SetCharacterVelocityCmd& c)
@@ -300,6 +312,15 @@ namespace SFW::Physics {
 		if (it == m_characters.end()) return;
 		it->second.ref->SetPosition(ToJVec3(c.worldTM.pos));
 		it->second.ref->SetRotation(ToJQuat(c.worldTM.rot));
+	}
+
+	void PhysicsDevice::ApplyDestroyCharacter(const DestroyCharacterCmd& c)
+	{
+		auto it = m_characters.find(c.e);
+		if (it == m_characters.end()) return;
+
+		// JPH::Ref<JPH::CharacterVirtual> なので erase すれば参照カウントが減って破棄される
+		m_characters.erase(it);
 	}
 
 
@@ -508,6 +529,29 @@ namespace SFW::Physics {
 		ev.type = ContactEvent::End;
 		ev.a = m_dev->ResolveEntity(pair.GetBody1ID());
 		ev.b = m_dev->ResolveEntity(pair.GetBody2ID());
+		m_dev->PushContactEvent(ev);
+	}
+
+	// ===== CharacterContactListenerImpl =====
+	void CharacterContactListenerImpl::PushContact(ContactEvent::Type            type,
+		const JPH::CharacterVirtual* ch,
+		const JPH::BodyID& bodyID,
+		JPH::RVec3Arg                pos,
+		JPH::Vec3Arg                 normal)
+	{
+		ContactEvent ev{};
+		ev.type = type;
+
+		// a: キャラクターの Entity
+		ev.a = m_dev->ResolveCharacterEntity(ch);
+
+		// b: 当たった Body の Entity（既存の ResolveEntity を流用）
+		ev.b = m_dev->ResolveEntity(bodyID);
+
+		ev.pointWorld = FromJVec3(pos);     // すでに RVec3/Vec3 → 自前 Vec3 の変換関数がありますよね
+		ev.normalWorld = FromJVec3(normal);
+		ev.impulse = 0.0f;               // CharacterContactListener からはインパルスは取れないので 0 など
+
 		m_dev->PushContactEvent(ev);
 	}
 

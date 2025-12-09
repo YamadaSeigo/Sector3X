@@ -31,10 +31,24 @@ namespace SFW {
 			};
 		}
 
+		// BroadPhaseLayer -> マスクビット の変換
+		inline constexpr BroadPhaseLayerMask MakeBPMask(JPH::BroadPhaseLayer layer)
+		{
+			return 1u << (JPH::uint8)layer;
+		}
+
+		// ObjectLayer -> マスクビット の変換
+		inline constexpr ObjectLayerMask MakeObjectLayerMask(JPH::ObjectLayer layer)
+		{
+			return 1u << (ObjectLayerMask)layer;
+		}
+
+
 		// ObjectLayer → BroadPhaseLayer の対応
 		class BroadPhaseLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
 		public:
 			BroadPhaseLayerInterfaceImpl() {
+				//ObjectLayerをBroadPhaseLayerに変換するマッピングを設定
 				m_object_to_broad[(size_t)Layers::NON_MOVING] = Layers::BPLayers::NON_MOVING;
 				m_object_to_broad[(size_t)Layers::MOVING] = Layers::BPLayers::MOVING;
 				m_object_to_broad[(size_t)Layers::SENSOR] = Layers::BPLayers::SENSOR;
@@ -77,6 +91,63 @@ namespace SFW {
 				if (a == Layers::NON_MOVING && b == Layers::NON_MOVING) return false; // 静的×静的は不要
 				return true;
 			}
+		};
+
+		class BroadPhaseLayerFilterMask final : public JPH::BroadPhaseLayerFilter
+		{
+		public:
+			explicit BroadPhaseLayerFilterMask(BroadPhaseLayerMask mask) : mMask(mask) {}
+
+			bool ShouldCollide(JPH::BroadPhaseLayer inLayer) const override
+			{
+				return (mMask & (1u << (BroadPhaseLayerMask)inLayer.GetValue())) != 0;
+			}
+
+		private:
+			BroadPhaseLayerMask mMask;
+		};
+
+		class ObjectLayerFilterMask final : public JPH::ObjectLayerFilter
+		{
+		public:
+			explicit ObjectLayerFilterMask(ObjectLayerMask mask) : mMask(mask) {}
+
+			bool ShouldCollide(JPH::ObjectLayer inLayer) const override
+			{
+				return (mMask & (1u << (ObjectLayerMask)inLayer)) != 0;
+			}
+
+		private:
+			ObjectLayerMask mMask;
+		};
+
+		// 自分自身（自キャラ）の Body を除外する BodyFilter
+		class RayBodyFilterIgnoreSelf final : public JPH::BodyFilter
+		{
+		public:
+			explicit RayBodyFilterIgnoreSelf(JPH::BodyID self)
+				: mSelf(self)
+			{
+			}
+
+			// BodyID だけで判定する版
+			bool ShouldCollide(const JPH::BodyID& inBodyID) const override
+			{
+				// 自分の BodyID は無視
+				return inBodyID != mSelf;
+			}
+
+			// Body の中身を見て判定する版（必要なら）
+			bool ShouldCollideLocked(const JPH::Body& inBody) const override
+			{
+				// 例えば UserData で "Trigger" を除外するなどもここで可能
+				// auto tag = static_cast<MyTag>(inBody.GetUserData());
+				// if (tag == MyTag::Trigger) return false;
+				return inBody.GetID() != mSelf;
+			}
+
+		private:
+			JPH::BodyID mSelf;
 		};
 	}
 }
