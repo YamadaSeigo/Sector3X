@@ -214,11 +214,16 @@ void InitializeRenderPipeLine(
 	passDesc.cbvs = { BindSlotBuffer{cameraHandle3D} };
 	passDesc.psoOverride = std::nullopt;
 	passDesc.viewport = vp;
-	//passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
+	passDesc.depthStencilState = DepthStencilStateID::Default_Stencil;
 	passDesc.customExecute = skyboxDraw;
+	passDesc.stencilRef = 1;
 	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
+
+	passDesc.customExecute = nullptr;
+	passDesc.stencilRef = 2;
+	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OUTLINE);
 
 	shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
 	shaderDesc.psPath = L"assets/shader/PS_HighLight.cso";
@@ -229,8 +234,9 @@ void InitializeRenderPipeLine(
 
 	passDesc.customExecute = nullptr;
 	passDesc.psoOverride = psoHandle;
-	passDesc.blendState = BlendStateID::AlphaBlend;
-	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly_Greater;
+	passDesc.blendState = BlendStateID::Opaque;
+	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly_Greater_Stencil;
+	passDesc.stencilRef = 1;
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_HIGHLIGHT);
 
 	auto& UIGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_UI]);
@@ -241,6 +247,7 @@ void InitializeRenderPipeLine(
 	passDesc.topology = PrimitiveTopology::LineList;
 	passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 	passDesc.blendState = BlendStateID::Opaque;
+	passDesc.psoOverride = std::nullopt;
 	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
 
 	renderGraph->AddPassToGroup(UIGroup, passDesc, PASS_UI_3DLINE);
@@ -269,6 +276,7 @@ void InitializeRenderPipeLine(
 		{ 0, 4 },
 		{ 0, 5 },
 		{ 0 ,6 },
+		{ 0 ,7 },
 		{ 1, 0 },
 		{ 1, 1 },
 		{ 1, 2 }
@@ -281,7 +289,7 @@ int main(void)
 {
 	LOG_INFO("SectorX Console Project started");
 
-	//==コンポーネントの登録=====================================
+	//==コンポーネントの登録===================================================
 	//main.cppに集めた方がコンパイル効率がいいので、ここで登録している
 	//※複数人で開発する場合は、各自のコンポーネントを別ファイルに分けて登録するようにする
 	ComponentTypeRegistry::Register<CModel>();
@@ -290,7 +298,7 @@ int main(void)
 	ComponentTypeRegistry::Register<Physics::BodyComponent>();
 	ComponentTypeRegistry::Register<Physics::PhysicsInterpolation>();
 	ComponentTypeRegistry::Register<Physics::ShapeDims>();
-	//========================================================
+	//======================================================================
 
 	// ウィンドウの作成
 	WindowHandler::Create(_T(WINDOW_NAME), WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -591,8 +599,6 @@ int main(void)
 
 			blockRevert.RunShadowDepth(deviceContext, cameraBufData->buffer,
 				shadowParams, &shadowMapService.GetCascadeViewport());
-
-			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 		};
 
 	auto drawTerrainColor = [](uint64_t frame)
@@ -614,6 +620,8 @@ int main(void)
 
 			//書き込みと読み込みを両立させないために、デフォルトのレンダーターゲットに戻す
 			graphics.SetDefaultRenderTarget();
+
+			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 
 			shadowMapService.BindShadowPSShadowMap(deviceContext, 7);
 
@@ -694,8 +702,8 @@ int main(void)
 				psoMgr->Add(psoDesc, cullNonePSOHandle);
 
 				//草の揺れ用PSO生成
-				shaderDesc.vsPath = L"assets/shader/VS_WindGrassUnlit.cso";
-				shaderDesc.psPath = L"assets/shader/PS_Unlit.cso";
+				shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
+				shaderDesc.psPath = L"assets/shader/PS_ShadowColor.cso";
 				shaderMgr->Add(shaderDesc, shaderHandle);
 				PSOHandle windGrassPSOHandle;
 				psoDesc.shader = shaderHandle;
@@ -704,6 +712,7 @@ int main(void)
 				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
 
 				shaderDesc.vsPath = L"assets/shader/VS_WindEntityUnlit.cso";
+				shaderDesc.psPath = L"assets/shader/PS_Unlit.cso";
 				shaderMgr->Add(shaderDesc, shaderHandle);
 				PSOHandle cullNoneWindEntityPSOHandle;
 				psoDesc.shader = shaderHandle;
@@ -853,6 +862,7 @@ int main(void)
 				float modelScaleBase[5] = { 2.5f,1.5f,2.5f, 1.5f,1.5f };
 				int modelScaleRange[5] = { 150,25,25, 25,25 };
 				int modelRotRange[5] = { 360,360,360, 360,360 };
+				bool enableOutline[5] = { false,true,false,true,true };
 
 				std::vector<Math::Vec2f> grassAnchor;
 				{
@@ -919,21 +929,24 @@ int main(void)
 
 							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 							rot.KeepTwist(pose.up);
+							auto modelComp = CModel{ grassModelHandle };
+							modelComp.outline = true;
 							auto id = levelSession.AddEntity(
 								CTransform{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-								CModel{ grassModelHandle }
+								std::move(modelComp)
 							);
 						}
 					}
 				}
 
 				// Entity生成
-				uint32_t rangeX = (uint32_t)(p.cellsX * p.cellSize);
-				uint32_t rangeZ = (uint32_t)(p.cellsZ * p.cellSize);
+				std::uniform_int_distribution<uint32_t> distX(1, uint32_t(p.cellsX* p.cellSize));
+				std::uniform_int_distribution<uint32_t> distZ(1, uint32_t(p.cellsZ* p.cellSize));
+
 				for (int j = 0; j < 100; ++j) {
 					for (int k = 0; k < 100; ++k) {
 						for (int n = 0; n < 1; ++n) {
-							Math::Vec3f location = { float(rand() % rangeX + 1), 0.0f, float(rand() % rangeZ + 1) };
+							Math::Vec3f location = { (float)distX(rng), 0.0f, (float)distZ(rng)};
 							//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
 							auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
 							auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
@@ -950,6 +963,7 @@ int main(void)
 							auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
 							auto modelComp = CModel{ modelAssetHandle[modelIdx] };
 							modelComp.castShadow = true;
+							modelComp.outline = enableOutline[modelIdx];
 
 							if (makeShapeHandleFunc[modelIdx] != nullptr)
 							{
@@ -1012,9 +1026,12 @@ int main(void)
 
 					//Physics::BodyComponent playerBody{};
 					//playerBody.isStatic = Physics::BodyType::Dynamic; // 動的にする
+
+					CModel modelComp{ playerModelHandle };
+					modelComp.outline = true;
 					auto id = levelSession.AddGlobalEntity(
 						CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
-						CModel{ playerModelHandle },
+						std::move(modelComp),
 						PlayerComponent{}
 #ifdef _DEBUG
 						, playerDims.value()

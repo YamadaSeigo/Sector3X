@@ -19,7 +19,10 @@ struct CModel
 	bool occluded = false;
 	bool temporalSkip = false;
 	bool castShadow = false;
+	bool outline = false;
 };
+
+#define ENABLE_PREPASS_AND_SHADOW 1
 
 
 template<typename Partition>
@@ -324,12 +327,13 @@ public:
 						cmd.material = mesh.material.index;
 						cmd.pso = mesh.pso.index;
 
-						cmd.viewMask |= PASS_3DMAIN_OPAQUE;
+						cmd.viewMask |= modelComp.outline ? PASS_3DMAIN_OUTLINE : PASS_3DMAIN_OPAQUE;
 
-#ifdef ENABLE_PREPASS_AND_SHADOW
+
+#if ENABLE_PREPASS_AND_SHADOW
 						if (ll < 2)
 						{
-							cmd.viewMask |= PASS_3DMAIN_ZPREPASS;
+							//cmd.viewMask |= PASS_3DMAIN_ZPREPASS;
 
 							if (modelComp.castShadow)
 							{

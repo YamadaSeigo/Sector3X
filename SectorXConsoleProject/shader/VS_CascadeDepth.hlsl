@@ -2,8 +2,8 @@
 
 cbuffer CascadeIndex : register(b11)
 {
-    uint gCascadeIndex;
-    uint3 _pading;
+    //x = index, yzw = pad
+    uint4 gCascadeIndex;
 }
 
 struct VSInputPos
@@ -29,6 +29,6 @@ VSOutputPos main(VSInputPos input, uint instId : SV_InstanceID)
     const float3 wp = mul(R, input.position) + t;
 
     // クリップ座標
-    output.clip = mul(gLightViewProj[gCascadeIndex], float4(wp, 1.0));
+    output.clip = mul(gLightViewProj[gCascadeIndex.x], float4(wp, 1.0));
     return output;
 }

@@ -96,7 +96,8 @@ namespace SFW
 					desc.cbvs,
 					desc.viewport,
 					desc.psoOverride,
-					desc.customExecute));
+					desc.customExecute,
+					desc.stencilRef));
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 				// パスごとのランタイムを初期化（常駐アリーナを作っておく）
@@ -144,7 +145,8 @@ namespace SFW
 					desc.cbvs,
 					desc.viewport,
 					desc.psoOverride,
-					desc.customExecute
+					desc.customExecute,
+					desc.stencilRef
 				));
 
 				auto* pass = passes.back().get();
@@ -287,7 +289,7 @@ namespace SFW
 					if (useRasterizer)
 						backend.SetRasterizerState(*pass->rasterizerState);
 					backend.SetBlendState(pass->blendState);
-					backend.SetDepthStencilState(pass->depthStencilState);
+					backend.SetDepthStencilState(pass->depthStencilState, pass->stencilRef);
 					backend.SetRenderTargets(pass->rtvsRaw, pass->dsv.Get());
 
 					if (pass->cbvs.has_value())

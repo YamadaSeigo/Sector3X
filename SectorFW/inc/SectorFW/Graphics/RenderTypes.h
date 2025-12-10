@@ -191,6 +191,8 @@ namespace SFW
 			DepthReadOnly,    // DepthTest ON, ZWrite OFF
 			Default_Greater,  // DepthTest(Greater) ON, ZWrite ON
 			DepthReadOnly_Greater, // DepthTest(Greater) ON, ZWrite OFF
+			Default_Stencil,		// DepthTest ON, ZWrite ON , Stencil ON
+			DepthReadOnly_Greater_Stencil,// DepthTest(Greater) ON, ZWrite OFF Stencil ON
 			NoDepth,          // DepthTest OFF, ZWrite OFF
 			// ...
 			MAX_COUNT,        // 有効な深度ステンシルステートの数

@@ -54,8 +54,8 @@ namespace SFW
 			 * @brief デプスステンシルステートを設定する関数
 			 * @param state デプスステンシルステートID
 			 */
-			void SetDepthStencilState(DepthStencilStateID state) {
-				static_cast<Derived*>(this)->SetDepthStencilStateImpl(state);
+			void SetDepthStencilState(DepthStencilStateID state, uint32_t stencilRef = 0) {
+				static_cast<Derived*>(this)->SetDepthStencilStateImpl(state, stencilRef);
 			}
 			/**
 			 * @brief レンダーターゲットとデプスステンシルビューを設定する関数

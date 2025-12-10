@@ -88,8 +88,8 @@ namespace SFW
 			 * @brief デプスステンシルステートを設定する関数
 			 * @param state デプスステンシルステートID
 			 */
-			void SetDepthStencilStateImpl(DepthStencilStateID state) {
-				context->OMSetDepthStencilState(depthStencilStates[(size_t)state].Get(), 0);
+			void SetDepthStencilStateImpl(DepthStencilStateID state, UINT stencilRef = 0) {
+				context->OMSetDepthStencilState(depthStencilStates[(size_t)state].Get(), stencilRef);
 			}
 			/**
 			 * @brief レンダーターゲットとデプスステンシルビューを設定する関数

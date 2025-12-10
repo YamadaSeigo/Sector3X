@@ -495,7 +495,38 @@ namespace SFW
 				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Greater, d); if (FAILED(hr)) return hr;
 			}
 
-			// 5) NoDepth: 深度テストOFF, 書き込みOFF（HUD/デバッグオーバーレイ）
+			{
+				auto d = ds;
+				d.DepthEnable = TRUE;
+				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+				d.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+				d.StencilEnable = TRUE;
+				d.StencilReadMask = 0xFF;
+				d.StencilWriteMask = 0xFF;
+				d.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+				d.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+				d.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+				d.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+				hr = create((size_t)DepthStencilStateID::Default_Stencil, d); if (FAILED(hr)) return hr;
+			}
+
+			// 4) DepthReadOnlyGreater: 深度テストON, 書き込みOFF（スカイボックス/アルファブレンド/ポスト系）
+			{
+				auto d = ds;
+				d.DepthEnable = TRUE;
+				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+				d.DepthFunc = D3D11_COMPARISON_GREATER;
+				d.StencilEnable = TRUE;
+				d.StencilReadMask = 0xFF;
+				d.StencilWriteMask = 0x00; // 書き込まない
+				d.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+				d.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+				d.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+				d.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Greater_Stencil, d); if (FAILED(hr)) return hr;
+			}
+
+			// 7) NoDepth: 深度テストOFF, 書き込みOFF（HUD/デバッグオーバーレイ）
 			{
 				auto d = ds;
 				d.DepthEnable = FALSE;

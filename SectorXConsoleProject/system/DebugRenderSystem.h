@@ -71,7 +71,7 @@ class DebugRenderSystem : public ITypeSystem<
 	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<CTransform>>;
 	using ModelAccessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
 
-	static constexpr inline uint32_t MAX_CAPACITY_3DLINE = 65536;
+	static constexpr inline uint32_t MAX_CAPACITY_3DLINE = 65536 * 2;
 	static constexpr inline uint32_t MAX_CAPACITY_3DVERTEX = MAX_CAPACITY_3DLINE * 2;
 
 	static constexpr inline uint32_t MAX_CAPACITY_2DLINE = 65536 / 4;
