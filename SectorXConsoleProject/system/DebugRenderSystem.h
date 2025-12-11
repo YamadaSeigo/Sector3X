@@ -230,6 +230,7 @@ public:
 		matMgr->Add(matDesc, mocMaterialHandle);
 
 		//imguiにバインド
+		BIND_DEBUG_CHECKBOX("Show", "enabled", &enabled);
 		BIND_DEBUG_CHECKBOX("Show", "partition", &drawPartitionBounds);
 		BIND_DEBUG_CHECKBOX("Show", "modelAABB", &drawModelAABB);
 		BIND_DEBUG_CHECKBOX("Show", "occAABB", &drawOccluderAABB);
@@ -248,6 +249,8 @@ public:
 		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
 		UndeletablePtr <Physics::PhysicsService> physicsService)
 	{
+		if (!enabled) return;
+
 		//機能を制限したRenderQueueを取得
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto* meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
@@ -297,7 +300,7 @@ public:
 
 		uint32_t line2DCount = 0;
 
-		if (drawModelAABB || drawOccluderAABB || drawModelRect || drawOcclutionRect || drawCascadeAABB)
+		if (drawModelAABB || drawOccluderAABB || drawModelRect || drawOcclutionRect)
 		{
 
 			this->ForEachFrustumChunkWithAccessor<ModelAccessor>([&](ModelAccessor& accessor, size_t entityCount)
@@ -635,6 +638,7 @@ public:
 		}
 	}
 private:
+	bool enabled = false;
 	bool drawPartitionBounds = false;
 	bool drawModelAABB = false;
 	bool drawOccluderAABB = false;

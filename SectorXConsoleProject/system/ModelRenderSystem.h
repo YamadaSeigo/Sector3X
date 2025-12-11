@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Graphics/DX11/DX11ModelAssetManager.h>
 #include <SectorFW/Debug/UIBus.h>
@@ -8,7 +8,7 @@
 
 #include "../app/RenderDefine.h"
 
-//•`‰æŒn‚Ì‚±‚ÌƒNƒ‰ƒX‚Å‚¢‚Á‚½‚ñƒoƒbƒtƒ@‚ÌXV
+//æç”»ç³»ã®ã“ã®ã‚¯ãƒ©ã‚¹ã§ã„ã£ãŸã‚“ãƒãƒƒãƒ•ã‚¡ã®æ›´æ–°
 #include "../app/WindMovementService.h"
 
 struct CModel
@@ -22,26 +22,25 @@ struct CModel
 	bool outline = false;
 };
 
-#define ENABLE_PREPASS_AND_SHADOW 1
 
 
 template<typename Partition>
 class ModelRenderSystem : public ITypeSystem<
 	ModelRenderSystem<Partition>,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 		Read<TransformSoA>,
 		Write<CModel>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 		Graphics::RenderService,
 		Graphics::I3DPerCameraService,
 		Graphics::LightShadowService,
 		WindMovementService
 	>,
-	//Update‚ğ•À—ñ‰»‚·‚é
+	//Updateã‚’ä¸¦åˆ—åŒ–ã™ã‚‹
 	IsParallel{ true }
 	>
 {
@@ -50,7 +49,7 @@ public:
 
 	static constexpr inline uint32_t MAX_OCCLUDER_AABB_NUM  = 64;
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		UndeletablePtr<IThreadExecutor> threadPool,
 		UndeletablePtr<Graphics::RenderService> renderService,
@@ -58,19 +57,26 @@ public:
 		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
 		UndeletablePtr<WindMovementService> grassService)
 	{
-		//‘‚Ìƒoƒbƒtƒ@‚ÌXV
+		//è‰ã®ãƒãƒƒãƒ•ã‚¡ã®æ›´æ–°
 		grassService->UpdateBufferToGPU(renderService->GetProduceSlot());
 
-		//‹@”\‚ğ§ŒÀ‚µ‚½RenderQueue‚ğæ“¾
+		//æ©Ÿèƒ½ã‚’åˆ¶é™ã—ãŸRenderQueueã‚’å–å¾—
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
 		auto materialManager = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
 		auto psoManager = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
 
-		auto fru = cameraService->MakeFrustum();
 		Math::Vec3f camPos = cameraService->GetEyePos();
 		auto viewProj = cameraService->GetCameraBufferData().viewProj;
 		auto resolution = cameraService->GetResolution();
+
+		auto fru = cameraService->MakeFrustum(true);
+		// far ã‚’200mã«åˆ¶é™ã—ãŸãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚’ä½œæˆ
+		fru = fru.ClampedFar(camPos, 200.0f);
+
+		float maxShadowDistance = lightShadowService->GetMaxShadowDistance();
+		Math::Vec3f shadowDir = lightShadowService->GetDirectionalLight().directionWS.normalized() * -1.0f;
+		auto shadowFru = fru.PushedAlongDirection(shadowDir, maxShadowDistance / 2);
 
 		const Graphics::OccluderViewport vp = { (int)resolution.x, (int)resolution.y, cameraService->GetFOV() };
 
@@ -107,10 +113,13 @@ public:
 			Graphics::DX11::MaterialManager* materialMgr;
 			Graphics::DX11::PSOManager* psoMgr;
 			const Math::Matrix4x4f& viewProj;
+			const Math::Frustumf& shadowFrustum;
 			Math::Vec3f cp;
 			Math::Vec3f camRight;
 			Math::Vec3f camUp;
 			Math::Vec3f camForward;
+			Math::Vec3f shadowDir;
+			float maxShadowDistance;
 			std::atomic<uint32_t>& occAABBCount;
 			Math::AABB3f* occAABBs;
 			Graphics::OccluderViewport vp;
@@ -130,28 +139,31 @@ public:
 			materialManager,
 			psoManager,
 			viewProj,
+			shadowFru,
 			camPos,
 			camRight,
 			camUp,
 			camForward,
+			shadowDir,
+			maxShadowDistance,
 			occluderAABBCount,
 			occluderAABBs,
 			vp,
 			drawOcc
 		};
 
-		//ƒAƒNƒZƒX‚ğéŒ¾‚µ‚½ƒRƒ“ƒ|[ƒlƒ“ƒg‚Éƒ}ƒbƒ`‚·‚éƒ`ƒƒƒ“ƒN‚Éw’è‚µ‚½ŠÖ”‚ğ“K‰‚·‚é
+		//ã‚¢ã‚¯ã‚»ã‚¹ã‚’å®£è¨€ã—ãŸã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«ãƒãƒƒãƒã™ã‚‹ãƒãƒ£ãƒ³ã‚¯ã«æŒ‡å®šã—ãŸé–¢æ•°ã‚’é©å¿œã™ã‚‹
 		this->ForEachFrustumNearChunkWithAccessor<IsParallel{true}>([](Accessor& accessor, size_t entityCount, KernelParams* kp)
 			{
 				if (entityCount == 0) return;
 
-				//ƒoƒbƒtƒ@‚ğƒXƒŒƒbƒh‚²‚Æ‚ÉŠm•Û‚µ‚Ä“n‚·
+				//ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¹ãƒ¬ãƒƒãƒ‰ã”ã¨ã«ç¢ºä¿ã—ã¦æ¸¡ã™
 				thread_local Graphics::RenderQueue::ProducerSessionExternal::SmallBuf localQueueBuf;
 				auto producer = kp->renderService->GetProducerSession(PassGroupName[GROUP_3D_MAIN], localQueueBuf);
 
 				float nearClip = kp->renderService->GetNearClipPlane();
 
-				//“Ç‚İæ‚èê—p‚ÅTransformSoA‚ÌƒAƒNƒZƒT‚ğæ“¾
+				//èª­ã¿å–ã‚Šå°‚ç”¨ã§TransformSoAã®ã‚¢ã‚¯ã‚»ã‚µã‚’å–å¾—
 				auto transform = accessor.Get<Read<TransformSoA>>();
 				auto model = accessor.Get<Write<CModel>>();
 
@@ -159,7 +171,7 @@ public:
 					transform->px(), transform->py(), transform->pz(), (uint32_t)entityCount
 				};
 
-				//ƒJƒƒ‰‚É‹ß‚¢‡‚Éƒ\[ƒg
+				//ã‚«ãƒ¡ãƒ©ã«è¿‘ã„é †ã«ã‚½ãƒ¼ãƒˆ
 				//std::vector<uint32_t> order;
 				//BuildOrder_FixedRadix16(soaTf, kp->cp.x, kp->cp.y, kp->cp.z, nearClip, 1000.0f, order);
 				//BuildFrontK_Strict(soaTf, kp->cp.x, kp->cp.y, kp->cp.z, 6, order);
@@ -170,7 +182,7 @@ public:
 					transform->sx(), transform->sy(), transform->sz()
 				};
 
-				// ƒ[ƒ‹ƒhs—ñ‚ğˆêŠ‡¶¬
+				// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’ä¸€æ‹¬ç”Ÿæˆ
 				std::vector<float> worldMtxBuffer(12 * entityCount);
 				Math::Matrix3x4fSoA worldMtxSoA(worldMtxBuffer.data(), entityCount);
 				Math::BuildWorldMatrixSoA_FromTransformSoA(mtf, worldMtxSoA, false);
@@ -186,14 +198,12 @@ public:
 
 					auto& modelComp = model.value()[i];
 
-					auto instanceIdx = instanceIndices[i];
 					auto& lodBits = modelComp.prevLODBits;
 
-					//ƒ‚ƒfƒ‹ƒAƒZƒbƒg‚ğæ“¾
+					//ãƒ¢ãƒ‡ãƒ«ã‚¢ã‚»ãƒƒãƒˆã‚’å–å¾—
 					auto modelAsset = kp->modelMgr->Get(modelComp.handle);
 					int subMeshIdx = 0;
 					for (const Graphics::DX11::ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
-						Graphics::DrawCommand cmd;
 						if (kp->materialMgr->IsValid(mesh.material) == false) [[unlikely]] continue;
 						if (kp->psoMgr->IsValid(mesh.pso) == false) [[unlikely]] continue;
 
@@ -202,15 +212,31 @@ public:
 						Math::NdcRectWithW ndc;
 						float depth = 0.0f;
 
-						//ƒoƒEƒ“ƒfƒBƒ“ƒOƒXƒtƒBƒA‚Å‚‘¬‘Šú”»’è
-						//¦WVP‚ªLH‚ÌZeroToOne[“x”ÍˆÍ‚ğ‰¼’è(‚»‚¤‚Å‚È‚¢ê‡‚ÍZDepth‚Í³Šm‚Å‚Í‚È‚¢)
-						//ƒJƒƒ‰‚Ì²‚ÉWVP‚Ì‰ñ“]¬•ª‚ğ”½‰f‚³‚¹‚È‚¢‚½‚ß‚ÉAradius‚¾‚¯world‹óŠÔ‚É‚µ‚Ä‚¨‚­
-						//(ƒXƒP[ƒ‹‚Ìˆê”Ô‘å‚«‚¢‚à‚Ì‚ğ”½‰f‚µ‚Ä‚¢‚é‚½‚ß‰Â‹”»’è‚à‚·‚±‚µ’Ê‚è‚â‚·‚­‚È‚é)
+						//ãƒã‚¦ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚¹ãƒ•ã‚£ã‚¢ã§é«˜é€Ÿæ—©æœŸåˆ¤å®š
+						//â€»WVPãŒLHã®ZeroToOneæ·±åº¦ç¯„å›²ã‚’ä»®å®š(ãã†ã§ãªã„å ´åˆã¯ZDepthã¯æ­£ç¢ºã§ã¯ãªã„)
+						//ã‚«ãƒ¡ãƒ©ã®è»¸ã«WVPã®å›è»¢æˆåˆ†ã‚’åæ˜ ã•ã›ãªã„ãŸã‚ã«ã€radiusã ã‘worldç©ºé–“ã«ã—ã¦ãŠã
+						//(ã‚¹ã‚±ãƒ¼ãƒ«ã®ä¸€ç•ªå¤§ãã„ã‚‚ã®ã‚’åæ˜ ã—ã¦ã„ã‚‹ãŸã‚å¯è¦–åˆ¤å®šã‚‚ã™ã“ã—é€šã‚Šã‚„ã™ããªã‚‹)
 						float bsRadiusWS = mesh.bs.radius * (std::max)(mtf.sx[i], (std::max)(mtf.sy[i], mtf.sz[i]));
+						bool shadowOnly = false;
+						Math::Vec3f centerWS = mesh.bs.center;
 						if (!Math::BoundingSpheref::IsVisible_LocalCenter_WorldRadius(WVP, kp->viewProj, mesh.bs.center, bsRadiusWS, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth))
-							continue;
+						{
+							if (!modelComp.castShadow) continue;
+
+							Math::MulPoint_RowMajor_ColVec(
+								worldMtxSoA.AoS(i),
+								centerWS.x, centerWS.y, centerWS.z,
+								centerWS.x, centerWS.y, centerWS.z
+							);
+
+							shadowOnly = kp->shadowFrustum.IntersectsSphere(centerWS, bsRadiusWS);
+
+							if (!shadowOnly) continue;
+						}
 
 						//if (!mesh.bs.IsVisible_WVP_CamBasis_Fast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth)) continue;
+
+						Graphics::InstanceIndex instanceIdx = instanceIndices[i];
 
 						ndc.valid = true;
 						int lodCount = (int)mesh.lods.size();
@@ -219,149 +245,196 @@ public:
 
 						float areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);
 
-						//¬‚³‚·‚¬‚éê‡‚Í–³‹
-						if (areaFrec <= 0.005f)
+						if (!shadowOnly)
 						{
-							continue;
-						}
-
-						//AABB‚ÅNDC‚ğÄŒvZ‚·‚é‚©‚ÌƒXƒe[ƒgæ“¾
-						auto refineState = Graphics::EvaluateRefineState(
-							ndc,
-							areaFrec,
-							kp->vp.width,
-							kp->vp.height,
-							depth,
-							nearClip,
-							Graphics::ExtentsFromAABB(mesh.aabb),
-							mesh.lodThresholds,
-							lodCount,
-							lodRefinePolicy
-						);
-
-						bool refineNeeded = refineState.shouldRefine();
-						//AABB‚Å³Šm‚ÉNDCƒJƒo[—¦‚ğŒvZ‚µ’¼‚µ
-						if (refineNeeded)
-						{
-							if (mesh.instance.HasData()) [[unlikely]] {
-								LOG_INFO("model has instance matrix!");
-								Graphics::SharedInstanceArena::InstancePool instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtxSoA.AoS(i), mesh.instance.worldMtx)};
-								cmd.instanceIndex = producer.AllocInstance(instance);
-								ndc = Math::ProjectAABBToNdc_Fast(WVP * mesh.instance.worldMtx, mesh.aabb);
-								areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);
-							}
-							else {
-								cmd.instanceIndex = instanceIdx;
-								ndc = Math::ProjectAABBToNdc_Fast(WVP, mesh.aabb);
-								areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);
-							}
-						}
-						else
-						{
-							cmd.instanceIndex = instanceIdx;
-						}
-
-
-						bool temporalSkip = modelComp.temporalSkip;
-						modelComp.temporalSkip = false;
-
-						if (!ndc.valid)
-						{
-							continue;
-						}
-
-						//‘OƒtƒŒ[ƒ€‚Å‰f‚Á‚Ä‚¢‚éê‡‚Í1ƒtƒŒ[ƒ€‚¾‚¯ƒJƒŠƒ“ƒO‚ğƒXƒLƒbƒv
-						//‘å‚«‚·‚¬‚éê‡‚ÍŠmÀ‚É‰Â‹
-						if (!temporalSkip)
-						{
-							if (areaFrec < 0.5f && kp->renderService->IsVisibleInMOC(ndc) != Graphics::MOC::CullingResult::VISIBLE) {
-								modelComp.temporalSkip = false;
-								modelComp.occluded = true;
+							//å°ã•ã™ãã‚‹å ´åˆã¯ç„¡è¦–
+							if (areaFrec <= 0.005f)
+							{
 								continue;
 							}
 
-							modelComp.temporalSkip = true;
+							//AABBã§NDCã‚’å†è¨ˆç®—ã™ã‚‹ã‹ã®ã‚¹ãƒ†ãƒ¼ãƒˆå–å¾—
+							auto refineState = Graphics::EvaluateRefineState(
+								ndc,
+								areaFrec,
+								kp->vp.width,
+								kp->vp.height,
+								depth,
+								nearClip,
+								Graphics::ExtentsFromAABB(mesh.aabb),
+								mesh.lodThresholds,
+								lodCount,
+								lodRefinePolicy
+							);
+
+							bool refineNeeded = refineState.shouldRefine();
+							//AABBã§æ­£ç¢ºã«NDCã‚«ãƒãƒ¼ç‡ã‚’è¨ˆç®—ã—ç›´ã—
+							if (refineNeeded)
+							{
+								if (mesh.instance.HasData()) [[unlikely]] {
+									LOG_INFO("model has instance matrix!");
+									Graphics::SharedInstanceArena::InstancePool instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtxSoA.AoS(i), mesh.instance.worldMtx) };
+									instanceIdx = producer.AllocInstance(instance);
+									ndc = Math::ProjectAABBToNdc_Fast(WVP * mesh.instance.worldMtx, mesh.aabb);
+									areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);
+								}
+								else {
+									ndc = Math::ProjectAABBToNdc_Fast(WVP, mesh.aabb);
+									areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);
+								}
+							}
+
+							bool temporalSkip = modelComp.temporalSkip;
+							modelComp.temporalSkip = false;
+
+							if (!ndc.valid)
+							{
+								continue;
+							}
+
+							//å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã§æ˜ ã£ã¦ã„ã‚‹å ´åˆã¯1ãƒ•ãƒ¬ãƒ¼ãƒ ã ã‘ã‚«ãƒªãƒ³ã‚°ã‚’ã‚¹ã‚­ãƒƒãƒ—
+							//å¤§ãã™ãã‚‹å ´åˆã¯ç¢ºå®Ÿã«å¯è¦–
+							if (!temporalSkip)
+							{
+								if (areaFrec < 0.5f && kp->renderService->IsVisibleInMOC(ndc) != Graphics::MOC::CullingResult::VISIBLE) {
+									modelComp.temporalSkip = false;
+									modelComp.occluded = true;
+									continue;
+								}
+
+								modelComp.temporalSkip = true;
+							}
 						}
 
 						int prevLod = (int)lodBits.get(subMeshIdx);
 						float s_occ;
 						int ll = Graphics::SelectLodByPixels(areaFrec, mesh.lodThresholds, lodCount, prevLod, kp->vp.width, kp->vp.height, -5.0f, &s_occ);
 						if (ll < 0 || ll > 3) [[unlikely]] {
-							LOG_ERROR("LOD ‚ª”ÍˆÍŠO‚Å‚·: %d", ll);
+							LOG_ERROR("LOD ãŒç¯„å›²å¤–ã§ã™: %d", ll);
 							ll = 0;
 						}
 
 						lodBits.set(subMeshIdx, (uint8_t)ll);
 
-						if (mesh.occluder.candidate)
-						{
-							auto prevOccLod = (int)modelComp.prevOCCBits.get(subMeshIdx);
-							auto occLod = Graphics::DecideOccluderLOD_FromThresholds(s_occ, mesh.lodThresholds, prevOccLod, ll, 0.0f);
-							modelComp.prevOCCBits.set(subMeshIdx, (uint8_t)occLod);
-							if (occLod != Graphics::OccluderLOD::Far)
-							{
-								size_t occCount = mesh.occluder.meltAABBs.size();
-								std::vector<Math::AABB3f> occAABB(occCount);
-								Math::Matrix3x4f worldMtx = worldMtxSoA.AoS(i);
-								for (auto j = 0; j < occCount; ++j)
-								{
-									occAABB[j] = Math::TransformAABB_Affine(worldMtx, mesh.occluder.meltAABBs[j]);
-								}
-								uint32_t base = kp->occAABBCount.fetch_add((uint32_t)occCount, std::memory_order_acq_rel);
-								if (base + occCount < MAX_OCCLUDER_AABB_NUM)
-								{
-									memcpy(&kp->occAABBs[base], occAABB.data(), sizeof(Math::AABB3f) * occCount);
-								}
-								else
-								{
-									LOG_WARNING("Occluder AABB buffer overflow");
-								}
-
-							}
-						}
-
 						auto& meshHandel = mesh.lods[ll].mesh;
 						if (kp->meshMgr->IsValid(meshHandel) == false) [[unlikely]] continue;
 
+						Graphics::DrawCommand cmd;
 						cmd.mesh = meshHandel.index;
 						cmd.material = mesh.material.index;
 						cmd.pso = mesh.pso.index;
+						cmd.instanceIndex = instanceIdx;
 
-						cmd.viewMask |= modelComp.outline ? PASS_3DMAIN_OUTLINE : PASS_3DMAIN_OPAQUE;
-
-
-#if ENABLE_PREPASS_AND_SHADOW
-						if (ll < 2)
+						if (!shadowOnly)
 						{
-							//cmd.viewMask |= PASS_3DMAIN_ZPREPASS;
-
-							if (modelComp.castShadow)
+							if (mesh.occluder.candidate)
 							{
-								Math::Quatf rot = { mtf.qx[i], mtf.qy[i], mtf.qz[i], mtf.qw[i] };
-								Math::Vec3f centerWS = Math::Vec3f{ mtf.px[i], mtf.py[i], mtf.pz[i] } + rot.RotateVector(mesh.bs.center);
-								auto centerVec = centerWS - kp->cp;
-								float camDepth = centerVec.dot(kp->camForward);
-								auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(camDepth - bsRadiusWS, camDepth + bsRadiusWS);
-
-								for (uint32_t ci = cascades.first; ci <= cascades.second; ++ci)
+								auto prevOccLod = (int)modelComp.prevOCCBits.get(subMeshIdx);
+								auto occLod = Graphics::DecideOccluderLOD_FromThresholds(s_occ, mesh.lodThresholds, prevOccLod, ll, 0.0f);
+								modelComp.prevOCCBits.set(subMeshIdx, (uint8_t)occLod);
+								if (occLod != Graphics::OccluderLOD::Far)
 								{
-									cmd.viewMask |= (PASS_3DMAIN_CASCADE0 << ci);
+									size_t occCount = mesh.occluder.meltAABBs.size();
+									std::vector<Math::AABB3f> occAABB(occCount);
+									Math::Matrix3x4f worldMtx = worldMtxSoA.AoS(i);
+									for (auto j = 0; j < occCount; ++j)
+									{
+										occAABB[j] = Math::TransformAABB_Affine(worldMtx, mesh.occluder.meltAABBs[j]);
+									}
+									uint32_t base = kp->occAABBCount.fetch_add((uint32_t)occCount, std::memory_order_acq_rel);
+									if (base + occCount < MAX_OCCLUDER_AABB_NUM)
+									{
+										memcpy(&kp->occAABBs[base], occAABB.data(), sizeof(Math::AABB3f) * occCount);
+									}
+									else
+									{
+										LOG_WARNING("Occluder AABB buffer overflow");
+									}
+
+								}
+							}
+
+							cmd.viewMask |= modelComp.outline ? PASS_3DMAIN_OUTLINE : PASS_3DMAIN_OPAQUE;
+
+							if (ll < 2)
+							{
+								//cmd.viewMask |= PASS_3DMAIN_ZPREPASS;
+
+								if (modelComp.castShadow)
+								{
+									Math::MulPoint_RowMajor_ColVec(
+										worldMtxSoA.AoS(i),
+										centerWS.x, centerWS.y, centerWS.z,
+										centerWS.x, centerWS.y, centerWS.z
+									);
+
+									auto centerVec = centerWS - kp->cp;
+									float camDepth = centerVec.dot(kp->camForward);
+
+									// å½±æ–¹å‘ã¨ã‚«ãƒ¡ãƒ© Forward ã® cosÎ¸
+									float cosLF = std::fabs(kp->shadowDir.dot(kp->camForward)); // 0..1
+
+									// å½±ã¨ã—ã¦ã©ã“ã¾ã§è€ƒæ…®ã™ã‚‹ã‹ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰è·é›¢ï¼‰
+									// ä¾‹ï¼šä¸€ç•ªé ã„ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ã® far ã‚¯ãƒªãƒƒãƒ—è·é›¢ - near è·é›¢
+									float maxShadowLenWS = kp->maxShadowDistance / 2;
+
+									// ã‚«ãƒ¡ãƒ©æ·±åº¦æ–¹å‘ã«æŠ•å½±ã•ã‚Œã‚‹ã€Œå½±ã®ä½™ç™½ã€
+									// å…‰ãŒã‚«ãƒ¡ãƒ©ã¨ã»ã¼å¹³è¡Œã ã¨ cosLF â‰ˆ 1 ã«ãªã£ã¦æ·±ãä¼¸ã³ã‚‹
+									float extraDepth = bsRadiusWS + maxShadowLenWS * cosLF;
+
+									// ã“ã‚Œã§ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ç¯„å›²ã‚’æ±ºã‚ã‚‹
+									float minD = camDepth - extraDepth;
+									float maxD = camDepth + extraDepth;
+
+									auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(minD, maxD);
+
+									for (uint32_t ci = cascades.first; ci <= cascades.second; ++ci)
+									{
+										cmd.viewMask |= (PASS_3DMAIN_CASCADE0 << ci);
+									}
 								}
 							}
 						}
-#endif
+						else
+						{
+							auto centerVec = centerWS - kp->cp;
+							float camDepth = centerVec.dot(kp->camForward);
+
+							// å½±æ–¹å‘ã¨ã‚«ãƒ¡ãƒ© Forward ã® cosÎ¸
+							float cosLF = std::fabs(kp->shadowDir.dot(kp->camForward)); // 0..1
+
+							// å½±ã¨ã—ã¦ã©ã“ã¾ã§è€ƒæ…®ã™ã‚‹ã‹ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰è·é›¢ï¼‰
+							// ä¾‹ï¼šä¸€ç•ªé ã„ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ã® far ã‚¯ãƒªãƒƒãƒ—è·é›¢ - near è·é›¢
+							float maxShadowLenWS = kp->maxShadowDistance / 2;
+
+							// ã‚«ãƒ¡ãƒ©æ·±åº¦æ–¹å‘ã«æŠ•å½±ã•ã‚Œã‚‹ã€Œå½±ã®ä½™ç™½ã€
+							// å…‰ãŒã‚«ãƒ¡ãƒ©ã¨ã»ã¼å¹³è¡Œã ã¨ cosLF â‰ˆ 1 ã«ãªã£ã¦æ·±ãä¼¸ã³ã‚‹
+							float extraDepth = bsRadiusWS + maxShadowLenWS * cosLF;
+
+							// ã“ã‚Œã§ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ç¯„å›²ã‚’æ±ºã‚ã‚‹
+							float minD = camDepth - extraDepth;
+							float maxD = camDepth + extraDepth;
+
+							auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(minD, maxD);
+
+							for (uint32_t ci = cascades.first; ci <= cascades.second; ++ci)
+							{
+								cmd.viewMask |= (PASS_3DMAIN_CASCADE0 << ci);
+							}
+						}
+
 
 						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
 						producer.Push(std::move(cmd));
 
 						subMeshIdx++;
 						if (subMeshIdx >= 16) [[unlikely]] {
-							LOG_ERROR("ƒ‚ƒfƒ‹‚ÌƒTƒuƒƒbƒVƒ…”‚ª‘½‚·‚¬‚Ü‚· {%d}", modelAsset.ref().subMeshes.size());
+							LOG_ERROR("ãƒ¢ãƒ‡ãƒ«ã®ã‚µãƒ–ãƒ¡ãƒƒã‚·ãƒ¥æ•°ãŒå¤šã™ãã¾ã™ {%d}", modelAsset.ref().subMeshes.size());
 							return;
 						}
 					}
 				}
-			}, partition, fru, camPos, &kp, threadPool.get()
+			}, partition, shadowFru, camPos, &kp, threadPool.get()
 		);
 	}
 

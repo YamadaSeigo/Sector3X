@@ -24,7 +24,7 @@ namespace SFW
         // -------------------------------------------------------------
         struct DirectionalLight
         {
-            Math::Vec3f directionWS = Math::Vec3f(cos(Math::Deg2Rad(10.0f)), -sin(Math::Deg2Rad(10.0f)), 0.0f); // ワールド空間
+            Math::Vec3f directionWS = Math::Vec3f(0.0f, -sin(Math::Deg2Rad(45.0f)), -cos(Math::Deg2Rad(45.0f))); // ワールド空間
             Math::Vec3f color = Math::Vec3f(1.0f, 1.0f, 1.0f);
             float intensity = 1.0f;
             bool  castsShadow = true;
@@ -78,7 +78,7 @@ namespace SFW
                 float           shadowDistance = 200.0f; // カメラからの最大影距離
                 float           lambda = 0.5f;   // 0 = 線形, 1 = 対数, その中間
                 float           maxWorldExtent = 1000.0f; // ライト正射影の最大サイズ（安全マージン）
-				float           casterExtrusion = 500.0f; // 影キャスターをライト方向に押し出す距離
+				float           casterExtrusion = 100.0f; // 影キャスターをライト方向に押し出す距離
             };
 
             LightShadowService() = default;
@@ -144,12 +144,21 @@ namespace SFW
 				return m_cascadeCount - 1;
             }
 
+            float GetMaxShadowDistance() const
+			{
+                std::shared_lock lock(m_updateMutex);
+				return m_cascadeCfg.shadowDistance;
+			}
+
 			std::pair<uint32_t, uint32_t> GetCascadeIndexRangeUnlock(float min, float max) const
             {
+                if(m_cascadeCount == 0)
+					return { 0, 0 };
+
 				max = (std::max)(max, min);
 
 				uint32_t first = 0;
-				uint32_t last = 0;
+				uint32_t last = m_cascadeCount - 1;
                 uint32_t i = 0;
                 for (i; i < m_cascadeCount; ++i)
                 {

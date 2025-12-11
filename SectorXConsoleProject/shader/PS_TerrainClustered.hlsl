@@ -107,7 +107,7 @@ float4 main(VSOut i) : SV_Target
 
     float shadowBias = 1.0f;
     if (shadowPos.z - shadow > 0.001f)
-        shadowBias = 0.6f;
+        shadowBias = 0.7f;
 
     float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
     final.rgb *= shadowBias;

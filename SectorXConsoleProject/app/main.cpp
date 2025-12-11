@@ -30,8 +30,8 @@
 constexpr uint32_t WINDOW_WIDTH = uint32_t(1920 / 1.5f);	// ウィンドウの幅
 constexpr uint32_t WINDOW_HEIGHT = uint32_t(1080 / 1.5f);	// ウィンドウの高さ
 
-constexpr uint32_t SHADOW_MAP_WIDTH = 1024 / 4;	// シャドウマップの幅
-constexpr uint32_t SHADOW_MAP_HEIGHT = 1024 * 2;	// シャドウマップの高さ
+constexpr uint32_t SHADOW_MAP_WIDTH = 1024 / 2;	// シャドウマップの幅
+constexpr uint32_t SHADOW_MAP_HEIGHT = 1024 / 2;	// シャドウマップの高さ
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
@@ -950,7 +950,7 @@ int main(void)
 					for (int k = 0; k < 200; ++k) {
 						for (int n = 0; n < 1; ++n) {
 							Math::Vec3f location = { (float)distX(rng), 0.0f, (float)distZ(rng)};
-							//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
+							//Math::Vec3f location = { 30.0f * j,0.0f, 10.0f * k };
 							auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
 							auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
 							if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
@@ -1031,7 +1031,7 @@ int main(void)
 					//playerBody.isStatic = Physics::BodyType::Dynamic; // 動的にする
 
 					CModel modelComp{ playerModelHandle };
-					//modelComp.castShadow = true;
+					modelComp.castShadow = true;
 					auto id = levelSession.AddGlobalEntity(
 						CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
 						std::move(modelComp),

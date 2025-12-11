@@ -400,7 +400,7 @@ namespace SFW::Math {
 
 			// L を正規化
 			Vec3f L = lightDirWS;
-			float len = std::sqrt(L.x * L.x + L.y * L.y + L.z * L.z);
+			float len = lightDirWS.length();
 			if (len <= 0.f) {
 				// ゼロベクトルなら拡張なし
 				return out;
@@ -418,6 +418,46 @@ namespace SFW::Math {
 					pl.d -= length * ndotl;
 				}
 			}
+			return out;
+		}
+
+		/*
+		@brief Far 平面をカメラ位置から maxFar までに制限したフラスタムを返す
+		@param eyeWS ワールド空間のカメラ位置
+		@param maxFar カメラから Far 平面までの最大距離
+		*/
+		Frustumf ClampedFar(const Vec3f& eyeWS, float maxFar) const noexcept
+		{
+			Frustumf out = *this;
+
+			// Far 平面（enum class FrustumPlane : int { Left, Right, Bottom, Top, Near, Far };）
+			Planef& farPl = out.p[(int)FrustumPlane::Far];
+
+			// 平面は Normalize 済み前提なので、SignedDistance はワールド距離とみなせる
+			const float dist = farPl.SignedDistance(eyeWS);
+
+			// カメラがフラスタム外なら何もしない（異常ケース防止）
+			if (dist < 0.0f) {
+				return out;
+			}
+
+			// すでに far が十分手前なら何もしない
+			if (dist <= maxFar) {
+				return out;
+			}
+
+			// ここから Far を「カメラから maxFar の位置」まで寄せる
+			//
+			// 平面: n・x + d = 0
+			// カメラ位置 eye に対して、SignedDistance(eye) = n・eye + d = dist
+			// 「カメラから maxFar の距離の位置で 0 になる」ようにしたいので
+			//   n・eye + d' = maxFar
+			// → d' = maxFar - n・eye
+			//   n・eye = dist - d なので
+			// → d' = d + maxFar - dist
+			const float delta = maxFar - dist;
+			farPl.d += delta;
+
 			return out;
 		}
 	};
