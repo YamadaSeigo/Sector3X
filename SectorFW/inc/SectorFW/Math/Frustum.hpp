@@ -377,5 +377,48 @@ namespace SFW::Math {
 						   (aabb.ub.z - aabb.lb.z) * 0.5f };
 			return IntersectsAABB(c, e);
 		}
+
+
+		//-----------------------------
+		// 方向光に沿ってフラスタムを押し伸ばす
+		//-----------------------------
+		// @brief 方向光に沿ってフラスタムを押し伸ばしたものを返す
+		// @param lightDirWS ワールド空間の光の方向（ワールド→ライト方向）
+		// @param length 押し伸ばす距離（ワールド座標系の長さ）
+		//
+		// 元のフラスタム内に「点 P を -lightDirWS 方向に [0,length] だけ
+		// スライドさせたどこかの点」が入っていれば P も IN とみなす、
+		// という体積を表します。
+		//
+		// 数式的には、各平面 n・x + d >= 0 に対し、
+		//   if dot(n, L) < 0 then d' = d - length * dot(n, L)
+		//   else d' = d
+		// として新しい半空間を定義しています。
+		Frustumf PushedAlongDirection(const Vec3f& lightDirWS, float length) const noexcept
+		{
+			Frustumf out = *this;
+
+			// L を正規化
+			Vec3f L = lightDirWS;
+			float len = std::sqrt(L.x * L.x + L.y * L.y + L.z * L.z);
+			if (len <= 0.f) {
+				// ゼロベクトルなら拡張なし
+				return out;
+			}
+			float invLen = 1.f / len;
+			L.x *= invLen; L.y *= invLen; L.z *= invLen;
+
+			for (auto& pl : out.p) {
+				// 平面法線とライト方向の内積
+				float ndotl = pl.n.x * L.x + pl.n.y * L.y + pl.n.z * L.z;
+
+				// 「ライト方向に対して裏側を向いている平面」だけを外側へ押し出す
+				if (ndotl < 0.f) {
+					// d' = d - length * (n・L)
+					pl.d -= length * ndotl;
+				}
+			}
+			return out;
+		}
 	};
 } // namespace SectorFW::Math

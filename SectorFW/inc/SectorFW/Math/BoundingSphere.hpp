@@ -17,6 +17,7 @@
 
 // 行列ユーティリティを使う
 #include "Matrix.hpp"
+#include "Frustum.hpp"
 
 namespace SFW {
     namespace Math {
@@ -763,6 +764,52 @@ namespace SFW {
                 return x_overlap && y_overlap && z_overlap;
             }
 
+            /**
+             * @brief フラスタムとの可視判定（ローカル中心 + ワールド半径）
+             *
+             * World 行列でローカル中心をワールドに変換し、
+             * Frustum::IntersectsSphere を使って可視判定を行います。
+             * ライト方向に押し伸ばしたフラスタムなどにもそのまま使えます。
+             *
+             * @tparam Mat4 Row-major 4x4 の World 行列型（Matrix.hpp の型を想定）
+             * @param world ワールド行列（Row-major, ColVec 規約）
+             * @param frustum 押し伸ばし前/後どちらの Frustumf でも可
+             * @param centerLocal モデルローカルの中心
+             * @param radiusWorld ワールド空間の半径（スケール反映済み）
+             */
+            template<class Mat4>
+            static bool IsVisible_LocalCenter_WorldRadius_Frustum(
+                const Mat4& world,
+                const ::SFW::Math::Frustumf& frustum,
+                const Vec3& centerLocal,
+                T radiusWorld
+            ) noexcept
+            {
+                using ::SFW::Math::MulPoint_RowMajor_ColVec;
+
+                // ローカル中心 → ワールド座標へ
+                T wx, wy, wz, ww;
+                MulPoint_RowMajor_ColVec(
+                    world,
+                    centerLocal.x, centerLocal.y, centerLocal.z,
+                    wx, wy, wz, ww);
+
+                // アフィン World なら ww ≒ 1 だが、念のため補正
+                const T eps = static_cast<T>(1e-6f);
+                if (std::fabs(ww) > eps) {
+                    const T invW = static_cast<T>(1) / ww;
+                    wx *= invW; wy *= invW; wz *= invW;
+                }
+
+                // Frustumf は Vec3f / float 固定なのでキャスト
+                ::SFW::Math::Vec3f centerWS{
+                    static_cast<float>(wx),
+                    static_cast<float>(wy),
+                    static_cast<float>(wz)
+                };
+
+                return frustum.IntersectsSphere(centerWS, static_cast<float>(radiusWorld));
+            }
         };
 
         using BoundingSpheref = BoundingSphere<float, Vec3f>;

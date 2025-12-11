@@ -140,7 +140,7 @@ public:
 			lightShadowService->SetDirectionalLight(dirLight);
 		}
 
-		if (perCameraService->IsUpdateBuffer() || updateCascade)
+		if (/*perCameraService->IsUpdateBuffer() || */updateCascade)
 		{
 			Graphics::CameraParams camParams;
 			camParams.view = perCameraService->MakeViewMatrix();

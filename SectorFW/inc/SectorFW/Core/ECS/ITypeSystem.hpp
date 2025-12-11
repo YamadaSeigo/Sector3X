@@ -130,35 +130,42 @@ namespace SFW
 		namespace
 		{
 			// 並列化の閾値と分割粒度（必要に応じて調整）
-			static constexpr size_t kChunksPerTask = 16;    // 1タスクあたりのチャンク数目安
+			static constexpr uint32_t kChunksPerTask = 16;    // 1タスクあたりのチャンク数目安
 
 			struct IsParallel { bool v; constexpr operator bool() const noexcept { return v; } };
 
 			// 先頭の匿名namespace内の RunIndexRange を置き換え
 			template<bool kParallel, class IndexFn>
-			static inline void RunIndexRange(size_t n, IndexFn&& fn, IThreadExecutor* exec = nullptr)
+			static inline void RunIndexRange(size_t size, IndexFn&& fn, IThreadExecutor* exec = nullptr)
 			{
+				//念のためサイズ上限チェック
+				assert(size <= (std::numeric_limits<uint32_t>::max)());
+
+				uint32_t n = static_cast<uint32_t>(size);
+
 				if constexpr (!kParallel) {
 					for (size_t i = 0; i < n; ++i) fn(i);
 				}
 				else {
 					//あまりのスレッド数から一スレッド当たりのタスク数を決める
-					const unsigned targetTasks = (unsigned)(std::min<size_t>)(
-						(std::max<size_t>)(1, (n + (kChunksPerTask - 1)) / kChunksPerTask),
-						exec ? (unsigned)exec->Concurrency() : (std::max)(1u, std::thread::hardware_concurrency()));
-					const size_t block = (n + targetTasks - 1) / targetTasks;
+
+					const unsigned targetTasks = (unsigned)(std::min<uint32_t>)(
+						(std::max<uint32_t>)(1, (n + (kChunksPerTask - 1)) / kChunksPerTask),
+						exec ? exec->Concurrency() : (std::max)(1u, std::thread::hardware_concurrency()));
+					const uint32_t block = (n + targetTasks - 1) / targetTasks;
 
 					std::exception_ptr first_ex = nullptr;
 					std::mutex ex_mtx;
 
 					if (exec) [[likely]] {
-						ThreadCountDownLatch latch((int)targetTasks);
-						for (unsigned t = 0; t < targetTasks; ++t) {
-							const size_t begin = t * block;
+						uint32_t endTasks = targetTasks - 1;
+						ThreadCountDownLatch latch(endTasks);
+						for (unsigned t = 0; t < endTasks; ++t) {
+							const uint32_t begin = t * block;
 							if (begin >= n) { latch.CountDown(); continue; }
-							const size_t end = (std::min)(n, begin + block);
+							const uint32_t end = (std::min)(n, begin + block);
 							exec->Submit([&, begin, end] {
-								try { for (size_t i = begin; i < end; ++i) fn(i); }
+								try { for (uint32_t i = begin; i < end; ++i) fn(i); }
 								catch (...) {
 									std::lock_guard lk(ex_mtx);
 									if (!first_ex) first_ex = std::current_exception();
@@ -166,6 +173,18 @@ namespace SFW
 								latch.CountDown();
 								});
 						}
+
+						//　このスレッドも仕事をする
+						const uint32_t begin = endTasks * block;
+						if (begin < n) {
+							const uint32_t end = (std::min)(n, begin + block);
+							try { for (uint32_t i = begin; i < end; ++i) fn(i); }
+							catch (...) {
+								std::lock_guard lk(ex_mtx);
+								if (!first_ex) first_ex = std::current_exception();
+							}
+						}
+
 						latch.Wait();
 						if (first_ex) std::rethrow_exception(first_ex);
 					}
@@ -174,11 +193,11 @@ namespace SFW
 						std::vector<std::thread> threads;
 						threads.reserve(targetTasks);
 						for (unsigned t = 0; t < targetTasks; ++t) {
-							const size_t begin = t * block;
+							const uint32_t begin = t * block;
 							if (begin >= n) break;
-							const size_t end = (std::min)(n, begin + block);
+							const uint32_t end = (std::min)(n, begin + block);
 							threads.emplace_back([&, begin, end] {
-								try { for (size_t i = begin; i < end; ++i) fn(i); }
+								try { for (uint32_t i = begin; i < end; ++i) fn(i); }
 								catch (...) {
 									std::lock_guard lk(ex_mtx);
 									if (!first_ex) first_ex = std::current_exception();

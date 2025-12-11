@@ -344,6 +344,7 @@ int main(void)
 	static Graphics::LightShadowService lightShadowService;
 	Graphics::LightShadowService::CascadeConfig cascadeConfig;
 	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
+	cascadeConfig.shadowDistance = 80.0f;
 	lightShadowService.SetCascadeConfig(cascadeConfig);
 
 	WindMovementService grassService(bufferMgr);
@@ -355,8 +356,8 @@ int main(void)
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
-	p.cellsX = 256 * 1;
-	p.cellsZ = 256 * 1;
+	p.cellsX = 512 * 1;
+	p.cellsZ = 512 * 1;
 	p.clusterCellsX = 16;
 	p.clusterCellsZ = 16;
 	p.cellSize = 3.0f;
@@ -747,7 +748,7 @@ int main(void)
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
 				modelDesc.path = "assets/model/Stylized/Tree01.gltf";
-				modelDesc.viewMax = 600.0f;
+				modelDesc.viewMax = 300.0f;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelDesc.pCustomNomWFunc = WindMovementService::ComputeTreeWeight;
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
@@ -902,8 +903,8 @@ int main(void)
 
 				auto levelSession = pLevel->GetSession();
 
-				for (int j = 0; j < 100; ++j) {
-					for (int k = 0; k < 100; ++k) {
+				for (int j = 0; j < 200; ++j) {
+					for (int k = 0; k < 200; ++k) {
 						for (int n = 0; n < 1; ++n) {
 							float scaleXZ = 15.0f;
 							float scaleY = 15.0f;
@@ -945,8 +946,8 @@ int main(void)
 				std::uniform_int_distribution<uint32_t> distX(1, uint32_t(p.cellsX* p.cellSize));
 				std::uniform_int_distribution<uint32_t> distZ(1, uint32_t(p.cellsZ* p.cellSize));
 
-				for (int j = 0; j < 100; ++j) {
-					for (int k = 0; k < 100; ++k) {
+				for (int j = 0; j < 200; ++j) {
+					for (int k = 0; k < 200; ++k) {
 						for (int n = 0; n < 1; ++n) {
 							Math::Vec3f location = { (float)distX(rng), 0.0f, (float)distZ(rng)};
 							//Math::Vec3f location = { float(j) * 30,0,float(k) * 30.0f };
@@ -1030,6 +1031,7 @@ int main(void)
 					//playerBody.isStatic = Physics::BodyType::Dynamic; // “®“I‚É‚·‚é
 
 					CModel modelComp{ playerModelHandle };
+					//modelComp.castShadow = true;
 					auto id = levelSession.AddGlobalEntity(
 						CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
 						std::move(modelComp),

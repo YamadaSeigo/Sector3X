@@ -13,21 +13,22 @@ namespace SFW
     struct IThreadExecutor {
         virtual ~IThreadExecutor() = default;
         virtual void Submit(std::function<void()> job) = 0;
-        virtual size_t Concurrency() const = 0;
+        virtual uint32_t Concurrency() const = 0;
     };
 
     class SimpleThreadPool final : public IThreadExecutor {
     public:
         //RenderThraedのためがスレッドを1つ使っているので-1する
-        explicit SimpleThreadPool(size_t n = std::thread::hardware_concurrency() - 1)
+        explicit SimpleThreadPool(uint32_t n = std::thread::hardware_concurrency() - 1)
             : stop_(false)
             , busy_(0)
         {
             if (n == 0) n = 1;
 
             LOG_INFO("SimpleThreadPoolService: starting with {%d} threads", n);
+			threadCount = n;
             workers_.reserve(n);
-            for (size_t i = 0; i < n; ++i) {
+            for (uint32_t i = 0; i < n; ++i) {
                 workers_.emplace_back([this] {
                     tls_inPool_ = true;
                     for (;;) {
@@ -81,13 +82,14 @@ namespace SFW
             cv_.notify_one();
         }
 
-        size_t Concurrency() const override { return workers_.size(); }
+        uint32_t Concurrency() const override { return threadCount; }
 
     private:
         std::mutex m_;
         std::condition_variable cv_;
         std::queue<std::function<void()>> q_;
         std::vector<std::thread> workers_;
+		uint32_t threadCount;
         bool stop_;
 
         std::atomic<int> busy_;
@@ -101,7 +103,7 @@ namespace SFW
 
     class ThreadCountDownLatch {
     public:
-        explicit ThreadCountDownLatch(int count) : count_(count) {}
+        explicit ThreadCountDownLatch(uint32_t count) : count_(count) {}
         void CountDown() {
             std::lock_guard lk(m_);
             if (--count_ == 0) cv_.notify_all();
@@ -113,7 +115,7 @@ namespace SFW
     private:
         std::mutex m_;
         std::condition_variable cv_;
-        int count_;
+        uint32_t count_;
     };
 
     class ThreadCountDownLatchExternalSync {
