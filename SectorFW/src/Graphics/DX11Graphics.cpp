@@ -332,9 +332,9 @@ namespace SFW
 			backend->SetBlendState(state);
 		}
 
-		void GraphicsDevice::SetDepthStencilState(DepthStencilStateID state)
+		void GraphicsDevice::SetDepthStencilState(DepthStencilStateID state, UINT stencilRef)
 		{
-			backend->SetDepthStencilState(state);
+			backend->SetDepthStencilState(state, stencilRef);
 		}
 
 		void GraphicsDevice::SetRasterizerState(RasterizerStateID state)

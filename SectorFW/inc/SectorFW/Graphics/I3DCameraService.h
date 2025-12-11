@@ -20,7 +20,7 @@ namespace SFW
 {
 	namespace Graphics
 	{
-		enum ProjectionType : uint8_t{
+		enum class ProjectionType : uint8_t{
 			Perspective,
 			Orthographic
 		};
@@ -467,7 +467,7 @@ namespace SFW
 			STATIC_SERVICE_TAG
 		};
 
-		using I3DPerCameraService = I3DCameraService<Perspective>;
-		using I3DOrtCameraService = I3DCameraService<Orthographic>;
+		using I3DPerCameraService = I3DCameraService<ProjectionType::Perspective>;
+		using I3DOrtCameraService = I3DCameraService<ProjectionType::Orthographic>;
 	}
 }

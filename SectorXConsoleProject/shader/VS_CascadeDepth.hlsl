@@ -1,6 +1,6 @@
 #include "_GlobalTypes.hlsli"
 
-cbuffer CascadeIndex : register(b11)
+cbuffer CascadeIndex : register(b13)
 {
     //x = index, yzw = pad
     uint4 gCascadeIndex;

@@ -120,7 +120,7 @@ namespace SFW
 		/**
 		 * @brief DrawCommand のフラグビットフィールド
 		 */
-		enum DrawFlags : uint8_t {
+		enum class DrawFlags : uint8_t {
 			DF_BindPSONeeded = 1u << 0, // 前のコマンドから PSO を切り替える必要あり
 			DF_BindMaterial = 1u << 1, // マテリアルバインドが必要
 			DF_BindMesh = 1u << 2, // VB/IB 再バインドが必要
@@ -180,6 +180,7 @@ namespace SFW
 			AlphaBlend,   // SrcAlpha / InvSrcAlpha
 			Additive,     // SrcAlpha / One
 			Multiply,     // DestColor / Zero
+			Subtract,     // One / Subtract
 			// ...
 			MAX_COUNT,    // 有効なブレンドステートの数
 		};
@@ -187,13 +188,14 @@ namespace SFW
 		 * @brief 深度ステンシルステートID列挙型
 		 */
 		enum class DepthStencilStateID {
-			Default,          // DepthTest ON, ZWrite ON
-			DepthReadOnly,    // DepthTest ON, ZWrite OFF
-			Default_Greater,  // DepthTest(Greater) ON, ZWrite ON
-			DepthReadOnly_Greater, // DepthTest(Greater) ON, ZWrite OFF
-			Default_Stencil,		// DepthTest ON, ZWrite ON , Stencil ON
-			DepthReadOnly_Greater_Stencil,// DepthTest(Greater) ON, ZWrite OFF Stencil ON
-			NoDepth,          // DepthTest OFF, ZWrite OFF
+			Default,							// DepthTest ON, ZWrite ON
+			DepthReadOnly,						// DepthTest ON, ZWrite OFF
+			Default_Greater,					// DepthTest(Greater) ON, ZWrite ON
+			DepthReadOnly_Greater,				// DepthTest(Greater) ON, ZWrite OFF
+			Default_Stencil,					// DepthTest ON, ZWrite ON , Stencil ON
+			DepthReadOnly_Stencil,			// DepthTest ON, ZWrite OFF Stencil ON
+			DepthReadOnly_Greater_Read_Stencil,		// DepthTest(Greater) ON, ZWrite OFF Stencil ON
+			NoDepth,							// DepthTest OFF, ZWrite OFF
 			// ...
 			MAX_COUNT,        // 有効な深度ステンシルステートの数
 		};

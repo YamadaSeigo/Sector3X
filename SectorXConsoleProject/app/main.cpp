@@ -138,7 +138,7 @@ void InitializeRenderPipeLine(
 		cbDesc.initialData = &data;
 		BufferHandle cascadeIndexHandle;
 		bufferMgr->Add(cbDesc, cascadeIndexHandle);
-		passDesc.cbvs = { BindSlotBuffer{11, cascadeIndexHandle} };
+		passDesc.cbvs = { BindSlotBuffer{13, cascadeIndexHandle} };
 
 		passDesc.dsv = cascadeDSVs[i];
 
@@ -215,15 +215,15 @@ void InitializeRenderPipeLine(
 	passDesc.psoOverride = std::nullopt;
 	passDesc.viewport = vp;
 	passDesc.depthStencilState = DepthStencilStateID::Default_Stencil;
-	passDesc.customExecute = skyboxDraw;
+	passDesc.customExecute = nullptr;
 	passDesc.stencilRef = 1;
 	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
-	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
-
-	passDesc.customExecute = nullptr;
-	passDesc.stencilRef = 2;
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OUTLINE);
+
+	passDesc.customExecute = skyboxDraw;
+	passDesc.stencilRef = 2;
+	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
 	shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
 	shaderDesc.psPath = L"assets/shader/PS_HighLight.cso";
@@ -235,7 +235,7 @@ void InitializeRenderPipeLine(
 	passDesc.customExecute = nullptr;
 	passDesc.psoOverride = psoHandle;
 	passDesc.blendState = BlendStateID::Opaque;
-	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly_Greater_Stencil;
+	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly_Greater_Read_Stencil;
 	passDesc.stencilRef = 1;
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_HIGHLIGHT);
 
@@ -722,6 +722,9 @@ int main(void)
 
 				ModelAssetHandle modelAssetHandle[5];
 
+				auto windCBHandle = grassService.GetBufferHandle();
+				auto footCBHandle = playerService.GetFootBufferHandle();
+
 				auto materialMgr = graphics.GetRenderService()->GetResourceManager<DX11::MaterialManager>();
 				// モデルアセットの読み込み
 				DX11::ModelAssetCreateDesc modelDesc;
@@ -732,6 +735,9 @@ int main(void)
 				modelDesc.viewMax = 400.0f;
 
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
+
+				modelDesc.BindVS_CBV("WindCB", windCBHandle); // 草揺れ用CBVをバインド
+				modelDesc.BindVS_CBV("GrassFootCB", footCBHandle); // 草揺れ用CBVをバインド
 
 				modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
 				modelDesc.buildOccluders = false;
@@ -825,9 +831,7 @@ int main(void)
 
 					auto data = modelAssetMgr->GetWrite(grassModelHandle);
 					auto& submesh = data.ref().subMeshes;
-					auto windCBHandle = grassService.GetBufferHandle();
 					auto cbData = bufferMgr->Get(windCBHandle);
-					auto footCBHandle = playerService.GetFootBufferHandle();
 					auto footCBData = bufferMgr->Get(footCBHandle);
 					auto heightTexData = textureMgr->Get(heightTexHandle);
 					for (auto& mesh : submesh)
@@ -862,7 +866,7 @@ int main(void)
 				float modelScaleBase[5] = { 2.5f,1.5f,2.5f, 1.5f,1.5f };
 				int modelScaleRange[5] = { 150,25,25, 25,25 };
 				int modelRotRange[5] = { 360,360,360, 360,360 };
-				bool enableOutline[5] = { false,true,false,true,true };
+				bool enableOutline[5] = { true,false,true,false,false };
 
 				std::vector<Math::Vec2f> grassAnchor;
 				{
@@ -929,11 +933,9 @@ int main(void)
 
 							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 							rot.KeepTwist(pose.up);
-							auto modelComp = CModel{ grassModelHandle };
-							modelComp.outline = true;
 							auto id = levelSession.AddEntity(
 								CTransform{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-								std::move(modelComp)
+								CModel{ grassModelHandle }
 							);
 						}
 					}
@@ -973,7 +975,7 @@ int main(void)
 								tag.handle = { key, chunk.value() };
 
 								Physics::BodyComponent staticBody{};
-								staticBody.isStatic = Physics::BodyType::Static; // staticにする
+								staticBody.type = Physics::BodyType::Static; // staticにする
 								staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
 								auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
 #ifdef _DEBUG
@@ -1028,7 +1030,6 @@ int main(void)
 					//playerBody.isStatic = Physics::BodyType::Dynamic; // 動的にする
 
 					CModel modelComp{ playerModelHandle };
-					modelComp.outline = true;
 					auto id = levelSession.AddGlobalEntity(
 						CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
 						std::move(modelComp),
@@ -1061,7 +1062,7 @@ int main(void)
 					};
 					auto terrainShape = ps->MakeShape(terrainShapeDesc);
 					Physics::BodyComponent terrainBody{};
-					terrainBody.isStatic = Physics::BodyType::Static; // staticにする
+					terrainBody.type = Physics::BodyType::Static; // staticにする
 					terrainBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
 					auto id = levelSession.AddEntity(
 						CTransform{ 0.0f, 0.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },

@@ -20,7 +20,7 @@ float4 main(PSInputDepth input) : SV_TARGET
 
     float shadowBias = 1.0f;
     if (shadowPos.z - shadow > 0.001f)
-        shadowBias = 0.8f;
+        shadowBias = 0.6f;
 
     if ((hasFlags & FLAG_HAS_BASECOLORTEX) == 0u)
         return baseColorFactor * shadowBias;

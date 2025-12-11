@@ -74,10 +74,11 @@ namespace SFW
 		/**
 		 * @brief 物理ボディのタイプ
 		 */
-		enum BodyType : uint8_t {
+		enum class BodyType : uint8_t {
 			Static = 1,
 			Dynamic = 0,
 		};
+
 		/**
 		 * @brief 物理ボディコンポーネント
 		 */
@@ -87,9 +88,9 @@ namespace SFW
 			JPH::BodyID body = JPH::BodyID((std::numeric_limits<uint32_t>::max)());   // 生成後にセット（読み取り用）
 			uint16_t    layer = invalidLayer;  // 所属ワールド
 			bool        kinematic{ false };
-			uint8_t     isStatic{ BodyType::Dynamic }; // 1: 静的、0: 動的（キネマティック含む）
+			BodyType     type{ BodyType::Dynamic }; // 1: 静的、0: 動的（キネマティック含む）
 
-			DEFINE_SOA(BodyComponent, body, layer, kinematic, isStatic)
+			DEFINE_SOA(BodyComponent, body, layer, kinematic, type)
 		};
 		/**
 		 * @brief 形状寸法コンポーネント

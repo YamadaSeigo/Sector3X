@@ -408,24 +408,43 @@ namespace SFW
 			blendDesc.AlphaToCoverageEnable = FALSE;
 			blendDesc.IndependentBlendEnable = FALSE;
 			blendDesc.RenderTarget[0].BlendEnable = TRUE;
-			blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
 			blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 			blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 			blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 			blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-			D3D11_BLEND blend[(size_t)BlendStateID::MAX_COUNT][2] = {
-				{D3D11_BLEND_ONE, D3D11_BLEND_ZERO},
-				{D3D11_BLEND_SRC_ALPHA, D3D11_BLEND_INV_SRC_ALPHA},
-				{D3D11_BLEND_ONE, D3D11_BLEND_ONE},
-				{D3D11_BLEND_ZERO, D3D11_BLEND_INV_SRC_COLOR},
+			struct BlendPreset {
+				D3D11_BLEND     src;
+				D3D11_BLEND     dst;
+				D3D11_BLEND_OP  op;
+			};
+
+			// BlendStateID と 1:1 で対応させる
+			BlendPreset presets[(size_t)BlendStateID::MAX_COUNT] = {
+				// Opaque        : C = Src
+				{ D3D11_BLEND_ONE,        D3D11_BLEND_ZERO,          D3D11_BLEND_OP_ADD },
+
+				// AlphaBlend    : C = SrcAlpha * Src + (1-SrcAlpha) * Dest
+				{ D3D11_BLEND_SRC_ALPHA,  D3D11_BLEND_INV_SRC_ALPHA, D3D11_BLEND_OP_ADD },
+
+				// Additive      : C = Src + Dest
+				{ D3D11_BLEND_ONE,        D3D11_BLEND_ONE,           D3D11_BLEND_OP_ADD },
+
+				// Multiply      : C = Dest * (1 - Src)  (元コードの ZERO / INV_SRC_COLOR に合わせています)
+				{ D3D11_BLEND_ZERO,       D3D11_BLEND_INV_SRC_COLOR, D3D11_BLEND_OP_ADD },
+
+				// Subtract      : C = Dest - Src  （減算ブレンド）
+				// ここで RevSubtract にしているので「既存色 - 新しい色」のイメージ
+				{ D3D11_BLEND_ONE,        D3D11_BLEND_ONE,           D3D11_BLEND_OP_REV_SUBTRACT },
 			};
 
 			HRESULT hr;
 			for (size_t i = 0; i < (size_t)BlendStateID::MAX_COUNT; ++i)
 			{
-				blendDesc.RenderTarget[0].SrcBlend = blend[i][0];
-				blendDesc.RenderTarget[0].DestBlend = blend[i][1];
+				blendDesc.RenderTarget[0].SrcBlend = presets[i].src;
+				blendDesc.RenderTarget[0].DestBlend = presets[i].dst;
+				blendDesc.RenderTarget[0].BlendOp = presets[i].op;
+
 				hr = device->CreateBlendState(&blendDesc, blendStates[i].GetAddressOf());
 				if (FAILED(hr)) { return hr; }
 			}
@@ -480,7 +499,7 @@ namespace SFW
 				auto d = ds;
 				d.DepthEnable = TRUE;
 				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-				d.DepthFunc = D3D11_COMPARISON_GREATER;
+				d.DepthFunc = D3D11_COMPARISON_GREATER_EQUAL;
 				d.StencilEnable = FALSE; // 既定はStencil未使用
 				hr = create((size_t)DepthStencilStateID::Default_Greater, d); if (FAILED(hr)) return hr;
 			}
@@ -490,11 +509,12 @@ namespace SFW
 				auto d = ds;
 				d.DepthEnable = TRUE;
 				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-				d.DepthFunc = D3D11_COMPARISON_GREATER;
+				d.DepthFunc = D3D11_COMPARISON_GREATER_EQUAL;
 				d.StencilEnable = FALSE;
 				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Greater, d); if (FAILED(hr)) return hr;
 			}
 
+			// 5) Default_Stencil: 深度テストON, 書き込みON, LessEqual, StencilON（不透明/大半の3D）
 			{
 				auto d = ds;
 				d.DepthEnable = TRUE;
@@ -507,15 +527,39 @@ namespace SFW
 				d.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
 				d.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 				d.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+				d.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+				d.BackFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+				d.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+				d.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
 				hr = create((size_t)DepthStencilStateID::Default_Stencil, d); if (FAILED(hr)) return hr;
 			}
 
-			// 4) DepthReadOnlyGreater: 深度テストON, 書き込みOFF（スカイボックス/アルファブレンド/ポスト系）
+			// 6) Default_ReadOnly_Stencil: 深度テストON, 書き込みOFF, LessEqual, StencilON（不透明/大半の3D）
 			{
 				auto d = ds;
 				d.DepthEnable = TRUE;
 				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-				d.DepthFunc = D3D11_COMPARISON_GREATER;
+				d.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+				d.StencilEnable = TRUE;
+				d.StencilReadMask = 0xFF;
+				d.StencilWriteMask = 0xFF;
+				d.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+				d.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+				d.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+				d.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+				d.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+				d.BackFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+				d.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+				d.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Stencil, d); if (FAILED(hr)) return hr;
+			}
+
+			// 7) DepthReadOnlyGreater_Stencil: 深度テストON, 書き込みOFF（スカイボックス/アルファブレンド/ポスト系）
+			{
+				auto d = ds;
+				d.DepthEnable = TRUE;
+				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+				d.DepthFunc = D3D11_COMPARISON_GREATER_EQUAL;
 				d.StencilEnable = TRUE;
 				d.StencilReadMask = 0xFF;
 				d.StencilWriteMask = 0x00; // 書き込まない
@@ -523,10 +567,10 @@ namespace SFW
 				d.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 				d.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 				d.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
-				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Greater_Stencil, d); if (FAILED(hr)) return hr;
+				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Greater_Read_Stencil, d); if (FAILED(hr)) return hr;
 			}
 
-			// 7) NoDepth: 深度テストOFF, 書き込みOFF（HUD/デバッグオーバーレイ）
+			// 8) NoDepth: 深度テストOFF, 書き込みOFF（HUD/デバッグオーバーレイ）
 			{
 				auto d = ds;
 				d.DepthEnable = FALSE;

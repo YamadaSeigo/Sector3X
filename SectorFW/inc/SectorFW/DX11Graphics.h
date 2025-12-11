@@ -84,7 +84,7 @@ namespace SFW
 			void SetDefaultRenderTarget();
 
 			void SetBlendState(BlendStateID state);
-			void SetDepthStencilState(DepthStencilStateID state);
+			void SetDepthStencilState(DepthStencilStateID state, UINT stencilRef = 0);
 			void SetRasterizerState(RasterizerStateID state);
 
 			RenderService* GetRenderService() noexcept {

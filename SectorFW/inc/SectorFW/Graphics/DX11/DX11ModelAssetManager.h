@@ -8,6 +8,7 @@
 #pragma once
 
 #include <filesystem>
+#include <variant>
 
 #include "DX11MeshManager.h"
 #include "DX11PSOManager.h"
@@ -38,6 +39,25 @@ namespace SFW
 		};
 
 		struct ModelAssetCreateDesc {
+
+			enum BindType : uint8_t
+			{
+				VS_CBV = 1u << 0,
+				PS_CBV = 1u << 1,
+				VS_SRV = 1u << 2,
+				PS_SRV = 1u << 3,
+				SAMPLER = 1u << 4,
+			};
+
+			struct BindNode
+			{
+				using HandleType = std::variant<BufferHandle, TextureHandle, SamplerHandle>;
+
+				std::string nodeName;
+				HandleType handle;
+				BindType type;
+			};
+
 			std::string path;
 			PSOHandle pso = {};
 			uint32_t option = 1; // トポロジーを保持するか（LOD生成時にメッシュ最適化を行わない）
@@ -56,7 +76,44 @@ namespace SFW
 
 			//法線のw成分のカスタム関数
 			MeshManager::NormalWCustomFunc pCustomNomWFunc = nullptr;
+
+			void BindVS_CBV(const std::string& name, const BufferHandle& h);
+
+			void BindPS_CBV(const std::string& name, const BufferHandle& h);
+
+			void BindVSPS_CBV(const std::string& name, const BufferHandle& h);
+
+			void BindVS_SRV(const std::string& name, const TextureHandle& h);
+
+			void BindPS_SRV(const std::string& name, const TextureHandle& h);
+
+			void BindVSPS_SRV(const std::string& name, const TextureHandle& h);
+
+			void BindSampler(const std::string& name, const SamplerHandle& h);
+
+			void ClearAdditionalBindings() noexcept {
+				additionalBindings.reset();
+			}
+
+		private:
+			std::unique_ptr<std::vector<BindNode>> additionalBindings = {}; // 追加バインド情報
+
+			friend class ModelAssetManager;
 		};
+
+		static inline constexpr ModelAssetCreateDesc::BindType operator|(ModelAssetCreateDesc::BindType lhs, ModelAssetCreateDesc::BindType rhs)
+		{
+			return static_cast<ModelAssetCreateDesc::BindType>(
+				static_cast<unsigned int>(lhs) |
+				static_cast<unsigned int>(rhs)
+				);
+		}
+
+		static inline constexpr ModelAssetCreateDesc::BindType operator|=(ModelAssetCreateDesc::BindType lhs, ModelAssetCreateDesc::BindType rhs)
+		{
+			lhs = lhs | rhs;
+			return lhs;
+		}
 
 		using LodThresholds = SFW::Graphics::LodThresholdsPx; // ピクセル基準
 

@@ -18,7 +18,7 @@ namespace SFW
 		/**
 		 * @brief DirectX11用の3Dカメラサービス。カメラの定数バッファを管理し、更新する。
 		 */
-		class PerCamera3DService : public I3DCameraService<Perspective> {
+		class PerCamera3DService : public I3DCameraService<ProjectionType::Perspective> {
 		public:
 			/**
 			 * @brief カメラの定数バッファの名前
@@ -100,7 +100,7 @@ namespace SFW
 		/**
 		 * @brief DirectX11用の3Dカメラサービス。カメラの定数バッファを管理し、更新する。
 		 */
-		class OrtCamera3DService : public I3DCameraService<Orthographic> {
+		class OrtCamera3DService : public I3DCameraService<ProjectionType::Orthographic> {
 		public:
 			/**
 			 * @brief カメラの定数バッファの名前
@@ -111,7 +111,7 @@ namespace SFW
 			 * @param bufferMgr BufferManagerのポインタ
 			 */
 			explicit OrtCamera3DService(BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
-				: I3DCameraService<Orthographic>([&] {
+				: I3DCameraService<ProjectionType::Orthographic>([&] {
 				BufferHandle h;
 				bufferMgr->Add(BufferCreateDesc{ BUFFER_NAME, sizeof(CameraBuffer) }, h);
 				return h;

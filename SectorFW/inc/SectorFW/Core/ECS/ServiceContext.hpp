@@ -64,7 +64,7 @@ namespace SFW {
 
 			enum Group : uint16_t {
 				GROUP_SERIAL, //メインスレッドで直列実行
-				GROUP_GRAPHICS, 
+				GROUP_GRAPHICS,
 				GROUP_PHYSICS,
 				GROUP_INPUT,
 				GROUP_AUDIO,

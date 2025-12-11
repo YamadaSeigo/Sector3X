@@ -337,11 +337,11 @@ public:
 
 							if (modelComp.castShadow)
 							{
-								Math::Vec3f centerWS = Math::Vec3f{ mtf.px[i], mtf.py[i], mtf.pz[i] } + mesh.bs.center;
+								Math::Quatf rot = { mtf.qx[i], mtf.qy[i], mtf.qz[i], mtf.qw[i] };
+								Math::Vec3f centerWS = Math::Vec3f{ mtf.px[i], mtf.py[i], mtf.pz[i] } + rot.RotateVector(mesh.bs.center);
 								auto centerVec = centerWS - kp->cp;
 								float camDepth = centerVec.dot(kp->camForward);
-								float maxRadius = mesh.bs.radius * (std::max)(mtf.sx[i], (std::max)(mtf.sy[i], mtf.sz[i]));
-								auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(camDepth - maxRadius, camDepth + maxRadius);
+								auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(camDepth - bsRadiusWS, camDepth + bsRadiusWS);
 
 								for (uint32_t ci = cascades.first; ci <= cascades.second; ++ci)
 								{

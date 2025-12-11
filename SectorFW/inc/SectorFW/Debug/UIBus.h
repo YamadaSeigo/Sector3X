@@ -109,6 +109,20 @@ namespace SFW
 		};
 
 		/**
+		 * @brief ワールドのデバッグツリーの深さ
+		 */
+		enum class WorldTreeDepth : uint32_t {
+			TREEDEPTH_WORLD = 0,
+			TREEDEPTH_LEVEL = 1,
+			TREEDEPTH_LEVELNODE = 2,
+			TREEDEPTH_SYSTEM = 3,
+			TREEDEPTH_RENDERGRAPH = 0,
+			TREEDEPTH_GROUP = 1,
+			TREEDEPTH_DRAWCOMMAND = 2,
+			TREEDEPTH_MAX
+		};
+
+		/**
 		 * @brief Tree snapshot types(UIBus.h)
 		 */
 		struct TreeItem {
@@ -116,6 +130,11 @@ namespace SFW
 			uint32_t depth;    // 0 = root, 1 = child, ...
 			bool     leaf;     // 子なしなら true
 			std::string label; // 表示テキスト
+
+			TreeItem() = default;
+			TreeItem(uint64_t i, WorldTreeDepth d, bool l, const std::string& lbl)
+				: id(i), depth(static_cast<uint32_t>(d)), leaf(l), label(lbl) {
+			}
 		};
 		/**
 		 * @brief ツリーフレーム（前順＋depth 付きアイテム群）
@@ -334,7 +353,7 @@ namespace SFW
 
 #else //! _ENABLE_IMGUI
 
-#define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange) 
+#define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange)
 #define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed)
 #define REGISTER_DEBUG_CHECKBOX(category, label, initialValue, onChange)
 #define BIND_DEBUG_CHECKBOX(category, label, target)
@@ -375,18 +394,5 @@ namespace SFW
 		 * @brief ツリー書き込み開始（RAIIでロック/アンロック）
 		 */
 		UiTreeSnapshot::WriteGuard BeginTreeWrite();
-		/**
-		 * @brief ワールドのデバッグツリーの深さ
-		 */
-		enum WorldTreeDepth : uint32_t {
-			TREEDEPTH_WORLD = 0,
-			TREEDEPTH_LEVEL = 1,
-			TREEDEPTH_LEVELNODE = 2,
-			TREEDEPTH_SYSTEM = 3,
-			TREEDEPTH_RENDERGRAPH = 0,
-			TREEDEPTH_GROUP = 1,
-			TREEDEPTH_DRAWCOMMAND = 2,
-			TREEDEPTH_MAX
-		};
 	}
 }

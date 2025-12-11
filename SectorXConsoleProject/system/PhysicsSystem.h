@@ -14,14 +14,14 @@ class PhysicsSystem : public ITypeSystem<
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Write<TransformSoA>, 
-		Write<Physics::PhysicsInterpolation>, 
-		Read<Physics::BodyComponent>, 
+		Write<TransformSoA>,
+		Write<Physics::PhysicsInterpolation>,
+		Read<Physics::BodyComponent>,
 		Write<SpatialMotionTag>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
-		Physics::PhysicsService, 
+		Physics::PhysicsService,
 		SpatialChunkRegistry>
 	>
 {
@@ -65,7 +65,7 @@ public:
 				Physics::PoseBatchView poseBatch = {
 					interpolation->cpx(),interpolation->cpy(),interpolation->cpz(),
 					interpolation->crx(), interpolation->cry(), interpolation->crz(), interpolation->crw(),
-					updateMasks.get(), entityCount, bodyComponent->body(), bodyComponent->isStatic()
+					updateMasks.get(), entityCount, bodyComponent->body(), (uint8_t*)bodyComponent->type()
 				};
 
 				physics->BuildPoseBatch(poseBatch);

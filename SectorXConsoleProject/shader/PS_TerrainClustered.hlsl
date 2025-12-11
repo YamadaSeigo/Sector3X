@@ -101,17 +101,13 @@ float4 main(VSOut i) : SV_Target
 
     uint cascade = ChooseCascade(i.viewDepth);
 
-    float3 offsetWP = i.worldPos;
-    offsetWP.x += gCascadeDirection.x * 5.0f;
-    offsetWP.z += gCascadeDirection.z * 5.0f;
-
-    float4 shadowPos = mul(gLightViewProj[cascade], float4(offsetWP, 1.0f));
+    float4 shadowPos = mul(gLightViewProj[cascade], float4(i.worldPos, 1.0f));
 
     float shadow = GetShadowMapDepth(shadowPos.xyz, cascade);
 
     float shadowBias = 1.0f;
-    if (shadowPos.z - shadow > 0.01f)
-        shadowBias = 0.8f;
+    if (shadowPos.z - shadow > 0.001f)
+        shadowBias = 0.6f;
 
     float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
     final.rgb *= shadowBias;

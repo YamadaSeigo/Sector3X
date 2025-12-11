@@ -353,6 +353,7 @@ namespace SFW
 					std::unordered_map<UINT, BufferHandle>  vsCBVMap;
 					std::unordered_map<UINT, SamplerHandle> samplerMap;
 
+
 					ShaderHandle shaderHandle;
 					{
 						auto psoData = psoMgr.Get(desc.pso);
@@ -484,6 +485,58 @@ namespace SFW
 						for (const auto& b : psBindings)
 							if (b.type == D3D_SIT_SAMPLER && b.name == gSamplerBindName)
 								samplerMap[b.bindPoint] = samp;
+
+					
+						// 追加バインド情報を適用
+						if (desc.additionalBindings)
+						{
+							for (const auto& bindNode : *desc.additionalBindings) {
+								std::visit([&](auto&& handle) {
+									using T = std::decay_t<decltype(handle)>;
+									if constexpr (std::is_same_v<T, TextureHandle>) {
+										if (bindNode.type & ModelAssetCreateDesc::PS_SRV) {
+											for (const auto& b : psBindings) {
+												if (b.type == D3D_SIT_TEXTURE && b.name == bindNode.nodeName) {
+													psSRVMap[b.bindPoint] = handle;
+												}
+											}
+										}
+										if (bindNode.type & ModelAssetCreateDesc::VS_SRV) {
+											for (const auto& b : vsBindings) {
+												if (b.type == D3D_SIT_TEXTURE && b.name == bindNode.nodeName) {
+													vsSRVMap[b.bindPoint] = handle;
+												}
+											}
+										}
+									}
+									else if constexpr (std::is_same_v<T, BufferHandle>) {
+										if (bindNode.type & ModelAssetCreateDesc::PS_CBV) {
+											for (const auto& b : psBindings) {
+												if (b.type == D3D_SIT_CBUFFER && b.name == bindNode.nodeName) {
+													psCBVMap[b.bindPoint] = handle;
+												}
+											}
+										}
+										if (bindNode.type & ModelAssetCreateDesc::VS_CBV) {
+											for (const auto& b : vsBindings) {
+												if (b.type == D3D_SIT_CBUFFER && b.name == bindNode.nodeName) {
+													vsCBVMap[b.bindPoint] = handle;
+												}
+											}
+										}
+									}
+									else if constexpr (std::is_same_v<T, SamplerHandle>) {
+										if (bindNode.type & ModelAssetCreateDesc::SAMPLER) {
+											for (const auto& b : psBindings) {
+												if (b.type == D3D_SIT_SAMPLER && b.name == bindNode.nodeName) {
+													samplerMap[b.bindPoint] = handle;
+												}
+											}
+										}
+									}
+									}, bindNode.handle);
+							}
+						}
 					}
 
 					// 6) Material を作る（desc に cbvMap を追加！）
@@ -966,5 +1019,40 @@ namespace SFW
 			}
 			return out;
 		}
-	}
+		void ModelAssetCreateDesc::BindVS_CBV(const std::string& name, const BufferHandle& h)
+		{
+			if (!additionalBindings) additionalBindings = std::make_unique<std::vector<BindNode>>();
+			additionalBindings->emplace_back(BindNode{ name, h, BindType::VS_CBV });
+		}
+		void ModelAssetCreateDesc::BindPS_CBV(const std::string& name, const BufferHandle& h)
+		{
+			if (!additionalBindings) additionalBindings = std::make_unique<std::vector<BindNode>>();
+			additionalBindings->emplace_back(BindNode{ name, h, BindType::PS_CBV });
+		}
+		void ModelAssetCreateDesc::BindVSPS_CBV(const std::string& name, const BufferHandle& h)
+		{
+			if (!additionalBindings) additionalBindings = std::make_unique<std::vector<BindNode>>();
+			additionalBindings->emplace_back(BindNode{ name, h, BindType::VS_CBV | BindType::PS_CBV });
+		}
+		void ModelAssetCreateDesc::BindVS_SRV(const std::string& name, const TextureHandle& h)
+		{
+			if (!additionalBindings) additionalBindings = std::make_unique<std::vector<BindNode>>();
+			additionalBindings->emplace_back(BindNode{ name, h, BindType::VS_SRV });
+		}
+		void ModelAssetCreateDesc::BindPS_SRV(const std::string& name, const TextureHandle& h)
+		{
+			if (!additionalBindings) additionalBindings = std::make_unique<std::vector<BindNode>>();
+			additionalBindings->emplace_back(BindNode{ name, h, BindType::PS_SRV });
+		}
+		void ModelAssetCreateDesc::BindVSPS_SRV(const std::string& name, const TextureHandle& h)
+		{
+			if (!additionalBindings) additionalBindings = std::make_unique<std::vector<BindNode>>();
+			additionalBindings->emplace_back(BindNode{ name, h, BindType::VS_SRV | BindType::PS_SRV });
+		}
+		void ModelAssetCreateDesc::BindSampler(const std::string& name, const SamplerHandle& h)
+		{
+			if (!additionalBindings) additionalBindings = std::make_unique<std::vector<BindNode>>();
+			additionalBindings->emplace_back(BindNode{ name, h, BindType::SAMPLER });
+		}
+}
 }
