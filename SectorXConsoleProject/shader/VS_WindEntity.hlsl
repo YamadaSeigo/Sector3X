@@ -107,49 +107,56 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     float weight = saturate(input.normal.w);
 
      // --------- ここから「踏まれオフセット」 ----------
+    // 事前
     float3 footOffset = 0.0f;
-
-    // 草の上の方ほどよく倒れるようにするウェイト（既存と同じ）
     float tipWeight = input.normal.w;
 
-    [unroll]
-    for (int i = 0; i < gFootCount; ++i)
+    if (gFootCount > 0)
     {
-        float3 footPos = gFootPosWRadiusWS[i].xyz;
-        float radius = gFootPosWRadiusWS[i].w;
+        const float heightRange = 2.5f;
+        const float invHeightRange = rcp(heightRange);
+        const float eps = 1e-8f;
 
-        // XZ 平面上の距離
-        float2 dXZ = baseWorldPos.xz - footPos.xz;
-        float dist = length(dXZ);
-
-        if (dist < radius)
+        // MAX_FOOT は 4 なので固定 unroll が強い
+        [unroll]
+        for (int i = 0; i < 4; ++i)
         {
-            // 半径内で 0～1 の減衰
-            float t = 1.0f - dist / radius;
-            // 少し滑らかに（内側ほど強く）したいので二乗
-            t *= t;
+            if (i >= gFootCount)
+                break;
 
-            // 高さ方向での制限（足よりだいぶ上はあまり動かさない）
-            // footPos.y を地面 or 足裏の高さとして扱う想定
-            float heightRange = 2.5f; // 250cm くらいまで強く影響
-            float dy = wp.y - footPos.y;
-            float hFactor = saturate(1.0f - abs(dy) / heightRange);
+            float3 footPos = gFootPosWRadiusWS[i].xyz;
+            float radius = gFootPosWRadiusWS[i].w;
 
-            // どの方向に倒すか：足の中心から外側に逃がすイメージ
-            float2 dirXZ = (dist > 1e-3f) ? (dXZ / dist) : float2(0.0f, 0.0f);
+            float2 dXZ = baseWorldPos.xz - footPos.xz;
+            float dist2 = dot(dXZ, dXZ);
+            float r2 = radius * radius;
 
-            float bend = gFootStrength * t * hFactor * tipWeight;
+            // ほとんどが範囲外なら分岐はむしろ有利
+            if (dist2 < r2)
+            {
+                float invR = rcp(radius);
 
-            // XZ 方向に押し倒す
-            footOffset.xz += dirXZ * bend;
+                // dist と dirXZ を rsqrt で作る（sqrt を避ける）
+                float invDist = rsqrt(max(dist2, eps));
+                float dist = dist2 * invDist; // = sqrt(dist2)
+                float2 dirXZ = dXZ * invDist; // 正規化
 
-            // 少しだけ下方向にも沈めると「踏みつぶされた感」が出る
-            footOffset.y -= bend * 0.5f;
+                // t = 1 - dist/radius
+                float t = 1.0f - dist * invR;
+                t *= t;
+
+                float dy = wp.y - footPos.y;
+                float hFactor = saturate(1.0f - abs(dy) * invHeightRange);
+
+                float bend = gFootStrength * t * hFactor * tipWeight;
+
+                footOffset.xz += dirXZ * bend;
+                footOffset.y -= bend * 0.5f;
+            }
         }
     }
-
-    // 踏まれオフセットを適用
     wp += footOffset;
+
     // --------- ここまで踏まれ処理 ----------
 
     float swayAmount = gWindAmplitude * wave * weight;

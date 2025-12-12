@@ -49,7 +49,7 @@ cbuffer CBShadowCascades : register(b5)
     row_major float4x4 gLightViewProj[NUM_CASCADES]; // kMaxShadowCascades = 4
 
 //***********************************************************************************************
-    //NUM_CASCADESが増えたらループアンローラーが働かなくなるので注意
+    //NUM_CASCADESが増えたらループアンローラーが働かなくなるので注意(この場合最大4個まで)
 //***********************************************************************************************
     float4 gCascadeSplits; // Camera の view-space 距離 (splitFar)
 

@@ -17,7 +17,7 @@ namespace SFW
 	{
 
         // カスケード数はお好みで
-        constexpr std::uint32_t kMaxShadowCascades = 4;
+        constexpr std::uint32_t kMaxShadowCascades = 3;
 
         // -------------------------------------------------------------
         // ライト定義

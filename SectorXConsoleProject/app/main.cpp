@@ -276,7 +276,6 @@ void InitializeRenderPipeLine(
 		{ 0, 4 },
 		{ 0, 5 },
 		{ 0 ,6 },
-		{ 0 ,7 },
 		{ 1, 0 },
 		{ 1, 1 },
 		{ 1, 2 }
@@ -344,7 +343,7 @@ int main(void)
 	static Graphics::LightShadowService lightShadowService;
 	Graphics::LightShadowService::CascadeConfig cascadeConfig;
 	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
-	cascadeConfig.shadowDistance = 80.0f;
+	cascadeConfig.shadowDistance = 40.0f;
 	lightShadowService.SetCascadeConfig(cascadeConfig);
 
 	WindMovementService grassService(bufferMgr);
@@ -363,7 +362,7 @@ int main(void)
 	p.cellSize = 3.0f;
 	p.heightScale = 80.0f;
 	p.frequency = 1.0f / 96.0f * 1.0f;
-	p.seed = 20251112;
+	p.seed = 20251212;
 	p.offset.y -= 40.0f;
 
 	std::vector<float> heightMap;
@@ -733,7 +732,7 @@ int main(void)
 				modelDesc.pso = cullDefaultPSOHandle;
 				modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
 				modelDesc.instancesPeak = 1000;
-				modelDesc.viewMax = 400.0f;
+				modelDesc.viewMax = 100.0f;
 
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
 
@@ -742,26 +741,26 @@ int main(void)
 
 				modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
 				modelDesc.buildOccluders = false;
-				modelDesc.viewMax = 200.0f;
+				modelDesc.viewMax = 50.0f;
 				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
 				modelDesc.path = "assets/model/Stylized/Tree01.gltf";
-				modelDesc.viewMax = 300.0f;
+				modelDesc.viewMax = 100.0f;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelDesc.pCustomNomWFunc = WindMovementService::ComputeTreeWeight;
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 				modelDesc.instancesPeak = 100;
-				modelDesc.viewMax = 100.0f;
+				modelDesc.viewMax = 50.0f;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
 				modelDesc.path = "assets/model/Stylized/WhiteCosmos.gltf";
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
 
 				modelDesc.instancesPeak = 100;
-				modelDesc.viewMax = 100.0f;
+				modelDesc.viewMax = 50.0f;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelDesc.path = "assets/model/Stylized/YellowCosmos.gltf";
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
@@ -775,10 +774,10 @@ int main(void)
 				ModelAssetHandle grassModelHandle;
 
 				modelDesc.instancesPeak = 10000;
-				modelDesc.viewMax = 100.0f;
+				modelDesc.viewMax = 50.0f;
 				modelDesc.pso = windGrassPSOHandle;
 				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
-				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
+				modelDesc.path = "assets/model/Stylized/optimizeGrass.gltf";
 				modelAssetMgr->Add(modelDesc, grassModelHandle);
 				modelDesc.pCustomNomWFunc = nullptr;
 
@@ -853,7 +852,10 @@ int main(void)
 						//頂点シェーダーにもバインドする設定にする
 						matData.ref().isBindVSSampler = true;
 
-						mesh.lodThresholds.Tpx[0] *= 2.0f; // LOD調整
+						for (auto& tpx : mesh.lodThresholds.Tpx) // LOD調整
+						{
+							tpx *= 6.0f;
+						}
 					}
 				}
 
@@ -888,7 +890,7 @@ int main(void)
 
 				//scheduler.AddSystem<SimpleModelRenderSystem>(serviceLocator);
 				scheduler.AddSystem<CameraSystem>(serviceLocator);
-				scheduler.AddSystem<PhysicsSystem>(serviceLocator);
+				//scheduler.AddSystem<PhysicsSystem>(serviceLocator);
 				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
 				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
@@ -933,10 +935,11 @@ int main(void)
 							location.y -= (1.0f - splatR / 255.0f) * 2.0f - 1.0f;
 
 							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
+							auto modelComp = CModel{ grassModelHandle };
 							rot.KeepTwist(pose.up);
 							auto id = levelSession.AddEntity(
 								CTransform{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-								CModel{ grassModelHandle }
+								std::move(modelComp)
 							);
 						}
 					}
@@ -986,10 +989,10 @@ int main(void)
 									CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
 									modelComp,
 									staticBody,
-									Physics::PhysicsInterpolation(
-										location, // 初期位置
-										rot // 初期回転
-									),
+									//Physics::PhysicsInterpolation(
+									//	location, // 初期位置
+									//	rot // 初期回転
+									//),
 #ifdef _DEBUG
 									shapeDims.value(),
 #endif
@@ -1067,12 +1070,13 @@ int main(void)
 					terrainBody.type = Physics::BodyType::Static; // staticにする
 					terrainBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
 					auto id = levelSession.AddEntity(
-						CTransform{ 0.0f, 0.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
-						terrainBody,
-						Physics::PhysicsInterpolation(
-							Math::Vec3f{ 0.0f,-40.0f, 0.0f }, // 初期位置
-							Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-						)
+						CTransform{ 0.0f, -40.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
+						terrainBody
+						//,
+						//Physics::PhysicsInterpolation(
+						//	Math::Vec3f{ 0.0f,-40.0f, 0.0f }, // 初期位置
+						//	Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
+						//)
 					);
 					if (id) {
 						auto chunk = pLevel->GetChunk({ 0.0f, -40.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);

@@ -90,9 +90,17 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
     float2 cHeightMapUV = (baseWorldPos.xz - gOriginXZ) / terrainSize;
-    float terrainHeight = gHeightMap.SampleLevel(gSampler, cHeightMapUV, 0);
+    //float terrainHeight = gHeightMap.SampleLevel(gSampler, cHeightMapUV, 0);
+    uint w, h, layers, mipLevels;
+    gHeightMap.GetDimensions(0, w, h, mipLevels);
+    int2 texel = int2(cHeightMapUV * float2(w, h)); // まず 0..w, 0..h にスケール
+    texel = clamp(texel, int2(0, 0), int2(w - 1, h - 1)); // 範囲内に
+    float terrainHeight = gHeightMap.Load(int3(texel, 0));
+
     float2 lHeightMapUV = (wp.xz - gOriginXZ) / terrainSize;
-    float localHeight = gHeightMap.SampleLevel(gSampler, lHeightMapUV, 0);
+    texel = int2(lHeightMapUV * float2(w, h)); // まず 0..w, 0..h にスケール
+    texel = clamp(texel, int2(0, 0), int2(w - 1, h - 1)); // 範囲内に
+    float localHeight = gHeightMap.Load(int3(texel, 0));
     wp.y += (localHeight - terrainHeight) * 70.0f;
 
    // ---- 1) 全体をまとめる“大きな揺れ” ----

@@ -55,14 +55,14 @@ public:
 			if (row >= count) continue; // 世代ズレなど
 
 			ComponentAccessor <
-				ECS::Read<PhysicsInterpolation>,
+				ECS::Read<CTransform>,
 				ECS::Read<BodyComponent>> chAccessor(ch);
 
 			// 必要列だけ生ポインタで取得（SoA）
-			auto interpOpt = chAccessor.Get<Read<PhysicsInterpolation>>();
+			auto tfOpt = chAccessor.Get<Read<CTransform>>();
 			auto bodyOpt = chAccessor.Get<Read<BodyComponent>>();
-			if (!interpOpt || !bodyOpt) continue;
-			auto interp = interpOpt.value();
+			if (!tfOpt || !bodyOpt) continue;
+			auto tf = tfOpt.value();
 			auto body = bodyOpt.value();
 
 			// すでに生成済みならスキップ（センチネル: 0xFFFFFFFF）
@@ -71,8 +71,8 @@ public:
 
 			// 現在姿勢（PhysicsInterpolation の curr）
 			Mat34f tm{};
-			tm.pos = Vec3f(interp.cpx()[row], interp.cpy()[row], interp.cpz()[row]);
-			tm.rot = Quatf(interp.crx()[row], interp.cry()[row], interp.crz()[row], interp.crw()[row]);
+			tm.pos = Vec3f(tf.px()[row], tf.py()[row], tf.pz()[row]);
+			tm.rot = Quatf(tf.qx()[row], tf.qy()[row], tf.qz()[row], tf.qw()[row]);
 
 			const uint16_t layer = body.layer()[row] != BodyComponent::invalidLayer ? body.layer()[row] : (body.type()[row] == BodyType::Static ? Layers::NON_MOVING_RAY_HIT : Layers::MOVING);
 			const bool kinematic = !!body.kinematic()[row];

@@ -76,7 +76,7 @@ public:
 
 		float maxShadowDistance = lightShadowService->GetMaxShadowDistance();
 		Math::Vec3f shadowDir = lightShadowService->GetDirectionalLight().directionWS.normalized() * -1.0f;
-		auto shadowFru = fru.PushedAlongDirection(shadowDir, maxShadowDistance / 2);
+		auto shadowFru = fru.PushedAlongDirection(shadowDir, maxShadowDistance);
 
 		const Graphics::OccluderViewport vp = { (int)resolution.x, (int)resolution.y, cameraService->GetFOV() };
 
@@ -221,7 +221,7 @@ public:
 						Math::Vec3f centerWS = mesh.bs.center;
 						if (!Math::BoundingSpheref::IsVisible_LocalCenter_WorldRadius(WVP, kp->viewProj, mesh.bs.center, bsRadiusWS, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth))
 						{
-							if (!modelComp.castShadow) continue;
+							if (!modelComp.castShadow || depth > 0.2f) continue;
 
 							Math::MulPoint_RowMajor_ColVec(
 								worldMtxSoA.AoS(i),
@@ -358,8 +358,6 @@ public:
 
 							if (ll < 2)
 							{
-								//cmd.viewMask |= PASS_3DMAIN_ZPREPASS;
-
 								if (modelComp.castShadow)
 								{
 									Math::MulPoint_RowMajor_ColVec(
@@ -376,7 +374,7 @@ public:
 
 									// 影としてどこまで考慮するか（ワールド距離）
 									// 例：一番遠いカスケードの far クリップ距離 - near 距離
-									float maxShadowLenWS = kp->maxShadowDistance / 2;
+									float maxShadowLenWS = kp->maxShadowDistance;
 
 									// カメラ深度方向に投影される「影の余白」
 									// 光がカメラとほぼ平行だと cosLF ≈ 1 になって深く伸びる
@@ -405,7 +403,7 @@ public:
 
 							// 影としてどこまで考慮するか（ワールド距離）
 							// 例：一番遠いカスケードの far クリップ距離 - near 距離
-							float maxShadowLenWS = kp->maxShadowDistance / 2;
+							float maxShadowLenWS = kp->maxShadowDistance;
 
 							// カメラ深度方向に投影される「影の余白」
 							// 光がカメラとほぼ平行だと cosLF ≈ 1 になって深く伸びる
@@ -434,7 +432,7 @@ public:
 						}
 					}
 				}
-			}, partition, shadowFru, camPos, &kp, threadPool.get()
+			}, partition, fru, camPos, &kp, threadPool.get()
 		);
 	}
 

@@ -617,51 +617,51 @@ namespace SFW::Graphics::DX11 {
                 ctx->DrawInstancedIndirect(argsBuf.Get(), 0);
             }
 
-            if (cascadeViewport)
-            {
-				ctx->RSSetViewports(1, cascadeViewport);
-            }
+    //        if (cascadeViewport)
+    //        {
+				//ctx->RSSetViewports(1, cascadeViewport);
+    //        }
 
-            // 5) カスケードシャドウ DepthOnly パス
-            for (UINT ci = 0; ci < p.cascadeCount; ++ci)
-            {
-                ctx->OMSetRenderTargets(0, nullptr, p.cascadeDSV[ci]);
-                //ctx->RSSetViewports(1, &p.cascadeViewport[ci]);
+    //        // 5) カスケードシャドウ DepthOnly パス
+    //        for (UINT ci = 0; ci < p.cascadeCount; ++ci)
+    //        {
+    //            ctx->OMSetRenderTargets(0, nullptr, p.cascadeDSV[ci]);
+    //            //ctx->RSSetViewports(1, &p.cascadeViewport[ci]);
 
-                // LightViewProj + World
-                D3D11_MAPPED_SUBRESOURCE ms{};
-                HRESULT hr = ctx->Map(cbVSShadow.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
-				assert(SUCCEEDED(hr) && "頂点シェーダーの定数バッファのマップオープンに失敗しました");
-                if (SUCCEEDED(hr))
-                {
-                    auto* vsp = reinterpret_cast<VSDepthParams*>(ms.pData);
-                    //ViewProjしか使用しない
-                    memcpy(vsp->ViewProj, p.lightViewProj[ci], sizeof(float) * 16);
+    //            // LightViewProj + World
+    //            D3D11_MAPPED_SUBRESOURCE ms{};
+    //            HRESULT hr = ctx->Map(cbVSShadow.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
+				//assert(SUCCEEDED(hr) && "頂点シェーダーの定数バッファのマップオープンに失敗しました");
+    //            if (SUCCEEDED(hr))
+    //            {
+    //                auto* vsp = reinterpret_cast<VSDepthParams*>(ms.pData);
+    //                //ViewProjしか使用しない
+    //                memcpy(vsp->ViewProj, p.lightViewProj[ci], sizeof(float) * 16);
 
-                    ctx->Unmap(cbVSShadow.Get(), 0);
-                }
+    //                ctx->Unmap(cbVSShadow.Get(), 0);
+    //            }
 
-				//各カスケードごとのoffsetで生成したSRVをセット
-                ctx->VSSetShaderResources(20, 1, shadowVisibleSRV[ci].GetAddressOf());
+				////各カスケードごとのoffsetで生成したSRVをセット
+    //            ctx->VSSetShaderResources(20, 1, shadowVisibleSRV[ci].GetAddressOf());
 
-                ctx->VSSetConstantBuffers(10, 1, cbVSShadow.GetAddressOf());
+    //            ctx->VSSetConstantBuffers(10, 1, cbVSShadow.GetAddressOf());
 
-                ctx->VSSetShader(vsShadow.Get(), nullptr, 0);
-                ctx->PSSetShader(nullptr, nullptr, 0);
+    //            ctx->VSSetShader(vsShadow.Get(), nullptr, 0);
+    //            ctx->PSSetShader(nullptr, nullptr, 0);
 
-                ID3D11ShaderResourceView* vsSRVs[] = {
-                    posSRV.Get(),
-                    //nrmSRV.Get(),
-                    //uvSRV.Get()
-                };
-                ctx->VSSetShaderResources(21, 1, vsSRVs);
+    //            ID3D11ShaderResourceView* vsSRVs[] = {
+    //                posSRV.Get(),
+    //                //nrmSRV.Get(),
+    //                //uvSRV.Get()
+    //            };
+    //            ctx->VSSetShaderResources(21, 1, vsSRVs);
 
-                ctx->IASetInputLayout(nullptr);
-                ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    //            ctx->IASetInputLayout(nullptr);
+    //            ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-                // オフセットでカスケードごとの Args
-                ctx->DrawInstancedIndirect(shadowArgsBuf.Get(), ci * sizeof(D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS));
-            }
+    //            // オフセットでカスケードごとの Args
+    //            ctx->DrawInstancedIndirect(shadowArgsBuf.Get(), ci * sizeof(D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS));
+    //        }
 
 			// 後始末
             constexpr ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };
