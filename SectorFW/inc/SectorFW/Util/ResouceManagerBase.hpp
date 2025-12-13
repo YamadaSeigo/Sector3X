@@ -238,6 +238,56 @@ namespace SFW
 				pendingDelete.erase(pendingDelete.begin() + i);
 			}
 		}
+
+		/**
+		 * @brief 読み取り用ロックを取得する関数
+		 * @return std::shared_lock<std::shared_mutex> 取得した読み取り用ロック
+		 */
+		[[nodiscard]] std::shared_lock<std::shared_mutex> AcquireReadLock() const {
+			return std::shared_lock<std::shared_mutex>(mapMutex);
+		}
+		/**
+		 * @brief 書き込み用ロックを取得する関数
+		 * @return std::unique_lock<std::shared_mutex> 取得した書き込み用ロック
+		 */
+		[[nodiscard]] std::unique_lock<std::shared_mutex> AcquireWriteLock() {
+			return std::unique_lock<std::shared_mutex>(mapMutex);
+		}
+		/**
+		 * @brief ロック無しでリソースを取得する関数（IsValid チェック付き）
+		 * @param h 有効なハンドル
+		 * @return const ResourceType& 取得したリソースの参照
+		 */
+		[[nodiscard]] const ResourceType& GetNoLock(HandleType h) const {
+			assert(IsValid(h));
+			return slots[h.index].data;
+		}
+		/**
+		 * @brief ロック無しでリソースを取得する関数（IsValid チェック付き）
+		 * @param h 有効なハンドル
+		 * @return ResourceType& 取得したリソースの参照
+		 */
+		[[nodiscard]] ResourceType& GetNoLockWrite(HandleType h) {
+			assert(IsValid(h));
+			return slots[h.index].data;
+		}
+		/**
+		 * @brief ロック無しでリソースを取得する関数（IsValid チェックなし）
+		 * @param idx スロットインデックス
+		 * @return const ResourceType& 取得したリソースの参照
+		 */
+		[[nodiscard]] const ResourceType& GetDirectNoLock(uint32_t idx) const {
+			return slots[idx].data;
+		}
+		/**
+		 * @brief ロック無しでリソースを取得する関数（IsValid チェックなし）
+		 * @param idx スロットインデックス
+		 * @return ResourceType& 取得したリソースの参照
+		 */
+		[[nodiscard]] ResourceType& GetDirectNoLockWrite(uint32_t idx) {
+			return slots[idx].data;
+		}
+
 		/**
 		 * @brief ハンドルが有効かどうかをチェックする関数
 		 * @param h チェックするハンドル

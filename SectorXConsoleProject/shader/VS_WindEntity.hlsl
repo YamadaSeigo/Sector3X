@@ -83,6 +83,12 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     VSOutput output;
     float3 wp = mul(R, input.position) + baseWorldPos;
+    
+    output.posH = mul(uViewProj, float4(wp, 1.0f));
+    output.worldPos = wp;
+    output.normalWS = mul(R, input.normal.xyz); // 非一様スケール無し前提
+    output.viewDepth = mul(uView, float4(wp, 1.0f)).z;
+    output.uv = input.uv;
 
    // ---- 1) 全体をまとめる“大きな揺れ” ----
    // 空間周波数をかなり低くして「大きなうねり」

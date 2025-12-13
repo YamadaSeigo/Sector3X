@@ -72,7 +72,7 @@ public:
 
 		auto fru = cameraService->MakeFrustum(true);
 		// far を200mに制限したフラスタムを作成
-		fru = fru.ClampedFar(camPos, 200.0f);
+		fru = fru.ClampedFar(camPos, 100.0f);
 
 		float maxShadowDistance = lightShadowService->GetMaxShadowDistance();
 		Math::Vec3f shadowDir = lightShadowService->GetDirectionalLight().directionWS.normalized() * -1.0f;
@@ -193,6 +193,9 @@ public:
 				std::vector<Graphics::InstanceIndex> instanceIndices(entityCount);
 				producer.AllocInstancesFromWorldSoA(worldMtxSoA, instanceIndices.data());
 
+				//ループの外で読み取りロックを取得
+				auto readLock = kp->modelMgr->AcquireReadLock();
+
 				for (size_t i = 0; i < entityCount; ++i) {
 					const auto& WVP = WVPs[i];
 
@@ -200,10 +203,10 @@ public:
 
 					auto& lodBits = modelComp.prevLODBits;
 
-					//モデルアセットを取得
-					auto modelAsset = kp->modelMgr->Get(modelComp.handle);
+					//モデルアセットを取得(ロックなし)
+					const auto& modelAsset = kp->modelMgr->GetNoLock(modelComp.handle);
 					int subMeshIdx = 0;
-					for (const Graphics::DX11::ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
+					for (const Graphics::DX11::ModelAssetData::SubMesh& mesh : modelAsset.subMeshes) {
 						if (kp->materialMgr->IsValid(mesh.material) == false) [[unlikely]] continue;
 						if (kp->psoMgr->IsValid(mesh.pso) == false) [[unlikely]] continue;
 
@@ -248,7 +251,7 @@ public:
 						if (!shadowOnly)
 						{
 							//小さすぎる場合は無視
-							if (areaFrec <= 0.005f)
+							if (areaFrec <= 0.002f)
 							{
 								continue;
 							}
@@ -427,7 +430,7 @@ public:
 
 						subMeshIdx++;
 						if (subMeshIdx >= 16) [[unlikely]] {
-							LOG_ERROR("モデルのサブメッシュ数が多すぎます {%d}", modelAsset.ref().subMeshes.size());
+							LOG_ERROR("モデルのサブメッシュ数が多すぎます {%d}", modelAsset.subMeshes.size());
 							return;
 						}
 					}

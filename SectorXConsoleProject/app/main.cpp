@@ -275,7 +275,6 @@ void InitializeRenderPipeLine(
 		{ 0, 3 },
 		{ 0, 4 },
 		{ 0, 5 },
-		{ 0 ,6 },
 		{ 1, 0 },
 		{ 1, 1 },
 		{ 1, 2 }
@@ -777,7 +776,7 @@ int main(void)
 				modelDesc.viewMax = 50.0f;
 				modelDesc.pso = windGrassPSOHandle;
 				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
-				modelDesc.path = "assets/model/Stylized/optimizeGrass.gltf";
+				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
 				modelAssetMgr->Add(modelDesc, grassModelHandle);
 				modelDesc.pCustomNomWFunc = nullptr;
 
@@ -854,7 +853,7 @@ int main(void)
 
 						for (auto& tpx : mesh.lodThresholds.Tpx) // LODí≤êÆ
 						{
-							tpx *= 6.0f;
+							tpx *= 4.0f;
 						}
 					}
 				}

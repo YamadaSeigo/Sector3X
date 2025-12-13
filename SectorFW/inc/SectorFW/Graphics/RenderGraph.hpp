@@ -195,6 +195,7 @@ namespace SFW
 
 				renderService.CallPreDrawCustomFunc(); // カスタム関数の更新
 
+
 				// グループごとに Submit して cmds を埋める
 				for (size_t gi = 0; gi < groups.size(); ++gi) {
 					auto& g = groups[gi];
