@@ -24,7 +24,8 @@ class PlayerSystem : public ITypeSystem<
 		Graphics::I3DPerCameraService,
 		Graphics::RenderService,
 		InputService,
-		PlayerService
+		PlayerService,
+		Audio::AudioService
 	>>{
 
 public:
@@ -98,12 +99,25 @@ public:
 	};
 
 	//指定したサービスを関数の引数として受け取る
+	void StartImpl(
+		UndeletablePtr<Physics::PhysicsService> physicsService,
+		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
+		UndeletablePtr<Graphics::RenderService> renderService,
+		UndeletablePtr<InputService> inputService,
+		UndeletablePtr<PlayerService> playerService,
+		UndeletablePtr<Audio::AudioService> audioService)
+	{
+		grassStepHandle = audioService->EnqueueLoadWav("assets/audio/SE/walk-on-grass.mp3");
+	}
+
+	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
 		UndeletablePtr<Physics::PhysicsService> physicsService,
 		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
 		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<InputService> inputService,
-		UndeletablePtr<PlayerService> playerService)
+		UndeletablePtr<PlayerService> playerService,
+		UndeletablePtr<Audio::AudioService> audioService)
 	{
 		ECS::EntityManager& globalEntityManager = partition.GetGlobalEntityManager();
 
@@ -120,6 +134,13 @@ public:
 			cameraService->SetRotateMode(playerCamera ? RotateMode::Orbital : RotateMode::FPS);
 		}
 
+		static std::random_device rd;
+		static std::mt19937_64 rng(rd());
+
+		static std::uniform_real_distribution<float> distVolume(0.3f, 0.5f);
+		static std::uniform_real_distribution<float> distPitch(0.75f, 1.0f);
+		static std::uniform_real_distribution <float> distDelay(4.0f, 5.0f);
+
 		for (auto& player : playerComponents)
 		{
 			auto entityID = player.first;
@@ -135,9 +156,23 @@ public:
 				// 空中制御が欲しいなら XZ だけ補正
 				Math::Vec3f wish = CalcWishVelocityFromInput(cameraService, inputService);
 
-				if (wish.lengthSquared() > 0.0f) {
+
+				static float stepSoundDelay = 0.0f;
+
+				float wishSquared = wish.lengthSquared();
+				bool move = wishSquared > 0.0f;
+				if (move) {
 					// 向きを変える
 					targetYaw = std::atan2(wish.x, wish.z);
+
+					stepSoundDelay -= dt * std::sqrt(wishSquared); // フレーム数換算
+					if (stepSoundDelay < 0.0f)
+						stepSoundDelay = 0.0f;
+				}
+				else
+				{
+					// 止まっているときは歩行音をリセット
+					stepSoundDelay = 0.0f;
 				}
 
 				if (comp.isGrounded) {
@@ -145,6 +180,19 @@ public:
 					// 地面にいるので縦成分を消す＆坂で滑らせない
 					float vy = v.dot(PlayerService::UP);
 					v -= PlayerService::UP * vy;
+
+					if (move)
+					{
+						// 歩行音
+						if (stepSoundDelay <= 0.0f)
+						{
+							Audio::AudioPlayParams params;
+							params.volume = distVolume(rng);
+							params.pitch = distPitch(rng);
+							audioService->EnqueuePlay(grassStepHandle, params);
+							stepSoundDelay = distDelay(rng); 
+						}
+					}
 				}
 				else {
 					// 空中：自前で重力を足す
@@ -299,4 +347,8 @@ public:
 			}
 		}
 	}
+
+private:
+	Audio::SoundHandle grassStepHandle = Audio::SoundHandle{ 0 };
+	Audio::AudioTicketID grassStepTicket = Audio::AudioTicketID::Invalid();
 };

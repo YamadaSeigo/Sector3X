@@ -18,7 +18,9 @@
 #include "system/SimpleModelRenderSystem.h"
 #include "system/SpriteRenderSystem.h"
 #include "system/PlayerSystem.h"
+#include "system/EnviromentSystem.h"
 #include "WindMovementService.h"
+
 #include <string>
 
 //デバッグ用
@@ -275,6 +277,7 @@ void InitializeRenderPipeLine(
 		{ 0, 3 },
 		{ 0, 4 },
 		{ 0, 5 },
+		{ 0, 6 },
 		{ 1, 0 },
 		{ 1, 1 },
 		{ 1, 2 }
@@ -349,8 +352,11 @@ int main(void)
 
 	PlayerService playerService(bufferMgr);
 
+	Audio::AudioService audioService;
+	audioService.Initialize();
+
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService,
-		ortCameraService, camera2DService, &lightShadowService, &grassService, &playerService);
+		ortCameraService, camera2DService, &lightShadowService, &grassService, &playerService, &audioService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
@@ -894,6 +900,7 @@ int main(void)
 				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
 				scheduler.AddSystem<PlayerSystem>(serviceLocator);
+				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
 
 				//草Entity生成
@@ -1082,6 +1089,7 @@ int main(void)
 						ps->EnqueueCreateIntent(id.value(), terrainShape, chunk.value()->GetNodeKey());
 					}
 				}
+
 			},
 			//アンロード時
 			[&](std::add_pointer_t<decltype(world)> pWorld, OpenFieldLevel* pLevel)

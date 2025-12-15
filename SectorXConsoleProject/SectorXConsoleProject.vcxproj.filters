@@ -162,5 +162,8 @@
     <ClInclude Include="app\PlayerService.h">
       <Filter>App</Filter>
     </ClInclude>
+    <ClInclude Include="system\EnviromentSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

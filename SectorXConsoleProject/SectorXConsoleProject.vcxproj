@@ -336,6 +336,7 @@
     <ClInclude Include="system\CameraSystem.h" />
     <ClInclude Include="system\CleanModelSystem.h" />
     <ClInclude Include="system\DebugRenderSystem.h" />
+    <ClInclude Include="system\EnviromentSystem.h" />
     <ClInclude Include="system\ModelRenderSystem.h" />
     <ClInclude Include="system\PhysicsSystem.h" />
     <ClInclude Include="system\PlayerSystem.h" />

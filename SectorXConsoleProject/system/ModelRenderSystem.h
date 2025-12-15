@@ -72,7 +72,7 @@ public:
 
 		auto fru = cameraService->MakeFrustum(true);
 		// far を200mに制限したフラスタムを作成
-		fru = fru.ClampedFar(camPos, 100.0f);
+		fru = fru.ClampedFar(camPos, 200.0f);
 
 		float maxShadowDistance = lightShadowService->GetMaxShadowDistance();
 		Math::Vec3f shadowDir = lightShadowService->GetDirectionalLight().directionWS.normalized() * -1.0f;

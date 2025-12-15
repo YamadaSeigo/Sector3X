@@ -31,6 +31,8 @@
 
 #include "Physics/PhysicsService.h"
 
+#include "Audio/AudioService.h"
+
 #include "SIMD/simd_api.h"
 #include "SIMD/simd_detect.h"
 
