@@ -5,13 +5,17 @@ namespace SFW
 {
 	namespace ECS
 	{
-		const ComponentMeta& ComponentTypeRegistry::GetMeta(ComponentTypeID id) noexcept
+		const ComponentMeta* ComponentTypeRegistry::GetMeta(ComponentTypeID id) noexcept
 		{
 			auto iter = meta.find(id);
 
-			DYNAMIC_ASSERT_MESSAGE(iter != meta.end(), "Not Registry ComponentType!");
+			if (iter == meta.end())
+			{
+				DYNAMIC_ASSERT_MESSAGE(false, "Not Registry ComponentType!");
+				return nullptr;
+			}
 
-			return iter->second;
+			return &iter->second;
 		}
 	}
 }

@@ -299,6 +299,7 @@ int main(void)
 	ComponentTypeRegistry::Register<Physics::BodyComponent>();
 	ComponentTypeRegistry::Register<Physics::PhysicsInterpolation>();
 	ComponentTypeRegistry::Register<Physics::ShapeDims>();
+	ComponentTypeRegistry::Register<CSprite>();
 	//======================================================================
 
 	// ウィンドウの作成
@@ -668,7 +669,59 @@ int main(void)
 		auto level = std::unique_ptr<Level<VoidPartition>>(new Level<VoidPartition>("Title", *entityManagerReg, ELevelState::Main));
 
 		auto worldSession = world.GetSession();
-		worldSession.AddLevel(std::move(level));
+		worldSession.AddLevel(std::move(level),
+			[](std::add_pointer_t<decltype(world)> pWorld, SFW::Level<VoidPartition>* pLevel)
+			{
+				auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
+				auto matMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::MaterialManager>();
+				auto shaderMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::ShaderManager>();
+				auto sampMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::SamplerManager>();
+
+				DX11::TextureCreateDesc textureDesc;
+				textureDesc.path = "assets/texture/sprite/TitleText.png";
+				textureDesc.forceSRGB = true;
+				Graphics::TextureHandle texHandle;
+				textureMgr->Add(textureDesc, texHandle);
+				Graphics::DX11::MaterialCreateDesc matDesc;
+
+				DX11::ShaderCreateDesc shaderDesc;
+				shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
+				shaderDesc.psPath = L"assets/shader/PS_Color.cso";
+				ShaderHandle shaderHandle;
+				shaderMgr->Add(shaderDesc, shaderHandle);
+
+				D3D11_SAMPLER_DESC sampDesc = {};
+				sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+				sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+				SamplerHandle samp = sampMgr->AddWithDesc(sampDesc);
+
+				matDesc.shader = shaderHandle;
+				matDesc.psSRV[2] = texHandle; // TEX2 にセット
+				matDesc.samplerMap[0] = samp;
+
+				Graphics::MaterialHandle matHandle;
+				matMgr->Add(matDesc, matHandle);
+				CSprite sprite;
+				sprite.hMat = matHandle;
+				auto levelSession = pLevel->GetSession();
+
+				auto getScale = [](float x, float y)->Math::Vec3f {
+					Math::Vec3f scale;
+					scale.x = WINDOW_WIDTH * x;
+					scale.y = WINDOW_HEIGHT * y;
+					scale.z = 1.0f;
+					return scale;
+					};
+
+				levelSession.AddGlobalEntity(
+					CTransform{ { 0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,1.0f}, getScale(0.7f,0.7f) },
+					std::move(sprite));
+
+				auto& serviceLocator = pWorld->GetServiceLocator();
+
+				auto& scheduler = pLevel->GetScheduler();
+				scheduler.AddSystem<SpriteRenderSystem>(serviceLocator);
+			});
 	}
 
 	{
@@ -888,21 +941,6 @@ int main(void)
 					grassAnchor.push_back({ aabb.ub.x * bias, aabb.ub.z * bias });
 				}
 
-				// System登録
-				auto& scheduler = pLevel->GetScheduler();
-
-				scheduler.AddSystem<ModelRenderSystem>(serviceLocator);
-
-				//scheduler.AddSystem<SimpleModelRenderSystem>(serviceLocator);
-				scheduler.AddSystem<CameraSystem>(serviceLocator);
-				//scheduler.AddSystem<PhysicsSystem>(serviceLocator);
-				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
-				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
-				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
-				scheduler.AddSystem<PlayerSystem>(serviceLocator);
-				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
-				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
-
 				//草Entity生成
 				Math::Vec2f terrainScale = {
 					p.cellsX * p.cellSize,
@@ -1090,6 +1128,21 @@ int main(void)
 					}
 				}
 
+				// System登録
+				auto& scheduler = pLevel->GetScheduler();
+
+				scheduler.AddSystem<ModelRenderSystem>(serviceLocator);
+
+				//scheduler.AddSystem<SimpleModelRenderSystem>(serviceLocator);
+				scheduler.AddSystem<CameraSystem>(serviceLocator);
+				//scheduler.AddSystem<PhysicsSystem>(serviceLocator);
+				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
+				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
+				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
+				scheduler.AddSystem<PlayerSystem>(serviceLocator);
+				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
+				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
+
 			},
 			//アンロード時
 			[&](std::add_pointer_t<decltype(world)> pWorld, OpenFieldLevel* pLevel)
@@ -1099,7 +1152,7 @@ int main(void)
 	}
 
 	//初めのレベルをロード
-	world.GetSession().LoadLevel("OpenField");
+	//world.GetSession().LoadLevel("OpenField");
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
 

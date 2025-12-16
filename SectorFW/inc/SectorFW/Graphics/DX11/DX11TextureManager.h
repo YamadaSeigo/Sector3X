@@ -105,7 +105,7 @@ namespace SFW
 		 */
 		struct TextureData {
 			ComPtr<ID3D11ShaderResourceView> srv = nullptr;
-			ComPtr<ID3D11Resource> resource = nullptr; // 必要なら
+			ComPtr<ID3D11Resource> resource = nullptr; // 必要なら使用する
 		private:
 			std::string path; // キャッシュ用のパス
 

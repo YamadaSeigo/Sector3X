@@ -39,14 +39,15 @@ namespace SFW
 			while (working.any()) {
 				ComponentTypeID index = static_cast<ComponentTypeID>(std::countr_zero(working.to_ullong()));
 				working.reset(index);
-				const ComponentMeta& meta = ComponentTypeRegistry::GetMeta(index);
-				if (meta.isSparse) continue;
+				const ComponentMeta* meta = ComponentTypeRegistry::GetMeta(index);
+				if (meta == nullptr) break;
+				if (meta->isSparse) continue;
 
-				if (meta.isSoA) {
+				if (meta->isSoA) {
 					hasSoA = true;
 				}
 
-				component.emplace_back(index, meta);
+				component.emplace_back(index, *meta);
 			}
 
 			if (hasSoA)

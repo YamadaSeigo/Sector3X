@@ -165,7 +165,7 @@ public:
 		psoMgr->Add(psoDesc, psoLineHandle);
 
 		ShaderHandle mocShaderHandle;
-		shaderDesc.vsPath = L"assets/shader/VS_Default.cso";
+		shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
 		shaderDesc.psPath = L"assets/shader/PS_MOCDebug.cso";
 		shaderMgr->Add(shaderDesc, mocShaderHandle);
 		psoDesc = { mocShaderHandle, RasterizerStateID::SolidCullBack };

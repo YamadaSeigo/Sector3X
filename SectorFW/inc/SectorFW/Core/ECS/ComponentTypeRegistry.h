@@ -186,7 +186,7 @@ namespace SFW
 			 * @param id コンポーネントの型ID
 			 * @return const ComponentMeta& コンポーネントのメタ情報への参照
 			 */
-			static const ComponentMeta& GetMeta(ComponentTypeID id) noexcept;
+			static const ComponentMeta* GetMeta(ComponentTypeID id) noexcept;
 		private:
 			//コンポーネントの型IDをカウントする静的変数
 			static inline ComponentTypeID counter = 0;

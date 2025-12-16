@@ -486,7 +486,7 @@ namespace SFW
 							if (b.type == D3D_SIT_SAMPLER && b.name == gSamplerBindName)
 								samplerMap[b.bindPoint] = samp;
 
-					
+
 						// 追加バインド情報を適用
 						if (desc.additionalBindings)
 						{
