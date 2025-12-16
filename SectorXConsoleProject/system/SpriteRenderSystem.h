@@ -30,7 +30,7 @@ public:
 		auto psoMgr = renderService->GetResourceManager<DX11::PSOManager>();
 
 		DX11::ShaderCreateDesc shaderDesc;
-		shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
+		shaderDesc.vsPath = L"assets/shader/VS_WindSprite.cso";
 		shaderDesc.psPath = L"assets/shader/PS_Color.cso";
 		ShaderHandle shaderHandle;
 		shaderMgr->Add(shaderDesc, shaderHandle);

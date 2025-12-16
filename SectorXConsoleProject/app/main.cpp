@@ -179,7 +179,7 @@ void InitializeRenderPipeLine(
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
 
 	shaderDesc.vsPath = L"assets/shader/VS_Sky.cso";
-	shaderDesc.psPath = L"assets/shader/PS_Unlit.cso";
+	shaderDesc.psPath = L"assets/shader/PS_Sky.cso";
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	psoDesc.shader = shaderHandle;
 	psoDesc.rasterizerState = RasterizerStateID::SolidCullNone;
@@ -203,11 +203,32 @@ void InitializeRenderPipeLine(
 	static auto gGraphics = graphics;
 	static auto renderBackend = graphics->GetBackend();
 
+	struct SkyCB {
+		float time;
+		float rotateSpeed;
+		float padding[2];
+	};
+
+	static SkyCB skyboxData = { 0.0f,0.005f,0.0f,0.0f };
+
+	DX11::BufferCreateDesc cbSkyboxDesc;
+	cbSkyboxDesc.name = "SkyboxCB";
+	cbSkyboxDesc.size = sizeof(SkyCB);
+	cbSkyboxDesc.initialData = &skyboxData;
+	BufferHandle skyboxCBHandle = {};
+	auto skyBufData = bufferMgr->CreateResource(cbSkyboxDesc, skyboxCBHandle);
+	static ComPtr<ID3D11Buffer> SkyCBBuffer = skyBufData.buffer;
+
 	static auto skyboxDraw = [](uint64_t frame) {
 		bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 		if (!execute) return;
 
+		skyboxData.time += (float)(1.0f / FPS_LIMIT);
+
+		renderBackend->UpdateBufferDataImpl(SkyCBBuffer.Get(), &skyboxData, sizeof(skyboxData));
+
 		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
+		renderBackend->BindPSCBVs({ SkyCBBuffer.Get()}, 12);
 		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
 		};
 
@@ -670,19 +691,13 @@ int main(void)
 
 		auto worldSession = world.GetSession();
 		worldSession.AddLevel(std::move(level),
-			[](std::add_pointer_t<decltype(world)> pWorld, SFW::Level<VoidPartition>* pLevel)
+			[&](std::add_pointer_t<decltype(world)> pWorld, SFW::Level<VoidPartition>* pLevel)
 			{
 				auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
 				auto matMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::MaterialManager>();
 				auto shaderMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::ShaderManager>();
 				auto sampMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::SamplerManager>();
 
-				DX11::TextureCreateDesc textureDesc;
-				textureDesc.path = "assets/texture/sprite/TitleText.png";
-				textureDesc.forceSRGB = true;
-				Graphics::TextureHandle texHandle;
-				textureMgr->Add(textureDesc, texHandle);
-				Graphics::DX11::MaterialCreateDesc matDesc;
 
 				DX11::ShaderCreateDesc shaderDesc;
 				shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
@@ -695,15 +710,33 @@ int main(void)
 				sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 				SamplerHandle samp = sampMgr->AddWithDesc(sampDesc);
 
+				DX11::TextureCreateDesc textureDesc;
+				textureDesc.path = "assets/texture/sprite/TitleText.png";
+				textureDesc.forceSRGB = true;
+				Graphics::TextureHandle texHandle;
+				textureMgr->Add(textureDesc, texHandle);
+				Graphics::DX11::MaterialCreateDesc matDesc;
+
+				auto windCBHandle = grassService.GetBufferHandle();
+
 				matDesc.shader = shaderHandle;
-				matDesc.psSRV[2] = texHandle; // TEX2 にセット
 				matDesc.samplerMap[0] = samp;
+				matDesc.vsCBV[11] = windCBHandle; // VS_CB11 にセット
+				matDesc.psSRV[2] = texHandle; // TEX2 にセット
 
 				Graphics::MaterialHandle matHandle;
 				matMgr->Add(matDesc, matHandle);
 				CSprite sprite;
 				sprite.hMat = matHandle;
 				auto levelSession = pLevel->GetSession();
+
+				auto getPos = [](float x, float y)->Math::Vec3f {
+					Math::Vec3f pos;
+					pos.x = (WINDOW_WIDTH * x) / 2.0f;
+					pos.y = (WINDOW_HEIGHT * y) / 2.0f;
+					pos.z = 0.0f;
+					return pos;
+					};
 
 				auto getScale = [](float x, float y)->Math::Vec3f {
 					Math::Vec3f scale;
@@ -714,13 +747,28 @@ int main(void)
 					};
 
 				levelSession.AddGlobalEntity(
-					CTransform{ { 0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,1.0f}, getScale(0.7f,0.7f) },
-					std::move(sprite));
+					CTransform{ getPos(0.0f,0.4f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.7f,0.7f) },
+					sprite);
+
+				textureDesc.path = "assets/texture/sprite/PressEnter.png";
+				textureMgr->Add(textureDesc, texHandle);
+				matDesc.psSRV[2] = texHandle; // TEX2 にセット
+				matMgr->Add(matDesc, matHandle);
+				sprite.hMat = matHandle;
+
+				levelSession.AddGlobalEntity(
+					CTransform{ getPos(0.0f,-0.7f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.25f,0.25f) },
+					sprite);
 
 				auto& serviceLocator = pWorld->GetServiceLocator();
 
 				auto& scheduler = pLevel->GetScheduler();
 				scheduler.AddSystem<SpriteRenderSystem>(serviceLocator);
+
+				perCameraService->SetTarget({ 100.0f,-1.0f,100.0f });
+				Math::Quatf cameraRot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(-20.0f));
+				perCameraService->Rotate(cameraRot);
+
 			});
 	}
 
@@ -1139,7 +1187,7 @@ int main(void)
 				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
 				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
-				scheduler.AddSystem<PlayerSystem>(serviceLocator);
+				//scheduler.AddSystem<PlayerSystem>(serviceLocator);
 				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
 
@@ -1152,7 +1200,8 @@ int main(void)
 	}
 
 	//初めのレベルをロード
-	//world.GetSession().LoadLevel("OpenField");
+	world.GetSession().LoadLevel("Title");
+	world.GetSession().LoadLevel("OpenField");
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
 

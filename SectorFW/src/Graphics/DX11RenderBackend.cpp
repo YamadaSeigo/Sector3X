@@ -55,7 +55,7 @@ namespace SFW
 			graph.RegisterResourceManager<ModelAssetManager>(modelAssetManager);
 		}
 
-		void RenderBackend::SetBlendStateImpl(BlendStateID state)
+		void RenderBackend::SetBlendStateImpl(BlendStateID state) const
 		{
 			if (state < BlendStateID(0) || state >= BlendStateID::MAX_COUNT) {
 				LOG_ERROR("Invalid BlendStateID: %d", static_cast<int>(state));

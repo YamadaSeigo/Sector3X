@@ -74,7 +74,16 @@ namespace SFW
 				rot.Normalize();
 				Math::Vec3f r, u, f;
 				Math::ToBasis<float, Math::LH_ZForward>(rot, r, u, f);
-				target = eye + f * focusDist;
+
+				if (rotateMode == RotateMode::FPS)
+				{
+					target = eye + f * focusDist;
+				}
+				else
+				{
+					eye = target - f * focusDist;
+				}
+
 				isUpdateBuffer = true;
 			}
 			/**

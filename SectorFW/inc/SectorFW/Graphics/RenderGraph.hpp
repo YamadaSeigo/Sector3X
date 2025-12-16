@@ -294,7 +294,7 @@ namespace SFW
 					backend.SetRenderTargets(pass->rtvsRaw, pass->dsv.Get());
 
 					if (pass->cbvs.has_value())
-						backend.BindGlobalCBVs(pass->cbvs.value());
+						backend.BindGlobalVSCBVs(pass->cbvs.value());
 
 					if (pass->viewport.has_value())
 						backend.SetViewport(pass->viewport.value());

@@ -33,67 +33,75 @@ namespace SFW
 			 * @brief プリミティブのトポロジーを設定する関数
 			 * @param topology　プリミティブのトポロジー
 			 */
-			void SetPrimitiveTopology(PrimitiveTopology topology) {
-				static_cast<Derived*>(this)->SetPrimitiveTopologyImpl(topology);
+			void SetPrimitiveTopology(PrimitiveTopology topology) const {
+				static_cast<const Derived*>(this)->SetPrimitiveTopologyImpl(topology);
 			}
 			/**
 			 * @brief ラスタライザーステートを設定する関数
 			 * @param state ラスタライザーステートID
 			 */
-			void SetRasterizerState(RasterizerStateID state) {
-				static_cast<Derived*>(this)->SetRasterizerStateImpl(state);
+			void SetRasterizerState(RasterizerStateID state) const {
+				static_cast<const Derived*>(this)->SetRasterizerStateImpl(state);
 			}
 			/**
 			 * @brief ブレンドステートを設定する関数
 			 * @param state ブレンドステートID
 			 */
-			void SetBlendState(BlendStateID state) {
-				static_cast<Derived*>(this)->SetBlendStateImpl(state);
+			void SetBlendState(BlendStateID state) const {
+				static_cast<const Derived*>(this)->SetBlendStateImpl(state);
 			}
 			/**
 			 * @brief デプスステンシルステートを設定する関数
 			 * @param state デプスステンシルステートID
 			 */
-			void SetDepthStencilState(DepthStencilStateID state, uint32_t stencilRef = 0) {
-				static_cast<Derived*>(this)->SetDepthStencilStateImpl(state, stencilRef);
+			void SetDepthStencilState(DepthStencilStateID state, uint32_t stencilRef = 0) const {
+				static_cast<const Derived*>(this)->SetDepthStencilStateImpl(state, stencilRef);
 			}
 			/**
 			 * @brief レンダーターゲットとデプスステンシルビューを設定する関数
 			 * @param rtvs レンダーターゲットビューの配列
 			 * @param dsv デプスステンシルビュー
 			 */
-			void SetRenderTargets(const std::vector<RTV>& rtvs, void* dsv) {
-				static_cast<Derived*>(this)->SetRenderTargetsImpl(rtvs, dsv);
+			void SetRenderTargets(const std::vector<RTV>& rtvs, void* dsv) const {
+				static_cast<const Derived*>(this)->SetRenderTargetsImpl(rtvs, dsv);
 			}
 			/**
 			 * @brief シェーダーリソースビューをバインドする関数
 			 * @param srvs シェーダーリソースビューの配列
 			 * @param startSlot バインド開始スロット
 			 */
-			void BindSRVs(const std::vector<SRV>& srvs, uint32_t startSlot = 0) {
-				static_cast<Derived*>(this)->BindSRVsImpl(srvs, startSlot);
+			void BindPSSRVs(const std::vector<SRV>& srvs, uint32_t startSlot = 0) const {
+				static_cast<const Derived*>(this)->BindPSSRVsImpl(srvs, startSlot);
 			}
 			/**
 			 * @brief 定数バッファビューをバインドする関数
 			 * @param cbvs 定数バッファビューの配列
 			 * @param startSlot バインド開始スロット
 			 */
-			void BindCBVs(const std::vector<Buffer>& cbvs, uint32_t startSlot = 0) {
-				static_cast<Derived*>(this)->BindCBVsImpl(cbvs, startSlot);
+			void BindVSCBVs(const std::vector<Buffer>& cbvs, uint32_t startSlot = 0) const {
+				static_cast<const Derived*>(this)->BindVSCBVsImpl(cbvs, startSlot);
+			}
+			/**
+			 * @brief ピクセルシェーダー用定数バッファビューをバインドする関数
+			 * @param cbvs 定数バッファビューの配列
+			 * @param startSlot バインド開始スロット
+			 */
+			void BindPSCBVs(const std::vector<Buffer>& cbvs, uint32_t startSlot = 0) const {
+				static_cast<const Derived*>(this)->BindPSCBVsImpl(cbvs, startSlot);
 			}
 			/**
 			 * @brief グローバル定数バッファビューをバインドする関数
 			 * @param cbvs 定数バッファビューの配列
 			 */
-			void BindGlobalCBVs(const std::vector<BindSlotBuffer>& cbvs) {
-				static_cast<Derived*>(this)->BindGlobalCBVsImpl(cbvs);
+			void BindGlobalVSCBVs(const std::vector<BindSlotBuffer>& cbvs) const {
+				static_cast<const Derived*>(this)->BindGlobalVSCBVsImpl(cbvs);
 			}
 			/**
 			 * @brief ビューポートを設定する関数
 			 * @param vp ビューポート情報
 			 */
-			void SetViewport(const Viewport& vp) {
-				static_cast<Derived*>(this)->SetViewportImpl(vp);
+			void SetViewport(const Viewport& vp) const {
+				static_cast<const Derived*>(this)->SetViewportImpl(vp);
 			}
 			/**
 			 * @brief フレームごとのインスタンスデータをアップロードする関数
@@ -123,6 +131,10 @@ namespace SFW
 			 */
 			void ProcessDeferredDeletes(uint64_t currentFrame) {
 				static_cast<Derived*>(this)->ProcessDeferredDeletesImpl(currentFrame);
+			}
+
+			void UpdateBufferData(Buffer buffer, const void* data, size_t size) {
+				static_cast<Derived*>(this)->UpdateBufferDataImpl(buffer, data, size);
 			}
 		};
 	}

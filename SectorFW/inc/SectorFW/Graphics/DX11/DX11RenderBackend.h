@@ -71,14 +71,14 @@ namespace SFW
 			 * @brief プリミティブトポロジーを設定する関数
 			 * @param topology プリミティブトポロジー
 			 */
-			void SetPrimitiveTopologyImpl(PrimitiveTopology topology) {
+			void SetPrimitiveTopologyImpl(PrimitiveTopology topology) const {
 				context->IASetPrimitiveTopology(ToD3DTopology(topology));
 			}
 			/**
 			 * @brief ブレンドステートを設定する関数
 			 * @param state ブレンドステートID
 			 */
-			void SetBlendStateImpl(BlendStateID state);
+			void SetBlendStateImpl(BlendStateID state) const;
 			/**
 			 * @brief ラスタライザーステートを設定する関数
 			 * @param state ラスタライザーステートID
@@ -88,7 +88,7 @@ namespace SFW
 			 * @brief デプスステンシルステートを設定する関数
 			 * @param state デプスステンシルステートID
 			 */
-			void SetDepthStencilStateImpl(DepthStencilStateID state, UINT stencilRef = 0) {
+			void SetDepthStencilStateImpl(DepthStencilStateID state, UINT stencilRef = 0) const {
 				context->OMSetDepthStencilState(depthStencilStates[(size_t)state].Get(), stencilRef);
 			}
 			/**
@@ -96,7 +96,7 @@ namespace SFW
 			 * @param rtvs レンダーターゲットビューの配列
 			 * @param dsv デプスステンシルビュー
 			 */
-			void SetRenderTargetsImpl(const std::vector<ID3D11RenderTargetView*>& rtvs, void* dsv) {
+			void SetRenderTargetsImpl(const std::vector<ID3D11RenderTargetView*>& rtvs, void* dsv) const {
 				context->OMSetRenderTargets((UINT)rtvs.size(), rtvs.data(), (ID3D11DepthStencilView*)dsv);
 			}
 			/**
@@ -104,7 +104,7 @@ namespace SFW
 			 * @param srvs シェーダリソースビューの配列
 			 * @param startSlot 開始スロット
 			 */
-			void BindSRVsImpl(const std::vector<ID3D11ShaderResourceView*>& srvs, uint32_t startSlot = 0) {
+			void BindPSSRVsImpl(const std::vector<ID3D11ShaderResourceView*>& srvs, uint32_t startSlot = 0) const {
 				context->PSSetShaderResources(startSlot, (UINT)srvs.size(), srvs.data());
 			}
 			/**
@@ -112,21 +112,29 @@ namespace SFW
 			 * @param cbvs コンスタントバッファの配列
 			 * @param startSlot 開始スロット
 			 */
-			void BindCBVsImpl(const std::vector<ID3D11Buffer*>& cbvs, uint32_t startSlot = 0) {
+			void BindVSCBVsImpl(const std::vector<ID3D11Buffer*>& cbvs, uint32_t startSlot = 0) const {
 				context->VSSetConstantBuffers(startSlot, (UINT)cbvs.size(), cbvs.data());
+			}
+			/**
+			 * @brief ピクセルシェーダー用コンスタントバッファをバインドする関数
+			 * @param cbvs コンスタントバッファの配列
+			 * @param startSlot 開始スロット
+			 */
+			void BindPSCBVsImpl(const std::vector<ID3D11Buffer*>& cbvs, uint32_t startSlot = 0) const {
+				context->PSSetConstantBuffers(startSlot, (UINT)cbvs.size(), cbvs.data());
 			}
 			/**
 			 * @brief 共通のコンスタントバッファをバインドする関数
 			 * @param cbvs コンスタントバッファの配列
 			 */
-			void BindGlobalCBVsImpl(const std::vector<BindSlotBuffer>& cbvs) {
+			void BindGlobalVSCBVsImpl(const std::vector<BindSlotBuffer>& cbvs) const {
 				for (const auto& cb : cbvs) {
 					auto d = cbManager->Get(cb.handle);
 					context->VSSetConstantBuffers(cb.slot, 1, d.ref().buffer.GetAddressOf());
 				}
 			}
 
-			void SetViewportImpl(const Viewport& vp) {
+			void SetViewportImpl(const Viewport& vp) const {
 				D3D11_VIEWPORT d3dvp{};
 				d3dvp.TopLeftX = vp.topLeftX;
 				d3dvp.TopLeftY = vp.topLeftY;
@@ -142,7 +150,7 @@ namespace SFW
 			 * @param framePool インスタンスデータの配列
 			 * @param instCount インスタンスデータの数
 			 */
-			void BeginFrameUploadImpl(const SharedInstanceArena::InstancePool* framePool, uint32_t instCount)
+			void BeginFrameUploadImpl(const SharedInstanceArena::InstancePool* framePool, uint32_t instCount) const
 			{
 				D3D11_MAPPED_SUBRESOURCE m{};
 				context->Map(m_instanceSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
@@ -335,6 +343,13 @@ namespace SFW
 			 * @param currentFrame 現在のフレーム番号
 			 */
 			void ProcessDeferredDeletesImpl(uint64_t currentFrame);
+
+			void UpdateBufferDataImpl(ID3D11Buffer* buffer, const void* data, size_t dataSize) const {
+				D3D11_MAPPED_SUBRESOURCE m{};
+				context->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
+				memcpy(m.pData, data, dataSize);
+				context->Unmap(buffer, 0);
+			}
 
 			/**
 			 * @brief インスタンスドローを実行する関数
