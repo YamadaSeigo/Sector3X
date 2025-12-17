@@ -20,14 +20,16 @@ cbuffer MaterialCB : register(b2)
     float4 baseColorFactor; // glTF baseColorFactor
     float metallicFactor;   // glTF metallicFactor
     float roughnessFactor;  // glTF roughnessFactor
-    uint hasFlags;          // フラグビット群
-    float _pad_Mat; // 16B 境界揃え
+    float occlutionFactor; // 16B 境界揃え
+    uint hasFlags;          // フラグビット群 
 };
 
 static const uint FLAG_HAS_BASECOLORTEX     = 1u << 0;
 static const uint FLAG_HAS_NORMALTEX        = 1u << 1;
-static const uint FLAG_HAS_MRRTEX           = 1u << 2;
-static const uint FLAG_HAS_EMISSIVETEX      = 1u << 3;
+static const uint FLAG_HAS_MRTEX            = 1u << 2;
+static const uint FLAG_HAS_OCCTEX           = 1u << 3;
+static const uint FLAG_HAS_ORMCOMBIENT      = 1u << 4;
+static const uint FLAG_HAS_EMISSIVETEX      = 1u << 5;
 
 cbuffer LightingCB : register(b3)
 {
@@ -82,7 +84,10 @@ Texture2D gNormalTex : register(t3);
 
 Texture2D gMetallicRoughness : register(t4);
 
-Texture2D gEmissiveTex : register(t5);
+Texture2D gOcclusionTex : register(t5);
+
+Texture2D gEmissiveTex : register(t6);
+
 //==================================================================================
 
 // シャドウマップ (Texture2DArray)

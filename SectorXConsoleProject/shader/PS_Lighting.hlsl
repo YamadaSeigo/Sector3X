@@ -2,7 +2,7 @@
 Texture2D gAlbedoAO : register(t11);
 Texture2D gNormalRough : register(t12);
 Texture2D gMetalEmi : register(t13);
-Texture2D gDepth : register(t14); // depth SRV‰»‚µ‚Ä‚¢‚é‘z’è
+//Texture2D gDepth : register(t14); // depth SRV‰»‚µ‚Ä‚¢‚é‘z’è
 SamplerState gSamp : register(s0);
 
 struct VSOut
@@ -11,7 +11,7 @@ struct VSOut
     float2 uv : TEXCOORD0;
 };
 
-float4 PS_Lighting(VSOut i) : SV_Target
+float4 main(VSOut i) : SV_Target
 {
     float2 uv = i.uv;
 

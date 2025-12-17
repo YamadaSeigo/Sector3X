@@ -342,6 +342,24 @@ namespace SFW
 						pbrCB.hasFlags |= (m->normal_texture.texture) ? PBRMaterialCB::HasFlagsBits::HasNormalTex : 0u;
 						pbrCB.hasFlags |= (m->pbr_metallic_roughness.metallic_roughness_texture.texture) ? PBRMaterialCB::HasFlagsBits::HasMetallicRoughnessTex : 0u;
 						pbrCB.hasFlags |= (m->emissive_texture.texture) ? PBRMaterialCB::HasFlagsBits::HasEmissiveTex : 0u;
+
+						// Occlusion(AO)
+						if (m->occlusion_texture.texture) {
+							pbrCB.hasFlags |= PBRMaterialCB::HasFlagsBits::HasOcclusionTex;
+							pbrCB.occlusionFactor = (float)m->occlusion_texture.scale;
+						}
+
+						auto* ao = m->occlusion_texture.texture;
+						auto* mr = m->pbr_metallic_roughness.metallic_roughness_texture.texture;
+
+						bool hasAO = (ao != nullptr);
+						bool hasMR = (mr != nullptr);
+
+						// AO と MRR が同じテクスチャの場合にフラグをたてる
+						if (hasAO && hasMR && (ao == mr))
+						{
+							pbrCB.hasFlags |= PBRMaterialCB::HasFlagsBits::HasORMCombined;
+						}
 					}
 
 					// 2) マテリアルCBを作成（内容キャッシュで自動重複排除）
@@ -460,6 +478,19 @@ namespace SFW
 									texMgr.Add(*optDesc, tex);
 									bindTex(gMetallicRoughnessBindName, tex, psBindings, psSRVMap);
 									bindTex(gMetallicRoughnessBindName, tex, vsBindings, vsSRVMap);
+								}
+							}
+
+							// Occlusion (AO) : glTF material->occlusion_texture
+							if (auto* t = m->occlusion_texture.texture)
+							{
+								// AO は線形（sRGBではない）扱いが基本
+								if (auto optDesc = MakeTextureDescFromCgltfTexture(t, /*forceSRGB=*/false))
+								{
+									TextureHandle tex;
+									texMgr.Add(*optDesc, tex);
+									bindTex(gOcclusionTexBindName, tex, psBindings, psSRVMap);
+									bindTex(gOcclusionTexBindName, tex, vsBindings, vsSRVMap);
 								}
 							}
 

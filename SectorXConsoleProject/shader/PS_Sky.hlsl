@@ -67,7 +67,7 @@ struct VSOutput
     float3 dir : TEXCOORD;
 };
 
-float4 main(VSOutput i) : SV_Target
+PS_PRBOutput main(VSOutput i)
 {
     float3 dir = normalize(i.dir);
 
@@ -76,18 +76,50 @@ float4 main(VSOutput i) : SV_Target
 
     float2 uv = DirToEquirectUV(d);
 
+    PS_PRBOutput output;
+
     float4 baseColor = baseColorFactor;
     if ((hasFlags & FLAG_HAS_BASECOLORTEX) != 0u)
         baseColor *= gBaseColorTex.Sample(gSampler, uv);
+
+    float occlution = occlutionFactor;
+    float roughness = roughnessFactor;
+    float metallic = metallicFactor;
+
+    if ((hasFlags & FLAG_HAS_ORMCOMBIENT) != 0u)
+    {
+        float4 orm = gMetallicRoughness.Sample(gSampler, uv);
+        occlution *= orm.r;
+        roughness *= orm.g;
+        metallic *= orm.b;
+    }
+    else
+    {
+        if ((hasFlags & FLAG_HAS_MRTEX) != 0u)
+        {
+            float4 mr = gMetallicRoughness.Sample(gSampler, uv);
+            roughness *= mr.g;
+            metallic *= mr.b;
+        }
+        if ((hasFlags & FLAG_HAS_OCCTEX) != 0u)
+        {
+            float occ = gOcclusionTex.Sample(gSampler, uv).r;
+            occlution *= occ;
+        }
+    }
+
+    output.AlbedoAO = float4(baseColor.rgb, occlution);
+
+    output.NormalRoughness = float4(normalize(i.dir) * 0.5 + 0.5, roughness);
 
     float4 emissionColor = float4(0, 0, 0, 0);
     if ((hasFlags & FLAG_HAS_EMISSIVETEX) != 0u)
         emissionColor = gEmissiveTex.Sample(gSampler, uv);
 
-    float4 col = baseColor + emissionColor;
+    output.EmissionMetallic = float4(emissionColor.rgb, metallic);
 
      // 「星だけ」明滅させたいのでマスクを作る（白いほど星、みたいな）
-    float starMask = saturate(col.rgb.r); // 例：単純にRを使う（テクスチャに合わせて調整）
+    float starMask = saturate(output.AlbedoAO.rgb.r); // 例：単純にRを使う（テクスチャに合わせて調整）
 
     // 瞬き係数（dirベース + time）
     float tw = StarTwinkle(uv, gTime,
@@ -96,9 +128,9 @@ float4 main(VSOutput i) : SV_Target
                            0.6); // amp
 
     // 星部分だけ強弱
-    col.rgb *= lerp(1.0, tw, starMask);
+    output.AlbedoAO.rgb *= lerp(1.0, tw, starMask);
 
-    return col;
+    return output;
 }
 
 

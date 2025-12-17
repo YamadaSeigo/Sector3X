@@ -74,7 +74,7 @@ float4 NormalizeWeights(float4 w)
 }
 
 // === PS（ワンドロー本体） ===
-float4 main(VSOut i) : SV_Target
+PS_PRBOutput main(VSOut i)
 {
     // ピクセルの worldPos.xz -> クラスタID
     ClusterCoord c = ComputeCluster(i.worldPos.xz);
@@ -99,18 +99,23 @@ float4 main(VSOut i) : SV_Target
     float4 c2 = gLayer2.Sample(gSampler, suv * p.layerTiling[2]);
     float4 c3 = gLayer3.Sample(gSampler, suv * p.layerTiling[3]);
 
-    uint cascade = ChooseCascade(i.viewDepth);
+    //uint cascade = ChooseCascade(i.viewDepth);
 
-    float4 shadowPos = mul(gLightViewProj[cascade], float4(i.worldPos, 1.0f));
+    //float4 shadowPos = mul(gLightViewProj[cascade], float4(i.worldPos, 1.0f));
 
-    float shadow = GetShadowMapDepth(shadowPos.xyz, cascade);
+    //float shadow = GetShadowMapDepth(shadowPos.xyz, cascade);
 
-    float shadowBias = 1.0f;
-    if (shadowPos.z - shadow > 0.001f)
-        shadowBias = 0.7f;
+    //float shadowBias = 1.0f;
+    //if (shadowPos.z - shadow > 0.001f)
+    //    shadowBias = 0.7f;
 
     float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
-    final.rgb *= shadowBias;
+    //final.rgb *= shadowBias;
+    
+    PS_PRBOutput output;
+    output.AlbedoAO = float4(final.rgb, 1.0f);
+    output.EmissionMetallic = float4(0, 0, 0, 0);
+    output.NormalRoughness = float4(normalize(i.nrm), 1.0f);
 
-    return final;
+    return output;
 }

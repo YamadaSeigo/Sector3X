@@ -165,6 +165,7 @@ namespace SFW
 			static inline constexpr const char* gBaseColorTexBindName = "gBaseColorTex";
 			static inline constexpr const char* gNormalTexBindName = "gNormalTex";
 			static inline constexpr const char* gMetallicRoughnessBindName = "gMetallicRoughness";
+			static inline constexpr const char* gOcclusionTexBindName = "gOcclusionTex";
 			static inline constexpr const char* gEmissiveTexBindName = "gEmissiveTex";
 			//===========================================================================================
 

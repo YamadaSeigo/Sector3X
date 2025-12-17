@@ -90,7 +90,7 @@ struct RtPack
 	std::vector<ComPtr<ID3D11ShaderResourceView>> srv;
 };
 
-bool CreateMRT(ID3D11Device* dev, UINT w, UINT h, RtPack& out)
+bool CreateMRT(ID3D11Device* dev, UINT w, UINT h, RtPack& out, size_t bufCount)
 {
 	DXGI_FORMAT fmt = DXGI_FORMAT_R16G16B16A16_FLOAT;
 
@@ -104,11 +104,11 @@ bool CreateMRT(ID3D11Device* dev, UINT w, UINT h, RtPack& out)
 	td.Usage = D3D11_USAGE_DEFAULT;
 	td.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 
-	out.tex.resize(2);
-	out.rtv.resize(2);
-	out.srv.resize(2);
+	out.tex.resize(bufCount);
+	out.rtv.resize(bufCount);
+	out.srv.resize(bufCount);
 
-	for (int i = 0; i < 2; ++i)
+	for (int i = 0; i < bufCount; ++i)
 	{
 		HRESULT hr = dev->CreateTexture2D(&td, nullptr, out.tex[i].GetAddressOf());
 		if (FAILED(hr)) return false;
@@ -142,7 +142,7 @@ void InitializeRenderPipeLine(
 	auto psoMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::PSOManager>();
 
 	static RtPack ttMRT;
-	CreateMRT(graphics->GetDevice(), WINDOW_WIDTH, WINDOW_HEIGHT, ttMRT);
+	CreateMRT(graphics->GetDevice(), WINDOW_WIDTH, WINDOW_HEIGHT, ttMRT, 3);
 
 	std::vector<ComPtr<ID3D11RenderTargetView>> mainRtv = { mainRenderTarget };
 
@@ -217,7 +217,7 @@ void InitializeRenderPipeLine(
 	passDesc.dsv = mainDepthStencilView;
 	passDesc.cbvs = { BindSlotBuffer{cameraHandle3D} };
 	passDesc.psoOverride = psoHandle;
-	passDesc.customExecute = drawTerrainColor;
+	passDesc.customExecute = nullptr;
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_ZPREPASS);
 
@@ -262,7 +262,27 @@ void InitializeRenderPipeLine(
 	auto skyBufData = bufferMgr->CreateResource(cbSkyboxDesc, skyboxCBHandle);
 	static ComPtr<ID3D11Buffer> SkyCBBuffer = skyBufData.buffer;
 
-	auto skyboxDraw = [](uint64_t frame) {
+	DX11::ShaderCreateDesc defferedShaderDesc;
+	defferedShaderDesc.vsPath = L"assets/shader/VS_Fullscreen.cso";
+	defferedShaderDesc.psPath = L"assets/shader/PS_Lighting.cso";
+	ShaderHandle defferedShaderHandle = {};
+	auto shaderData = shaderMgr->CreateResource(defferedShaderDesc, defferedShaderHandle);
+	static ComPtr<ID3D11VertexShader> defferedVS = shaderData.vs;
+	static ComPtr<ID3D11PixelShader> defferedPS = shaderData.ps;
+
+	static std::vector<ID3D11ShaderResourceView*> derreredSRVs;
+	for (auto& srv : ttMRT.srv)
+	{
+		derreredSRVs.push_back(srv.Get());
+	}
+
+	static std::vector<ID3D11ShaderResourceView*> nullSRVs;
+	for (int i = 0; i < derreredSRVs.size(); ++i)
+	{
+		nullSRVs.push_back(nullptr);
+	}
+
+	auto endOpaqueFunc = [](uint64_t frame) {
 		bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 		if (!execute) return;
 
@@ -273,12 +293,31 @@ void InitializeRenderPipeLine(
 		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
 		renderBackend->BindPSCBVs({ SkyCBBuffer.Get()}, 12);
 		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
-		};
 
-	auto calcDeffered = []() {
+		// 全画面描画でライティング計算
 		auto ctx = gGraphics->GetDeviceContext();
 
+		// デフォルトのレンダーターゲットに戻す
+		gGraphics->SetDefaultRenderTarget();
+
+		gGraphics->SetRasterizerState(RasterizerStateID::SolidCullBack);
+
+		ctx->IASetInputLayout(nullptr);
+		ctx->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
+		ctx->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
+		ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		ctx->VSSetShader(defferedVS.Get(), nullptr, 0);
+		ctx->PSSetShader(defferedPS.Get(), nullptr, 0);
+
+		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
+
+		ctx->Draw(3, 0);
+
+		// SRVを解除
+		ctx->PSSetShaderResources(11, (UINT)nullSRVs.size(), nullSRVs.data());
 		};
+
 
 	passDesc.rtvs = ttMRT.rtv;
 	passDesc.dsv = mainDepthStencilView;
@@ -286,13 +325,12 @@ void InitializeRenderPipeLine(
 	passDesc.psoOverride = std::nullopt;
 	passDesc.viewport = vp;
 	passDesc.depthStencilState = DepthStencilStateID::Default_Stencil;
-	passDesc.customExecute = nullptr;
+	passDesc.customExecute = drawTerrainColor;
 	passDesc.stencilRef = 1;
-	//passDesc.rasterizerState = RasterizerStateID::WireCullNone;
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OUTLINE);
 
-	passDesc.customExecute = skyboxDraw;
+	passDesc.customExecute = endOpaqueFunc;
 	passDesc.stencilRef = 2;
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
@@ -303,6 +341,7 @@ void InitializeRenderPipeLine(
 	psoDesc.rasterizerState = RasterizerStateID::SolidCullBack;
 	psoMgr->Add(psoDesc, psoHandle);
 
+	passDesc.rtvs = mainRtv;
 	passDesc.customExecute = nullptr;
 	passDesc.psoOverride = psoHandle;
 	passDesc.blendState = BlendStateID::Opaque;
@@ -312,7 +351,6 @@ void InitializeRenderPipeLine(
 
 	auto& UIGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_UI]);
 
-	passDesc.rtvs = mainRtv;
 	passDesc.viewport = std::nullopt;
 	passDesc.customExecute = nullptr;
 
@@ -695,7 +733,7 @@ int main(void)
 			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t25, b10
 
 			//書き込みと読み込みを両立させないために、デフォルトのレンダーターゲットに戻す
-			graphics.SetDefaultRenderTarget();
+			//graphics.SetDefaultRenderTarget();
 
 			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 
@@ -705,10 +743,7 @@ int main(void)
 
 			shadowMapService.BindShadowRasterizer(deviceContext);
 
-			blockRevert.RunColor(deviceContext,
-				graphics.GetMainRenderTargetView().Get(),
-				graphics.GetMainDepthStencilView().Get()
-			);
+			blockRevert.RunColor(deviceContext);
 		};
 
 	renderService->SetCustomUpdateFunction(terrainUpdateFunc);
@@ -749,7 +784,7 @@ int main(void)
 
 
 				DX11::ShaderCreateDesc shaderDesc;
-				shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
+				shaderDesc.vsPath = L"assets/shader/VS_WindSprite.cso";
 				shaderDesc.psPath = L"assets/shader/PS_Color.cso";
 				ShaderHandle shaderHandle;
 				shaderMgr->Add(shaderDesc, shaderHandle);
@@ -842,8 +877,8 @@ int main(void)
 				//デフォルト描画のPSO生成
 				DX11::ShaderCreateDesc shaderDesc;
 				shaderDesc.templateID = MaterialTemplateID::PBR;
-				shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
-				shaderDesc.psPath = L"assets/shader/PS_Unlit.cso";
+				shaderDesc.vsPath = L"assets/shader/VS_Lit.cso";
+				shaderDesc.psPath = L"assets/shader/PS_Opaque.cso";
 				ShaderHandle shaderHandle;
 				shaderMgr->Add(shaderDesc, shaderHandle);
 
@@ -858,7 +893,7 @@ int main(void)
 
 				//草の揺れ用PSO生成
 				shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
-				shaderDesc.psPath = L"assets/shader/PS_ShadowColor.cso";
+				shaderDesc.psPath = L"assets/shader/PS_Opaque.cso";
 				shaderMgr->Add(shaderDesc, shaderHandle);
 				PSOHandle windGrassPSOHandle;
 				psoDesc.shader = shaderHandle;
@@ -866,8 +901,8 @@ int main(void)
 				psoMgr->Add(psoDesc, windGrassPSOHandle);
 				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
 
-				shaderDesc.vsPath = L"assets/shader/VS_WindEntityUnlit.cso";
-				shaderDesc.psPath = L"assets/shader/PS_Unlit.cso";
+				shaderDesc.vsPath = L"assets/shader/VS_WindEntity.cso";
+				shaderDesc.psPath = L"assets/shader/PS_Opaque.cso";
 				shaderMgr->Add(shaderDesc, shaderHandle);
 				PSOHandle cullNoneWindEntityPSOHandle;
 				psoDesc.shader = shaderHandle;
@@ -1236,7 +1271,7 @@ int main(void)
 				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
 				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
-				//scheduler.AddSystem<PlayerSystem>(serviceLocator);
+				scheduler.AddSystem<PlayerSystem>(serviceLocator);
 				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
 
@@ -1249,7 +1284,7 @@ int main(void)
 	}
 
 	//初めのレベルをロード
-	world.GetSession().LoadLevel("Title");
+	//world.GetSession().LoadLevel("Title");
 	world.GetSession().LoadLevel("OpenField");
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);

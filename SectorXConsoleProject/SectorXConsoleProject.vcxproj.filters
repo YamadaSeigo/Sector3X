@@ -29,7 +29,7 @@
     <FxCompile Include="shader\VS_Unlit.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\PS_Unlit.hlsl">
+    <FxCompile Include="shader\PS_Opaque.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_DrawLineList.hlsl">
@@ -111,6 +111,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_Lighting.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_Lit.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

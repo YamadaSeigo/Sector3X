@@ -668,12 +668,8 @@ namespace SFW::Graphics::DX11 {
             ctx->VSSetShaderResources(20, 4, nullVs);
         }
 
-        void RunColor(ID3D11DeviceContext* ctx,
-            ID3D11RenderTargetView* rtv,
-            ID3D11DepthStencilView* dsv)
+        void RunColor(ID3D11DeviceContext* ctx)
         {
-            ctx->OMSetRenderTargets(1, &rtv, dsv);
-
             ctx->VSSetConstantBuffers(10, 1, cbCameraFrame.GetAddressOf());
 
             ctx->VSSetShader(vs.Get(), nullptr, 0);

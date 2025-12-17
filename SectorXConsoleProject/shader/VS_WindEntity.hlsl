@@ -44,10 +44,8 @@ struct VSInput
 struct VSOutput
 {
     float4 posH : SV_Position;
-    float3 worldPos : TEXCOORD0;
+    float2 uv : TEXCOORD0;
     float3 normalWS : TEXCOORD1;
-    float viewDepth : TEXCOORD2;
-    float2 uv : TEXCOORD3;
 };
 
 float PseudoNoise2D(float2 p)
@@ -84,12 +82,6 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     VSOutput output;
     float3 wp = mul(R, input.position) + baseWorldPos;
     
-    output.posH = mul(uViewProj, float4(wp, 1.0f));
-    output.worldPos = wp;
-    output.normalWS = mul(R, input.normal.xyz); // 非一様スケール無し前提
-    output.viewDepth = mul(uView, float4(wp, 1.0f)).z;
-    output.uv = input.uv;
-
    // ---- 1) 全体をまとめる“大きな揺れ” ----
    // 空間周波数をかなり低くして「大きなうねり」
     float bigSpatial = dot(baseWorldPos.xz, gWindDirXZ * 0.03f);
@@ -170,9 +162,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     wp += windDir3 * swayAmount;
 
     output.posH = mul(uViewProj, float4(wp, 1.0f));
-    output.worldPos = wp;
     output.normalWS = mul(R, input.normal.xyz); // 非一様スケール無し前提
-    output.viewDepth = mul(uView, float4(wp, 1.0f)).z;
     output.uv = input.uv;
 
     return output;
