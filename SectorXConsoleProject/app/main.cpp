@@ -83,6 +83,46 @@ static bool ResolveTexturePath(uint32_t id, std::string& path, bool& forceSRGB)
 //カスタム関数を実行するかのフラグ
 static std::atomic<bool> isExecuteCustomFunc = false;
 
+struct RtPack
+{
+	std::vector<ComPtr<ID3D11Texture2D>>        tex;
+	std::vector<ComPtr<ID3D11RenderTargetView>> rtv;
+	std::vector<ComPtr<ID3D11ShaderResourceView>> srv;
+};
+
+bool CreateMRT(ID3D11Device* dev, UINT w, UINT h, RtPack& out)
+{
+	DXGI_FORMAT fmt = DXGI_FORMAT_R16G16B16A16_FLOAT;
+
+	D3D11_TEXTURE2D_DESC td = {};
+	td.Width = w;
+	td.Height = h;
+	td.MipLevels = 1;
+	td.ArraySize = 1;
+	td.Format = fmt;
+	td.SampleDesc.Count = 1;
+	td.Usage = D3D11_USAGE_DEFAULT;
+	td.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+
+	out.tex.resize(2);
+	out.rtv.resize(2);
+	out.srv.resize(2);
+
+	for (int i = 0; i < 2; ++i)
+	{
+		HRESULT hr = dev->CreateTexture2D(&td, nullptr, out.tex[i].GetAddressOf());
+		if (FAILED(hr)) return false;
+
+		hr = dev->CreateRenderTargetView(out.tex[i].Get(), nullptr, out.rtv[i].GetAddressOf());
+		if (FAILED(hr)) return false;
+
+		hr = dev->CreateShaderResourceView(out.tex[i].Get(), nullptr, out.srv[i].GetAddressOf());
+		if (FAILED(hr)) return false;
+	}
+	return true;
+}
+
+
 // 描画のパイプライン初期化
 void InitializeRenderPipeLine(
 	Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
@@ -94,14 +134,17 @@ void InitializeRenderPipeLine(
 {
 	using namespace SFW::Graphics;
 
-	std::vector<ComPtr<ID3D11RenderTargetView>> rtvs{ mainRenderTarget };
-
 	auto bufferMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::BufferManager>();
 	auto cameraHandle3D = bufferMgr->FindByName(DX11::PerCamera3DService::BUFFER_NAME);
 	auto cameraHandle2D = bufferMgr->FindByName(DX11::Camera2DService::BUFFER_NAME);
 
 	auto shaderMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::ShaderManager>();
 	auto psoMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::PSOManager>();
+
+	static RtPack ttMRT;
+	CreateMRT(graphics->GetDevice(), WINDOW_WIDTH, WINDOW_HEIGHT, ttMRT);
+
+	std::vector<ComPtr<ID3D11RenderTargetView>> mainRtv = { mainRenderTarget };
 
 	auto& main3DGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_3D_MAIN]);
 
@@ -219,7 +262,7 @@ void InitializeRenderPipeLine(
 	auto skyBufData = bufferMgr->CreateResource(cbSkyboxDesc, skyboxCBHandle);
 	static ComPtr<ID3D11Buffer> SkyCBBuffer = skyBufData.buffer;
 
-	static auto skyboxDraw = [](uint64_t frame) {
+	auto skyboxDraw = [](uint64_t frame) {
 		bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 		if (!execute) return;
 
@@ -232,7 +275,12 @@ void InitializeRenderPipeLine(
 		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
 		};
 
-	passDesc.rtvs = rtvs;
+	auto calcDeffered = []() {
+		auto ctx = gGraphics->GetDeviceContext();
+
+		};
+
+	passDesc.rtvs = ttMRT.rtv;
 	passDesc.dsv = mainDepthStencilView;
 	passDesc.cbvs = { BindSlotBuffer{cameraHandle3D} };
 	passDesc.psoOverride = std::nullopt;
@@ -264,6 +312,7 @@ void InitializeRenderPipeLine(
 
 	auto& UIGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_UI]);
 
+	passDesc.rtvs = mainRtv;
 	passDesc.viewport = std::nullopt;
 	passDesc.customExecute = nullptr;
 

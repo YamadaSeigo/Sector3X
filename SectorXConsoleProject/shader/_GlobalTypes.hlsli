@@ -118,6 +118,13 @@ SamplerComparisonState gShadowSampler : register(s1);
 ==================================================================================
 */
 
+struct PS_PRBOutput
+{
+    float4 AlbedoAO : SV_Target0; // RGB=Albedo, A=AO
+    float4 NormalRoughness : SV_Target1; // RGB=Normal, A=Roughness
+    float4 EmissionMetallic : SV_Target2; // RGB=Emission, A=Metallic
+};
+
 //==================================================================================
 // ヘルパー：カスケード選択
 //==================================================================================

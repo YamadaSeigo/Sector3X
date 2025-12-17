@@ -132,7 +132,12 @@ namespace SFW
 			void ProcessDeferredDeletes(uint64_t currentFrame) {
 				static_cast<Derived*>(this)->ProcessDeferredDeletesImpl(currentFrame);
 			}
-
+			/**
+			 * @brief バッファデータを更新する関数
+			 * @param buffer 更新するバッファ
+			 * @param data 更新データへのポインタ
+			 * @param size 更新データのサイズ（バイト単位）
+			 */
 			void UpdateBufferData(Buffer buffer, const void* data, size_t size) {
 				static_cast<Derived*>(this)->UpdateBufferDataImpl(buffer, data, size);
 			}

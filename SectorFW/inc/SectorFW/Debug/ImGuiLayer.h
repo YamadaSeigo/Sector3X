@@ -6,8 +6,6 @@
  *********************************************************************/
 #pragma once
 
-#define _ENABLE_IMGUI
-
 #if _DEBUG
  // デバッグビルド時は ImGui を有効化
 #define _ENABLE_IMGUI
