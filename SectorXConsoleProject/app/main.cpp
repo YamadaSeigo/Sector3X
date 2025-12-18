@@ -20,6 +20,7 @@
 #include "system/PlayerSystem.h"
 #include "system/EnviromentSystem.h"
 #include "system/DefferedRenderingSystem.h"
+#include "system/LightShadowSystem.h"
 #include "WindMovementService.h"
 
 #include <string>
@@ -130,6 +131,7 @@ void InitializeRenderPipeLine(
 	Graphics::DX11::GraphicsDevice* graphics,
 	ComPtr<ID3D11RenderTargetView>& mainRenderTarget,
 	ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
+	ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV,
 	Graphics::PassCustomFuncType drawTerrainColor,
 	Graphics::DX11::ShadowMapService shadowMapService)
 {
@@ -277,6 +279,9 @@ void InitializeRenderPipeLine(
 		derreredSRVs.push_back(srv.Get());
 	}
 
+	// 深度ステンシルSRVも追加
+	derreredSRVs.push_back(mainDepthStencilSRV.Get());
+
 	static std::vector<ID3D11ShaderResourceView*> nullSRVs;
 	for (int i = 0; i < derreredSRVs.size(); ++i)
 	{
@@ -307,7 +312,8 @@ void InitializeRenderPipeLine(
 		auto ctx = gGraphics->GetDeviceContext();
 
 		// デフォルトのレンダーターゲットに戻す
-		gGraphics->SetDefaultRenderTarget();
+		// Depthはsrvとして使うので外す
+		gGraphics->SetMainRenderTargetNoDepth();
 
 		gGraphics->SetRasterizerState(RasterizerStateID::SolidCullBack);
 
@@ -465,6 +471,7 @@ int main(void)
 	static Graphics::LightShadowService lightShadowService;
 	Graphics::LightShadowService::CascadeConfig cascadeConfig;
 	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
+	cascadeConfig.cascadeCount = 3;
 	cascadeConfig.shadowDistance = 40.0f;
 	lightShadowService.SetCascadeConfig(cascadeConfig);
 
@@ -473,13 +480,21 @@ int main(void)
 	PlayerService playerService(bufferMgr);
 
 	Audio::AudioService audioService;
-	audioService.Initialize();
+	ok = audioService.Initialize();
+	assert(ok && "Failed Audio Service Initialize");
 
 	DefferedRenderingService defferedRenderingService(bufferMgr);
 
+	static Graphics::DX11::ShadowMapService shadowMapService;
+	Graphics::DX11::ShadowMapConfig shadowMapConfig;
+	shadowMapConfig.width = SHADOW_MAP_WIDTH;
+	shadowMapConfig.height = SHADOW_MAP_HEIGHT;
+	ok = shadowMapService.Initialize(device, shadowMapConfig);
+	assert(ok && "Failed ShadowMapService Initialize");
+
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService,
 		ortCameraService, camera2DService, &lightShadowService, &grassService,
-		&playerService, &audioService, &defferedRenderingService);
+		&playerService, &audioService, &defferedRenderingService, &shadowMapService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
@@ -599,13 +614,6 @@ int main(void)
 	// 地形のクラスター専用GPUリソースを作る/初期更新
 	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
 	Graphics::DX11::BuildOrUpdateTerrainGridCB(device, deviceContext, cp);
-
-	static Graphics::DX11::ShadowMapService shadowMapService;
-	Graphics::DX11::ShadowMapConfig shadowMapConfig;
-	shadowMapConfig.width = SHADOW_MAP_WIDTH;
-	shadowMapConfig.height = SHADOW_MAP_HEIGHT;
-	ok = shadowMapService.Initialize(device, shadowMapConfig);
-	assert(ok && "Failed ShadowMapService Initialize");
 
 	auto terrainUpdateFunc = [](Graphics::RenderService* renderService)
 		{
@@ -746,14 +754,9 @@ int main(void)
 			deviceContext->PSSetShaderResources(24, 1, &splatSrv);       // t24
 			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t25, b10
 
-			//書き込みと読み込みを両立させないために、デフォルトのレンダーターゲットに戻す
-			//graphics.SetDefaultRenderTarget();
-
 			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 
 			shadowMapService.BindShadowPSShadowMap(deviceContext, 7);
-
-			shadowMapService.UpdateShadowCascadeCB(deviceContext, lightShadowService);
 
 			shadowMapService.BindShadowRasterizer(deviceContext);
 
@@ -771,9 +774,10 @@ int main(void)
 	graphics.ExecuteCustomFunc([&](
 		Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
 		ComPtr<ID3D11RenderTargetView>& mainRenderTarget,
-		ComPtr<ID3D11DepthStencilView>& mainDepthStencilView)
+		ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
+		ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV)
 		{
-			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget, mainDepthStencilView, drawTerrainColor, shadowMapService);
+			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget, mainDepthStencilView, mainDepthStencilSRV, drawTerrainColor, shadowMapService);
 		}
 	);
 
@@ -1281,6 +1285,7 @@ int main(void)
 				scheduler.AddSystem<PlayerSystem>(serviceLocator);
 				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
 				scheduler.AddSystem<DefferedRenderingSystem>(serviceLocator);
+				scheduler.AddSystem<LightShadowSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
 
 			},

@@ -81,7 +81,8 @@ namespace SFW
 			void SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx);
 			void WaitSubmittedFramesImpl(uint64_t uptoFrame);
 
-			void SetDefaultRenderTarget();
+			void SetMainRenderTargetAndDepth();
+			void SetMainRenderTargetNoDepth();
 
 			void SetBlendState(BlendStateID state);
 			void SetDepthStencilState(DepthStencilStateID state, UINT stencilRef = 0);
@@ -97,7 +98,7 @@ namespace SFW
 			template<typename F>
 			void ExecuteCustomFunc(F&& func)
 			{
-				func(renderGraph.get(), m_renderTargetView, m_depthStencilView);
+				func(renderGraph.get(), m_renderTargetView, m_depthStencilView, m_depthStencilSRV);
 			}
 
 			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }

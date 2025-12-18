@@ -1118,6 +1118,9 @@
     <ClCompile Include="external\SoLoud\src\audiosource\wav\stb_vorbis.c">
       <Filter>Src\Audio\SoLoud\audiosource\wav</Filter>
     </ClCompile>
+    <ClCompile Include="external\SoLoud\src\backend\wasapi\soloud_wasapi.cpp">
+      <Filter>Src\Audio\SoLoud\backend</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="docs\NamingConventions.md" />

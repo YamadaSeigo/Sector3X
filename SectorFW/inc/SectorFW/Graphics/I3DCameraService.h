@@ -366,7 +366,7 @@ namespace SFW
 			 * @return const CameraBuffer& カメラバッファのデータ
 			 */
 			CameraBuffer GetOldCameraBufferData() const noexcept {
-				return cameraBuffer[(currentSlot + (RENDER_BUFFER_COUNT - 1)) % RENDER_BUFFER_COUNT];
+				return cameraBuffer[(currentSlot + (RENDER_BUFFER_COUNT - 2)) % RENDER_BUFFER_COUNT];
 			}
 
 			/**

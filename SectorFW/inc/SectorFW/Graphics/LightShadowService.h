@@ -55,6 +55,8 @@ namespace SFW
         template<uint32_t N>
         struct ShadowCascade
         {
+			static constexpr uint32_t kNumCascades = N;
+
             std::array<float, N> splitNear = { 0.0f };  // カメラ視点の距離
             std::array<float, N> splitFar = { 0.0f };
 
@@ -74,7 +76,7 @@ namespace SFW
             struct CascadeConfig
             {
 				Math::Vec2f shadowMapResolution = Math::Vec2f(1920.0f, 1080.0f); // シャドウマップ解像度
-                std::uint32_t   cascadeCount = 4;   // 1〜kMaxShadowCascades
+                std::uint32_t   cascadeCount = 3;   // 1〜kMaxShadowCascades
                 float           shadowDistance = 200.0f; // カメラからの最大影距離
                 float           lambda = 0.5f;   // 0 = 線形, 1 = 対数, その中間
                 float           maxWorldExtent = 1000.0f; // ライト正射影の最大サイズ（安全マージン）
@@ -295,30 +297,37 @@ namespace SFW
                     Math::AABB3f recvLS = lightView * recvBoundsWS;
 
                     Math::Vec3f centerLS = recvLS.center();
-                    Math::Vec3f extentsLS = recvLS.extent(); // XY はライト空間の幅・高さ
+                    Math::Vec3f extentsLS = recvLS.extent(); // half-size (x,y,z)
 
+
+                    // まず half-size を最大値でクランプしているならここまでの extentsLS はOK
                     float shadowSizeX = (float)m_cascadeCfg.shadowMapResolution.x;
                     float shadowSizeY = (float)m_cascadeCfg.shadowMapResolution.y;
 
+                    // いったん現在の half-size からテクセルサイズを出す
                     float texelSizeX = (extentsLS.x * 2.0f) / shadowSizeX;
                     float texelSizeY = (extentsLS.y * 2.0f) / shadowSizeY;
 
-                    Math::Vec3f snappedCenterLS;
-                    snappedCenterLS.x =
-                        std::floor(centerLS.x / texelSizeX + 0.5f) * texelSizeX;
-                    snappedCenterLS.y =
-                        std::floor(centerLS.y / texelSizeY + 0.5f) * texelSizeY;
-                    snappedCenterLS.z = centerLS.z; // Z はそのまま
+                    // half-size をテクセルの整数倍に“切り上げ”て安定化（extent quantize）
+                    extentsLS.x = std::ceil(extentsLS.x / texelSizeX) * texelSizeX;
+                    extentsLS.y = std::ceil(extentsLS.y / texelSizeY) * texelSizeY;
 
-                    //スナップオフ
-                    snappedCenterLS = centerLS;
+                    // 切り上げた half-size で texelSize を再計算（これで毎フレームの揺れが減る）
+                    texelSizeX = (extentsLS.x * 2.0f) / shadowSizeX;
+                    texelSizeY = (extentsLS.y * 2.0f) / shadowSizeY;
+
+                    // 中心をテクセルにスナップ
+                    Math::Vec3f snappedCenterLS = centerLS;
+                    snappedCenterLS.x = std::floor(snappedCenterLS.x / texelSizeX + 0.5f) * texelSizeX;
+                    snappedCenterLS.y = std::floor(snappedCenterLS.y / texelSizeY + 0.5f) * texelSizeY;
+
+                    // ※この行は削除！！（スナップ無効化）
+                    //snappedCenterLS = centerLS;
 
                     // XY だけスナップしたライト空間 AABB（受け側）
                     Math::AABB3f recvSnappedLS;
-                    recvSnappedLS.lb =
-                        snappedCenterLS - Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
-                    recvSnappedLS.ub =
-                        snappedCenterLS + Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
+                    recvSnappedLS.lb = snappedCenterLS - Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
+                    recvSnappedLS.ub = snappedCenterLS + Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
 
                     // --- キャスター用に Z だけ押し出す -----------------------
                     Math::AABB3f casterWS = recvBoundsWS;
@@ -345,6 +354,9 @@ namespace SFW
                     // そのライト空間 AABB をちょうど覆う Ortho
                     Math::Matrix4x4f lightProj;
                     BuildLightOrtho(finalLS, lightProj);
+
+                    StabilizeShadowProjection_TexelSnap(lightView, lightProj,
+						(uint32_t)m_cascadeCfg.shadowMapResolution.x, (uint32_t)m_cascadeCfg.shadowMapResolution.y);
 
                     // 記録
                     m_cascades.lightView[i] = lightView;
@@ -459,7 +471,7 @@ namespace SFW
             // ---------------------------------------------------------
             static void BuildLightView(const Math::Vec3f& lightDirWS, const Math::AABB3f& boundsWS, Math::Matrix4x4f& outView)
             {
-                Math::Vec3f center = boundsWS.center(); // AABB.hpp に合わせて
+                Math::Vec3f center = boundsWS.center();
 
                 Math::Vec3f eye = center - lightDirWS;
                 Math::Vec3f target = center;
@@ -496,6 +508,50 @@ namespace SFW
 				Math::Frustumf fr = Math::Frustumf::FromRowMajorMatrix(viewProj, Math::ClipZRange::ZeroToOne, true);
                 return fr;
             }
+
+            static void StabilizeShadowProjection_TexelSnap(
+                const Math::Matrix4x4f& lightView,
+                Math::Matrix4x4f& lightProj,
+                uint32_t                shadowResX,
+                uint32_t                shadowResY)
+            {
+                Math::Matrix4x4f shadowVP = lightProj * lightView;
+
+                // ワールド原点をシャドウクリップへ（原点でなく “カスケード中心” でもOK）
+                Math::Vec4f originWS(0.0f, 0.0f, 0.0f, 1.0f);
+                Math::Vec4f originCS = shadowVP * originWS;
+
+                // 念のため
+                if (std::abs(originCS.w) < 1e-6f) return;
+
+                // NDC
+                originCS.x /= originCS.w;
+                originCS.y /= originCS.w;
+
+                // NDC[-1..1] を “テクセル座標” に変換
+                float halfX = shadowResX * 0.5f;
+                float halfY = shadowResY * 0.5f;
+
+                float texX = originCS.x * halfX;
+                float texY = originCS.y * halfY;
+
+                // テクセル格子へ丸め
+                float snappedTexX = std::round(texX);
+                float snappedTexY = std::round(texY);
+
+                // どれだけズレているか（テクセル→NDCに戻す）
+                float offsetNdcX = (snappedTexX - texX) / halfX;
+                float offsetNdcY = (snappedTexY - texY) / halfY;
+
+                // クリップ空間で平行移動をかける：T * P
+                Math::Matrix4x4f T = Math::Matrix4x4f::Identity();
+                // 「クリップで x,y を足す」成分に offset を入れるのが目的です
+                T.m30 = offsetNdcX;   // (row-major/col-majorでここは変わる可能性あり)
+                T.m31 = offsetNdcY;
+
+                lightProj = T * lightProj;
+            }
+
 
         private:
             mutable std::shared_mutex m_updateMutex;

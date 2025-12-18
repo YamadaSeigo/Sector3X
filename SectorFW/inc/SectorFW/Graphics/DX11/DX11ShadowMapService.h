@@ -102,6 +102,11 @@ namespace SFW
                 }
             }
 
+            ComPtr<ID3D11Buffer> GetShadowCascadesBuffer() const noexcept
+            {
+                return m_cbShadowCascades;
+			}
+
             // ------------ メインパスから利用する情報 ------------
 
             ID3D11ShaderResourceView* GetShadowMapSRV() const noexcept

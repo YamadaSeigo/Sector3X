@@ -8,7 +8,8 @@ class DefferedRenderingSystem : public ITypeSystem<
 	Partition,
 	ComponentAccess<>,//アクセスするコンポーネントの指定
 	ServiceContext<
-		Graphics::RenderService
+		DefferedRenderingService,
+		Graphics::I3DPerCameraService
 	>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<>;
 public:
@@ -23,6 +24,7 @@ public:
 		LightCameraBuffer lightCameraBufferData{};
 		lightCameraBufferData.invViewProj = Math::Inverse(perCameraService->GetCameraBufferData().viewProj);
 		lightCameraBufferData.camForward = perCameraService->GetForward();
+		lightCameraBufferData.camPos = perCameraService->GetEyePos();
 
 		defferedService->UpdateBufferData(std::move(lightCameraBufferData));
 	}

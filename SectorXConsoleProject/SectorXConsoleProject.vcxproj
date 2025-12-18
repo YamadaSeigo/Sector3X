@@ -369,6 +369,7 @@
     <ClInclude Include="system\DebugRenderSystem.h" />
     <ClInclude Include="system\DefferedRenderingSystem.h" />
     <ClInclude Include="system\EnviromentSystem.h" />
+    <ClInclude Include="system\LightShadowSystem.h" />
     <ClInclude Include="system\ModelRenderSystem.h" />
     <ClInclude Include="system\PhysicsSystem.h" />
     <ClInclude Include="system\PlayerSystem.h" />

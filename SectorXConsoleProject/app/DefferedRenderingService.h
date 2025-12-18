@@ -4,6 +4,8 @@ struct LightCameraBuffer {
 	Math::Matrix4x4f invViewProj;
 	Math::Vec3f camForward;
 	float padding;
+	Math::Vec3f camPos;
+	float padding2;
 };
 
 class DefferedRenderingService : public ECS::IUpdateService

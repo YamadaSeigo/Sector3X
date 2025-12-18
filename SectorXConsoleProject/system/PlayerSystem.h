@@ -137,7 +137,7 @@ public:
 		static std::random_device rd;
 		static std::mt19937_64 rng(rd());
 
-		static std::uniform_real_distribution<float> distVolume(0.1f, 0.3f);
+		static std::uniform_real_distribution<float> distVolume(0.2f, 0.4f);
 		static std::uniform_real_distribution<float> distPitch(0.75f, 1.0f);
 		static std::uniform_real_distribution <float> distDelay(4.0f, 5.0f);
 
@@ -165,7 +165,7 @@ public:
 					// 向きを変える
 					targetYaw = std::atan2(wish.x, wish.z);
 
-					stepSoundDelay -= dt * (0.6f + std::sqrt(wishSquared) * 0.3f); // フレーム数換算
+					stepSoundDelay -= dt * (2.0f + std::sqrt(wishSquared) * 0.2f); // フレーム数換算
 					if (stepSoundDelay < 0.0f)
 						stepSoundDelay = 0.0f;
 				}

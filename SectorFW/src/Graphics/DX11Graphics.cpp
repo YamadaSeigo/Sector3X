@@ -159,11 +159,11 @@ namespace SFW
 			depthDesc.Height = height;
 			depthDesc.MipLevels = 1;
 			depthDesc.ArraySize = 1;
-			depthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; // 一般的な深度+ステンシル形式
+			depthDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
 			depthDesc.SampleDesc.Count = 1;
 			depthDesc.SampleDesc.Quality = 0;
 			depthDesc.Usage = D3D11_USAGE_DEFAULT;
-			depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+			depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
 
 			hr = m_device->CreateTexture2D(&depthDesc, nullptr, m_depthStencilBuffer.GetAddressOf());
 			if (FAILED(hr)) {
@@ -173,13 +173,26 @@ namespace SFW
 
 			// 深度ステンシルビューの作成
 			D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-			dsvDesc.Format = depthDesc.Format;
+			dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 			dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 			dsvDesc.Texture2D.MipSlice = 0;
 
 			hr = m_device->CreateDepthStencilView(m_depthStencilBuffer.Get(), &dsvDesc, m_depthStencilView.GetAddressOf());
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to create depth stencil view: %d", hr);
+				return false;
+			}
+
+
+			D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+			srvDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+			srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+			srvDesc.Texture2D.MostDetailedMip = 0;
+			srvDesc.Texture2D.MipLevels = 1;
+
+			hr = m_device->CreateShaderResourceView(m_depthStencilBuffer.Get(), &srvDesc, m_depthStencilSRV.GetAddressOf());
+			if (FAILED(hr)) {
+				LOG_ERROR("Failed to create depth stencil shader resource view: %d", hr);
 				return false;
 			}
 
@@ -249,7 +262,7 @@ namespace SFW
 			}
 
 			//Imguiのためにメインのターゲットに戻す
-			SetDefaultRenderTarget();
+			SetMainRenderTargetAndDepth();
 #endif
 		}
 
@@ -321,9 +334,14 @@ namespace SFW
 			st->doneCv.wait(lk, [&] { return st->lastCompleted.load(std::memory_order_acquire) >= uptoFrame; });
 		}
 
-		void GraphicsDevice::SetDefaultRenderTarget()
+		void GraphicsDevice::SetMainRenderTargetAndDepth()
 		{
 			backend->SetRenderTargets({m_renderTargetView.Get()}, m_depthStencilView.Get());
+		}
+
+		void GraphicsDevice::SetMainRenderTargetNoDepth()
+		{
+			backend->SetRenderTargets({ m_renderTargetView.Get() }, nullptr);
 		}
 
 

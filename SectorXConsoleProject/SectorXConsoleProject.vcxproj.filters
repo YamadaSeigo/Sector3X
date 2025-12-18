@@ -186,5 +186,8 @@
     <ClInclude Include="app\DefferedRenderingService.h">
       <Filter>App</Filter>
     </ClInclude>
+    <ClInclude Include="system\LightShadowSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
