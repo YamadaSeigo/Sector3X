@@ -356,6 +356,7 @@
     <None Include="shader\_ShadowTypes.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="app\DefferedRenderingService.h" />
     <ClInclude Include="app\PlayerService.h" />
     <ClInclude Include="app\WindMovementService.h" />
     <ClInclude Include="app\Packed2Bits32.h" />
@@ -366,6 +367,7 @@
     <ClInclude Include="system\CameraSystem.h" />
     <ClInclude Include="system\CleanModelSystem.h" />
     <ClInclude Include="system\DebugRenderSystem.h" />
+    <ClInclude Include="system\DefferedRenderingSystem.h" />
     <ClInclude Include="system\EnviromentSystem.h" />
     <ClInclude Include="system\ModelRenderSystem.h" />
     <ClInclude Include="system\PhysicsSystem.h" />

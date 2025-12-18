@@ -251,7 +251,7 @@ public:
 						if (!shadowOnly)
 						{
 							//小さすぎる場合は無視
-							if (areaFrec <= 0.002f)
+							if (areaFrec <= 0.005f)
 							{
 								continue;
 							}

@@ -19,6 +19,7 @@
 #include "system/SpriteRenderSystem.h"
 #include "system/PlayerSystem.h"
 #include "system/EnviromentSystem.h"
+#include "system/DefferedRenderingSystem.h"
 #include "WindMovementService.h"
 
 #include <string>
@@ -282,6 +283,14 @@ void InitializeRenderPipeLine(
 		nullSRVs.push_back(nullptr);
 	}
 
+	auto defferedCameraHandle = bufferMgr->FindByName(DefferedRenderingService::BUFFER_NAME);
+
+	static ComPtr<ID3D11Buffer> defferedBuffer;
+	{
+		auto bufData = bufferMgr->Get(defferedCameraHandle);
+		defferedBuffer = bufData.ref().buffer;
+	}
+
 	auto endOpaqueFunc = [](uint64_t frame) {
 		bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 		if (!execute) return;
@@ -311,6 +320,8 @@ void InitializeRenderPipeLine(
 		ctx->PSSetShader(defferedPS.Get(), nullptr, 0);
 
 		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
+
+		ctx->PSSetConstantBuffers(11, 1, defferedBuffer.GetAddressOf());
 
 		ctx->Draw(3, 0);
 
@@ -464,8 +475,11 @@ int main(void)
 	Audio::AudioService audioService;
 	audioService.Initialize();
 
+	DefferedRenderingService defferedRenderingService(bufferMgr);
+
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService,
-		ortCameraService, camera2DService, &lightShadowService, &grassService, &playerService, &audioService);
+		ortCameraService, camera2DService, &lightShadowService, &grassService,
+		&playerService, &audioService, &defferedRenderingService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
@@ -1201,13 +1215,6 @@ int main(void)
 #ifdef _DEBUG
 					auto playerDims = ps->GetShapeDims(playerShape);
 #endif
-					/*auto chunk = pLevel->GetChunk(playerStartPos, EOutOfBoundsPolicy::ClampToEdge);
-					auto key = chunk.value()->GetNodeKey();
-					SpatialMotionTag tag{};
-					tag.handle = { key, chunk.value() };*/
-
-					//Physics::BodyComponent playerBody{};
-					//playerBody.isStatic = Physics::BodyType::Dynamic; // “®“I‚É‚·‚é
 
 					CModel modelComp{ playerModelHandle };
 					modelComp.castShadow = true;
@@ -1273,6 +1280,7 @@ int main(void)
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
 				scheduler.AddSystem<PlayerSystem>(serviceLocator);
 				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
+				scheduler.AddSystem<DefferedRenderingSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
 
 			},

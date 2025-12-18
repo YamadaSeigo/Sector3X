@@ -180,5 +180,11 @@
     <ClInclude Include="system\EnviromentSystem.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="system\DefferedRenderingSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="app\DefferedRenderingService.h">
+      <Filter>App</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

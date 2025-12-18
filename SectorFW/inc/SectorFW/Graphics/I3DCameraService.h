@@ -34,6 +34,7 @@ namespace SFW
 			Math::Matrix4x4f viewProj;
 		};
 
+
 		/**
 		 * @brief 3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。
 		 */

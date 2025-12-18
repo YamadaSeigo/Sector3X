@@ -161,6 +161,8 @@ namespace SFW
 			ComPtr<ID3D11Texture2D> m_depthStencilBuffer;
 			// デフォルトの深度ステンシルビュー
 			ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+			// デフォルトの深度のSRV
+			ComPtr<ID3D11ShaderResourceView> m_depthStencilSRV;
 
 			D3D11_VIEWPORT m_viewport{};
 
