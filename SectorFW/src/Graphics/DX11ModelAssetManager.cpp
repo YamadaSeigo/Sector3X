@@ -362,15 +362,20 @@ namespace SFW
 						}
 					}
 
-					// 2) マテリアルCBを作成（内容キャッシュで自動重複排除）
-					BufferHandle matCB = cbManager.AcquireWithContent(&pbrCB, sizeof(PBRMaterialCB));
-
 					std::unordered_map<UINT, TextureHandle> psSRVMap;
 					std::unordered_map<UINT, TextureHandle> vsSRVMap;
 					std::unordered_map<UINT, BufferHandle>  psCBVMap;
 					std::unordered_map<UINT, BufferHandle>  vsCBVMap;
 					std::unordered_map<UINT, SamplerHandle> samplerMap;
 
+					//マテリアルだけに参照を持たせたいので、あとで参照を消すためのリストを用意
+					std::vector<TextureHandle> releaseTextures;
+					std::vector<BufferHandle>  releaseBuffers;
+					std::vector<SamplerHandle> releaseSamplers;
+
+					// 2) マテリアルCBを作成（内容キャッシュで自動重複排除）
+					BufferHandle matCB = cbManager.AcquireWithContent(&pbrCB, sizeof(PBRMaterialCB));
+					releaseBuffers.push_back(matCB);
 
 					ShaderHandle shaderHandle;
 					{
@@ -452,6 +457,9 @@ namespace SFW
 									texMgr.Add(*optDesc, tex);
 									bindTex(gBaseColorTexBindName, tex, psBindings, psSRVMap);
 									bindTex(gBaseColorTexBindName, tex, vsBindings, vsSRVMap);
+
+									// 追加参照保持
+									releaseTextures.push_back(tex);
 								}
 							}
 
@@ -466,6 +474,9 @@ namespace SFW
 									texMgr.Add(*optDesc, tex);
 									bindTex(gNormalTexBindName, tex, psBindings, psSRVMap);
 									bindTex(gNormalTexBindName, tex, vsBindings, vsSRVMap);
+
+									// 追加参照保持
+									releaseTextures.push_back(tex);
 								}
 							}
 
@@ -478,6 +489,9 @@ namespace SFW
 									texMgr.Add(*optDesc, tex);
 									bindTex(gMetallicRoughnessBindName, tex, psBindings, psSRVMap);
 									bindTex(gMetallicRoughnessBindName, tex, vsBindings, vsSRVMap);
+
+									// 追加参照保持
+									releaseTextures.push_back(tex);
 								}
 							}
 
@@ -491,6 +505,9 @@ namespace SFW
 									texMgr.Add(*optDesc, tex);
 									bindTex(gOcclusionTexBindName, tex, psBindings, psSRVMap);
 									bindTex(gOcclusionTexBindName, tex, vsBindings, vsSRVMap);
+
+									// 追加参照保持
+									releaseTextures.push_back(tex);
 								}
 							}
 
@@ -503,6 +520,9 @@ namespace SFW
 									texMgr.Add(*optDesc, tex);
 									bindTex(gEmissiveTexBindName, tex, psBindings, psSRVMap);
 									bindTex(gEmissiveTexBindName, tex, vsBindings, vsSRVMap);
+
+									// 追加参照保持
+									releaseTextures.push_back(tex);
 								}
 							}
 						}
@@ -512,6 +532,7 @@ namespace SFW
 						sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 						sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 						SamplerHandle samp = samplerManager.AddWithDesc(sampDesc);
+						releaseSamplers.push_back(samp);
 
 						for (const auto& b : psBindings)
 							if (b.type == D3D_SIT_SAMPLER && b.name == gSamplerBindName)
@@ -584,20 +605,14 @@ namespace SFW
 
 					//再利用ではない場合呼び出し側の一時参照を返す
 					if (!find) {
-						for (auto& [slot, th] : psSRVMap) {
-							texMgr.Release(th, 0);         // Material側が AddRef 済みなのでここで返す
+						for(auto& th : releaseTextures) {
+							texMgr.Release(th, 0);
 						}
-						for (auto& [slot, th] : vsSRVMap) {
-							texMgr.Release(th, 0);         // 同上
+						for (auto& bh : releaseBuffers) {
+							cbManager.Release(bh, 0);
 						}
-						for (auto& [slot, cb] : psCBVMap) {
-							cbManager.Release(cb, 0);         // 同上
-						}
-						for (auto& [slot, cb] : vsCBVMap) {
-							cbManager.Release(cb, 0);         // 同上
-						}
-						for (auto& [slot, sp] : samplerMap) {
-							samplerManager.Release(sp, 0);         // 同上
+						for (auto& sh : releaseSamplers) {
+							samplerManager.Release(sh, 0);
 						}
 					}
 					// -----------------------------------------------

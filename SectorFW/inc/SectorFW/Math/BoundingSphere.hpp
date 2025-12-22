@@ -14,6 +14,7 @@
 #include <cmath>
 #include <cstdint>
 #include <type_traits>
+#include <immintrin.h>
 
 // 行列ユーティリティを使う
 #include "Matrix.hpp"
@@ -574,7 +575,7 @@ namespace SFW {
                 return x_overlap && y_overlap && z_overlap;
             }
 
-            /** 
+            /**
 			* @brief カメラ基底を使った高速な可視判定
 			* @details WVPに回転が入っているとカメラの軸も回転するの誤判定になる
             */
@@ -762,6 +763,192 @@ namespace SFW {
                 }
 
                 return x_overlap && y_overlap && z_overlap;
+            }
+
+            struct NdcPrecomp
+            {
+                // scalar（AVX用にset1して使う）
+                float clipR_x, clipU_y, clipF_z;
+                float wR, wU, wF;
+
+                // NDCの範囲（D3D想定: x,y [-1,1], z [0,1]）
+                float ndcMinX = -1.0f, ndcMaxX = 1.0f;
+                float ndcMinY = -1.0f, ndcMaxY = 1.0f;
+                float ndcMinZ = 0.0f, ndcMaxZ = 1.0f;
+
+                float cwEps = 1e-6f;
+            };
+
+            template<typename Mat4>
+            static inline NdcPrecomp MakeSphereNdcPrecomp(
+                const Mat4& VP,
+                const Vec3& camRightWS,
+                const Vec3& camUpWS,
+                const Vec3& camForwardWS
+            ) noexcept
+            {
+                NdcPrecomp p{};
+
+                // ここはあなたの元式と同じ: VPの row0/1/2 と cam軸の内積（要素は Mat4 の定義に合わせて）
+                p.clipR_x = VP.m00 * camRightWS.x + VP.m01 * camRightWS.y + VP.m02 * camRightWS.z;
+                p.clipU_y = VP.m10 * camUpWS.x + VP.m11 * camUpWS.y + VP.m12 * camUpWS.z;
+                p.clipF_z = VP.m20 * camForwardWS.x + VP.m21 * camForwardWS.y + VP.m22 * camForwardWS.z;
+
+                // wR,wU,wF（VP row3 の xyz と cam軸の内積）
+                p.wR = VP.m30 * camRightWS.x + VP.m31 * camRightWS.y + VP.m32 * camRightWS.z;
+                p.wU = VP.m30 * camUpWS.x + VP.m31 * camUpWS.y + VP.m32 * camUpWS.z;
+                p.wF = VP.m30 * camForwardWS.x + VP.m31 * camForwardWS.y + VP.m32 * camForwardWS.z;
+
+                return p;
+            }
+
+            // AVX2で8個ずつ
+            // 戻り値: i..i+7 の可視 lane をビットで返す
+			template<typename Mat4>
+            static inline std::uint32_t IsVisibleBatch_WorldSoA_LocalCenterRadius_AVX2(
+                const Matrix3x4fSoA& WorldSoA,     // Matrix.hpp
+                const Mat4& VP,                    // そのまま使う（clip計算用）
+                const NdcPrecomp& pc,         // 前計算係数
+                const Vec3& centerLocal,
+                const float* radiusWorld,
+                std::size_t i,
+                // ---- optional debug outputs（nullptrなら書かない）----
+                float* outNdcX,
+                float* outNdcY,
+                float* outNdcZ,
+                float* outDepthMin,
+                float* outDepthMax
+            ) noexcept
+            {
+#if defined(__AVX2__) || (defined(_MSC_VER) && defined(__AVX2__))
+                const std::size_t n = WorldSoA.count;
+                if (i >= n) return 0;
+                const std::size_t laneCount = (i + 8 <= n) ? 8 : (n - i);
+
+                const __m256 vLocalX = _mm256_set1_ps(centerLocal.x);
+                const __m256 vLocalY = _mm256_set1_ps(centerLocal.y);
+                const __m256 vLocalZ = _mm256_set1_ps(centerLocal.z);
+
+                // precomp
+                const __m256 vClipR_x = _mm256_set1_ps(pc.clipR_x);
+                const __m256 vClipU_y = _mm256_set1_ps(pc.clipU_y);
+                const __m256 vClipF_z = _mm256_set1_ps(pc.clipF_z);
+                const __m256 vWR = _mm256_set1_ps(pc.wR);
+                const __m256 vWU = _mm256_set1_ps(pc.wU);
+                const __m256 vWF = _mm256_set1_ps(pc.wF);
+
+                const __m256 vNegOne = _mm256_set1_ps(pc.ndcMinX); // -1
+                const __m256 vPosOne = _mm256_set1_ps(pc.ndcMaxX); // +1
+                const __m256 vMinZ = _mm256_set1_ps(pc.ndcMinZ); // 0
+                const __m256 vMaxZ = _mm256_set1_ps(pc.ndcMaxZ); // 1
+                const __m256 vZero = _mm256_set1_ps(0.0f);
+
+                const __m256 vEps = _mm256_set1_ps(pc.cwEps);
+                const __m256 vSignBit = _mm256_set1_ps(-0.0f);
+
+                auto abs256 = [&](const __m256& v) noexcept {
+                    return _mm256_andnot_ps(vSignBit, v);
+                    };
+
+                // ---- WorldSoA * centerLocal => worldPos ----
+                const __m256 m00w = _mm256_loadu_ps(WorldSoA.m00 + i);
+                const __m256 m01w = _mm256_loadu_ps(WorldSoA.m01 + i);
+                const __m256 m02w = _mm256_loadu_ps(WorldSoA.m02 + i);
+                const __m256 tx = _mm256_loadu_ps(WorldSoA.tx + i);
+
+                const __m256 m10w = _mm256_loadu_ps(WorldSoA.m10 + i);
+                const __m256 m11w = _mm256_loadu_ps(WorldSoA.m11 + i);
+                const __m256 m12w = _mm256_loadu_ps(WorldSoA.m12 + i);
+                const __m256 ty = _mm256_loadu_ps(WorldSoA.ty + i);
+
+                const __m256 m20w = _mm256_loadu_ps(WorldSoA.m20 + i);
+                const __m256 m21w = _mm256_loadu_ps(WorldSoA.m21 + i);
+                const __m256 m22w = _mm256_loadu_ps(WorldSoA.m22 + i);
+                const __m256 tz = _mm256_loadu_ps(WorldSoA.tz + i);
+
+                __m256 wx = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(m00w, vLocalX), _mm256_mul_ps(m01w, vLocalY)),
+                    _mm256_add_ps(_mm256_mul_ps(m02w, vLocalZ), tx));
+                __m256 wy = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(m10w, vLocalX), _mm256_mul_ps(m11w, vLocalY)),
+                    _mm256_add_ps(_mm256_mul_ps(m12w, vLocalZ), ty));
+                __m256 wz = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(m20w, vLocalX), _mm256_mul_ps(m21w, vLocalY)),
+                    _mm256_add_ps(_mm256_mul_ps(m22w, vLocalZ), tz));
+
+                // ---- VP * [worldPos,1] => clip ----
+                const __m256 vp00 = _mm256_set1_ps(VP.m00), vp01 = _mm256_set1_ps(VP.m01), vp02 = _mm256_set1_ps(VP.m02), vp03 = _mm256_set1_ps(VP.m03);
+                const __m256 vp10 = _mm256_set1_ps(VP.m10), vp11 = _mm256_set1_ps(VP.m11), vp12 = _mm256_set1_ps(VP.m12), vp13 = _mm256_set1_ps(VP.m13);
+                const __m256 vp20 = _mm256_set1_ps(VP.m20), vp21 = _mm256_set1_ps(VP.m21), vp22 = _mm256_set1_ps(VP.m22), vp23 = _mm256_set1_ps(VP.m23);
+                const __m256 vp30 = _mm256_set1_ps(VP.m30), vp31 = _mm256_set1_ps(VP.m31), vp32 = _mm256_set1_ps(VP.m32), vp33 = _mm256_set1_ps(VP.m33);
+
+                __m256 cx = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(vp00, wx), _mm256_mul_ps(vp01, wy)),
+                    _mm256_add_ps(_mm256_mul_ps(vp02, wz), vp03));
+                __m256 cy = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(vp10, wx), _mm256_mul_ps(vp11, wy)),
+                    _mm256_add_ps(_mm256_mul_ps(vp12, wz), vp13));
+                __m256 cz = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(vp20, wx), _mm256_mul_ps(vp21, wy)),
+                    _mm256_add_ps(_mm256_mul_ps(vp22, wz), vp23));
+                __m256 cw = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(vp30, wx), _mm256_mul_ps(vp31, wy)),
+                    _mm256_add_ps(_mm256_mul_ps(vp32, wz), vp33));
+
+                // cwのeps保護（符号付き）
+                const __m256 maskNeg = _mm256_cmp_ps(cw, vZero, _CMP_LT_OQ);
+                const __m256 sign = _mm256_blendv_ps(_mm256_set1_ps(1.0f), _mm256_set1_ps(-1.0f), maskNeg);
+                const __m256 absCw = abs256(cw);
+                const __m256 maskSmall = _mm256_cmp_ps(absCw, vEps, _CMP_LT_OQ);
+                cw = _mm256_blendv_ps(cw, _mm256_mul_ps(sign, vEps), maskSmall);
+
+                const __m256 invCW = _mm256_div_ps(_mm256_set1_ps(1.0f), cw);
+                const __m256 invCW2 = _mm256_mul_ps(invCW, invCW);
+
+                const __m256 ndcX = _mm256_mul_ps(cx, invCW);
+                const __m256 ndcY = _mm256_mul_ps(cy, invCW);
+                const __m256 ndcZ = _mm256_mul_ps(cz, invCW);
+
+                // ---- debug outputs（必要なら）----
+                if (outNdcX) _mm256_storeu_ps(outNdcX + i, ndcX);
+                if (outNdcY) _mm256_storeu_ps(outNdcY + i, ndcY);
+                if (outNdcZ) _mm256_storeu_ps(outNdcZ + i, ndcZ);
+
+                __m256 rW = _mm256_loadu_ps(radiusWorld + i);
+
+                // r_ndc / r_ndc_z（あなたの式の形）
+                const __m256 dxR = _mm256_sub_ps(_mm256_mul_ps(vClipR_x, cw), _mm256_mul_ps(cx, vWR));
+                const __m256 dyU = _mm256_sub_ps(_mm256_mul_ps(vClipU_y, cw), _mm256_mul_ps(cy, vWU));
+                const __m256 dzF = _mm256_sub_ps(_mm256_mul_ps(vClipF_z, cw), _mm256_mul_ps(cz, vWF));
+
+                const __m256 r_ndc_x = abs256(_mm256_mul_ps(_mm256_mul_ps(rW, dxR), invCW2));
+                const __m256 r_ndc_y = abs256(_mm256_mul_ps(_mm256_mul_ps(rW, dyU), invCW2));
+                const __m256 r_ndc = _mm256_max_ps(r_ndc_x, r_ndc_y);
+
+                const __m256 r_ndc_z = abs256(_mm256_mul_ps(_mm256_mul_ps(rW, dzF), invCW2));
+
+                const __m256 xmin = _mm256_sub_ps(ndcX, r_ndc);
+                const __m256 xmax = _mm256_add_ps(ndcX, r_ndc);
+                const __m256 ymin = _mm256_sub_ps(ndcY, r_ndc);
+                const __m256 ymax = _mm256_add_ps(ndcY, r_ndc);
+
+                const __m256 zmin = _mm256_sub_ps(ndcZ, r_ndc_z);
+                const __m256 zmax = _mm256_add_ps(ndcZ, r_ndc_z);
+
+                if (outDepthMin) _mm256_storeu_ps(outDepthMin + i, zmin);
+                if (outDepthMax) _mm256_storeu_ps(outDepthMax + i, zmax);
+
+                // ---- overlap 判定 ----
+                const __m256 x_ok = _mm256_and_ps(_mm256_cmp_ps(xmax, vNegOne, _CMP_GE_OQ),
+                    _mm256_cmp_ps(xmin, vPosOne, _CMP_LE_OQ));
+                const __m256 y_ok = _mm256_and_ps(_mm256_cmp_ps(ymax, vNegOne, _CMP_GE_OQ),
+                    _mm256_cmp_ps(ymin, vPosOne, _CMP_LE_OQ));
+                const __m256 z_ok = _mm256_and_ps(_mm256_cmp_ps(zmax, vMinZ, _CMP_GE_OQ),
+                    _mm256_cmp_ps(zmin, vMaxZ, _CMP_LE_OQ));
+
+                const __m256 ok = _mm256_and_ps(_mm256_and_ps(x_ok, y_ok), z_ok);
+
+                int mask = _mm256_movemask_ps(ok);
+                if (laneCount < 8) mask &= ((1 << (int)laneCount) - 1);
+                return (std::uint32_t)mask;
+#else
+                (void)WorldSoA; (void)VP; (void)pc; (void)centerLocal; (void)radiusWorld; (void)i;
+                (void)outNdcX; (void)outNdcY; (void)outNdcZ; (void)outDepthMin; (void)outDepthMax;
+                return 0;
+#endif
             }
         };
 

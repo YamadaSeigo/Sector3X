@@ -4,7 +4,7 @@
 #include <SectorFW/Core/ChunkCrossingMove.hpp>
 #include <SectorFW/DX11WinTerrainHelper.h>
 #include <SectorFW/Graphics/DX11/DX11BlockRevertHelper.h>
-#include <SectorFW/Graphics/DX11/DX11ShadowMapService.h>
+#include <SectorFW/Graphics/DX11/DX11LightShadowResourceService.h>
 #include <SectorFW/Graphics/TerrainOccluderExtraction.h>
 
 //System
@@ -21,6 +21,7 @@
 #include "system/EnviromentSystem.h"
 #include "system/DefferedRenderingSystem.h"
 #include "system/LightShadowSystem.h"
+#include "system/PointLightSystem.h"
 #include "WindMovementService.h"
 
 #include <string>
@@ -133,7 +134,7 @@ void InitializeRenderPipeLine(
 	ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
 	ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV,
 	Graphics::PassCustomFuncType drawTerrainColor,
-	Graphics::DX11::ShadowMapService shadowMapService)
+	Graphics::DX11::LightShadowResourceService& resourceService)
 {
 	using namespace SFW::Graphics;
 
@@ -171,7 +172,7 @@ void InitializeRenderPipeLine(
 		UINT padding[3];
 	};
 
-	const auto& cascadeDSVs = shadowMapService.GetCascadeDSV();
+	const auto& cascadeDSVs = resourceService.GetCascadeDSV();
 
 	auto cascadeCount = cascadeDSVs.size();
 
@@ -244,8 +245,9 @@ void InitializeRenderPipeLine(
 	static MaterialHandle skyboxMaterialHandle = modelData.ref().subMeshes[0].material;
 	static PSOHandle skyboxPsoHandle = psoHandle;
 
-	//本当はやるべきではないが
-	//graphicsがstaticであることを前提にしてラムダ式でキャプチャなしでアクセスするために所有権保持
+	//本当はやるべきではないがここから
+	//staticであることを前提にしてラムダ式でキャプチャなしでアクセスするために所有権保持
+
 	static auto gGraphics = graphics;
 	static auto renderBackend = graphics->GetBackend();
 
@@ -267,7 +269,7 @@ void InitializeRenderPipeLine(
 
 	DX11::ShaderCreateDesc defferedShaderDesc;
 	defferedShaderDesc.vsPath = L"assets/shader/VS_Fullscreen.cso";
-	defferedShaderDesc.psPath = L"assets/shader/PS_Lighting.cso";
+	defferedShaderDesc.psPath = L"assets/shader/PS_PBR_Lighting.cso";
 	ShaderHandle defferedShaderHandle = {};
 	auto shaderData = shaderMgr->CreateResource(defferedShaderDesc, defferedShaderHandle);
 	static ComPtr<ID3D11VertexShader> defferedVS = shaderData.vs;
@@ -296,6 +298,11 @@ void InitializeRenderPipeLine(
 		defferedBuffer = bufData.ref().buffer;
 	}
 
+	static ComPtr<ID3D11Buffer> cbLightBuffer;
+	cbLightBuffer = resourceService.GetLightDataCB();
+	static ComPtr<ID3D11ShaderResourceView> srvPointLight;
+	srvPointLight = resourceService.GetPointLightSRV();
+
 	auto endOpaqueFunc = [](uint64_t frame) {
 		bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 		if (!execute) return;
@@ -311,11 +318,12 @@ void InitializeRenderPipeLine(
 		// 全画面描画でライティング計算
 		auto ctx = gGraphics->GetDeviceContext();
 
-		// デフォルトのレンダーターゲットに戻す
 		// Depthはsrvとして使うので外す
 		gGraphics->SetMainRenderTargetNoDepth();
 
 		gGraphics->SetRasterizerState(RasterizerStateID::SolidCullBack);
+
+		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
 
 		ctx->IASetInputLayout(nullptr);
 		ctx->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
@@ -327,7 +335,11 @@ void InitializeRenderPipeLine(
 
 		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
 
+		ctx->PSSetShaderResources(15, 1, srvPointLight.GetAddressOf());
+
 		ctx->PSSetConstantBuffers(11, 1, defferedBuffer.GetAddressOf());
+
+		ctx->PSSetConstantBuffers(12, 1, cbLightBuffer.GetAddressOf());
 
 		ctx->Draw(3, 0);
 
@@ -425,6 +437,7 @@ int main(void)
 	ComponentTypeRegistry::Register<Physics::PhysicsInterpolation>();
 	ComponentTypeRegistry::Register<Physics::ShapeDims>();
 	ComponentTypeRegistry::Register<CSprite>();
+	ComponentTypeRegistry::Register<CPointLight>();
 	//======================================================================
 
 	// ウィンドウの作成
@@ -473,6 +486,7 @@ int main(void)
 	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
 	cascadeConfig.cascadeCount = 3;
 	cascadeConfig.shadowDistance = 40.0f;
+	cascadeConfig.casterExtrusion = 0.0f;
 	lightShadowService.SetCascadeConfig(cascadeConfig);
 
 	WindMovementService grassService(bufferMgr);
@@ -485,16 +499,18 @@ int main(void)
 
 	DefferedRenderingService defferedRenderingService(bufferMgr);
 
-	static Graphics::DX11::ShadowMapService shadowMapService;
+	static Graphics::DX11::LightShadowResourceService lightShadowResourceService;
 	Graphics::DX11::ShadowMapConfig shadowMapConfig;
 	shadowMapConfig.width = SHADOW_MAP_WIDTH;
 	shadowMapConfig.height = SHADOW_MAP_HEIGHT;
-	ok = shadowMapService.Initialize(device, shadowMapConfig);
+	ok = lightShadowResourceService.Initialize(device, shadowMapConfig);
 	assert(ok && "Failed ShadowMapService Initialize");
+
+	static Graphics::PointLightService pointLightService;
 
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService,
 		ortCameraService, camera2DService, &lightShadowService, &grassService,
-		&playerService, &audioService, &defferedRenderingService, &shadowMapService);
+		&playerService, &audioService, &defferedRenderingService, &lightShadowResourceService, &pointLightService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
@@ -703,7 +719,7 @@ int main(void)
 			shadowParams.mainDSV = graphics.GetMainDepthStencilView().Get();
 			shadowParams.mainViewProj = perCameraService->MakeViewProjMatrix();
 			memcpy(shadowParams.mainFrustumPlanes, frustumPlanes.data(), sizeof(shadowParams.mainFrustumPlanes));
-			auto& cascadeDSV = shadowMapService.GetCascadeDSV();
+			auto& cascadeDSV = lightShadowResourceService.GetCascadeDSV();
 			for (int c = 0; c < Graphics::kMaxShadowCascades; ++c) {
 				shadowParams.cascadeDSV[c] = cascadeDSV[c].Get();
 			}
@@ -724,17 +740,17 @@ int main(void)
 			constexpr ID3D11SamplerState* nullSampler = nullptr;
 			deviceContext->PSSetSamplers(1, 1, &nullSampler);
 
-			shadowMapService.ClearDepthBuffer(deviceContext);
+			lightShadowResourceService.ClearDepthBuffer(deviceContext);
 
 			//CBの5, Samplerの1にバインド
-			shadowMapService.BindShadowResources(deviceContext, 5, 1);
+			lightShadowResourceService.BindShadowResources(deviceContext, 5, 1);
 
 			auto bufMgr = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
 			auto cameraHandle = bufMgr->FindByName(Graphics::DX11::PerCamera3DService::BUFFER_NAME);
 			auto cameraBufData = bufMgr->Get(cameraHandle);
 
 			blockRevert.RunShadowDepth(deviceContext, cameraBufData->buffer,
-				shadowParams, &shadowMapService.GetCascadeViewport());
+				shadowParams, &lightShadowResourceService.GetCascadeViewport());
 		};
 
 	auto drawTerrainColor = [](uint64_t frame)
@@ -756,9 +772,9 @@ int main(void)
 
 			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 
-			shadowMapService.BindShadowPSShadowMap(deviceContext, 7);
+			lightShadowResourceService.BindShadowPSShadowMap(deviceContext, 7);
 
-			shadowMapService.BindShadowRasterizer(deviceContext);
+			lightShadowResourceService.BindShadowRasterizer(deviceContext);
 
 			blockRevert.RunColor(deviceContext);
 		};
@@ -777,7 +793,7 @@ int main(void)
 		ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
 		ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV)
 		{
-			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget, mainDepthStencilView, mainDepthStencilSRV, drawTerrainColor, shadowMapService);
+			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget, mainDepthStencilView, mainDepthStencilSRV, drawTerrainColor, lightShadowResourceService);
 		}
 	);
 
@@ -1139,6 +1155,34 @@ int main(void)
 					}
 				}
 
+				// 点光源生成
+				for (int j = 0; j < 10; ++j) {
+					for (int k = 0; k < 10; ++k) {
+						for (int n = 0; n < 1; ++n) {
+							float scaleXZ = 15.0f;
+							float scaleY = 15.0f;
+							Math::Vec2f offsetXZ = { 12.0f,12.0f };
+							Math::Vec3f location = { float(j) * scaleXZ + offsetXZ.x , 0, float(k) * scaleXZ + offsetXZ.y };
+
+							float height = 0.0f;
+							terrain.SampleHeightNormalBilinear(location.x, location.z, height);
+							location.y = height + 5.0f;
+
+							Graphics::PointLightDesc plDesc;
+							plDesc.positionWS = location;
+							plDesc.color = { 1.0f,0.8f,0.6f };
+							plDesc.intensity = 500.0f;
+							plDesc.range = 10.0f;
+							plDesc.castsShadow = false;
+							auto plHandle = pointLightService.Create(plDesc);
+
+							levelSession.AddEntity(
+								CPointLight{ plHandle }
+							);
+						}
+					}
+				}
+
 				// Entity生成
 				std::uniform_int_distribution<uint32_t> distX(1, uint32_t(p.cellsX* p.cellSize));
 				std::uniform_int_distribution<uint32_t> distZ(1, uint32_t(p.cellsZ* p.cellSize));
@@ -1286,6 +1330,7 @@ int main(void)
 				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
 				scheduler.AddSystem<DefferedRenderingSystem>(serviceLocator);
 				scheduler.AddSystem<LightShadowSystem>(serviceLocator);
+				scheduler.AddSystem<PointLightSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
 
 			},

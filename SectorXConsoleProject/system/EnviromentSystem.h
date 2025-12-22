@@ -18,13 +18,13 @@ class EnviromentSystem : public ITypeSystem<
 public:
 	void StartImpl(UndeletablePtr<Audio::AudioService> audioService) {
 		//Audio“Ç‚Ýž‚Ý
-		mainBGM.handle = audioService->EnqueueLoadWav("assets/audio/BGM/fjordnosundakaze.mp3");
+		mainBGM.handle = audioService->EnqueueLoadWav("assets/audio/BGM/fjordnosundakaze.ogg");
 		Audio::AudioPlayParams bgmPlayParams;
 		bgmPlayParams.loop = true;
 		bgmPlayParams.volume = 0.8f;
 		mainBGM.ticketID = audioService->EnqueuePlay(mainBGM.handle, bgmPlayParams);
 
-		wind.handle = audioService->EnqueueLoadWav("assets/audio/SE/wind_04.mp3");
+		wind.handle = audioService->EnqueueLoadWav("assets/audio/SE/wind_04.wav");
 		Audio::AudioPlayParams windPlayParams;
 		windPlayParams.loop = true;
 		windPlayParams.volume = 1.5f;

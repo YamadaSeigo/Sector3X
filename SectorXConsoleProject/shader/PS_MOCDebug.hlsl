@@ -4,7 +4,6 @@ struct PSInput
 {
     float4 posH : SV_POSITION;
     float2 uv : TEXCOORD;
-    float3 normal : NORMAL;
 };
 
 Texture2D<float> gDepthTex : register(t10);

@@ -110,10 +110,13 @@
     <FxCompile Include="shader\VS_Fullscreen.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\PS_Lighting.hlsl">
+    <FxCompile Include="shader\PS_PBR_Unlit_Shadow.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\VS_Lit.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_PBR_Lighting.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
@@ -187,6 +190,9 @@
       <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="system\LightShadowSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="system\PointLightSystem.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

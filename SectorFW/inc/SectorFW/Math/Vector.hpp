@@ -184,13 +184,13 @@ namespace SFW
 		}
 
 		template<typename T>
-		static T Length(const Vec3<T>& v) noexcept {
-			return std::sqrt(Dot(v, v));
+		static T Length(const Vec3<T>& v1, const Vec3<T>& v2) noexcept {
+			return std::sqrt(Dot(v1, v2));
 		}
 
 		template<typename T>
-		static T LengthSquared(const Vec3<T>& v) noexcept {
-			return Dot(v, v);
+		static T LengthSquared(const Vec3<T>& v1, const Vec3<T>& v2) noexcept {
+			return Dot(v1, v2);
 		}
 
 		template<typename T>

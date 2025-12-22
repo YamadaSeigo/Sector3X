@@ -33,7 +33,7 @@ namespace SFW
         struct AmbientLight
         {
             Math::Vec3f color = Math::Vec3f(0.1f, 0.1f, 0.1f);
-            float intensity = 1.0f;
+            float intensity = 10.0f;
         };
 
         // -------------------------------------------------------------
@@ -70,6 +70,19 @@ namespace SFW
             std::array<Math::AABB3f, N> boundsWS;
         };
 
+        struct alignas(16) CPULightData
+        {
+            // Sun / directional
+            Math::Vec3f gSunDirectionWS;
+            float gSunIntensity; // 16B
+            Math::Vec3f gSunColor;
+            float gAmbientIntensity; // 16B
+
+            // Ambient + counts
+            Math::Vec3f gAmbientColor;
+            uint32_t gPointLightCount; // 16B
+        };
+
         class LightShadowService
         {
         public:
@@ -104,6 +117,19 @@ namespace SFW
             const AmbientLight& GetAmbientLight()     const noexcept {
 				std::shared_lock lock(m_updateMutex);
                 return m_ambient;
+            }
+
+			// ポイントライトの数はここで管理しない
+            CPULightData GetCPULightData() const
+            {
+                std::shared_lock lock(m_updateMutex);
+                CPULightData data{};
+                data.gSunDirectionWS = Math::NormalizeSafe(m_directional.directionWS, Math::Vec3f(0.0f, -1.0f, 0.0f));
+                data.gSunColor = m_directional.color;
+                data.gSunIntensity = m_directional.intensity;
+                data.gAmbientColor = m_ambient.color;
+                data.gAmbientIntensity = m_ambient.intensity;
+				return data;
             }
 
             // カスケード設定
@@ -299,35 +325,10 @@ namespace SFW
                     Math::Vec3f centerLS = recvLS.center();
                     Math::Vec3f extentsLS = recvLS.extent(); // half-size (x,y,z)
 
-
-                    // まず half-size を最大値でクランプしているならここまでの extentsLS はOK
-                    float shadowSizeX = (float)m_cascadeCfg.shadowMapResolution.x;
-                    float shadowSizeY = (float)m_cascadeCfg.shadowMapResolution.y;
-
-                    // いったん現在の half-size からテクセルサイズを出す
-                    float texelSizeX = (extentsLS.x * 2.0f) / shadowSizeX;
-                    float texelSizeY = (extentsLS.y * 2.0f) / shadowSizeY;
-
-                    // half-size をテクセルの整数倍に“切り上げ”て安定化（extent quantize）
-                    extentsLS.x = std::ceil(extentsLS.x / texelSizeX) * texelSizeX;
-                    extentsLS.y = std::ceil(extentsLS.y / texelSizeY) * texelSizeY;
-
-                    // 切り上げた half-size で texelSize を再計算（これで毎フレームの揺れが減る）
-                    texelSizeX = (extentsLS.x * 2.0f) / shadowSizeX;
-                    texelSizeY = (extentsLS.y * 2.0f) / shadowSizeY;
-
-                    // 中心をテクセルにスナップ
-                    Math::Vec3f snappedCenterLS = centerLS;
-                    snappedCenterLS.x = std::floor(snappedCenterLS.x / texelSizeX + 0.5f) * texelSizeX;
-                    snappedCenterLS.y = std::floor(snappedCenterLS.y / texelSizeY + 0.5f) * texelSizeY;
-
-                    // ※この行は削除！！（スナップ無効化）
-                    //snappedCenterLS = centerLS;
-
                     // XY だけスナップしたライト空間 AABB（受け側）
                     Math::AABB3f recvSnappedLS;
-                    recvSnappedLS.lb = snappedCenterLS - Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
-                    recvSnappedLS.ub = snappedCenterLS + Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
+                    recvSnappedLS.lb = centerLS - Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
+                    recvSnappedLS.ub = centerLS + Math::Vec3f(extentsLS.x, extentsLS.y, extentsLS.z);
 
                     // --- キャスター用に Z だけ押し出す -----------------------
                     Math::AABB3f casterWS = recvBoundsWS;
@@ -355,8 +356,8 @@ namespace SFW
                     Math::Matrix4x4f lightProj;
                     BuildLightOrtho(finalLS, lightProj);
 
-                    StabilizeShadowProjection_TexelSnap(lightView, lightProj,
-						(uint32_t)m_cascadeCfg.shadowMapResolution.x, (uint32_t)m_cascadeCfg.shadowMapResolution.y);
+                   /* StabilizeShadowProjection_TexelSnap(lightView, lightProj,
+						(uint32_t)m_cascadeCfg.shadowMapResolution.x, (uint32_t)m_cascadeCfg.shadowMapResolution.y);*/
 
                     // 記録
                     m_cascades.lightView[i] = lightView;

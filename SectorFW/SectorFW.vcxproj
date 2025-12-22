@@ -80,7 +80,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11RenderBackend.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11SamplerManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShaderManager.h" />
-    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShadowMapService.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11LightShadowResourceService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11TextureManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\_dx11inc.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX12\dx12inc.h" />
@@ -92,6 +92,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\LightShadowService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\LODPolicy.h" />
     <ClInclude Include="inc\SectorFW\Graphics\OccluderToolkit.h" />
+    <ClInclude Include="inc\SectorFW\Graphics\PointLightService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderBackend.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderGraph.hpp" />
     <ClInclude Include="inc\SectorFW\Graphics\RenderPass.hpp" />
@@ -224,7 +225,10 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
     </ClCompile>
-    <ClCompile Include="external\SoLoud\src\backend\wasapi\soloud_wasapi.cpp" />
+    <ClCompile Include="external\SoLoud\src\backend\wasapi\soloud_wasapi.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="external\SoLoud\src\backend\winmm\soloud_winmm.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -327,11 +331,12 @@
     <ClCompile Include="src\Graphics\DX11PSOManager.cpp" />
     <ClCompile Include="src\Graphics\DX11RenderBackend.cpp" />
     <ClCompile Include="src\Graphics\DX11ShaderManager.cpp" />
-    <ClCompile Include="src\Graphics\DX11ShadowMapService.cpp" />
+    <ClCompile Include="src\Graphics\DX11LightShadowResourceService.cpp" />
     <ClCompile Include="src\Graphics\DX11TextureManager.cpp" />
     <ClCompile Include="src\Graphics\DX12Graphics.cpp" />
     <ClCompile Include="src\Graphics\LODPolicy.cpp" />
     <ClCompile Include="src\Graphics\OccluderToolkit.cpp" />
+    <ClCompile Include="src\Graphics\PointLightService.cpp" />
     <ClCompile Include="src\Graphics\RenderQueue.cpp" />
     <ClCompile Include="src\Graphics\TerrainClustered.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />

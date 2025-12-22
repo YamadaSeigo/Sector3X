@@ -27,6 +27,19 @@ namespace SFW
 		explicit Grid2D(Size width, Size height) noexcept
 			: m_width(width), m_height(height), m_data(width* height) {
 		}
+
+		/**
+		 * @brief 引数付きコンストラクタ
+		 * @tparam Args 可変長テンプレート引数
+		 * @param width グリッドの幅
+		 * @param height グリッドの高さ
+		 * @param args 要素の初期化に使用する引数
+		 */
+		template<typename... Args>
+		Grid2D(Size width, Size height, Args&&... args) noexcept
+			: m_width(width), m_height(height), m_data(width * height, T(std::forward<Args>(args)...)) {
+		}
+
 		/**
 		 * @brief グリッドの要素にアクセスする演算子オーバーロード
 		 * @param x グリッドのx座標
@@ -108,6 +121,20 @@ namespace SFW
 		explicit Grid3D(Size width, Size height, Size depth) noexcept
 			: m_width(width), m_height(height), m_depth(depth),
 			m_data(static_cast<size_t>(width)* static_cast<size_t>(height)* static_cast<size_t>(depth)) {
+		}
+
+		/**
+		 * @brief 引数付きコンストラクタ
+		 * @tparam Args 可変長テンプレート引数
+		 * @param width  グリッドの幅 (x)
+		 * @param height グリッドの高さ (y)
+		 * @param depth  グリッドの奥行 (z)
+		 * @param args   要素の初期化に使用する引数
+		 */
+		template<typename... Args>
+		Grid3D(Size width, Size height, Size depth, Args&&... args) noexcept
+			: m_width(width), m_height(height), m_depth(depth),
+			m_data(static_cast<size_t>(width)* static_cast<size_t>(height)* static_cast<size_t>(depth), T(std::forward<Args>(args)...)) {
 		}
 
 		/**

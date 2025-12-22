@@ -140,9 +140,9 @@ namespace SFW
 		 */
 		void Release(HandleType h, uint64_t deleteSync = 0) {
 			assert(IsValid(h));
-			auto prev = refCount[h.index].fetch_sub(1, std::memory_order_acq_rel);
-			assert(prev >= 0 && "Release underflow");
-			if (prev == 0) EnqueueDelete(h.index, deleteSync);
+			uint32_t prev = refCount[h.index].fetch_sub(1, std::memory_order_acq_rel);
+			assert(prev > 0 && "Release underflow");
+			if (prev == 1) EnqueueDelete(h.index, deleteSync);
 		}
 		/**
 		 * @brief 削除要求の登録（重複を防いで期限更新）

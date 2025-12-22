@@ -330,38 +330,6 @@ namespace SFW
 			);
 		}
 
-
-#ifdef _ENABLE_IMGUI
-
-#define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange) \
-	SFW::Debug::RegisterDebugSliderFloat(category, label, initialValue, minValue, maxValue, speed, onChange)
-
-#define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed) \
-	SFW::Debug::BindDebugSliderFloat(category, label, target, minValue, maxValue, speed)
-
-#define REGISTER_DEBUG_CHECKBOX(category, label, initialValue, onChange) \
-	SFW::Debug::RegisterDebugCheckBox(category, label, initialValue, onChange)
-
-#define BIND_DEBUG_CHECKBOX(category, label, target) \
-	SFW::Debug::BindDebugCheckBox(category, label, target)
-
-#define REGISTER_DEBUG_BUTTON(category, label, onChange)\
-	SFW::Debug::RegisterDebugButton(category, label, onChange)
-
-#define BIND_DEBUG_TEXT(category, label, target)\
-	SFW::Debug::BindDebugText(category, label, target);
-
-#else //! _ENABLE_IMGUI
-
-#define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange)
-#define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed)
-#define REGISTER_DEBUG_CHECKBOX(category, label, initialValue, onChange)
-#define BIND_DEBUG_CHECKBOX(category, label, target)
-#define REGISTER_DEBUG_BUTTON(category, label, onChange)
-#define BIND_DEBUG_TEXT(category, label, target)
-
-#endif // _ENABLE_IMGUI
-
 		/**
 		 * @brief ライフサイクル（起動時 / 終了時に呼ぶ）
 		 */
@@ -394,5 +362,37 @@ namespace SFW
 		 * @brief ツリー書き込み開始（RAIIでロック/アンロック）
 		 */
 		UiTreeSnapshot::WriteGuard BeginTreeWrite();
+
+
+#ifdef _ENABLE_IMGUI
+
+#define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange) \
+	SFW::Debug::RegisterDebugSliderFloat(category, label, initialValue, minValue, maxValue, speed, onChange)
+
+#define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed) \
+	SFW::Debug::BindDebugSliderFloat(category, label, target, minValue, maxValue, speed)
+
+#define REGISTER_DEBUG_CHECKBOX(category, label, initialValue, onChange) \
+	SFW::Debug::RegisterDebugCheckBox(category, label, initialValue, onChange)
+
+#define BIND_DEBUG_CHECKBOX(category, label, target) \
+	SFW::Debug::BindDebugCheckBox(category, label, target)
+
+#define REGISTER_DEBUG_BUTTON(category, label, onChange)\
+	SFW::Debug::RegisterDebugButton(category, label, onChange)
+
+#define BIND_DEBUG_TEXT(category, label, target)\
+	SFW::Debug::BindDebugText(category, label, target);
+
+#else //! _ENABLE_IMGUI
+
+#define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange)
+#define BIND_DEBUG_SLIDER_FLOAT(category, label, target, minValue, maxValue, speed)
+#define REGISTER_DEBUG_CHECKBOX(category, label, initialValue, onChange)
+#define BIND_DEBUG_CHECKBOX(category, label, target)
+#define REGISTER_DEBUG_BUTTON(category, label, onChange)
+#define BIND_DEBUG_TEXT(category, label, target)
+
+#endif // _ENABLE_IMGUI
 	}
 }

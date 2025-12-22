@@ -146,6 +146,10 @@
     <Exec Command="python &quot;$(ProjectDir)convert_textures.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration)" />
   </Target>
   
+  <Target Name="ConvertAudio" BeforeTargets="Build">
+	<Exec Command="python &quot;$(ProjectDir)convert_audio.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration) --ffmpeg &quot;$(ProjectDir)Tools/ffmpeg.exe&quot;"/>
+  </Target>
+  
   <!-- Convex生成処理 -->
   <Target Name="RunGenerateConvex"
           BeforeTargets="Build">

@@ -53,8 +53,19 @@ namespace SFW
 			ImGui::End();
 
 			static std::vector<std::string> logBuf;
+			static size_t oldLogSize = 0;
+
 			for (auto& s : bus.logQ.drain()) logBuf.push_back(std::move(s));
-			ImGui::Begin("Log"); for (auto& s : logBuf) ImGui::TextUnformatted(s.c_str()); ImGui::End();
+			ImGui::Begin("Log");
+			for (auto& s : logBuf) ImGui::TextUnformatted(s.c_str());
+
+			if(oldLogSize != logBuf.size()) {
+				// スクロールを一番下に移動
+				ImGui::SetScrollHereY(1.0f);
+				oldLogSize = logBuf.size();
+			}
+
+			ImGui::End();
 
 			// --- ツリースナップショットを反映 ---
 			bus.tree.swap(); // back<->front

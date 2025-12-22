@@ -358,14 +358,14 @@ namespace SFW
 			 * @brief カメラバッファのデータを取得
 			 * @return const CameraBuffer& カメラバッファのデータ
 			 */
-			CameraBuffer GetCameraBufferData() const noexcept {
+			const CameraBuffer& GetCameraBufferData() const noexcept {
 				return cameraBuffer[currentSlot];
 			}
 			/**
 			 * @brief 遅延分前のカメラバッファのデータを取得
 			 * @return const CameraBuffer& カメラバッファのデータ
 			 */
-			CameraBuffer GetOldCameraBufferData() const noexcept {
+			const CameraBuffer& GetOldCameraBufferData() const noexcept {
 				return cameraBuffer[(currentSlot + (RENDER_BUFFER_COUNT - 2)) % RENDER_BUFFER_COUNT];
 			}
 

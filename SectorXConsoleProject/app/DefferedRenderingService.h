@@ -47,10 +47,7 @@ public:
 	{
 		std::lock_guard lock(updateMutex);
 
-		//Systemで更新する前提でServiceのほうが更新が先なので一歩先のスロットを更新させる
-		auto targetSlot = (currentSlot + 1) % Graphics::RENDER_BUFFER_COUNT;
-
-		lightCameraBufferData[targetSlot] = std::move(data);
+		lightCameraBufferData[currentSlot] = std::move(data);
 	}
 
 private:

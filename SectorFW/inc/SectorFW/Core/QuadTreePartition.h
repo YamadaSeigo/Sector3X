@@ -129,27 +129,23 @@ namespace SFW
 		/**
 		 * @brief 指定した視錐台に含まれるチャンクを列挙する関数
 		 * @param fr 視錐台
-		 * @param ymin 最低Y座標(省略時は無制限)
-		 * @param ymax 最高Y座標(省略時は無制限)
 		 * @return チャンクのポインタ配列
 		 */
-		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr,
-			float ymin = std::numeric_limits<float>::lowest(), float ymax = (std::numeric_limits<float>::max)()) noexcept
+		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) noexcept
 		{
 			std::vector<SpatialChunk*> out;
 			out.reserve(64);
 			if (!m_root) return out;
-			cullRecursive(*m_root, fr, ymin, ymax, out);
+			cullRecursive(*m_root, fr, -m_minLeaf, m_minLeaf, out);
 			return out;
 		}
 
-		std::vector<const SpatialChunk*> CullChunks(const Math::Frustumf& fr,
-			float ymin = std::numeric_limits<float>::lowest(), float ymax = (std::numeric_limits<float>::max)()) const noexcept
+		std::vector<const SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
 		{
 			std::vector<const SpatialChunk*> out;
 			out.reserve(64);
 			if (!m_root) return out;
-			cullRecursive(*m_root, fr, ymin, ymax, out);
+			cullRecursive(*m_root, fr, -m_minLeaf, m_minLeaf, out);
 			return out;
 		}
 
@@ -166,9 +162,7 @@ namespace SFW
 
 		std::vector<SpatialChunk*> CullChunksNear(const Math::Frustumf& fr,
 			const Math::Vec3f& camPos,
-			size_t maxCount = (std::numeric_limits<size_t>::max)(),
-			float ymin = std::numeric_limits<float>::lowest(),
-			float ymax = (std::numeric_limits<float>::max)()) const noexcept
+			size_t maxCount = (std::numeric_limits<size_t>::max)()) const noexcept
 		{
 			struct Item { SpatialChunk* sc; float d2; };
 
@@ -177,7 +171,7 @@ namespace SFW
 
 			// 可視葉 (chunk, bounds) を同時に収集する内部再帰
 			std::function<void(const Node&)> rec = [&](const Node& n) {
-				if (!nodeIntersectsFrustum(n, fr, ymin, ymax)) return;
+				if (!nodeIntersectsFrustum(n, fr, -m_minLeaf, m_minLeaf)) return;
 				if (n.isLeaf()) {
 					const Math::Vec2f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
 					const Math::Vec2f e = (n.bounds.ub - n.bounds.lb) * 0.5f;

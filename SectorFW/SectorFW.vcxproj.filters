@@ -501,7 +501,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\LightShadowService.h">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShadowMapService.h">
+    <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11LightShadowResourceService.h">
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Core\VoidPartition.h">
@@ -518,6 +518,9 @@
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Audio\AudioType.h">
       <Filter>Inc\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\PointLightService.h">
+      <Filter>Inc\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1037,7 +1040,7 @@
     <ClCompile Include="src\Graphics\TerrainClustered.cpp">
       <Filter>Src\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\DX11ShadowMapService.cpp">
+    <ClCompile Include="src\Graphics\DX11LightShadowResourceService.cpp">
       <Filter>Src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="external\SoLoud\src\core\soloud.cpp">
@@ -1120,6 +1123,9 @@
     </ClCompile>
     <ClCompile Include="external\SoLoud\src\backend\wasapi\soloud_wasapi.cpp">
       <Filter>Src\Audio\SoLoud\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\PointLightService.cpp">
+      <Filter>Src\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -21,7 +21,7 @@ cbuffer MaterialCB : register(b2)
     float metallicFactor;   // glTF metallicFactor
     float roughnessFactor;  // glTF roughnessFactor
     float occlutionFactor; // 16B 境界揃え
-    uint hasFlags;          // フラグビット群 
+    uint hasFlags;          // フラグビット群
 };
 
 static const uint FLAG_HAS_BASECOLORTEX     = 1u << 0;
@@ -30,19 +30,6 @@ static const uint FLAG_HAS_MRTEX            = 1u << 2;
 static const uint FLAG_HAS_OCCTEX           = 1u << 3;
 static const uint FLAG_HAS_ORMCOMBIENT      = 1u << 4;
 static const uint FLAG_HAS_EMISSIVETEX      = 1u << 5;
-
-cbuffer LightingCB : register(b3)
-{
-    // Sun / directional
-    float3 gSunDirectionWS;
-    float gSunIntensity; // 16B
-    float3 gSunColor;
-    float gAmbientIntensity; // 16B
-
-    // Ambient + counts
-    float3 gAmbientColor;
-    uint gPointLightCount; // 16B
-};
 
 
 // カスケード情報（DX11ShadowMapService::CBShadowCascadesData と揃える）
@@ -93,18 +80,6 @@ Texture2D gEmissiveTex : register(t6);
 // シャドウマップ (Texture2DArray)
 Texture2DArray<float> gShadowMap : register(t7);
 
-struct PointLight
-{
-    float3 positionWS;
-    float radius; // 16B
-    float3 color;
-    float invRadius; // 16B
-    int shadowLayer;
-    float shadowBias; // 8B
-    float2 _padPL0_; // 8B (16B 境界揃え)
-};
-
-StructuredBuffer<PointLight> gPointLights : register(t8);
 
 SamplerState gSampler : register(s0);
 

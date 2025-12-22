@@ -10,7 +10,7 @@ class LightShadowSystem : public ITypeSystem<
 		Graphics::I3DPerCameraService,
 		Graphics::RenderService,
 		Graphics::LightShadowService,
-		Graphics::DX11::ShadowMapService
+		Graphics::DX11::LightShadowResourceService
 	>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<>;
 public:
@@ -19,7 +19,7 @@ public:
 		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService,
 		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
-		UndeletablePtr<Graphics::DX11::ShadowMapService> shadowMapService
+		UndeletablePtr<Graphics::DX11::LightShadowResourceService> shadowMapService
 	)
 	{
 		Graphics::CameraParams camParams;
@@ -39,7 +39,7 @@ public:
 		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService,
 		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
-		UndeletablePtr<Graphics::DX11::ShadowMapService> shadowMapService) {
+		UndeletablePtr<Graphics::DX11::LightShadowResourceService> resourceService) {
 
 		bool updateCascade = false;
 		if (inputService->IsKeyPressed(Input::Key::L))
@@ -118,12 +118,22 @@ public:
 			std::memcpy(dst.dir, &lightShadowService->GetDirectionalLight().directionWS, sizeof(float) * 3);
 
 			Graphics::DX11::BufferUpdateDesc cbUpdateDesc{};
-			cbUpdateDesc.buffer = shadowMapService->GetShadowCascadesBuffer();
+			cbUpdateDesc.buffer = resourceService->GetShadowCascadesBuffer();
 			cbUpdateDesc.data = &dst;
 			cbUpdateDesc.size = sizeof(Graphics::DX11::CBShadowCascadesData);
 			cbUpdateDesc.isDelete = false;
 
 			auto bufferMgr = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
+			bufferMgr->UpdateBuffer(cbUpdateDesc, currentSlot);
+
+			Graphics::CPULightData cbLightData = lightShadowService->GetCPULightData();
+			resourceService->SetCPULightData(currentSlot, cbLightData);
+
+			// CPU 側のライトデータを GPU 側に転送
+			//※ポイントライトの数はPointLightSystemで更新!
+			cbUpdateDesc.buffer = resourceService->GetLightDataCB();
+			cbUpdateDesc.data = resourceService->GetCPULightDataPtrNoLock(currentSlot);
+			cbUpdateDesc.size = sizeof(Graphics::CPULightData);
 			bufferMgr->UpdateBuffer(cbUpdateDesc, currentSlot);
 		}
 	}

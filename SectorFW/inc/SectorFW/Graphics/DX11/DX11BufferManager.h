@@ -269,6 +269,34 @@ namespace SFW
 			void DestroyResource(uint32_t idx, uint64_t /*currentFrame*/) {
 				slots[idx].data.buffer.Reset();
 			}
+			/**
+			 * @brief CreateSRV: バッファ用のシェーダーリソースビューを作成する関数
+			 * @param buffer バッファのComPtr
+			 * @param desc シェーダーリソースビューの記述子
+			 * @return ID3D11ShaderResourceViewのComPtr
+			 */
+			ComPtr<ID3D11ShaderResourceView> CreateSRV(ComPtr<ID3D11Buffer> buffer, D3D11_SHADER_RESOURCE_VIEW_DESC desc) const {
+				ComPtr<ID3D11ShaderResourceView> srv;
+				HRESULT hr = device->CreateShaderResourceView(buffer.Get(), &desc, &srv);
+				if (FAILED(hr)) {
+					assert(false && "Failed to create shader resource view");
+				}
+				return srv;
+			}
+			/**
+			 * @brief CreateUAV: バッファ用のアンオーダードアクセスビューを作成する関数
+			 * @param buffer バッファのComPtr
+			 * @param desc アンオーダードアクセスビューの記述子
+			 * @return ID3D11UnorderedAccessViewのComPtr
+			 */
+			ComPtr<ID3D11UnorderedAccessView> CreateUAV(ComPtr<ID3D11Buffer> buffer, D3D11_UNORDERED_ACCESS_VIEW_DESC desc) const {
+				ComPtr<ID3D11UnorderedAccessView> uav;
+				HRESULT hr = device->CreateUnorderedAccessView(buffer.Get(), &desc, &uav);
+				if (FAILED(hr)) {
+					assert(false && "Failed to create unordered access view");
+				}
+				return uav;
+			}
 		private:
 			ID3D11Device* device;
 			ID3D11DeviceContext* context;

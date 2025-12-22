@@ -11,6 +11,10 @@
 //描画系のこのクラスでいったんバッファの更新
 #include "../app/WindMovementService.h"
 
+#ifdef _DEBUG
+#define PROFILE_MODEL_UPDATE_TIME 1
+#endif
+
 struct CModel
 {
 	Graphics::ModelAssetHandle handle;
@@ -152,7 +156,12 @@ public:
 			drawOcc
 		};
 
+#if PROFILE_MODEL_UPDATE_TIME
+		clock_t start = clock();
+#endif
+
 		//アクセスを宣言したコンポーネントにマッチするチャンクに指定した関数を適応する
+
 		this->ForEachFrustumNearChunkWithAccessor<IsParallel{true}>([](Accessor& accessor, size_t entityCount, KernelParams* kp)
 			{
 				if (entityCount == 0) return;
@@ -251,7 +260,7 @@ public:
 						if (!shadowOnly)
 						{
 							//小さすぎる場合は無視
-							if (areaFrec <= 0.005f)
+							if (areaFrec <= 0.002f)
 							{
 								continue;
 							}
@@ -437,6 +446,27 @@ public:
 				}
 			}, partition, fru, camPos, &kp, threadPool.get()
 		);
+
+#if PROFILE_MODEL_UPDATE_TIME
+		clock_t end = clock();
+
+		const double time = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
+
+		static int displayCount = 0;
+		static double totalTime = 0.0;
+
+		totalTime += time;
+
+		displayCount++;
+		if (displayCount % 60 == 0)
+		{
+			std::string msg = std::format("[Profile] ModelRenderSystem Update Time: {:.3f} ms", totalTime / 60.0);
+			Debug::PushLog(std::move(msg));
+
+			displayCount = 0;
+			totalTime = 0.0;
+		}
+#endif
 	}
 
 private:

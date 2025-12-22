@@ -112,12 +112,9 @@ namespace SFW
 		/**
 		 * @brief フラスタムカリングを行い、可視なチャンクのリストを取得します。
 		 * @param fr フラスタム
-		 * @param ymin 最小Y値
-		 * @param ymax 最大Y値
 		 * @return std::vector<SpatialChunk*> 可視なチャンクのリスト
 		 */
-		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr,
-			float ymin = std::numeric_limits<float>::lowest(), float ymax = (std::numeric_limits<float>::max)()) const noexcept
+		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
 		{
 			std::vector<SpatialChunk*> out;
 			const uint32_t w = grid.width(), d = grid.height();
@@ -130,7 +127,7 @@ namespace SFW
 					const float cz = (z + 0.5f) * cell;
 
 					float cyEff, eyEff;
-					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, ymin, ymax, cyEff, eyEff)) {
+					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, -chunkSize, chunkSize, cyEff, eyEff)) {
 						continue; // 縦に一切重ならない → 可視になり得ない
 					}
 
@@ -191,9 +188,7 @@ namespace SFW
 		// 可視チャンクを「カメラ位置から近い順」に上位K件返す
 		std::vector<SpatialChunk*> CullChunksNear(const Math::Frustumf& fr,
 			const Math::Vec3f& camPos,
-			size_t maxCount = (std::numeric_limits<size_t>::max)(),
-			float ymin = std::numeric_limits<float>::lowest(),
-			float ymax = (std::numeric_limits<float>::max)()) const noexcept
+			size_t maxCount = (std::numeric_limits<size_t>::max)()) const noexcept
 		{
 			struct Item { SpatialChunk* sc; float d2; };
 			std::vector<Item> items; items.reserve(128);
@@ -208,7 +203,7 @@ namespace SFW
 					const float cz = (z + 0.5f) * cell;
 
 					float cyEff, eyEff;
-					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, ymin, ymax, cyEff, eyEff)) continue;
+					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, -chunkSize, chunkSize, cyEff, eyEff)) continue;
 
 					const Math::Vec3f center{ cx, cyEff, cz };
 					const Math::Vec3f extent{ exz, eyEff, exz };

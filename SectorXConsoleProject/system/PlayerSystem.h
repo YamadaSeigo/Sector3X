@@ -107,7 +107,7 @@ public:
 		UndeletablePtr<PlayerService> playerService,
 		UndeletablePtr<Audio::AudioService> audioService)
 	{
-		grassStepHandle = audioService->EnqueueLoadWav("assets/audio/SE/walk-on-grass.mp3");
+		grassStepHandle = audioService->EnqueueLoadWav("assets/audio/SE/walk-on-grass.wav");
 	}
 
 	//指定したサービスを関数の引数として受け取る
