@@ -1013,7 +1013,8 @@ namespace SFW::Graphics::DX11 {
         Math::Vec2f cellSizeXZ;   // 各クラスタの幅・奥行（ワールド）
         uint32_t dimX;       // クラスタ数X
         uint32_t dimZ;       // クラスタ数Z
-        uint32_t _pad[2];
+		float heightScale;  // 高さスケール
+        uint32_t _pad;
 
     };
 
@@ -1416,12 +1417,14 @@ namespace SFW::Graphics::DX11 {
     inline void SetupTerrainGridCB(const Math::Vec2f& originXZ,
         const Math::Vec2f& cellSizeXZ,
         uint32_t dimX, uint32_t dimZ,
+		float heightScale,
         ClusterParamsGPU& out)
     {
         out.grid.originXZ = originXZ;
         out.grid.cellSizeXZ = cellSizeXZ;
         out.grid.dimX = dimX;
         out.grid.dimZ = dimZ;
+        out.grid.heightScale = heightScale;
     }
 
         // 入力シート（ID）→ ID3D11Texture2D を取得

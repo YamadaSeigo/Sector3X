@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../app/DefferedRenderingService.h"
+#include "../app/DeferredRenderingService.h"
 
 template<typename Partition>
-class DefferedRenderingSystem : public ITypeSystem<
-	DefferedRenderingSystem<Partition>,
+class DeferredRenderingSystem : public ITypeSystem<
+	DeferredRenderingSystem<Partition>,
 	Partition,
 	ComponentAccess<>,//アクセスするコンポーネントの指定
 	ServiceContext<
-		DefferedRenderingService,
+		DeferredRenderingService,
 		Graphics::I3DPerCameraService
 	>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<>;
@@ -16,7 +16,7 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		UndeletablePtr<DefferedRenderingService> defferedService,
+		UndeletablePtr<DeferredRenderingService> deferredService,
 		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService)
 	{
 		using namespace Graphics;
@@ -26,7 +26,7 @@ public:
 		lightCameraBufferData.camForward = perCameraService->GetForward();
 		lightCameraBufferData.camPos = perCameraService->GetEyePos();
 
-		defferedService->UpdateBufferData(std::move(lightCameraBufferData));
+		deferredService->UpdateBufferData(std::move(lightCameraBufferData));
 	}
 };
 

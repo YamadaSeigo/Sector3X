@@ -377,6 +377,37 @@ namespace SFW
 				std::shared_lock lock(sharedMutex);
 				return isUpdateBuffer;
 			}
+
+			/**
+			 * @brief 現在の回転を計算して取得する
+			 * @return Math::Quatf 現在の回転を表すクォータニオン
+			 */
+			Math::Quatf CalcCurrentRotation() const noexcept {
+				std::shared_lock lock(sharedMutex);
+				Math::Quatf outRot;
+
+				// マウス → 角度（1pxあたり何ラジアン回すかを sens* で決める）
+				float yaw = dx * sensX_rad_per_px; // 右に動かすと右旋回にしたい等で符号調整
+				float pitch = dy * sensY_rad_per_px;
+
+				// ピッチ制限（オススメ：累積角で管理）
+				float newPitch = std::clamp(pitchAccum + pitch, Math::Deg2Rad(-89.0f), Math::Deg2Rad(89.0f));
+				pitch = newPitch - pitchAccum;
+
+				// 1) Yaw をワールドUpで適用
+				const Math::Vec3f worldUp{ 0,1,0 };
+				Math::Quatf qYaw = Math::Quatf::FromAxisAngle(worldUp, yaw);
+				outRot = qYaw * rot;
+				outRot.Normalize();
+
+				// 2) Yaw 後の Right を取り直して Pitch
+				Math::Vec3f right = rot.RotateVector(Math::Vec3f{ 1,0,0 });
+				Math::Quatf qPitch = Math::Quatf::FromAxisAngle(right, pitch);
+				outRot = qPitch * rot;
+				outRot.Normalize();
+
+				return outRot;
+			}
 		private:
 			virtual void Update(double deltaTime) override {
 				++frameIdx;
@@ -391,6 +422,7 @@ namespace SFW
 				UpdateCameraFromMouse();
 				isUpdateBuffer = false;
 			}
+
 
 		protected:
 			/**

@@ -116,6 +116,7 @@ float4 main(VSOut i) : SV_Target
     float3 albedo = albedoAO.rgb;
     float ao = saturate(albedoAO.a);
     float3 emissive = em.rgb;
+    
     float metallic = saturate(em.a);
     float roughness = saturate(nr.a);
 
@@ -135,9 +136,6 @@ float4 main(VSOut i) : SV_Target
 
     // View vector
     float3 V = normalize(camPos.xyz - worldPos);
-
-    // 視線方向(カメラ前方)で viewDepth を作って cascade 選択
-    float viewDepth = dot(worldPos - camPos.xyz, camForward.xyz);
 
     // F0
     float3 F0 = lerp(float3(0.04f, 0.04f, 0.04f), albedo, metallic);
@@ -166,10 +164,11 @@ float4 main(VSOut i) : SV_Target
 
         float3 radiance = gSunColor * gSunIntensity;
 
+           // 視線方向(カメラ前方)で viewDepth を作って cascade 選択
+        float viewDepth = dot(worldPos - camPos.xyz, camForward.xyz);
+        
         // 影（Directionalのみ）
         //float shadow = SampleShadow(worldPos, viewDepth); // 1=光あり, 0=影
-
-        float viewDepth = dot(wp4.xyz - camPos.xyz, camForward.xyz);
 
         uint cascade = ChooseCascade(viewDepth);
 

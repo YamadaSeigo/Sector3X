@@ -4,13 +4,20 @@
 草を揺らす処理と地形の高さに一致させる処理を同じシェーダーで行っている
 **/
 
+cbuffer CameraBuffer : register(b9)
+{
+    row_major float4x4 invViewProj;
+    float4 camForward; //wはpadding
+    float4 camPos; // wはpadding
+}
+
 cbuffer TerrainGridCB : register(b10)
 {
     float2 gOriginXZ; // ワールド座標の基準 (x,z)
     float2 gCellSizeXZ; // 1クラスタのサイズ (x,z)
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
-    uint _pad00;
+    float heightScale;
     uint _pad11;
 };
 
@@ -81,36 +88,40 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     row_major float3x4 world = gInstanceMats[pooledIndex].M;
 
     float3x3 R = (float3x3) world;
-    float3 baseWorldPos = float3(world._m03, world._m13, world._m23);
+    float3 translation = float3(world._m03, world._m13, world._m23);
 
     VSOutput output;
-    float3 wp = mul(R, input.position) + baseWorldPos;
+
+    float3 baseWS = mul(R, input.position);
+
+    float3 wp = baseWS + translation;
 
     float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
-    float2 cHeightMapUV = (baseWorldPos.xz - gOriginXZ) / terrainSize;
-    //float terrainHeight = gHeightMap.SampleLevel(gSampler, cHeightMapUV, 0);
+    float2 cHeightMapUV = (translation.xz - gOriginXZ) / terrainSize;
     uint w, h, layers, mipLevels;
     gHeightMap.GetDimensions(0, w, h, mipLevels);
     int2 texel = int2(cHeightMapUV * float2(w, h)); // まず 0..w, 0..h にスケール
     texel = clamp(texel, int2(0, 0), int2(w - 1, h - 1)); // 範囲内に
-    float terrainHeight = gHeightMap.Load(int3(texel, 0));
+    float offsetHeight = gHeightMap.Load(int3(texel, 0));
 
     float2 lHeightMapUV = (wp.xz - gOriginXZ) / terrainSize;
     texel = int2(lHeightMapUV * float2(w, h)); // まず 0..w, 0..h にスケール
     texel = clamp(texel, int2(0, 0), int2(w - 1, h - 1)); // 範囲内に
-    float localHeight = gHeightMap.Load(int3(texel, 0));
-    wp.y += (localHeight - terrainHeight) * 70.0f;
+    float wpHeight = gHeightMap.Load(int3(texel, 0));
+    float terrainOffset = (wpHeight - offsetHeight) * heightScale;
+
+    wp.y += terrainOffset;
 
    // ---- 1) 全体をまとめる“大きな揺れ” ----
    // 空間周波数をかなり低くして「大きなうねり」
-    float bigSpatial = dot(baseWorldPos.xz, gWindDirXZ * 0.03f);
+    float bigSpatial = dot(translation.xz, gWindDirXZ * 0.03f);
 
    // GrassMovementService 側でグルーブさせた Time を使う前提
     float bigPhase = bigSpatial + gTime * gWindSpeed;
     float bigWave = sin(bigPhase); // -1..1
 
    // ---- 2) 個々の“ゆらぎ”用の小さいノイズ ----
-    float2 noisePos = baseWorldPos.xz * gNoiseFreq; // gNoiseFreq は 0.1 とか
+    float2 noisePos = translation.xz * gNoiseFreq; // gNoiseFreq は 0.1 とか
     float noise01 = Hash2D(noisePos);
     float noiseN11 = noise01 * 2.0f - 1.0f;
 
@@ -169,7 +180,39 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     wp += footOffset;
     // --------- ここまで踏まれ処理 ----------
 
-    float swayAmount = gWindAmplitude * terrainHeight * wave * weight;
+    float3 toP = wp - camPos.xyz;
+
+    // 手前距離（視線方向の奥行き）
+    float depth = dot(toP, camForward.xyz);
+
+    // 視線レイからの横ズレ距離
+    float3 lateral = toP - camForward.xyz * depth;
+    float r = length(lateral);
+
+    // 「カメラ前方のみ」マスク
+    float heightMask = 1.0f - smoothstep(0.0f, 10.0f, camPos.y - translation.y);
+
+    // depthが近いほど強く（0→1にするのではなく、近いほど“縮む”強さに）
+    float depthT = saturate((depth - 0.0f /*gCamFadeStart*/) / (10.0f /*gCamFadeEnd*/ - 0.0f /*gCamFadeStart*/)); // 0=近い,1=遠い
+    float depthMask = 1.0f - depthT; // 1=近い,0=遠い
+
+    // 視線中心に近いほど強く
+    float radiusMask = 1.0f - smoothstep(0.0f /*gCamRadius*/, 10.0f, r);
+
+    // 最終影響量
+    float influence = heightMask * depthMask * radiusMask;
+
+    // スケール（influence=1でmin、0で1）
+
+    float scale = lerp(1.0f, 0.05f /*gCamMinScale*/, influence);
+
+    float3 offsetWS = wp - baseWS;
+
+    baseWS.y *= scale;
+
+    wp = baseWS + offsetWS;
+
+    float swayAmount = gWindAmplitude * offsetHeight * wave * weight;
     float3 windDir3 = float3(gWindDirXZ.x, 0.0f, gWindDirXZ.y);
     wp += windDir3 * swayAmount;
 

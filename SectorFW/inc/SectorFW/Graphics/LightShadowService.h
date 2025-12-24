@@ -33,7 +33,7 @@ namespace SFW
         struct AmbientLight
         {
             Math::Vec3f color = Math::Vec3f(0.1f, 0.1f, 0.1f);
-            float intensity = 10.0f;
+            float intensity = 4.0f;
         };
 
         // -------------------------------------------------------------
@@ -478,9 +478,9 @@ namespace SFW
                 Math::Vec3f target = center;
                 Math::Vec3f up(0.0f, 1.0f, 0.0f);
 
-				if (lightDirWS.dot(up) > 0.99f)
+				if (std::abs(lightDirWS.dot(up)) > 0.99f)
 				{
-					up = Math::Vec3f(1.0f, 0.0f, 0.0f); // ライトが真上なら別の Up を使う
+					up = Math::Vec3f(1.0f, 0.0f, 0.0f); // ライトが平行なら別の Up を使う
 				}
 
                 // 左手系 / 右手系に合わせて LookAt 関数を呼んでください

@@ -295,7 +295,12 @@ public:
 					rayCmd.broadPhaseMask = MakeBPMask(Layers::BPLayers::NON_MOVING) | MakeBPMask(Layers::BPLayers::MOVING);
 					rayCmd.objectLayerMask = MakeObjectLayerMask(Layers::NON_MOVING_RAY_HIT);
 					rayCmd.origin = camState.smoothedTarget;
-					rayCmd.dir = cameraService->GetBackward(); // カメラの後ろ方向
+
+					//最新のカメラの向きを計算して求める(Rayの結果取得に一フレーム遅延があるため)
+					auto camRot = cameraService->CalcCurrentRotation();
+					auto basis = Math::FastBasisFromQuat(camRot);
+
+					rayCmd.dir = basis.forward * -1.0f; // カメラの後ろ方向
 					rayCmd.maxDist = cameraDistance;
 
 					float focusDist = cameraDistance;

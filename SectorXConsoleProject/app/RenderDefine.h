@@ -28,3 +28,11 @@ enum PassUI : uint16_t {
 	PASS_UI_LINE =				1u << 2,
 };
 
+constexpr inline const char* DeferredTextureNames[] = {
+	"AlbedoAO",
+	"NormalRoughness",
+	"EmissiveMetallic"
+};
+
+inline constexpr size_t DeferredTextureCount = sizeof(DeferredTextureNames) / sizeof(DeferredTextureNames[0]);
+

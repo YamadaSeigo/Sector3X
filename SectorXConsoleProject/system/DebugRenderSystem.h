@@ -9,6 +9,7 @@
 #include <SectorFW/Graphics/LightShadowService.h>
 
 #include "ModelRenderSystem.h"
+#include "../app/DeferredRenderingService.h"
 
 using namespace SFW;
 
@@ -65,7 +66,8 @@ class DebugRenderSystem : public ITypeSystem<
 		Graphics::I3DPerCameraService,
 		Graphics::I2DCameraService,
 		Graphics::LightShadowService,
-		Physics::PhysicsService
+		Physics::PhysicsService,
+		DeferredRenderingService
 	>>
 {
 	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<CTransform>>;
@@ -79,12 +81,24 @@ class DebugRenderSystem : public ITypeSystem<
 
 	static constexpr inline uint32_t DRAW_LINE_CHUNK_COUNT = 12;
 public:
+
+	inline static constexpr const char* ShowDeferredBufferName[] =
+	{
+		"albedo",
+		"normal",
+		"emissive",
+		"ao",
+		"roughness",
+		"metallic"
+	};
+
 	void StartImpl(
 		UndeletablePtr<Graphics::RenderService> renderService,
 		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
 		UndeletablePtr<Graphics::I2DCameraService>,
 		UndeletablePtr<Graphics::LightShadowService>,
-		UndeletablePtr <Physics::PhysicsService>)
+		UndeletablePtr<Physics::PhysicsService>,
+		UndeletablePtr<DeferredRenderingService> deferredRenderService)
 	{
 		using namespace Graphics;
 		using namespace Debug;
@@ -221,13 +235,72 @@ public:
 		DX11::TextureCreateDesc texDesc;
 		texDesc.forceSRGB = false;
 		texDesc.recipe = &recipe;
-		texMgr->Add(texDesc, mocTexHandle);
+		texMgr->Add(texDesc, mocDepthTexHandle);
 
 		Graphics::DX11::MaterialCreateDesc matDesc;
 		matDesc.shader = mocShaderHandle;
-		matDesc.psSRV[10] = mocTexHandle; // TEX10 にセット
+		matDesc.psSRV[10] = mocDepthTexHandle; // TEX10 にセット
 		auto matMgr = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
 		matMgr->Add(matDesc, mocMaterialHandle);
+
+		Graphics::DX11::ShaderCreateDesc deferredShaderDesc;
+		deferredShaderDesc.templateID = MaterialTemplateID::Unlit;
+		deferredShaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
+		deferredShaderDesc.psPath = L"assets/shader/PS_DebugDeferred.cso";
+		ShaderHandle deferredShaderHandle;
+		shaderMgr->Add(deferredShaderDesc, deferredShaderHandle);
+
+		Graphics::DX11::PSOCreateDesc deferredPsoDesc = { deferredShaderHandle, RasterizerStateID::SolidCullBack };
+		psoMgr->Add(deferredPsoDesc, deferredPsoHandle);
+
+		const auto shaderData = shaderMgr->Get(deferredShaderHandle);
+
+		PBRMaterialCB pbrMatCB{};
+		pbrMatCB.baseColorFactor[0] = 1.0f;
+		pbrMatCB.baseColorFactor[1] = 1.0f;
+		pbrMatCB.baseColorFactor[2] = 1.0f;
+		pbrMatCB.baseColorFactor[3] = 0.0f;
+
+		auto bufferMgr = renderService->GetResourceManager<DX11::BufferManager>();
+
+		BufferHandle matCB_RGM = bufferMgr->AcquireWithContent(&pbrMatCB, sizeof(PBRMaterialCB));
+
+		pbrMatCB.baseColorFactor[0] = 0.0f;
+		pbrMatCB.baseColorFactor[1] = 0.0f;
+		pbrMatCB.baseColorFactor[2] = 0.0f;
+		pbrMatCB.baseColorFactor[3] = 1.0f;
+
+		BufferHandle matCB_A = bufferMgr->AcquireWithContent(&pbrMatCB, sizeof(PBRMaterialCB));
+
+		const auto* deferredTexHandle = deferredRenderService->GetGBufferHandles();
+
+		uint32_t matSlot = 10;
+		uint32_t texSlot = 10;
+		for(const auto& bind : shaderData.ref().psBindings)
+		{
+			if (bind.name == DX11::ModelAssetManager::gMaterialBindName)
+			{
+				matSlot = bind.bindPoint;
+			}
+			else if (bind.name == DX11::ModelAssetManager::gBaseColorTexBindName)
+			{
+				texSlot = bind.bindPoint;
+			}
+		}
+
+		matDesc.shader = deferredShaderHandle;
+
+		for (size_t i = 0; i < DeferredTextureCount; ++i)
+		{
+			matDesc.psSRV[texSlot] = deferredTexHandle[i];
+			matDesc.psCBV[matSlot] = matCB_RGM;
+			matMgr->Add(matDesc, deferredMaterialHandle[i]);
+			matDesc.psCBV[matSlot] = matCB_A;
+			matMgr->Add(matDesc, deferredMaterialHandle[i + DeferredTextureCount]);
+		}
+
+		matDesc.psSRV[texSlot] = mocDepthTexHandle;
+		matMgr->Add(matDesc, dummyMatHandle);
 
 		//imguiにバインド
 		BIND_DEBUG_CHECKBOX("Show", "enabled", &enabled);
@@ -235,10 +308,17 @@ public:
 		BIND_DEBUG_CHECKBOX("Show", "modelAABB", &drawModelAABB);
 		BIND_DEBUG_CHECKBOX("Show", "occAABB", &drawOccluderAABB);
 		BIND_DEBUG_CHECKBOX("Show", "modelRect", &drawModelRect);
-		BIND_DEBUG_CHECKBOX("Show", "occlutionRect", &drawOcclutionRect);
+		BIND_DEBUG_CHECKBOX("Show", "occlusionRect", &drawOcclusionRect);
 		BIND_DEBUG_CHECKBOX("Show", "cascadesAABB", &drawCascadeAABB);
 		BIND_DEBUG_CHECKBOX("Show", "shapeDims", &drawShapeDims);
 		BIND_DEBUG_CHECKBOX("Show", "MOCDepth", &drawMOCDepth);
+
+		constexpr auto drawDeferredBufferCount = sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0]);
+		assert(drawDeferredBufferCount == DeferredTextureCount * 2);
+		for (size_t i = 0; i < drawDeferredBufferCount; ++i)
+		{
+			BIND_DEBUG_CHECKBOX("Show", ShowDeferredBufferName[i], &drawDeferredTextureFlags[i]);
+		}
 	}
 
 	//指定したサービスを関数の引数として受け取る
@@ -247,7 +327,8 @@ public:
 		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
 		UndeletablePtr<Graphics::I2DCameraService> camera2DService,
 		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
-		UndeletablePtr <Physics::PhysicsService> physicsService)
+		UndeletablePtr <Physics::PhysicsService> physicsService,
+		UndeletablePtr<DeferredRenderingService> deferredRenderService)
 	{
 		if (!enabled) return;
 
@@ -300,7 +381,7 @@ public:
 
 		uint32_t line2DCount = 0;
 
-		if (drawModelAABB || drawOccluderAABB || drawModelRect || drawOcclutionRect)
+		if (drawModelAABB || drawOccluderAABB || drawModelRect || drawOcclusionRect)
 		{
 
 			this->ForEachFrustumChunkWithAccessor<ModelAccessor>([&](ModelAccessor& accessor, size_t entityCount)
@@ -342,7 +423,7 @@ public:
 
 							Math::Rectangle rect = Math::ProjectAABBToScreenRect(mesh.aabb, viewProj * worldMtx, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
 							//2D Rect
-							if (drawModelRect || drawOcclutionRect)
+							if (drawModelRect || drawOcclusionRect)
 							{
 								if (model.value()[i].occluded || drawModelRect)
 								{
@@ -569,7 +650,7 @@ public:
 
 			Graphics::DX11::TextureManager* texMgr = renderService->GetResourceManager<Graphics::DX11::TextureManager>();
 
-			texMgr->UpdateTexture(mocTexHandle, mocDepth.data(), (UINT)(camera3DService->GetResolution().x) * sizeof(float));
+			texMgr->UpdateTexture(mocDepthTexHandle, mocDepth.data(), (UINT)(camera3DService->GetResolution().x) * sizeof(float));
 
 			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(350.0f, -220.0f, 0.0f));
 			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 1920.0f / 5.0f, 1080.0f / 5.0f, 1.0f });
@@ -582,6 +663,40 @@ public:
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;
 
+			uiSession.Push(std::move(cmd));
+		}
+
+		constexpr uint32_t showDeferredTextureCount = sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0]);
+
+		bool showDeferred = false;
+		for (uint32_t i = 0; i < showDeferredTextureCount; ++i)
+		{
+			if (!drawDeferredTextureFlags[i]) continue;
+			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(-350.0f + (i % DeferredTextureCount) * 400.0f, -220.0f * (i >= DeferredTextureCount ? -1.0f : 1.0f), 0.0f));
+			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 320.0f, 180.0f, 1.0f });
+			Graphics::DrawCommand cmd;
+			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
+			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
+			cmd.pso = deferredPsoHandle.index;
+			cmd.material = deferredMaterialHandle[i].index;
+			cmd.viewMask = PASS_UI_MAIN;
+			cmd.sortKey = 0;
+			uiSession.Push(std::move(cmd));
+
+			showDeferred = true;
+		}
+
+		//SRVのバインドを外すためにダミーのコマンド発行
+		if (showDeferred)
+		{
+			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 0.0f, 0.0f, 0.0f });
+			Graphics::DrawCommand cmd;
+			cmd.instanceIndex = uiSession.AllocInstance(scaleMat);
+			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
+			cmd.pso = deferredPsoHandle.index;
+			cmd.material = dummyMatHandle.index;
+			cmd.viewMask = PASS_UI_MAIN;
+			cmd.sortKey = 0;
 			uiSession.Push(std::move(cmd));
 		}
 
@@ -643,7 +758,7 @@ private:
 	bool drawModelAABB = false;
 	bool drawOccluderAABB = false;
 	bool drawModelRect = false;
-	bool drawOcclutionRect = false;
+	bool drawOcclusionRect = false;
 	bool drawCascadeAABB = false;
 	bool drawShapeDims = false;
 	bool drawMOCDepth = false;
@@ -655,7 +770,7 @@ private:
 	std::unique_ptr<Debug::LineVertex> line3DVertices;
 	std::unique_ptr<Debug::LineVertex> line2DVertices;
 
-	Graphics::TextureHandle mocTexHandle = {};
+	Graphics::TextureHandle mocDepthTexHandle = {};
 	Graphics::MaterialHandle mocMaterialHandle = {};
 
 	std::vector<float> mocDepth;
@@ -663,4 +778,11 @@ private:
 	Graphics::MeshHandle boxHandle = {}; // デフォルトメッシュ（立方体）
 	Graphics::MeshHandle sphereHandle = {}; // デフォルトメッシュ（球）
 	Graphics::MeshHandle capsuleLineHandle = {}; //カプセルの真ん中の直線
+
+	Graphics::PSOHandle deferredPsoHandle = {};
+	Graphics::MaterialHandle deferredMaterialHandle[DeferredTextureCount * 2] = {};
+
+	Graphics::MaterialHandle dummyMatHandle;
+
+	bool drawDeferredTextureFlags[sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0])] = {false};
 };

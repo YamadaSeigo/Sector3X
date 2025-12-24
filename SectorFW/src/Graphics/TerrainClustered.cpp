@@ -675,9 +675,9 @@ namespace SFW {
                 const float3& p2 = outVtx[i2].pos;
                 float3 n = cross(make3(p1.x - p0.x, p1.y - p0.y, p1.z - p0.z),
                     make3(p2.x - p0.x, p2.y - p0.y, p2.z - p0.z));
-                outVtx[i0].nrm = make3(outVtx[i0].nrm.x + n.x, outVtx[i0].nrm.y + n.y, outVtx[i0].nrm.z + n.z);
-                outVtx[i1].nrm = make3(outVtx[i1].nrm.x + n.x, outVtx[i1].nrm.y + n.y, outVtx[i1].nrm.z + n.z);
-                outVtx[i2].nrm = make3(outVtx[i2].nrm.x + n.x, outVtx[i2].nrm.y + n.y, outVtx[i2].nrm.z + n.z);
+                outVtx[i0].nrm = n;
+                outVtx[i1].nrm = n;
+                outVtx[i2].nrm = n;
                 };
 
             for (uint32_t z = 0; z < vz - 1; ++z) {
@@ -687,8 +687,8 @@ namespace SFW {
                     uint32_t v01 = VIdx(x, z + 1, vx);
                     uint32_t v11 = VIdx(x + 1, z + 1, vx);
                     // 2三角
-                    addTri(v00, v10, v11);
-                    addTri(v00, v11, v01);
+                    addTri(v00, v11, v10);
+                    addTri(v00, v01, v11);
                 }
             }
             for (auto& v : outVtx) normalize(v.nrm);

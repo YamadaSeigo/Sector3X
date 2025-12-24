@@ -31,6 +31,13 @@ public:
 		camParams.aspect = perCameraService->GetAspectRatio();
 
 		lightShadowService->UpdateCascade(camParams, cascadeSceneAABB);
+
+		REGISTER_DEBUG_SLIDER_FLOAT("Light", "AmbientIntensity", 1.0f, 0.0f, 10.0f, 0.05f, [=](float value) {
+			Graphics::AmbientLight ambient = lightShadowService->GetAmbientLight();
+			ambient.intensity = value;
+
+			lightShadowService->SetAmbientLight(ambient);
+			});
 	}
 
 	//指定したサービスを関数の引数として受け取る

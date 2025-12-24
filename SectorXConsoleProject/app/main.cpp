@@ -19,7 +19,7 @@
 #include "system/SpriteRenderSystem.h"
 #include "system/PlayerSystem.h"
 #include "system/EnviromentSystem.h"
-#include "system/DefferedRenderingSystem.h"
+#include "system/DeferredRenderingSystem.h"
 #include "system/LightShadowSystem.h"
 #include "system/PointLightSystem.h"
 #include "WindMovementService.h"
@@ -88,38 +88,26 @@ static std::atomic<bool> isExecuteCustomFunc = false;
 
 struct RtPack
 {
-	std::vector<ComPtr<ID3D11Texture2D>>        tex;
 	std::vector<ComPtr<ID3D11RenderTargetView>> rtv;
 	std::vector<ComPtr<ID3D11ShaderResourceView>> srv;
 };
 
-bool CreateMRT(ID3D11Device* dev, UINT w, UINT h, RtPack& out, size_t bufCount)
+bool CreateMRT(ID3D11Device* dev, Graphics::DX11::TextureManager* texMgr, const DeferredRenderingService& deferredService, RtPack& out)
 {
-	DXGI_FORMAT fmt = DXGI_FORMAT_R16G16B16A16_FLOAT;
+	using namespace Graphics;
 
-	D3D11_TEXTURE2D_DESC td = {};
-	td.Width = w;
-	td.Height = h;
-	td.MipLevels = 1;
-	td.ArraySize = 1;
-	td.Format = fmt;
-	td.SampleDesc.Count = 1;
-	td.Usage = D3D11_USAGE_DEFAULT;
-	td.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	out.rtv.resize(DeferredTextureCount);
+	out.srv.resize(DeferredTextureCount);
 
-	out.tex.resize(bufCount);
-	out.rtv.resize(bufCount);
-	out.srv.resize(bufCount);
-
-	for (int i = 0; i < bufCount; ++i)
+	for (int i = 0; i < DeferredTextureCount; ++i)
 	{
-		HRESULT hr = dev->CreateTexture2D(&td, nullptr, out.tex[i].GetAddressOf());
-		if (FAILED(hr)) return false;
+		const auto& texData = texMgr->Get(deferredService.GetGBufferHandles()[i]);
 
-		hr = dev->CreateRenderTargetView(out.tex[i].Get(), nullptr, out.rtv[i].GetAddressOf());
-		if (FAILED(hr)) return false;
+		out.srv[i] = texData.ref().srv;
 
-		hr = dev->CreateShaderResourceView(out.tex[i].Get(), nullptr, out.srv[i].GetAddressOf());
+		HRESULT hr;
+
+		hr = dev->CreateRenderTargetView(texData.ref().resource.Get(), nullptr, out.rtv[i].GetAddressOf());
 		if (FAILED(hr)) return false;
 	}
 	return true;
@@ -134,7 +122,8 @@ void InitializeRenderPipeLine(
 	ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
 	ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV,
 	Graphics::PassCustomFuncType drawTerrainColor,
-	Graphics::DX11::LightShadowResourceService& resourceService)
+	Graphics::DX11::LightShadowResourceService& resourceService,
+	const DeferredRenderingService& deferredService)
 {
 	using namespace SFW::Graphics;
 
@@ -144,9 +133,10 @@ void InitializeRenderPipeLine(
 
 	auto shaderMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::ShaderManager>();
 	auto psoMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::PSOManager>();
+	auto textureMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::TextureManager>();
 
 	static RtPack ttMRT;
-	CreateMRT(graphics->GetDevice(), WINDOW_WIDTH, WINDOW_HEIGHT, ttMRT, 3);
+	CreateMRT(graphics->GetDevice(), textureMgr, deferredService, ttMRT);
 
 	std::vector<ComPtr<ID3D11RenderTargetView>> mainRtv = { mainRenderTarget };
 
@@ -269,7 +259,7 @@ void InitializeRenderPipeLine(
 
 	DX11::ShaderCreateDesc defferedShaderDesc;
 	defferedShaderDesc.vsPath = L"assets/shader/VS_Fullscreen.cso";
-	defferedShaderDesc.psPath = L"assets/shader/PS_PBR_Lighting.cso";
+	defferedShaderDesc.psPath = L"assets/shader/PS_PBR_Unlit_Shadow.cso";
 	ShaderHandle defferedShaderHandle = {};
 	auto shaderData = shaderMgr->CreateResource(defferedShaderDesc, defferedShaderHandle);
 	static ComPtr<ID3D11VertexShader> defferedVS = shaderData.vs;
@@ -290,12 +280,12 @@ void InitializeRenderPipeLine(
 		nullSRVs.push_back(nullptr);
 	}
 
-	auto defferedCameraHandle = bufferMgr->FindByName(DefferedRenderingService::BUFFER_NAME);
+	auto deferredCameraHandle = bufferMgr->FindByName(DeferredRenderingService::BUFFER_NAME);
 
-	static ComPtr<ID3D11Buffer> defferedBuffer;
+	static ComPtr<ID3D11Buffer> deferredBuffer;
 	{
-		auto bufData = bufferMgr->Get(defferedCameraHandle);
-		defferedBuffer = bufData.ref().buffer;
+		auto bufData = bufferMgr->Get(deferredCameraHandle);
+		deferredBuffer = bufData.ref().buffer;
 	}
 
 	static ComPtr<ID3D11Buffer> cbLightBuffer;
@@ -303,17 +293,61 @@ void InitializeRenderPipeLine(
 	static ComPtr<ID3D11ShaderResourceView> srvPointLight;
 	srvPointLight = resourceService.GetPointLightSRV();
 
+	struct StylizedCB
+	{
+		// Toon diffuse
+		float gToonSteps = 4.0f;
+		float gToonSoftness = 0.05f; // 例: 0.05 (境界のぼかし)
+		float gWrap = 0.2f;  //(ハーフランバート寄りにする)
+
+		// Spec band
+		float gSpecPower = 64.0f; // 例: 64
+		float gSpecThreshold = 0.5f; // 例: 0.5
+		float gSpecSoftness = 0.08f; // 例: 0.08
+		float gSpecIntensity = 1.0f; // 例: 1.0
+
+		// Rim
+		float gRimPower = 3.0f; // 例: 3.0
+		float gRimIntensity = 0.6f; // 例: 0.6
+		Math::Vec3f gRimColor = {1,1,1}; // 例: (1,1,1)
+
+		// Optional outline (0:off, 1:on)
+		uint32_t gEnableOutline = 1;
+		float gOutlineDepthScale = 80.0f; // 例: 80.0 (強さ)
+		float gOutlineNormalScale = 1.5f; // 例: 1.5
+		float gOutlineIntensity = 1.0f; // 例: 1.0
+
+		Math::Vec2f gInvRTSize = {1.0f / WINDOW_WIDTH, 1.0f/ WINDOW_HEIGHT}; // 例: (1/width, 1/height)
+		Math::Vec2f _pad_st;
+	};
+
+	static StylizedCB stylizedCB;
+
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "ToonSteps", &stylizedCB.gToonSteps, 1.0f, 10.0f, 1.0f);
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "ToonSoftness", &stylizedCB.gToonSoftness, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "Wrap", &stylizedCB.gWrap, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "SpecPower", &stylizedCB.gSpecPower, 1.0f, 256.0f, 1.0f);
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "SpecThreshold", &stylizedCB.gSpecThreshold, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "SpecSoftness", &stylizedCB.gSpecSoftness, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "SpecIntensity", &stylizedCB.gSpecIntensity, 0.0f, 5.0f, 0.05f);
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "RimPower", &stylizedCB.gRimPower, 0.1f, 10.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "RimIntensity", &stylizedCB.gRimIntensity, 0.0f, 5.0f, 0.05f);
+	BIND_DEBUG_SLIDER_FLOAT("Stylized", "OutlineIntensity", &stylizedCB.gOutlineIntensity, 0.0f, 50.0f, 0.05f);
+
+	DX11::BufferCreateDesc cbStylizedDesc;
+	cbStylizedDesc.name = "StylizedBuffer";
+	cbStylizedDesc.size = sizeof(StylizedCB);
+	cbStylizedDesc.initialData = &stylizedCB;
+	cbStylizedDesc.usage = D3D11_USAGE_DEFAULT;
+	cbStylizedDesc.cpuAccessFlags = (D3D11_CPU_ACCESS_FLAG)0;
+	BufferHandle stylizedCBHandle = {};
+	auto stylizedBufData = bufferMgr->CreateResource(cbStylizedDesc, stylizedCBHandle);
+
+	static ComPtr<ID3D11Buffer> cbStylizedBuffer = stylizedBufData.buffer;
+
 	auto endOpaqueFunc = [](uint64_t frame) {
 		bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 		if (!execute) return;
-
-		skyboxData.time += (float)(1.0f / FPS_LIMIT);
-
-		renderBackend->UpdateBufferDataImpl(SkyCBBuffer.Get(), &skyboxData, sizeof(skyboxData));
-
-		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
-		renderBackend->BindPSCBVs({ SkyCBBuffer.Get()}, 12);
-		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
 
 		// 全画面描画でライティング計算
 		auto ctx = gGraphics->GetDeviceContext();
@@ -337,14 +371,28 @@ void InitializeRenderPipeLine(
 
 		ctx->PSSetShaderResources(15, 1, srvPointLight.GetAddressOf());
 
-		ctx->PSSetConstantBuffers(11, 1, defferedBuffer.GetAddressOf());
+		ctx->PSSetConstantBuffers(11, 1, deferredBuffer.GetAddressOf());
 
 		ctx->PSSetConstantBuffers(12, 1, cbLightBuffer.GetAddressOf());
+
+		ctx->UpdateSubresource(cbStylizedBuffer.Get(), 0, nullptr, &stylizedCB, 0, 0);
+		ctx->PSSetConstantBuffers(13, 1, cbStylizedBuffer.GetAddressOf());
 
 		ctx->Draw(3, 0);
 
 		// SRVを解除
 		ctx->PSSetShaderResources(11, (UINT)nullSRVs.size(), nullSRVs.data());
+
+		gGraphics->SetMainRenderTargetAndDepth();
+
+		skyboxData.time += (float)(1.0f / FPS_LIMIT);
+
+		renderBackend->UpdateBufferDataImpl(SkyCBBuffer.Get(), &skyboxData, sizeof(skyboxData));
+
+		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
+		renderBackend->BindPSCBVs({ SkyCBBuffer.Get() }, 12);
+		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
+
 		};
 
 
@@ -467,6 +515,7 @@ int main(void)
 	InputService* inputService = &winInput;
 
 	auto bufferMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::BufferManager>();
+	auto textureManager = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::TextureManager>();
 	Graphics::DX11::PerCamera3DService dx11PerCameraService(bufferMgr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	static Graphics::I3DPerCameraService* perCameraService = &dx11PerCameraService;
 
@@ -485,7 +534,7 @@ int main(void)
 	Graphics::LightShadowService::CascadeConfig cascadeConfig;
 	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
 	cascadeConfig.cascadeCount = 3;
-	cascadeConfig.shadowDistance = 40.0f;
+	cascadeConfig.shadowDistance = 60.0f;
 	cascadeConfig.casterExtrusion = 0.0f;
 	lightShadowService.SetCascadeConfig(cascadeConfig);
 
@@ -497,7 +546,7 @@ int main(void)
 	ok = audioService.Initialize();
 	assert(ok && "Failed Audio Service Initialize");
 
-	DefferedRenderingService defferedRenderingService(bufferMgr);
+	DeferredRenderingService deferredRenderingService(bufferMgr, textureManager, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	static Graphics::DX11::LightShadowResourceService lightShadowResourceService;
 	Graphics::DX11::ShadowMapConfig shadowMapConfig;
@@ -510,7 +559,7 @@ int main(void)
 
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService,
 		ortCameraService, camera2DService, &lightShadowService, &grassService,
-		&playerService, &audioService, &defferedRenderingService, &lightShadowResourceService, &pointLightService);
+		&playerService, &audioService, &deferredRenderingService, &lightShadowResourceService, &pointLightService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
@@ -578,11 +627,9 @@ int main(void)
 	// ---- マッピング設定 ----
 	static Graphics::HeightTexMapping map = Graphics::MakeHeightTexMappingFromTerrainParams(p, heightMap);
 
-	auto& textureManager = *renderService->GetResourceManager<Graphics::DX11::TextureManager>();
-
 	static Graphics::DX11::CommonMaterialResources matRes;
 	const uint32_t matIds[4] = { Mat_Grass, Mat_Rock, Mat_Dirt, Mat_Snow }; // ← あなたの素材ID
-	Graphics::DX11::BuildCommonMaterialSRVs(device, textureManager, matIds, &ResolveTexturePath, matRes);
+	Graphics::DX11::BuildCommonMaterialSRVs(device, *textureManager, matIds, &ResolveTexturePath, matRes);
 
 	// 0) “シート画像” の ID（例: Tex_Splat_Sheet0）は ResolveTexturePathFn でパスに解決される想定
 	uint32_t sheetTexId = Tex_Splat_Control_0;
@@ -590,7 +637,7 @@ int main(void)
 	ComPtr<ID3D11Texture2D> sheetTex;
 	// 1) シートを分割して各クラスタの TextureHandle を生成
 	auto handles = Graphics::DX11::BuildClusterSplatTexturesFromSingleSheet(
-		device, deviceContext, textureManager,
+		device, deviceContext, *textureManager,
 		sheetTex,
 		terrain.clustersX, terrain.clustersZ,
 		sheetTexId, &ResolveTexturePath,
@@ -612,7 +659,7 @@ int main(void)
 	static Graphics::DX11::SplatArrayResources splatRes;
 	Graphics::DX11::InitSplatArrayResources(device, splatRes, terrain.clusters.size());
 
-	BuildSplatArrayFromHandles(device, deviceContext, textureManager, handles, splatRes);
+	BuildSplatArrayFromHandles(device, deviceContext, *textureManager, handles, splatRes);
 
 	// スライステーブルは Array 生成時の uniqueIds から得る
 	std::vector<uint32_t> uniqueIds; Graphics::DX11::CollectUniqueSplatIds(terrain, uniqueIds);
@@ -625,7 +672,7 @@ int main(void)
 	// グリッドCBを設定（TerrainClustered の定義に合わせて）
 	Graphics::DX11::SetupTerrainGridCB(/*originXZ=*/{ 0, 0 },
 		/*cellSize=*/{ p.clusterCellsX * p.cellSize, p.clusterCellsZ * p.cellSize },
-		/*dimX=*/terrain.clustersX, /*dimZ=*/terrain.clustersZ, cp);
+		/*dimX=*/terrain.clustersX, /*dimZ=*/terrain.clustersZ, p.heightScale - 10.0f, cp);
 
 	// 地形のクラスター専用GPUリソースを作る/初期更新
 	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
@@ -793,7 +840,7 @@ int main(void)
 		ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
 		ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV)
 		{
-			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget, mainDepthStencilView, mainDepthStencilSRV, drawTerrainColor, lightShadowResourceService);
+			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget, mainDepthStencilView, mainDepthStencilSRV, drawTerrainColor, lightShadowResourceService, deferredRenderingService);
 		}
 	);
 
@@ -1058,15 +1105,22 @@ int main(void)
 					auto cbData = bufferMgr->Get(windCBHandle);
 					auto footCBData = bufferMgr->Get(footCBHandle);
 					auto heightTexData = textureMgr->Get(heightTexHandle);
+
+					//ディファ―ド用のカメラの定数バッファハンドル取得
+					auto deferredCameraHandle = bufferMgr->FindByName(DeferredRenderingService::BUFFER_NAME);
+					auto deferredCameraCBData = bufferMgr->Get(deferredCameraHandle);
+
 					for (auto& mesh : submesh)
 					{
 						auto matData = materialMgr->GetWrite(mesh.material);
 						//参照カウントを増やしておく
 						bufferMgr->AddRef(windCBHandle);
 						//直接定数バッファをセット
+						matData.ref().vsCBV.PushOrOverwrite({ 9, deferredCameraCBData.ref().buffer.Get() });
 						matData.ref().vsCBV.PushOrOverwrite({ 10, cp.cbGrid.Get() });
 						matData.ref().vsCBV.PushOrOverwrite({ 11, cbData.ref().buffer.Get() });
 						matData.ref().vsCBV.PushOrOverwrite({ 12, footCBData.ref().buffer.Get() });
+
 						matData.ref().usedCBBuffers.push_back(windCBHandle);
 						//高さテクスチャもセット
 						textureMgr->AddRef(heightTexHandle);
@@ -1156,7 +1210,7 @@ int main(void)
 				}
 
 				// 点光源生成
-				for (int j = 0; j < 10; ++j) {
+				/*for (int j = 0; j < 10; ++j) {
 					for (int k = 0; k < 10; ++k) {
 						for (int n = 0; n < 1; ++n) {
 							float scaleXZ = 15.0f;
@@ -1181,7 +1235,7 @@ int main(void)
 							);
 						}
 					}
-				}
+				}*/
 
 				// Entity生成
 				std::uniform_int_distribution<uint32_t> distX(1, uint32_t(p.cellsX* p.cellSize));
@@ -1328,7 +1382,7 @@ int main(void)
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
 				scheduler.AddSystem<PlayerSystem>(serviceLocator);
 				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
-				scheduler.AddSystem<DefferedRenderingSystem>(serviceLocator);
+				scheduler.AddSystem<DeferredRenderingSystem>(serviceLocator);
 				scheduler.AddSystem<LightShadowSystem>(serviceLocator);
 				scheduler.AddSystem<PointLightSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);

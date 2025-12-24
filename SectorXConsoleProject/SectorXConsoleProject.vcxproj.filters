@@ -119,6 +119,12 @@
     <FxCompile Include="shader\PS_PBR_Lighting.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\PS_DebugDeferred.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_PBR_Stylized.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\_GlobalTypes.hlsli">
@@ -183,10 +189,10 @@
     <ClInclude Include="system\EnviromentSystem.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="system\DefferedRenderingSystem.h">
+    <ClInclude Include="system\DeferredRenderingSystem.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="app\DefferedRenderingService.h">
+    <ClInclude Include="app\DeferredRenderingService.h">
       <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="system\LightShadowSystem.h">

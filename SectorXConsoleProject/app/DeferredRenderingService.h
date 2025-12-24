@@ -8,12 +8,15 @@ struct LightCameraBuffer {
 	float padding2;
 };
 
-class DefferedRenderingService : public ECS::IUpdateService
+class DeferredRenderingService : public ECS::IUpdateService
 {
 public:
 	static inline constexpr const char* BUFFER_NAME = "DefferedCameraBuffer";
 
-	DefferedRenderingService(Graphics::DX11::BufferManager* bufferManager)
+	DeferredRenderingService(
+		Graphics::DX11::BufferManager* bufferManager,
+		Graphics::DX11::TextureManager* textureManager,
+		uint32_t w, uint32_t h)
 		:bufferManager(bufferManager)
 	{
 		using namespace Graphics;
@@ -22,6 +25,23 @@ public:
 		bufferDesc.name = BUFFER_NAME;
 		bufferDesc.size = sizeof(LightCameraBuffer);
 		bufferManager->Add(bufferDesc, lightCameraBufferHandle);
+
+		DX11::TextureRecipe recipe;
+		recipe.width = w;
+		recipe.height = h;
+		recipe.format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+		recipe.mipLevels = 1;
+		recipe.bindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+		recipe.usage = D3D11_USAGE_DEFAULT;
+		recipe.arraySize = 1;
+
+		for (int i = 0; i < DeferredTextureCount; ++i)
+		{
+			DX11::TextureCreateDesc texDesc;
+			texDesc.recipe = &recipe;
+			texDesc.path = ""; // 空パスで生成モード
+			textureManager->Add(texDesc, GBufferHandle[i]);
+		}
 	}
 
 	void Update(double delta) override
@@ -50,6 +70,11 @@ public:
 		lightCameraBufferData[currentSlot] = std::move(data);
 	}
 
+	const Graphics::TextureHandle* GetGBufferHandles() const noexcept
+	{
+		return GBufferHandle;
+	}
+
 private:
 
 	std::mutex updateMutex;
@@ -59,6 +84,8 @@ private:
 	//staticなことを前提に保持させる
 	Graphics::DX11::BufferManager* bufferManager;
 	uint8_t currentSlot = 0;
+
+	Graphics::TextureHandle GBufferHandle[DeferredTextureCount];
 
 public:
 	STATIC_SERVICE_TAG
