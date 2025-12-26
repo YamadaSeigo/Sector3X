@@ -17,8 +17,8 @@ class SimpleModelRenderSystem : public ITypeSystem<
 	using Accessor = ComponentAccessor<Read<TransformSoA>, Write<CModel>>;
 public:
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::I3DPerCameraService> cameraService) {
+	void UpdateImpl(Partition& partition, safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<Graphics::I3DPerCameraService> cameraService) {
 		//機能を制限したRenderQueueを取得
 		auto producerSession = renderService->GetProducerSession("3D");
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();

@@ -55,11 +55,11 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		UndeletablePtr<IThreadExecutor> threadPool,
-		UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
-		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
-		UndeletablePtr<WindMovementService> grassService)
+		safe_ptr<IThreadExecutor> threadPool,
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<Graphics::I3DPerCameraService> cameraService,
+		safe_ptr<Graphics::LightShadowService> lightShadowService,
+		safe_ptr<WindMovementService> grassService)
 	{
 		//草のバッファの更新
 		grassService->UpdateBufferToGPU(renderService->GetProduceSlot());
@@ -71,7 +71,7 @@ public:
 		auto psoManager = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
 
 		Math::Vec3f camPos = cameraService->GetEyePos();
-		auto viewProj = cameraService->GetCameraBufferData().viewProj;
+		auto viewProj = cameraService->GetCameraBufferDataNoLock().viewProj;
 		auto resolution = cameraService->GetResolution();
 
 		auto fru = cameraService->MakeFrustum(true);
@@ -215,6 +215,9 @@ public:
 					//モデルアセットを取得(ロックなし)
 					const auto& modelAsset = kp->modelMgr->GetNoLock(modelComp.handle);
 					int subMeshIdx = 0;
+
+					float minAreaFrec = modelAsset.minAreaFrec;
+
 					for (const Graphics::DX11::ModelAssetData::SubMesh& mesh : modelAsset.subMeshes) {
 						if (kp->materialMgr->IsValid(mesh.material) == false) [[unlikely]] continue;
 						if (kp->psoMgr->IsValid(mesh.pso) == false) [[unlikely]] continue;
@@ -260,7 +263,7 @@ public:
 						if (!shadowOnly)
 						{
 							//小さすぎる場合は無視
-							if (areaFrec <= 0.002f)
+							if (areaFrec <= minAreaFrec)
 							{
 								continue;
 							}

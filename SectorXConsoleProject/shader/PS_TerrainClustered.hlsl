@@ -111,11 +111,11 @@ PS_PRBOutput main(VSOut i)
 
     float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
     //final.rgb *= shadowBias;
-    
+
     PS_PRBOutput output;
     output.AlbedoAO = float4(final.rgb, 1.0f);
     output.EmissionMetallic = float4(0, 0, 0, 0);
-    output.NormalRoughness = float4(normalize(i.nrm), 1.0f);
+    output.NormalRoughness = float4(normalize(i.nrm) * 0.5f + 0.5f, 1.0f);
 
     return output;
 }

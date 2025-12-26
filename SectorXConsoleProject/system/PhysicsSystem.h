@@ -28,8 +28,8 @@ class PhysicsSystem : public ITypeSystem<
 	using Accessor = ComponentAccessor<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>, Read<Physics::BodyComponent>, Write<SpatialMotionTag>>;
 public:
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, LevelContext& levelCtx, UndeletablePtr<Physics::PhysicsService> physicsService,
-		UndeletablePtr<SpatialChunkRegistry> chunkReg) {
+	void UpdateImpl(Partition& partition, LevelContext& levelCtx, safe_ptr<Physics::PhysicsService> physicsService,
+		safe_ptr<SpatialChunkRegistry> chunkReg) {
 
 		BudgetMover::LocalBatch moveBatch(levelCtx.mover, 200);
 

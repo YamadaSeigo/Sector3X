@@ -33,8 +33,8 @@ public:
 
 	// 入力から希望する速度を計算する（仮実装）
 	Math::Vec3f CalcWishVelocityFromInput(
-		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
-		UndeletablePtr<InputService> inputService)
+		safe_ptr<Graphics::I3DPerCameraService> cameraService,
+		safe_ptr<InputService> inputService)
 	{
 		Math::Vec3f wishVelocity;
 		Math::Vec2f inputDir(0.0f, 0.0f);
@@ -100,24 +100,24 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void StartImpl(
-		UndeletablePtr<Physics::PhysicsService> physicsService,
-		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
-		UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<InputService> inputService,
-		UndeletablePtr<PlayerService> playerService,
-		UndeletablePtr<Audio::AudioService> audioService)
+		safe_ptr<Physics::PhysicsService> physicsService,
+		safe_ptr<Graphics::I3DPerCameraService> cameraService,
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<InputService> inputService,
+		safe_ptr<PlayerService> playerService,
+		safe_ptr<Audio::AudioService> audioService)
 	{
 		grassStepHandle = audioService->EnqueueLoadWav("assets/audio/SE/walk-on-grass.wav");
 	}
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		UndeletablePtr<Physics::PhysicsService> physicsService,
-		UndeletablePtr<Graphics::I3DPerCameraService> cameraService,
-		UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<InputService> inputService,
-		UndeletablePtr<PlayerService> playerService,
-		UndeletablePtr<Audio::AudioService> audioService)
+		safe_ptr<Physics::PhysicsService> physicsService,
+		safe_ptr<Graphics::I3DPerCameraService> cameraService,
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<InputService> inputService,
+		safe_ptr<PlayerService> playerService,
+		safe_ptr<Audio::AudioService> audioService)
 	{
 		ECS::EntityManager& globalEntityManager = partition.GetGlobalEntityManager();
 

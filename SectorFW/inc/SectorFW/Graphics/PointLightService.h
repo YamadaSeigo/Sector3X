@@ -48,20 +48,22 @@ namespace SFW::Graphics
             , range(range_)
             , color(color_)
             , intensity(intensity_)
+            , invRange(1.0f / range)
             , flags(flags_)
 		{
 		}
 
         Math::Vec3f positionWS; float range;
         Math::Vec3f color;      float intensity;
-        uint32_t flags;    uint32_t _pad0[3];
+        float invRange;
+        uint32_t flags;    uint32_t _pad0[2] = {};
         // flags bit0: castsShadow ‚È‚Ç
     };
 
     class PointLightService
     {
     public:
-        static inline constexpr uint32_t MAX_POINT_LIGHT_NUM = 1u << 10;
+        static inline constexpr uint32_t MAX_POINT_LIGHT_NUM = 1u << 8;
 
         enum DirtyFlags : uint32_t
         {

@@ -226,16 +226,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="shader\PS_PBR_Unlit_Shadow.hlsl">
+    <FxCompile Include="shader\PS_PBR_Stylized.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="shader\PS_PBR_Stylized.hlsl">
+    <FxCompile Include="shader\PS_PBR_Unlit_Shadow.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="shader\PS_Sky.hlsl">
@@ -375,6 +373,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app\DeferredRenderingService.h" />
+    <ClInclude Include="app\EnvironmentService.h" />
     <ClInclude Include="app\PlayerService.h" />
     <ClInclude Include="app\WindMovementService.h" />
     <ClInclude Include="app\Packed2Bits32.h" />
@@ -386,7 +385,7 @@
     <ClInclude Include="system\CleanModelSystem.h" />
     <ClInclude Include="system\DebugRenderSystem.h" />
     <ClInclude Include="system\DeferredRenderingSystem.h" />
-    <ClInclude Include="system\EnviromentSystem.h" />
+    <ClInclude Include="system\EnvironmentSystem.h" />
     <ClInclude Include="system\LightShadowSystem.h" />
     <ClInclude Include="system\ModelRenderSystem.h" />
     <ClInclude Include="system\PhysicsSystem.h" />

@@ -30,8 +30,7 @@
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
-				},
-				"metallicFactor":0
+				}
 			}
 		}
 	],
@@ -75,7 +74,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"max":[
 				0.5992547869682312,
 				0.2576335072517395,
@@ -91,55 +90,55 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":4,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":5,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":6,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":7,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":8,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":9,
 			"componentType":5126,
-			"count":9099,
+			"count":9144,
 			"type":"VEC2"
 		},
 		{
@@ -152,68 +151,68 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":109188,
+			"byteLength":109728,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":109188,
-			"byteOffset":109188,
+			"byteLength":109728,
+			"byteOffset":109728,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72792,
-			"byteOffset":218376,
+			"byteLength":73152,
+			"byteOffset":219456,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72792,
-			"byteOffset":291168,
+			"byteLength":73152,
+			"byteOffset":292608,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72792,
-			"byteOffset":363960,
+			"byteLength":73152,
+			"byteOffset":365760,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72792,
-			"byteOffset":436752,
+			"byteLength":73152,
+			"byteOffset":438912,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72792,
-			"byteOffset":509544,
+			"byteLength":73152,
+			"byteOffset":512064,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72792,
-			"byteOffset":582336,
+			"byteLength":73152,
+			"byteOffset":585216,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72792,
-			"byteOffset":655128,
+			"byteLength":73152,
+			"byteOffset":658368,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72792,
-			"byteOffset":727920,
+			"byteLength":73152,
+			"byteOffset":731520,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":38400,
-			"byteOffset":800712,
+			"byteOffset":804672,
 			"target":34963
 		}
 	],
@@ -225,7 +224,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":839112,
+			"byteLength":843072,
 			"uri":"StylizedGrass.bin"
 		}
 	]

@@ -123,6 +123,7 @@ namespace SFW
 					size_t offset = 0;
 					size_t capacity = chunk->GetCapacity();
 
+					//BufferType がちゃんと構築済み＋アラインもOKの前提で変換
 					BufferType* base = reinterpret_cast<BufferType*>(column.value());
 					PtrType soaPtr;
 					GetMemberStartPtr<PtrType>(base, capacity, offset, soaPtr,

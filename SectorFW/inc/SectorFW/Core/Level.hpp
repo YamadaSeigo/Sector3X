@@ -79,6 +79,10 @@ namespace SFW
 		using TransformType = CTransform; // Transformコンポーネントの型
 
 	public:
+		/**
+		 * @brief レベルへの要求を管理するセッション構造体
+		 * @details 専有ロックを取得しているので、システムの更新で生成するとデッドロックの可能性あり
+		 */
 		struct Session
 		{
 			Session(Level<Partition>& _level, std::shared_mutex& _m) : level(_level), lock(_m) {}
@@ -87,7 +91,6 @@ namespace SFW
 			 * @brief エンティティを追加する関数
 			 * @param ...components 追加するコンポーネントの可変引数
 			 * @return std::optional<ECS::EntityID> エンティティIDのオプション
-			 * @details 外部から専有ロックする必要がある。Systemで呼び出すとデッドロックの危険性あり
 			 */
 			template<typename... Components>
 			std::optional<ECS::EntityID> AddEntity(const Components&... components)
@@ -134,7 +137,6 @@ namespace SFW
 			 * @brief グローバルエンティティを追加する関数
 			 * @param ...components 追加するコンポーネントの可変引数
 			 * @return std::optional<ECS::EntityID> エンティティIDのオプション
-			 * @details 外部から専有ロックする必要がある。Systemで呼び出すとデッドロックの危険性あり
 			 */
 			template<typename... Components>
 			std::optional<ECS::EntityID> AddGlobalEntity(const Components&... components)
@@ -223,7 +225,7 @@ namespace SFW
 
 			scheduler.UpdateAll(partition, levelCtx, serviceLocator, executor);
 
-			//書くスレッドでチャンクを跨いだ移動を実行
+			//各スレッドでチャンクを跨いだ移動を実行
 			BudgetMover::Accessor::MoverFlush(levelCtx.mover, *serviceLocator.Get<SpatialChunkRegistry>(), 2000);
 		}
 		/**

@@ -707,6 +707,8 @@ namespace SFW
 
 			asset.path = path_view(canonicalPath);
 
+			asset.minAreaFrec = desc.minAreaFrec;
+
 			cgltf_free(data);
 
 			LOG_INFO("Loaded model asset: %s", asset.name.c_str());

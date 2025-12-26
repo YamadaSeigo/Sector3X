@@ -1,4 +1,16 @@
 
+/*****************************************************************//**
+ * @file   main.cpp
+ * @brief SectorX コンソールプロジェクトのエントリーポイント
+ * @author seigo_t03b63m
+ * @date   December 2025
+ *********************************************************************/
+
+//========================================================================
+// 一人のプロジェクトなので、とりあえず初期化関連の処理をmainに書いています
+// 将来的には適切に分割する
+//========================================================================
+
 //SectorFW
 #include <SectorFW/Debug/ImGuiBackendDX11Win32.h>
 #include <SectorFW/Core/ChunkCrossingMove.hpp>
@@ -18,11 +30,12 @@
 #include "system/SimpleModelRenderSystem.h"
 #include "system/SpriteRenderSystem.h"
 #include "system/PlayerSystem.h"
-#include "system/EnviromentSystem.h"
+#include "system/EnvironmentSystem.h"
 #include "system/DeferredRenderingSystem.h"
 #include "system/LightShadowSystem.h"
 #include "system/PointLightSystem.h"
 #include "WindMovementService.h"
+#include "EnvironmentService.h"
 
 #include <string>
 
@@ -293,57 +306,18 @@ void InitializeRenderPipeLine(
 	static ComPtr<ID3D11ShaderResourceView> srvPointLight;
 	srvPointLight = resourceService.GetPointLightSRV();
 
-	struct StylizedCB
-	{
-		// Toon diffuse
-		float gToonSteps = 4.0f;
-		float gToonSoftness = 0.05f; // 例: 0.05 (境界のぼかし)
-		float gWrap = 0.2f;  //(ハーフランバート寄りにする)
+	static ComPtr<ID3D11Buffer> fogBuffer;
 
-		// Spec band
-		float gSpecPower = 64.0f; // 例: 64
-		float gSpecThreshold = 0.5f; // 例: 0.5
-		float gSpecSoftness = 0.08f; // 例: 0.08
-		float gSpecIntensity = 1.0f; // 例: 1.0
+	static ComPtr<ID3D11Buffer> godRayBuffer;
 
-		// Rim
-		float gRimPower = 3.0f; // 例: 3.0
-		float gRimIntensity = 0.6f; // 例: 0.6
-		Math::Vec3f gRimColor = {1,1,1}; // 例: (1,1,1)
+	auto fogBufHandle = bufferMgr->FindByName(EnvironmentService::FOG_BUFFER_NAME);
+	auto fogBufData = bufferMgr->Get(fogBufHandle);
 
-		// Optional outline (0:off, 1:on)
-		uint32_t gEnableOutline = 1;
-		float gOutlineDepthScale = 80.0f; // 例: 80.0 (強さ)
-		float gOutlineNormalScale = 1.5f; // 例: 1.5
-		float gOutlineIntensity = 1.0f; // 例: 1.0
+	auto godRayBufHandle = bufferMgr->FindByName(EnvironmentService::GODRAY_BUFFER_NAME);
+	auto godRayBufData = bufferMgr->Get(godRayBufHandle);
 
-		Math::Vec2f gInvRTSize = {1.0f / WINDOW_WIDTH, 1.0f/ WINDOW_HEIGHT}; // 例: (1/width, 1/height)
-		Math::Vec2f _pad_st;
-	};
-
-	static StylizedCB stylizedCB;
-
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "ToonSteps", &stylizedCB.gToonSteps, 1.0f, 10.0f, 1.0f);
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "ToonSoftness", &stylizedCB.gToonSoftness, 0.0f, 1.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "Wrap", &stylizedCB.gWrap, 0.0f, 1.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "SpecPower", &stylizedCB.gSpecPower, 1.0f, 256.0f, 1.0f);
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "SpecThreshold", &stylizedCB.gSpecThreshold, 0.0f, 1.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "SpecSoftness", &stylizedCB.gSpecSoftness, 0.0f, 1.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "SpecIntensity", &stylizedCB.gSpecIntensity, 0.0f, 5.0f, 0.05f);
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "RimPower", &stylizedCB.gRimPower, 0.1f, 10.0f, 0.1f);
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "RimIntensity", &stylizedCB.gRimIntensity, 0.0f, 5.0f, 0.05f);
-	BIND_DEBUG_SLIDER_FLOAT("Stylized", "OutlineIntensity", &stylizedCB.gOutlineIntensity, 0.0f, 50.0f, 0.05f);
-
-	DX11::BufferCreateDesc cbStylizedDesc;
-	cbStylizedDesc.name = "StylizedBuffer";
-	cbStylizedDesc.size = sizeof(StylizedCB);
-	cbStylizedDesc.initialData = &stylizedCB;
-	cbStylizedDesc.usage = D3D11_USAGE_DEFAULT;
-	cbStylizedDesc.cpuAccessFlags = (D3D11_CPU_ACCESS_FLAG)0;
-	BufferHandle stylizedCBHandle = {};
-	auto stylizedBufData = bufferMgr->CreateResource(cbStylizedDesc, stylizedCBHandle);
-
-	static ComPtr<ID3D11Buffer> cbStylizedBuffer = stylizedBufData.buffer;
+	fogBuffer = fogBufData.ref().buffer;
+	godRayBuffer = godRayBufData.ref().buffer;
 
 	auto endOpaqueFunc = [](uint64_t frame) {
 		bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
@@ -351,6 +325,14 @@ void InitializeRenderPipeLine(
 
 		// 全画面描画でライティング計算
 		auto ctx = gGraphics->GetDeviceContext();
+
+		skyboxData.time += (float)(1.0f / FPS_LIMIT);
+
+		renderBackend->UpdateBufferDataImpl(SkyCBBuffer.Get(), &skyboxData, sizeof(skyboxData));
+
+		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
+		renderBackend->BindPSCBVs({ SkyCBBuffer.Get() }, 9);
+		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
 
 		// Depthはsrvとして使うので外す
 		gGraphics->SetMainRenderTargetNoDepth();
@@ -367,16 +349,12 @@ void InitializeRenderPipeLine(
 		ctx->VSSetShader(defferedVS.Get(), nullptr, 0);
 		ctx->PSSetShader(defferedPS.Get(), nullptr, 0);
 
+
 		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
 
 		ctx->PSSetShaderResources(15, 1, srvPointLight.GetAddressOf());
 
-		ctx->PSSetConstantBuffers(11, 1, deferredBuffer.GetAddressOf());
-
-		ctx->PSSetConstantBuffers(12, 1, cbLightBuffer.GetAddressOf());
-
-		ctx->UpdateSubresource(cbStylizedBuffer.Get(), 0, nullptr, &stylizedCB, 0, 0);
-		ctx->PSSetConstantBuffers(13, 1, cbStylizedBuffer.GetAddressOf());
+		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), deferredBuffer.Get(), cbLightBuffer.Get(), fogBuffer.Get(), godRayBuffer.Get() }, 9);
 
 		ctx->Draw(3, 0);
 
@@ -384,14 +362,6 @@ void InitializeRenderPipeLine(
 		ctx->PSSetShaderResources(11, (UINT)nullSRVs.size(), nullSRVs.data());
 
 		gGraphics->SetMainRenderTargetAndDepth();
-
-		skyboxData.time += (float)(1.0f / FPS_LIMIT);
-
-		renderBackend->UpdateBufferDataImpl(SkyCBBuffer.Get(), &skyboxData, sizeof(skyboxData));
-
-		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
-		renderBackend->BindPSCBVs({ SkyCBBuffer.Get() }, 12);
-		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
 
 		};
 
@@ -557,9 +527,11 @@ int main(void)
 
 	static Graphics::PointLightService pointLightService;
 
+	EnvironmentService environmentService(bufferMgr);
+
 	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService,
 		ortCameraService, camera2DService, &lightShadowService, &grassService,
-		&playerService, &audioService, &deferredRenderingService, &lightShadowResourceService, &pointLightService);
+		&playerService, &audioService, &deferredRenderingService, &lightShadowResourceService, &pointLightService, &environmentService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	Graphics::TerrainBuildParams p;
@@ -596,10 +568,6 @@ int main(void)
 
 
 	bool check = Graphics::TerrainClustered::CheckClusterBorderEquality(terrain.indexPool, terrain.clusters, terrain.clustersX, terrain.clustersZ);
-
-	//Graphics::TerrainClustered::WeldVerticesAlongBorders(terrain.vertices, terrain.indexPool, p.cellSize);
-
-	//Graphics::TerrainClustered::AddSkirtsToClusters(terrain, /*skirtDepth=*/100.0f);
 
 	Graphics::DX11::GenerateClusterLODs_meshopt_fast(terrain.indexPool, terrain.clusters, positions.data(),
 		terrain.vertices.size(), sizeof(Math::Vec3f), lodTarget,
@@ -683,7 +651,7 @@ int main(void)
 			bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
 			if (!execute) return;
 
-			auto viewProj = perCameraService->GetCameraBufferData().viewProj;
+			auto viewProj = perCameraService->GetCameraBufferDataNoLock().viewProj;
 			auto camPos = perCameraService->GetEyePos();
 
 			auto resolution = perCameraService->GetResolution();
@@ -1048,6 +1016,7 @@ int main(void)
 				modelDesc.viewMax = 50.0f;
 				modelDesc.pso = windGrassPSOHandle;
 				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.minAreaFrec = 0.005f;
 				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
 				modelAssetMgr->Add(modelDesc, grassModelHandle);
 				modelDesc.pCustomNomWFunc = nullptr;
@@ -1210,7 +1179,7 @@ int main(void)
 				}
 
 				// 点光源生成
-				/*for (int j = 0; j < 10; ++j) {
+				for (int j = 0; j < 10; ++j) {
 					for (int k = 0; k < 10; ++k) {
 						for (int n = 0; n < 1; ++n) {
 							float scaleXZ = 15.0f;
@@ -1225,7 +1194,7 @@ int main(void)
 							Graphics::PointLightDesc plDesc;
 							plDesc.positionWS = location;
 							plDesc.color = { 1.0f,0.8f,0.6f };
-							plDesc.intensity = 500.0f;
+							plDesc.intensity = 0.5f;
 							plDesc.range = 10.0f;
 							plDesc.castsShadow = false;
 							auto plHandle = pointLightService.Create(plDesc);
@@ -1235,7 +1204,7 @@ int main(void)
 							);
 						}
 					}
-				}*/
+				}
 
 				// Entity生成
 				std::uniform_int_distribution<uint32_t> distX(1, uint32_t(p.cellsX* p.cellSize));
@@ -1308,7 +1277,7 @@ int main(void)
 
 				//プレイヤー生成
 				{
-					Math::Vec3f playerStartPos = { 10.0f, 10.0f, 10.0f };
+					Math::Vec3f playerStartPos = { 10.0f/*p.cellsX * p.cellSize / 2.0f*/, 20.0f, 10.0f/* p.cellsZ * p.cellSize / 2.0f*/ };
 
 					Physics::ShapeCreateDesc shapeDesc;
 					shapeDesc.shape = Physics::CapsuleDesc{ 2.0f, 1.0f };
@@ -1357,11 +1326,6 @@ int main(void)
 					auto id = levelSession.AddEntity(
 						CTransform{ 0.0f, -40.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
 						terrainBody
-						//,
-						//Physics::PhysicsInterpolation(
-						//	Math::Vec3f{ 0.0f,-40.0f, 0.0f }, // 初期位置
-						//	Math::Quatf{ 0.0f,0.0f,0.0f,1.0f } // 初期回転
-						//)
 					);
 					if (id) {
 						auto chunk = pLevel->GetChunk({ 0.0f, -40.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
@@ -1381,7 +1345,7 @@ int main(void)
 				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
 				scheduler.AddSystem<PlayerSystem>(serviceLocator);
-				scheduler.AddSystem<EnviromentSystem>(serviceLocator);
+				scheduler.AddSystem<EnvironmentSystem>(serviceLocator);
 				scheduler.AddSystem<DeferredRenderingSystem>(serviceLocator);
 				scheduler.AddSystem<LightShadowSystem>(serviceLocator);
 				scheduler.AddSystem<PointLightSystem>(serviceLocator);

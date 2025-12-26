@@ -1,6 +1,6 @@
 #include "_GlobalTypes.hlsli"
 
-cbuffer SkyCB : register(b12)
+cbuffer SkyCB : register(b9)
 {
     float gTime;
     float gRotateSpeed; // rad/sec 例: 0.01
@@ -67,8 +67,10 @@ struct VSOutput
     float3 dir : TEXCOORD;
 };
 
-float4 main(VSOutput i) : SV_Target
+PS_PRBOutput main(VSOutput i)
 {
+    PS_PRBOutput output;
+
     float3 dir = normalize(i.dir);
 
     float a = gTime * gRotateSpeed;
@@ -84,10 +86,10 @@ float4 main(VSOutput i) : SV_Target
     if ((hasFlags & FLAG_HAS_EMISSIVETEX) != 0u)
         emissionColor = gEmissiveTex.Sample(gSampler, uv);
 
-    float4 col = baseColor + emissionColor;
+    output.AlbedoAO = baseColor;
 
      // 「星だけ」明滅させたいのでマスクを作る（白いほど星、みたいな）
-    float starMask = saturate(col.r); // 例：単純にRを使う（テクスチャに合わせて調整）
+    float starMask = saturate(emissionColor.r); // 例：単純にRを使う（テクスチャに合わせて調整）
 
     // 瞬き係数（dirベース + time）
     float tw = StarTwinkle(uv, gTime,
@@ -96,9 +98,13 @@ float4 main(VSOutput i) : SV_Target
                            0.6); // amp
 
     // 星部分だけ強弱
-    col.rgb *= lerp(1.0, tw, starMask);
+    emissionColor.rgb *= lerp(1.0, tw, starMask);
 
-    return col;
+    output.EmissionMetallic = emissionColor;
+
+    output.NormalRoughness = float4(dir, 0.0f);
+
+    return output;
 }
 
 

@@ -46,10 +46,21 @@ namespace SFW
 			const T& operator[](size_t i) const noexcept { return data[i]; }
 
 			Vec2 operator+(const Vec2& rhs) const noexcept { return Vec2(x + rhs.x, y + rhs.y); }
+			Vec2 operator+(const T& s) const noexcept { return Vec2(x + s, y + s); }
 			Vec2& operator+=(const Vec2& rhs) noexcept { x += rhs.x; y += rhs.y; return *this; }
+			Vec2& operator+=(const T& s) noexcept { x += s; y += s; return *this; }
 			Vec2 operator-(const Vec2& rhs) const noexcept { return Vec2(x - rhs.x, y - rhs.y); }
+			Vec2 operator-(const T& s) const noexcept { return Vec2(x - s, y - s); }
+			Vec2& operator-=(const Vec2& rhs) noexcept { x -= rhs.x; y -= rhs.y; return *this; }
+			Vec2& operator-=(const T& s) noexcept { x -= s; y -= s; return *this; }
+			Vec2 operator*(const Vec2& rhs) const noexcept { return Vec2(x * rhs.x, y * rhs.y); }
 			Vec2 operator*(T s) const noexcept { return Vec2(x * s, y * s); }
+			Vec2& operator*=(const Vec2& rhs) noexcept { x *= rhs.x; y *= rhs.y; return *this; }
+			Vec2& operator*=(T s) noexcept { x *= s; y *= s; return *this; }
+			Vec2 operator/(const Vec2& rhs) const noexcept { return Vec2(x / rhs.x, y / rhs.y); }
 			Vec2 operator/(T s) const noexcept { return Vec2(x / s, y / s); }
+			Vec2& operator/=(const Vec2& rhs) noexcept { x /= rhs.x; y /= rhs.y; return *this; }
+			Vec2& operator/=(T s) noexcept { x /= s; y /= s; return *this; }
 
 			bool operator==(const Vec2& rhs) const noexcept { return x == rhs.x && y == rhs.y; }
 			bool operator!=(const Vec2& rhs) const noexcept { return !(*this == rhs); }
@@ -78,11 +89,14 @@ namespace SFW
 		struct alignas(GetAlignmentForVector<T, 3>()) Vec3 {
 			union {
 				struct { T x, y, z; };
+				// 2Dベクトルとしてもアクセス可能
+				struct { Vec2<T> xy; T z; };
 				T data[3];
 			};
 
 			Vec3() noexcept : x(0), y(0), z(0) {}
 			Vec3(T x_, T y_, T z_) noexcept : x(x_), y(y_), z(z_) {}
+			Vec3(const Vec2<T>& xy_, T z_) noexcept : x(xy_.x), y(xy_.y), z(z_) {}
 			explicit Vec3(T val) noexcept : x(val), y(val), z(val) {}
 
 			T& operator[](size_t i) noexcept { return data[i]; }
@@ -264,6 +278,8 @@ namespace SFW
 			union {
 				struct { T x, y, z, w; };
 				struct { T r, g, b, a; };
+				// 2要素ベクトルとしてもアクセス可能
+				struct { Vec2<T> xy; Vec2<T> zw; };
 				// 3要素ベクトルとしてもアクセス可能
 				struct { Vec3<T> xyz; T w; };
 				T data[4];
@@ -271,18 +287,31 @@ namespace SFW
 
 			Vec4() noexcept : x(0), y(0), z(0), w(0) {}
 			Vec4(T x_, T y_, T z_, T w_) noexcept : x(x_), y(y_), z(z_), w(w_) {}
+			Vec4(const Vec2<T>& v2, T z_, T w_) noexcept : x(v2.x), y(v2.y), z(z_), w(w_) {}
+			Vec4(const Vec2<T>& v2a, const Vec2<T>& v2b) noexcept : x(v2a.x), y(v2a.y), z(v2b.x), w(v2b.y) {}
+			Vec4(const Vec3<T>& v3, T w_) noexcept : x(v3.x), y(v3.y), z(v3.z), w(w_) {}
+			Vec4(const Vec4& v4) noexcept = default;
+
 			explicit Vec4(T val) noexcept : x(val), y(val), z(val), w(val) {}
 
 			T& operator[](size_t i) noexcept { return data[i]; }
 			const T& operator[](size_t i) const noexcept { return data[i]; }
 
 			Vec4 operator+(const Vec4& rhs) const noexcept { return Vec4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w); }
+			Vec4 operator+(T s) const noexcept { return Vec4(x + s, y + s, z + s, w + s); }
 			Vec4& operator+=(const Vec4& rhs) noexcept { x += rhs.x; y += rhs.y; z += rhs.z; w += rhs.w; return *this; }
+			Vec4& operator+=(T s) noexcept { x += s; y += s; z += s; w += s; return *this; }
 			Vec4 operator-(const Vec4& rhs) const noexcept { return Vec4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w); }
+			Vec4 operator-(T s) const noexcept { return Vec4(x - s, y - s, z - s, w - s); }
 			Vec4& operator-=(const Vec4& rhs) noexcept { x -= rhs.x; y -= rhs.y; z -= rhs.z; w -= rhs.w; return *this; }
+			Vec4& operator-=(T s) noexcept { x -= s; y -= s; z -= s; w -= s; return *this; }
+			Vec4 operator*(const Vec4& rhs) const noexcept { return Vec4(x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w); }
 			Vec4 operator*(T s) const noexcept { return Vec4(x * s, y * s, z * s, w * s); }
+			Vec4& operator*=(const Vec4& rhs) noexcept { x *= rhs.x; y *= rhs.y; z *= rhs.z; w *= rhs.w; return *this; }
 			Vec4& operator*=(T s) noexcept { x *= s; y *= s; z *= s; w *= s; return *this; }
+			Vec4 operator/(const Vec4& rhs) const noexcept { return Vec4(x / rhs.x, y / rhs.y, z / rhs.z, w / rhs.w); }
 			Vec4 operator/(T s) const noexcept { return Vec4(x / s, y / s, z / s, w / s); }
+			Vec4& operator/=(const Vec4& rhs) noexcept { x /= rhs.x; y /= rhs.y; z /= rhs.z; w /= rhs.w; return *this; }
 			Vec4& operator/=(T s) noexcept { x /= s; y /= s; z /= s; w /= s; return *this; }
 			bool operator==(const Vec4& rhs) const noexcept { return x == rhs.x && y == rhs.y && z == rhs.z && w == rhs.w; }
 			bool operator!=(const Vec4& rhs) const noexcept { return !(*this == rhs); }

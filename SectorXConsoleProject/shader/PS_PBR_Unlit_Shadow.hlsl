@@ -1,15 +1,22 @@
 
 #include "_GlobalTypes.hlsli"
 
+//Timeだけ使用
+cbuffer SkyCB : register(b9)
+{
+    float gTime;
+    float gRotateSpeed; // rad/sec 例: 0.01
+    float2 _pad;
+};
 
-cbuffer CameraBuffer : register(b11)
+cbuffer CameraBuffer : register(b10)
 {
     row_major float4x4 invViewProj;
     float4 camForward; //wはpadding
     float4 camPos; // wはpadding
 }
 
-cbuffer LightingCB : register(b12)
+cbuffer LightingCB : register(b11)
 {
     // Sun / directional
     float3 gSunDirectionWS;
@@ -22,23 +29,133 @@ cbuffer LightingCB : register(b12)
     uint gPointLightCount; // 16B
 };
 
+cbuffer FogCB : register(b12)
+{
+    // Distance fog
+    float3 gFogColor; //例: (0.8, 0.8, 1.0)
+    float gFogStart; // 例: 100.0 (メートル)
+    float gFogEnd; // 例: 3000.0 (メートル)
+    float2 _padFog0;
+    uint gEnableDistanceFog; // 0/1
 
-Texture2D gAlbedoAO : register(t11);            // RGB: Albedo, A: Occlusion
-Texture2D gNormalRough : register(t12);         // RGB: Normal, A: Roughness
-Texture2D gEmiMetal : register(t13);            // RGB: Emissive, A: Metallic
-Texture2D<float> gDepth : register(t14);        // Depth
+    // Height fog
+    float gHeightFogBaseHeight; // 霧の基準高さ(この高さ付近が最も濃い想定) 例: 1.0 (地面付近)
+    float gHeightFogDensity; // 高さフォグ密度(全体強さ) 例: 0.01
+    float gHeightFogFalloff; // 高さ減衰(大きいほど上に行くと急に薄くなる) 例: 0.05
+    uint gEnableHeightFog; // 0/1
+
+    // Height fog wind/noise
+    float2 gFogWindDirXZ; // 正規化推奨 (x,z)
+    float gFogWindSpeed; // 例: 0.2
+    float gFogNoiseScale; // 例: 0.08 (ワールド->ノイズ空間)
+    float gFogNoiseAmount; // 例: 0.35 (濃淡の強さ 0..1)
+    float gFogGroundBand; // 例: 6.0  (地面付近の厚み)
+    float gFogNoiseMinHeight; // 例: -1.0 (基準高さから下は強め等)
+    float gFogNoiseMaxHeight; // 例: 8.0  (基準高さから上は減衰)
+}
+
+// GodRay(光の筋) パラメータ
+cbuffer GodRayCB : register(b13)
+{
+    float2 gSunScreenUV; // 太陽のスクリーンUV(0..1) ※CPUで計算して渡す
+    float gGodRayIntensity; // 強さ（例: 0.6）
+    float gGodRayDecay; // 減衰（例: 0.96）
+
+    float2 gSunDirSS; // 太陽のスクリーン上の方向ベクトル（正規化済み）
+    float2 _padGR0;
+
+    float gGodRayDensity; // 伸び具合（例: 0.9）
+    float gGodRayWeight; // サンプル重み（例: 0.02）
+    uint gEnableGodRay; // 0/1
+    float _padGR1;
+
+    float3 gGodRayTint; // 色（例: (1.0, 0.95, 0.8)）
+    float gGodRayMaxDepth; // “空/遠方”判定の深度閾値（例: 0.9995）
+};
+
+Texture2D gAlbedoAO : register(t11); // RGB: Albedo, A: Occlusion
+Texture2D gNormalRough : register(t12); // RGB: Normal, A: Roughness
+Texture2D gEmiMetal : register(t13); // RGB: Emissive, A: Metallic
+Texture2D<float> gDepth : register(t14); // Depth
 
 struct PointLight
 {
     float3 positionWS;
-    float radius; // 16B
+    float range; // 16B
     float3 color;
-    float invRadius; // 16B
+    float intensity; // 16B
+    float invRadius;
     uint flag;
-    uint3 _pad_pl;
+    uint2 _pad_pl;
 };
 
 StructuredBuffer<PointLight> gPointLights : register(t15);
+
+float ToonStep3(float x)
+{
+    // 0..1 を 3段階に（好みで値調整）
+    // 例: 0, 0.5, 1.0
+    return (x < 0.33f) ? 0.0f : (x < 0.66f) ? 0.5f : 1.0f;
+}
+
+float3 AccumulatePointLights_UnlitWithTranslucency(
+    float3 wp, float3 N, float3 albedo,
+    float translucency, // 0..1: 透けの強さ（素材ごと）
+    float3 transColor // 透け色（葉なら緑っぽい）
+)
+{
+    float3 sum = 0.0f;
+
+    [loop]
+    for (uint li = 0; li < gPointLightCount; ++li)
+    {
+        PointLight pl = gPointLights[li];
+
+        float3 toL = pl.positionWS - wp;
+        float distSq = dot(toL, toL);
+
+        float range = pl.range;
+        float rangeSq = range * range;
+        if (range <= 0.0f || distSq >= rangeSq)
+            continue;
+
+        float dist = sqrt(distSq);
+        float3 L = toL / max(dist, 1e-6f);
+
+        float t = saturate(dist * pl.invRadius); // 0 (中心) -> 1 (半径)
+        float att = 1.0f - t;
+
+        // 端(1付近)だけをなめらかに落とす：フェード帯
+        // fadeWidth: 0.05~0.2 くらい（大きいほど境界が消える）
+        float fadeWidth = 0.2f;
+        float edge = 1.0f - smoothstep(1.0f - fadeWidth, 1.0f, t);
+
+        // 中心はそこそこ強く、端はさらに弱く
+        att = att * att; // 好み（^2）
+        att *= edge;
+
+        float wrap = 0.35f; // 0..1 大きいほど回り込み
+        float ndl = dot(N, L);
+        float ndlWrap = saturate((ndl + wrap) / (1.0f + wrap));
+
+        float ndlBack = saturate(dot(-N, L)); // 裏（透け用）
+
+        // 表の"塗り"ライト（Unlit）
+        float3 radiance = pl.color * pl.intensity * att;
+        float3 frontLit = albedo * (ndlWrap);
+
+        // 裏の透け（柔らかめに）
+        float backSoft = pow(ndlBack, 1.5f); // 1.0~3.0くらい好み
+        float3 backLit = transColor * backSoft * translucency;
+
+        // 合成：表 + 裏の透け
+        sum += radiance * (frontLit + backLit);
+    }
+
+    return sum;
+}
+
+
 
 struct VSOut
 {
@@ -81,34 +198,114 @@ float SampleShadowPCF(float4 shadowClip, uint cascade)
 
 float ComputeFogFactor(float viewDepth)
 {
+    if (gEnableDistanceFog == 0)
+        return 0.0f;
+
     // viewDepth: カメラから前方向の距離(メートル想定)。負になり得るなら abs/viewDepth clamp を入れる
     viewDepth = max(viewDepth, 0.0f);
 
-
-    float denom = max(3000.0f /*FogEnd*/ - 100.0f /*FogStart*/, 1e-5f);
-    return saturate((viewDepth - 100.0f /*FogStart*/) / denom);
+    float denom = max(gFogEnd - gFogStart, 1e-5f);
+    return saturate((viewDepth - gFogStart) / denom);
 }
+
+float Hash12(float2 p)
+{
+    // 低コスト hash（安定）
+    float h = dot(p, float2(127.1, 311.7));
+    return frac(sin(h) * 43758.5453123);
+}
+
+float ValueNoise2D(float2 p)
+{
+    float2 i = floor(p);
+    float2 f = frac(p);
+    float a = Hash12(i);
+    float b = Hash12(i + float2(1, 0));
+    float c = Hash12(i + float2(0, 1));
+    float d = Hash12(i + float2(1, 1));
+
+    // smoothstep
+    float2 u = f * f * (3.0f - 2.0f * f);
+
+    return lerp(lerp(a, b, u.x), lerp(c, d, u.x), u.y);
+}
+
+
+
+float FBM2D(float2 p)
+{
+    // 3~4オクターブで十分（重ければ2でもOK）
+    float v = 0.0f;
+    float a = 0.5f;
+    float2 shift = float2(37.0f, 17.0f);
+    [unroll]
+    for (int o = 0; o < 4; ++o)
+    {
+        v += a * ValueNoise2D(p);
+        p = p * 2.0f + shift;
+        a *= 0.5f;
+    }
+    return v; // 0..1 付近
+}
+
+
+
+float GroundBandMask(float yRel)
+{
+    // yRel = (wp.y - baseHeight)
+    // 基準高さから上に行くほど0へ。band内で1に近い。
+    float t = saturate(1.0f - (yRel / max(gFogGroundBand, 1e-4f)));
+    // 端をなめらかに
+    return t * t * (3.0f - 2.0f * t);
+}
+
+
+float ComputeFogNoiseMod(float3 worldPosWS, float timeSec)
+{
+    //基準高さからの相対Yで"地面付近" のみに効かせる
+
+    float yRel = worldPosWS.y - gHeightFogBaseHeight;
+
+    // 追加の上下範囲（任意）
+    float h01 = saturate((yRel - gFogNoiseMinHeight) / max(gFogNoiseMaxHeight - gFogNoiseMinHeight, 1e-4f));
+    float hMask = (1.0f - h01); // 上に行くほど弱い
+
+    float band = GroundBandMask(yRel) * hMask;
+    if (band <= 0.0001f)
+        return 1.0f;
+
+    // XZでノイズを作り、風で流す
+    float2 wind = gFogWindDirXZ * (gFogWindSpeed * timeSec);
+    float2 p = (worldPosWS.xz * gFogNoiseScale) + wind;
+
+    float n = FBM2D(p); // 0..1
+    // -1..+1 へ
+    float nSigned = (n * 2.0f - 1.0f);
+
+    // 霧密度を "1 +- amount" の範囲で揺らす
+    float mod = 1.0f + (nSigned * gFogNoiseAmount);
+
+    // 地面付近だけ強く適用
+    return lerp(1.0f, mod, band);
+}
+
 
 float ComputeHeightFogFactor(float3 camPosWS, float3 worldPosWS, float viewDepth)
 {
-    //if (gEnableHeightFog == 0)
-    //    return 0.0f;
+    if (gEnableHeightFog == 0)
+        return 0.0f;
 
     viewDepth = max(viewDepth, 0.0f);
 
-    // 高さを基準高さからの相対にする（base より上ほど薄く）
-    float camY = camPosWS.y - 1.0f/*gHeightFogBaseHeight*/;
-    float posY = worldPosWS.y - 1.0f/*gHeightFogBaseHeight*/;
+    float camY = camPosWS.y - gHeightFogBaseHeight;
+    float posY = worldPosWS.y - gHeightFogBaseHeight;
 
-    float k = max(0.05f/*gHeightFogFalloff*/, 1e-5f);
-
-    // density(y) = exp(-k * y)
+    float k = max(gHeightFogFalloff, 1e-5f);
     float e0 = exp(-k * camY);
     float e1 = exp(-k * posY);
 
     float dy = (worldPosWS.y - camPosWS.y);
 
-    // レイに沿った exp の平均（dy が小さいときは中点近似）
     float avgExp;
     if (abs(dy) < 1e-4f)
     {
@@ -117,20 +314,104 @@ float ComputeHeightFogFactor(float3 camPosWS, float3 worldPosWS, float viewDepth
     }
     else
     {
-        // (e0 - e1) / (k * dy) は「高さ方向の変化を考慮した平均」になりやすい
         avgExp = (e0 - e1) / (k * dy);
-        // 数値が暴れた時の保険
         avgExp = max(avgExp, 0.0f);
     }
 
-    // optical depth（霧の濃さ×距離×平均密度）
-    float opticalDepth = 0.01f/*gHeightFogDensity*/ * viewDepth * avgExp;
+    // ここで密度をノイズ変調（地面付近だけ動く）
+    float densityMod = ComputeFogNoiseMod(worldPosWS, gTime);
+    float density = gHeightFogDensity * densityMod;
 
-    // 0..1 のフォグ係数
+    float opticalDepth = density * viewDepth * avgExp;
     return saturate(1.0f - exp(-opticalDepth));
 }
 
 
+float ComputeRadialGodRay(float2 uv)
+{
+    // 太陽が画面外なら弱める（完全に切ってもOK）
+    // ※clipしてもいいけど、ここでは軽くフェード
+    float2 d = abs(gSunScreenUV - 0.5f) * 2.0f;
+    float sunIn = saturate(1.0f - max(d.x, d.y)); // 画面中心寄りほど1
+
+    const int NUM_SAMPLES = 48;
+
+    float2 delta = (uv - gSunScreenUV);
+    delta *= (gGodRayDensity / (float) NUM_SAMPLES);
+
+    float illuminationDecay = 1.0f;
+    float sum = 0.0f;
+
+    float2 sampUV = uv;
+
+    [unroll]
+    for (int s = 0; s < NUM_SAMPLES; ++s)
+    {
+        sampUV -= delta;
+
+        // 範囲外はスキップ（ブレにくい）
+        if (any(sampUV < 0.0f) || any(sampUV > 1.0f))
+            continue;
+
+        float z = gDepth.SampleLevel(gSampler, sampUV, 0);
+
+        // “空/遠方”なら通す（= 1）、近いジオメトリなら遮る（= 0）
+        // ※あなたのDepthの性質に合わせて閾値を調整
+        float occ = (z >= gGodRayMaxDepth) ? 1.0f : 0.0f;
+
+        sum += occ * illuminationDecay * gGodRayWeight;
+        illuminationDecay *= gGodRayDecay;
+    }
+
+    return sum * gGodRayIntensity * sunIn;
+}
+
+float ComputeDirectionalGodRay(float2 uv, float shadow, float2 sunDirSS)
+{
+    // sunDirSS: スクリーン上の太陽方向（正規化）
+    // 例：上から差す光なら (0, -1) 近い値になる
+
+    const int N = 48;
+
+    float2 stepUV = sunDirSS * (gGodRayDensity / (float) N);
+
+    float sum = 0.0;
+    float decay = 1.0;
+
+    float2 p = uv;
+
+    [unroll]
+    for (int i = 0; i < N; ++i)
+    {
+        p -= stepUV;
+
+        if (any(p < 0.0) || any(p > 1.0))
+            break;
+
+        float z = gDepth.SampleLevel(gSampler, p, 0);
+
+        // “空/遠方なら通す” みたいな簡易遮蔽
+        float occ = (z >= gGodRayMaxDepth) ? 1.0 : 0.0;
+
+        // 影があるところは筋が出にくい（木の影で切れる）
+        float sh = shadow;
+
+        sum += occ * sh * decay * gGodRayWeight;
+        decay *= gGodRayDecay;
+    }
+
+    return sum * gGodRayIntensity;
+}
+
+float ComputeRadialWeight(float3 camForwardWS, float3 sunDirWS)
+{
+    float3 V = normalize(camForwardWS);
+    float3 L = normalize(-sunDirWS); // 太陽“から来る”方向（必要なら符号反転）
+    float d = abs(dot(V, L)); // 0..1
+
+    // 0.2以下でDirectional寄り、0.6以上でRadial寄り、間はなめらかに補間
+    return smoothstep(0.2, 0.6, d); // -> wRadial
+}
 
 float4 main(VSOut i) : SV_Target
 {
@@ -138,7 +419,7 @@ float4 main(VSOut i) : SV_Target
 
     float4 albedoAO = gAlbedoAO.Sample(gSampler, uv);
     float4 nr = gNormalRough.Sample(gSampler, uv);
-    float4 me = gEmiMetal.Sample(gSampler, uv);
+    float4 emiMetal = gEmiMetal.Sample(gSampler, uv);
 
     float4 ndc;
     ndc.xy = uv * 2.0f - 1.0f;
@@ -164,7 +445,24 @@ float4 main(VSOut i) : SV_Target
     // 影の濃さ(0.7)は元の意図を踏襲
     float shadowMul = lerp(0.6f, 1.0f, vis);
 
-    float3 color = ambient * shadowMul;
+    // GBuffer
+    float3 albedo = albedoAO.rgb;
+    float3 N = normalize(nr.rgb * 2.0f - 1.0f);
+
+    // Ambient（Unlitの基礎明るさ）
+    float3 base = albedo * (gAmbientColor * gAmbientIntensity);
+
+    // 影で暗くする（既存 shadowMul を利用）
+    base *= shadowMul;
+
+    // PointLight（Unlit Toon）
+    // とりあえずmetalを透けの強さに利用
+    float translucency = emiMetal.a; // 0..1
+    float3 transColor = albedo; // ざっくり「葉の色で透ける」でも良い
+    float3 plAdd = AccumulatePointLights_UnlitWithTranslucency(wp.xyz, N, albedo, translucency, transColor);
+
+    // Emissive（必要ならそのまま加算）
+    float3 color = base + plAdd + emiMetal.rgb;
 
     // 距離フォグ
     float fogDist = ComputeFogFactor(viewDepth);
@@ -173,9 +471,25 @@ float4 main(VSOut i) : SV_Target
     float fogHeight = ComputeHeightFogFactor(camPos.xyz, wp.xyz, viewDepth);
 
     // 2つのフォグを合体：1 - (1-a)(1-b) が自然に「どっちも効く」
-    float fog = 1.0f - /*(1.0f - ) * */(1.0f - fogHeight * fogDist);
+    float fog = 1.0f - (1.0f - fogHeight) * (1.0f - fogDist);
 
-    color = lerp(color, float3(0.8f, 0.8f, 1.0f) /*gFogColor*/, fog);
+    color = lerp(color, gFogColor, fog);
+
+    if (gEnableGodRay != 0)
+    {
+        float wRadial = ComputeRadialWeight(camForward.xyz, gSunDirectionWS);
+
+        float godRadial = ComputeRadialGodRay(uv); // sunScreenUV を使う版
+        float godDirectional = ComputeDirectionalGodRay(uv, vis, gSunDirSS); // sunDirSS を使う版
+
+        float god = lerp(godDirectional, godRadial, wRadial);
+
+        // fogが無いとほぼ見えない／霧があると見える（好みで係数調整）
+        float fogVis = saturate(fog * 1.2f);
+
+        // 太陽の色味で足す（Unlitスタイルなら加算でOK）
+        color += gGodRayTint * god * fogVis;
+    }
 
     return float4(color, 1.0f);
 }

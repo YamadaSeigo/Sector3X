@@ -15,14 +15,14 @@ class DeferredRenderingSystem : public ITypeSystem<
 public:
 
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition,
-		UndeletablePtr<DeferredRenderingService> deferredService,
-		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService)
+	void UpdateImpl(
+		safe_ptr<DeferredRenderingService> deferredService,
+		safe_ptr<Graphics::I3DPerCameraService> perCameraService)
 	{
 		using namespace Graphics;
 
 		LightCameraBuffer lightCameraBufferData{};
-		lightCameraBufferData.invViewProj = Math::Inverse(perCameraService->GetCameraBufferData().viewProj);
+		lightCameraBufferData.invViewProj = Math::Inverse(perCameraService->GetCameraBufferDataNoLock().viewProj);
 		lightCameraBufferData.camForward = perCameraService->GetForward();
 		lightCameraBufferData.camPos = perCameraService->GetEyePos();
 

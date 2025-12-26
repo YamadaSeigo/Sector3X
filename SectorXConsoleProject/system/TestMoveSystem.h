@@ -9,7 +9,7 @@ class TestMoveSystem : public ITypeSystem<
 	using Accessor = ComponentAccessor<Write<CTransform>, Write<SpatialMotionTag>>;
 public:
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, LevelContext& levelCtx, UndeletablePtr<SpatialChunkRegistry> registry) {
+	void UpdateImpl(Partition& partition, LevelContext& levelCtx, safe_ptr<SpatialChunkRegistry> registry) {
 
 		BudgetMover::LocalBatch moveBatch(levelCtx.mover, 200);
 

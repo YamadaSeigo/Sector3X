@@ -530,9 +530,12 @@ namespace SFW
 			 * @details 自身のシステムのコンテキストを使用して、UpdateImplを呼び出す
 			 */
 			void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override final{
+				// UpdateImpl関数を持っている場合のみ呼び出す
+				//※このフラグで包まないと、UpdateImplを持たないシステムでコンパイルエラーになる
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
+
+					// 静的サービスを使用する場合、サービスロケーターから直接取得
 					if constexpr (AllStaticServices<Services...>) {
-						// 静的サービスを使用する場合、サービスロケーターから直接取得
 						std::apply(
 							[&](Services*... unpacked) {
 								constexpr bool hasPartition = function_mentions_v<decltype(&Derived::UpdateImpl), Partition&>;
@@ -566,6 +569,7 @@ namespace SFW
 						return;
 					}
 
+					// 動的サービスを使用する場合、ランタイムにサービスロケーターから取得
 					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
 					std::apply(
 						[&](Services*... unpacked) {

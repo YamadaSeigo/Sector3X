@@ -63,6 +63,7 @@ namespace SFW
 			uint32_t option = 1; // トポロジーを保持するか（LOD生成時にメッシュ最適化を行わない）
 			uint32_t    instancesPeak = 1;   // 同時表示おおよそ
 			float  viewMin = 0, viewMax = 100;// 想定視距離[m]
+			float minAreaFrec = 0.001f; // モデル全体面積に対する最小面積比。
 			bool hero = false;            // 注視対象（品質優先）
 			bool rhFlipZ = false; // Z軸反転フラグ（右手系GLTF用）
 
@@ -148,6 +149,8 @@ namespace SFW
 			std::vector<SubMesh> subMeshes = {};
 
 			std::optional<Skeleton> skeleton; // スケルトンがある場合
+
+			float minAreaFrec = 0.001f; // モデル全体面積に対する最小面積比（小さいものをカットする用）
 		private:
 			path_view path; // キャッシュ用のパスビュー
 

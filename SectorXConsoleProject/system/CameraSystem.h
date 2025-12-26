@@ -18,10 +18,11 @@ class CameraSystem : public ITypeSystem<
 	static constexpr float MOVE_SPEED_WHEEL_RATE = 0.5f;
 public:
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition,
-		UndeletablePtr<InputService> inputService,
-		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService,
-		UndeletablePtr<Graphics::I2DCameraService> camera2DService) {
+	void UpdateImpl(
+		safe_ptr<InputService> inputService,
+		safe_ptr<Graphics::I3DPerCameraService> perCameraService,
+		safe_ptr<Graphics::I2DCameraService> camera2DService) 
+	{
 		int mouseWheelV, mouseWheelH;
 		inputService->GetMouseWheel(mouseWheelV, mouseWheelH);
 

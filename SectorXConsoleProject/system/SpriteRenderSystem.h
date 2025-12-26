@@ -22,7 +22,7 @@ class SpriteRenderSystem : public ITypeSystem<
 {
 	using Accessor = ComponentAccessor<Read<CSprite>,Read<CTransform>>;
 public:
-	void StartImpl(UndeletablePtr<SFW::Graphics::RenderService> renderService)
+	void StartImpl(safe_ptr<SFW::Graphics::RenderService> renderService)
 	{
 		using namespace SFW::Graphics;
 
@@ -41,7 +41,7 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		UndeletablePtr<SFW::Graphics::RenderService> renderService) {
+		safe_ptr<SFW::Graphics::RenderService> renderService) {
 
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();

@@ -218,6 +218,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     output.posH = mul(uViewProj, float4(wp, 1.0f));
     output.normalWS = mul(R, input.normal.xyz); // 非一様スケール無し前提
+
     output.uv = input.uv;
 
     return output;

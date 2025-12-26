@@ -65,6 +65,8 @@ namespace SFW
 					// 一旦 swap で持ち出し → ロック解放後に反映
 					newly.swap(pendingSystems);
 				}
+
+				//新しいシステムの取り込み
 				if (!newly.empty()) {
 					// まとめて systems と accessList に移動/push（reserve で再配置削減）
 					updateSystems.reserve(updateSystems.size() + newly.size());
@@ -82,7 +84,6 @@ namespace SFW
 							updateSystems.emplace_back(std::move(uptr));
 
 							// AccessInfo を取得してキャッシュ
-							// ※ 実装に合わせてメソッド名を調整してください
 							accessList.emplace_back(updateSystems.back()->GetAccessInfo());
 						}
 						else

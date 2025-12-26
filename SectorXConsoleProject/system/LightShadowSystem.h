@@ -15,11 +15,11 @@ class LightShadowSystem : public ITypeSystem<
 	using Accessor = ComponentAccessor<>;
 public:
 	void StartImpl(
-		UndeletablePtr<InputService> inputService,
-		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService,
-		UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
-		UndeletablePtr<Graphics::DX11::LightShadowResourceService> shadowMapService
+		safe_ptr<InputService> inputService,
+		safe_ptr<Graphics::I3DPerCameraService> perCameraService,
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<Graphics::LightShadowService> lightShadowService,
+		safe_ptr<Graphics::DX11::LightShadowResourceService> shadowMapService
 	)
 	{
 		Graphics::CameraParams camParams;
@@ -41,12 +41,12 @@ public:
 	}
 
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition,
-		UndeletablePtr<InputService> inputService,
-		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService,
-		UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
-		UndeletablePtr<Graphics::DX11::LightShadowResourceService> resourceService) {
+	void UpdateImpl(
+		safe_ptr<InputService> inputService,
+		safe_ptr<Graphics::I3DPerCameraService> perCameraService,
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<Graphics::LightShadowService> lightShadowService,
+		safe_ptr<Graphics::DX11::LightShadowResourceService> resourceService) {
 
 		bool updateCascade = false;
 		if (inputService->IsKeyPressed(Input::Key::L))

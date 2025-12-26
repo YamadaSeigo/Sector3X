@@ -35,9 +35,9 @@ namespace SFW
 			Session(World<LevelTypes...>& _world) : world(_world) {}
 
 			/**
-		 * @brief レベルを追加する関数
-		 * @param level 追加するレベルの右辺値参照
-		 */
+			 * @brief レベルを追加する関数
+			 * @param level 追加するレベルの右辺値参照
+			 */
 			template<typename T>
 			void AddLevel(std::unique_ptr<Level<T>> level) {
 
@@ -174,6 +174,8 @@ namespace SFW
 			}
 		private:
 			std::vector<std::unique_ptr<IRequestCommand>> requests;
+		public:
+			STATIC_SERVICE_TAG
 		};
 
 	public:
@@ -228,7 +230,7 @@ namespace SFW
 
 			std::apply([&](auto&... levelVecs)
 				{
-					(..., [&](auto& vecs, auto& mainFunc, auto& subFunc) {
+					(..., [](auto& vecs, auto& mainFunc, auto& subFunc) {
 						for (auto& holder : vecs) {
 							auto& level = holder.level;
 							if (level->GetState() == ELevelState::Main) {
@@ -257,7 +259,7 @@ namespace SFW
 					this,
 					deltaTime,
 					executor,
-					&latch]() mutable
+					&latch]()
 					{
 						task(serviceLocator, deltaTime, executor);
 						latch.CountDown();

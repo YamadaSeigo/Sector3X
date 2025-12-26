@@ -93,12 +93,12 @@ public:
 	};
 
 	void StartImpl(
-		UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
-		UndeletablePtr<Graphics::I2DCameraService>,
-		UndeletablePtr<Graphics::LightShadowService>,
-		UndeletablePtr<Physics::PhysicsService>,
-		UndeletablePtr<DeferredRenderingService> deferredRenderService)
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<Graphics::I3DPerCameraService> camera3DService,
+		safe_ptr<Graphics::I2DCameraService>,
+		safe_ptr<Graphics::LightShadowService>,
+		safe_ptr<Physics::PhysicsService>,
+		safe_ptr<DeferredRenderingService> deferredRenderService)
 	{
 		using namespace Graphics;
 		using namespace Debug;
@@ -317,27 +317,67 @@ public:
 		assert(drawDeferredBufferCount == DeferredTextureCount * 2);
 		for (size_t i = 0; i < drawDeferredBufferCount; ++i)
 		{
-			BIND_DEBUG_CHECKBOX("Show", ShowDeferredBufferName[i], &drawDeferredTextureFlags[i]);
+			BIND_DEBUG_CHECKBOX("Deferred", ShowDeferredBufferName[i], &drawDeferredTextureFlags[i]);
 		}
 	}
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::I3DPerCameraService> camera3DService,
-		UndeletablePtr<Graphics::I2DCameraService> camera2DService,
-		UndeletablePtr<Graphics::LightShadowService> lightShadowService,
-		UndeletablePtr <Physics::PhysicsService> physicsService,
-		UndeletablePtr<DeferredRenderingService> deferredRenderService)
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<Graphics::I3DPerCameraService> camera3DService,
+		safe_ptr<Graphics::I2DCameraService> camera2DService,
+		safe_ptr<Graphics::LightShadowService> lightShadowService,
+		safe_ptr <Physics::PhysicsService> physicsService,
+		safe_ptr<DeferredRenderingService> deferredRenderService)
 	{
-		if (!enabled) return;
-
 		//機能を制限したRenderQueueを取得
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto* meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
+		auto bufferManager = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
+
+		constexpr uint32_t showDeferredTextureCount = sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0]);
+
+		Math::Vec2f resolution = camera2DService->GetVirtualResolution();
+
+		bool showDeferred = false;
+		for (uint32_t i = 0; i < showDeferredTextureCount; ++i)
+		{
+			if (!drawDeferredTextureFlags[i]) continue;
+
+
+			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(-resolution.x / DeferredTextureCount + (i % DeferredTextureCount) * resolution.x / DeferredTextureCount, -resolution.y / DeferredTextureCount * (i >= DeferredTextureCount ? -1.0f : 1.0f), 0.0f));
+			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ resolution.x / DeferredTextureCount, resolution.y / DeferredTextureCount, 1.0f });
+			Graphics::DrawCommand cmd;
+			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
+			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
+			cmd.pso = deferredPsoHandle.index;
+			cmd.material = deferredMaterialHandle[i].index;
+			cmd.viewMask = PASS_UI_MAIN;
+			cmd.sortKey = 0;
+			uiSession.Push(std::move(cmd));
+
+			showDeferred = true;
+		}
+
+		//SRVのバインドを外すためにダミーのコマンド発行
+		if (showDeferred)
+		{
+			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 0.0f, 0.0f, 0.0f });
+			Graphics::DrawCommand cmd;
+			cmd.instanceIndex = uiSession.AllocInstance(scaleMat);
+			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
+			cmd.pso = deferredPsoHandle.index;
+			cmd.material = dummyMatHandle.index;
+			cmd.viewMask = PASS_UI_MAIN;
+			cmd.sortKey = 0;
+			uiSession.Push(std::move(cmd));
+		}
+
+		if (!enabled) return;
+
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 		auto psoManager = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
-		auto bufferManager = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
+
 		if (!psoManager->IsValid(psoLineHandle)) {
 			LOG_ERROR("PSOHandle が有効な値ではありません");
 			return;
@@ -346,10 +386,8 @@ public:
 		auto fru = camera3DService->MakeFrustum();
 
 		auto cameraPos = camera3DService->GetEyePos();
-		const auto viewProj = camera3DService->GetCameraBufferData().viewProj;
+		const auto viewProj = camera3DService->GetCameraBufferDataNoLock().viewProj;
 		auto fov = camera3DService->GetFOV();
-
-		Math::Vec2f resolution = camera2DService->GetVirtualResolution();
 
 		const Graphics::OccluderViewport vp = { (int)resolution.x, (int)resolution.y, fov };
 
@@ -648,12 +686,13 @@ public:
 		{
 			renderService->GetDepthBuffer(mocDepth);
 
+
 			Graphics::DX11::TextureManager* texMgr = renderService->GetResourceManager<Graphics::DX11::TextureManager>();
 
-			texMgr->UpdateTexture(mocDepthTexHandle, mocDepth.data(), (UINT)(camera3DService->GetResolution().x) * sizeof(float));
+			texMgr->UpdateTexture(mocDepthTexHandle, mocDepth.data(), (UINT)(resolution.x) * sizeof(float));
 
-			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(350.0f, -220.0f, 0.0f));
-			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 1920.0f / 5.0f, 1080.0f / 5.0f, 1.0f });
+			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(resolution.x / 3.0f, 0.0f, 0.0f));
+			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ resolution.x / 3.0f, resolution.y / 3.0f, 1.0f });
 
 			Graphics::DrawCommand cmd;
 			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
@@ -663,40 +702,6 @@ public:
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;
 
-			uiSession.Push(std::move(cmd));
-		}
-
-		constexpr uint32_t showDeferredTextureCount = sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0]);
-
-		bool showDeferred = false;
-		for (uint32_t i = 0; i < showDeferredTextureCount; ++i)
-		{
-			if (!drawDeferredTextureFlags[i]) continue;
-			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(-350.0f + (i % DeferredTextureCount) * 400.0f, -220.0f * (i >= DeferredTextureCount ? -1.0f : 1.0f), 0.0f));
-			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 320.0f, 180.0f, 1.0f });
-			Graphics::DrawCommand cmd;
-			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
-			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.pso = deferredPsoHandle.index;
-			cmd.material = deferredMaterialHandle[i].index;
-			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
-			uiSession.Push(std::move(cmd));
-
-			showDeferred = true;
-		}
-
-		//SRVのバインドを外すためにダミーのコマンド発行
-		if (showDeferred)
-		{
-			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 0.0f, 0.0f, 0.0f });
-			Graphics::DrawCommand cmd;
-			cmd.instanceIndex = uiSession.AllocInstance(scaleMat);
-			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.pso = deferredPsoHandle.index;
-			cmd.material = dummyMatHandle.index;
-			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
 			uiSession.Push(std::move(cmd));
 		}
 

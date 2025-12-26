@@ -7,7 +7,7 @@ struct PSInput
     float3 normalWS : TEXCOORD1;
 };
 
-PS_PRBOutput main(PSInput input)
+PS_PRBOutput main(PSInput input, bool isFrontFace : SV_IsFrontFace)
 {
     PS_PRBOutput output;
 
@@ -43,7 +43,10 @@ PS_PRBOutput main(PSInput input)
 
     output.AlbedoAO = float4(baseColor.rgb, occlution);
 
-    output.NormalRoughness = float4(normalize(input.normalWS) * 0.5 + 0.5, roughness);
+    // ñ@ê¸ÇÕñ ó†Ç≈îΩì]
+    float3 N = isFrontFace ? normalize(input.normalWS) : -normalize(input.normalWS);
+
+    output.NormalRoughness = float4(N * 0.5f + 0.5f, roughness);
 
     float4 emissionColor = float4(0, 0, 0, 0);
     if ((hasFlags & FLAG_HAS_EMISSIVETEX) != 0u)

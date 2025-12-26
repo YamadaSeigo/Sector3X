@@ -71,10 +71,10 @@ namespace SFW {
         };
 
         // 型エイリアス
+        using Matrix3x3f = Matrix<3, 3, float>;
+        using Matrix3x4f = Matrix<3, 4, float>;
         using Matrix4x4f = Matrix<4, 4, float>;
         using Matrix4x4d = Matrix<4, 4, double>;
-
-        using Matrix3x4f = Matrix<3, 4, float>;
 
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
         //==============================
@@ -235,6 +235,18 @@ namespace SFW {
             return Rt;
         }
 #endif
+
+        //==============================
+		// ベクトルとの積（列ベクトル規約）
+		//==============================
+        template<typename T>
+        inline Vec3<T> operator*(const Matrix<3, 3, T>& M, const Vec3<T>& v) noexcept {
+            Vec3<T> out{};
+            out.x = M.m[0][0] * v.x + M.m[0][1] * v.y + M.m[0][2] * v.z;
+            out.y = M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z;
+            out.z = M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z;
+            return out;
+		}
 
         //==============================
         // ベクトルとの積（列ベクトル規約）

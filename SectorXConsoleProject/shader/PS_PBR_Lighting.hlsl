@@ -1,3 +1,4 @@
+
 #include "_GlobalTypes.hlsli"
 
 cbuffer CameraBuffer : register(b11)

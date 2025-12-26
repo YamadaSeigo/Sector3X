@@ -27,9 +27,9 @@ class PointLightSystem : public ITypeSystem<
 public:
 
 	/*void StartImpl(
-		UndeletablePtr<Graphics::PointLightService> pointLightService,
-		UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::DX11::LightShadowResourceService> resourceService)
+		safe_ptr<Graphics::PointLightService> pointLightService,
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<Graphics::DX11::LightShadowResourceService> resourceService)
 	{
 		using namespace Graphics;
 
@@ -50,10 +50,10 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		UndeletablePtr<Graphics::PointLightService> pointLightService,
-		UndeletablePtr<Graphics::RenderService> renderService,
-		UndeletablePtr<Graphics::I3DPerCameraService> perCameraService,
-		UndeletablePtr<Graphics::DX11::LightShadowResourceService> resourceService) {
+		safe_ptr<Graphics::PointLightService> pointLightService,
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<Graphics::I3DPerCameraService> perCameraService,
+		safe_ptr<Graphics::DX11::LightShadowResourceService> resourceService) {
 
 		auto camPos = perCameraService->GetEyePos();
 		auto fru = perCameraService->MakeFrustum();
@@ -79,6 +79,12 @@ public:
 
 					auto index = lightCount.fetch_add(1, std::memory_order_relaxed);
 
+					if(index >= Graphics::PointLightService::MAX_POINT_LIGHT_NUM)
+					{
+						//上限に達したら追加しない
+						break;
+					}
+
 					pointData[index] = Graphics::GpuPointLight{
 						desc.positionWS,
 						desc.range,
@@ -90,12 +96,14 @@ public:
 
 			}, partition, fru, camPos);
 
-		auto plCOunt = lightCount.load(std::memory_order_acquire);
+		auto plCount = lightCount.load(std::memory_order_acquire);
+
+		plCount = (std::min)(plCount, Graphics::PointLightService::MAX_POINT_LIGHT_NUM);
 
 		Graphics::DX11::BufferUpdateDesc bufferDesc{};
 		bufferDesc.buffer = resourceService->GetPointLightBuffer();
 		bufferDesc.data = pointData;
-		bufferDesc.size = sizeof(Graphics::GpuPointLight) * plCOunt;
+		bufferDesc.size = sizeof(Graphics::GpuPointLight) * plCount;
 		bufferDesc.isDelete = false;
 
 		auto bufferManager = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
@@ -103,7 +111,7 @@ public:
 
 		//更新したライト数をCPU側にも伝える
 		auto lightData = resourceService->GetCPULightData(slot);
-		lightData.gPointLightCount = plCOunt;
+		lightData.gPointLightCount = plCount;
 		resourceService->SetCPULightData(slot, lightData);
 	}
 
