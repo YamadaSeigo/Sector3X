@@ -93,14 +93,15 @@ public:
 			viewProj,
 			vp,
 			Graphics::OccluderLOD::Near,
-			outQuad);
+			outQuad,
+			Graphics::AABBQuadAxisBit::X | Graphics::AABBQuadAxisBit::Z);
 
 		auto nearClip = renderService->GetNearClipPlane();
 
 		bool drawOcc = false;
 		for (const auto& quad : outQuad)
 		{
-			auto quadMOC = Graphics::ConvertAABBFrontFaceQuadToMoc(quad.quad, viewProj, nearClip);
+			auto quadMOC = Graphics::ConvertAABBFrontFaceQuadToMoc(quad.clip, viewProj, nearClip);
 			if (quadMOC.valid)
 			{
 				drawOcc = true;

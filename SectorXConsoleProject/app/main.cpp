@@ -451,7 +451,7 @@ int main(void)
 	ComponentTypeRegistry::Register<CModel>();
 	ComponentTypeRegistry::Register<TransformSoA>();
 	ComponentTypeRegistry::Register<SpatialMotionTag>();
-	ComponentTypeRegistry::Register<Physics::BodyComponent>();
+	ComponentTypeRegistry::Register<Physics::CPhyBody>();
 	ComponentTypeRegistry::Register<Physics::PhysicsInterpolation>();
 	ComponentTypeRegistry::Register<Physics::ShapeDims>();
 	ComponentTypeRegistry::Register<CSprite>();
@@ -972,6 +972,7 @@ int main(void)
 				modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
 				modelDesc.instancesPeak = 1000;
 				modelDesc.viewMax = 100.0f;
+				modelDesc.buildOccluders = false;
 
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
 
@@ -1020,6 +1021,33 @@ int main(void)
 				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
 				modelAssetMgr->Add(modelDesc, grassModelHandle);
 				modelDesc.pCustomNomWFunc = nullptr;
+
+				ModelAssetHandle ruinTowerModelHandle;
+				modelDesc.instancesPeak = 2;
+				modelDesc.viewMax = 1000.0f;
+				modelDesc.pso = cullDefaultPSOHandle;
+				modelDesc.path = "assets/model/RuinTower.gltf";
+				modelDesc.buildOccluders = true;
+				modelDesc.meltResolution = 64;
+				modelDesc.meltFillPct = 1.0f;
+				modelDesc.meltBoxType = Graphics::MeltBoxType::SIDES;
+				modelAssetMgr->Add(modelDesc, ruinTowerModelHandle);
+
+				{
+					auto ruinTowerData = modelAssetMgr->GetWrite(ruinTowerModelHandle);
+					// 遮蔽AABBを少し小さくする
+					auto& occAABB = ruinTowerData.ref().subMeshes[0].occluder.meltAABBs[0];
+					occAABB.lb.x *= 0.4f;
+					occAABB.lb.z *= 0.4f;
+					occAABB.ub.x *= 0.4f;
+					occAABB.ub.z *= 0.4f;
+				}
+
+				//float occScoreThreshold = 0.5f;// このスコア以上ならOccluder化（0..1）
+				//int   meltResolution = 16;      // meltのボクセル解像度。小さくするほどボクセルが大きくなる（64 or 96 程度が実用。性能と品質のトレードオフ）
+				//float meltStopRatio = 0.3f;   // meltの停止しきい（小AABB生成を抑える目安。0.1～0.7）
+				//float minWorldSizeM = 1.0f;    // 小さすぎるモデルはOccluder対象外（対角長[m]）
+				//float minThicknessRatio = 0.01f;// 最小厚み比。これ未満は超薄板として減点
 
 				const auto& serviceLocator = pWorld->GetServiceLocator();
 				auto ps = serviceLocator.Get<Physics::PhysicsService>();
@@ -1239,7 +1267,7 @@ int main(void)
 								SpatialMotionTag tag{};
 								tag.handle = { key, chunk.value() };
 
-								Physics::BodyComponent staticBody{};
+								Physics::CPhyBody staticBody{};
 								staticBody.type = Physics::BodyType::Static; // staticにする
 								staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
 								auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
@@ -1320,7 +1348,7 @@ int main(void)
 						.cellSizeY = p.cellSize
 					};
 					auto terrainShape = ps->MakeShape(terrainShapeDesc);
-					Physics::BodyComponent terrainBody{};
+					Physics::CPhyBody terrainBody{};
 					terrainBody.type = Physics::BodyType::Static; // staticにする
 					terrainBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
 					auto id = levelSession.AddEntity(
@@ -1330,6 +1358,40 @@ int main(void)
 					if (id) {
 						auto chunk = pLevel->GetChunk({ 0.0f, -40.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
 						ps->EnqueueCreateIntent(id.value(), terrainShape, chunk.value()->GetNodeKey());
+					}
+				}
+
+				// 塔生成
+				{
+					Math::Vec3f location = { p.cellsX * p.cellSize - 200.0f, 0.0f, p.cellsZ * p.cellSize - 200.0f};
+
+					float height = 0.0f;
+					terrain.SampleHeightNormalBilinear(location.x, location.z, height);
+					location.y = height - 10.0f;
+
+					auto shape = ps->MakeConvexCompound("generated/convex/RuinTower.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+#ifdef _DEBUG
+					auto shapeDims = ps->GetShapeDims(shape);
+#endif
+					CModel modelComp{ ruinTowerModelHandle };
+					modelComp.castShadow = true;
+
+					Physics::CPhyBody staticBody{};
+					staticBody.type = Physics::BodyType::Static; // staticにする
+					staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
+
+					auto tf = CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } };
+
+					auto id = levelSession.AddGlobalEntity(
+						tf,
+						std::move(modelComp)
+#ifdef _DEBUG
+						, shapeDims.value()
+#endif
+					);
+					if (id) {
+						auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shape);
+						ps->CreateBody(bodyCmd);
 					}
 				}
 

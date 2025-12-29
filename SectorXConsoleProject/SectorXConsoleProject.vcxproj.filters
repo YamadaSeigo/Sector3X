@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\VS_Unlit.hlsl">
+    <FxCompile Include="shader\VS_Instance.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_Opaque.hlsl">

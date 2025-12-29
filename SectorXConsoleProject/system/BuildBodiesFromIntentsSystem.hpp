@@ -9,6 +9,43 @@
 #include <SectorFW/Core/SpatialChunkRegistryService.h>
 
 /**
+ * @brief チャンクを跨がないBody作成コマンドを作成するユーティリティ(GlobalやStatic)
+ * @param e Entity
+ * @param tf Transform
+ * @param body CPhyBody
+ * @param shape ShapeHandle
+ * @return CreateBodyCmd
+ */
+Physics::CreateBodyCmd MakeNoMoveChunkCreateBodyCmd(
+	SFW::ECS::EntityID e,
+	const CTransform& tf,
+	const Physics::CPhyBody& body,
+	SFW::Physics::ShapeHandle shape
+)
+{
+	using namespace SFW::Physics;
+
+	// 現在姿勢（PhysicsInterpolation の curr）
+	Mat34f tm{};
+	tm.pos = tf.location;
+	tm.rot = tf.rotation;
+
+	const uint16_t layer = body.layer != CPhyBody::invalidLayer ? body.layer : (body.type == BodyType::Static ? Layers::NON_MOVING_RAY_HIT : Layers::MOVING);
+	const bool kinematic = body.kinematic;
+
+	CreateBodyCmd cmd{};
+	cmd.e = e;
+	cmd.owner.code = SpatialChunkKey::kInvalidCode;   // グローバル Entity 用に無効キーをセット
+	cmd.shape = shape;
+	cmd.worldTM = tm;
+	cmd.layer = layer;
+	cmd.broadphase = 0;
+	cmd.kinematic = kinematic;
+
+	return cmd;
+}
+
+/**
 * @brief 生成インテント（Entity  所有 EntityManager）だけを処理して
 *        CreateBodyCmd を一括で発行する。全チャンク走査はしない。
 *
@@ -56,11 +93,11 @@ public:
 
 			ComponentAccessor <
 				ECS::Read<CTransform>,
-				ECS::Read<BodyComponent>> chAccessor(ch);
+				ECS::Read<CPhyBody>> chAccessor(ch);
 
 			// 必要列だけ生ポインタで取得（SoA）
 			auto tfOpt = chAccessor.Get<Read<CTransform>>();
-			auto bodyOpt = chAccessor.Get<Read<BodyComponent>>();
+			auto bodyOpt = chAccessor.Get<Read<CPhyBody>>();
 			if (!tfOpt || !bodyOpt) continue;
 			auto tf = tfOpt.value();
 			auto body = bodyOpt.value();
@@ -74,8 +111,8 @@ public:
 			tm.pos = Vec3f(tf.px()[row], tf.py()[row], tf.pz()[row]);
 			tm.rot = Quatf(tf.qx()[row], tf.qy()[row], tf.qz()[row], tf.qw()[row]);
 
-			const uint16_t layer = body.layer()[row] != BodyComponent::invalidLayer ? body.layer()[row] : (body.type()[row] == BodyType::Static ? Layers::NON_MOVING_RAY_HIT : Layers::MOVING);
-			const bool kinematic = !!body.kinematic()[row];
+			const uint16_t layer = body.layer()[row] != CPhyBody::invalidLayer ? body.layer()[row] : (body.type()[row] == BodyType::Static ? Layers::NON_MOVING_RAY_HIT : Layers::MOVING);
+			const bool kinematic = body.kinematic()[row];
 
 			CreateBodyCmd cmd{};
 			cmd.e = in.e;
@@ -121,7 +158,7 @@ public:
 
 	ECS::AccessInfo GetAccessInfo() const noexcept override {
 		// 位置情報は EntityManager 内の locations を読むだけで、チャンク列は Read
-		return ECS::ComponentAccess<ECS::Read<Physics::PhysicsInterpolation>, ECS::Read<Physics::BodyComponent>>::GetAccessInfo();
+		return ECS::ComponentAccess<ECS::Read<Physics::PhysicsInterpolation>, ECS::Read<Physics::CPhyBody>>::GetAccessInfo();
 	}
 
 private:

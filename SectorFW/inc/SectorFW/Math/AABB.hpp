@@ -22,6 +22,15 @@ namespace SFW
 			AABB() : lb(T(0)), ub(T(0)) {}
 			AABB(const VecT& lower_bound_, const VecT& upper_bound_) : lb(lower_bound_), ub(upper_bound_) {}
 
+			AABB operator+(const VecT& v) const noexcept { return AABB(lb + v, ub + v); }
+			AABB& operator+=(const VecT& v) noexcept { lb += v; ub += v; return *this; }
+			AABB operator-(const VecT& v) const noexcept { return AABB(lb - v, ub - v); }
+			AABB& operator-=(const VecT& v) noexcept { lb -= v; ub -= v; return *this; }
+			AABB operator*(const T& s) const noexcept {	return AABB(lb * s, ub * s); }
+			AABB& operator*=(const T& s) noexcept { lb *= s; ub *= s; return *this; }
+			AABB operator/(const T& s) const noexcept { return AABB(lb / s, ub / s); }
+			AABB& operator/=(const T& s) noexcept { lb /= s; ub /= s; return *this; }
+
 			// 幅・高さ・奥行き（フルサイズ）
 			VecT size() const noexcept {
 				return ub - lb;

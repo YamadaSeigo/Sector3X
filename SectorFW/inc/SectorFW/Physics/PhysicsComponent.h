@@ -82,7 +82,7 @@ namespace SFW
 		/**
 		 * @brief 物理ボディコンポーネント
 		 */
-		struct BodyComponent {
+		struct CPhyBody {
 			static constexpr uint16_t invalidLayer = 0xFFFFu;
 
 			JPH::BodyID body = JPH::BodyID((std::numeric_limits<uint32_t>::max)());   // 生成後にセット（読み取り用）
@@ -90,7 +90,7 @@ namespace SFW
 			bool        kinematic{ false };
 			BodyType     type{ BodyType::Dynamic }; // 1: 静的、0: 動的（キネマティック含む）
 
-			DEFINE_SOA(BodyComponent, body, layer, kinematic, type)
+			DEFINE_SOA(CPhyBody, body, layer, kinematic, type)
 		};
 		/**
 		 * @brief 形状寸法コンポーネント

@@ -19,6 +19,12 @@ public:
 		if (evs.empty()) return;
 
 		for (const auto& ev : evs) {
+
+			// 無効なオーナーはスキップ
+			if(ev.owner.code == SpatialChunkKey::kInvalidCode) {
+				continue;
+			}
+
 			auto owner = reg->ResolveOwner(ev.owner);
 			if (!owner) {
 				LOG_WARNING("Not find SpatialChunk");
@@ -36,9 +42,9 @@ public:
 			size_t row = loc->index;
 			if (row >= ch->GetEntityCount()) continue;
 
-			ComponentAccessor<ECS::Write<BodyComponent>> chAccessor(ch);
+			ComponentAccessor<ECS::Write<CPhyBody>> chAccessor(ch);
 
-			auto bodyCol = chAccessor.Get<Write<BodyComponent>>();
+			auto bodyCol = chAccessor.Get<Write<CPhyBody>>();
 			if (!bodyCol) continue;
 
 			auto& bodyValue = bodyCol.value().body()[row];
@@ -61,7 +67,7 @@ public:
 	}
 
 	ECS::AccessInfo GetAccessInfo() const noexcept override {
-		return ECS::ComponentAccess<ECS::Write<Physics::BodyComponent>>::GetAccessInfo();
+		return ECS::ComponentAccess<ECS::Write<Physics::CPhyBody>>::GetAccessInfo();
 	}
 private:
 	Physics::PhysicsService* ps = nullptr;

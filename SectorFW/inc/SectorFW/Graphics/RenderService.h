@@ -163,7 +163,7 @@ namespace SFW
 					(unsigned*)&quad.indices[0],
 					quad.numTriangles,
 					nullptr,
-					MOC::BACKFACE_CCW
+					MOC::BACKFACE_NONE
 				);
 			}
 			/**
@@ -253,7 +253,7 @@ namespace SFW
 
 		// AABBFrontFaceQuad を 2トライで提出できるバッチに変換
 		inline MocQuadBatch ConvertAABBFrontFaceQuadToMoc(
-			const AABBFrontFaceQuad& quadWS,
+			const Math::Vec4f* clips,
 			const SFW::Math::Matrix<4, 4, float>& viewProj,
 			float nearClipW /* = moc->GetNearClipPlane() と一致させるのが理想 */
 		)
@@ -263,13 +263,7 @@ namespace SFW
 
 			MocQuadBatch out{};
 
-			// 1) world -> clip
-			for (int i = 0; i < 4; ++i) {
-				const Vec3& p = quadWS.v[i];
-				const Vec4 wpos{ p.x, p.y, p.z, 1.0f };
-				// 行列の掛け順：clip = viewProj * wpos （v*M派なら wpos * viewProj）
-				out.clip[i] = viewProj * wpos;
-			}
+			std::memcpy(out.clip, clips, sizeof(Vec4) * 4);
 
 			// 2) 近クリップ整合（全頂点が near より奥側なら無効）
 			//    MOC は depth = 1/w（逆深度）なので、near と合わせるなら w > near を可視空間とみなす。
@@ -282,15 +276,19 @@ namespace SFW
 
 			// 3) スクリーン空間の巻き方向を安定させる（CCW想定）
 			//    NDC の x,y を使って符号付き面積で CCW を判定し、CW なら対角を入れ替える。
-			auto ndcXY = [&](int i) {
-				const float invw = 1.0f / out.clip[i].w;
+			auto ndcXY_stable = [&](int i) {
+				// CCW判定用途なので「割り算が爆発しない」ことを優先
+				const float w = (std::max)(out.clip[i].w, nearClipW); // near でクランプ
+				const float invw = 1.0f / w;
 				return SFW::Math::Vec2f{ out.clip[i].x * invw, out.clip[i].y * invw };
 				};
-			const auto a = ndcXY(0), b = ndcXY(1), c = ndcXY(2), d = ndcXY(3);
+
 			auto triArea2 = [](SFW::Math::Vec2f p, SFW::Math::Vec2f q, SFW::Math::Vec2f r) {
 				// 2倍面積（z成分）: (q - p) × (r - p)
 				return (q.x - p.x) * (r.y - p.y) - (q.y - p.y) * (r.x - p.x);
 				};
+
+			const auto a = ndcXY_stable(0), b = ndcXY_stable(1), c = ndcXY_stable(2), d = ndcXY_stable(3);
 			float area = triArea2(a, b, c) + triArea2(a, c, d);
 			bool ccw = (area > 0.0f);
 			// CCW でなければ 1 と 2 を入れ替える（0,1,2 / 2,1,3 -> 0,2,1 / 1,2,3）

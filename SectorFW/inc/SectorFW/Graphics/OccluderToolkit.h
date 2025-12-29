@@ -33,10 +33,6 @@
 
 #define SFW_ROWMAJOR_MAT4F_HAS_M
 
-#ifndef SFW_MATH_ROWVEC
-#define SFW_MATH_ROWVEC 0
-#endif
-
 namespace SFW {
     namespace Graphics {
 
@@ -47,6 +43,17 @@ namespace SFW {
             Failed = 2
         };
 
+
+
+        enum class MeltBoxType : int32_t {
+            NONE = 0,
+            DIAGONALS = 1 << 0,
+            TOP = 1 << 1,
+            BOTTOM = 1 << 2,
+            SIDES = 1 << 3,
+            REGULAR = SIDES | TOP | BOTTOM
+        };
+
         // Generate occluder AABBs using melt (if available) or fallback to whole AABB.
         // meltResolution: nominal grid resolution along max extent (e.g. 64). <=0 uses default.
         // meltFillPct: 0..1 density target (typ. 0.25~0.6).
@@ -55,17 +62,38 @@ namespace SFW {
             const std::vector<uint32_t>& indices,
             int   meltResolution,
             float meltFillPct,
-            std::vector<Math::AABB3f>& outAABBs);
+            std::vector<Math::AABB3f>& outAABBs,
+            MeltBoxType boxType = MeltBoxType::REGULAR);
+
+        enum class AABBQuadAxisBit : uint32_t {
+            None = 0,
+            X = 1 << 0,
+            Y = 1 << 1,
+            Z = 1 << 2,
+            AUTO = X | Y | Z
+        };
+
+        inline bool operator==(AABBQuadAxisBit a, AABBQuadAxisBit b) {
+            return static_cast<uint32_t>(a) == static_cast<uint32_t>(b);
+        }
+
+        inline bool operator&(AABBQuadAxisBit a, AABBQuadAxisBit b) {
+            return (static_cast<uint32_t>(a) & static_cast<uint32_t>(b)) != 0;
+        }
+
+        inline AABBQuadAxisBit operator|(AABBQuadAxisBit a, AABBQuadAxisBit b) {
+            return static_cast<AABBQuadAxisBit>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));
+        }
 
         // ----- Front face quad from AABB (O(1)) -----
         struct AABBFrontFaceQuad {
             Math::Vec3f v[4];      // CCW as seen from camera
             Math::Vec3f normal;    // +-X/Y/Z
-            int  axis = -1;  // 0:X,1:Y,2:Z
+            AABBQuadAxisBit  axis = AABBQuadAxisBit::None;  // 0:X,1:Y,2:Z
             bool positive = true;
         };
 
-        bool ComputeFrontFaceQuad(const Math::AABB3f& b, const Math::Vec3f& camPos, AABBFrontFaceQuad& out);
+        bool ComputeFrontFaceQuad(const Math::AABB3f& b, const Math::Vec3f& camPos, AABBFrontFaceQuad& out, AABBQuadAxisBit axisBit = AABBQuadAxisBit::AUTO);
         void QuadToTrianglesCCW(uint16_t outIdx[6]);
 
         // ----- Screen-space helpers -----
@@ -101,6 +129,9 @@ namespace SFW {
 
         struct QuadCandidate {
             AABBFrontFaceQuad quad;
+            // Clip-space coordinates after VP transform (x,y,z,w) for each vertex.
+            // NDC = clip.xyz / clip.w
+            Math::Vec4f clip[4];
             float areaPx2 = 0.0f;
             float score = 0.0f;
             int   tileId = -1;
@@ -118,12 +149,13 @@ namespace SFW {
         // AVX2 path (2 quads at a time). If AVX2/row-major is unavailable, this will internally fall back to the SIMD/scalar path.
         int SelectOccluderQuads_AVX2(
             const Math::AABB3f* aabbs,
-			const size_t aabbCount,
+            const size_t aabbCount,
             const Math::Vec3f& camPos,
             const Math::Matrix4x4f& VP,
             const OccluderViewport& vp,
             OccluderLOD lod,
-            std::vector<QuadCandidate>& out);
+            std::vector<QuadCandidate>& out,
+            AABBQuadAxisBit axisBit = AABBQuadAxisBit::AUTO);
 
         // ----- Reuse render LOD thresholds for Occluder LOD -----
         // Generic LOD selector with hysteresis & bias.

@@ -110,7 +110,8 @@ MeltBuildStatus SFW::Graphics::GenerateOccluderAABBs_MaybeWithMelt(
     const std::vector<uint32_t>& indices,
     int   meltResolution,
     float meltFillPct,
-    std::vector<AABB3f>& outAABBs)
+    std::vector<AABB3f>& outAABBs,
+    MeltBoxType boxType)
 {
     auto pushWhole = [&]() {
         if (positions.empty()) return;
@@ -169,7 +170,7 @@ MeltBuildStatus SFW::Graphics::GenerateOccluderAABBs_MaybeWithMelt(
     params.mesh.indices = is.data();
     params.mesh.vertex_count = (uint32_t)vs.size();
     params.mesh.index_count = (uint32_t)is.size();
-    params.box_type_flags = MELT_OCCLUDER_BOX_TYPE_REGULAR;
+    params.box_type_flags = (melt_occluder_box_type_flags_t)boxType;
     params.voxel_size = voxelSize;
     params.fill_pct = (std::max)(0.05f, (std::min)(1.0f, meltFillPct));
 
@@ -179,7 +180,7 @@ MeltBuildStatus SFW::Graphics::GenerateOccluderAABBs_MaybeWithMelt(
         return MeltBuildStatus::FallbackWhole;
     }
 
-    const uint32_t K = 8;
+    constexpr uint32_t K = 8;
     if (!result.mesh.vertices || result.mesh.vertex_count < K) {
         melt_free_result(result);
         return MeltBuildStatus::Failed;
@@ -209,7 +210,7 @@ MeltBuildStatus SFW::Graphics::GenerateOccluderAABBs_MaybeWithMelt(
 // -----------------------------------------------------------------------------
 // (B) front-face quad (O(1)), AABB helpers
 // -----------------------------------------------------------------------------
-bool SFW::Graphics::ComputeFrontFaceQuad(const AABB3f& b, const Vec3f& camPos, AABBFrontFaceQuad& out)
+bool SFW::Graphics::ComputeFrontFaceQuad(const AABB3f& b, const Vec3f& camPos, AABBFrontFaceQuad& out, AABBQuadAxisBit axisBit)
 {
     const float ex = b.ub.x - b.lb.x;
     const float ey = b.ub.y - b.lb.y;
@@ -222,22 +223,26 @@ bool SFW::Graphics::ComputeFrontFaceQuad(const AABB3f& b, const Vec3f& camPos, A
     const Vec3f d = camPos - c;
 
     float ax = std::fabs(d.x), ay = std::fabs(d.y), az = std::fabs(d.z);
-    int axis = 0; float amax = ax;
-    if (ay > amax) { axis = 1; amax = ay; }
-    if (az > amax) { axis = 2; }
+    AABBQuadAxisBit axis = AABBQuadAxisBit::None;
+    float amax = 0.0f;
+    if (axisBit & AABBQuadAxisBit::X && ax > amax) { axis = AABBQuadAxisBit::X; amax = ax; }
+    if (axisBit & AABBQuadAxisBit::Y && ay > amax) { axis = AABBQuadAxisBit::Y; amax = ay; }
+    if (axisBit & AABBQuadAxisBit::Z && az > amax) { axis = AABBQuadAxisBit::Z; }
+
+    if (axis == AABBQuadAxisBit::None) return false;
 
     bool positive = true;
-    if (axis == 0) positive = (d.x >= 0.0f);
-    else if (axis == 1) positive = (d.y >= 0.0f);
+    if (axis == AABBQuadAxisBit::X) positive = (d.x >= 0.0f);
+    else if (axis == AABBQuadAxisBit::Y) positive = (d.y >= 0.0f);
     else                positive = (d.z >= 0.0f);
 
     Vec3f v[4]; Vec3f n(0, 0, 0);
-    if (axis == 0) {
+    if (axis == AABBQuadAxisBit::X) {
         n.x = positive ? +1.f : -1.f; float x = positive ? b.ub.x : b.lb.x;
         if (positive) { v[0] = { x,b.lb.y,b.lb.z }; v[1] = { x,b.ub.y,b.lb.z }; v[2] = { x,b.ub.y,b.ub.z }; v[3] = { x,b.lb.y,b.ub.z }; }
         else { v[0] = { x,b.lb.y,b.ub.z }; v[1] = { x,b.ub.y,b.ub.z }; v[2] = { x,b.ub.y,b.lb.z }; v[3] = { x,b.lb.y,b.lb.z }; }
     }
-    else if (axis == 1) {
+    else if (axis == AABBQuadAxisBit::Y) {
         n.y = positive ? +1.f : -1.f; float y = positive ? b.ub.y : b.lb.y;
         if (positive) { v[0] = { b.lb.x,y,b.lb.z }; v[1] = { b.ub.x,y,b.lb.z }; v[2] = { b.ub.x,y,b.ub.z }; v[3] = { b.lb.x,y,b.ub.z }; }
         else { v[0] = { b.lb.x,y,b.ub.z }; v[1] = { b.ub.x,y,b.ub.z }; v[2] = { b.ub.x,y,b.lb.z }; v[3] = { b.lb.x,y,b.lb.z }; }
@@ -343,12 +348,16 @@ float SFW::Graphics::ProjectQuadAreaPx2_SIMDOrScalar(
     __m128 cx, cy, cz, cw;
     TransformPoints4_SSE(p, VP, cx, cy, cz, cw);
 
-    const __m128 wle = _mm_cmple_ps(cw, _mm_set1_ps(0.0f));
-    if (_mm_movemask_ps(wle)) {
+    //「1頂点でもw<=0」ではなく「4頂点すべてw<=0」のときだけ捨てる
+    const __m128 zero = _mm_set1_ps(0.0f);
+    const __m128 wle = _mm_cmple_ps(cw, zero);
+    const int mask = _mm_movemask_ps(wle);
+    if (mask == 0xF) { // 全ビット立っている = 4頂点すべて w<=0
         if (outMinX) *outMinX = 0; if (outMinY) *outMinY = 0; if (outMaxX) *outMaxX = 0; if (outMaxY) *outMaxY = 0;
         if (outDepthMeanNDC) *outDepthMeanNDC = 1.0f;
         return 0.0f;
     }
+
     const __m128 invw = _mm_div_ps(_mm_set1_ps(1.0f), cw);
     const __m128 ndcX = _mm_mul_ps(cx, invw);
     const __m128 ndcY = _mm_mul_ps(cy, invw);
@@ -412,16 +421,35 @@ OccluderPolicy SFW::Graphics::GetPolicy(OccluderLOD lod) {
          { 18.f, 324.f, 1, 10000, 64, 1.6f }
     };
 
-	return policy[(int)lod];
+    return policy[(int)lod];
 }
 
 static inline int TileIdFromScreenAABB_Local(float minx, float miny, float maxx, float maxy,
     int vpW, int vpH, int tilePx, int& tilesX) {
-    float cx = 0.5f * (minx + maxx), cy = 0.5f * (miny + maxy);
-    if (cx < 0 || cy < 0 || cx >= vpW || cy >= vpH) return -1;
     tilesX = (vpW + tilePx - 1) / tilePx;
-    int x = int(cx) / tilePx;
-    int y = int(cy) / tilePx;
+
+    // 画面と全く交差しないなら -1
+    if (maxx <= 0.0f || maxy <= 0.0f || minx >= (float)vpW || miny >= (float)vpH)
+        return -1;
+
+    // 画面内にクリップ
+    float cminx = (std::max)(0.0f, minx);
+    float cminy = (std::max)(0.0f, miny);
+    float cmaxx = (std::min)((float)vpW, maxx);
+    float cmaxy = (std::min)((float)vpH, maxy);
+
+    // クリップ後中心でタイル決定（必ず画面内になる）
+    float cx = 0.5f * (cminx + cmaxx);
+    float cy = 0.5f * (cminy + cmaxy);
+
+    int x = (int)cx / tilePx;
+    int y = (int)cy / tilePx;
+
+    // 念のためクランプ（境界ちょうどのときの安全）
+    x = (std::min)((std::max)(0, x), tilesX - 1);
+    int tilesY = (vpH + tilePx - 1) / tilePx;
+    y = (std::min)((std::max)(0, y), tilesY - 1);
+
     return y * tilesX + x;
 }
 
@@ -454,7 +482,16 @@ int SFW::Graphics::SelectOccluderQuads_SIMD(
 
         float depth = (zmean + 1.0f) * 0.5f + 1e-3f;
         float score = area / std::pow(depth, P.scoreDepthAlpha);
-        out.push_back({ q, area, score, tileId });
+        QuadCandidate qc{};
+        qc.quad = q;
+        qc.areaPx2 = area;
+        qc.score = score;
+        qc.tileId = tileId;
+        qc.clip[0] = MulPointClip_ByVP(VP, Vec4f(q.v[0].x, q.v[0].y, q.v[0].z, 1.0f));
+        qc.clip[1] = MulPointClip_ByVP(VP, Vec4f(q.v[1].x, q.v[1].y, q.v[1].z, 1.0f));
+        qc.clip[2] = MulPointClip_ByVP(VP, Vec4f(q.v[2].x, q.v[2].y, q.v[2].z, 1.0f));
+        qc.clip[3] = MulPointClip_ByVP(VP, Vec4f(q.v[3].x, q.v[3].y, q.v[3].z, 1.0f));
+        out.push_back(qc);
     }
 
     std::unordered_map<int, std::vector<size_t>> perTile;
@@ -557,10 +594,15 @@ static inline TwoQuadProjectOut ProjectTwoQuadsAreaPx2_AVX2(
     __m256 cx, cy, cz, cw;
     TransformPoints8_AVX2(p, VP, cx, cy, cz, cw);
 
-    __m256 wle = _mm256_cmp_ps(cw, _mm256_set1_ps(0.0f), _CMP_LE_OQ);
+    const __m256 zero = _mm256_set1_ps(0.0f);
+    __m256 wle = _mm256_cmp_ps(cw, zero, _CMP_LE_OQ);
     int m = _mm256_movemask_ps(wle);
-    bool rejA = (m & 0x0F) != 0;
-    bool rejB = (m & 0xF0) != 0;
+
+    //「1頂点でもw<=0」ではなく「4頂点すべてw<=0」のときだけreject
+    const int mA = (m & 0x0F);
+    const int mB = ((m >> 4) & 0x0F);
+    bool rejA = (mA == 0x0F);
+    bool rejB = (mB == 0x0F);
 
     __m256 invw = _mm256_div_ps(_mm256_set1_ps(1.0f), cw);
     __m256 ndcX = _mm256_mul_ps(cx, invw);
@@ -612,7 +654,8 @@ int SFW::Graphics::SelectOccluderQuads_AVX2(
     const Mat4f& VP,
     const OccluderViewport& vp,
     OccluderLOD lod,
-    std::vector<QuadCandidate>& out)
+    std::vector<QuadCandidate>& out,
+    AABBQuadAxisBit axisBit)
 {
 #if SFW_HAVE_AVX2 && defined(SFW_ROWMAJOR_MAT4F_HAS_M)
     out.clear();
@@ -628,7 +671,7 @@ int SFW::Graphics::SelectOccluderQuads_AVX2(
             continue;
         }
         AABBFrontFaceQuad q;
-        if (!ComputeFrontFaceQuad(b, camPos, q)) {
+        if (!ComputeFrontFaceQuad(b, camPos, q, axisBit)) {
             continue;
         }
         quads.push_back(q);
@@ -636,24 +679,208 @@ int SFW::Graphics::SelectOccluderQuads_AVX2(
 
     for (size_t i = 0; i < quads.size(); i += 2) {
         if (i + 1 < quads.size()) {
-            auto out2 = ProjectTwoQuadsAreaPx2_AVX2(quads[i].v, quads[i + 1].v, VP, vp.width, vp.height);
+            // Direction B: do VP transform once here (8 points), and reuse it for
+            //  - clip coords (stored to QuadCandidate)
+            //  - screen AABB + area
+            //  - mean NDC depth
+            float p8[8][3] = {
 
-            if (out2.areaA >= P.minAreaPx2) {
+                {quads[i + 0].v[0].x, quads[i + 0].v[0].y, quads[i + 0].v[0].z},
+
+                {quads[i + 0].v[1].x, quads[i + 0].v[1].y, quads[i + 0].v[1].z},
+
+                {quads[i + 0].v[2].x, quads[i + 0].v[2].y, quads[i + 0].v[2].z},
+
+                {quads[i + 0].v[3].x, quads[i + 0].v[3].y, quads[i + 0].v[3].z},
+
+                {quads[i + 1].v[0].x, quads[i + 1].v[0].y, quads[i + 1].v[0].z},
+
+                {quads[i + 1].v[1].x, quads[i + 1].v[1].y, quads[i + 1].v[1].z},
+
+                {quads[i + 1].v[2].x, quads[i + 1].v[2].y, quads[i + 1].v[2].z},
+
+                {quads[i + 1].v[3].x, quads[i + 1].v[3].y, quads[i + 1].v[3].z},
+
+            };
+
+            __m256 cx, cy, cz, cw;
+
+            TransformPoints8_AVX2(p8, VP, cx, cy, cz, cw);
+
+            // Reject only if all 4 vertices are w<=0 (per-quad)
+
+            const __m256 zero = _mm256_set1_ps(0.0f);
+
+            const __m256 wle = _mm256_cmp_ps(cw, zero, _CMP_LE_OQ);
+
+            const int m = _mm256_movemask_ps(wle);
+
+            const int mA = (m & 0x0F);
+
+            const int mB = ((m >> 4) & 0x0F);
+
+            const bool rejA = (mA == 0x0F);
+
+            const bool rejB = (mB == 0x0F);
+
+
+
+            // Safety: avoid INF/NaN when some vertices have w<=0 (we still keep original clip.w)
+
+            const __m256 eps = _mm256_set1_ps(1e-6f);
+
+            __m256 cwSafe = _mm256_max_ps(cw, eps);
+
+            __m256 invw = _mm256_div_ps(_mm256_set1_ps(1.0f), cwSafe);
+
+            __m256 ndcX = _mm256_mul_ps(cx, invw);
+
+            __m256 ndcY = _mm256_mul_ps(cy, invw);
+
+            __m256 ndcZ = _mm256_mul_ps(cz, invw);
+
+
+
+            const __m256 half = _mm256_set1_ps(0.5f);
+
+            const __m256 one = _mm256_set1_ps(1.0f);
+
+            __m256 sx = _mm256_mul_ps(_mm256_add_ps(_mm256_mul_ps(ndcX, half), half), _mm256_set1_ps((float)vp.width));
+
+            __m256 sy = _mm256_mul_ps(_mm256_sub_ps(one, _mm256_add_ps(_mm256_mul_ps(ndcY, half), half)), _mm256_set1_ps((float)vp.height));
+
+
+
+            __m128 sxA = _mm256_castps256_ps128(sx);
+
+            __m128 sxB = _mm256_extractf128_ps(sx, 1);
+
+            __m128 syA = _mm256_castps256_ps128(sy);
+
+            __m128 syB = _mm256_extractf128_ps(sy, 1);
+
+            __m128 zA = _mm256_castps256_ps128(ndcZ);
+
+            __m128 zB = _mm256_extractf128_ps(ndcZ, 1);
+
+
+
+            float minxA = hmin4_128(sxA), maxxA = hmax4_128(sxA);
+
+            float minyA = hmin4_128(syA), maxyA = hmax4_128(syA);
+
+            float minxB = hmin4_128(sxB), maxxB = hmax4_128(sxB);
+
+            float minyB = hmin4_128(syB), maxyB = hmax4_128(syB);
+
+
+
+            float wA = (std::max)(0.0f, maxxA - minxA);
+
+            float hA = (std::max)(0.0f, maxyA - minyA);
+
+            float wB = (std::max)(0.0f, maxxB - minxB);
+
+            float hB = (std::max)(0.0f, maxyB - minyB);
+
+            float areaA = rejA ? 0.0f : (wA * hA);
+
+            float areaB = rejB ? 0.0f : (wB * hB);
+
+
+
+            alignas(16) float zbufA[4], zbufB[4];
+
+            _mm_store_ps(zbufA, zA);
+
+            _mm_store_ps(zbufB, zB);
+
+            float zmeanA = 0.25f * (zbufA[0] + zbufA[1] + zbufA[2] + zbufA[3]);
+
+            float zmeanB = 0.25f * (zbufB[0] + zbufB[1] + zbufB[2] + zbufB[3]);
+
+
+
+            // Store clip (original cx/cy/cz/cw)
+
+            alignas(32) float xbuf[8], ybuf[8], zbuf[8], wbuf[8];
+
+            _mm256_store_ps(xbuf, cx);
+
+            _mm256_store_ps(ybuf, cy);
+
+            _mm256_store_ps(zbuf, cz);
+
+            _mm256_store_ps(wbuf, cw);
+
+
+
+            if (areaA >= P.minAreaPx2) {
+
                 int tilesX = 0;
-                int tileId = TileIdFromScreenAABB_Local(out2.minxA, out2.minyA, out2.maxxA, out2.maxyA, vp.width, vp.height, P.tileSizePx, tilesX);
+
+                int tileId = TileIdFromScreenAABB_Local(minxA, minyA, maxxA, maxyA, vp.width, vp.height, P.tileSizePx, tilesX);
+
                 if (tileId >= 0) {
-                    float depth = (out2.zmeanA + 1.0f) * 0.5f + 1e-3f;
-                    float score = out2.areaA / std::pow(depth, P.scoreDepthAlpha);
-                    out.push_back({ quads[i], out2.areaA, score, tileId });
+
+                    float depth = (zmeanA + 1.0f) * 0.5f + 1e-3f;
+
+                    float score = areaA / std::pow(depth, P.scoreDepthAlpha);
+
+                    QuadCandidate qc{};
+
+                    qc.quad = quads[i + 0];
+
+                    qc.areaPx2 = areaA;
+
+                    qc.score = score;
+
+                    qc.tileId = tileId;
+
+                    qc.clip[0] = Vec4f(xbuf[0], ybuf[0], zbuf[0], wbuf[0]);
+
+                    qc.clip[1] = Vec4f(xbuf[1], ybuf[1], zbuf[1], wbuf[1]);
+
+                    qc.clip[2] = Vec4f(xbuf[2], ybuf[2], zbuf[2], wbuf[2]);
+
+                    qc.clip[3] = Vec4f(xbuf[3], ybuf[3], zbuf[3], wbuf[3]);
+
+                    out.push_back(qc);
                 }
             }
-            if (out2.areaB >= P.minAreaPx2) {
+
+
+            if (areaB >= P.minAreaPx2) {
+
                 int tilesX = 0;
-                int tileId = TileIdFromScreenAABB_Local(out2.minxB, out2.minyB, out2.maxxB, out2.maxyB, vp.width, vp.height, P.tileSizePx, tilesX);
+
+                int tileId = TileIdFromScreenAABB_Local(minxB, minyB, maxxB, maxyB, vp.width, vp.height, P.tileSizePx, tilesX);
+
                 if (tileId >= 0) {
-                    float depth = (out2.zmeanB + 1.0f) * 0.5f + 1e-3f;
-                    float score = out2.areaB / std::pow(depth, P.scoreDepthAlpha);
-                    out.push_back({ quads[i + 1], out2.areaB, score, tileId });
+
+                    float depth = (zmeanB + 1.0f) * 0.5f + 1e-3f;
+
+                    float score = areaB / std::pow(depth, P.scoreDepthAlpha);
+
+                    QuadCandidate qc{};
+
+                    qc.quad = quads[i + 1];
+
+                    qc.areaPx2 = areaB;
+
+                    qc.score = score;
+
+                    qc.tileId = tileId;
+
+                    qc.clip[0] = Vec4f(xbuf[4], ybuf[4], zbuf[4], wbuf[4]);
+
+                    qc.clip[1] = Vec4f(xbuf[5], ybuf[5], zbuf[5], wbuf[5]);
+
+                    qc.clip[2] = Vec4f(xbuf[6], ybuf[6], zbuf[6], wbuf[6]);
+
+                    qc.clip[3] = Vec4f(xbuf[7], ybuf[7], zbuf[7], wbuf[7]);
+
+                    out.push_back(qc);
                 }
             }
         }
@@ -666,7 +893,16 @@ int SFW::Graphics::SelectOccluderQuads_AVX2(
                 if (tileId >= 0) {
                     float depth = (zmean + 1.0f) * 0.5f + 1e-3f;
                     float score = area / std::pow(depth, P.scoreDepthAlpha);
-                    out.push_back({ quads[i], area, score, tileId });
+                    QuadCandidate qc{};
+                    qc.quad = quads[i];
+                    qc.areaPx2 = area;
+                    qc.score = score;
+                    qc.tileId = tileId;
+                    qc.clip[0] = MulPointClip_ByVP(VP, Vec4f(quads[i].v[0].x, quads[i].v[0].y, quads[i].v[0].z, 1.0f));
+                    qc.clip[1] = MulPointClip_ByVP(VP, Vec4f(quads[i].v[1].x, quads[i].v[1].y, quads[i].v[1].z, 1.0f));
+                    qc.clip[2] = MulPointClip_ByVP(VP, Vec4f(quads[i].v[2].x, quads[i].v[2].y, quads[i].v[2].z, 1.0f));
+                    qc.clip[3] = MulPointClip_ByVP(VP, Vec4f(quads[i].v[3].x, quads[i].v[3].y, quads[i].v[3].z, 1.0f));
+                    out.push_back(qc);
                 }
             }
         }
@@ -695,7 +931,7 @@ int SFW::Graphics::SelectOccluderQuads_AVX2(
     return (int)out.size();
 #else
     // Fallback seamlessly to the SSE/scalar selector
-    return SelectOccluderQuads_SIMD(aabbs, camPos, VP, vpW, vpH, lod, out);
+    return SelectOccluderQuads_SIMD(std::vector<AABB3f>(aabbs, aabbs + aabbCount), camPos, VP, vp.width, vp.height, lod, out);
 #endif
 }
 

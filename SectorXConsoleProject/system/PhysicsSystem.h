@@ -16,7 +16,7 @@ class PhysicsSystem : public ITypeSystem<
 	ComponentAccess<
 		Write<TransformSoA>,
 		Write<Physics::PhysicsInterpolation>,
-		Read<Physics::BodyComponent>,
+		Read<Physics::CPhyBody>,
 		Write<SpatialMotionTag>
 	>,
 	//受け取るサービスの指定
@@ -25,7 +25,7 @@ class PhysicsSystem : public ITypeSystem<
 		SpatialChunkRegistry>
 	>
 {
-	using Accessor = ComponentAccessor<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>, Read<Physics::BodyComponent>, Write<SpatialMotionTag>>;
+	using Accessor = ComponentAccessor<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>, Read<Physics::CPhyBody>, Write<SpatialMotionTag>>;
 public:
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition, LevelContext& levelCtx, safe_ptr<Physics::PhysicsService> physicsService,
@@ -44,7 +44,7 @@ public:
 				auto interpolation = accessor.Get<Write<Physics::PhysicsInterpolation>>();
 				if (!interpolation) [[unlikely]] { LOG_ERROR("PhysicsInterpolation component not found in PhysicsSystem"); return; }
 
-				auto bodyComponent = accessor.Get<Read<Physics::BodyComponent>>();
+				auto bodyComponent = accessor.Get<Read<Physics::CPhyBody>>();
 				if (!bodyComponent) [[unlikely]] { LOG_ERROR("BodyComponent not found in PhysicsSystem"); return; }
 
 				auto motionTag = accessor.Get<Write<SpatialMotionTag>>();

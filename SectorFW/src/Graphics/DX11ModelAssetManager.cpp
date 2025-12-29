@@ -18,9 +18,6 @@
 #endif//_DEBUG
 #endif//USE_MESHOPTIMIZER
 
-#define SFW_MATH_ROWVEC 1
-#include "Graphics/OccluderToolkit.h"
-
 namespace SFW
 {
 	namespace Graphics::DX11
@@ -655,9 +652,15 @@ namespace SFW
 							subRef.occluder.candidate = (occScore >= desc.occScoreThreshold);
 
 							if (subRef.occluder.candidate) {
+								bool debug = desc.path == "assets/model/RuinTower.gltf";
 								std::vector<SFW::Math::AABB3f> meltAABBs;
-								GenerateOccluderAABBs_MaybeWithMelt(
-									positions, indices, desc.meltResolution, desc.meltStopRatio, meltAABBs);
+								auto meltRes = GenerateOccluderAABBs_MaybeWithMelt(
+									positions, indices, desc.meltResolution, desc.meltFillPct, meltAABBs, desc.meltBoxType);
+
+								if(meltRes == MeltBuildStatus::Failed) {
+									LOG_WARNING("Occluder melt AABB generation failed for model asset: %s", asset.name.c_str());
+								}
+
 								if (meltAABBs.empty()) {
 									// 何も作れなかったときだけ候補を落とす
 									subRef.occluder.candidate = false;

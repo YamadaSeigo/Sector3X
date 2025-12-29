@@ -438,6 +438,8 @@ namespace SFW
 						}
 						else
 						{
+							bool debug = d.path == "generated/convex/RuinTower.chullbin";
+
 							if (!LoadVHACDFile(d.path, hulls, desc.scale.s, d.rhFlip) || hulls.empty()) {
 								// 読み込み失敗 → フォールバック Box
 								RefConst<Shape> base = new BoxShape(Vec3(0.5f, 0.5f, 0.5f));
