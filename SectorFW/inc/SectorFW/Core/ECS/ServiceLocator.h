@@ -21,6 +21,10 @@
 
 namespace SFW
 {
+	// 前方宣言
+	template<typename... LevelTypes>
+	class World;
+
 	namespace ECS
 	{
 		/**
@@ -83,14 +87,12 @@ namespace SFW
 			}
 
 			/**
-			 * @brief 初期化処理(必ず呼び出す必要がある、複数回呼び出し禁止)
+			 * @brief 初期化処理(複数回呼び出し禁止)
 			 */
 			template<typename... Services>
 			void InitAndRegisterStaticService() noexcept {
-				SFW_ASSERT(!initialized && "ServiceLocator is already initialized.");
 
 				std::unique_lock<std::shared_mutex> lock(*mapMutex);
-				initialized = true;
 				(AllRegisterStaticService<Services>(), ...);
 
 				RebuildPlan_NeedLock();
@@ -157,13 +159,7 @@ namespace SFW
 				}
 				return static_cast<T*>(it->second.servicePtr);
 			}
-			/**
-			 * @brief サービスコンテキストが初期化されているかを確認する
-			 * @return 初期化されている場合はtrue、そうでない場合はfalse
-			 */
-			bool IsInitialized() const noexcept {
-				return initialized;
-			}
+
 			/**
 			 * @brief サービスの更新を行う
 			 */
@@ -354,10 +350,7 @@ namespace SFW
 			 * @brief サービスマップ(Get関数で対象の型にcastする)
 			 */
 			std::unordered_map<std::type_index, Location> services;
-			/**
-			 * @brief 初期化されているかのフラグ
-			 */
-			bool initialized = false;
+
 			//サービスマップへのアクセス同期
 			std::unique_ptr<std::shared_mutex> mapMutex;
 
@@ -382,6 +375,23 @@ namespace SFW
 			std::shared_ptr<ExecPlan> plan_;    // 毎フレーム読み取りのみ
 
 			std::vector<IUpdateService*> updateServices;
+
+
+		public:
+			// ワールドにだけ静的サービスを追加登録させるためのフレンドクラス
+			// WorldRequestServiceを登録するために利用している
+			class WorldAccessor {
+				template<PointerType... Services>
+				static void AddStaticService(ServiceLocator* locator, Services... service) {
+					std::unique_lock<std::shared_mutex> lock(*locator->mapMutex);
+					(locator->AllRegisterStaticServiceWithArg<std::remove_pointer_t<Services>>(service), ...);
+
+					locator->RebuildPlan_NeedLock();
+				}
+
+				template<typename... LevelTypes>
+				friend class ::SFW::World;
+			};
 		};
 	}
 }

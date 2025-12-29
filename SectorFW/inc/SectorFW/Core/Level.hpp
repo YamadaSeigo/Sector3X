@@ -34,7 +34,15 @@ namespace SFW
 	/**
 	 * @brief Systemに渡すレベルの情報や操作を提供する構造体
 	 */
+	template<class Partition>
 	struct LevelContext {
+
+		class IRequestCommand {
+			public:
+			virtual ~IRequestCommand() = default;
+			virtual void Execute(Level<Partition>::Session& pLevelSession) = 0;
+		};
+
 		// 2) ディファード運用
 		BudgetMover mover;
 
@@ -42,8 +50,7 @@ namespace SFW
 	private:
 		LevelID id = {};
 
-		template<PartitionConcept Partition>
-		friend class Level;
+		friend class Level<Partition>;
 	};
 
 	/**
@@ -311,7 +318,7 @@ namespace SFW
 
 	private:
 		//レベルのコンテキスト
-		LevelContext levelCtx;
+		LevelContext<Partition> levelCtx;
 		//レベルの名前
 		std::string name;
 		//レベルの状態

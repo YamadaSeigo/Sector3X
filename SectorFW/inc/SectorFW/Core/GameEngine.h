@@ -52,6 +52,8 @@ namespace SFW
 		explicit GameEngine(Graphics&& graphicsDevice, WorldType&& world, double fps = 60.0)
 			: m_graphicsDevice(std::move(graphicsDevice)), m_world(std::move(world))
 		{
+			m_world.RegisterRequestService();
+
 			InitializeGameEngine(m_graphicsDevice.IsInitialized());
 
 			m_frameTimer.SetMaxFrameRate(fps);
@@ -63,6 +65,10 @@ namespace SFW
 		{
 			UnInitializeGameEngine();
 		}
+
+		//ムーブ禁止
+		GameEngine(GameEngine&&) = delete;
+		GameEngine& operator=(GameEngine&&) = delete;
 
 		/**
 		 * @brief メインループ

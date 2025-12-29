@@ -63,9 +63,6 @@ namespace SFW
 			InstanceData(const Math::Matrix4x4f& mtx) : worldMtx(mtx) {
 				worldMtx[3][3] = 1.0f; // 有効化
 			}
-			InstanceData(Math::Matrix4x4f&& mtx) noexcept : worldMtx(std::move(mtx)) {
-				worldMtx[3][3] = 1.0f; // 有効化
-			}
 
 			bool HasData() const noexcept { return worldMtx[3][3] != 0.0f; }
 			void SetData(const Math::Matrix4x4f& mtx) noexcept { worldMtx = mtx; worldMtx[3][3] = 1.0f; }
@@ -96,22 +93,20 @@ namespace SFW
 		 * @details 条件：フレーム短命 + Pin / Unpin + in - flight 制御 + 投入時の generation 検証。
 		 */
 		struct DrawCommand {
-			uint64_t sortKey;          // 0..63: ソートキー（PSO/材質/メッシュ/深度バケツ等をパック）
+			uint64_t sortKey = 0;          // 0..63: ソートキー（PSO/材質/メッシュ/深度バケツ等をパック）
 
-			uint32_t mesh;             // 24Bまで：ハンドル/ID（32bit想定）
-			uint32_t material;
-			uint32_t pso;
-			InstanceIndex instanceIndex;    // InstanceData プールへのインデックス
+			uint32_t mesh = 0;             // 24Bまで：ハンドル/ID（32bit想定）
+			uint32_t material = 0;
+			uint32_t pso = 0;
+			InstanceIndex instanceIndex = {0};    // InstanceData プールへのインデックス
 
 			// ここが“空白の活用”パート（合計 8B）
-			uint32_t cbOffsetDiv256;   // 動的CBリングの 256B 単位オフセット（DX12/11.1 等で使える）
-			uint16_t viewMask;         // 例: 16 ビュー/パス（例: 影カスケード / ステレオ / MRT パスの選別）
-			uint8_t  flags;            // 小さなフラグ群（下に定義）
-			uint8_t  userTag;          // 任意のラベル/デバッグ/可視化タグ
+			uint32_t cbOffsetDiv256 = 0;   // 動的CBリングの 256B 単位オフセット（DX12/11.1 等で使える）
+			uint16_t viewMask = 0;         // 例: 16 ビュー/パス（例: 影カスケード / ステレオ / MRT パスの選別）
+			uint8_t  flags = 0;            // 小さなフラグ群（下に定義）
+			uint8_t  userTag = 0;          // 任意のラベル/デバッグ/可視化タグ
 
-			DrawCommand() : sortKey(0), mesh(0), material(0), pso(0), instanceIndex{ 0 },
-				cbOffsetDiv256(0), viewMask(0), flags(0), userTag(0) {
-			}
+			DrawCommand() noexcept = default;
 
 			// 便利ヘルパ
 			void setCBOffsetBytes(uint32_t byteOffset) noexcept { cbOffsetDiv256 = byteOffset >> 8; }

@@ -441,6 +441,7 @@ void InitializeRenderPipeLine(
 	renderGraph->SetExecutionOrder(order);
 }
 
+
 int main(void)
 {
 	LOG_INFO("SectorX Console Project started");
@@ -534,6 +535,9 @@ int main(void)
 		&playerService, &audioService, &deferredRenderingService, &lightShadowResourceService, &pointLightService, &environmentService);
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
+	//スレッドプールクラス
+	static SimpleThreadPool threadPool;
+
 	Graphics::TerrainBuildParams p;
 	p.cellsX = 512 * 1;
 	p.cellsZ = 512 * 1;
@@ -545,52 +549,10 @@ int main(void)
 	p.seed = 20251212;
 	p.offset.y -= 40.0f;
 
+
 	std::vector<float> heightMap;
 	static SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);
 
-	std::vector<float> positions(terrain.vertices.size() * 3);
-	auto vertexSize = terrain.vertices.size();
-	for (auto i = 0; i < vertexSize; ++i)
-	{
-		positions[i * 3 + 0] = terrain.vertices[i].pos.x;
-		positions[i * 3 + 1] = terrain.vertices[i].pos.y;
-		positions[i * 3 + 2] = terrain.vertices[i].pos.z;
-	}
-	std::vector<float> lodTarget =
-	{
-		1.0f, 0.25f, 0.075f
-	};
-
-	std::vector<uint32_t> outIndexPool;
-	std::vector<Graphics::DX11::ClusterLodRange> outLodRanges;
-	std::vector<uint32_t> outLodBase;
-	std::vector<uint32_t> outLodCount;
-
-
-	bool check = Graphics::TerrainClustered::CheckClusterBorderEquality(terrain.indexPool, terrain.clusters, terrain.clustersX, terrain.clustersZ);
-
-	Graphics::DX11::GenerateClusterLODs_meshopt_fast(terrain.indexPool, terrain.clusters, positions.data(),
-		terrain.vertices.size(), sizeof(Math::Vec3f), lodTarget,
-		outIndexPool, outLodRanges, outLodBase, outLodCount);
-
-	static Graphics::DX11::BlockReservedContext blockRevert;
-	ok = blockRevert.Init(graphics.GetDevice(),
-		L"assets/shader/CS_TerrainClustered.cso",
-		L"assets/shader/CS_TerrainClusteredShadow.cso",
-		L"assets/shader/CS_WriteArgs.cso",
-		L"assets/shader/CS_WriteArgsShadow.cso",
-		L"assets/shader/VS_TerrainClustered.cso",
-		L"assets/shader/VS_TerrainClusteredDepth.cso",
-		L"assets/shader/PS_TerrainClustered.cso",
-		/*maxVisibleIndices*/ (UINT)terrain.indexPool.size());
-
-	assert(ok && "Failed BlockRevert Init");
-
-	blockRevert.BuildLodSrvs(graphics.GetDevice(), outLodRanges, outLodBase, outLodCount);
-
-	terrain.indexPool = std::move(outIndexPool);
-
-	Graphics::DX11::BuildFromTerrainClustered(graphics.GetDevice(), terrain, blockRevert);
 
 	// ---- マッピング設定 ----
 	static Graphics::HeightTexMapping map = Graphics::MakeHeightTexMappingFromTerrainParams(p, heightMap);
@@ -612,12 +574,8 @@ int main(void)
 		/*sheetIsSRGB=*/false // 重みなので通常は false
 	);
 
+
 	// 2) 生成ハンドルにアプリ側の “ID” を割当て → terrain.splat[cid].splatTextureId に反映
-	auto AllocateSplatId = [&](Graphics::TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid)->uint32_t {
-		// 例: ハンドルのインデックス等で安定ハッシュを作る or 登録テーブルに入れて返す
-		//     必要ならここで "ID→TextureHandle" の辞書も作っておく（レンダラー層で参照）
-		return (0x70000000u + cid); // 例：単純に cid ベースの ID
-		};
 	Graphics::DX11::AssignClusterSplatsFromHandles(terrain, terrain.clustersX, terrain.clustersZ, handles,
 		[](Graphics::TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid) { return (0x70000000u + cid); },
 		/*queryLayer*/nullptr,
@@ -635,6 +593,7 @@ int main(void)
 
 	// CPU配列に詰める
 	static Graphics::DX11::ClusterParamsGPU cp{};
+
 	Graphics::DX11::FillClusterParamsCPU(terrain, id2slice, cp);
 
 	// グリッドCBを設定（TerrainClustered の定義に合わせて）
@@ -645,6 +604,70 @@ int main(void)
 	// 地形のクラスター専用GPUリソースを作る/初期更新
 	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
 	Graphics::DX11::BuildOrUpdateTerrainGridCB(device, deviceContext, cp);
+
+	// LOD生成
+	std::vector<float> positions(terrain.vertices.size() * 3);
+	auto vertexSize = terrain.vertices.size();
+	for (auto i = 0; i < vertexSize; ++i)
+	{
+		positions[i * 3 + 0] = terrain.vertices[i].pos.x;
+		positions[i * 3 + 1] = terrain.vertices[i].pos.y;
+		positions[i * 3 + 2] = terrain.vertices[i].pos.z;
+	}
+	std::vector<float> lodTarget =
+	{
+		1.0f, 0.25f, 0.075f
+	};
+
+	std::vector<uint32_t> outIndexPool;
+	std::vector<Graphics::DX11::ClusterLodRange> outLodRanges;
+	std::vector<uint32_t> outLodBase;
+	std::vector<uint32_t> outLodCount;
+
+	bool check = Graphics::TerrainClustered::CheckClusterBorderEquality(terrain.indexPool, terrain.clusters, terrain.clustersX, terrain.clustersZ);
+
+	ThreadCountDownLatch latch(2);
+
+	auto lodGenTask = [&]() {
+		Graphics::DX11::GenerateClusterLODs_meshopt_fast(terrain.indexPool, terrain.clusters, positions.data(),
+			terrain.vertices.size(), sizeof(Math::Vec3f), lodTarget,
+			outIndexPool, outLodRanges, outLodBase, outLodCount);
+
+		latch.CountDown();
+		};
+
+	Graphics::DX11::CpuImage cpuSplatImage;
+
+	auto splatArrayTask = [&]() {
+		Graphics::DX11::ReadTexture2DToCPU(device, deviceContext, sheetTex.Get(), cpuSplatImage);
+		latch.CountDown();
+		};
+
+	//重い初期化処理を並列で実行
+	threadPool.Submit(lodGenTask);
+	threadPool.Submit(splatArrayTask);
+
+	latch.Wait();
+
+	static Graphics::DX11::BlockReservedContext blockRevert;
+	ok = blockRevert.Init(graphics.GetDevice(),
+		L"assets/shader/CS_TerrainClustered.cso",
+		L"assets/shader/CS_TerrainClusteredShadow.cso",
+		L"assets/shader/CS_WriteArgs.cso",
+		L"assets/shader/CS_WriteArgsShadow.cso",
+		L"assets/shader/VS_TerrainClustered.cso",
+		L"assets/shader/VS_TerrainClusteredDepth.cso",
+		L"assets/shader/PS_TerrainClustered.cso",
+		/*maxVisibleIndices*/ (UINT)terrain.indexPool.size());
+
+	assert(ok && "Failed BlockRevert Init");
+
+	blockRevert.BuildLodSrvs(graphics.GetDevice(), outLodRanges, outLodBase, outLodCount);
+
+	terrain.indexPool = std::move(outIndexPool);
+
+	Graphics::DX11::BuildFromTerrainClustered(graphics.GetDevice(), terrain, blockRevert);
+
 
 	auto terrainUpdateFunc = [](Graphics::RenderService* renderService)
 		{
@@ -812,18 +835,29 @@ int main(void)
 		}
 	);
 
-
-	Graphics::DX11::CpuImage cpuSplatImage;
-	Graphics::DX11::ReadTexture2DToCPU(device, deviceContext, sheetTex.Get(), cpuSplatImage);
-
-	SFW::World<Grid2DPartition, QuadTreePartition, VoidPartition> world(std::move(serviceLocator));
+	SFW::World<Grid2DPartition, VoidPartition> world(std::move(serviceLocator));
 	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
+
+	auto& worldRequestService = world.GetRequestServiceNoLock();
+
+	// グローバルシステムの追加
+	{
+		std::vector<std::unique_ptr<decltype(world)::IRequestCommand>> reqCmds;
+		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<CameraSystem>());
+		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<EnvironmentSystem>());
+		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<DeferredRenderingSystem>());
+		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<LightShadowSystem>());
+
+		// レベル追加コマンドを実行キューにプッシュ
+		for (auto& cmd : reqCmds) {
+			worldRequestService.PushCommand(std::move(cmd));
+		}
+	}
 
 	{
 		auto level = std::unique_ptr<Level<VoidPartition>>(new Level<VoidPartition>("Title", *entityManagerReg, ELevelState::Main));
 
-		auto worldSession = world.GetSession();
-		worldSession.AddLevel(std::move(level),
+		auto reqCmd = worldRequestService.CreateAddLevelCommand(std::move(level),
 			[&](std::add_pointer_t<decltype(world)> pWorld, SFW::Level<VoidPartition>* pLevel)
 			{
 				auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
@@ -903,6 +937,9 @@ int main(void)
 				perCameraService->Rotate(cameraRot);
 
 			});
+
+		// レベル追加コマンドを実行キューにプッシュ
+		worldRequestService.PushCommand(std::move(reqCmd));
 	}
 
 	{
@@ -910,8 +947,7 @@ int main(void)
 
 		auto level = std::unique_ptr<OpenFieldLevel>(new OpenFieldLevel("OpenField", *entityManagerReg, ELevelState::Main));
 
-		auto worldSession = world.GetSession();
-		worldSession.AddLevel(
+		auto reqCmd = worldRequestService.CreateAddLevelCommand(
 			std::move(level),
 			//ロード時
 			[&](std::add_pointer_t<decltype(world)> pWorld, OpenFieldLevel* pLevel) {
@@ -1319,7 +1355,7 @@ int main(void)
 					modelComp.castShadow = true;
 					auto id = levelSession.AddGlobalEntity(
 						CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
-						std::move(modelComp),
+						modelComp,
 						PlayerComponent{}
 #ifdef _DEBUG
 						, playerDims.value()
@@ -1384,7 +1420,7 @@ int main(void)
 
 					auto id = levelSession.AddGlobalEntity(
 						tf,
-						std::move(modelComp)
+						modelComp
 #ifdef _DEBUG
 						, shapeDims.value()
 #endif
@@ -1401,15 +1437,11 @@ int main(void)
 				scheduler.AddSystem<ModelRenderSystem>(serviceLocator);
 
 				//scheduler.AddSystem<SimpleModelRenderSystem>(serviceLocator);
-				scheduler.AddSystem<CameraSystem>(serviceLocator);
 				//scheduler.AddSystem<PhysicsSystem>(serviceLocator);
 				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
 				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
 				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
 				scheduler.AddSystem<PlayerSystem>(serviceLocator);
-				scheduler.AddSystem<EnvironmentSystem>(serviceLocator);
-				scheduler.AddSystem<DeferredRenderingSystem>(serviceLocator);
-				scheduler.AddSystem<LightShadowSystem>(serviceLocator);
 				scheduler.AddSystem<PointLightSystem>(serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
 
@@ -1419,11 +1451,14 @@ int main(void)
 			{
 				isExecuteCustomFunc.store(false, std::memory_order_relaxed);
 			});
+
+			// レベル追加コマンドを実行キューにプッシュ
+			worldRequestService.PushCommand(std::move(reqCmd));
 	}
 
 	//初めのレベルをロード
 	//world.GetSession().LoadLevel("Title");
-	world.GetSession().LoadLevel("OpenField");
+	//world.GetSession().LoadLevel("OpenField");
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
 
@@ -1434,17 +1469,17 @@ int main(void)
 		BIND_DEBUG_TEXT("Level", "Name", &loadLevelName);
 
 		REGISTER_DEBUG_BUTTON("Level", "load", [](bool) {
-			auto worldSession = gameEngine.GetWorld().GetSession();
-			worldSession.LoadLevel(loadLevelName);
+			auto& worldRequestService = gameEngine.GetWorld().GetRequestServiceNoLock();
+			auto reqCmd = worldRequestService.CreateLoadLevelCommand(loadLevelName);
+			worldRequestService.PushCommand(std::move(reqCmd));
 			});
 
 		REGISTER_DEBUG_BUTTON("Level", "clean", [](bool) {
-			auto worldSession = gameEngine.GetWorld().GetSession();
-			worldSession.CleanLevel(loadLevelName);
+			auto& worldRequestService = gameEngine.GetWorld().GetRequestServiceNoLock();
+			auto reqCmd = worldRequestService.CreateCleanLevelCommand(loadLevelName);
+			worldRequestService.PushCommand(std::move(reqCmd));
 			});
 	}
-	//スレッドプールクラス
-	static SimpleThreadPool threadPool;
 
 	// メッセージループ
 	WindowHandler::Run([]() {

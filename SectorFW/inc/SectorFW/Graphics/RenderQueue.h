@@ -378,7 +378,7 @@ namespace SFW
 				struct alignas(32) SmallBuf {
 					DrawCommand data[kChunk];
 					size_t size = 0;
-					void push_back(const DrawCommand& c) noexcept { data[size++] = c; }
+					void push_back(const DrawCommand c) noexcept { data[size++] = c; }
 					void push_back(DrawCommand&& c) noexcept { data[size++] = std::move(c); }
 					bool full() const noexcept { return size >= kChunk; }
 					void clear() noexcept { size = 0; }
@@ -427,18 +427,9 @@ namespace SFW
 				 * @brief DrawCommand を 1 件プールへ書き込み
 				 * @param cmd 書き込む DrawCommand インスタンス
 				 */
-				void Push(const DrawCommand& cmd) {
+				void Push(const DrawCommand cmd) {
 					RebindIfNeeded();
 					buf.push_back(cmd);
-					if (buf.full()) flushChunk();
-				}
-				/**
-				 * @brief DrawCommand を 1 件プールへ書き込み（ムーブ版）
-				 * @param cmd 書き込む DrawCommand インスタンス
-				 */
-				void Push(DrawCommand&& cmd) {
-					RebindIfNeeded();
-					buf.push_back(std::move(cmd));
 					if (buf.full()) flushChunk();
 				}
 				/**

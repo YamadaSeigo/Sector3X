@@ -63,11 +63,11 @@ public:
 		bufferManager->UpdateBuffer(updateDesc, currentSlot);
 	}
 
-	void UpdateBufferData(LightCameraBuffer&& data)
+	void UpdateBufferData(const LightCameraBuffer& data)
 	{
 		std::lock_guard lock(updateMutex);
 
-		lightCameraBufferData[currentSlot] = std::move(data);
+		lightCameraBufferData[currentSlot] = data;
 	}
 
 	const Graphics::TextureHandle* GetGBufferHandles() const noexcept

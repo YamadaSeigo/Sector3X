@@ -141,6 +141,7 @@ namespace SFW {
             BuildClusters(t.indexPool, t.clusters, t.clustersX, t.clustersZ,
                 H, p.cellsX, p.cellsZ, p.clusterCellsX, p.clusterCellsZ, p.cellSize, p.heightScale, p.offset);
 
+
             if (outMap != nullptr) *outMap = std::move(H);
 
             return t;

@@ -55,7 +55,7 @@ namespace SFW
 			 * @brief すべてのシステムを更新する関数
 			 * @param partition 対象のパーティション
 			 */
-			void UpdateAll(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
+			void UpdateAll(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
 				// --- pending の取り込み（ロック最小化） ---
 				std::vector<std::unique_ptr<ISystem<Partition>>> newly; // ローカル退避
 				//newly.reserve(16);
@@ -140,7 +140,83 @@ namespace SFW
 				}
 			}
 
-			void CleanSystem(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) {
+			/**
+			 * @brief すべてのシステムをグローバルに更新する関数
+			 * @param serviceLocator サービスロケーター
+			 * @param executor スレッド実行クラス
+			 */
+			void UpdateGlobal(const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
+				// --- pending の取り込み（ロック最小化） ---
+				std::vector<std::unique_ptr<ISystem<Partition>>> newly; // ローカル退避
+				//newly.reserve(16);
+
+				if (!pendingSystems.empty()) {
+					std::scoped_lock lk(pendingMutex);
+					// 一旦 swap で持ち出し → ロック解放後に反映
+					newly.swap(pendingSystems);
+				}
+
+				//新しいシステムの取り込み
+				if (!newly.empty()) {
+					// まとめて systems と accessList に移動/push（reserve で再配置削減）
+					updateSystems.reserve(updateSystems.size() + newly.size());
+					accessList.reserve(accessList.size() + newly.size());
+
+					for (auto& uptr : newly) {
+						// ここで必要ならコンテキスト注入（AddSystem時に済なら不要）
+						// uptr->SetContext(serviceLocator);
+
+						// UpdateImpl を持たないシステムは登録しない
+						if constexpr (std::remove_reference_t<decltype(*uptr)>::IsUpdateable())
+						{
+							scheduleDirty = true; // 追加があれば再構築フラグ
+
+							updateSystems.emplace_back(std::move(uptr));
+
+							// AccessInfo を取得してキャッシュ
+							accessList.emplace_back(updateSystems.back()->GetAccessInfo());
+						}
+						else
+						{
+							systems.emplace_back(std::move(uptr)); // Update不要なシステムは別途保存
+						}
+					}
+				}
+
+				// --- 並列実行プランの再構築（必要時のみ） ---
+				if (scheduleDirty) {
+					RebuildBatches();
+				}
+
+				// --- バッチごとに並列実行 ---
+				// 例外は各システム内で握り潰さず、ここで個別捕捉するのも可
+				for (const auto& group : batches) {
+					ThreadCountDownLatchExternalSync latch(batchMutex, batchCv, (int)group.parallel.size());
+
+					std::vector<uint32_t> serialIndices;
+
+					// 並列実行部分
+					for (auto idx : group.parallel)
+					{
+						//idxはコピーキャプチャじゃないと破棄される
+						executor->Submit([&, idx]() noexcept {
+							// 可能なら no-throw Update を用意、あるいはここでtry/catch
+							updateSystems[idx]->Update(serviceLocator, executor);
+							latch.CountDown();
+							});
+					}
+
+					// 直列実行部分
+					for (auto idx : group.serial)
+					{
+						updateSystems[idx]->Update(serviceLocator, executor);
+					}
+
+					latch.Wait();
+				}
+			}
+
+			void CleanSystem(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator) {
 				for (auto& sys : systems)
 				{
 					if constexpr (std::remove_reference_t<decltype(*sys)>::IsEndSystem())
@@ -168,6 +244,23 @@ namespace SFW
 					batches.clear();
 				}
 			}
+
+			void ShowDebugSystemTree() {
+#ifdef _ENABLE_IMGUI
+				size_t n = updateSystems.size();
+				for (size_t i = 0; i < n; ++i)
+				{
+					auto g = Debug::BeginTreeWrite(); // lock & back buffer
+					auto& frame = g.data();
+
+					// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
+					std::string systemName = updateSystems[i]->derived_name();
+					std::string partitionName = typeid(Partition).name();
+					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, std::string(systemName.begin() + 6, systemName.end() - (partitionName.size() + 2)) });
+				} // guard のデストラクトで unlock。swap は UI スレッドで。
+#endif
+			}
+
 		private:
 			std::vector<std::unique_ptr<ISystem<Partition>>> systems;
 			//更新するシステムのリスト

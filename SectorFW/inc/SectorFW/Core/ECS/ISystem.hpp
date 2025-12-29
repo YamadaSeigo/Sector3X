@@ -39,6 +39,7 @@ inline std::string demangle_msvc(const char* decorated) {
 namespace SFW
 {
 	//前方定義
+	template<class Partition>
 	struct LevelContext;
 
 	namespace ECS
@@ -75,18 +76,33 @@ namespace SFW
 			 * @param serviceLocator サービスロケーター
 			 */
 			virtual void Start(const ServiceLocator& serviceLocator) {}
+
+			/**
+			 * @brief システムの更新関数(Worldからグローバルに呼び出す)
+			 * @param serviceLocator サービスロケーター
+			 * @param executor スレッド実行クラス
+			 */
+			virtual void Update(const ServiceLocator& serviceLocator, IThreadExecutor* executor) {}
+
 			/**
 			 * @brief システムの更新関数
 			 * @param partition 対象のパーティション
 			 * @param serviceLocator サービズロケーター
 			 */
-			virtual void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) = 0;
+			virtual void Update(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) = 0;
+
+			/**
+			 * @brief システムの終了関数(Worldからグローバルに呼び出す)
+			 * @param serviceLocator サービズロケーター
+			 */
+			virtual void End(const ServiceLocator& serviceLocator) {}
+
 			/**
 			 * @brief システムの終了関数
 			 * @param partition 対象のパーティション
 			 * @param serviceLocator サービズロケーター
 			 */
-			virtual void End(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator){}
+			virtual void End(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator){}
 			/**
 			 * @brief アクセス情報の取得関数
 			 * @return AccessInfo アクセス情報

@@ -1712,9 +1712,7 @@ namespace SFW::Graphics::DX11 {
                 // スプラットUV（必要に応じて）
                 sm.splatUVScaleU = splatUVScale.x; sm.splatUVScaleV = splatUVScale.y;
                 sm.splatUVOffsetU = splatUVOffset.x; sm.splatUVOffsetV = splatUVOffset.x;
-
             }
-
         }
     }
 

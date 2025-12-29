@@ -26,7 +26,7 @@ public:
 		lightCameraBufferData.camForward = perCameraService->GetForward();
 		lightCameraBufferData.camPos = perCameraService->GetEyePos();
 
-		deferredService->UpdateBufferData(std::move(lightCameraBufferData));
+		deferredService->UpdateBufferData(lightCameraBufferData);
 	}
 };
 

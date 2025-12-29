@@ -8,5 +8,5 @@ struct PSInput
 
 float4 main(PSInput input) : SV_TARGET
 {
-    return gBaseColorTex.Sample(gSampler, input.uv) * baseColorFactor;
+    return gBaseColorTex.Sample(gSampler, input.uv);
 }

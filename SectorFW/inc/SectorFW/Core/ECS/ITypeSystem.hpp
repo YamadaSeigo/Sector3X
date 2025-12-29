@@ -48,10 +48,10 @@ namespace SFW
 			requires (Derived & t, Partition & partition, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, LevelContext ctx, UndeletablePtr<Services>... services) {
+			requires (Derived & t, LevelContext<Partition>& ctx, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(ctx, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, Partition & partition, LevelContext & ctx, UndeletablePtr<Services>... services) {
+			requires (Derived & t, Partition & partition, LevelContext<Partition>& ctx, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, ctx, services...) } -> std::same_as<void>;
 		} ||
 			requires (Derived & t, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
@@ -60,11 +60,20 @@ namespace SFW
 			requires (Derived & t, Partition & partition, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, exe, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, LevelContext & ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
+			requires (Derived & t, LevelContext<Partition> & ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(ctx, exe, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, Partition & partition, LevelContext & ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
+			requires (Derived & t, Partition & partition, LevelContext<Partition> & ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, ctx, exe, services...) } -> std::same_as<void>;
+		};
+
+		template<typename Derived, typename... Services>
+		concept HasGlobalUpdateImpl =
+			requires (Derived & t, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(services...) } -> std::same_as<void>;
+		} ||
+			requires (Derived & t, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
+				{ t.UpdateImpl(exe, services...) } -> std::same_as<void>;
 		};
 
 		// EndImplのオーバーロードをチェックするコンセプト
@@ -76,12 +85,21 @@ namespace SFW
 			requires (Derived & t, Partition & partition, UndeletablePtr<Services>... services) {
 				{ t.EndImpl(partition, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, LevelContext ctx, UndeletablePtr<Services>... services) {
+			requires (Derived & t, LevelContext<Partition> ctx, UndeletablePtr<Services>... services) {
 				{ t.EndImpl(ctx, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, Partition & partition, LevelContext & ctx, UndeletablePtr<Services>... services) {
+			requires (Derived & t, Partition & partition, LevelContext<Partition> & ctx, UndeletablePtr<Services>... services) {
 				{ t.EndImpl(partition, ctx, services...) } -> std::same_as<void>;
 		};
+
+		// グローバルEndImplのオーバーロードをチェックするコンセプト
+		template<typename Derived, typename... Services>
+		concept HasGlobalEndImpl =
+			requires (Derived & t, UndeletablePtr<Services>... services) {
+				{ t.EndImpl(services...) } -> std::same_as<void>;
+		};
+
+
 
 		// ComponentAccess<Override...> が Allowed... の部分集合か？
 		template<class AccessSpec, class... Allowed>
@@ -524,12 +542,49 @@ namespace SFW
 					);
 				}
 			}
+
+			void Update(const ServiceLocator& serviceLocator, IThreadExecutor* executor) override {
+
+				if constexpr (HasGlobalUpdateImpl<Derived, Services...>) {
+					// 静的サービスを使用する場合、サービスロケーターから直接取得
+					if constexpr (AllStaticServices<Services...>) {
+						std::apply(
+							[&](Services*... unpacked) {
+								constexpr bool hasExecutor = function_mentions_v<decltype(&Derived::UpdateImpl), UndeletablePtr<IThreadExecutor>>;
+
+								if constexpr (hasExecutor)
+									static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+								else
+									static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<Services>(unpacked)...);
+							},
+							context
+						);
+						return;
+					}
+
+					// 動的サービスを使用する場合、ランタイムにサービスロケーターから取得
+					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
+					std::apply(
+						[&](Services*... unpacked) {
+
+							constexpr bool hasExecutor = function_mentions_v<decltype(&Derived::UpdateImpl), UndeletablePtr<IThreadExecutor>>;
+
+							if constexpr (hasExecutor)
+								static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<IThreadExecutor>(executor), UndeletablePtr<Services>(unpacked)...);
+							else
+								static_cast<Derived*>(this)->UpdateImpl(UndeletablePtr<Services>(unpacked)...);
+						},
+						serviceTuple
+					);
+				}
+			}
+
 			/**
 			 * @brief システムの更新関数
 			 * @param partition パーティションの参照
 			 * @details 自身のシステムのコンテキストを使用して、UpdateImplを呼び出す
 			 */
-			void Update(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override final{
+			void Update(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override final{
 				// UpdateImpl関数を持っている場合のみ呼び出す
 				//※このフラグで包まないと、UpdateImplを持たないシステムでコンパイルエラーになる
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
@@ -539,7 +594,7 @@ namespace SFW
 						std::apply(
 							[&](Services*... unpacked) {
 								constexpr bool hasPartition = function_mentions_v<decltype(&Derived::UpdateImpl), Partition&>;
-								constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::UpdateImpl), LevelContext&>;
+								constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::UpdateImpl), LevelContext<Partition>&>;
 								constexpr bool hasExecutor = function_mentions_v<decltype(&Derived::UpdateImpl), UndeletablePtr<IThreadExecutor>>;
 
 								if constexpr (hasPartition) {
@@ -574,7 +629,7 @@ namespace SFW
 					std::apply(
 						[&](Services*... unpacked) {
 							constexpr bool hasPartition = function_mentions_v<decltype(&Derived::UpdateImpl), Partition&>;
-							constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::UpdateImpl), LevelContext&>;
+							constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::UpdateImpl), LevelContext<Partition>&>;
 							constexpr bool hasExecutor = function_mentions_v<decltype(&Derived::UpdateImpl), UndeletablePtr<IThreadExecutor>>;
 
 							if constexpr (hasPartition) {
@@ -603,19 +658,48 @@ namespace SFW
 					);
 				}
 			}
+
+			/**
+			 * @brief システムのグローバル終了関数
+			 * @param serviceLocator サービスロケーターの参照
+			 * @details 自身のコンテキストを使用して、EndImplを呼び出す
+			 */
+			void End(const ServiceLocator& serviceLocator) override{
+				if constexpr (HasGlobalEndImpl<Derived, Services...>) {
+					if constexpr (AllStaticServices<Services...>) {
+						// 静的サービスを使用する場合、サービスロケーターから直接取得
+						std::apply(
+							[&](Services*... unpacked) {
+								static_cast<Derived*>(this)->EndImpl(UndeletablePtr<Services>(unpacked)...);
+							},
+							context
+						);
+						return;
+					}
+
+					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
+					std::apply(
+						[&](Services*... unpacked) {
+							static_cast<Derived*>(this)->EndImpl(UndeletablePtr<Services>(unpacked)...);
+						},
+						serviceTuple
+					);
+				}
+			}
+
 			/**
 			 * @brief システムの終了関数
 			 * @param partition パーティションの参照
-			 * @details 自身のコンテキストを使用して、StartImplを呼び出す
+			 * @details 自身のコンテキストを使用して、EndImplを呼び出す
 			 */
-			void End(Partition& partition, LevelContext& levelCtx, const ServiceLocator& serviceLocator) override final {
+			void End(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator) override final {
 				if constexpr (HasEndImpl<Derived, Partition, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
 						// 静的サービスを使用する場合、サービスロケーターから直接取得
 						std::apply(
 							[&](Services*... unpacked) {
 								constexpr bool hasPartition = function_mentions_v<decltype(&Derived::EndImpl), Partition&>;
-								constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::EndImpl), LevelContext&>;
+								constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::EndImpl), LevelContext<Partition>&>;
 
 								if constexpr (hasPartition && hasLevelContext)
 									static_cast<Derived*>(this)->EndImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);
@@ -635,7 +719,7 @@ namespace SFW
 					std::apply(
 						[&](Services*... unpacked) {
 							constexpr bool hasPartition = function_mentions_v<decltype(&Derived::EndImpl), Partition&>;
-							constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::EndImpl), LevelContext&>;
+							constexpr bool hasLevelContext = function_mentions_v<decltype(&Derived::EndImpl), LevelContext<Partition>&>;
 
 							if constexpr (hasPartition && hasLevelContext)
 								static_cast<Derived*>(this)->EndImpl(partition, levelCtx, UndeletablePtr<Services>(unpacked)...);

@@ -62,7 +62,7 @@ public:
 		: resolveShape(std::move(resolver)) {
 	}
 
-	void Update(Partition& partition, SFW::LevelContext& levelCtx, const ECS::ServiceLocator& services, IThreadExecutor* executor) override {
+	void Update(Partition& partition, SFW::LevelContext<Partition>& levelCtx, const ECS::ServiceLocator& services, IThreadExecutor* executor) override {
 		using namespace SFW::Physics;
 
 		std::vector<PhysicsService::CreateIntent> intents;

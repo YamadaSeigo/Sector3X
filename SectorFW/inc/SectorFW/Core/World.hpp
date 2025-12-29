@@ -14,6 +14,7 @@ namespace SFW
 {
 	/**
 	 * @brief 各レベルを管理し、更新するクラス。サービスロケーターを保持する。
+	 * @details コピー不可
 	 */
 	template<typename... LevelTypes>
 	class World {
@@ -61,10 +62,18 @@ namespace SFW
 				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
 				vec.emplace_back(LevelHolder<T>{
 					std::move(level),
-					std::move(customFunc)...
+					std::forward<Func>(customFunc)...
 				});
 			}
 
+			template<typename T>
+			void AddLevel(LevelHolder<T>&& holder) {
+
+				static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
+
+				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
+				vec.push_back(std::move(holder));
+			}
 
 			/**
 			 * @brief 指定したレベルのロード関数を呼び出す関数
@@ -137,42 +146,175 @@ namespace SFW
 				if (!find) LOG_WARNING("指定されたレベルが見つかりませんでした {%s}", levelName.c_str());
 #endif
 			}
+
+			template<template<typename> class SystemType>
+			void AddGlobalSystem() {
+				world.globalSystem.AddSystem<SystemType>(world.serviceLocator);
+			}
+
 		private:
 			World<LevelTypes...>& world;
 		};
 
+
+		/*
+		* @brief Worldに対するリクエストコマンドのインターフェース
+		*/
 		class IRequestCommand
 		{
 		public:
+			virtual ~IRequestCommand() = default;
 			virtual void Execute(Session* pWorldSession) = 0;
 		};
+		/*
+		* @brief Worldにレベルを追加するコマンド
+		*/
+		template<typename T>
+		class AddLevelCommand : public IRequestCommand
+		{
+		public:
+			AddLevelCommand(std::unique_ptr<Level<T>> level)
+			{
+				holder = LevelHolder<T>{
+					std::move(level)
+				};
+			}
+
+			template<typename... Func>
+			AddLevelCommand(std::unique_ptr<Level<T>> level, Func&&... customFunc)
+			{
+				holder = LevelHolder<T>{
+					std::move(level),
+					std::move(customFunc)...
+				};
+			}
+
+			void Execute(Session* pWorldSession) override {
+				pWorldSession->AddLevel<T>(std::move(holder));
+			}
+
+		private:
+			LevelHolder<T> holder;
+		};
+
+		/*
+		* @brief Worldにレベルをロードするコマンド
+		*/
+		class LoadLevelCommand : public IRequestCommand
+		{
+		public:
+			LoadLevelCommand(const std::string& name) : levelName(name) {}
+
+			void Execute(Session* pWorldSession) override {
+				pWorldSession->LoadLevel(levelName);
+			}
+		private:
+			std::string levelName;
+		};
+		/*
+		* @brief Worldにレベルをクリーンするコマンド
+		*/
+		class CleanLevelCommand : public IRequestCommand
+		{
+		public:
+			CleanLevelCommand(const std::string& name) : levelName(name) {}
+			void Execute(Session* pWorldSession) override {
+				pWorldSession->CleanLevel(levelName);
+			}
+		private:
+			std::string levelName;
+		};
+
+		template<template<typename> class SystemType>
+		class AddGlobalSystemCommand : public IRequestCommand
+		{
+		public:
+			AddGlobalSystemCommand() = default;
+
+			void Execute(Session* pWorldSession) override {
+				pWorldSession->AddGlobalSystem<SystemType>();
+			}
+		};
+
 		/*
 		* @brief Systemなどの下層からWorldに対してのリクエストを受け付ける
 		*/
 		class RequestService
 		{
+			friend class World<LevelTypes...>;
 		public:
+			RequestService() : requestMutex(std::make_unique<std::mutex>()) {}
+
+			RequestService(RequestService&& other) noexcept :
+				requestMutex(other.requestMutex),
+				requests(std::move(other.requests)){
+			}
+
+			RequestService& operator=(RequestService&& other) {
+				if (this != &other) {
+					requestMutex = other.requestMutex;
+					requests = std::move(other.requests);
+				}
+				return *this;
+			}
+
 			/*
 			* @brief コマンドをリクエストに追加する
 			*/
 			void PushCommand(std::unique_ptr<IRequestCommand> cmd) {
+				std::lock_guard<std::mutex> lock(*requestMutex);
 				requests.push_back(std::move(cmd));
 			}
+
+			template<typename T>
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateAddLevelCommand(std::unique_ptr<Level<T>> level) const noexcept {
+				return std::make_unique<AddLevelCommand<T>>(std::move(level));
+			}
+
+			template<typename T, typename... Func>
+			[[nodiscard]] std::unique_ptr<IRequestCommand>
+				CreateAddLevelCommand(std::unique_ptr<Level<T>> level, Func&&... customFunc) const noexcept {
+				return std::make_unique<AddLevelCommand<T>>(std::move(level), std::forward<Func>(customFunc)...);
+			}
+
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLoadLevelCommand(const std::string& name) const noexcept {
+				return std::make_unique<LoadLevelCommand>(name);
+			}
+
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateCleanLevelCommand(const std::string& name) const noexcept {
+				return std::make_unique<CleanLevelCommand>(name);
+			}
+
+			template<template<typename> class System>
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateAddGlobalSystemCommand() const noexcept {
+				return std::make_unique<AddGlobalSystemCommand<System>>();
+			}
+
+		private:
 			// すべてのコマンドを実行する関数
 			// WorldでLevelを更新する前に呼び出す
 			void FlashAllCommand(World<LevelTypes...>* pWorld) {
 
-				if (requests.empty()) return;
+				decltype(requests) localRequests;
+				{
+					std::lock_guard<std::mutex> lock(*requestMutex);
+					std::swap(localRequests, requests);
+
+					//念のためクリア
+					requests.clear();
+				}
+
+				if (localRequests.empty()) return;
 
 				auto session = pWorld->GetSession();
 
-				for (auto& cmd : requests) {
+				for (auto& cmd : localRequests) {
 					cmd->Execute(&session);
 				}
-
-				requests.clear();
 			}
 		private:
+			//ムーブ可能にするためヒープで保持
+			std::shared_ptr<std::mutex> requestMutex;
 			std::vector<std::unique_ptr<IRequestCommand>> requests;
 		public:
 			STATIC_SERVICE_TAG
@@ -193,7 +335,8 @@ namespace SFW
 		 */
 		World(World&& other) noexcept
 			: levelSets(std::move(other.levelSets)),
-			serviceLocator(std::move(other.serviceLocator)) {
+			serviceLocator(std::move(other.serviceLocator)),
+			requestService(std::move(other.requestService)) {
 		}
 
 		/**
@@ -205,8 +348,18 @@ namespace SFW
 			if (this != &other) {
 				levelSets = std::move(other.levelSets);
 				serviceLocator = std::move(other.serviceLocator);
+				requestService = std::move(other.requestService);
 			}
 			return *this;
+		}
+
+		/**
+		 * @brief ワールドリクエストサービスをサービスロケーターに登録する関数
+		 * @details GameEngineの初期化時に呼び出す
+		 */
+		void RegisterRequestService() {
+			// ワールドリクエストサービスをサービスロケーターに登録
+			ECS::ServiceLocator::WorldAccessor::AddStaticService(&this->serviceLocator, &requestService);
 		}
 
 		/**
@@ -247,6 +400,16 @@ namespace SFW
 						}(levelVecs, mainLevelFunc, subLevelFunc));
 				}, levelSets);
 
+#ifdef _ENABLE_IMGUI
+			{
+				auto g = Debug::BeginTreeWrite(); // lock & back buffer
+				auto& frame = g.data();
+				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVEL, /*leaf=*/false, "GlobalSystem" });
+			}
+
+			globalSystem.ShowDebugSystemTree();
+#endif
+
 			ThreadCountDownLatch latch((int)mainLevelFunc.size());
 			//メインのレベルの更新処理を並行で実行
 			for (auto& f : mainLevelFunc)
@@ -266,6 +429,9 @@ namespace SFW
 					}
 				);
 			}
+
+			//グローバルシステムの更新処理実行
+			globalSystem.UpdateGlobal(serviceLocator, executor);
 
 			//サブレベルの更新処理実行
 			for (auto& f : subLevelFunc) f(serviceLocator, deltaTime, executor);
@@ -289,6 +455,20 @@ namespace SFW
 		const ECS::ServiceLocator& GetServiceLocator() const noexcept {
 			return serviceLocator;
 		}
+		/**
+		 * @brief ワールドへの要求を管理するサービスの取得
+		 * @return RequestService& ワールドへの要求を管理するサービスへの参照
+		 */
+		[[nodiscard]] RequestService& GetRequestServiceNoLock() {
+			return requestService;
+		}
+
+		void LoadLevel(const std::string levelName)
+		{
+			auto requestCmd = requestService.CreateLoadLevelCommand(levelName);
+			requestService.PushCommand(std::move(requestCmd));
+		}
+	private:
 		/*
 		* @brief Worldへのセッション(レベルの追加など)を取得する関数
 		* @return Session Worldのセッションオブジェクト
@@ -298,8 +478,13 @@ namespace SFW
 		}
 	private:
 		std::tuple<std::vector<LevelHolder<LevelTypes>>...> levelSets;
-		//std::tuple<std::vector<std::unique_ptr<Level<LevelTypes>>>...> levelSets;
 		ECS::ServiceLocator serviceLocator;
 		RequestService requestService;
+
+		struct NonePartition {
+		};
+
+		//Partitionクラスを使用しないので適当な型を入れる
+		ECS::SystemScheduler<NonePartition> globalSystem;
 	};
 }
