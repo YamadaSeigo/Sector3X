@@ -19,7 +19,7 @@
 Physics::CreateBodyCmd MakeNoMoveChunkCreateBodyCmd(
 	SFW::ECS::EntityID e,
 	const CTransform& tf,
-	const Physics::CPhyBody& body,
+	const Physics::CPhyBody body,
 	SFW::Physics::ShapeHandle shape
 )
 {
@@ -72,6 +72,12 @@ public:
 		bool stop = false;
 		size_t createCount = 0;
 		for (const auto& in : intents) {
+
+			//チャンクに属さない場合はスキップ
+			if(in.owner.code == SpatialChunkKey::kInvalidCode) {
+				continue;
+			}
+
 			auto chunk = reg->ResolveOwner(in.owner);
 			if (chunk == nullptr) {
 				LOG_WARNING("Not find SpatialChunk");
@@ -140,6 +146,30 @@ public:
 
 			//未生成のintentを戻す
 			ps->SwapCreateIntents(intents);
+		}
+	}
+
+	void End(Partition& partition, SFW::LevelContext<Partition>& levelCtx, const ECS::ServiceLocator& services) override {
+
+		Query q;
+		q.With<Physics::CPhyBody>();
+		auto chunks = q.MatchingChunks<Partition&>(partition);
+
+		for (auto& ch : chunks) {
+			ComponentAccessor<ECS::Read<Physics::CPhyBody>> accessor(ch);
+			auto body = accessor.Get<Read<Physics::CPhyBody>>();
+
+			const auto& entities = ch->GetEntities();
+
+			const size_t count = ch->GetEntityCount();
+			for (size_t i = 0; i < count; i++) {
+				//未生成ならスキップ（センチネル: 0xFFFFFFFF）
+				if (body->body()[i].GetIndexAndSequenceNumber() == (std::numeric_limits<uint32_t>::max)())
+					continue;
+
+				// Body 削除要求
+				ps->DestroyBody(entities[i]);
+			}
 		}
 	}
 

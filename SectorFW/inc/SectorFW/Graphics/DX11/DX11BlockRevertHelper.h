@@ -9,6 +9,8 @@
 #include <execution>
 
 #include "../TerrainClustered.h"
+#include "../RenderTypes.h"
+#include "DX11BufferManager.h"
 #include "../../Math/AABB.hpp"
 
 #ifdef _DEBUG
@@ -1024,6 +1026,8 @@ namespace SFW::Graphics::DX11 {
         ComPtr<ID3D11ShaderResourceView> srv;    // t15 にバインド
         // グリッド用CB（b2）
         ComPtr<ID3D11Buffer>             cbGrid;
+        // バッファハンドル
+		Graphics::BufferHandle           gridHandle;
         // CPU側ミラー
         std::vector<ClusterParam>        cpu;
         TerrainGridCB                    grid;
@@ -1353,16 +1357,20 @@ namespace SFW::Graphics::DX11 {
         // グリッドCBの作成/更新
     inline bool BuildOrUpdateTerrainGridCB(ID3D11Device* dev,
         ID3D11DeviceContext* ctx,
+        BufferManager* bufferMgr,
         ClusterParamsGPU& out)
     {
         if (!out.cbGrid) {
-            D3D11_BUFFER_DESC bd{};
-            bd.ByteWidth = sizeof(TerrainGridCB);
-            bd.Usage = D3D11_USAGE_DYNAMIC;
-            bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-            bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-            if (FAILED(dev->CreateBuffer(&bd, nullptr, &out.cbGrid))) return false;
+			BufferCreateDesc cbd{};
+			cbd.size = sizeof(TerrainGridCB);
+			cbd.usage = D3D11_USAGE_DYNAMIC;
+			cbd.bindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			cbd.cpuAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			bufferMgr->Add(cbd, out.gridHandle);
 
+			auto data = bufferMgr->Get(out.gridHandle);
+
+			out.cbGrid = data.ref().buffer;
         }
         D3D11_MAPPED_SUBRESOURCE m{};
         if (FAILED(ctx->Map(out.cbGrid.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m))) return false;

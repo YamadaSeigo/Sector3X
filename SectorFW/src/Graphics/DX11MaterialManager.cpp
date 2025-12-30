@@ -65,7 +65,7 @@ namespace SFW
 			std::unordered_map<UINT, ID3D11ShaderResourceView*> vsSRVMap;
 			for (const auto& [slot, texHandle] : desc.vsSRV) {
 				auto texData = textureManager->Get(texHandle);
-				psSRVMap[slot] = texData.ref().srv.Get();
+				vsSRVMap[slot] = texData.ref().srv.Get();
 				mat.usedTextures.push_back(texHandle);
 				textureManager->AddRef(texHandle); // Š—LŒ ’ÇÕŠJn
 			}

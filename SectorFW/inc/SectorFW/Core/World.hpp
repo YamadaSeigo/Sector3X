@@ -20,7 +20,7 @@ namespace SFW
 	class World {
 
 		template<typename T>
-		using LevelCustomFunc = std::function<void(World<LevelTypes...>*, Level<T>*)>;
+		using LevelCustomFunc = std::function<void(const ECS::ServiceLocator*, Level<T>*)>;
 
 	public:
 		template<typename T>
@@ -78,35 +78,73 @@ namespace SFW
 			/**
 			 * @brief 指定したレベルのロード関数を呼び出す関数
 			 * @param levelName ロードするレベルの名前
+			 * @param executor 渡した場合,非同期でロードする
 			 * @details 全レベルの名前と比較して一致するものを探す
 			 */
-			void LoadLevel(const std::string levelName)
+			void LoadLevel(const std::string levelName, IThreadExecutor* executor = nullptr)
 			{
 #ifdef _DEBUG
 				bool find = false;
 #endif
 
-				// 指定された名前のレベルをすべてロードする
-				auto loadFunc = [&](auto& vecs)
+				auto loadOne = [&](auto& vecs)
 					{
 						for (auto& holder : vecs)
 						{
 							auto& level = holder.level;
-							if (level->GetName() == levelName) {
+							if (level->GetName() != levelName) continue;
+
 #ifdef _DEBUG
-								find = true;
+							find = true;
 #endif
-								if (holder.loadingFunc) {
-									holder.loadingFunc(&world, level.get());
-								}
+
+							// 1) メイン側で多重ロード防止（必須）
+							if (!level->TryBeginLoading()) {
+								LOG_WARNING("Level {%s} is already active or loading.", levelName.c_str());
+								return;
 							}
+
+							// ローディング状態に入れる（BeginLoading が内部で立ててるなら不要でもOK）
+							level->SetLoading(true);
+							level->SetActive(false); // “ロード完了までActiveにしない”方が事故が減る
+
+							// 同期ロードなら従来通り
+							if (!executor)
+							{
+								if (holder.loadingFunc) holder.loadingFunc(&world.GetServiceLocator(), level.get());
+								level->SetActive(true);
+								level->SetLoading(false);
+								return;
+							}
+
+							// 2) 非同期ロード：ワーカーに重い処理だけ投げる
+							auto* levelPtr = level.get();                 // レベルが破棄されない限り有効
+							auto loadingFunc = holder.loadingFunc;        // コピーして安全に（holder参照を掴まない）
+							auto* worldPtr = &world;                      // WorldはGameEngineが潰すまで生きてる想定
+
+							executor->Submit([worldPtr, levelPtr, loadingFunc, levelName]()
+								{
+									// ここは “並列OKな処理だけ” に限定（GPU/レンダスレッド専用/World状態変更はNG）
+									if (loadingFunc) loadingFunc(&worldPtr->GetServiceLocator(), levelPtr);
+
+									// 3) 完了通知をメインに返す（Requestキューはmutexで守られてる）
+									auto& rs = worldPtr->GetRequestServiceNoLock();
+									rs.PushCommand(rs.CreateLambdaCommand(
+										[levelPtr, levelName](Session* s, IThreadExecutor* ex)
+										{
+											// メイン(=FlashAllCommand経由)で確定させる
+											// ここで「キャンセルされてないか」「まだloadingか」をチェックするとより安全
+											levelPtr->SetActive(true);
+											levelPtr->SetLoading(false);
+										}
+									));
+								});
+
+							return;
 						}
 					};
 
-				std::apply([&](auto&... levelVecs)
-					{
-						(..., loadFunc(levelVecs));
-					}, world.levelSets);
+				std::apply([&](auto&... levelVecs) { (..., loadOne(levelVecs)); }, world.levelSets);
 
 #ifdef _DEBUG
 				if (!find) LOG_WARNING("指定されたレベルが見つかりませんでした {%s}", levelName.c_str());
@@ -129,9 +167,19 @@ namespace SFW
 #ifdef _DEBUG
 								find = true;
 #endif
+								auto state = level->GetState();
+								if (!HasAny(state, ELevelState::Active) || HasAny(state, ELevelState::Loading)) {
+									// すでに非アクティブまたはロード中の場合はスキップ
+									LOG_WARNING("Level {%s} is already inactive or loading.", levelName.c_str());
+									continue;
+								};
+
+								// レベルを非アクティブにする
+								level->SetActive(false);
+
 								level->Clean(world.serviceLocator);
 								if (holder.cleanFunc) {
-									holder.cleanFunc(&world, level.get());
+									holder.cleanFunc(&world.GetServiceLocator(), level.get());
 								}
 							}
 						}
@@ -164,7 +212,7 @@ namespace SFW
 		{
 		public:
 			virtual ~IRequestCommand() = default;
-			virtual void Execute(Session* pWorldSession) = 0;
+			virtual void Execute(Session* pWorldSession, IThreadExecutor* executor) = 0;
 		};
 		/*
 		* @brief Worldにレベルを追加するコマンド
@@ -189,7 +237,7 @@ namespace SFW
 				};
 			}
 
-			void Execute(Session* pWorldSession) override {
+			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
 				pWorldSession->AddLevel<T>(std::move(holder));
 			}
 
@@ -203,13 +251,16 @@ namespace SFW
 		class LoadLevelCommand : public IRequestCommand
 		{
 		public:
-			LoadLevelCommand(const std::string& name) : levelName(name) {}
+			LoadLevelCommand(const std::string& name, bool async)
+				: levelName(name), isAsync(async) {
+			}
 
-			void Execute(Session* pWorldSession) override {
-				pWorldSession->LoadLevel(levelName);
+			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
+				pWorldSession->LoadLevel(levelName, isAsync ? executor : nullptr);
 			}
 		private:
 			std::string levelName;
+			bool isAsync;
 		};
 		/*
 		* @brief Worldにレベルをクリーンするコマンド
@@ -218,7 +269,7 @@ namespace SFW
 		{
 		public:
 			CleanLevelCommand(const std::string& name) : levelName(name) {}
-			void Execute(Session* pWorldSession) override {
+			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
 				pWorldSession->CleanLevel(levelName);
 			}
 		private:
@@ -231,9 +282,22 @@ namespace SFW
 		public:
 			AddGlobalSystemCommand() = default;
 
-			void Execute(Session* pWorldSession) override {
+			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
 				pWorldSession->AddGlobalSystem<SystemType>();
 			}
+		};
+
+		class LambdaCommand : public IRequestCommand
+		{
+		public:
+			explicit LambdaCommand(std::function<void(Session*, IThreadExecutor*)> fn)
+				: fn_(std::move(fn)) {
+			}
+
+			void Execute(Session* s, IThreadExecutor* ex) override { fn_(s, ex); }
+
+		private:
+			std::function<void(Session*, IThreadExecutor*)> fn_;
 		};
 
 		/*
@@ -277,8 +341,8 @@ namespace SFW
 				return std::make_unique<AddLevelCommand<T>>(std::move(level), std::forward<Func>(customFunc)...);
 			}
 
-			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLoadLevelCommand(const std::string& name) const noexcept {
-				return std::make_unique<LoadLevelCommand>(name);
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLoadLevelCommand(const std::string& name, bool isAsync = false) const noexcept {
+				return std::make_unique<LoadLevelCommand>(name, isAsync);
 			}
 
 			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateCleanLevelCommand(const std::string& name) const noexcept {
@@ -290,10 +354,15 @@ namespace SFW
 				return std::make_unique<AddGlobalSystemCommand<System>>();
 			}
 
+			[[nodiscard]] std::unique_ptr<IRequestCommand>
+				CreateLambdaCommand(std::function<void(Session*, IThreadExecutor*)> fn) const {
+				return std::make_unique<LambdaCommand>(std::move(fn));
+			}
+
 		private:
 			// すべてのコマンドを実行する関数
 			// WorldでLevelを更新する前に呼び出す
-			void FlashAllCommand(World<LevelTypes...>* pWorld) {
+			void FlashAllCommand(World<LevelTypes...>* pWorld, IThreadExecutor* executor) {
 
 				decltype(requests) localRequests;
 				{
@@ -309,7 +378,7 @@ namespace SFW
 				auto session = pWorld->GetSession();
 
 				for (auto& cmd : localRequests) {
-					cmd->Execute(&session);
+					cmd->Execute(&session, executor);
 				}
 			}
 		private:
@@ -386,12 +455,23 @@ namespace SFW
 					(..., [](auto& vecs, auto& mainFunc, auto& subFunc) {
 						for (auto& holder : vecs) {
 							auto& level = holder.level;
-							if (level->GetState() == ELevelState::Main) {
+							auto levelState = level->GetState();
+
+							// アクティブでないレベルはスキップ
+							if (!HasAny(levelState, ELevelState::Active)) {
+#ifdef _ENABLE_IMGUI
+								level->ShowDebugInactiveLevelInfoUI();
+#endif
+
+								continue;
+							}
+
+							if (HasAny(levelState, ELevelState::Main)) {
 								mainFunc.push_back([&level](auto& locator, double delta, auto* te) {
 									level->Update(locator, delta, te);
 									});
 							}
-							else if (level->GetState() == ELevelState::Sub) {
+							else if (HasAny(levelState, ELevelState::Sub)) {
 								subFunc.push_back([&level](auto& locator, double delta, auto* te) {
 									level->UpdateLimited(locator, delta, te);
 									});
@@ -407,7 +487,7 @@ namespace SFW
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVEL, /*leaf=*/false, "GlobalSystem" });
 			}
 
-			globalSystem.ShowDebugSystemTree();
+			globalSystem.ShowDebugSystemTree((uint32_t)Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE);
 #endif
 
 			ThreadCountDownLatch latch((int)mainLevelFunc.size());
@@ -444,7 +524,7 @@ namespace SFW
 		 */
 		void UpdateServiceLocator(double deltaTime, IThreadExecutor* executor) {
 			//下層からリクエストされたコマンドを実行
-			requestService.FlashAllCommand(this);
+			requestService.FlashAllCommand(this, executor);
 
 			serviceLocator.UpdateService(deltaTime, executor);
 		}
@@ -463,9 +543,9 @@ namespace SFW
 			return requestService;
 		}
 
-		void LoadLevel(const std::string levelName)
+		void LoadLevel(const std::string levelName, bool async = false)
 		{
-			auto requestCmd = requestService.CreateLoadLevelCommand(levelName);
+			auto requestCmd = requestService.CreateLoadLevelCommand(levelName, async);
 			requestService.PushCommand(std::move(requestCmd));
 		}
 	private:

@@ -245,7 +245,7 @@ namespace SFW
 				}
 			}
 
-			void ShowDebugSystemTree() {
+			void ShowDebugSystemTree(uint32_t treeDepth) {
 #ifdef _ENABLE_IMGUI
 				size_t n = updateSystems.size();
 				for (size_t i = 0; i < n; ++i)
@@ -256,7 +256,7 @@ namespace SFW
 					// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
 					std::string systemName = updateSystems[i]->derived_name();
 					std::string partitionName = typeid(Partition).name();
-					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, std::string(systemName.begin() + 6, systemName.end() - (partitionName.size() + 2)) });
+					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/(Debug::WorldTreeDepth)treeDepth, /*leaf=*/true, std::string(systemName.begin() + 6, systemName.end() - (partitionName.size() + 2)) });
 				} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
 			}

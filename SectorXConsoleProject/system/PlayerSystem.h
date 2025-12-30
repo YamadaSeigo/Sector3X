@@ -353,6 +353,27 @@ public:
 		}
 	}
 
+	void EndImpl(Partition& partition,
+		safe_ptr<Physics::PhysicsService> physicsService,
+		safe_ptr<Graphics::I3DPerCameraService> cameraService,
+		safe_ptr<Graphics::RenderService> renderService,
+		safe_ptr<InputService> inputService,
+		safe_ptr<PlayerService> playerService,
+		safe_ptr<Audio::AudioService> audioService)
+	{
+		ECS::EntityManager& globalEntityManager = partition.GetGlobalEntityManager();
+
+		auto playerComponents = globalEntityManager.GetSparseComponents<PlayerComponent>();
+
+		for (auto& player : playerComponents)
+		{
+			auto entityID = player.first;
+
+			// キャラクターコントローラー削除
+			physicsService->DestroyCharacter(entityID);
+		}
+	}
+
 private:
 	Audio::SoundHandle grassStepHandle = Audio::SoundHandle{ 0 };
 	Audio::AudioTicketID grassStepTicket = Audio::AudioTicketID::Invalid();

@@ -536,7 +536,7 @@ int main(void)
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	//スレッドプールクラス
-	static SimpleThreadPool threadPool;
+	static std::unique_ptr<SimpleThreadPool> threadPool = std::make_unique<SimpleThreadPool>();
 
 	Graphics::TerrainBuildParams p;
 	p.cellsX = 512 * 1;
@@ -603,7 +603,7 @@ int main(void)
 
 	// 地形のクラスター専用GPUリソースを作る/初期更新
 	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
-	Graphics::DX11::BuildOrUpdateTerrainGridCB(device, deviceContext, cp);
+	Graphics::DX11::BuildOrUpdateTerrainGridCB(device, deviceContext, bufferMgr, cp);
 
 	// LOD生成
 	std::vector<float> positions(terrain.vertices.size() * 3);
@@ -644,8 +644,8 @@ int main(void)
 		};
 
 	//重い初期化処理を並列で実行
-	threadPool.Submit(lodGenTask);
-	threadPool.Submit(splatArrayTask);
+	threadPool->Submit(lodGenTask);
+	threadPool->Submit(splatArrayTask);
 
 	latch.Wait();
 
@@ -858,7 +858,7 @@ int main(void)
 		auto level = std::unique_ptr<Level<VoidPartition>>(new Level<VoidPartition>("Title", *entityManagerReg, ELevelState::Main));
 
 		auto reqCmd = worldRequestService.CreateAddLevelCommand(std::move(level),
-			[&](std::add_pointer_t<decltype(world)> pWorld, SFW::Level<VoidPartition>* pLevel)
+			[&](const ECS::ServiceLocator* serviceLocator, SFW::Level<VoidPartition>* pLevel)
 			{
 				auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
 				auto matMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::MaterialManager>();
@@ -927,10 +927,8 @@ int main(void)
 					CTransform{ getPos(0.0f,-0.7f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.25f,0.25f) },
 					sprite);
 
-				auto& serviceLocator = pWorld->GetServiceLocator();
-
 				auto& scheduler = pLevel->GetScheduler();
-				scheduler.AddSystem<SpriteRenderSystem>(serviceLocator);
+				scheduler.AddSystem<SpriteRenderSystem>(*serviceLocator);
 
 				perCameraService->SetTarget({ 100.0f,-1.0f,100.0f });
 				Math::Quatf cameraRot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(-20.0f));
@@ -950,14 +948,14 @@ int main(void)
 		auto reqCmd = worldRequestService.CreateAddLevelCommand(
 			std::move(level),
 			//ロード時
-			[&](std::add_pointer_t<decltype(world)> pWorld, OpenFieldLevel* pLevel) {
-
-				//地形の処理を開始
-				isExecuteCustomFunc.store(true, std::memory_order_relaxed);
+			[&](const ECS::ServiceLocator* serviceLocator, OpenFieldLevel* pLevel) {
 
 				auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
 
 				auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11::ShaderManager>();
+
+				clock_t start = clock();
+
 
 				//デフォルト描画のPSO生成
 				DX11::ShaderCreateDesc shaderDesc;
@@ -1040,6 +1038,7 @@ int main(void)
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelDesc.path = "assets/model/Stylized/YellowCosmos.gltf";
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
+				modelDesc.ClearAdditionalBindings();
 
 				ModelAssetHandle playerModelHandle;
 				modelDesc.pso = cullDefaultPSOHandle;
@@ -1048,63 +1047,6 @@ int main(void)
 				modelAssetMgr->Add(modelDesc, playerModelHandle);
 
 				ModelAssetHandle grassModelHandle;
-
-				modelDesc.instancesPeak = 10000;
-				modelDesc.viewMax = 50.0f;
-				modelDesc.pso = windGrassPSOHandle;
-				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
-				modelDesc.minAreaFrec = 0.005f;
-				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
-				modelAssetMgr->Add(modelDesc, grassModelHandle);
-				modelDesc.pCustomNomWFunc = nullptr;
-
-				ModelAssetHandle ruinTowerModelHandle;
-				modelDesc.instancesPeak = 2;
-				modelDesc.viewMax = 1000.0f;
-				modelDesc.pso = cullDefaultPSOHandle;
-				modelDesc.path = "assets/model/RuinTower.gltf";
-				modelDesc.buildOccluders = true;
-				modelDesc.meltResolution = 64;
-				modelDesc.meltFillPct = 1.0f;
-				modelDesc.meltBoxType = Graphics::MeltBoxType::SIDES;
-				modelAssetMgr->Add(modelDesc, ruinTowerModelHandle);
-
-				{
-					auto ruinTowerData = modelAssetMgr->GetWrite(ruinTowerModelHandle);
-					// 遮蔽AABBを少し小さくする
-					auto& occAABB = ruinTowerData.ref().subMeshes[0].occluder.meltAABBs[0];
-					occAABB.lb.x *= 0.4f;
-					occAABB.lb.z *= 0.4f;
-					occAABB.ub.x *= 0.4f;
-					occAABB.ub.z *= 0.4f;
-				}
-
-				//float occScoreThreshold = 0.5f;// このスコア以上ならOccluder化（0..1）
-				//int   meltResolution = 16;      // meltのボクセル解像度。小さくするほどボクセルが大きくなる（64 or 96 程度が実用。性能と品質のトレードオフ）
-				//float meltStopRatio = 0.3f;   // meltの停止しきい（小AABB生成を抑える目安。0.1～0.7）
-				//float minWorldSizeM = 1.0f;    // 小さすぎるモデルはOccluder対象外（対角長[m]）
-				//float minThicknessRatio = 0.01f;// 最小厚み比。これ未満は超薄板として減点
-
-				const auto& serviceLocator = pWorld->GetServiceLocator();
-				auto ps = serviceLocator.Get<Physics::PhysicsService>();
-
-				std::function<Physics::ShapeHandle(Math::Vec3f)> makeShapeHandleFunc[5] =
-				{
-					[&](Math::Vec3f scale)
-					{
-						return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_1.chullbin", true, scale);
-					},
-					nullptr,
-					[&](Math::Vec3f scale)
-					{
-						Physics::ShapeCreateDesc shapeDesc;
-						shapeDesc.shape = Physics::CapsuleDesc{ 8.0f,0.5f };
-						shapeDesc.localOffset.y = 8.0f;
-						return ps->MakeShape(shapeDesc);
-					},
-					nullptr,
-					nullptr
-				};
 
 				// 草のマテリアルに草揺れ用CBVをセット
 				{
@@ -1133,32 +1075,34 @@ int main(void)
 					auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
 					textureMgr->Add(texDesc, heightTexHandle);
 
-					auto data = modelAssetMgr->GetWrite(grassModelHandle);
-					auto& submesh = data.ref().subMeshes;
-					auto cbData = bufferMgr->Get(windCBHandle);
-					auto footCBData = bufferMgr->Get(footCBHandle);
-					auto heightTexData = textureMgr->Get(heightTexHandle);
-
 					//ディファ―ド用のカメラの定数バッファハンドル取得
 					auto deferredCameraHandle = bufferMgr->FindByName(DeferredRenderingService::BUFFER_NAME);
-					auto deferredCameraCBData = bufferMgr->Get(deferredCameraHandle);
+
+					modelDesc.BindVS_CBV("CameraBuffer", deferredCameraHandle); // カメラCBVをバインド
+					modelDesc.BindVS_CBV("TerrainGridCB", cp.gridHandle); // 地形グリッドCBVをバインド
+					modelDesc.BindVS_CBV("WindCB", windCBHandle); // 草揺れ用CBVをバインド
+					modelDesc.BindVS_CBV("GrassFootCB", footCBHandle); // 草揺れ用CBVをバインド
+
+					modelDesc.BindVS_SRV("gHeightMap", heightTexHandle); // 高さテクスチャをバインド
+				}
+
+				modelDesc.instancesPeak = 10000;
+				modelDesc.viewMax = 50.0f;
+				modelDesc.pso = windGrassPSOHandle;
+				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.minAreaFrec = 0.005f;
+				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
+				modelAssetMgr->Add(modelDesc, grassModelHandle);
+				modelDesc.pCustomNomWFunc = nullptr;
+
+				// 草のマテリアルに草揺れ用CBVをセット
+				{
+					auto data = modelAssetMgr->GetWrite(grassModelHandle);
+					auto& submesh = data.ref().subMeshes;
 
 					for (auto& mesh : submesh)
 					{
 						auto matData = materialMgr->GetWrite(mesh.material);
-						//参照カウントを増やしておく
-						bufferMgr->AddRef(windCBHandle);
-						//直接定数バッファをセット
-						matData.ref().vsCBV.PushOrOverwrite({ 9, deferredCameraCBData.ref().buffer.Get() });
-						matData.ref().vsCBV.PushOrOverwrite({ 10, cp.cbGrid.Get() });
-						matData.ref().vsCBV.PushOrOverwrite({ 11, cbData.ref().buffer.Get() });
-						matData.ref().vsCBV.PushOrOverwrite({ 12, footCBData.ref().buffer.Get() });
-
-						matData.ref().usedCBBuffers.push_back(windCBHandle);
-						//高さテクスチャもセット
-						textureMgr->AddRef(heightTexHandle);
-						matData.ref().vsSRV.PushOrOverwrite({ 10, heightTexData.ref().srv.Get() });
-						matData.ref().usedTextures.push_back(heightTexHandle);
 
 						//頂点シェーダーにもバインドする設定にする
 						matData.ref().isBindVSSampler = true;
@@ -1169,6 +1113,61 @@ int main(void)
 						}
 					}
 				}
+
+				modelDesc.ClearAdditionalBindings();
+
+				ModelAssetHandle ruinTowerModelHandle;
+				modelDesc.instancesPeak = 2;
+				modelDesc.viewMax = 1000.0f;
+				modelDesc.pso = cullDefaultPSOHandle;
+				modelDesc.path = "assets/model/RuinTower.gltf";
+				modelDesc.buildOccluders = true;
+				modelDesc.meltResolution = 64;
+				modelDesc.meltFillPct = 1.0f;
+				modelDesc.meltBoxType = Graphics::MeltBoxType::SIDES;
+				modelAssetMgr->Add(modelDesc, ruinTowerModelHandle);
+
+				{
+					auto ruinTowerData = modelAssetMgr->GetWrite(ruinTowerModelHandle);
+					// 遮蔽AABBを少し小さくする
+					auto& occAABB = ruinTowerData.ref().subMeshes[0].occluder.meltAABBs[0];
+					occAABB.lb.x *= 0.4f;
+					occAABB.lb.z *= 0.4f;
+					occAABB.ub.x *= 0.4f;
+					occAABB.ub.z *= 0.4f;
+				}
+
+				//float occScoreThreshold = 0.5f;// このスコア以上ならOccluder化（0..1）
+				//int   meltResolution = 16;      // meltのボクセル解像度。小さくするほどボクセルが大きくなる（64 or 96 程度が実用。性能と品質のトレードオフ）
+				//float meltStopRatio = 0.3f;   // meltの停止しきい（小AABB生成を抑える目安。0.1～0.7）
+				//float minWorldSizeM = 1.0f;    // 小さすぎるモデルはOccluder対象外（対角長[m]）
+				//float minThicknessRatio = 0.01f;// 最小厚み比。これ未満は超薄板として減点
+
+				auto ps = serviceLocator->Get<Physics::PhysicsService>();
+
+				std::function<Physics::ShapeHandle(Math::Vec3f)> makeShapeHandleFunc[5] =
+				{
+					[&](Math::Vec3f scale)
+					{
+						return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_1.chullbin", true, scale);
+					},
+					nullptr,
+					[&](Math::Vec3f scale)
+					{
+						Physics::ShapeCreateDesc shapeDesc;
+						shapeDesc.shape = Physics::CapsuleDesc{ 8.0f,0.5f };
+						shapeDesc.localOffset.y = 8.0f;
+						return ps->MakeShape(shapeDesc);
+					},
+					nullptr,
+					nullptr
+				};
+
+
+				clock_t end = clock();
+
+				const double time = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
+				printf("create entity time %lf[ms]\n", time);
 
 				std::random_device rd;
 				std::mt19937_64 rng(rd());
@@ -1399,7 +1398,7 @@ int main(void)
 
 				// 塔生成
 				{
-					Math::Vec3f location = { p.cellsX * p.cellSize - 200.0f, 0.0f, p.cellsZ * p.cellSize - 200.0f};
+					Math::Vec3f location = { p.cellsX * p.cellSize - 1200.0f, 0.0f, p.cellsZ * p.cellSize - 1200.0f };
 
 					float height = 0.0f;
 					terrain.SampleHeightNormalBilinear(location.x, location.z, height);
@@ -1420,34 +1419,40 @@ int main(void)
 
 					auto id = levelSession.AddGlobalEntity(
 						tf,
-						modelComp
+						modelComp,
+						staticBody
 #ifdef _DEBUG
 						, shapeDims.value()
 #endif
 					);
 					if (id) {
+						// チャンクに属さないので直接ボディ作成コマンドを発行
 						auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shape);
 						ps->CreateBody(bodyCmd);
 					}
 				}
 
+
 				// System登録
 				auto& scheduler = pLevel->GetScheduler();
 
-				scheduler.AddSystem<ModelRenderSystem>(serviceLocator);
+				scheduler.AddSystem<ModelRenderSystem>(*serviceLocator);
 
-				//scheduler.AddSystem<SimpleModelRenderSystem>(serviceLocator);
-				//scheduler.AddSystem<PhysicsSystem>(serviceLocator);
-				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(serviceLocator);
-				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(serviceLocator);
-				scheduler.AddSystem<DebugRenderSystem>(serviceLocator);
-				scheduler.AddSystem<PlayerSystem>(serviceLocator);
-				scheduler.AddSystem<PointLightSystem>(serviceLocator);
-				//scheduler.AddSystem<CleanModelSystem>(serviceLocator);
+				//scheduler.AddSystem<SimpleModelRenderSystem>(*serviceLocator);
+				//scheduler.AddSystem<PhysicsSystem>(*serviceLocator);
+				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(*serviceLocator);
+				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(*serviceLocator);
+				scheduler.AddSystem<DebugRenderSystem>(*serviceLocator);
+				scheduler.AddSystem<PlayerSystem>(*serviceLocator);
+				scheduler.AddSystem<PointLightSystem>(*serviceLocator);
+				//scheduler.AddSystem<CleanModelSystem>(*serviceLocator);
+
+				//地形の処理を開始
+				isExecuteCustomFunc.store(true, std::memory_order_relaxed);
 
 			},
 			//アンロード時
-			[&](std::add_pointer_t<decltype(world)> pWorld, OpenFieldLevel* pLevel)
+			[&](const ECS::ServiceLocator*, OpenFieldLevel* pLevel)
 			{
 				isExecuteCustomFunc.store(false, std::memory_order_relaxed);
 			});
@@ -1457,8 +1462,8 @@ int main(void)
 	}
 
 	//初めのレベルをロード
-	//world.GetSession().LoadLevel("Title");
-	//world.GetSession().LoadLevel("OpenField");
+	//world.LoadLevel("OpenField", true);
+
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);
 
@@ -1468,9 +1473,13 @@ int main(void)
 
 		BIND_DEBUG_TEXT("Level", "Name", &loadLevelName);
 
+		static bool loadAsync = false;
+
+		BIND_DEBUG_CHECKBOX("Level", "loadAsync", &loadAsync);
+
 		REGISTER_DEBUG_BUTTON("Level", "load", [](bool) {
 			auto& worldRequestService = gameEngine.GetWorld().GetRequestServiceNoLock();
-			auto reqCmd = worldRequestService.CreateLoadLevelCommand(loadLevelName);
+			auto reqCmd = worldRequestService.CreateLoadLevelCommand(loadLevelName, loadAsync);
 			worldRequestService.PushCommand(std::move(reqCmd));
 			});
 
@@ -1484,8 +1493,11 @@ int main(void)
 	// メッセージループ
 	WindowHandler::Run([]() {
 		// ここにメインループの処理を書く
-		gameEngine.MainLoop(&threadPool);
+		gameEngine.MainLoop(threadPool.get());
 		});
+
+	// ワーカースレッドを停止
+	threadPool.reset();
 
 	return WindowHandler::Destroy();
 }

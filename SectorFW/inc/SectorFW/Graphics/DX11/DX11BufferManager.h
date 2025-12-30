@@ -24,7 +24,7 @@ namespace SFW
 			std::string name;
 			uint32_t size = {};
 			uint32_t structureByteStride = 0; // StructuredBuffer 用（CBV では無視される）
-			void* initialData = nullptr; // 初期データ（nullptr ならゼロクリア）
+			const void* initialData = nullptr; // 初期データ（nullptr ならゼロクリア）
 			D3D11_USAGE usage = D3D11_USAGE_DYNAMIC;
 			D3D11_BIND_FLAG bindFlags = D3D11_BIND_CONSTANT_BUFFER;
 			D3D11_RESOURCE_MISC_FLAG miscFlags = {};
@@ -191,16 +191,12 @@ namespace SFW
 				}
 				// 初回作成：匿名名で Add（Add が +1 を返す）
 				BufferHandle h;
-				Add({ .name = "auto_cb_" + std::to_string(key.hash), .size = size }, h);
-
-				// 中身コピー
-				{
-					auto d = Get(h);
-					D3D11_MAPPED_SUBRESOURCE m{};
-					context->Map(d.ref().buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);
-					memcpy(m.pData, data, size);
-					context->Unmap(d.ref().buffer.Get(), 0);
-				}
+				BufferCreateDesc desc = {
+					.name = "auto_cb_" + std::to_string(key.hash),
+					.size = size,
+					.initialData = data
+				};
+				Add(desc, h);
 
 				cbvCache[key] = h;
 				handleToCacheKey[h.index] = key;
