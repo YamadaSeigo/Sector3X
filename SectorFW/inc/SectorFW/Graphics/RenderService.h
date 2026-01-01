@@ -68,7 +68,7 @@ namespace SFW
 			/**
 			 * @brief MOC‚ÌXV
 			 */
-			void Update(double deltaTime) override final
+			void PreUpdate(double deltaTime) override final
 			{
 				moc->ClearBuffer();
 

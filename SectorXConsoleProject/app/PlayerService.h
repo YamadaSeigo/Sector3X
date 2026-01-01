@@ -37,7 +37,7 @@ public:
 		BIND_DEBUG_SLIDER_FLOAT("Player", "DefaultFootRadius", &DEFAULT_FOOT_RADIUS, 0.1f, 20.0f, 0.1f);
 	}
 
-	void Update(double deltaTime)
+	void PreUpdate(double deltaTime)
 	{
 		currentSlot = (currentSlot + 1) % Graphics::RENDER_BUFFER_COUNT;
 

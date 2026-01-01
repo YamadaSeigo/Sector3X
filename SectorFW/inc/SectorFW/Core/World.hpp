@@ -21,8 +21,13 @@ namespace SFW
 
 		template<typename T>
 		using LevelCustomFunc = std::function<void(const ECS::ServiceLocator*, Level<T>*)>;
-
 	public:
+		
+		struct Session;
+
+		// ロード完了時に呼び出すカスタム関数の型
+		using LoadedCustomFunc = void(*)(Session*);
+
 		template<typename T>
 		struct LevelHolder
 		{
@@ -81,7 +86,7 @@ namespace SFW
 			 * @param executor 渡した場合,非同期でロードする
 			 * @details 全レベルの名前と比較して一致するものを探す
 			 */
-			void LoadLevel(const std::string levelName, IThreadExecutor* executor = nullptr)
+			void LoadLevel(const std::string levelName, IThreadExecutor* executor = nullptr, LoadedCustomFunc loadedCustom = nullptr)
 			{
 #ifdef _DEBUG
 				bool find = false;
@@ -114,6 +119,7 @@ namespace SFW
 								if (holder.loadingFunc) holder.loadingFunc(&world.GetServiceLocator(), level.get());
 								level->SetActive(true);
 								level->SetLoading(false);
+								if (loadedCustom) loadedCustom(this);
 								return;
 							}
 
@@ -122,7 +128,7 @@ namespace SFW
 							auto loadingFunc = holder.loadingFunc;        // コピーして安全に（holder参照を掴まない）
 							auto* worldPtr = &world;                      // WorldはGameEngineが潰すまで生きてる想定
 
-							executor->Submit([worldPtr, levelPtr, loadingFunc, levelName]()
+							executor->Submit([worldPtr, levelPtr, loadingFunc, levelName, loadedCustom]()
 								{
 									// ここは “並列OKな処理だけ” に限定（GPU/レンダスレッド専用/World状態変更はNG）
 									if (loadingFunc) loadingFunc(&worldPtr->GetServiceLocator(), levelPtr);
@@ -130,12 +136,14 @@ namespace SFW
 									// 3) 完了通知をメインに返す（Requestキューはmutexで守られてる）
 									auto& rs = worldPtr->GetRequestServiceNoLock();
 									rs.PushCommand(rs.CreateLambdaCommand(
-										[levelPtr, levelName](Session* s, IThreadExecutor* ex)
+										[levelPtr, levelName, loadedCustom](Session* s, IThreadExecutor* ex)
 										{
 											// メイン(=FlashAllCommand経由)で確定させる
 											// ここで「キャンセルされてないか」「まだloadingか」をチェックするとより安全
 											levelPtr->SetActive(true);
 											levelPtr->SetLoading(false);
+
+											if (loadedCustom) loadedCustom(s);
 										}
 									));
 								});
@@ -251,15 +259,16 @@ namespace SFW
 		class LoadLevelCommand : public IRequestCommand
 		{
 		public:
-			LoadLevelCommand(const std::string& name, bool async)
-				: levelName(name), isAsync(async) {
+			LoadLevelCommand(const std::string& name, LoadedCustomFunc customFunc, bool async)
+				: levelName(name), loadedCustomFunc(customFunc), isAsync(async) {
 			}
 
 			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
-				pWorldSession->LoadLevel(levelName, isAsync ? executor : nullptr);
+				pWorldSession->LoadLevel(levelName, isAsync ? executor : nullptr, loadedCustomFunc);
 			}
 		private:
 			std::string levelName;
+			LoadedCustomFunc loadedCustomFunc = nullptr;
 			bool isAsync;
 		};
 		/*
@@ -341,8 +350,8 @@ namespace SFW
 				return std::make_unique<AddLevelCommand<T>>(std::move(level), std::forward<Func>(customFunc)...);
 			}
 
-			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLoadLevelCommand(const std::string& name, bool isAsync = false) const noexcept {
-				return std::make_unique<LoadLevelCommand>(name, isAsync);
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLoadLevelCommand(const std::string& name, bool isAsync = false, LoadedCustomFunc customFunc = nullptr) const noexcept {
+				return std::make_unique<LoadLevelCommand>(name, customFunc, isAsync);
 			}
 
 			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateCleanLevelCommand(const std::string& name) const noexcept {
@@ -528,6 +537,14 @@ namespace SFW
 
 			serviceLocator.UpdateService(deltaTime, executor);
 		}
+
+		/**
+		 * @brief サービスロケーターのサービスのコミットを行う関数
+		 */
+		void CommitServiceLocator(double deltaTime) {
+			serviceLocator.CommitService(deltaTime);
+		}
+
 		/**
 		 * @brief サービスロケーターを取得する関数
 		 * @return const ECS::ServiceLocator& サービスロケーターへの定数参照
@@ -543,9 +560,9 @@ namespace SFW
 			return requestService;
 		}
 
-		void LoadLevel(const std::string levelName, bool async = false)
+		void LoadLevel(const std::string levelName, bool async = false, LoadedCustomFunc customFunc = nullptr)
 		{
-			auto requestCmd = requestService.CreateLoadLevelCommand(levelName, async);
+			auto requestCmd = requestService.CreateLoadLevelCommand(levelName, async, customFunc);
 			requestService.PushCommand(std::move(requestCmd));
 		}
 	private:

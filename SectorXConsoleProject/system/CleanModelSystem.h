@@ -4,14 +4,14 @@
 
 template<typename Partition>
 class CleanModelSystem : public ITypeSystem<
-	CleanModelSystem<Partition>,
+	CleanModelSystem,
 	Partition,
 	ComponentAccess<Write<CModel>>,//アクセスするコンポーネントの指定
 	ServiceContext<Graphics::RenderService>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<Write<CModel>>;
 public:
 	//指定したサービスを関数の引数として受け取る
-	void EndImpl(Partition& partition, safe_ptr<Graphics::RenderService> renderService) {
+	void EndImpl(Partition& partition, NoDeletePtr<Graphics::RenderService> renderService) {
 		Graphics::DX11::ModelAssetManager* modelMgr = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 
 		this->ForEachChunkWithAccessor([](Accessor& accessor, auto entityCount, Graphics::DX11::ModelAssetManager* modelMgr)

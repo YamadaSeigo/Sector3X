@@ -4,7 +4,7 @@
 
 template<typename Partition>
 class DeferredRenderingSystem : public ITypeSystem<
-	DeferredRenderingSystem<Partition>,
+	DeferredRenderingSystem,
 	Partition,
 	ComponentAccess<>,//アクセスするコンポーネントの指定
 	ServiceContext<
@@ -16,8 +16,8 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(
-		safe_ptr<DeferredRenderingService> deferredService,
-		safe_ptr<Graphics::I3DPerCameraService> perCameraService)
+		NoDeletePtr<DeferredRenderingService> deferredService,
+		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService)
 	{
 		using namespace Graphics;
 

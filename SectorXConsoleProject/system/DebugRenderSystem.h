@@ -51,7 +51,7 @@ void MakeCapsuleLines(float radius, float halfHeight,
 
 template<typename Partition>
 class DebugRenderSystem : public ITypeSystem<
-	DebugRenderSystem<Partition>,
+	DebugRenderSystem,
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
@@ -93,12 +93,12 @@ public:
 	};
 
 	void StartImpl(
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<Graphics::I3DPerCameraService> camera3DService,
-		safe_ptr<Graphics::I2DCameraService>,
-		safe_ptr<Graphics::LightShadowService>,
-		safe_ptr<Physics::PhysicsService>,
-		safe_ptr<DeferredRenderingService> deferredRenderService)
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
+		NoDeletePtr<Graphics::I2DCameraService>,
+		NoDeletePtr<Graphics::LightShadowService>,
+		NoDeletePtr<Physics::PhysicsService>,
+		NoDeletePtr<DeferredRenderingService> deferredRenderService)
 	{
 		using namespace Graphics;
 		using namespace Debug;
@@ -179,7 +179,7 @@ public:
 		psoMgr->Add(psoDesc, psoLineHandle);
 
 		ShaderHandle mocShaderHandle;
-		shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
+		shaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
 		shaderDesc.psPath = L"assets/shader/PS_MOCDebug.cso";
 		shaderMgr->Add(shaderDesc, mocShaderHandle);
 		psoDesc = { mocShaderHandle, RasterizerStateID::SolidCullBack };
@@ -245,7 +245,7 @@ public:
 
 		Graphics::DX11::ShaderCreateDesc deferredShaderDesc;
 		deferredShaderDesc.templateID = MaterialTemplateID::Unlit;
-		deferredShaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
+		deferredShaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
 		deferredShaderDesc.psPath = L"assets/shader/PS_DebugDeferred.cso";
 		ShaderHandle deferredShaderHandle;
 		shaderMgr->Add(deferredShaderDesc, deferredShaderHandle);
@@ -305,6 +305,7 @@ public:
 		//imguiにバインド
 		BIND_DEBUG_CHECKBOX("Show", "enabled", &enabled);
 		BIND_DEBUG_CHECKBOX("Show", "partition", &drawPartitionBounds);
+		BIND_DEBUG_CHECKBOX("Show", "frustum", &drawFrustumBounds);
 		BIND_DEBUG_CHECKBOX("Show", "modelAABB", &drawModelAABB);
 		BIND_DEBUG_CHECKBOX("Show", "occAABB", &drawOccluderAABB);
 		BIND_DEBUG_CHECKBOX("Show", "modelRect", &drawModelRect);
@@ -323,12 +324,12 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<Graphics::I3DPerCameraService> camera3DService,
-		safe_ptr<Graphics::I2DCameraService> camera2DService,
-		safe_ptr<Graphics::LightShadowService> lightShadowService,
-		safe_ptr <Physics::PhysicsService> physicsService,
-		safe_ptr<DeferredRenderingService> deferredRenderService)
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
+		NoDeletePtr<Graphics::I2DCameraService> camera2DService,
+		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
+		NoDeletePtr <Physics::PhysicsService> physicsService,
+		NoDeletePtr<DeferredRenderingService> deferredRenderService)
 	{
 		//機能を制限したRenderQueueを取得
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
@@ -383,11 +384,12 @@ public:
 			return;
 		}
 
-		auto fru = camera3DService->MakeFrustum();
-
 		auto cameraPos = camera3DService->GetEyePos();
 		const auto viewProj = camera3DService->GetCameraBufferDataNoLock().viewProj;
 		auto fov = camera3DService->GetFOV();
+
+		auto fru = camera3DService->MakeFrustum();
+		fru = fru.ClampedFar(cameraPos, 200.0f);
 
 		const Graphics::OccluderViewport vp = { (int)resolution.x, (int)resolution.y, fov };
 
@@ -398,6 +400,16 @@ public:
 				line3DVertices.get(), MAX_CAPACITY_3DLINE, DRAW_LINE_CHUNK_COUNT);
 		}
 
+		if (drawFrustumBounds)
+		{
+			if (line3DCount + 24 < MAX_CAPACITY_3DLINE) {
+				auto frustumLines = Debug::MakeFrustumLineVertices(fru, 0xFFFFFFFF);
+				for (auto& l : frustumLines) {
+					line3DVertices.get()[line3DCount++] = { l.pos, l.rgba };
+				}
+			}
+		}
+
 		if (drawCascadeAABB)
 		{
 			const auto& cascade = lightShadowService->GetCascades();
@@ -406,7 +418,7 @@ public:
 			{
 				const auto& aabb = cascade.boundsWS[i];
 				float t = (float(i) / float(cascadeCount - 1));
-				auto lineVertex = Math::MakeAABBLineVertices(aabb, Math::LerpColor(0xFF0000FF, 0x0000FFFF, t));
+				auto lineVertex = Debug::MakeAABBLineVertices(aabb, Math::LerpColor(0xFF0000FF, 0x0000FFFF, t));
 				size_t newLineSize = lineVertex.size();
 				if (line3DCount + newLineSize > MAX_CAPACITY_3DLINE) {
 					break;
@@ -482,7 +494,7 @@ public:
 							//3D AABB
 							if (drawModelAABB)
 							{
-								auto lines = Math::MakeAABBLineVertices(mesh.aabb, rgbaAABB);
+								auto lines = Debug::MakeAABBLineVertices(mesh.aabb, rgbaAABB);
 								size_t newLineSize = lines.size();
 								if (mesh.occluder.candidate)
 								{
@@ -509,7 +521,7 @@ public:
 							{
 								for (const auto& aabb : mesh.occluder.meltAABBs)
 								{
-									auto occLines = Math::MakeAABBLineVertices(aabb, rgbaOcc);
+									auto occLines = Debug::MakeAABBLineVertices(aabb, rgbaOcc);
 									for (auto& l : occLines) {
 										linePoss.push_back(l.pos);
 										lineColors.push_back(l.rgba);
@@ -760,6 +772,7 @@ public:
 private:
 	bool enabled = false;
 	bool drawPartitionBounds = false;
+	bool drawFrustumBounds = false;
 	bool drawModelAABB = false;
 	bool drawOccluderAABB = false;
 	bool drawModelRect = false;

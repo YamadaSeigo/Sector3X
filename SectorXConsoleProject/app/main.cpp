@@ -34,6 +34,7 @@
 #include "system/DeferredRenderingSystem.h"
 #include "system/LightShadowSystem.h"
 #include "system/PointLightSystem.h"
+#include "system/SpriteAnimationSystem.h"
 #include "WindMovementService.h"
 #include "EnvironmentService.h"
 
@@ -181,6 +182,13 @@ void InitializeRenderPipeLine(
 
 	DX11::BufferCreateDesc cbDesc;
 	cbDesc.size = sizeof(CascadeIndex);
+
+	Viewport vp;
+	vp.width = (float)SHADOW_MAP_WIDTH;
+	vp.height = (float)SHADOW_MAP_HEIGHT;
+
+	passDesc.viewport = vp;
+
 	for (UINT i = 0; i < cascadeCount; ++i)
 	{
 		cbDesc.name = "CascadeIndexCB_" + std::to_string(i);
@@ -194,19 +202,6 @@ void InitializeRenderPipeLine(
 
 		passDesc.dsv = cascadeDSVs[i];
 
-		if (i == 0)
-		{
-			Viewport vp;
-			vp.width = (float)SHADOW_MAP_WIDTH;
-			vp.height = (float)SHADOW_MAP_HEIGHT;
-
-			passDesc.viewport = vp;
-		}
-		else
-		{
-			passDesc.viewport = std::nullopt;
-		}
-
 		renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_CASCADE0 << i);
 	}
 
@@ -216,7 +211,6 @@ void InitializeRenderPipeLine(
 	psoDesc.shader = shaderHandle;
 	psoMgr->Add(psoDesc, psoHandle);
 
-	Viewport vp;
 	vp.width = (float)WINDOW_WIDTH;
 	vp.height = (float)WINDOW_HEIGHT;
 	passDesc.viewport = vp;
@@ -301,6 +295,18 @@ void InitializeRenderPipeLine(
 		deferredBuffer = bufData.ref().buffer;
 	}
 
+	auto samplerManager = renderGraph->GetRenderService()->GetResourceManager<DX11::SamplerManager>();
+
+	D3D11_SAMPLER_DESC sampDesc = {};
+	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	SamplerHandle samp = samplerManager->AddWithDesc(sampDesc);
+	auto sampData = samplerManager->Get(samp);
+	static ComPtr<ID3D11SamplerState> linearSampler = sampData.ref().state;
+
+	static ComPtr<ID3D11SamplerState> shadowSampler;
+	shadowSampler = resourceService.GetShadowSampler();
+
 	static ComPtr<ID3D11Buffer> cbLightBuffer;
 	cbLightBuffer = resourceService.GetLightDataCB();
 	static ComPtr<ID3D11ShaderResourceView> srvPointLight;
@@ -320,19 +326,21 @@ void InitializeRenderPipeLine(
 	godRayBuffer = godRayBufData.ref().buffer;
 
 	auto endOpaqueFunc = [](uint64_t frame) {
+
 		bool execute = isExecuteCustomFunc.load(std::memory_order_relaxed);
-		if (!execute) return;
+		if (execute) {
+
+			skyboxData.time += (float)(1.0f / FPS_LIMIT);
+
+			renderBackend->UpdateBufferDataImpl(SkyCBBuffer.Get(), &skyboxData, sizeof(skyboxData));
+
+			gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
+			renderBackend->BindPSCBVs({ SkyCBBuffer.Get() }, 9);
+			renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
+		}
 
 		// 全画面描画でライティング計算
 		auto ctx = gGraphics->GetDeviceContext();
-
-		skyboxData.time += (float)(1.0f / FPS_LIMIT);
-
-		renderBackend->UpdateBufferDataImpl(SkyCBBuffer.Get(), &skyboxData, sizeof(skyboxData));
-
-		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
-		renderBackend->BindPSCBVs({ SkyCBBuffer.Get() }, 9);
-		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
 
 		// Depthはsrvとして使うので外す
 		gGraphics->SetMainRenderTargetNoDepth();
@@ -349,12 +357,15 @@ void InitializeRenderPipeLine(
 		ctx->VSSetShader(defferedVS.Get(), nullptr, 0);
 		ctx->PSSetShader(defferedPS.Get(), nullptr, 0);
 
-
 		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
 
 		ctx->PSSetShaderResources(15, 1, srvPointLight.GetAddressOf());
 
 		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), deferredBuffer.Get(), cbLightBuffer.Get(), fogBuffer.Get(), godRayBuffer.Get() }, 9);
+
+		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
+
+		ctx->PSSetSamplers(1, 1, shadowSampler.GetAddressOf());
 
 		ctx->Draw(3, 0);
 
@@ -381,7 +392,7 @@ void InitializeRenderPipeLine(
 	passDesc.stencilRef = 2;
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
-	shaderDesc.vsPath = L"assets/shader/VS_Unlit.cso";
+	shaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
 	shaderDesc.psPath = L"assets/shader/PS_HighLight.cso";
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	psoDesc.shader = shaderHandle;
@@ -457,6 +468,7 @@ int main(void)
 	ComponentTypeRegistry::Register<Physics::ShapeDims>();
 	ComponentTypeRegistry::Register<CSprite>();
 	ComponentTypeRegistry::Register<CPointLight>();
+	ComponentTypeRegistry::Register<CSpriteAnimation>();
 	//======================================================================
 
 	// ウィンドウの作成
@@ -530,9 +542,14 @@ int main(void)
 
 	EnvironmentService environmentService(bufferMgr);
 
-	ECS::ServiceLocator serviceLocator(renderService, &physicsService, inputService, perCameraService,
+	static SpriteAnimationService spriteAnimationService(bufferMgr);
+
+	ECS::ServiceLocator serviceLocator(
+		renderService, &physicsService, inputService, perCameraService,
 		ortCameraService, camera2DService, &lightShadowService, &grassService,
-		&playerService, &audioService, &deferredRenderingService, &lightShadowResourceService, &pointLightService, &environmentService);
+		&playerService, &audioService, &deferredRenderingService, &lightShadowResourceService,
+		&pointLightService, &environmentService, &spriteAnimationService);
+
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 	//スレッドプールクラス
@@ -940,6 +957,84 @@ int main(void)
 		worldRequestService.PushCommand(std::move(reqCmd));
 	}
 
+	static constexpr const char* LoadingLevelName = "Loading";
+
+	{
+		auto level = std::unique_ptr<Level<VoidPartition>>(new Level<VoidPartition>(LoadingLevelName, *entityManagerReg, ELevelState::Main));
+
+		auto reqCmd = worldRequestService.CreateAddLevelCommand(std::move(level),
+			[&](const ECS::ServiceLocator* serviceLocator, SFW::Level<VoidPartition>* pLevel)
+			{
+				auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
+				auto matMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::MaterialManager>();
+				auto shaderMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::ShaderManager>();
+				auto sampMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::SamplerManager>();
+
+
+				DX11::ShaderCreateDesc shaderDesc;
+				shaderDesc.vsPath = L"assets/shader/VS_SpriteAnimation.cso";
+				shaderDesc.psPath = L"assets/shader/PS_Color.cso";
+				ShaderHandle shaderHandle;
+				shaderMgr->Add(shaderDesc, shaderHandle);
+
+				D3D11_SAMPLER_DESC sampDesc = {};
+				sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+				sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+				SamplerHandle samp = sampMgr->AddWithDesc(sampDesc);
+
+				DX11::TextureCreateDesc textureDesc;
+				textureDesc.path = "assets/texture/sprite/ToxicFrogPurpleBlue_Hop.png";
+				textureDesc.forceSRGB = true;
+				Graphics::TextureHandle texHandle;
+				textureMgr->Add(textureDesc, texHandle);
+
+				auto spriteInstBufferHandle= spriteAnimationService.GetInstanceBufferHandle();
+
+				Graphics::DX11::MaterialCreateDesc matDesc;
+				matDesc.shader = shaderHandle;
+				matDesc.samplerMap[0] = samp;
+				matDesc.vsSRV[11] = spriteInstBufferHandle; // VS_CB11 にセット
+				matDesc.psSRV[2] = texHandle; // TEX2 にセット
+
+				Graphics::MaterialHandle matHandle;
+				matMgr->Add(matDesc, matHandle);
+
+				CSpriteAnimation spriteAnim;
+				spriteAnim.hMat = matHandle;
+				spriteAnim.buf.divX = 7; // 横分割数
+
+				auto getPos = [](float x, float y)->Math::Vec3f {
+					Math::Vec3f pos;
+					pos.x = (WINDOW_WIDTH * x) / 2.0f;
+					pos.y = (WINDOW_HEIGHT * y) / 2.0f;
+					pos.z = 0.0f;
+					return pos;
+					};
+
+				auto getScale = [](float s)->Math::Vec3f {
+					Math::Vec3f scale;
+					constexpr auto half = (WINDOW_WIDTH + WINDOW_HEIGHT) / 2.0f;
+
+					scale.x = half * s;
+					scale.y = half * s;
+					scale.z = 1.0f;
+					return scale;
+					};
+
+				auto levelSession = pLevel->GetSession();
+				levelSession.AddGlobalEntity(
+					CTransform{ getPos(0.9f, -0.85f), {0.0f,0.0f,0.0f,1.0f}, getScale(0.15f)},
+					spriteAnim);
+
+				auto& scheduler = pLevel->GetScheduler();
+				scheduler.AddSystem<SpriteAnimationSystem>(*serviceLocator);
+
+			});
+
+		// レベル追加コマンドを実行キューにプッシュ
+		worldRequestService.PushCommand(std::move(reqCmd));
+	}
+
 	{
 		using OpenFieldLevel = SFW::Level<Grid2DPartition>;
 
@@ -949,6 +1044,9 @@ int main(void)
 			std::move(level),
 			//ロード時
 			[&](const ECS::ServiceLocator* serviceLocator, OpenFieldLevel* pLevel) {
+
+				//地形の処理を開始
+				isExecuteCustomFunc.store(true, std::memory_order_relaxed);
 
 				auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
 
@@ -960,7 +1058,7 @@ int main(void)
 				//デフォルト描画のPSO生成
 				DX11::ShaderCreateDesc shaderDesc;
 				shaderDesc.templateID = MaterialTemplateID::PBR;
-				shaderDesc.vsPath = L"assets/shader/VS_Lit.cso";
+				shaderDesc.vsPath = L"assets/shader/VS_ClipUVNrm.cso";
 				shaderDesc.psPath = L"assets/shader/PS_Opaque.cso";
 				ShaderHandle shaderHandle;
 				shaderMgr->Add(shaderDesc, shaderHandle);
@@ -1092,10 +1190,11 @@ int main(void)
 				modelDesc.pCustomNomWFunc = WindMovementService::ComputeGrassWeight;
 				modelDesc.minAreaFrec = 0.005f;
 				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
-				modelAssetMgr->Add(modelDesc, grassModelHandle);
+				bool existingModel = modelAssetMgr->Add(modelDesc, grassModelHandle);
 				modelDesc.pCustomNomWFunc = nullptr;
 
-				// 草のマテリアルに草揺れ用CBVをセット
+				// 新規の場合、草のマテリアルに草揺れ用CBVをセット
+				if(!existingModel)
 				{
 					auto data = modelAssetMgr->GetWrite(grassModelHandle);
 					auto& submesh = data.ref().subMeshes;
@@ -1120,13 +1219,15 @@ int main(void)
 				modelDesc.instancesPeak = 2;
 				modelDesc.viewMax = 1000.0f;
 				modelDesc.pso = cullDefaultPSOHandle;
+				modelDesc.minAreaFrec = 0.0f;
 				modelDesc.path = "assets/model/RuinTower.gltf";
 				modelDesc.buildOccluders = true;
 				modelDesc.meltResolution = 64;
 				modelDesc.meltFillPct = 1.0f;
 				modelDesc.meltBoxType = Graphics::MeltBoxType::SIDES;
-				modelAssetMgr->Add(modelDesc, ruinTowerModelHandle);
+				existingModel = modelAssetMgr->Add(modelDesc, ruinTowerModelHandle);
 
+				if(!existingModel)
 				{
 					auto ruinTowerData = modelAssetMgr->GetWrite(ruinTowerModelHandle);
 					// 遮蔽AABBを少し小さくする
@@ -1277,7 +1378,7 @@ int main(void)
 					for (int k = 0; k < 200; ++k) {
 						for (int n = 0; n < 1; ++n) {
 							Math::Vec3f location = { (float)distX(rng), 0.0f, (float)distZ(rng)};
-							//Math::Vec3f location = { 30.0f * j,0.0f, 10.0f * k };
+							//Math::Vec3f location = { 30.0f + j * 10.0f,0.0f, 30.0f + k * 10.0f};
 							auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
 							auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
 							if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
@@ -1446,10 +1547,6 @@ int main(void)
 				scheduler.AddSystem<PlayerSystem>(*serviceLocator);
 				scheduler.AddSystem<PointLightSystem>(*serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(*serviceLocator);
-
-				//地形の処理を開始
-				isExecuteCustomFunc.store(true, std::memory_order_relaxed);
-
 			},
 			//アンロード時
 			[&](const ECS::ServiceLocator*, OpenFieldLevel* pLevel)
@@ -1479,7 +1576,21 @@ int main(void)
 
 		REGISTER_DEBUG_BUTTON("Level", "load", [](bool) {
 			auto& worldRequestService = gameEngine.GetWorld().GetRequestServiceNoLock();
-			auto reqCmd = worldRequestService.CreateLoadLevelCommand(loadLevelName, loadAsync);
+
+			if (loadAsync) {
+				//ローディング中のレベルを先にロード
+				auto loadingCmd = worldRequestService.CreateLoadLevelCommand(LoadingLevelName, false);
+				worldRequestService.PushCommand(std::move(loadingCmd));
+			}
+
+			//ロード完了後のコールバック
+			auto loadedFunc = [](decltype(world)::Session* pSession) {
+
+				//ローディングレベルをクリーンアップ
+				pSession->CleanLevel(LoadingLevelName);
+				};
+
+			auto reqCmd = worldRequestService.CreateLoadLevelCommand(loadLevelName, loadAsync, loadAsync ? loadedFunc : nullptr);
 			worldRequestService.PushCommand(std::move(reqCmd));
 			});
 

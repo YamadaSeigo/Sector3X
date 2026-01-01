@@ -97,7 +97,7 @@ public:
 		BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayMaxDepth, 0.0f, 1.0f, 0.0001f);
 	}
 
-	void Update(double deltaTime) override {
+	void PreUpdate(double deltaTime) override {
 
 		slot = (slot + 1) % Graphics::RENDER_BUFFER_COUNT;
 

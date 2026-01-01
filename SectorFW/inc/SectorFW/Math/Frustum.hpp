@@ -42,6 +42,33 @@ namespace SFW::Math {
 			return { nn, -(nn.x * point.x + nn.y * point.y + nn.z * point.z) };
 		}
 
+		// 3平面の交点。失敗時 false
+		static bool Intersect3Planes(const Planef& p1, const Planef& p2, const Planef& p3, Math::Vec3f& out)
+		{
+			const auto n1 = p1.n, n2 = p2.n, n3 = p3.n;
+
+			const auto c23 = Cross(n2, n3);
+			const auto c31 = Cross(n3, n1);
+			const auto c12 = Cross(n1, n2);
+
+			const float denom = Dot(n1, c23);
+			const float eps = 1e-6f;
+			if (fabsf(denom) < eps) return false;
+
+			auto MulAdd = [](float s, const Vec3f& v, const Vec3f& acc) noexcept -> Vec3f {
+				return Vec3f{ acc.x + s * v.x, acc.y + s * v.y, acc.z + s * v.z };
+				};
+
+			// x = [(-d1)*c23 + (-d2)*c31 + (-d3)*c12] / denom
+			Math::Vec3f num{ 0,0,0 };
+			num = MulAdd(-p1.d, c23, num);
+			num = MulAdd(-p2.d, c31, num);
+			num = MulAdd(-p3.d, c12, num);
+
+			out = num / denom;
+			return true;
+		}
+
 		// 片側正規化
 		void Normalize() noexcept {
 			const float len = std::sqrt(n.x * n.x + n.y * n.y + n.z * n.z);
@@ -394,7 +421,7 @@ namespace SFW::Math {
 		//   if dot(n, L) < 0 then d' = d - length * dot(n, L)
 		//   else d' = d
 		// として新しい半空間を定義しています。
-		Frustumf PushedAlongDirection(const Vec3f& lightDirWS, float length) const noexcept
+		[[nodiscard]] Frustumf PushedAlongDirection(const Vec3f& lightDirWS, float length) const noexcept
 		{
 			Frustumf out = *this;
 
@@ -426,7 +453,7 @@ namespace SFW::Math {
 		@param eyeWS ワールド空間のカメラ位置
 		@param maxFar カメラから Far 平面までの最大距離
 		*/
-		Frustumf ClampedFar(const Vec3f& eyeWS, float maxFar) const noexcept
+		[[nodiscard]] Frustumf ClampedFar(const Vec3f& eyeWS, float maxFar) const noexcept
 		{
 			Frustumf out = *this;
 

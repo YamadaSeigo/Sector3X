@@ -50,7 +50,7 @@ namespace SFW::Audio
          */
         void Shutdown();
 
-        void Update(double deltaTime) override
+        void PreUpdate(double deltaTime) override
         {
 			// ƒRƒ}ƒ“ƒh‚ğˆ—
             PumpCommands();

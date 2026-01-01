@@ -137,13 +137,23 @@ namespace SFW
 							SFW_ASSERT(false && "Update service not found in the update services list.");
 						}
 					}
+					if constexpr (std::is_base_of_v<ICommitService, T>) {
+						auto commitService = static_cast<ICommitService*>(iter->second.servicePtr);
+						auto it = std::find(commitServices.begin(), commitServices.end(), commitService);
+						if (it != commitServices.end()) {
+							commitServices.erase(it);
+						}
+						else {
+							SFW_ASSERT(false && "Commit service not found in the commit services list.");
+						}
+					}
 					services.erase(iter);
 				}
 
 				RebuildPlan_NeedLock();
 			}
 			/**
-			 * @brief サービスを取得する
+			 * @brief サービスを取得する(const強制解除)
 			 * @tparam T サービスの型
 			 * @return サービスのポインタ
 			 */
@@ -171,7 +181,7 @@ namespace SFW
 					std::shared_lock<std::shared_mutex> lk(*mapMutex);
 					// Executor 取得や束ね直しは行わず、直列フォールバックでも良いが
 					// プラン未構築なら何もしないか、旧直列ループに退避してもOK
-					for (auto* s : updateServices) if (s) s->Update(dt); // フォールバック
+					for (auto* s : updateServices) if (s) s->PreUpdate(dt); // フォールバック
 					return;
 				}
 				for (const auto& phase : plan_->phases) {
@@ -183,17 +193,26 @@ namespace SFW
 						executor->Submit([&g, &latch, dt]() {
 							// グループ内は order 順に直列
 							for (IUpdateService* s : g.serial) {
-								s->Update(dt);
+								s->PreUpdate(dt);
 							}
 							latch.CountDown();
 							});
 					}
 
 					// group==0 の“直列レーン”をメインスレッドで順に実行
-					for (auto* s : phase.serialLane) s->Update(dt);
+					for (auto* s : phase.serialLane) s->PreUpdate(dt);
 
 					//並列更新待ち
 					latch.Wait();
+				}
+			}
+
+			/**
+			 * @brief コミットサービスの関数呼び出し
+			 */
+			void CommitService(double deltaTime) {
+				for (auto* service : commitServices) {
+					service->Commit(deltaTime);
 				}
 			}
 
@@ -215,6 +234,10 @@ namespace SFW
 					updateService->group = T::updateGroup;
 					updateService->order = T::updateOrder;
 					updateServices.push_back(updateService);
+				}
+				if constexpr (std::is_base_of_v<ICommitService, T>) {
+					ICommitService* commitService = static_cast<ICommitService*>(service);
+					commitServices.push_back(commitService);
 				}
 
 				services[typeid(T)] = Location{ service,updateIndex, T::isStatic };
@@ -241,6 +264,10 @@ namespace SFW
 					updateService->group = T::updateGroup;
 					updateService->order = T::updateOrder;
 					updateServices.push_back(updateService);
+				}
+				if constexpr (std::is_base_of_v<ICommitService, T>) {
+					ICommitService* commitService = static_cast<ICommitService*>(service.get());
+					commitServices.push_back(commitService);
 				}
 
 				services[typeid(T)] = Location{ service.get(),updateIndex, T::isStatic };
@@ -273,6 +300,10 @@ namespace SFW
 					updateService->group = T::updateGroup;
 					updateService->order = T::updateOrder;
 					updateServices.push_back(updateService);
+				}
+				if constexpr (std::is_base_of_v<ICommitService, T>) {
+					ICommitService* commitService = static_cast<ICommitService*>(service.get());
+					commitServices.push_back(commitService);
 				}
 
 				services[typeid(T)] = Location{ service.get(),updateIndex,T::isStatic };
@@ -376,6 +407,7 @@ namespace SFW
 
 			std::vector<IUpdateService*> updateServices;
 
+			std::vector<ICommitService*> commitServices;
 
 		public:
 			// ワールドにだけ静的サービスを追加登録させるためのフレンドクラス

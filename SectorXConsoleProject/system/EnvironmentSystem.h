@@ -4,7 +4,7 @@
 
 template<typename Partition>
 class EnvironmentSystem : public ITypeSystem<
-	EnvironmentSystem<Partition>,
+	EnvironmentSystem,
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<>,
@@ -27,11 +27,11 @@ class EnvironmentSystem : public ITypeSystem<
 
 public:
 	void StartImpl(
-		safe_ptr<EnvironmentService> environmentService,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<Graphics::LightShadowService> lightShadowService,
-		safe_ptr<Audio::AudioService> audioService,
-		safe_ptr<Graphics::I3DPerCameraService> cameraService)
+		NoDeletePtr<EnvironmentService> environmentService,
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
+		NoDeletePtr<Audio::AudioService> audioService,
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService)
 	{
 		//Audio読み込み
 		mainBGM.handle = audioService->EnqueueLoadWav("assets/audio/BGM/fjordnosundakaze.ogg");
@@ -48,11 +48,11 @@ public:
 	}
 
 	void UpdateImpl(
-		safe_ptr<EnvironmentService> environmentService,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<Graphics::LightShadowService> lightShadowService,
-		safe_ptr<Audio::AudioService> audioService,
-		safe_ptr<Graphics::I3DPerCameraService> cameraService)
+		NoDeletePtr<EnvironmentService> environmentService,
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
+		NoDeletePtr<Audio::AudioService> audioService,
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService)
 	{
 		auto sunDirWS = lightShadowService->GetDirectionalLight().directionWS;
 		auto camPos = cameraService->GetEyePos();
@@ -76,11 +76,11 @@ public:
 	}
 
 	void EndImpl(
-		safe_ptr<EnvironmentService> environmentService,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<Graphics::LightShadowService> lightShadowService,
-		safe_ptr<Audio::AudioService> audioService,
-		safe_ptr<Graphics::I3DPerCameraService> cameraService)
+		NoDeletePtr<EnvironmentService> environmentService,
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
+		NoDeletePtr<Audio::AudioService> audioService,
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService)
 	{
 		//BGM停止
 		if (mainBGM.ticketID.IsValid()) {

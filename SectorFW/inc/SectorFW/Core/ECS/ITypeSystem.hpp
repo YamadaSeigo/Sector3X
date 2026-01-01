@@ -294,7 +294,7 @@ namespace SFW
 		}
 
 		//前方宣言
-		template<typename Derived, typename Partition, typename AccessSpec, typename ContextSpec, IsParallel ParallelUpdate = IsParallel{false}>
+		template<template<typename> class Derived, typename Partition, typename AccessSpec, typename ContextSpec, IsParallel ParallelUpdate = IsParallel{false}>
 		class ITypeSystem;
 
 		/**
@@ -304,10 +304,12 @@ namespace SFW
 		 * @tparam AccessTypes アクセスするコンポーネントの型
 		 * @tparam Services サービスの型
 		 */
-		template<typename Derived, typename Partition, typename... AccessTypes, typename... Services, IsParallel ParallelUpdate>
-		class ITypeSystem<Derived, Partition, ComponentAccess<AccessTypes...>, ServiceContext<Services...>, ParallelUpdate> : public ISystem<Partition> {
+		template<template<typename> class DerivedT, typename Partition, typename... AccessTypes, typename... Services, IsParallel ParallelUpdate>
+		class ITypeSystem<DerivedT, Partition, ComponentAccess<AccessTypes...>, ServiceContext<Services...>, ParallelUpdate> : public ISystem<Partition> {
 
 		protected:
+			using Derived = DerivedT<Partition>;
+
 			using AccessorTuple = ComponentAccess<AccessTypes...>::Tuple;
 			using ContextTuple = ServiceContext<Services...>::Tuple;
 

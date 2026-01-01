@@ -9,6 +9,7 @@
 
 #include <bitset>
 #include <unordered_map>
+#include <variant>
 #include "DX11ShaderManager.h"
 #include "DX11TextureManager.h"
 #include "DX11BufferManager.h"
@@ -18,14 +19,16 @@ namespace SFW
 {
 	namespace Graphics::DX11
 	{
+		using ShaderResourceHandle = std::variant<std::monostate, TextureHandle, BufferHandle>;
+
 		/**
 		 * @brief DirectX 11用のマテリアル作成情報構造体
 		 */
 		struct MaterialCreateDesc {
 			ShaderHandle shader = {};
 			bool isBindVSSampler{ false }; // 頂点シェーダーでサンプラーを使用するかどうか
-			std::unordered_map<UINT, TextureHandle> psSRV;
-			std::unordered_map<UINT, TextureHandle> vsSRV;
+			std::unordered_map<uint32_t, ShaderResourceHandle> psSRV;
+			std::unordered_map<uint32_t, ShaderResourceHandle> vsSRV;
 			std::unordered_map<UINT, BufferHandle> psCBV; // CBVバインディング
 			std::unordered_map<UINT, BufferHandle> vsCBV; // CBVバインディング
 			std::unordered_map<UINT, SamplerHandle> samplerMap; // サンプラーバインディング
@@ -150,7 +153,7 @@ namespace SFW
 			MaterialBindingCacheSRV psSRV, vsSRV;
 			MaterialBindingCacheCBV psCBV, vsCBV; // CBVバインディングキャッシュ
 			MaterialBindingCacheSampler samplerCache; // サンプラーバインディングキャッシュ
-			std::vector<TextureHandle> usedTextures; // テクスチャハンドルのキャッシュ
+			std::vector<ShaderResourceHandle> usedSRVs; // 使用中のSRVキャッシュ
 			std::vector<BufferHandle> usedCBBuffers; // 使用中のCBハンドル
 			std::vector<SamplerHandle> usedSamplers; // 使用中のサンプラーハンドル
 		};
@@ -224,6 +227,38 @@ namespace SFW
 			 */
 			static void BindMaterialPSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache);
 			static void BindMaterialVSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache);
+
+			static ID3D11ShaderResourceView* ResolveSRV(
+				const ShaderResourceHandle& h,
+				DX11::TextureManager& texMgr,
+				DX11::BufferManager& bufMgr
+			);
+
+			static void AddRefSRV(
+				const ShaderResourceHandle& h,
+				DX11::TextureManager& texMgr,
+				DX11::BufferManager& bufMgr
+			);
+
+			static void ReleaseSRV(
+				const ShaderResourceHandle& h,
+				DX11::TextureManager& texMgr,
+				DX11::BufferManager& bufMgr,
+				bool del
+			);
+
+			static uint32_t ResolveHandleIndex(const ShaderResourceHandle& h) {
+				uint32_t index = 0;
+
+				std::visit([&](auto&& v) {
+					using T = std::decay_t<decltype(v)>;
+					if constexpr (std::is_same_v<T, TextureHandle>) index = v.index;
+					else if constexpr (std::is_same_v<T, BufferHandle>) index = v.index;
+					}, h);
+
+				return index;
+			}
+
 		private:
 			MaterialBindingCacheSRV BuildBindingCacheSRV(
 				const std::vector<ShaderResourceBinding>& bindings,

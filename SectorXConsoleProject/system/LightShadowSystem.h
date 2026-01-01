@@ -2,7 +2,7 @@
 
 template<typename Partition>
 class LightShadowSystem : public ITypeSystem<
-	LightShadowSystem<Partition>,
+	LightShadowSystem,
 	Partition,
 	ComponentAccess<>,//アクセスするコンポーネントの指定
 	ServiceContext<
@@ -10,16 +10,18 @@ class LightShadowSystem : public ITypeSystem<
 		Graphics::I3DPerCameraService,
 		Graphics::RenderService,
 		Graphics::LightShadowService,
+		Graphics::PointLightService,
 		Graphics::DX11::LightShadowResourceService
 	>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<>;
 public:
 	void StartImpl(
-		safe_ptr<InputService> inputService,
-		safe_ptr<Graphics::I3DPerCameraService> perCameraService,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<Graphics::LightShadowService> lightShadowService,
-		safe_ptr<Graphics::DX11::LightShadowResourceService> shadowMapService
+		NoDeletePtr<InputService> inputService,
+		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService,
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
+		NoDeletePtr<Graphics::PointLightService> pointLightService,
+		NoDeletePtr<Graphics::DX11::LightShadowResourceService> shadowMapService
 	)
 	{
 		Graphics::CameraParams camParams;
@@ -42,11 +44,12 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(
-		safe_ptr<InputService> inputService,
-		safe_ptr<Graphics::I3DPerCameraService> perCameraService,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<Graphics::LightShadowService> lightShadowService,
-		safe_ptr<Graphics::DX11::LightShadowResourceService> resourceService) {
+		NoDeletePtr<InputService> inputService,
+		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService,
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
+		NoDeletePtr<Graphics::PointLightService> pointLightService,
+		NoDeletePtr<Graphics::DX11::LightShadowResourceService> resourceService) {
 
 		bool updateCascade = false;
 		if (inputService->IsKeyPressed(Input::Key::L))
@@ -133,18 +136,25 @@ public:
 			auto bufferMgr = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
 			bufferMgr->UpdateBuffer(cbUpdateDesc, currentSlot);
 
-			Graphics::CPULightData cbLightData = lightShadowService->GetCPULightData();
-			resourceService->SetCPULightData(currentSlot, cbLightData);
+			auto& cpuLightData = m_cpuLightData[currentSlot];
+			cpuLightData = lightShadowService->GetCPULightData();
+
+			const auto* pointLightData = pointLightService->BuildGpuLights(cpuLightData.gPointLightCount);
 
 			// CPU 側のライトデータを GPU 側に転送
-			//※ポイントライトの数はPointLightSystemで更新!
 			cbUpdateDesc.buffer = resourceService->GetLightDataCB();
-			cbUpdateDesc.data = resourceService->GetCPULightDataPtrNoLock(currentSlot);
+			cbUpdateDesc.data = &cpuLightData;
 			cbUpdateDesc.size = sizeof(Graphics::CPULightData);
+			bufferMgr->UpdateBuffer(cbUpdateDesc, currentSlot);
+
+			cbUpdateDesc.buffer = resourceService->GetPointLightBuffer();
+			cbUpdateDesc.data = pointLightData;
+			cbUpdateDesc.size = sizeof(Graphics::GpuPointLight) * cpuLightData.gPointLightCount;
 			bufferMgr->UpdateBuffer(cbUpdateDesc, currentSlot);
 		}
 	}
 private:
 	Math::AABB3f cascadeSceneAABB = { {0,-500.0f,0},{5000.0f,500.0f,5000.0f} };
 	Graphics::DX11::CBShadowCascadesData m_cbShadowCascadesData[Graphics::RENDER_BUFFER_COUNT] = {};
+	Graphics::CPULightData m_cpuLightData[::SFW::Graphics::RENDER_BUFFER_COUNT] = {};
 };

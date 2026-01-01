@@ -48,11 +48,11 @@ namespace SFW {
 			using Tuple = std::tuple<Services*...>;
 		};
 		/**
-		 * @brief 更新サービスのインターフェース
+		 * @brief 更新サービスのインターフェース(Systemよりも前に更新)
 		 * @details 使用する場合は対象のサービスに継承させる
 		 */
 		class IUpdateService {
-			virtual void Update(double deltaTime) = 0;
+			virtual void PreUpdate(double deltaTime) = 0;
 
 		public:
 			enum Phase : uint16_t {
@@ -84,11 +84,28 @@ namespace SFW {
 
 			friend class ServiceLocator;
 		};
+
+		/**
+		 * @brief コミットサービスのインターフェース(Systemを更新した後に呼び出される)
+		 * @details 使用する場合は対象のサービスに継承させる
+		 * @details とりあえず直列で更新。重い処理を載せる予定ならIUpdateServiceのように並列にしてもいい
+		 */
+		class ICommitService {
+		public:
+			virtual void Commit(double deltaTime) = 0;
+		};
+
 		/**
 		 * @brief 指定した型がIUpdateServiceを継承しているかを判定するテンプレート
 		 */
 		template<typename T>
 		static constexpr bool isUpdateService = std::is_base_of_v<IUpdateService, T>;
+
+		/**
+		 * @brief 指定した型がICommitServiceを継承しているかを判定するテンプレート
+		 */
+		template<typename T>
+		static constexpr bool isCommitService = std::is_base_of_v<ICommitService, T>;
 
 #define DEFINE_UPDATESERVICE_PHASE(PhaseEnum) \
 			static inline constexpr uint16_t updatePhase = PhaseEnum;

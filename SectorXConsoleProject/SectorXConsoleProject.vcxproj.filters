@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\VS_Instance.hlsl">
+    <FxCompile Include="shader\VS_ClipUV.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_Opaque.hlsl">
@@ -110,7 +110,7 @@
     <FxCompile Include="shader\VS_Fullscreen.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\VS_Lit.hlsl">
+    <FxCompile Include="shader\VS_ClipUVNrm.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_PBR_Lighting.hlsl">
@@ -123,6 +123,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_PBR_Unlit_Shadow.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_SpriteAnimation.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
@@ -203,6 +206,12 @@
     </ClInclude>
     <ClInclude Include="app\EnvironmentService.h">
       <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="app\SpriteAnimationService.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="system\SpriteAnimationSystem.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

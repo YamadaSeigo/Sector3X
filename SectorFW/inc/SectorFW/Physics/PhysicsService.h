@@ -236,7 +236,7 @@ namespace SFW
 			 * @brief 物理シミュレーションを更新する（IUpdateService 実装）
 			 * @param dt 可変フレーム時間（ゲームループから呼ぶ）
 			 */
-			void Update(double dt) override {
+			void PreUpdate(double dt) override {
 				m_delta = dt;
 				m_accum += static_cast<float>(dt);
 

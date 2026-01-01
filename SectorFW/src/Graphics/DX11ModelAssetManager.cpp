@@ -359,8 +359,8 @@ namespace SFW
 						}
 					}
 
-					std::unordered_map<UINT, TextureHandle> psSRVMap;
-					std::unordered_map<UINT, TextureHandle> vsSRVMap;
+					std::unordered_map<UINT, ShaderResourceHandle> psSRVMap;
+					std::unordered_map<UINT, ShaderResourceHandle> vsSRVMap;
 					std::unordered_map<UINT, BufferHandle>  psCBVMap;
 					std::unordered_map<UINT, BufferHandle>  vsCBVMap;
 					std::unordered_map<UINT, SamplerHandle> samplerMap;
@@ -400,7 +400,7 @@ namespace SFW
 						// 4) テクスチャの自動割り当て（既存のBaseColorに加えて Normal / MRR にも対応）
 						auto bindTex = [&](const char* name, TextureHandle h,
 							const std::vector<ShaderResourceBinding>& binding,
-							std::unordered_map<UINT, TextureHandle>& map) {
+							std::unordered_map<UINT, ShaderResourceHandle>& map) {
 								for (const auto& b : binding)
 									if (b.type == D3D_SIT_TEXTURE && b.name == name)
 										map[b.bindPoint] = h;

@@ -67,6 +67,18 @@ namespace SFW
 			Right,
 			Up,
 			Down,
+			F1,
+			F2,
+			F3,
+			F4,
+			F5,
+			F6,
+			F7,
+			F8,
+			F9,
+			F10,
+			F11,
+			F12,
 			LShift,
 			RShift,
 			LCtrl,
@@ -153,7 +165,7 @@ namespace SFW
 				static_cast<const Derived*>(this)->GetMouseWheelImpl(outWheelV, outWheelH);
 			}
 		private:
-			void Update(double deltaTime) override {
+			void PreUpdate(double deltaTime) override {
 				static_cast<Derived*>(this)->UpdateImpl();
 			}
 		public:

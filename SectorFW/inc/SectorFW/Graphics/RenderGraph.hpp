@@ -171,6 +171,26 @@ namespace SFW
 				assert(false && "Pass not found");
 				return *passes[0];
 			}
+
+			bool BindPassGlobalResources(PassType* pass) {
+				// パス固有の状態をセット
+				backend.SetPrimitiveTopology(pass->topology);
+				bool useRasterizer = pass->rasterizerState.has_value();
+				if (useRasterizer)
+					backend.SetRasterizerState(*pass->rasterizerState);
+				backend.SetBlendState(pass->blendState);
+				backend.SetDepthStencilState(pass->depthStencilState, pass->stencilRef);
+				backend.SetRenderTargets(pass->rtvsRaw, pass->dsv.Get());
+
+				if (pass->cbvs.has_value())
+					backend.BindGlobalVSCBVs(pass->cbvs.value());
+
+				if (pass->viewport.has_value())
+					backend.SetViewport(pass->viewport.value());
+
+				return useRasterizer;
+			}
+
 			/**
 			 * @brief 描画の実行
 			 */
@@ -273,31 +293,22 @@ namespace SFW
 
 					auto* pass = g.passes[node.passIndex];
 					const auto& r = gs.ranges[node.passIndex];
+
 					if (r.count == 0) {
-						if (pass->customExecute)
+						if (pass->customExecute) {
+							BindPassGlobalResources(pass);
+
 							pass->customExecute(currentFrame);
+						}
 
 						continue;
 					}
 
+					bool useRasterizer = BindPassGlobalResources(pass);
+
 					// このパス用の indexView
 					auto* idxBegin = gs.indices.data() + r.offset;
 					auto* idxEnd = idxBegin + r.count;
-
-					// パス固有の状態をセット
-					backend.SetPrimitiveTopology(pass->topology);
-					bool useRasterizer = pass->rasterizerState.has_value();
-					if (useRasterizer)
-						backend.SetRasterizerState(*pass->rasterizerState);
-					backend.SetBlendState(pass->blendState);
-					backend.SetDepthStencilState(pass->depthStencilState, pass->stencilRef);
-					backend.SetRenderTargets(pass->rtvsRaw, pass->dsv.Get());
-
-					if (pass->cbvs.has_value())
-						backend.BindGlobalVSCBVs(pass->cbvs.value());
-
-					if (pass->viewport.has_value())
-						backend.SetViewport(pass->viewport.value());
 
 					// 共通cmds + このパスの indexビューで描画
 					backend.ExecuteDrawIndexedInstanced(gs.cmds, std::span<const uint32_t>(idxBegin, idxEnd), pass->psoOverride, !useRasterizer);

@@ -159,7 +159,7 @@ namespace SFW
 
             {
                 D3D11_BUFFER_DESC bd = {};
-                bd.ByteWidth = sizeof(GpuPointLight) * PointLightService::MAX_POINT_LIGHT_NUM;
+                bd.ByteWidth = sizeof(GpuPointLight) * PointLightService::MAX_FRAME_POINTLIGHT;
                 bd.Usage = D3D11_USAGE_DYNAMIC;
                 bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
                 bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -172,7 +172,7 @@ namespace SFW
                 srvDesc.Format = DXGI_FORMAT_UNKNOWN;
                 srvDesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
                 srvDesc.Buffer.FirstElement = 0;
-                srvDesc.Buffer.NumElements = PointLightService::MAX_POINT_LIGHT_NUM;
+                srvDesc.Buffer.NumElements = PointLightService::MAX_FRAME_POINTLIGHT;
 
                 hr = device->CreateShaderResourceView(m_pointLightBuffer.Get(), &srvDesc, &m_pointLightSRV);
             }

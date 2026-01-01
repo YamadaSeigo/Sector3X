@@ -2,7 +2,7 @@
 
 template<typename Partition>
 class VoidSystem : public ITypeSystem<
-	VoidSystem<Partition>,
+	VoidSystem,
 	Partition,
 	ComponentAccess<>,//アクセスするコンポーネントの指定
 	ServiceContext<>>{//受け取るサービスの指定

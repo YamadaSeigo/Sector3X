@@ -168,23 +168,6 @@ namespace SFW
                 return m_pointLightSRV.Get();
 			}
 
-            CPULightData GetCPULightData(std::uint16_t slot) const noexcept
-            {
-				std::shared_lock lock(m_lightDataMutex);
-                return m_cpuLightData[slot];
-			}
-
-            void SetCPULightData(std::uint16_t slot, const CPULightData& data)
-            {
-                std::unique_lock lock(m_lightDataMutex);
-				m_cpuLightData[slot] = data;
-            }
-
-            const CPULightData* GetCPULightDataPtrNoLock(std::uint16_t slot) const noexcept
-            {
-                return &m_cpuLightData[slot];
-            }
-
         private:
             bool CreateResources(ID3D11Device* device);
 
@@ -217,10 +200,6 @@ namespace SFW
             ComPtr<ID3D11Buffer> m_pointLightBuffer;
 
             ComPtr<ID3D11ShaderResourceView> m_pointLightSRV;
-
-			mutable std::shared_mutex m_lightDataMutex;
-
-            CPULightData m_cpuLightData[::SFW::Graphics::RENDER_BUFFER_COUNT] = {};
         public:
             STATIC_SERVICE_TAG
         };

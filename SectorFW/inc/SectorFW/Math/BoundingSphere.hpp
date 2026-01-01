@@ -658,6 +658,14 @@ namespace SFW {
 
                 return x_overlap && y_overlap && z_overlap;
             }
+
+            enum class VisState : uint32_t {
+                Culled = 0,          // 画面外（この関数のNDC/rect判定で落ちた）
+                Visible = 1,         // 可視（rectが画面と交差）
+                NeedFrustum = 2      // 近すぎ/背面などでrect推定が不安定 → フラスタム球判定へ
+            };
+
+
             /**
           * @brief カメラ基底を使った高速な可視判定
           * @details centerはWVPで変換、radiusは元からワールド空間にする、カメラ軸はワールド空間なのでVPだけ使う
@@ -672,7 +680,7 @@ namespace SFW {
 		  * @param depth 中心の clip.w
           */
             template<class Mat4, class NDC>
-            static bool IsVisible_LocalCenter_WorldRadius(
+            static VisState IsVisible_LocalCenter_WorldRadius(
                 const Mat4& WVP,          // = VP * World
                 const Mat4& VP,           // = Projection * View
                 const Vec3& centerLocal,  // モデルローカルの中心
@@ -686,16 +694,25 @@ namespace SFW {
             {
                 using ::SFW::Math::MulPoint_RowMajor_ColVec;
 
-                // 1) ローカル中心を clip へ (World -> View -> Proj を WVP でまとめて計算)
+                // 1) center -> clip
                 T cx, cy, cz, cw;
                 MulPoint_RowMajor_ColVec(WVP,
                     centerLocal.x, centerLocal.y, centerLocal.z,
                     cx, cy, cz, cw);
 
-                // cw が 0 付近のときの保護
-                const T eps = static_cast<T>(1e-6f);
-                if (std::fabs(cw) < eps)
-                    cw = (cw < 0 ? -eps : eps);
+                // ---- フォールバック条件（近すぎ/背面）----
+                // ここはプロジェクトに合わせて閾値調整。
+                // 目的：cw が小さくて r_ndc が爆発しやすい/背面で不安定なケースを除外
+                const T epsW = static_cast<T>(1e-4f); // 1e-6 より少し大きめ推奨
+                if (cw <= epsW) {
+                    if (outNDC) {
+                        outNDC->xmin = -1; outNDC->xmax = 1;
+                        outNDC->ymin = -1; outNDC->ymax = 1;
+                        outNDC->wmin = cw;
+                    }
+                    if (depth) { *depth = cw; }
+                    return VisState::NeedFrustum;
+                }
 
                 const T invCW = static_cast<T>(1) / cw;
                 const T invCW2 = invCW * invCW;
@@ -704,54 +721,59 @@ namespace SFW {
                 const T ndc_cy = cy * invCW;
                 const T ndc_cz = cz * invCW;
 
-                // 2) VP の線形部分を抽出（ワールドベクトル -> clip の変換）
-                const T m00 = VP.m00, m01 = VP.m01, m02 = VP.m02;
-                const T m10 = VP.m10, m11 = VP.m11, m12 = VP.m12;
-                const T m20 = VP.m20, m21 = VP.m21, m22 = VP.m22;
-                const T m30 = VP.m30, m31 = VP.m31, m32 = VP.m32; // w成分
+                // VP の行（clipX, clipY, clipZ, clipW の xyz だけ）
+                const T x0 = VP.m00, x1 = VP.m01, x2 = VP.m02;
+                const T y0 = VP.m10, y1 = VP.m11, y2 = VP.m12;
+                const T z0 = VP.m20, z1 = VP.m21, z2 = VP.m22;
+                const T w0 = VP.m30, w1 = VP.m31, w2 = VP.m32;
 
-                auto to_clip_dir = [&](const Vec3& v)->Vec3 {
-                    return {
-                        m00 * v.x + m01 * v.y + m02 * v.z,
-                        m10 * v.x + m11 * v.y + m12 * v.z,
-                        m20 * v.x + m21 * v.y + m22 * v.z
-                    };
-                    };
-                auto to_clip_w_dir = [&](const Vec3& v)->T {
-                    return m30 * v.x + m31 * v.y + m32 * v.z;
+                // dot(row, v) : v は world 方向（camRightWS 等）
+                auto dot3 = [&](T r0, T r1, T r2, const Vec3& v)->T {
+                    return r0 * v.x + r1 * v.y + r2 * v.z;
                     };
 
-                const Vec3 clipR = to_clip_dir(camRightWS);
-                const Vec3 clipU = to_clip_dir(camUpWS);
-                const Vec3 clipF = to_clip_dir(camForwardWS);
-                const T wR = to_clip_w_dir(camRightWS);
-                const T wU = to_clip_w_dir(camUpWS);
-                const T wF = to_clip_w_dir(camForwardWS);
+                // df = d(X/W) along v  ≈ (dX * W - X * dW) / W^2
+                auto d_ndc_along = [&](T X, T W, T dX, T dW)->T {
+                    return (dX * W - X * dW) * invCW2;
+                    };
 
-                // 3) 半径の NDC への変換（微分ベース）
-                // d(x/w) ≈ (dx*w - x*dw) / w²
-                const T dxR = clipR.x * cw - cx * wR;
-                const T dyU = clipU.y * cw - cy * wU;
-                const T dzF = clipF.z * cw - cz * wF;
+                auto grad_norm_ndc = [&](T X, T W, T row0, T row1, T row2)->T
+                    {
+                        // dX, dW for each camera basis direction
+                        const T dX_R = dot3(row0, row1, row2, camRightWS);
+                        const T dX_U = dot3(row0, row1, row2, camUpWS);
+                        const T dX_F = dot3(row0, row1, row2, camForwardWS);
 
-                const T r_ndc_x = std::fabs(radiusWorld * dxR * invCW2);
-                const T r_ndc_y = std::fabs(radiusWorld * dyU * invCW2);
-                const T r_ndc = (std::max)(r_ndc_x, r_ndc_y);
+                        const T dW_R = dot3(w0, w1, w2, camRightWS);
+                        const T dW_U = dot3(w0, w1, w2, camUpWS);
+                        const T dW_F = dot3(w0, w1, w2, camForwardWS);
 
-                // 4) z 範囲（前後 ±radius * Forward）
-                const T r_ndc_z = std::fabs(radiusWorld * dzF * invCW2);
+                        const T a = d_ndc_along(X, W, dX_R, dW_R);
+                        const T b = d_ndc_along(X, W, dX_U, dW_U);
+                        const T c = d_ndc_along(X, W, dX_F, dW_F);
+
+                        return std::sqrt(a * a + b * b + c * c); // ≒ ||∇(X/W)||
+                    };
+
+                const T absR = std::fabs(radiusWorld);
+
+                const T r_ndc_x = absR * grad_norm_ndc(cx, cw, x0, x1, x2); // for ndc_x
+                const T r_ndc_y = absR * grad_norm_ndc(cy, cw, y0, y1, y2); // for ndc_y
+                const T r_ndc_z = absR * grad_norm_ndc(cz, cw, z0, z1, z2); // for ndc_z
+
+                // 4) NDC矩形
+                const T xmin = ndc_cx - r_ndc_x;
+                const T xmax = ndc_cx + r_ndc_x;
+                const T ymin = ndc_cy - r_ndc_y;
+                const T ymax = ndc_cy + r_ndc_y;
+
+                // z範囲（深度前提に合わせる）
                 const T zmin_est = ndc_cz - r_ndc_z;
                 const T zmax_est = ndc_cz + r_ndc_z;
 
-                // 5) 画面矩形との交差判定
-                const T xmin = ndc_cx - r_ndc;
-                const T xmax = ndc_cx + r_ndc;
-                const T ymin = ndc_cy - r_ndc;
-                const T ymax = ndc_cy + r_ndc;
-
                 const bool x_overlap = !(xmax < -1.0f || xmin >  1.0f);
                 const bool y_overlap = !(ymax < -1.0f || ymin >  1.0f);
-                const bool z_overlap = !(zmax_est < 0.0f || zmin_est > 1.0f); // NDC z が [0,1] 前提
+                const bool z_overlap = !(zmax_est < 0.0f || zmin_est > 1.0f); // [0,1] 前提
 
                 if (outNDC) {
                     outNDC->xmin = xmin; outNDC->xmax = xmax;
@@ -759,10 +781,11 @@ namespace SFW {
                     outNDC->wmin = cw;
                 }
                 if (depth) {
-                    *depth = cw; // or ndc_cz など用途次第
+                    *depth = cw; // 用途次第で ndc_cz にしてもOK
                 }
 
-                return x_overlap && y_overlap && z_overlap;
+                if (x_overlap && y_overlap && z_overlap) return VisState::Visible;
+                return VisState::Culled;
             }
 
             struct NdcPrecomp

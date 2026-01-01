@@ -15,7 +15,7 @@ public:
 // プレイヤー制御システム
 template<typename Partition>
 class PlayerSystem : public ITypeSystem<
-	PlayerSystem<Partition>,
+	PlayerSystem,
 	Partition,
 	ComponentAccess<Write<CTransform>>,//アクセスするコンポーネントの指定
 	//受け取るサービスの指定
@@ -33,8 +33,8 @@ public:
 
 	// 入力から希望する速度を計算する（仮実装）
 	Math::Vec3f CalcWishVelocityFromInput(
-		safe_ptr<Graphics::I3DPerCameraService> cameraService,
-		safe_ptr<InputService> inputService)
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
+		NoDeletePtr<InputService> inputService)
 	{
 		Math::Vec3f wishVelocity;
 		Math::Vec2f inputDir(0.0f, 0.0f);
@@ -100,24 +100,24 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void StartImpl(
-		safe_ptr<Physics::PhysicsService> physicsService,
-		safe_ptr<Graphics::I3DPerCameraService> cameraService,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<InputService> inputService,
-		safe_ptr<PlayerService> playerService,
-		safe_ptr<Audio::AudioService> audioService)
+		NoDeletePtr<Physics::PhysicsService> physicsService,
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<InputService> inputService,
+		NoDeletePtr<PlayerService> playerService,
+		NoDeletePtr<Audio::AudioService> audioService)
 	{
 		grassStepHandle = audioService->EnqueueLoadWav("assets/audio/SE/walk-on-grass.wav");
 	}
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		safe_ptr<Physics::PhysicsService> physicsService,
-		safe_ptr<Graphics::I3DPerCameraService> cameraService,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<InputService> inputService,
-		safe_ptr<PlayerService> playerService,
-		safe_ptr<Audio::AudioService> audioService)
+		NoDeletePtr<Physics::PhysicsService> physicsService,
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<InputService> inputService,
+		NoDeletePtr<PlayerService> playerService,
+		NoDeletePtr<Audio::AudioService> audioService)
 	{
 		ECS::EntityManager& globalEntityManager = partition.GetGlobalEntityManager();
 
@@ -125,7 +125,7 @@ public:
 		float dt = static_cast<float>(physicsService->GetDeltaTime());
 
 		static bool playerCamera = true;
-		if (inputService->IsKeyTrigger(Input::Key::P))
+		if (inputService->IsKeyTrigger(Input::Key::F1))
 		{
 			playerCamera = !playerCamera;
 
@@ -354,12 +354,12 @@ public:
 	}
 
 	void EndImpl(Partition& partition,
-		safe_ptr<Physics::PhysicsService> physicsService,
-		safe_ptr<Graphics::I3DPerCameraService> cameraService,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<InputService> inputService,
-		safe_ptr<PlayerService> playerService,
-		safe_ptr<Audio::AudioService> audioService)
+		NoDeletePtr<Physics::PhysicsService> physicsService,
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<InputService> inputService,
+		NoDeletePtr<PlayerService> playerService,
+		NoDeletePtr<Audio::AudioService> audioService)
 	{
 		ECS::EntityManager& globalEntityManager = partition.GetGlobalEntityManager();
 

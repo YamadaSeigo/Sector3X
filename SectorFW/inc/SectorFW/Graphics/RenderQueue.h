@@ -5,6 +5,13 @@
  * @date   September 2025
  *********************************************************************/
 
+//インスタンスの情報を変更する場合は以下のマクロを使用する
+/*
+	SFW_MAX_INSTANCES_PER_FRAME : フレーム当たりの最大インスタンス数(パス全体)
+	SFW_MAX_INSTANCE_INDICES_PER_PASS : パス当たりの最大インスタンスインデックス数
+	SFW_DRAWCOMMAND_TMPBUF_SIZE : 描画コマンドをキューから取り出す際のバッチサイズ
+ */
+
 #pragma once
 
 #include "../external/concurrentqueue/concurrentqueue.h"
@@ -24,24 +31,37 @@
 
 #include "RenderTypes.h"
 
+
 namespace SFW
 {
 	namespace Graphics
 	{
 		/**
-		 * @brief フレーム当たりの最大インスタンス数
+		 * @brief フレーム当たりの最大インスタンス数(パス全体)
 		 */
-		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = 98304 * 2;
+#ifdef SFW_MAX_INSTANCES_PER_FRAME
+		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = SFW_MAX_INSTANCES_PER_FRAME;
+#else
+		static inline constexpr uint32_t MAX_INSTANCES_PER_FRAME = 1u << 16;
+#endif
 		/**
 		 * @brief パス当たりの最大インスタンスインデックス数
 		 */
-		static inline constexpr uint32_t MAX_INSTANCE_INDICES_PER_PASS = 1024 * 1024;
+#ifdef SFW_MAX_INSTANCE_INDICES_PER_PASS
+		static inline constexpr uint32_t MAX_INSTANCE_INDICES_PER_PASS = SFW_MAX_INSTANCE_INDICES_PER_PASS;
+#else
+		static inline constexpr uint32_t MAX_INSTANCE_INDICES_PER_PASS = 1u << 14;
+#endif
 
 		//========================================================================
 		/**
 		 * @brief 描画コマンドをキューから取り出す際のバッチサイズ
 		 */
-		static inline constexpr size_t DRAWCOMMAND_TMPBUF_SIZE = 4096 * 4;
+#ifdef SFW_DRAWCOMMAND_TMPBUF_SIZE
+		static inline constexpr size_t DRAWCOMMAND_TMPBUF_SIZE = 1u << SFW_DRAWCOMMAND_TMPBUF_SIZE;
+#else
+		static inline constexpr size_t DRAWCOMMAND_TMPBUF_SIZE = 1u << 12;
+#endif
 		//========================================================================
 
 		// RenderQueue とは独立した“フレーム共有”アリーナ

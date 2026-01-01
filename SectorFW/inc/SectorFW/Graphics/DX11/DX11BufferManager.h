@@ -35,6 +35,8 @@ namespace SFW
 		 */
 		struct BufferData {
 			ComPtr<ID3D11Buffer> buffer;
+			ComPtr<ID3D11ShaderResourceView> srv;
+			ComPtr<ID3D11UnorderedAccessView> uav;
 			std::string_view name;
 		};
 		/**
@@ -63,6 +65,12 @@ namespace SFW
 			ComPtr<ID3D11Buffer> buffer;
 			const void* data = nullptr;
 			size_t size = (std::numeric_limits<size_t>::max)();
+			
+			// カスタム更新関数の型定義(dst, src, size)
+			using CustomUpdateFunc = void(*)(void*, const void*, size_t);
+
+			CustomUpdateFunc customUpdateFunc = nullptr;
+
 			bool isDelete = true;
 
 			bool isValid() const {
@@ -125,7 +133,7 @@ namespace SFW
 			 * @return DX11BufferData 作成されたバッファデータ
 			 */
 			BufferData CreateResource(const BufferCreateDesc& desc, BufferHandle h) {
-				BufferData cb{};
+				BufferData out{};
 
 				D3D11_BUFFER_DESC bd = {};
 				bd.Usage = desc.usage;
@@ -150,19 +158,62 @@ namespace SFW
 						assert(false && "Immutable buffer must have initial data.");
 					}
 
-					hr = device->CreateBuffer(&bd, nullptr, &cb.buffer);
+					hr = device->CreateBuffer(&bd, nullptr, &out.buffer);
 				}
 				else {
 					D3D11_SUBRESOURCE_DATA initData = {};
 					initData.pSysMem = desc.initialData;
-					hr = device->CreateBuffer(&bd, &initData, &cb.buffer);
+					hr = device->CreateBuffer(&bd, &initData, &out.buffer);
 				}
 
 				if (FAILED(hr)) {
 					assert(false && "Failed to create constant buffer");
 				}
 
-				return cb;
+				// SRV が必要なら作成
+				if (desc.bindFlags & D3D11_BIND_SHADER_RESOURCE) {
+					D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
+					if (desc.miscFlags & D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS) {
+						// ByteAddressBuffer (raw)
+						sd.Format = DXGI_FORMAT_R32_TYPELESS;
+						sd.ViewDimension = D3D11_SRV_DIMENSION_BUFFEREX;
+						sd.BufferEx.FirstElement = 0;
+						sd.BufferEx.NumElements = desc.size / 4;
+						sd.BufferEx.Flags = D3D11_BUFFEREX_SRV_FLAG_RAW;
+					}
+					else {
+						// StructuredBuffer
+						sd.Format = DXGI_FORMAT_UNKNOWN;
+						sd.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+						sd.Buffer.FirstElement = 0;
+						sd.Buffer.NumElements = desc.size / desc.structureByteStride;
+					}
+					HRESULT hr = device->CreateShaderResourceView(out.buffer.Get(), &sd, &out.srv);
+					assert(SUCCEEDED(hr));
+				}
+
+				// UAV が必要なら作成（Compute 用）
+				if (desc.bindFlags & D3D11_BIND_UNORDERED_ACCESS) {
+					D3D11_UNORDERED_ACCESS_VIEW_DESC ud{};
+					if (desc.miscFlags & D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS) {
+						ud.Format = DXGI_FORMAT_R32_TYPELESS;
+						ud.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
+						ud.Buffer.FirstElement = 0;
+						ud.Buffer.NumElements = desc.size / 4;
+						ud.Buffer.Flags = D3D11_BUFFER_UAV_FLAG_RAW;
+					}
+					else {
+						ud.Format = DXGI_FORMAT_UNKNOWN;
+						ud.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
+						ud.Buffer.FirstElement = 0;
+						ud.Buffer.NumElements = desc.size / desc.structureByteStride;
+						ud.Buffer.Flags = 0;
+					}
+					HRESULT hr = device->CreateUnorderedAccessView(out.buffer.Get(), &ud, &out.uav);
+					assert(SUCCEEDED(hr));
+				}
+
+				return out;
 			}
 			/**
 			 * @brief 名前でバッファを検索
@@ -233,7 +284,12 @@ namespace SFW
 						D3D11_MAPPED_SUBRESOURCE mapped;
 						HRESULT hr = context->Map(update.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 						if (SUCCEEDED(hr)) [[likely]] {
-							memcpy(mapped.pData, update.data, update.size);
+							if (update.customUpdateFunc) {
+								update.customUpdateFunc(mapped.pData, update.data, update.size);
+							}
+							else {
+								memcpy(mapped.pData, update.data, update.size);
+							}
 							context->Unmap(update.buffer.Get(), 0);
 						}
 						else {

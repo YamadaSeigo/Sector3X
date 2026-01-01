@@ -102,6 +102,8 @@ namespace SFW
 			m_world.UpdateServiceLocator(delta_time, executor);
 
 			m_world.UpdateAllLevels(delta_time, executor);
+
+			m_world.CommitServiceLocator(delta_time);
 		}
 		/**
 		 * @brief •`‰æˆ—

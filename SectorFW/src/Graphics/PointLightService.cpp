@@ -3,6 +3,15 @@
 
 namespace SFW::Graphics
 {
+    void PointLightService::PreUpdate(double deltaTime)
+    {
+        m_frameIndex++;
+
+        auto countSlot = (m_frameIndex + 1) % 2;
+
+        m_showCount[countSlot].store(0, std::memory_order_release);
+    }
+
     void PointLightService::Reserve(uint32_t capacity)
     {
         std::unique_lock lock(m_mtx);
@@ -10,7 +19,6 @@ namespace SFW::Graphics
         m_generation.reserve(capacity);
         m_alive.reserve(capacity);
         m_freeList.reserve(capacity / 2);
-        m_dirtyIndices.reserve(capacity / 4);
     }
 
     PointLightHandle PointLightService::Create(const PointLightDesc& desc)
@@ -28,7 +36,6 @@ namespace SFW::Graphics
             ++m_generation[idx];
 
             m_slots[idx].desc = desc;
-            m_slots[idx].dirty = Dirty_All;
             m_slots[idx].alive = true;
             m_alive[idx] = 1;
         }
@@ -40,14 +47,11 @@ namespace SFW::Graphics
             m_alive.push_back(1);
 
             m_slots[idx].desc = desc;
-            m_slots[idx].dirty = Dirty_All;
             m_slots[idx].alive = true;
         }
 
         ++m_aliveCount;
 
-        // dirty indexに追加（重複は許容。最適化するならbitset等にする）
-        m_dirtyIndices.push_back(idx);
 
         return PointLightHandle{ idx, m_generation[idx] };
     }
@@ -60,12 +64,9 @@ namespace SFW::Graphics
         Slot& s = m_slots[h.index];
         s.alive = false;
         m_alive[h.index] = 0;
-        s.dirty = Dirty_All; // DestroyもGPU反映が必要ならdirty扱い（無効化フラグ等）
         m_freeList.push_back(h.index);
 
         if (m_aliveCount > 0) --m_aliveCount;
-
-        m_dirtyIndices.push_back(h.index);
     }
 
     bool PointLightService::IsValid(PointLightHandle h) const
@@ -90,8 +91,6 @@ namespace SFW::Graphics
 
         Slot& s = m_slots[h.index];
         s.desc.positionWS = posWS;
-        s.dirty |= Dirty_Pos;
-        m_dirtyIndices.push_back(h.index);
     }
 
     void PointLightService::SetParams(PointLightHandle h, const Math::Vec3f& color, float intensity, float range, bool castsShadow)
@@ -104,8 +103,6 @@ namespace SFW::Graphics
         s.desc.intensity = intensity;
         s.desc.range = range;
         s.desc.castsShadow = castsShadow;
-        s.dirty |= Dirty_Params;
-        m_dirtyIndices.push_back(h.index);
     }
 
     PointLightDesc PointLightService::Get(PointLightHandle h) const
@@ -121,80 +118,44 @@ namespace SFW::Graphics
         return m_slots[h.index].desc;
     }
 
-    void PointLightService::BuildGpuLights(std::vector<GpuPointLight>& out) const
+    bool PointLightService::PushShowHandle(PointLightHandle h)
     {
-        std::shared_lock lock(m_mtx);
+        if (!IsValid(h)) return false;
 
-        out.clear();
-        out.reserve(m_aliveCount);
+        // 1フレーム先のスロットを指定
+        auto countSlot = (m_frameIndex + 1) % 2;
+        auto n = m_showCount[countSlot].fetch_add(1, std::memory_order_acq_rel);
+        if (n >= MAX_FRAME_POINTLIGHT) return false;
 
-        for (uint32_t i = 0; i < (uint32_t)m_slots.size(); ++i)
+        m_showIndex[countSlot][n] = h.index;
+
+        return true;
+    }
+
+    const GpuPointLight* PointLightService::BuildGpuLights(uint32_t& outCount) noexcept
+    {
+        auto countSlot = m_frameIndex % 2;
+        auto& showIndex = m_showIndex[countSlot];
+
+        auto n = m_showCount[countSlot].load(std::memory_order_acquire);
+      
+		auto& buffer = m_gpuLights[m_frameIndex % RENDER_BUFFER_COUNT];
+
+        for (uint32_t i = 0; i < n; ++i)
         {
-            const Slot& s = m_slots[i];
-            if (!s.alive) continue;
-
-            GpuPointLight g{};
+            auto idx = showIndex[i];
+            const Slot& s = m_slots[idx];
+            GpuPointLight& g = buffer[i];
             g.positionWS = s.desc.positionWS;
-            g.range = s.desc.range;
+			g.range = s.desc.range;
             g.color = s.desc.color;
             g.intensity = s.desc.intensity;
-            g.flags = (s.desc.castsShadow ? 1u : 0u);
-
-            out.push_back(g);
-        }
-    }
-
-    void PointLightService::CollectDirtyIndices(std::vector<uint32_t>& outDirtyIndices)
-    {
-        std::unique_lock lock(m_mtx);
-
-        outDirtyIndices = m_dirtyIndices;
-
-        // 重複削除（必要なら）
-        std::sort(outDirtyIndices.begin(), outDirtyIndices.end());
-        outDirtyIndices.erase(std::unique(outDirtyIndices.begin(), outDirtyIndices.end()), outDirtyIndices.end());
-    }
-
-    void PointLightService::ClearDirty()
-    {
-        std::unique_lock lock(m_mtx);
-
-        for (uint32_t i = 0; i < (uint32_t)m_slots.size(); ++i)
-            m_slots[i].dirty = Dirty_None;
-
-        m_dirtyIndices.clear();
-    }
-
-    void PointLightService::CollectShadowCandidatesNear(
-        const Math::Vec3f& cameraPosWS,
-        uint32_t maxCount,
-        std::vector<PointLightHandle>& out) const
-    {
-        std::shared_lock lock(m_mtx);
-
-        struct Cand { uint32_t idx; float d2; };
-        std::vector<Cand> cands;
-        cands.reserve(64);
-
-        for (uint32_t i = 0; i < (uint32_t)m_slots.size(); ++i)
-        {
-            const Slot& s = m_slots[i];
-            if (!s.alive) continue;
-            if (!s.desc.castsShadow) continue;
-
-            cands.push_back(Cand{ i, Math::LengthSquared(s.desc.positionWS, cameraPosWS) });
+            g.invRange = 1.0f / s.desc.range;
+			g.flags = s.desc.castsShadow ? 1u : 0u;
         }
 
-        std::sort(cands.begin(), cands.end(), [](const Cand& a, const Cand& b) { return a.d2 < b.d2; });
+        outCount = n;
 
-        out.clear();
-        const uint32_t take = std::min<uint32_t>((uint32_t)cands.size(), maxCount);
-        out.reserve(take);
-
-        for (uint32_t k = 0; k < take; ++k)
-        {
-            const uint32_t idx = cands[k].idx;
-            out.push_back(PointLightHandle{ idx, m_generation[idx] });
-        }
+        return buffer;
     }
 }

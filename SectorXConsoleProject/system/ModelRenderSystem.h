@@ -30,7 +30,7 @@ struct CModel
 
 template<typename Partition>
 class ModelRenderSystem : public ITypeSystem<
-	ModelRenderSystem<Partition>,
+	ModelRenderSystem,
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
@@ -55,11 +55,11 @@ public:
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		safe_ptr<IThreadExecutor> threadPool,
-		safe_ptr<Graphics::RenderService> renderService,
-		safe_ptr<Graphics::I3DPerCameraService> cameraService,
-		safe_ptr<Graphics::LightShadowService> lightShadowService,
-		safe_ptr<WindMovementService> grassService)
+		NoDeletePtr<IThreadExecutor> threadPool,
+		NoDeletePtr<Graphics::RenderService> renderService,
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
+		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
+		NoDeletePtr<WindMovementService> grassService)
 	{
 		//草のバッファの更新
 		grassService->UpdateBufferToGPU(renderService->GetProduceSlot());
@@ -118,6 +118,7 @@ public:
 			Graphics::DX11::MaterialManager* materialMgr;
 			Graphics::DX11::PSOManager* psoMgr;
 			const Math::Matrix4x4f& viewProj;
+			const Math::Frustumf& frustum;
 			const Math::Frustumf& shadowFrustum;
 			Math::Vec3f cp;
 			Math::Vec3f camRight;
@@ -144,6 +145,7 @@ public:
 			materialManager,
 			psoManager,
 			viewProj,
+			fru,
 			shadowFru,
 			camPos,
 			camRight,
@@ -233,24 +235,56 @@ public:
 						//カメラの軸にWVPの回転成分を反映させないために、radiusだけworld空間にしておく
 						//(スケールの一番大きいものを反映しているため可視判定もすこし通りやすくなる)
 						float bsRadiusWS = mesh.bs.radius * (std::max)(mtf.sx[i], (std::max)(mtf.sy[i], mtf.sz[i]));
+
+						Math::Vec3f centerBS = mesh.bs.center;
+						using BSVisState = Math::BoundingSpheref::VisState;
+
+						BSVisState visRes = Math::BoundingSpheref::IsVisible_LocalCenter_WorldRadius(WVP, kp->viewProj, centerBS, bsRadiusWS, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth);
+
 						bool shadowOnly = false;
-						Math::Vec3f centerWS = mesh.bs.center;
-						if (!Math::BoundingSpheref::IsVisible_LocalCenter_WorldRadius(WVP, kp->viewProj, mesh.bs.center, bsRadiusWS, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth))
+						switch (visRes)
 						{
-							if (!modelComp.castShadow || depth > 0.2f) continue;
+						case BSVisState::Visible:
+							break;
+						case BSVisState::Culled:
+						{
+							if (!modelComp.castShadow) continue;
 
 							Math::MulPoint_RowMajor_ColVec(
 								worldMtxSoA.AoS(i),
-								centerWS.x, centerWS.y, centerWS.z,
-								centerWS.x, centerWS.y, centerWS.z
+								centerBS.x, centerBS.y, centerBS.z,
+								centerBS.x, centerBS.y, centerBS.z
 							);
 
-							shadowOnly = kp->shadowFrustum.IntersectsSphere(centerWS, bsRadiusWS);
+							//影だけ映るか判定
+							shadowOnly = kp->shadowFrustum.IntersectsSphere(centerBS, bsRadiusWS);
 
 							if (!shadowOnly) continue;
-						}
 
-						//if (!mesh.bs.IsVisible_WVP_CamBasis_Fast(WVP, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth)) continue;
+							break;
+						}
+						case BSVisState::NeedFrustum:
+						{
+							Math::MulPoint_RowMajor_ColVec(
+								worldMtxSoA.AoS(i),
+								centerBS.x, centerBS.y, centerBS.z,
+								centerBS.x, centerBS.y, centerBS.z
+							);
+
+							//フラスタムで再計算
+							if (kp->frustum.IntersectsSphere(centerBS, bsRadiusWS))
+								break;
+
+							if (!modelComp.castShadow) continue;
+
+							//影だけ映るか判定
+							shadowOnly = kp->shadowFrustum.IntersectsSphere(centerBS, bsRadiusWS);
+
+							if (!shadowOnly) continue;
+
+							break;
+						}
+						}
 
 						Graphics::InstanceIndex instanceIdx = instanceIndices[i];
 
@@ -305,12 +339,26 @@ public:
 
 							if (!ndc.valid)
 							{
-								continue;
+								if (!modelComp.castShadow) continue;
+
+								// Visbleはまだ計算していないため、ここで計算
+								if(visRes == BSVisState::Visible) {
+									Math::MulPoint_RowMajor_ColVec(
+										worldMtxSoA.AoS(i),
+										centerBS.x, centerBS.y, centerBS.z,
+										centerBS.x, centerBS.y, centerBS.z
+									);
+								}
+
+								//影だけ映るか判定
+								shadowOnly = kp->shadowFrustum.IntersectsSphere(centerBS, bsRadiusWS);
+
+								if (!shadowOnly) continue;
 							}
 
 							//前フレームで映っている場合は1フレームだけカリングをスキップ
 							//大きすぎる場合は確実に可視
-							if (!temporalSkip)
+							if (!temporalSkip && !shadowOnly)
 							{
 								if (areaFrec < 0.5f && kp->renderService->IsVisibleInMOC(ndc) != Graphics::MOC::CullingResult::VISIBLE) {
 									modelComp.temporalSkip = false;
@@ -372,46 +420,46 @@ public:
 
 							cmd.viewMask |= modelComp.outline ? PASS_3DMAIN_OUTLINE : PASS_3DMAIN_OPAQUE;
 
-							if (ll < 2)
+							if (modelComp.castShadow)
 							{
-								if (modelComp.castShadow)
-								{
+								//Visibleはまだ計算していないため、ここで計算
+								if (visRes == BSVisState::Visible) {
 									Math::MulPoint_RowMajor_ColVec(
 										worldMtxSoA.AoS(i),
-										centerWS.x, centerWS.y, centerWS.z,
-										centerWS.x, centerWS.y, centerWS.z
+										centerBS.x, centerBS.y, centerBS.z,
+										centerBS.x, centerBS.y, centerBS.z
 									);
+								}
 
-									auto centerVec = centerWS - kp->cp;
-									float camDepth = centerVec.dot(kp->camForward);
+								auto centerVec = centerBS - kp->cp;
+								float camDepth = centerVec.dot(kp->camForward);
 
-									// 影方向とカメラ Forward の cosθ
-									float cosLF = std::fabs(kp->shadowDir.dot(kp->camForward)); // 0..1
+								// 影方向とカメラ Forward の cosθ
+								float cosLF = std::fabs(kp->shadowDir.dot(kp->camForward)); // 0..1
 
-									// 影としてどこまで考慮するか（ワールド距離）
-									// 例：一番遠いカスケードの far クリップ距離 - near 距離
-									float maxShadowLenWS = kp->maxShadowDistance;
+								// 影としてどこまで考慮するか（ワールド距離）
+								// 例：一番遠いカスケードの far クリップ距離 - near 距離
+								float maxShadowLenWS = kp->maxShadowDistance;
 
-									// カメラ深度方向に投影される「影の余白」
-									// 光がカメラとほぼ平行だと cosLF ≈ 1 になって深く伸びる
-									float extraDepth = bsRadiusWS + maxShadowLenWS * cosLF;
+								// カメラ深度方向に投影される「影の余白」
+								// 光がカメラとほぼ平行だと cosLF ≈ 1 になって深く伸びる
+								float extraDepth = bsRadiusWS + maxShadowLenWS * cosLF;
 
-									// これでカスケード範囲を決める
-									float minD = camDepth - extraDepth;
-									float maxD = camDepth + extraDepth;
+								// これでカスケード範囲を決める
+								float minD = camDepth - extraDepth;
+								float maxD = camDepth + extraDepth;
 
-									auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(minD, maxD);
+								auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(minD, maxD);
 
-									for (uint32_t ci = cascades.first; ci <= cascades.second; ++ci)
-									{
-										cmd.viewMask |= (PASS_3DMAIN_CASCADE0 << ci);
-									}
+								for (uint32_t ci = cascades.first; ci <= cascades.second; ++ci)
+								{
+									cmd.viewMask |= (PASS_3DMAIN_CASCADE0 << ci);
 								}
 							}
 						}
 						else
 						{
-							auto centerVec = centerWS - kp->cp;
+							auto centerVec = centerBS - kp->cp;
 							float camDepth = centerVec.dot(kp->camForward);
 
 							// 影方向とカメラ Forward の cosθ

@@ -12,4 +12,4 @@ using namespace SFW::ECS;
 using InputService = Input::InputDevice<Input::WinInput>;
 
 template<typename T>
-using safe_ptr = SFW::UndeletablePtr<T>;
+using NoDeletePtr = SFW::UndeletablePtr<T>;

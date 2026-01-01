@@ -44,7 +44,7 @@ public:
 		}
 	}
 
-	void Update(double delta) override
+	void PreUpdate(double delta) override
 	{
 		using namespace Graphics;
 

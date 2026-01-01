@@ -12,10 +12,10 @@ namespace SFW
 			k.shaderIndex = desc.shader.index;
 
 			k.psSrvs.reserve(desc.psSRV.size());
-			for (auto& [slot, h] : desc.psSRV)     k.psSrvs.emplace_back(slot, h.index);
+			for (auto& [slot, h] : desc.psSRV)     k.psSrvs.emplace_back(slot, ResolveHandleIndex(h));
 
 			k.vsSrvs.reserve(desc.vsSRV.size());
-			for (auto& [slot, h] : desc.vsSRV)     k.vsSrvs.emplace_back(slot, h.index);
+			for (auto& [slot, h] : desc.vsSRV)     k.vsSrvs.emplace_back(slot, ResolveHandleIndex(h));
 
 			k.psCbvs.reserve(desc.psCBV.size());
 			for (auto& [slot, h] : desc.psCBV)     k.psCbvs.emplace_back(slot, h.index);
@@ -54,20 +54,21 @@ namespace SFW
 			MaterialData mat{};
 			mat.isBindVSSampler = desc.isBindVSSampler;
 
+			mat.usedSRVs.reserve(desc.psSRV.size() + desc.vsSRV.size());
+			mat.usedCBBuffers.reserve(desc.psCBV.size() + desc.vsCBV.size());
+
 			std::unordered_map<UINT, ID3D11ShaderResourceView*> psSRVMap;
 			for (const auto& [slot, texHandle] : desc.psSRV) {
-				auto texData = textureManager->Get(texHandle);
-				psSRVMap[slot] = texData.ref().srv.Get();
-				mat.usedTextures.push_back(texHandle);
-				textureManager->AddRef(texHandle); // 所有権追跡開始
+				psSRVMap[slot] = ResolveSRV(texHandle, *textureManager, *cbManager);
+				mat.usedSRVs.push_back(texHandle);
+				AddRefSRV(texHandle, *textureManager, *cbManager); // 所有権追跡開始
 			}
 
 			std::unordered_map<UINT, ID3D11ShaderResourceView*> vsSRVMap;
 			for (const auto& [slot, texHandle] : desc.vsSRV) {
-				auto texData = textureManager->Get(texHandle);
-				vsSRVMap[slot] = texData.ref().srv.Get();
-				mat.usedTextures.push_back(texHandle);
-				textureManager->AddRef(texHandle); // 所有権追跡開始
+				vsSRVMap[slot] = ResolveSRV(texHandle, *textureManager, *cbManager);
+				mat.usedSRVs.push_back(texHandle);
+				AddRefSRV(texHandle, *textureManager, *cbManager); // 所有権追跡開始
 			}
 
 			std::unordered_map<UINT, ID3D11Buffer*> psCBVMap;
@@ -97,7 +98,6 @@ namespace SFW
 			auto shader = shaderManager->Get(desc.shader);
 			mat.templateID = shader.ref().templateID;
 			mat.shader = desc.shader;
-			mat.usedTextures.reserve(desc.psSRV.size());
 
 			// === リフレクション情報取得 ===
 			const auto& psBindings = shader.ref().psBindings;
@@ -140,7 +140,7 @@ namespace SFW
 
 			// 子の参照を連鎖解放（1～2フレ先に遅延）
 			const uint64_t del = currentFrame + RENDER_BUFFER_COUNT;
-			for (auto& th : m.usedTextures)  textureManager->Release(th, del);
+			for (auto& th : m.usedSRVs)  ReleaseSRV(th, *textureManager, *cbManager, del);
 			for (auto& cb : m.usedCBBuffers) cbManager->Release(cb, del);
 			for (auto& sp : m.usedSamplers)  samplerManager->Release(sp, del);
 		}
@@ -181,6 +181,40 @@ namespace SFW
 			if (cache.contiguous) ctx->VSSetSamplers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, sampler] : cache.individualViews) ctx->VSSetSamplers(slot, 1, &sampler);
 		}
+		ID3D11ShaderResourceView* MaterialManager::ResolveSRV(const ShaderResourceHandle& h, DX11::TextureManager& texMgr, DX11::BufferManager& bufMgr)
+		{
+			return std::visit([&](auto&& v) -> ID3D11ShaderResourceView* {
+				using T = std::decay_t<decltype(v)>;
+
+				if constexpr (std::is_same_v<T, TextureHandle>) {
+					auto td = texMgr.Get(v);
+					return td.ref().srv.Get();
+				}
+				else if constexpr (std::is_same_v<T, BufferHandle>) {
+					auto bd = bufMgr.Get(v);
+					return bd.ref().srv.Get();
+				}
+				else {
+					return nullptr; // monostate 等
+				}
+				}, h);
+		}
+		void MaterialManager::AddRefSRV(const ShaderResourceHandle& h, DX11::TextureManager& texMgr, DX11::BufferManager& bufMgr)
+		{
+			std::visit([&](auto&& v) {
+				using T = std::decay_t<decltype(v)>;
+				if constexpr (std::is_same_v<T, TextureHandle>) texMgr.AddRef(v);
+				else if constexpr (std::is_same_v<T, BufferHandle>) bufMgr.AddRef(v);
+				}, h);
+		}
+		void MaterialManager::ReleaseSRV(const ShaderResourceHandle& h, DX11::TextureManager& texMgr, DX11::BufferManager& bufMgr, bool del)
+		{
+			std::visit([&](auto&& v) {
+				using T = std::decay_t<decltype(v)>;
+				if constexpr (std::is_same_v<T, TextureHandle>) texMgr.Release(v, del);
+				else if constexpr (std::is_same_v<T, BufferHandle>) bufMgr.Release(v, del);
+				}, h);
+		}
 		MaterialBindingCacheSRV MaterialManager::BuildBindingCacheSRV(const std::vector<ShaderResourceBinding>& bindings, const std::unordered_map<UINT, ID3D11ShaderResourceView*>& srvMap)
 		{
 			MaterialBindingCacheSRV result;
@@ -190,7 +224,7 @@ namespace SFW
 			std::bitset<128> usedSlots;
 
 			for (const auto& b : bindings) {
-				if (b.type != D3D_SIT_TEXTURE) continue;
+				if (b.type != D3D_SIT_TEXTURE && b.type != D3D_SIT_STRUCTURED) continue;
 				if (auto it = srvMap.find(b.bindPoint); it != srvMap.end()) {
 					usedSlots.set(b.bindPoint);
 					minSlot = (std::min)(minSlot, b.bindPoint);
@@ -212,7 +246,7 @@ namespace SFW
 			if (result.contiguous) {
 				result.contiguousViews.resize(result.count, nullptr);
 				for (const auto& b : bindings) {
-					if (b.type != D3D_SIT_TEXTURE) continue;
+					if (b.type != D3D_SIT_TEXTURE && b.type != D3D_SIT_STRUCTURED) continue;
 					auto it = srvMap.find(b.bindPoint);
 					if (it != srvMap.end()) {
 						result.contiguousViews[b.bindPoint - minSlot] = it->second;
@@ -221,7 +255,7 @@ namespace SFW
 			}
 			else {
 				for (const auto& b : bindings) {
-					if (b.type != D3D_SIT_TEXTURE) continue;
+					if (b.type != D3D_SIT_TEXTURE && b.type != D3D_SIT_STRUCTURED) continue;
 					auto it = srvMap.find(b.bindPoint);
 					if (it != srvMap.end()) {
 						result.individualViews.emplace_back(b.bindPoint, it->second);

@@ -2,14 +2,14 @@
 
 template<typename Partition>
 class TestMoveSystem : public ITypeSystem<
-	TestMoveSystem<Partition>,
+	TestMoveSystem,
 	Partition,
 	ComponentAccess<Write<CTransform>, Write<SpatialMotionTag>>,//アクセスするコンポーネントの指定
 	ServiceContext<SpatialChunkRegistry>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<Write<CTransform>, Write<SpatialMotionTag>>;
 public:
 	//指定したサービスを関数の引数として受け取る
-	void UpdateImpl(Partition& partition, LevelContext& levelCtx, safe_ptr<SpatialChunkRegistry> registry) {
+	void UpdateImpl(Partition& partition, LevelContext& levelCtx, SafePtr<SpatialChunkRegistry> registry) {
 
 		BudgetMover::LocalBatch moveBatch(levelCtx.mover, 200);
 

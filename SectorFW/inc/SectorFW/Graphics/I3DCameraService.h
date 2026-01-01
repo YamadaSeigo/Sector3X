@@ -251,6 +251,14 @@ namespace SFW
 				return farClip;
 			}
 			/**
+			 * @brief カメラの回転を取得
+			 * @return Math::Quatf カメラの回転クォータニオン
+			 */
+			Math::Quatf GetRotation() const noexcept {
+				std::shared_lock lock(sharedMutex);
+				return rot;
+			}
+			/**
 			 * @brief カメラの焦点距離を取得
 			 * @return float 焦点距離
 			 */
@@ -288,6 +296,17 @@ namespace SFW
 			float GetFocusDistance() const noexcept {
 				std::shared_lock lock(sharedMutex);
 				return focusDist;
+			}
+
+			void GetSensitivity(float& outSensX, float& outSensY) const noexcept {
+				std::shared_lock lock(sharedMutex);
+				outSensX = sensX_rad_per_px;
+				outSensY = sensY_rad_per_px;
+			}
+
+			float GetPitchAccum() const noexcept {
+				std::shared_lock lock(sharedMutex);
+				return pitchAccum;
 			}
 
 			Math::Matrix4x4f MakeViewMatrix() const {
@@ -369,6 +388,10 @@ namespace SFW
 				return cameraBuffer[(currentSlot + (RENDER_BUFFER_COUNT - 2)) % RENDER_BUFFER_COUNT];
 			}
 
+			BufferHandle GetCameraBufferHandle() const noexcept {
+				return cameraBufferHandle;
+			}
+
 			/**
 			 * @brief カメラバッファの更新が必要かどうかを取得
 			 * @return bool 更新が必要な場合はtrue、そうでなければfalse
@@ -409,7 +432,7 @@ namespace SFW
 				return outRot;
 			}
 		private:
-			virtual void Update(double deltaTime) override {
+			virtual void PreUpdate(double deltaTime) override {
 				++frameIdx;
 
 				if (!isUpdateBuffer) return; // 更新が必要ない場合は何もしない

@@ -212,7 +212,7 @@ namespace SFW
 
 		struct Accessor {
 		private:
-			static inline void MoverFlush(BudgetMover& mover, SpatialChunkRegistry& reg, size_t budget) {
+			static inline void MoverFlush(BudgetMover& mover, const SpatialChunkRegistry& reg, size_t budget) {
 				mover.Flush(reg, budget);
 			}
 
@@ -284,7 +284,7 @@ namespace SFW
 		}
 
 		// そのフレームの上限 budget 件まで処理し、残りは次フレームへ持ち越す
-		size_t Flush(SpatialChunkRegistry& reg, size_t budget) {
+		size_t Flush(const SpatialChunkRegistry& reg, size_t budget) {
 			// 共有キューから先頭 budget 件を取り出す（臨界区間は最小限）
 			if (budget == 0) return 0;
 

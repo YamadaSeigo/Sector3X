@@ -230,7 +230,7 @@ namespace SFW
 
 		private:
 			// 毎フレーム or 変更時にバッファ更新
-			virtual void Update(double /*deltaTime*/) override {
+			virtual void PreUpdate(double /*deltaTime*/) override {
 				++frameIdx;
 
 				if (!isUpdateBuffer) return;

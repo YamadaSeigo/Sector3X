@@ -41,7 +41,7 @@ namespace SFW
 					 * @brief カメラの更新関数
 					 * @param deltaTime 前のフレームからの経過時間（秒）
 					 */
-					void Update(double deltaTime) override {
+					void PreUpdate(double deltaTime) override {
 
 						++frameIdx;
 
@@ -123,7 +123,7 @@ namespace SFW
 					 * @brief カメラの更新関数
 					 * @param deltaTime 前のフレームからの経過時間（秒）
 					 */
-					void Update(double deltaTime) override {
+					void PreUpdate(double deltaTime) override {
 						++frameIdx;
 
 						if (!isUpdateBuffer) return;

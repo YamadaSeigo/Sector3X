@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include "Debug/logger.h"
+#include "Debug/assert_config.h"
 
 namespace SFW
 {
@@ -56,13 +57,15 @@ namespace SFW
 			hr = D3DReadFileToBlob(desc.vsPath.c_str(), vsBlob.GetAddressOf());
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to compile vertex shader: %s", desc.vsPath.c_str());
-				assert(false && "Failed to compile vertex shader");
+				SFW_ASSERT(false && "Failed to compile vertex shader");
+				return shader;
 			}
 
 			hr = device->CreateVertexShader(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), nullptr, &shader.vs);
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to create vertex shader: %s", desc.vsPath.c_str());
-				assert(false && "Failed to create vertex shader");
+				SFW_ASSERT(false && "Failed to create vertex shader");
+				return shader;
 			}
 
 			shader.vsBlob = vsBlob;
@@ -80,13 +83,15 @@ namespace SFW
 			hr = D3DReadFileToBlob(desc.psPath.c_str(), psBlob.GetAddressOf());
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to compile pixel shader: %s", desc.psPath.c_str());
-				assert(false && "Failed to compile pixel shader");
+				SFW_ASSERT(false && "Failed to compile pixel shader");
+				return shader;
 			}
 
 			hr = device->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, &shader.ps);
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to create pixel shader: %s", desc.psPath.c_str());
-				assert(false && "Failed to create pixel shader");
+				SFW_ASSERT(false && "Failed to create pixel shader");
+				return shader;
 			}
 
 			// === Reflection (PS for bindings) ===
@@ -126,7 +131,8 @@ namespace SFW
 			hr = D3DReflect(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), IID_PPV_ARGS(&reflector));
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to reflect vertex shader: %s", hr);
-				assert(false && "Failed to reflect vertex shader");
+				SFW_ASSERT(false && "Failed to reflect vertex shader");
+				return;
 			}
 
 			D3D11_SHADER_DESC shaderDesc;
@@ -136,7 +142,8 @@ namespace SFW
 
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to get shader description: %s", hr);
-				assert(false && "Failed to get shader description");
+				SFW_ASSERT(false && "Failed to get shader description");
+				return;
 			}
 
 			bool allKnown = true;

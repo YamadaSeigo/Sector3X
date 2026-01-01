@@ -286,13 +286,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="shader\VS_Lit.hlsl">
+    <FxCompile Include="shader\VS_ClipUVNrm.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="shader\VS_Instance.hlsl">
+    <FxCompile Include="shader\VS_ClipUV.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
@@ -317,6 +317,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="shader\VS_SpriteAnimation.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="shader\VS_TerrainClustered.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
@@ -375,6 +381,7 @@
     <ClInclude Include="app\DeferredRenderingService.h" />
     <ClInclude Include="app\EnvironmentService.h" />
     <ClInclude Include="app\PlayerService.h" />
+    <ClInclude Include="app\SpriteAnimationService.h" />
     <ClInclude Include="app\WindMovementService.h" />
     <ClInclude Include="app\Packed2Bits32.h" />
     <ClInclude Include="app\RenderDefine.h" />
@@ -392,6 +399,7 @@
     <ClInclude Include="system\PlayerSystem.h" />
     <ClInclude Include="system\PointLightSystem.h" />
     <ClInclude Include="system\SimpleModelRenderSystem.h" />
+    <ClInclude Include="system\SpriteAnimationSystem.h" />
     <ClInclude Include="system\SpriteRenderSystem.h" />
     <ClInclude Include="system\TestMoveSystem.h" />
     <ClInclude Include="system\VoidSystem.h" />

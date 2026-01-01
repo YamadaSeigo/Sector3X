@@ -1,28 +1,26 @@
 #pragma once
 
-struct CSprite
-{
-	SFW::Graphics::MaterialHandle hMat;
-	uint32_t layer = 0;
-};
+#include "../app/SpriteAnimationService.h"
 
 template<typename Partition>
-class SpriteRenderSystem : public ITypeSystem<
-	SpriteRenderSystem,
+class SpriteAnimationSystem : public ITypeSystem<
+	SpriteAnimationSystem,
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Read<CSprite>,
+		Write<CSpriteAnimation>,
 		Read<CTransform>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
+		SpriteAnimationService,
 		SFW::Graphics::RenderService
-	>>
-{
-	using Accessor = ComponentAccessor<Read<CSprite>,Read<CTransform>>;
+	>>{
+	using Accessor = ComponentAccessor<Write<CSpriteAnimation>, Read<CTransform>>;
 public:
-	void StartImpl(NoDeletePtr<SFW::Graphics::RenderService> renderService)
+	void StartImpl(
+		NoDeletePtr<SpriteAnimationService> spriteAnimationService,
+		NoDeletePtr< SFW::Graphics::RenderService> renderService)
 	{
 		using namespace SFW::Graphics;
 
@@ -30,7 +28,7 @@ public:
 		auto psoMgr = renderService->GetResourceManager<DX11::PSOManager>();
 
 		DX11::ShaderCreateDesc shaderDesc;
-		shaderDesc.vsPath = L"assets/shader/VS_WindSprite.cso";
+		shaderDesc.vsPath = L"assets/shader/VS_SpriteAnimation.cso";
 		shaderDesc.psPath = L"assets/shader/PS_Color.cso";
 		ShaderHandle shaderHandle;
 		shaderMgr->Add(shaderDesc, shaderHandle);
@@ -39,9 +37,11 @@ public:
 		psoMgr->Add(psoDesc, psoHandle);
 	}
 
+
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
-		NoDeletePtr<SFW::Graphics::RenderService> renderService) {
+		NoDeletePtr<SpriteAnimationService> spriteAnimationService,
+		NoDeletePtr< SFW::Graphics::RenderService> renderService) {
 
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
@@ -51,12 +51,12 @@ public:
 		auto& globalEntityManager = partition.GetGlobalEntityManager();
 
 		Query query;
-		query.With<CSprite, CTransform>();
+		query.With<CSpriteAnimation, CTransform>();
 		auto chunks = query.MatchingChunks<ECS::EntityManager&>(globalEntityManager);
 
 		auto updateFunc = [&](Accessor& accessor, size_t entityCount) {
 
-			auto sprite = accessor.Get<Read<CSprite>>();
+			auto sprite = accessor.Get<Write<CSpriteAnimation>>();
 			auto transform = accessor.Get<Read<CTransform>>();
 
 			Math::MTransformSoA mtf = {
@@ -80,10 +80,15 @@ public:
 			cmd.sortKey = 0;
 
 			for (auto i = 0; i < entityCount; ++i) {
-				const auto& sp = sprite.value()[i];
+				auto& sp = sprite.value()[i];
+
+				auto instIdx = instanceIndices[i];
+
+				// スプライトアニメーションのインスタンス登録(Time上書き)
+				spriteAnimationService->PushSpriteAnimationInstance(sp, instIdx);
 
 				cmd.material = sp.hMat.index;
-				cmd.instanceIndex = instanceIndices[i];
+				cmd.instanceIndex = instIdx;
 				cmd.sortKey = sp.layer;
 				uiSession.Push(cmd);
 			}

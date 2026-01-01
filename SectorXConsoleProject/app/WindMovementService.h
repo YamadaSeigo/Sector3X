@@ -38,7 +38,7 @@ public:
         BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionZ", &m_grassWindCB.WindDirXZ.y, -1.0f, 1.0f, 0.01f);
     }
 
-	void Update(double deltaTime) noexcept override
+	void PreUpdate(double deltaTime) noexcept override
 	{
         // 生の経過時間（デバッグ用にも便利）
         m_rawTime += deltaTime;

@@ -7,7 +7,9 @@
 #include <cmath>
 #include <cassert>
 
+
 #include "../Core/ECS/ServiceContext.hpp"
+#include "RenderTypes.h"
 
 namespace SFW::Graphics
 {
@@ -60,20 +62,14 @@ namespace SFW::Graphics
         // flags bit0: castsShadow など
     };
 
-    class PointLightService
+    class PointLightService : public ECS::IUpdateService
     {
     public:
-        static inline constexpr uint32_t MAX_POINT_LIGHT_NUM = 1u << 8;
-
-        enum DirtyFlags : uint32_t
-        {
-            Dirty_None = 0,
-            Dirty_Pos = 1u << 0,
-            Dirty_Params = 1u << 1,
-            Dirty_All = Dirty_Pos | Dirty_Params,
-        };
+        static inline constexpr uint32_t MAX_FRAME_POINTLIGHT = 1u << 8;
 
         PointLightService() = default;
+
+        void PreUpdate(double deltaTime) override;
 
         // 予約（オープンワールドは事前reserveが効く）
         void Reserve(uint32_t capacity);
@@ -110,21 +106,14 @@ namespace SFW::Graphics
         // 取得（読み取り）
         PointLightDesc GetNoLock(PointLightHandle h) const;
 
-        // 毎フレーム：GPUへ渡すライト配列を作る
-        // - まずは “全ライト” を詰めて返すシンプル版
-        // - あとで「カメラ周辺だけ」「Clustered用にタイル分け」などに発展させやすい
-        void BuildGpuLights(std::vector<GpuPointLight>& out) const;
+        /**
+		 * @brief 指定した点光源を表示リストに追加する
+		 * @param h　追加する点光源ハンドル
+		 * @return　追加に成功したら true、失敗なら false
+         */
+		bool PushShowHandle(PointLightHandle h);
 
-        // dirty範囲だけ欲しい場合（UpdateSubresource/Mapの最適化用）
-        // ※ここでは「dirty index一覧」を返す方式にしておく（範囲化は後で可能）
-        void CollectDirtyIndices(std::vector<uint32_t>& outDirtyIndices);
-        void ClearDirty();
-
-        // シャドウ対象候補を取る（例：近い順にN個）
-        void CollectShadowCandidatesNear(
-            const Math::Vec3f& cameraPosWS,
-            uint32_t maxCount,
-            std::vector<PointLightHandle>& out) const;
+        const GpuPointLight* BuildGpuLights(uint32_t& outCount) noexcept;
 
         uint32_t AliveCount() const noexcept { return m_aliveCount; }
         uint32_t Capacity()  const noexcept { return (uint32_t)m_alive.size(); }
@@ -133,7 +122,6 @@ namespace SFW::Graphics
         struct Slot
         {
             PointLightDesc desc{};
-            uint32_t dirty = Dirty_All;
             bool alive = false;
         };
 
@@ -151,9 +139,12 @@ namespace SFW::Graphics
 
         uint32_t m_aliveCount = 0;
 
-        // dirty index一覧（「どこが変わったか」）
-        // Create/Destroy/Updateで push、Collect/Clearで消す
-        std::vector<uint32_t> m_dirtyIndices;
+        size_t m_frameIndex = 0;
+		uint32_t m_showIndex[2][MAX_FRAME_POINTLIGHT] = {};
+		std::atomic<uint32_t > m_showCount[2] = { 0,0 };
+
+		GpuPointLight m_gpuLights[RENDER_BUFFER_COUNT][MAX_FRAME_POINTLIGHT] = {};
+
     public:
         STATIC_SERVICE_TAG
     };
