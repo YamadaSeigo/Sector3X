@@ -9,7 +9,7 @@
 
 #endif //_WIN32
 
-#include "message.h"
+#include "Debug/message.h"
 #include "SIMD/simd_api.h"
 
 namespace SFW
@@ -17,7 +17,7 @@ namespace SFW
 	void InitializeGameEngine(bool initialize)
 	{
 		// グラフィックデバイスが初期化されていない場合は、エラーを出す
-		DYNAMIC_ASSERT_MESSAGE(initialize, "GraphicsDevice is not Configure");
+		SFW::Debug::DYNAMIC_ASSERT_MESSAGE(initialize, "GraphicsDevice is not Configure");
 
 		SIMD::SimdInit(); // SIMD 初期化
 

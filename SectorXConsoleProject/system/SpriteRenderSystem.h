@@ -2,8 +2,15 @@
 
 struct CSprite
 {
-	SFW::Graphics::MaterialHandle hMat;
+	static inline constexpr uint32_t invalidPSOIndex = 0xFFFFFFFF;
+
+	Graphics::MaterialHandle hMat = {};
+	Graphics::PSOHandle overridePSO = { invalidPSOIndex, 0};
 	uint32_t layer = 0;
+
+	bool IsOverridePso() const noexcept {
+		return overridePSO.index != invalidPSOIndex;
+	}
 };
 
 template<typename Partition>
@@ -30,7 +37,7 @@ public:
 		auto psoMgr = renderService->GetResourceManager<DX11::PSOManager>();
 
 		DX11::ShaderCreateDesc shaderDesc;
-		shaderDesc.vsPath = L"assets/shader/VS_WindSprite.cso";
+		shaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
 		shaderDesc.psPath = L"assets/shader/PS_Color.cso";
 		ShaderHandle shaderHandle;
 		shaderMgr->Add(shaderDesc, shaderHandle);
@@ -75,12 +82,15 @@ public:
 
 			Graphics::DrawCommand cmd;
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.pso = psoHandle.index;
+			cmd.overridePSO = psoHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;
 
 			for (auto i = 0; i < entityCount; ++i) {
 				const auto& sp = sprite.value()[i];
+
+				if(sp.IsOverridePso())
+					cmd.overridePSO = sp.overridePSO.index;
 
 				cmd.material = sp.hMat.index;
 				cmd.instanceIndex = instanceIndices[i];

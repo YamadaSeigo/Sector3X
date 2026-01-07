@@ -240,7 +240,9 @@ namespace SFW
 
 		void GraphicsDevice::ClearImpl(const FLOAT clearColor[4])
 		{
+#if CLEAR_MAIN_RENDER_TARGET
 			m_context->ClearRenderTargetView(m_renderTargetView.Get(), clearColor);
+#endif
 			m_context->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 		}
 

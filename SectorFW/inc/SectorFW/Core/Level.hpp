@@ -32,6 +32,7 @@ namespace SFW
 		Sub		= 1u << 1,
 		Active	= 1u << 2,
 		Loading = 1u << 3,
+		Loaded	= 1u << 4,
 	};
 
 	constexpr ELevelState operator|(ELevelState a, ELevelState b) {
@@ -51,7 +52,9 @@ namespace SFW
 		constexpr uint32_t Mask =
 			static_cast<uint32_t>(ELevelState::Main) |
 			static_cast<uint32_t>(ELevelState::Sub) |
-			static_cast<uint32_t>(ELevelState::Active);
+			static_cast<uint32_t>(ELevelState::Active) |
+			static_cast<uint32_t>(ELevelState::Loading) |
+			static_cast<uint32_t>(ELevelState::Loaded);
 
 		return static_cast<ELevelState>(~static_cast<uint32_t>(a) & Mask);
 	}
@@ -189,6 +192,49 @@ namespace SFW
 
 				return id;
 			}
+
+
+			/**
+			 * @brief 位置を指定してエンティティを追加する関数
+			 * @param location エンティティの位置
+			 * @param ...components 追加するコンポーネントの可変引数
+			 * @return std::optional<ECS::EntityID> エンティティID
+			 * */
+			template<typename... Components>
+			std::optional<ECS::EntityID> AddEntityWithLocation(Math::Vec3f location, const Components&... components)
+			{
+				using namespace ECS;
+
+				ComponentMask mask;
+				(SetMask<Components>(mask), ...);
+
+				// Transformコンポーネントが存在するかどうかをチェック
+				ComponentTypeID typeID = ComponentTypeRegistry::GetID<TransformType>();
+				bool hasTransform = mask.test(typeID);
+
+				EntityID id = EntityID::Invalid();
+
+				//Transformコンポーネントが存在する場合、パーティションからチャンクを取得
+				if (hasTransform)
+				{
+					LOG_WARNING("AddEntityWithLocation: Transformの位置は無視されます!");
+				}
+
+				auto chunk = level.partition.GetChunk(location, level.entityManagerReg, level.levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transformの位置に基づいてチャンクを取得
+				if (chunk)
+				{
+					id = (*chunk)->GetEntityManager().AddEntity<Components...>(mask, components...);
+				}
+
+				// エンティティIDが無効な場合はエラーをログ出力
+				if (!id.IsValid()) {
+					LOG_ERROR("EntityID is not Valid : %d", id.index);
+					return std::nullopt; // エンティティの追加に失敗した場合
+				}
+
+				return id;
+			}
+
 			/**
 			 * @brief グローバルエンティティを追加する関数
 			 * @param ...components 追加するコンポーネントの可変引数
@@ -358,9 +404,32 @@ namespace SFW
 		 * @brief レベルの状態を設定する関数
 		 * @param s レベルの状態
 		 */
-		void SetState(ELevelState bits,
+		void ChangeState(ELevelState bits, bool set = true,
 			std::memory_order mo = std::memory_order_acq_rel) {
-			state.fetch_or(static_cast<uint32_t>(bits), mo);
+			if (set) {
+				state.fetch_or(static_cast<uint32_t>(bits), mo);
+				return;
+			}
+			state.fetch_and(~static_cast<uint32_t>(bits), mo);
+		}
+
+		/**
+		 * @brief ビットを立てるのと落とすのを同時に行う関数
+		 * @param setMask 立てるビットのマスク
+		 * @param clearMask 落とすビットのマスク
+		 */
+		void UpdateState(ELevelState setBits, ELevelState clearBits,
+			std::memory_order success = std::memory_order_acq_rel,
+			std::memory_order fail = std::memory_order_acquire)
+		{
+			uint32_t expected = state.load(std::memory_order_relaxed);
+			while (true) {
+				uint32_t desired = (expected | static_cast<uint32_t>(setBits)) & ~static_cast<uint32_t>(clearBits);
+				if (state.compare_exchange_weak(expected, desired, success, fail)) {
+					return;
+				}
+				// 失敗時 expected が最新値に更新されるのでループ継続
+			}
 		}
 		/**
 		 * @brief レベルの状態を取得する関数
@@ -391,25 +460,15 @@ namespace SFW
 		 */
 		void SetActive(bool active,
 			std::memory_order mo = std::memory_order_acq_rel) {
+
 			if (active) {
+				//念のためロード済みであることを確認
+				assert(state.load(std::memory_order_acquire) & static_cast<uint32_t>(ELevelState::Loaded) && "Cannot set level active when it is not loaded.");
+
 				state.fetch_or(static_cast<uint32_t>(ELevelState::Active), mo);
 			}
 			else {
 				state.fetch_and(~static_cast<uint32_t>(ELevelState::Active), mo);
-			}
-		}
-
-		/**
-		 * @brief レベルのローディング状態を設定する関数
-		 * @param loading ローディング状態
-		 */
-		void SetLoading(bool loading,
-			std::memory_order mo = std::memory_order_acq_rel) {
-			if (loading) {
-				state.fetch_or(static_cast<uint32_t>(ELevelState::Loading), mo);
-			}
-			else {
-				state.fetch_and(~static_cast<uint32_t>(ELevelState::Loading), mo);
 			}
 		}
 
@@ -424,8 +483,32 @@ namespace SFW
 			uint32_t expected = state.load(std::memory_order_relaxed);
 
 			for (;;) {
-				// すでに Active / Loading なら開始できない
-				if (expected & static_cast<uint32_t>(ELevelState::Active))  return false;
+				// すでに Loaded / Loading なら開始できない
+				if (expected & static_cast<uint32_t>(ELevelState::Loaded))  return false;
+				if (expected & static_cast<uint32_t>(ELevelState::Loading)) return false;
+
+				const uint32_t desired = expected | static_cast<uint32_t>(ELevelState::Loading);
+
+				if (state.compare_exchange_weak(expected, desired, success, fail)) {
+					return true; // Loading を立てることに成功
+				}
+				// compare_exchange_weak が失敗すると expected が更新されるので、そのままループ継続
+			}
+		}
+
+		/**
+		 * @brief レベルのクリーンを開始し、成功したかどうかを返す関数
+		 * @return bool クリーンの開始に成功した場合はtrue、そうでない場合はfalse
+		 */
+		bool TryBeginClean(
+			std::memory_order success = std::memory_order_acq_rel,
+			std::memory_order fail = std::memory_order_acquire
+		) {
+			uint32_t expected = state.load(std::memory_order_relaxed);
+
+			for (;;) {
+				// Loadedではない / Loading なら開始できない
+				if (!(expected & static_cast<uint32_t>(ELevelState::Loaded)))  return false;
 				if (expected & static_cast<uint32_t>(ELevelState::Loading)) return false;
 
 				const uint32_t desired = expected | static_cast<uint32_t>(ELevelState::Loading);

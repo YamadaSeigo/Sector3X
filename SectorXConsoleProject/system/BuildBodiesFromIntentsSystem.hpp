@@ -159,7 +159,7 @@ public:
 			ComponentAccessor<ECS::Read<Physics::CPhyBody>> accessor(ch);
 			auto body = accessor.Get<Read<Physics::CPhyBody>>();
 
-			const auto& entities = ch->GetEntities();
+			const auto& entities = ch->GetEntityIDs();
 
 			const size_t count = ch->GetEntityCount();
 			for (size_t i = 0; i < count; i++) {

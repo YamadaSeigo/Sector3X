@@ -44,7 +44,7 @@ namespace SFW
 			std::optional<std::vector<BindSlotBuffer>> cbvs; // 定数バッファハンドルのリスト
 			std::optional<Viewport> viewport = std::nullopt; // ビューポートのオーバーライド
 			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
-			PassCustomFuncType customExecute = nullptr;	// カスタム描画関数（FullscreenQuadなど）
+			std::vector<PassCustomFuncType> customExecute = {};	// カスタム描画関数（FullscreenQuadなど）
 
 			uint32_t stencilRef = 0;
 
@@ -79,7 +79,7 @@ namespace SFW
 				std::optional<std::vector<BindSlotBuffer>> cbvs = std::nullopt,
 				std::optional<Viewport> viewport = std::nullopt,
 				std::optional<PSOHandle> psoOverride = std::nullopt,
-				PassCustomFuncType customExecute = nullptr,
+				const std::vector<PassCustomFuncType>& customExecute = {},
 				uint32_t stencilRef = 0)
 				: rtvs(rtvs)
 				, dsv(dsv)
@@ -114,7 +114,7 @@ namespace SFW
 				, cbvs(std::move(other.cbvs))
 				, viewport(other.viewport)
 				, psoOverride(other.psoOverride)
-				, customExecute(other.customExecute)
+				, customExecute(std::move(other.customExecute))
 				, stencilRef(other.stencilRef){
 				other.dsv = nullptr; // 安全のためヌルクリア
 				queue = other.queue;
@@ -183,7 +183,7 @@ namespace SFW
 			std::optional<std::vector<BindSlotBuffer>> cbvs; // 定数バッファハンドルのリスト
 			std::optional<Viewport> viewport = std::nullopt; // ビューポート設定
 			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
-			PassCustomFuncType customExecute = nullptr; // FullscreenQuadなど
+			std::vector<PassCustomFuncType> customExecute = {}; // FullscreenQuadなど
 			uint32_t stencilRef = 0;
 		};
 	}

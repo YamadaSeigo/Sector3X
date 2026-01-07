@@ -462,7 +462,7 @@ namespace SFW::Graphics::DX11 {
 
         void RunShadowDepth(
             ID3D11DeviceContext* ctx,
-            ComPtr<ID3D11Buffer> cameraCB,
+            ComPtr<ID3D11Buffer>&& cameraCB,
             const ShadowDepthParams& p,
 			const D3D11_VIEWPORT* cascadeViewport = nullptr)
         {
@@ -1016,8 +1016,7 @@ namespace SFW::Graphics::DX11 {
         uint32_t dimX;       // クラスタ数X
         uint32_t dimZ;       // クラスタ数Z
 		float heightScale;  // 高さスケール
-        uint32_t _pad;
-
+		float offsetY;      // 高さオフセット
     };
 
     struct ClusterParamsGPU {
@@ -1426,6 +1425,7 @@ namespace SFW::Graphics::DX11 {
         const Math::Vec2f& cellSizeXZ,
         uint32_t dimX, uint32_t dimZ,
 		float heightScale,
+		float offsetY,
         ClusterParamsGPU& out)
     {
         out.grid.originXZ = originXZ;
@@ -1433,6 +1433,7 @@ namespace SFW::Graphics::DX11 {
         out.grid.dimX = dimX;
         out.grid.dimZ = dimZ;
         out.grid.heightScale = heightScale;
+		out.grid.offsetY = offsetY;
     }
 
         // 入力シート（ID）→ ID3D11Texture2D を取得

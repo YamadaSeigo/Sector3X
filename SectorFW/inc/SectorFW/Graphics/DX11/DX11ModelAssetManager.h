@@ -60,7 +60,7 @@ namespace SFW
 			};
 
 			std::string path;
-			PSOHandle pso = {};
+			PSOHandle overridePSO = {};
 			uint32_t option = 1; // トポロジーを保持するか（LOD生成時にメッシュ最適化を行わない）
 			uint32_t    instancesPeak = 1;   // 同時表示おおよそ
 			float  viewMin = 0, viewMax = 100;// 想定視距離[m]
@@ -85,7 +85,7 @@ namespace SFW
 
 
 			//法線のw成分のカスタム関数
-			MeshManager::NormalWCustomFunc pCustomNomWFunc = nullptr;
+			MeshManager::NormalWCustomFunc pCustomNrmWFunc = nullptr;
 
 			void BindVS_CBV(const std::string& name, const BufferHandle& h);
 
@@ -143,7 +143,7 @@ namespace SFW
 				MaterialHandle material = {};
 				std::vector<SubmeshLOD> lods;   // LOD0..N-1
 				LodThresholds lodThresholds = {}; // LOD選択用の閾値
-				PSOHandle pso = {};
+				PSOHandle overridePSO = {};
 				InstanceData instance = {};
 
 				// ===== Occluder 情報 =====

@@ -505,6 +505,7 @@ namespace SFW
 				if (vb) { vb.Reset(); }
 			if (data.ib) { data.ib.Reset(); }
 		}
+
 		bool MeshManager::InitCommonMeshes()
 		{
 			// すでに有効なら何もしない（ResourceManagerBase の IsValid を想定）

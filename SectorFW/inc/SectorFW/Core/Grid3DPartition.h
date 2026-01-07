@@ -176,6 +176,63 @@ namespace SFW
 			}
 		}
 
+		/**
+		 * @brief 球体カリング（各セルを立方AABBで判定）
+		 */
+		std::vector<SpatialChunk*> CullChunks(const Math::Vec3f& center, float radius) const noexcept
+		{
+			std::vector<SpatialChunk*> out;
+			if (!std::isfinite(radius) || radius <= 0.0f) {
+				radius = 0.0f;
+			}
+
+			using Signed = long long;
+			const float r = (radius < 0.0f) ? 0.0f : radius;
+			const float r2 = r * r;
+
+			const float cell = float(chunkSize);
+			const float e = 0.5f * cell;
+
+			auto floor_div = [&](float v) -> Signed {
+				return static_cast<Signed>(std::floor(double(v) / double(cell)));
+				};
+
+			Signed ix0 = floor_div(center.x - r);
+			Signed iy0 = floor_div(center.y - r);
+			Signed iz0 = floor_div(center.z - r);
+			Signed ix1 = floor_div(center.x + r);
+			Signed iy1 = floor_div(center.y + r);
+			Signed iz1 = floor_div(center.z + r);
+
+			const Signed w = static_cast<Signed>(grid.width());
+			const Signed h = static_cast<Signed>(grid.height());
+			const Signed d = static_cast<Signed>(grid.depth());
+
+			ix0 = std::clamp<Signed>(ix0, 0, w - 1);
+			iy0 = std::clamp<Signed>(iy0, 0, h - 1);
+			iz0 = std::clamp<Signed>(iz0, 0, d - 1);
+			ix1 = std::clamp<Signed>(ix1, 0, w - 1);
+			iy1 = std::clamp<Signed>(iy1, 0, h - 1);
+			iz1 = std::clamp<Signed>(iz1, 0, d - 1);
+
+			out.reserve(static_cast<size_t>((ix1 - ix0 + 1) * (iy1 - iy0 + 1) * (iz1 - iz0 + 1)));
+
+			for (Signed z = iz0; z <= iz1; ++z) {
+				for (Signed y = iy0; y <= iy1; ++y) {
+					for (Signed x = ix0; x <= ix1; ++x) {
+						const Math::Vec3f c{ (float(x) + 0.5f) * cell, (float(y) + 0.5f) * cell, (float(z) + 0.5f) * cell };
+						const Math::Vec3f ex{ e, e, e };
+						if (Dist2PointAABB3D(center, c, ex) > r2) continue;
+
+						auto& chunk = grid(ChunkSizeType(x), ChunkSizeType(y), ChunkSizeType(z));
+						if (chunk.GetEntityManager().GetEntityCount() > 0)
+							out.push_back(const_cast<SpatialChunk*>(&chunk));
+					}
+				}
+			}
+			return out;
+		}
+
 		static inline float Dist2PointAABB3D(const Math::Vec3f& p,
 			const Math::Vec3f& c,
 			const Math::Vec3f& e)

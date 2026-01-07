@@ -12,7 +12,7 @@
 #include "../app/WindMovementService.h"
 
 #ifdef _DEBUG
-#define PROFILE_MODEL_UPDATE_TIME 1
+#define PROFILE_MODEL_UPDATE_TIME 0
 #endif
 
 struct CModel
@@ -223,7 +223,7 @@ public:
 
 					for (const Graphics::DX11::ModelAssetData::SubMesh& mesh : modelAsset.subMeshes) {
 						if (kp->materialMgr->IsValid(mesh.material) == false) [[unlikely]] continue;
-						if (kp->psoMgr->IsValid(mesh.pso) == false) [[unlikely]] continue;
+						if (kp->psoMgr->IsValid(mesh.overridePSO) == false) [[unlikely]] continue;
 
 						modelComp.occluded = false;
 
@@ -386,7 +386,7 @@ public:
 						Graphics::DrawCommand cmd;
 						cmd.mesh = meshHandel.index;
 						cmd.material = mesh.material.index;
-						cmd.pso = mesh.pso.index;
+						cmd.overridePSO = mesh.overridePSO.index;
 						cmd.instanceIndex = instanceIdx;
 
 						if (!shadowOnly)
@@ -486,7 +486,7 @@ public:
 						}
 
 
-						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
+						cmd.sortKey = Graphics::MakeSortKey(mesh.overridePSO.index, mesh.material.index, meshHandel.index);
 						producer.Push(std::move(cmd));
 
 						subMeshIdx++;

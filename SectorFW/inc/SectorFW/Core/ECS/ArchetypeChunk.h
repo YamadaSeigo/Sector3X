@@ -99,7 +99,7 @@ namespace SFW
 			 * @brief エンティティIDの配列を取得する関数
 			 * @return const std::vector<EntityID>& エンティティIDの配列への参照
 			 */
-			const std::vector<EntityID>& GetEntities() const noexcept { return entities; }
+			const std::vector<EntityID>& GetEntityIDs() const noexcept { return entities; }
 		private:
 			//アーキタイプチャンクのバッファ
 			BufferType buffer[ChunkSizeBytes] = {};
@@ -129,7 +129,7 @@ namespace SFW
 				 * @param chunk アーキタイプチャンクへのポインタ
 				 * @return const std::vector<EntityID>& エンティティの配列への参照
 				 */
-				static const std::vector<EntityID>& GetEntities(ArchetypeChunk* chunk) noexcept { return chunk->entities; }
+				static const std::vector<EntityID>& GetEntityIDs(ArchetypeChunk* chunk) noexcept { return chunk->entities; }
 				/**
 				 * @brief コンポーネントレイアウト情報を取得する関数
 				 * @param chunk アーキタイプチャンクへのポインタ

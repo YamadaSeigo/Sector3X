@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RenderDefine.h"
+
 struct LightCameraBuffer {
 	Math::Matrix4x4f invViewProj;
 	Math::Vec3f camForward;
@@ -11,7 +13,7 @@ struct LightCameraBuffer {
 class DeferredRenderingService : public ECS::IUpdateService
 {
 public:
-	static inline constexpr const char* BUFFER_NAME = "DefferedCameraBuffer";
+	static inline constexpr const char* BUFFER_NAME = "DeferredCameraBuffer";
 
 	DeferredRenderingService(
 		Graphics::DX11::BufferManager* bufferManager,
@@ -29,7 +31,7 @@ public:
 		DX11::TextureRecipe recipe;
 		recipe.width = w;
 		recipe.height = h;
-		recipe.format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+		recipe.format = DXGI_FORMAT_R11G11B10_FLOAT;
 		recipe.mipLevels = 1;
 		recipe.bindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 		recipe.usage = D3D11_USAGE_DEFAULT;

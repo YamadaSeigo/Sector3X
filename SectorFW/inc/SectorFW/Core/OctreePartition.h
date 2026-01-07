@@ -203,6 +203,34 @@ namespace SFW
 			cullRecursive(*m_root, fr, ymin, ymax, std::forward<F>(f));
 		}
 
+		std::vector<SpatialChunk*> CullChunks(const Math::Vec3f& center, float radius) const noexcept
+		{
+			std::vector<SpatialChunk*> out;
+			if (!m_root) return out;
+
+			if (!std::isfinite(radius) || radius <= 0.0f) radius = 0.0f;
+			const float r = (radius < 0.0f) ? 0.0f : radius;
+			const float r2 = r * r;
+
+			std::function<void(const Node&)> rec = [&](const Node& n) {
+				// node AABB vs sphere
+				const Math::Vec3f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
+				const Math::Vec3f e = (n.bounds.ub - n.bounds.lb) * 0.5f;
+				if (Dist2PointAABB3D(center, c, e) > r2) return;
+
+				if (n.isLeaf()) {
+					if (n.chunk.GetEntityManager().GetEntityCount() > 0)
+						out.push_back(const_cast<SpatialChunk*>(&n.chunk));
+					return;
+				}
+				for (int i = 0; i < 8; ++i) if (n.child[i]) rec(*n.child[i]);
+				};
+			rec(*m_root);
+
+			return out;
+		}
+
+
 		static inline float Dist2PointAABB3D(const Math::Vec3f& p,
 			const Math::Vec3f& c,
 			const Math::Vec3f& e)

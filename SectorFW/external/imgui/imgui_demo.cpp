@@ -8790,8 +8790,8 @@ static void ShowExampleMenuFile()
 	IMGUI_DEMO_MARKER("Examples/Menu/Options");
 	if (ImGui::BeginMenu("Options"))
 	{
-		static bool enabled = true;
-		ImGui::MenuItem("Enabled", "", &enabled);
+		static bool showEnable = true;
+		ImGui::MenuItem("Enabled", "", &showEnable);
 		ImGui::BeginChild("child", ImVec2(0, 60), ImGuiChildFlags_Borders);
 		for (int i = 0; i < 10; i++)
 			ImGui::Text("Scrolling Text %d", i);

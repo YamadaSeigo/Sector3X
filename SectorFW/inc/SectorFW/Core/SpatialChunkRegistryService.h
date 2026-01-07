@@ -47,7 +47,7 @@ namespace SFW {
 			owners_.erase(key);
 		}
 		/**
-		 * @brief 解決（生存していれば EM* を返す）
+		 * @brief キーからチャンクの取得（生存していれば SpatialChunk* を返す）
 		 * @param key 解決するキー
 		 * @return SpatialChunk* 解決した SpatialChunk へのポインタ（存在しない場合は nullptr）
 		 */

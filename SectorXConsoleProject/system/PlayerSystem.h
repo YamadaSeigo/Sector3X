@@ -250,7 +250,7 @@ public:
 						Graphics::DrawCommand cmd;
 						cmd.sortKey = 0;
 						cmd.instanceIndex = instanceIdx;
-						cmd.pso = subMesh.pso.index;
+						cmd.overridePSO = subMesh.overridePSO.index;
 						cmd.mesh = subMesh.lods[0].mesh.index;
 						cmd.material = subMesh.material.index;
 						cmd.viewMask = PASS_3DMAIN_HIGHLIGHT;
@@ -338,6 +338,9 @@ public:
 
 				//足元の位置をPlayerServiceにセット
 				playerService->SetFootData(playerPos);
+			
+				//PlayerServiceにも位置をセット
+				playerService->SetPlayerPosition(playerPos);
 
 				//位置と回転を反映
 				globalEntityManager.ReadWriteComponent<CTransform>(entityID,

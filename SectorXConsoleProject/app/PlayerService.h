@@ -41,7 +41,7 @@ public:
 	{
 		currentSlot = (currentSlot + 1) % Graphics::RENDER_BUFFER_COUNT;
 
-		uint8_t footNum = bufferSlot.exchange(0, std::memory_order_acq_rel);
+		uint32_t footNum = bufferSlot.exchange(0, std::memory_order_acq_rel);
 		if (footNum > 0 && footNum <= GrassFootCB::MAX_FOOT)
 		{
 			grassFoot_buf.gFootCount = footNum;
@@ -59,24 +59,38 @@ public:
 
 	void SetFootData(const Math::Vec3f& posWS, float radius = DEFAULT_FOOT_RADIUS)
 	{
-		uint8_t slot = bufferSlot.load(std::memory_order_acquire);
+		uint32_t slot = bufferSlot.fetch_add(1, std::memory_order_acq_rel);
 		if (slot < GrassFootCB::MAX_FOOT)
 		{
 			grassFoot_buf.gFootPosWRadiusWS[slot].xyz = posWS;
 			grassFoot_buf.gFootPosWRadiusWS[slot].w = radius;
-			bufferSlot.fetch_add(1, std::memory_order_acq_rel);
 		}
 	}
 
 	Graphics::BufferHandle GetFootBufferHandle() const noexcept { return hGrassFootCB; }
 
+	void SetPlayerPosition(const Math::Vec3f& pos)
+	{
+		std::unique_lock<std::shared_mutex> lock(posMutex);
+		currentPlayerPos = pos;
+	}
+
+	Math::Vec3f GetPlayerPosition()
+	{
+		std::shared_lock<std::shared_mutex> lock(posMutex);
+		return currentPlayerPos;
+	}
+
 private:
 	Graphics::DX11::BufferManager* bufferMgr = nullptr;
 
+	std::shared_mutex posMutex;
+	Math::Vec3f currentPlayerPos = Math::Vec3f(0.0f, 0.0f, 0.0f);
+
 	GrassFootCB grassFoot_buf{};
 	Graphics::BufferHandle hGrassFootCB;
-	uint16_t currentSlot = 0;
-	std::atomic<uint8_t> bufferSlot;
+	uint32_t currentSlot = 0;
+	std::atomic<uint32_t> bufferSlot;
 
 public:
 	STATIC_SERVICE_TAG

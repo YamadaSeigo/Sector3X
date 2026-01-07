@@ -65,13 +65,14 @@ namespace SFW
 			ComPtr<ID3D11Buffer> buffer;
 			const void* data = nullptr;
 			size_t size = (std::numeric_limits<size_t>::max)();
-			
+
 			// カスタム更新関数の型定義(dst, src, size)
 			using CustomUpdateFunc = void(*)(void*, const void*, size_t);
 
 			CustomUpdateFunc customUpdateFunc = nullptr;
 
 			bool isDelete = true;
+			bool isArray = false;
 
 			bool isValid() const {
 				return buffer != nullptr && data != nullptr && size != (std::numeric_limits<size_t>::max)();
@@ -104,7 +105,9 @@ namespace SFW
 			~BufferManager() {
 				for (auto& pendings : pendingUpdates) {
 					for (auto& update : pendings) {
-						if (update.data && update.isDelete) delete update.data;
+						if (update.data && update.isDelete) {
+							update.isArray ? delete[] update.data : delete update.data;
+						}
 					}
 				}
 			}
@@ -295,7 +298,10 @@ namespace SFW
 						else {
 							assert(false && "Failed to map constant buffer for update");
 						}
-						if (update.data && update.isDelete) delete update.data;
+						if (update.data && update.isDelete) {
+							update.isArray ? delete[] update.data : delete update.data;
+							update.isDelete = false;
+						}
 					}
 
 					pendingCount[slot].store(0, std::memory_order_release);

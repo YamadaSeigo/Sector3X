@@ -33,6 +33,11 @@ namespace SFW
 			return { &m_chunk };
 		}
 
+		std::vector<SpatialChunk*> CullChunks(const Math::Vec3f&, float) noexcept
+		{
+			return { &m_chunk };
+		}
+
 		std::vector<SpatialChunk*> CullChunksNear(const Math::Frustumf&, Math::Vec3f) noexcept
 		{
 			return { &m_chunk };

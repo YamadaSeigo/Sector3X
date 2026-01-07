@@ -69,7 +69,7 @@ public:
 					for (const Graphics::DX11::ModelAssetData::SubMesh& mesh : modelAsset.ref().subMeshes) {
 						Graphics::DrawCommand cmd;
 						if (materialMgr->IsValid(mesh.material) == false) [[unlikely]] continue;
-						if (psoMgr->IsValid(mesh.pso) == false) [[unlikely]] continue;
+						if (psoMgr->IsValid(mesh.overridePSO) == false) [[unlikely]] continue;
 
 						auto& meshHandel = mesh.lods[0].mesh;
 						if (meshMgr->IsValid(meshHandel) == false) [[unlikely]] continue;
@@ -84,9 +84,9 @@ public:
 
 						cmd.mesh = meshHandel.index;
 						cmd.material = mesh.material.index;
-						cmd.pso = mesh.pso.index;
+						cmd.overridePSO = mesh.overridePSO.index;
 
-						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
+						cmd.sortKey = Graphics::MakeSortKey(mesh.overridePSO.index, mesh.material.index, meshHandel.index);
 						queue->Push(std::move(cmd));
 					}
 				}

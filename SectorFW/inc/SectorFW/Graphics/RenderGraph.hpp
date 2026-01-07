@@ -213,7 +213,7 @@ namespace SFW
 				backend.BeginFrameUpload(sharedInstanceArena->Data(prevSlot), sharedInstanceArena->Size(prevSlot));
 				sharedInstanceArena->ResetSlot(prevSlot);
 
-				renderService.CallPreDrawCustomFunc(); // カスタム関数の更新
+				renderService.CallPreDrawCustomFunc(prevSlot); // カスタム関数の更新
 
 
 				// グループごとに Submit して cmds を埋める
@@ -295,10 +295,11 @@ namespace SFW
 					const auto& r = gs.ranges[node.passIndex];
 
 					if (r.count == 0) {
-						if (pass->customExecute) {
+						if (!pass->customExecute.empty()) {
 							BindPassGlobalResources(pass);
 
-							pass->customExecute(currentFrame);
+							for (auto& func : pass->customExecute)
+								func(currentFrame);
 						}
 
 						continue;
@@ -313,75 +314,9 @@ namespace SFW
 					// 共通cmds + このパスの indexビューで描画
 					backend.ExecuteDrawIndexedInstanced(gs.cmds, std::span<const uint32_t>(idxBegin, idxEnd), pass->psoOverride, !useRasterizer);
 
-					if (pass->customExecute)
-						pass->customExecute(currentFrame);
+					for (auto& func : pass->customExecute)
+						func(currentFrame);
 				}
-
-
-//				for (auto& pass : passes) {
-//					backend.SetPrimitiveTopology(pass->topology);
-//
-//					bool useRasterizer = pass->rasterizerState.has_value();
-//					if (useRasterizer)
-//						backend.SetRasterizerState(*pass->rasterizerState);
-//
-//					backend.SetBlendState(pass->blendState); // デフォルトのブレンドステートを使用
-//
-//					backend.SetDepthStencilState(pass->depthStencilState);
-//
-//					backend.SetRenderTargets(pass->rtvs, pass->dsv);
-//
-//					backend.BindGlobalCBVs(pass->cbvs);
-//
-//#ifndef NO_USE_PMR_RENDER_QUEUE
-//					// 常駐アリーナ＆cmdsを取得（再構築しない）
-//					PassRuntime* rt = getRuntime(pass->name);
-//					const uint32_t flight = currentFrame % kFlights;
-//					auto& pf = rt->perFlight[flight];
-//					pf.release();              // メモリは解放せず、ポインタだけ巻き戻す
-//					auto& cmds = pf.cmds;      // 容量は保持。clear()のみ
-//					cmds.clear();
-//#else
-//					std::vector<DrawCommand> cmds;
-//#endif //NO_USE_PMR_RENDER_QUEUE
-//
-//
-//					pass->queue->Submit(prevSlot, cmds);
-//
-//#ifdef _ENABLE_IMGUI
-//					{
-//						auto g = Debug::BeginTreeWrite(); // lock & back buffer
-//						auto& frame = g.data();
-//
-//						// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める
-//						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::GROUP, /*leaf=*/false, "Pass : " + pass->name });
-//						frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::DrawCommand, /*leaf=*/true, "DrawCommand : " + std::to_string(cmds.size()) });
-//					} // guard のデストラクトで unlock。swap は UI スレッドで。
-//#endif // _ENABLE_IMGUI
-//
-//					backend.ExecuteDrawIndexedInstanced(cmds, !useRasterizer); // インスタンシング対応
-//
-//					if (pass->customExecute) pass->customExecute(currentFrame);
-//
-//#ifndef NO_USE_PMR_RENDER_QUEUE
-//					// 使用量からヒント更新 & 必要時のみ拡張
-//					auto round_up = [](size_t x, size_t a) { return (x + (a - 1)) & ~(a - 1); };
-//					size_t used = rt->perFlight[currentFrame % kFlights].tracker.used;
-//					size_t next = round_up(static_cast<size_t>(used * 5 / 4), 64 * 1024); // 1.25x
-//					constexpr size_t kMin = 128 * 1024, kMax = 32ull * 1024 * 1024;
-//					next = (std::min)((std::max)(next, kMin), kMax);
-//					size_t prev = rt->hint;
-//					if (prev == 0 || next >= prev / 2) rt->hint = next; else rt->hint = prev / 2;
-//
-//					// ヒントが現在の初期バッファより大きくなったら“まれに”拡張
-//					const uint32_t f0 = (currentFrame % kFlights);
-//					if (rt->needs_grow()) {
-//						for (uint32_t i = 0; i < kFlights; ++i) {
-//							rt->perFlight[i].maybe_grow(rt->hint);
-//						}
-//					}
-//#endif //NO_USE_PMR_RENDER_QUEUE
-//				}
 			}
 			/**
 			 * @brief レンダーサービスの取得

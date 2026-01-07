@@ -97,7 +97,7 @@ namespace SFW
 
 			uint32_t mesh = 0;             // 24Bまで：ハンドル/ID（32bit想定）
 			uint32_t material = 0;
-			uint32_t pso = 0;
+			uint32_t overridePSO = 0;
 			InstanceIndex instanceIndex = {0};    // InstanceData プールへのインデックス
 
 			// ここが“空白の活用”パート（合計 8B）

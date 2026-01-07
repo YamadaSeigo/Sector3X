@@ -9,7 +9,11 @@
 #include <SectorFW/Graphics/LightShadowService.h>
 
 #include "ModelRenderSystem.h"
+#include "FireflySystem.h"
+
+#include "../app/DebugRenderType.h"
 #include "../app/DeferredRenderingService.h"
+
 
 using namespace SFW;
 
@@ -49,6 +53,34 @@ void MakeCapsuleLines(float radius, float halfHeight,
 	std::vector<Debug::LineVertex>& outVerts,
 	std::vector<uint32_t>& outIndices);
 
+
+class OncePerFrameGate
+{
+public:
+	// 同じ frameId では最初の1スレッドだけ true
+	bool TryEnter(uint16_t frameId) noexcept
+	{
+		// すでにこのフレームを通過したかをCASで確定させる
+		uint16_t expected = m_lastFrame.load(std::memory_order_relaxed);
+		for (;;)
+		{
+			if (expected == frameId) return false; // もう誰かが通った
+			// expected != frameId なら、このスレッドが frameId を刻めたら勝ち
+			if (m_lastFrame.compare_exchange_weak(
+				expected, frameId,
+				std::memory_order_acq_rel,
+				std::memory_order_relaxed))
+			{
+				return true;
+			}
+			// 失敗したら expected が更新されるのでループ継続
+		}
+	}
+
+private:
+	std::atomic<uint16_t> m_lastFrame{ INT16_MAX };
+};
+
 template<typename Partition>
 class DebugRenderSystem : public ITypeSystem<
 	DebugRenderSystem,
@@ -57,8 +89,9 @@ class DebugRenderSystem : public ITypeSystem<
 	ComponentAccess<
 		Read<Physics::ShapeDims>,
 		Read<Physics::PhysicsInterpolation>,
-		Read<TransformSoA>,
-		Read<CModel>
+		Read<CTransform>,
+		Read<CModel>,
+		Read<CFireflyVolume>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
@@ -66,12 +99,12 @@ class DebugRenderSystem : public ITypeSystem<
 		Graphics::I3DPerCameraService,
 		Graphics::I2DCameraService,
 		Graphics::LightShadowService,
-		Physics::PhysicsService,
-		DeferredRenderingService
+		Physics::PhysicsService
 	>>
 {
 	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<CTransform>>;
 	using ModelAccessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
+	using FireflyAccessor = ComponentAccessor<Read<CFireflyVolume>>;
 
 	static constexpr inline uint32_t MAX_CAPACITY_3DLINE = 65536 * 2;
 	static constexpr inline uint32_t MAX_CAPACITY_3DVERTEX = MAX_CAPACITY_3DLINE * 2;
@@ -82,23 +115,12 @@ class DebugRenderSystem : public ITypeSystem<
 	static constexpr inline uint32_t DRAW_LINE_CHUNK_COUNT = 12;
 public:
 
-	inline static constexpr const char* ShowDeferredBufferName[] =
-	{
-		"albedo",
-		"normal",
-		"emissive",
-		"ao",
-		"roughness",
-		"metallic"
-	};
-
 	void StartImpl(
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
 		NoDeletePtr<Graphics::I2DCameraService>,
 		NoDeletePtr<Graphics::LightShadowService>,
-		NoDeletePtr<Physics::PhysicsService>,
-		NoDeletePtr<DeferredRenderingService> deferredRenderService)
+		NoDeletePtr<Physics::PhysicsService>)
 	{
 		using namespace Graphics;
 		using namespace Debug;
@@ -178,13 +200,6 @@ public:
 		DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::WireCullNone };
 		psoMgr->Add(psoDesc, psoLineHandle);
 
-		ShaderHandle mocShaderHandle;
-		shaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
-		shaderDesc.psPath = L"assets/shader/PS_MOCDebug.cso";
-		shaderMgr->Add(shaderDesc, mocShaderHandle);
-		psoDesc = { mocShaderHandle, RasterizerStateID::SolidCullBack };
-		psoMgr->Add(psoDesc, psoMOCHandle);
-
 		// --- Index Buffer（固定：0,1,2,3,4,5,…）---
 		std::vector<uint32_t> indices(MAX_CAPACITY_3DLINE);
 		for (uint32_t i = 0; i < MAX_CAPACITY_3DLINE; ++i) indices[i] = i;
@@ -207,119 +222,6 @@ public:
 		meshMgr->Add(lineDesc, line2DHandle);
 
 		line2DVertices.reset(new LineVertex[MAX_CAPACITY_2DLINE]);
-
-		auto texMgr = renderService->GetResourceManager<DX11::TextureManager>();
-
-		auto resolution = camera3DService->GetResolution();
-
-		uint32_t width = (UINT)resolution.x;
-		uint32_t height = (UINT)resolution.y;
-
-		mocDepth.resize(width * height);
-
-		Graphics::DX11::TextureRecipe recipe =
-		{
-		.width = width,
-		.height = height,
-		.format = DXGI_FORMAT_R32_FLOAT,
-		.mipLevels = 1,
-		.arraySize = 1,
-		.usage = D3D11_USAGE_DEFAULT,
-		.bindFlags = D3D11_BIND_SHADER_RESOURCE, // 必要に応じて RENDER_TARGET など追加
-		.cpuAccessFlags = 0,
-		.miscFlags = 0,
-		.initialData = mocDepth.data(),
-		.initialRowPitch = (UINT)width * sizeof(float)
-		};
-
-		DX11::TextureCreateDesc texDesc;
-		texDesc.forceSRGB = false;
-		texDesc.recipe = &recipe;
-		texMgr->Add(texDesc, mocDepthTexHandle);
-
-		Graphics::DX11::MaterialCreateDesc matDesc;
-		matDesc.shader = mocShaderHandle;
-		matDesc.psSRV[10] = mocDepthTexHandle; // TEX10 にセット
-		auto matMgr = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
-		matMgr->Add(matDesc, mocMaterialHandle);
-
-		Graphics::DX11::ShaderCreateDesc deferredShaderDesc;
-		deferredShaderDesc.templateID = MaterialTemplateID::Unlit;
-		deferredShaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
-		deferredShaderDesc.psPath = L"assets/shader/PS_DebugDeferred.cso";
-		ShaderHandle deferredShaderHandle;
-		shaderMgr->Add(deferredShaderDesc, deferredShaderHandle);
-
-		Graphics::DX11::PSOCreateDesc deferredPsoDesc = { deferredShaderHandle, RasterizerStateID::SolidCullBack };
-		psoMgr->Add(deferredPsoDesc, deferredPsoHandle);
-
-		const auto shaderData = shaderMgr->Get(deferredShaderHandle);
-
-		PBRMaterialCB pbrMatCB{};
-		pbrMatCB.baseColorFactor[0] = 1.0f;
-		pbrMatCB.baseColorFactor[1] = 1.0f;
-		pbrMatCB.baseColorFactor[2] = 1.0f;
-		pbrMatCB.baseColorFactor[3] = 0.0f;
-
-		auto bufferMgr = renderService->GetResourceManager<DX11::BufferManager>();
-
-		BufferHandle matCB_RGM = bufferMgr->AcquireWithContent(&pbrMatCB, sizeof(PBRMaterialCB));
-
-		pbrMatCB.baseColorFactor[0] = 0.0f;
-		pbrMatCB.baseColorFactor[1] = 0.0f;
-		pbrMatCB.baseColorFactor[2] = 0.0f;
-		pbrMatCB.baseColorFactor[3] = 1.0f;
-
-		BufferHandle matCB_A = bufferMgr->AcquireWithContent(&pbrMatCB, sizeof(PBRMaterialCB));
-
-		const auto* deferredTexHandle = deferredRenderService->GetGBufferHandles();
-
-		uint32_t matSlot = 10;
-		uint32_t texSlot = 10;
-		for(const auto& bind : shaderData.ref().psBindings)
-		{
-			if (bind.name == DX11::ModelAssetManager::gMaterialBindName)
-			{
-				matSlot = bind.bindPoint;
-			}
-			else if (bind.name == DX11::ModelAssetManager::gBaseColorTexBindName)
-			{
-				texSlot = bind.bindPoint;
-			}
-		}
-
-		matDesc.shader = deferredShaderHandle;
-
-		for (size_t i = 0; i < DeferredTextureCount; ++i)
-		{
-			matDesc.psSRV[texSlot] = deferredTexHandle[i];
-			matDesc.psCBV[matSlot] = matCB_RGM;
-			matMgr->Add(matDesc, deferredMaterialHandle[i]);
-			matDesc.psCBV[matSlot] = matCB_A;
-			matMgr->Add(matDesc, deferredMaterialHandle[i + DeferredTextureCount]);
-		}
-
-		matDesc.psSRV[texSlot] = mocDepthTexHandle;
-		matMgr->Add(matDesc, dummyMatHandle);
-
-		//imguiにバインド
-		BIND_DEBUG_CHECKBOX("Show", "enabled", &enabled);
-		BIND_DEBUG_CHECKBOX("Show", "partition", &drawPartitionBounds);
-		BIND_DEBUG_CHECKBOX("Show", "frustum", &drawFrustumBounds);
-		BIND_DEBUG_CHECKBOX("Show", "modelAABB", &drawModelAABB);
-		BIND_DEBUG_CHECKBOX("Show", "occAABB", &drawOccluderAABB);
-		BIND_DEBUG_CHECKBOX("Show", "modelRect", &drawModelRect);
-		BIND_DEBUG_CHECKBOX("Show", "occlusionRect", &drawOcclusionRect);
-		BIND_DEBUG_CHECKBOX("Show", "cascadesAABB", &drawCascadeAABB);
-		BIND_DEBUG_CHECKBOX("Show", "shapeDims", &drawShapeDims);
-		BIND_DEBUG_CHECKBOX("Show", "MOCDepth", &drawMOCDepth);
-
-		constexpr auto drawDeferredBufferCount = sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0]);
-		assert(drawDeferredBufferCount == DeferredTextureCount * 2);
-		for (size_t i = 0; i < drawDeferredBufferCount; ++i)
-		{
-			BIND_DEBUG_CHECKBOX("Deferred", ShowDeferredBufferName[i], &drawDeferredTextureFlags[i]);
-		}
 	}
 
 	//指定したサービスを関数の引数として受け取る
@@ -328,61 +230,18 @@ public:
 		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
 		NoDeletePtr<Graphics::I2DCameraService> camera2DService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
-		NoDeletePtr <Physics::PhysicsService> physicsService,
-		NoDeletePtr<DeferredRenderingService> deferredRenderService)
+		NoDeletePtr <Physics::PhysicsService> physicsService)
 	{
+		if (!DebugRenderType::showEnable) return;
+
 		//機能を制限したRenderQueueを取得
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto* meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
 		auto bufferManager = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
 
-		constexpr uint32_t showDeferredTextureCount = sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0]);
-
 		Math::Vec2f resolution = camera2DService->GetVirtualResolution();
 
-		bool showDeferred = false;
-		for (uint32_t i = 0; i < showDeferredTextureCount; ++i)
-		{
-			if (!drawDeferredTextureFlags[i]) continue;
-
-
-			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(-resolution.x / DeferredTextureCount + (i % DeferredTextureCount) * resolution.x / DeferredTextureCount, -resolution.y / DeferredTextureCount * (i >= DeferredTextureCount ? -1.0f : 1.0f), 0.0f));
-			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ resolution.x / DeferredTextureCount, resolution.y / DeferredTextureCount, 1.0f });
-			Graphics::DrawCommand cmd;
-			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
-			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.pso = deferredPsoHandle.index;
-			cmd.material = deferredMaterialHandle[i].index;
-			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
-			uiSession.Push(std::move(cmd));
-
-			showDeferred = true;
-		}
-
-		//SRVのバインドを外すためにダミーのコマンド発行
-		if (showDeferred)
-		{
-			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 0.0f, 0.0f, 0.0f });
-			Graphics::DrawCommand cmd;
-			cmd.instanceIndex = uiSession.AllocInstance(scaleMat);
-			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.pso = deferredPsoHandle.index;
-			cmd.material = dummyMatHandle.index;
-			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
-			uiSession.Push(std::move(cmd));
-		}
-
-		if (!enabled) return;
-
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
-		auto psoManager = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
-
-		if (!psoManager->IsValid(psoLineHandle)) {
-			LOG_ERROR("PSOHandle が有効な値ではありません");
-			return;
-		}
 
 		auto cameraPos = camera3DService->GetEyePos();
 		const auto viewProj = camera3DService->GetCameraBufferDataNoLock().viewProj;
@@ -394,15 +253,19 @@ public:
 		const Graphics::OccluderViewport vp = { (int)resolution.x, (int)resolution.y, fov };
 
 		auto line3DCount = 0;
-		if (drawPartitionBounds)
+		if (DebugRenderType::drawPartitionBounds)
 		{
 			line3DCount = partition.CullChunkLine(fru, cameraPos, 200.0f,
 				line3DVertices.get(), MAX_CAPACITY_3DLINE, DRAW_LINE_CHUNK_COUNT);
 		}
 
-		if (drawFrustumBounds)
+		auto currentFrameId = renderService->GetProduceSlot();
+
+		if (DebugRenderType::drawFrustumBounds)
 		{
-			if (line3DCount + 24 < MAX_CAPACITY_3DLINE) {
+			static OncePerFrameGate gate;
+
+			if (gate.TryEnter(currentFrameId) && line3DCount + 24 < MAX_CAPACITY_3DLINE) {
 				auto frustumLines = Debug::MakeFrustumLineVertices(fru, 0xFFFFFFFF);
 				for (auto& l : frustumLines) {
 					line3DVertices.get()[line3DCount++] = { l.pos, l.rgba };
@@ -410,34 +273,40 @@ public:
 			}
 		}
 
-		if (drawCascadeAABB)
+		if (DebugRenderType::drawCascadeAABB)
 		{
-			const auto& cascade = lightShadowService->GetCascades();
-			uint32_t cascadeCount = (uint32_t)cascade.boundsWS.size();
-			for (uint32_t i = 0; i < cascadeCount; ++i)
+			static OncePerFrameGate gate;
+
+			if (gate.TryEnter(currentFrameId))
 			{
-				const auto& aabb = cascade.boundsWS[i];
-				float t = (float(i) / float(cascadeCount - 1));
-				auto lineVertex = Debug::MakeAABBLineVertices(aabb, Math::LerpColor(0xFF0000FF, 0x0000FFFF, t));
-				size_t newLineSize = lineVertex.size();
-				if (line3DCount + newLineSize > MAX_CAPACITY_3DLINE) {
-					break;
-				}
-				for (auto& l : lineVertex) {
-					line3DVertices.get()[line3DCount++] = { l.pos, l.rgba };
+				const auto& cascade = lightShadowService->GetCascades();
+				uint32_t cascadeCount = (uint32_t)cascade.boundsWS.size();
+				for (uint32_t i = 0; i < cascadeCount; ++i)
+				{
+					const auto& aabb = cascade.boundsWS[i];
+					float t = (float(i) / float(cascadeCount - 1));
+					auto lineVertex = Debug::MakeAABBLineVertices(aabb, Math::LerpColor(0xFF0000FF, 0x0000FFFF, t));
+					size_t newLineSize = lineVertex.size();
+					if (line3DCount + newLineSize > MAX_CAPACITY_3DLINE) {
+						break;
+					}
+					for (auto& l : lineVertex) {
+						line3DVertices.get()[line3DCount++] = { l.pos, l.rgba };
+					}
 				}
 			}
 		}
 
 		uint32_t line2DCount = 0;
 
-		if (drawModelAABB || drawOccluderAABB || drawModelRect || drawOcclusionRect)
+		if (DebugRenderType::drawModelAABB || DebugRenderType::drawOccluderAABB ||
+			DebugRenderType::drawModelRect || DebugRenderType::drawOcclusionRect)
 		{
 
 			this->ForEachFrustumChunkWithAccessor<ModelAccessor>([&](ModelAccessor& accessor, size_t entityCount)
 				{
 					//読み取り専用でTransformSoAのアクセサを取得
-					auto transform = accessor.Get<Read<TransformSoA>>();
+					auto transform = accessor.Get<Read<CTransform>>();
 					auto model = accessor.Get<Read<CModel>>();
 
 					bool overflow = false;
@@ -473,9 +342,9 @@ public:
 
 							Math::Rectangle rect = Math::ProjectAABBToScreenRect(mesh.aabb, viewProj * worldMtx, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
 							//2D Rect
-							if (drawModelRect || drawOcclusionRect)
+							if (DebugRenderType::drawModelRect || DebugRenderType::drawOcclusionRect)
 							{
-								if (model.value()[i].occluded || drawModelRect)
+								if (model.value()[i].occluded || DebugRenderType::drawModelRect)
 								{
 									if (rect.Area() > 0.0f)
 									{
@@ -492,13 +361,13 @@ public:
 							}
 
 							//3D AABB
-							if (drawModelAABB)
+							if (DebugRenderType::drawModelAABB)
 							{
 								auto lines = Debug::MakeAABBLineVertices(mesh.aabb, rgbaAABB);
 								size_t newLineSize = lines.size();
 								if (mesh.occluder.candidate)
 								{
-									if (drawOccluderAABB)
+									if (DebugRenderType::drawOccluderAABB)
 										newLineSize += mesh.occluder.meltAABBs.size() * 24; // OCcluder AABB 分
 								}
 
@@ -517,7 +386,7 @@ public:
 							}
 
 							//OCcluder AABB
-							if (mesh.occluder.candidate && drawOccluderAABB)
+							if (mesh.occluder.candidate && DebugRenderType::drawOccluderAABB)
 							{
 								for (const auto& aabb : mesh.occluder.meltAABBs)
 								{
@@ -587,9 +456,9 @@ public:
 				}, partition, fru);
 		}
 
-		if (drawShapeDims)
+		if (DebugRenderType::drawShapeDims)
 		{
-			this->ForEachFrustumNearChunkWithAccessor<ShapeDimsAccessor>([&](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
+			this->ForEachFrustumNearChunkWithAccessor<ShapeDimsAccessor>([&](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto overridePSO, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
 				{
 					auto shapeDims = accessor.Get<Read<Physics::ShapeDims>>();
 					auto tf = accessor.Get<Read<CTransform>>();
@@ -610,7 +479,7 @@ public:
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
 							cmd.mesh = boxMesh;
 							cmd.material = 0;
-							cmd.pso = pso;
+							cmd.overridePSO = overridePSO;
 							cmd.sortKey = 0; // 適切なソートキーを設定
 							cmd.viewMask = PASS_UI_3DLINE;
 							queue->Push(std::move(cmd));
@@ -623,7 +492,7 @@ public:
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
 							cmd.mesh = sphereMesh;
 							cmd.material = 0;
-							cmd.pso = pso;
+							cmd.overridePSO = overridePSO;
 							cmd.sortKey = 0; // 適切なソートキーを設定
 							cmd.viewMask = PASS_UI_3DLINE;
 							queue->Push(std::move(cmd));
@@ -641,7 +510,7 @@ public:
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
 							cmd.mesh = sphereMesh;
 							cmd.material = 0;
-							cmd.pso = pso;
+							cmd.overridePSO = overridePSO;
 							cmd.sortKey = 0; // 適切なソートキーを設定
 							cmd.viewMask = PASS_UI_3DLINE;
 							queue->Push(cmd);
@@ -694,27 +563,32 @@ public:
 				}, partition, fru, cameraPos, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereHandle.index, capsuleLineHandle.index);
 		}
 
-		if (drawMOCDepth)
+		if (DebugRenderType::drawFireflyVolumes)
 		{
-			renderService->GetDepthBuffer(mocDepth);
+			this->ForEachSphereChunkWithAccessor<FireflyAccessor>([&](FireflyAccessor accessor, size_t entityCount)
+				{
 
+					auto fireflyVolume = accessor.Get<Read<CFireflyVolume>>();
+					if (!fireflyVolume.has_value()) [[unlikely]] {
+						return;
+					}
 
-			Graphics::DX11::TextureManager* texMgr = renderService->GetResourceManager<Graphics::DX11::TextureManager>();
+					for (auto i = 0; i < entityCount; ++i) {
+						auto volume = fireflyVolume.value()[i];
 
-			texMgr->UpdateTexture(mocDepthTexHandle, mocDepth.data(), (UINT)(resolution.x) * sizeof(float));
+						auto transMtx = Math::MakeTranslationMatrix(volume.centerWS);
+						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.radius * 2.0f }); // 球は均一スケーリング
+						Graphics::DrawCommand cmd;
+						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
+						cmd.mesh = sphereHandle.index;
+						cmd.material = 0;
+						cmd.overridePSO = psoLineHandle.index;
+						cmd.sortKey = 0; // 適切なソートキーを設定
+						cmd.viewMask = PASS_UI_3DLINE;
+						uiSession.Push(std::move(cmd));
+					}
 
-			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(resolution.x / 3.0f, 0.0f, 0.0f));
-			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ resolution.x / 3.0f, resolution.y / 3.0f, 1.0f });
-
-			Graphics::DrawCommand cmd;
-			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
-			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.pso = psoMOCHandle.index;
-			cmd.material = mocMaterialHandle.index;
-			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
-
-			uiSession.Push(std::move(cmd));
+				}, partition, cameraPos, 100.0f);
 		}
 
 		if (line3DCount > 0)
@@ -737,7 +611,7 @@ public:
 			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
 			cmd.mesh = line3DHandle.index;
 			cmd.material = 0;
-			cmd.pso = psoLineHandle.index;
+			cmd.overridePSO = psoLineHandle.index;
 			cmd.sortKey = 0; // 本来は適切なソートキーを設定
 			cmd.viewMask = PASS_UI_3DLINE;
 			uiSession.Push(cmd);
@@ -763,44 +637,20 @@ public:
 			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
 			cmd.mesh = line2DHandle.index;
 			cmd.material = 0;
-			cmd.pso = psoLineHandle.index;
+			cmd.overridePSO = psoLineHandle.index;
 			cmd.viewMask = PASS_UI_LINE;
 			cmd.sortKey = 0; // 本来は適切なソートキーを設定
 			uiSession.Push(cmd);
 		}
 	}
 private:
-	bool enabled = false;
-	bool drawPartitionBounds = false;
-	bool drawFrustumBounds = false;
-	bool drawModelAABB = false;
-	bool drawOccluderAABB = false;
-	bool drawModelRect = false;
-	bool drawOcclusionRect = false;
-	bool drawCascadeAABB = false;
-	bool drawShapeDims = false;
-	bool drawMOCDepth = false;
-
 	Graphics::PSOHandle psoLineHandle = {};
-	Graphics::PSOHandle psoMOCHandle = {};
 	Graphics::MeshHandle line3DHandle = {};
 	Graphics::MeshHandle line2DHandle = {};
 	std::unique_ptr<Debug::LineVertex> line3DVertices;
 	std::unique_ptr<Debug::LineVertex> line2DVertices;
 
-	Graphics::TextureHandle mocDepthTexHandle = {};
-	Graphics::MaterialHandle mocMaterialHandle = {};
-
-	std::vector<float> mocDepth;
-
 	Graphics::MeshHandle boxHandle = {}; // デフォルトメッシュ（立方体）
 	Graphics::MeshHandle sphereHandle = {}; // デフォルトメッシュ（球）
 	Graphics::MeshHandle capsuleLineHandle = {}; //カプセルの真ん中の直線
-
-	Graphics::PSOHandle deferredPsoHandle = {};
-	Graphics::MaterialHandle deferredMaterialHandle[DeferredTextureCount * 2] = {};
-
-	Graphics::MaterialHandle dummyMatHandle;
-
-	bool drawDeferredTextureFlags[sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0])] = {false};
 };

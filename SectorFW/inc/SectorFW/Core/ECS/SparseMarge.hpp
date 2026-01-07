@@ -30,7 +30,7 @@ namespace SFW::ECS {
 				// 以後は &col[i] で連続メモリアクセス。 :contentReference[oaicite:6]{index=6}
 				auto cols = std::tuple{ chunk->GetColumn<Dense>().value()... };
 
-				const auto& ids = chunk->GetEntities(); // 昇順 ID 配列を想定 :contentReference[oaicite:7]{index=7}
+				const auto& ids = chunk->GetEntityIDs(); // 昇順 ID 配列を想定 :contentReference[oaicite:7]{index=7}
 				const size_t n = chunk->GetEntityCount();
 
 				for (size_t i = 0; i < n; ++i) {
@@ -102,7 +102,7 @@ namespace SFW::ECS {
 
 			for (auto* chunk : chunks) {
 				auto cols = std::tuple{ chunk->GetColumn<Dense>().value()... }; // 列ポインタ取得 :contentReference[oaicite:10]{index=10}
-				const auto& ids = chunk->GetEntities();                         // :contentReference[oaicite:11]{index=11}
+				const auto& ids = chunk->GetEntityIDs();                         // :contentReference[oaicite:11]{index=11}
 
 				totalHits += MergeJoinApply(ids, sparseMap, sortedKeys,
 					[&](size_t row, const S& sval) {

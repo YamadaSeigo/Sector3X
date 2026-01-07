@@ -48,7 +48,7 @@ namespace SFW
 		struct RenderService : public ECS::IUpdateService
 		{
 			using UpdateFuncType = void(*)(RenderService*);
-			using PreDrawFuncType = void(*)(RenderService*);
+			using PreDrawFuncType = void(*)(RenderService*, uint32_t);
 
 			template<typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template <typename> class ViewHandle>
 			friend class RenderGraph;
@@ -80,9 +80,9 @@ namespace SFW
 			 * @brief カスタム関数の更新
 			 * @details RenderGraphで呼び出される
 			 */
-			void CallPreDrawCustomFunc() noexcept
+			void CallPreDrawCustomFunc(uint32_t slot) noexcept
 			{
-				if (preDrawFunc) preDrawFunc(this);
+				if (preDrawFunc) preDrawFunc(this, slot);
 			}
 
 		public:
@@ -204,7 +204,7 @@ namespace SFW
 			* @ brief 現在の生産スロットを取得する
 			* @ return int 生産スロットのインデックス
 			 */
-			int GetProduceSlot() const noexcept { return produceSlot.load(std::memory_order_acquire); }
+			uint16_t GetProduceSlot() const noexcept { return produceSlot.load(std::memory_order_acquire); }
 			/**
 			* @ brief Updateカスタム関数の設定
 			* @ param func カスタム関数

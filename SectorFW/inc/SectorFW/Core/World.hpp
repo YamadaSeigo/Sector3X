@@ -22,7 +22,7 @@ namespace SFW
 		template<typename T>
 		using LevelCustomFunc = std::function<void(const ECS::ServiceLocator*, Level<T>*)>;
 	public:
-		
+
 		struct Session;
 
 		// ロード完了時に呼び出すカスタム関数の型
@@ -86,7 +86,7 @@ namespace SFW
 			 * @param executor 渡した場合,非同期でロードする
 			 * @details 全レベルの名前と比較して一致するものを探す
 			 */
-			void LoadLevel(const std::string levelName, IThreadExecutor* executor = nullptr, LoadedCustomFunc loadedCustom = nullptr)
+			void LoadLevel(const std::string levelName, IThreadExecutor* executor = nullptr, bool active = true, LoadedCustomFunc loadedCustom = nullptr)
 			{
 #ifdef _DEBUG
 				bool find = false;
@@ -105,20 +105,28 @@ namespace SFW
 
 							// 1) メイン側で多重ロード防止（必須）
 							if (!level->TryBeginLoading()) {
-								LOG_WARNING("Level {%s} is already active or loading.", levelName.c_str());
+								LOG_WARNING("Level {%s} is already loaded or loading.", levelName.c_str());
 								return;
 							}
 
-							// ローディング状態に入れる（BeginLoading が内部で立ててるなら不要でもOK）
-							level->SetLoading(true);
-							level->SetActive(false); // “ロード完了までActiveにしない”方が事故が減る
+							level->ChangeState(ELevelState::Loaded, false);// “ロード完了フラグを落とす
 
 							// 同期ロードなら従来通り
 							if (!executor)
 							{
 								if (holder.loadingFunc) holder.loadingFunc(&world.GetServiceLocator(), level.get());
-								level->SetActive(true);
-								level->SetLoading(false);
+
+								ELevelState setBits = ELevelState::Loaded;
+								ELevelState clearBits = ELevelState::Loading;
+								if(active) {
+									setBits = setBits | ELevelState::Active;
+								} else {
+									clearBits = clearBits | ELevelState::Active;
+								}
+
+								// ロード完了後、状態を更新
+								level->UpdateState(setBits, clearBits);
+
 								if (loadedCustom) loadedCustom(this);
 								return;
 							}
@@ -128,7 +136,7 @@ namespace SFW
 							auto loadingFunc = holder.loadingFunc;        // コピーして安全に（holder参照を掴まない）
 							auto* worldPtr = &world;                      // WorldはGameEngineが潰すまで生きてる想定
 
-							executor->Submit([worldPtr, levelPtr, loadingFunc, levelName, loadedCustom]()
+							executor->Submit([worldPtr, levelPtr, loadingFunc, levelName, loadedCustom, active]()
 								{
 									// ここは “並列OKな処理だけ” に限定（GPU/レンダスレッド専用/World状態変更はNG）
 									if (loadingFunc) loadingFunc(&worldPtr->GetServiceLocator(), levelPtr);
@@ -136,12 +144,19 @@ namespace SFW
 									// 3) 完了通知をメインに返す（Requestキューはmutexで守られてる）
 									auto& rs = worldPtr->GetRequestServiceNoLock();
 									rs.PushCommand(rs.CreateLambdaCommand(
-										[levelPtr, levelName, loadedCustom](Session* s, IThreadExecutor* ex)
+										[levelPtr, loadedCustom, active](Session* s, IThreadExecutor* ex)
 										{
+											ELevelState setBits = ELevelState::Loaded;
+											ELevelState clearBits = ELevelState::Loading;
+											if (active) {
+												setBits = setBits | ELevelState::Active;
+											}
+											else {
+												clearBits = clearBits | ELevelState::Active;
+											}
+
 											// メイン(=FlashAllCommand経由)で確定させる
-											// ここで「キャンセルされてないか」「まだloadingか」をチェックするとより安全
-											levelPtr->SetActive(true);
-											levelPtr->SetLoading(false);
+											levelPtr->UpdateState(setBits, clearBits);
 
 											if (loadedCustom) loadedCustom(s);
 										}
@@ -176,19 +191,24 @@ namespace SFW
 								find = true;
 #endif
 								auto state = level->GetState();
-								if (!HasAny(state, ELevelState::Active) || HasAny(state, ELevelState::Loading)) {
-									// すでに非アクティブまたはロード中の場合はスキップ
-									LOG_WARNING("Level {%s} is already inactive or loading.", levelName.c_str());
+								// trueの場合Loadingビットを立てる
+								if (!level->TryBeginClean()) {
+									// 未ロードまたはロード中の場合はスキップ
+									LOG_WARNING("Level {%s} is unloaded or loading.", levelName.c_str());
 									continue;
 								};
 
-								// レベルを非アクティブにする
-								level->SetActive(false);
+								// レベルを未ロード | 非アクティブにする
+								ELevelState clearBits = ELevelState::Loaded | ELevelState::Active;
+								level->ChangeState(clearBits, false);
 
 								level->Clean(world.serviceLocator);
 								if (holder.cleanFunc) {
 									holder.cleanFunc(&world.GetServiceLocator(), level.get());
 								}
+
+								// クリーン完了後、Loadingビットを落とす
+								level->ChangeState(ELevelState::Loading, false);
 							}
 						}
 					};
@@ -259,17 +279,18 @@ namespace SFW
 		class LoadLevelCommand : public IRequestCommand
 		{
 		public:
-			LoadLevelCommand(const std::string& name, LoadedCustomFunc customFunc, bool async)
-				: levelName(name), loadedCustomFunc(customFunc), isAsync(async) {
+			LoadLevelCommand(const std::string& name, LoadedCustomFunc customFunc, bool async, bool active)
+				: levelName(name), loadedCustomFunc(customFunc), isAsync(async), active(active) {
 			}
 
 			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
-				pWorldSession->LoadLevel(levelName, isAsync ? executor : nullptr, loadedCustomFunc);
+				pWorldSession->LoadLevel(levelName, isAsync ? executor : nullptr, active, loadedCustomFunc);
 			}
 		private:
 			std::string levelName;
 			LoadedCustomFunc loadedCustomFunc = nullptr;
 			bool isAsync;
+			bool active;
 		};
 		/*
 		* @brief Worldにレベルをクリーンするコマンド
@@ -350,8 +371,8 @@ namespace SFW
 				return std::make_unique<AddLevelCommand<T>>(std::move(level), std::forward<Func>(customFunc)...);
 			}
 
-			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLoadLevelCommand(const std::string& name, bool isAsync = false, LoadedCustomFunc customFunc = nullptr) const noexcept {
-				return std::make_unique<LoadLevelCommand>(name, customFunc, isAsync);
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLoadLevelCommand(const std::string& name, bool isAsync = false, bool active = true, LoadedCustomFunc customFunc = nullptr) const noexcept {
+				return std::make_unique<LoadLevelCommand>(name, customFunc, isAsync, active);
 			}
 
 			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateCleanLevelCommand(const std::string& name) const noexcept {
@@ -466,12 +487,12 @@ namespace SFW
 							auto& level = holder.level;
 							auto levelState = level->GetState();
 
-							// アクティブでないレベルはスキップ
-							if (!HasAny(levelState, ELevelState::Active)) {
+							// 非アクティブ | 未ロード | ローディング中 レベルはスキップ
+							if (!HasAll(levelState, ELevelState::Active | ELevelState::Loaded)
+								|| HasAny(levelState, ELevelState::Loading)) {
 #ifdef _ENABLE_IMGUI
 								level->ShowDebugInactiveLevelInfoUI();
 #endif
-
 								continue;
 							}
 
@@ -560,9 +581,9 @@ namespace SFW
 			return requestService;
 		}
 
-		void LoadLevel(const std::string levelName, bool async = false, LoadedCustomFunc customFunc = nullptr)
+		void LoadLevel(const std::string levelName, bool async = false, bool active = true, LoadedCustomFunc customFunc = nullptr)
 		{
-			auto requestCmd = requestService.CreateLoadLevelCommand(levelName, async, customFunc);
+			auto requestCmd = requestService.CreateLoadLevelCommand(levelName, async, active, customFunc);
 			requestService.PushCommand(std::move(requestCmd));
 		}
 	private:

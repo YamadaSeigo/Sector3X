@@ -18,7 +18,7 @@ cbuffer TerrainGridCB : register(b10)
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
     float heightScale;
-    uint _pad11;
+    float offsetY; // 地形オフセット（ワールドY）
 };
 
 cbuffer WindCB : register(b11)
@@ -81,6 +81,17 @@ float Hash2D(float2 p)
     return h * (1.0 / 4294967296.0);
 }
 
+float SampleHeightMap(float2 xz)
+{
+    float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
+    float2 uv = (xz - gOriginXZ) / terrainSize;
+    uint w, h, layers, mipLevels;
+    gHeightMap.GetDimensions(0, w, h, mipLevels);
+    int2 texel = int2(uv * float2(w, h)); // まず 0..w, 0..h にスケール
+    texel = clamp(texel, int2(0, 0), int2(w - 1, h - 1)); // 範囲内に
+    return gHeightMap.Load(int3(texel, 0));
+}
+
 VSOutput main(VSInput input, uint instId : SV_InstanceID)
 {
     uint pooledIndex = gInstIndices[gIndexBase + instId]; //間接参照
@@ -96,21 +107,11 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     float3 wp = baseWS + translation;
 
-    float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
-    float2 cHeightMapUV = (translation.xz - gOriginXZ) / terrainSize;
-    uint w, h, layers, mipLevels;
-    gHeightMap.GetDimensions(0, w, h, mipLevels);
-    int2 texel = int2(cHeightMapUV * float2(w, h)); // まず 0..w, 0..h にスケール
-    texel = clamp(texel, int2(0, 0), int2(w - 1, h - 1)); // 範囲内に
-    float offsetHeight = gHeightMap.Load(int3(texel, 0));
+    float centerHeight = SampleHeightMap(translation.xz);
+    float worldHeight = SampleHeightMap(wp.xz);
 
-    float2 lHeightMapUV = (wp.xz - gOriginXZ) / terrainSize;
-    texel = int2(lHeightMapUV * float2(w, h)); // まず 0..w, 0..h にスケール
-    texel = clamp(texel, int2(0, 0), int2(w - 1, h - 1)); // 範囲内に
-    float wpHeight = gHeightMap.Load(int3(texel, 0));
-    float terrainOffset = (wpHeight - offsetHeight) * heightScale;
-
-    wp.y += terrainOffset;
+    // transformを活用するために差分で計算して加算
+    wp.y += (worldHeight - centerHeight) * heightScale;
 
    // ---- 1) 全体をまとめる“大きな揺れ” ----
    // 空間周波数をかなり低くして「大きなうねり」
@@ -212,7 +213,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     wp = baseWS + offsetWS;
 
-    float swayAmount = gWindAmplitude * offsetHeight * wave * weight;
+    float swayAmount = gWindAmplitude * worldHeight * wave * weight;
     float3 windDir3 = float3(gWindDirXZ.x, 0.0f, gWindDirXZ.y);
     wp += windDir3 * swayAmount;
 

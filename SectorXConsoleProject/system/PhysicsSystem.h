@@ -124,7 +124,7 @@ public:
 					//	partition->GetGlobalEntityManager(),
 					//	rule);
 
-					MoveIfCrossed_Deferred(entityIDs[i], newPos, *partition, *registry, levelCtx->GetID(), tag.handle, *moveBatch);
+					SFW::MoveIfCrossed_Deferred(entityIDs[i], newPos, *partition, *registry, levelCtx->GetID(), tag.handle, *moveBatch);
 				}
 #endif // USE_LERP_SIMD
 

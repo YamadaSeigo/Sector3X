@@ -126,9 +126,6 @@
     <ClInclude Include="src\Utility\pch.h">
       <Filter>Src\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\message.h">
-      <Filter>Src\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SectorFW\Physics\gltf_to_shape.h">
       <Filter>Inc\Physics</Filter>
     </ClInclude>
@@ -522,6 +519,12 @@
     <ClInclude Include="inc\SectorFW\Graphics\PointLightService.h">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Debug\message.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\convert_string.h">
+      <Filter>Inc\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">
@@ -544,9 +547,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\ArchetypeChunk.cpp">
       <Filter>Src\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Utility\message.cpp">
-      <Filter>Src\Utility</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\ComponentTypeRegistry.cpp">
       <Filter>Src\Core</Filter>
@@ -1126,6 +1126,9 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\PointLightService.cpp">
       <Filter>Src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\message.cpp">
+      <Filter>Src\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -25,6 +25,9 @@
 #include <condition_variable>
 #include <queue>
 
+ // メインレンダーターゲットをクリアするかどうかの定義
+#define CLEAR_MAIN_RENDER_TARGET 0
+
 namespace SFW
 {
 	namespace Graphics::DX11

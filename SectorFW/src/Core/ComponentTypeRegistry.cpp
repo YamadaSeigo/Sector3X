@@ -1,5 +1,5 @@
 #include "Core/ECS/ComponentTypeRegistry.h"
-#include "message.h"
+#include "Debug/message.h"
 
 namespace SFW
 {
@@ -11,7 +11,7 @@ namespace SFW
 
 			if (iter == meta.end())
 			{
-				DYNAMIC_ASSERT_MESSAGE(false, "Not Registry ComponentType!");
+				SFW::Debug::DYNAMIC_ASSERT_MESSAGE(false, "Not Registry ComponentType!");
 				return nullptr;
 			}
 

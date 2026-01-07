@@ -149,6 +149,38 @@ namespace SFW
 			return out;
 		}
 
+		std::vector<SpatialChunk*> CullChunks(const Math::Vec3f& center, float radius) const noexcept
+		{
+			std::vector<SpatialChunk*> out;
+			if (!m_root) return out;
+
+			if (!std::isfinite(radius) || radius <= 0.0f) radius = 0.0f;
+			const float r = (radius < 0.0f) ? 0.0f : radius;
+			const float r2 = r * r;
+
+			auto dist2_point_aabb_xz = [&](const Node& n) -> float {
+				auto clamp = [](float v, float lo, float hi) { return v < lo ? lo : (v > hi ? hi : v); };
+				const float qx = clamp(center.x, n.bounds.lb.x, n.bounds.ub.x);
+				const float qz = clamp(center.z, n.bounds.lb.y, n.bounds.ub.y);
+				const float dx = center.x - qx, dz = center.z - qz;
+				return dx * dx + dz * dz;
+				};
+
+			std::function<void(const Node&)> rec = [&](const Node& n) {
+				if (dist2_point_aabb_xz(n) > r2) return;
+				if (n.isLeaf()) {
+					if (n.chunk.GetEntityManager().GetEntityCount() > 0)
+						out.push_back(const_cast<SpatialChunk*>(&n.chunk));
+					return;
+				}
+				for (int i = 0; i < 4; ++i) if (n.child[i]) rec(*n.child[i]);
+				};
+			rec(*m_root);
+
+			return out;
+		}
+
+
 		static inline float Dist2PointAABB3D(const Math::Vec3f& p,
 			const Math::Vec2f& c,
 			const Math::Vec2f& e)

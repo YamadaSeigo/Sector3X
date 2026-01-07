@@ -1,5 +1,5 @@
 #include "Core/ECS/EntityManager.h"
-#include "message.h"
+#include "Debug/message.h"
 
 #include <algorithm>
 
@@ -22,7 +22,7 @@ namespace SFW
 					chunk->RemoveEntitySwapPop(idx);
 					// スワップで詰められた場合、末尾ID → idx に移動するので更新
 					if (idx < lastIndexBefore) {
-						EntityID swappedId = ArchetypeChunk::Accessor::GetEntities(chunk)[idx]; // Remove 後は idx に来ている
+						EntityID swappedId = ArchetypeChunk::Accessor::GetEntityIDs(chunk)[idx]; // Remove 後は idx に来ている
 						auto its = locations.find(swappedId);
 						if (its != locations.end()) {
 							its->second = { chunk, idx };
@@ -87,7 +87,7 @@ namespace SFW
 			// 念のため、locations に無いものも拾う（補完）
 			for (auto& arch : archetypeManager.GetAllData()) {
 				for (auto& ck : arch->GetChunks()) {
-					const auto entities = ArchetypeChunk::Accessor::GetEntities(ck.get());
+					const auto entities = ArchetypeChunk::Accessor::GetEntityIDs(ck.get());
 					const size_t n = ck->GetEntityCount();
 					for (size_t i = 0; i < n; ++i) {
 						EntityID id = entities[i];
@@ -113,7 +113,7 @@ namespace SFW
 			for (auto& [mask, idx] : archetypeManager.GetAllMaskIndices()) {
 				for (auto& chunk : archetypeManager.AccessArchetype(idx)->GetChunks()) {
 					auto entityCount = chunk->GetEntityCount();
-					const auto& entities = ArchetypeChunk::Accessor::GetEntities(chunk.get());
+					const auto& entities = ArchetypeChunk::Accessor::GetEntityIDs(chunk.get());
 					for (size_t i = 0; i < entityCount; ++i) {
 						if (entities[i] == id)
 							return mask; // マスクが見つかったら返す
@@ -160,7 +160,7 @@ namespace SFW
 
 			chunk->RemoveEntitySwapPop(idx);
 			if (idx < lastIndexBefore) {
-				EntityID swappedId = ArchetypeChunk::Accessor::GetEntities(chunk)[idx];
+				EntityID swappedId = ArchetypeChunk::Accessor::GetEntityIDs(chunk)[idx];
 				auto its = locations.find(swappedId);
 				if (its != locations.end()) { its->second = { chunk, idx }; }
 			}

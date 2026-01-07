@@ -143,6 +143,7 @@ namespace SFW
 			}
 			return out;
 		}
+
 		// （任意）アロケーション回避のコールバック版
 		template<class F>
 		void CullChunks(const Math::Frustumf& fr, float ymin, float ymax, F&& f) const noexcept
@@ -171,6 +172,65 @@ namespace SFW
 					}
 				}
 			}
+		}
+
+		/**
+		 * @brief 位置(center)と半径(radius)でチャンクをカリングする（XZ の Circle vs chunk AABB）
+		 *        Grid2D は「地面」扱い（Y は無視）として、XZ のみで判定します。
+		 */
+		std::vector<SpatialChunk*> CullChunks(const Math::Vec3f& center, float radius) const noexcept
+		{
+			std::vector<SpatialChunk*> out;
+			if (!std::isfinite(radius) || radius <= 0.0f) {
+				radius = 0.0f;
+			}
+			const float r = (radius < 0.0f) ? 0.0f : radius;
+			const float r2 = r * r;
+
+			using Signed = long long;
+			const float cell = float(chunkSize);
+			const float e = 0.5f * cell;
+
+			auto floor_div = [&](float v) -> Signed {
+				return static_cast<Signed>(std::floor(double(v) / double(cell)));
+				};
+
+			Signed ix0 = floor_div(center.x - r);
+			Signed iz0 = floor_div(center.z - r);
+			Signed ix1 = floor_div(center.x + r);
+			Signed iz1 = floor_div(center.z + r);
+
+			const Signed w = static_cast<Signed>(grid.width());
+			const Signed d = static_cast<Signed>(grid.height());
+
+			ix0 = std::clamp<Signed>(ix0, 0, w - 1);
+			iz0 = std::clamp<Signed>(iz0, 0, d - 1);
+			ix1 = std::clamp<Signed>(ix1, 0, w - 1);
+			iz1 = std::clamp<Signed>(iz1, 0, d - 1);
+
+			out.reserve(static_cast<size_t>((ix1 - ix0 + 1) * (iz1 - iz0 + 1)));
+
+			auto dist2_point_aabb_xz = [&](const Math::Vec3f& p, float cx, float cz, float ex, float ez) -> float {
+				auto clamp = [](float v, float lo, float hi) { return v < lo ? lo : (v > hi ? hi : v); };
+				const float qx = clamp(p.x, cx - ex, cx + ex);
+				const float qz = clamp(p.z, cz - ez, cz + ez);
+				const float dx = p.x - qx, dz = p.z - qz;
+				return dx * dx + dz * dz;
+				};
+
+			for (Signed z = iz0; z <= iz1; ++z) {
+				for (Signed x = ix0; x <= ix1; ++x) {
+					const float cx = (float(x) + 0.5f) * cell;
+					const float cz = (float(z) + 0.5f) * cell;
+
+					if (dist2_point_aabb_xz(center, cx, cz, e, e) > r2) continue;
+
+					auto& chunk = grid(ChunkSizeType(x), ChunkSizeType(z));
+					if (chunk.GetEntityManager().GetEntityCount() > 0)
+						out.push_back(const_cast<SpatialChunk*>(&chunk));
+				}
+			}
+			return out;
 		}
 
 		static inline float Dist2PointAABB3D(const Math::Vec3f& p,

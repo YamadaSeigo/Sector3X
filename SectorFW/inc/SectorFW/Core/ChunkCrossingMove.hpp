@@ -231,7 +231,9 @@ namespace SFW
 			}
 
 			// Move-only（所有権の二重Flushを防ぐ）
-			LocalBatch(LocalBatch&& o) noexcept : owner_(o.owner_), buf_(std::move(o.buf_)) { o.owner_ = nullptr; }
+			LocalBatch(LocalBatch&& o) noexcept
+				: owner_(o.owner_), buf_(std::move(o.buf_)) { o.owner_ = nullptr; }
+
 			LocalBatch& operator=(LocalBatch&& o) noexcept {
 				if (this == &o) return *this;
 				FlushNoThrow();
@@ -249,15 +251,36 @@ namespace SFW
 				buf_.push_back({ id, src, dst });
 			}
 			template<class Range>
-			inline void AddRange(const Range& moves) { buf_.insert(buf_.end(), moves.begin(), moves.end()); }
+			inline void AddRange(const Range& moves) {
+				buf_.insert(buf_.end(), moves.begin(), moves.end());
+			}
 
-			inline void Flush() { if (buf_.empty() || owner_ == nullptr) return; owner_->EnqueueBulk(buf_); buf_.clear(); }
-			inline void FlushNoThrow() noexcept { if (buf_.empty() || owner_ == nullptr) return; try { owner_->EnqueueBulk(buf_); } catch (...) {/*最後の手段：捨てずに保持*/ } buf_.clear(); }
+			inline void Flush() {
+				if (buf_.empty() || owner_ == nullptr) return;
+				owner_->EnqueueBulk(buf_); buf_.clear();
+			}
+			inline void FlushNoThrow() noexcept {
+				if (buf_.empty() || owner_ == nullptr) return;
+				try {
+					owner_->EnqueueBulk(buf_);
+				} catch (...) {
+					/*最後の手段：捨てずに保持*/
+				}
+				buf_.clear();
+			}
 
-			inline void ClearKeepCapacity() { buf_.clear(); }
-			inline void ClearAndRelease() { std::vector<PendingMove>().swap(buf_); }
-			inline void Cancel() noexcept { owner_ = nullptr; buf_.clear(); }
-			size_t Size() const { return buf_.size(); }
+			inline void ClearKeepCapacity() {
+				buf_.clear();
+			}
+			inline void ClearAndRelease() {
+				std::vector<PendingMove>().swap(buf_);
+			}
+			inline void Cancel() noexcept {
+				owner_ = nullptr; buf_.clear();
+			}
+			size_t Size() const {
+				return buf_.size();
+			}
 		private:
 			BudgetMover* owner_{};                  // ※ owner_ の寿命 > このバッチの寿命であること
 			std::vector<PendingMove> buf_{};        // 呼び出し側が寿命管理するローカル一時
@@ -336,6 +359,7 @@ namespace SFW
 	 * @brief 即時→ディファード版 MoveIfCrossed（移送はキューへ）
 	 * @details * Flush をフレーム末に呼んで実際に動かす
 	 * @details スレッド終わりに必ず BudgetMover::PublishTLS() を呼ぶこと
+	 * @return 移送予定が積まれたら true、そうでなければ false
 	 */
 	template<class Partition>
 	inline bool MoveIfCrossed_Deferred(ECS::EntityID id,
@@ -363,6 +387,7 @@ namespace SFW
 		}
 		else {
 			const SpatialChunkKey dstKey = dst->GetNodeKey();
+			// 変化無し
 			if (dstKey.code == handle.key.code && dstKey.level == handle.key.level) {
 				handle.cached = dst;
 				return false;

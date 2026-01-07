@@ -36,3 +36,4 @@ constexpr inline const char* DeferredTextureNames[] = {
 
 inline constexpr size_t DeferredTextureCount = sizeof(DeferredTextureNames) / sizeof(DeferredTextureNames[0]);
 
+inline static constexpr const char* BLOOM_TEXTURE_NAME = "BloomTexture";

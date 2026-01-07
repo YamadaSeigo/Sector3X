@@ -4,6 +4,7 @@
 
 #include "Debug/logger.h"
 #include "Debug/assert_config.h"
+#include "Debug/message.h"
 
 namespace SFW
 {
@@ -56,8 +57,9 @@ namespace SFW
 			Microsoft::WRL::ComPtr<ID3DBlob> vsBlob;
 			hr = D3DReadFileToBlob(desc.vsPath.c_str(), vsBlob.GetAddressOf());
 			if (FAILED(hr)) {
+
 				LOG_ERROR("Failed to compile vertex shader: %s", desc.vsPath.c_str());
-				SFW_ASSERT(false && "Failed to compile vertex shader");
+				SFW::Debug::DYNAMIC_ASSERT_MESSAGE(false, "Failed to compile vertex shader {%s}", desc.vsPath.c_str());
 				return shader;
 			}
 
@@ -83,7 +85,7 @@ namespace SFW
 			hr = D3DReadFileToBlob(desc.psPath.c_str(), psBlob.GetAddressOf());
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to compile pixel shader: %s", desc.psPath.c_str());
-				SFW_ASSERT(false && "Failed to compile pixel shader");
+				SFW::Debug::DYNAMIC_ASSERT_MESSAGE(false, "Failed to compile pixel shader {%s}", desc.psPath.c_str());
 				return shader;
 			}
 

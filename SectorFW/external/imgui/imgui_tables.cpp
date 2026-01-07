@@ -1737,7 +1737,7 @@ const char* ImGui::TableGetColumnName(const ImGuiTable* table, int column_n)
 // - Request will be applied during next layout, which happens on the first call to TableNextRow() after BeginTable().
 // - For the getter you can test (TableGetColumnFlags() & ImGuiTableColumnFlags_IsEnabled) != 0.
 // - Alternative: the ImGuiTableColumnFlags_Disabled is an overriding/master disable flag which will also hide the column from context menu.
-void ImGui::TableSetColumnEnabled(int column_n, bool enabled)
+void ImGui::TableSetColumnEnabled(int column_n, bool showEnable)
 {
 	ImGuiContext& g = *GImGui;
 	ImGuiTable* table = g.CurrentTable;
@@ -1751,7 +1751,7 @@ void ImGui::TableSetColumnEnabled(int column_n, bool enabled)
 		column_n = table->CurrentColumn;
 	IM_ASSERT(column_n >= 0 && column_n < table->ColumnsCount);
 	ImGuiTableColumn* column = &table->Columns[column_n];
-	column->IsUserEnabledNextFrame = enabled;
+	column->IsUserEnabledNextFrame = showEnable;
 }
 
 // We allow querying for an extra column in order to poll the IsHovered state of the right-most section

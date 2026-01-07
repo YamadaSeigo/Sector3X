@@ -23,7 +23,7 @@ namespace SFW
 
 		PSOData PSOManager::CreateResource(const PSOCreateDesc& desc, PSOHandle h)
 		{
-			PSOData pso{};
+			PSOData overridePSO{};
 			{
 				auto shaderData = shaderManager->Get(desc.shader);
 
@@ -31,7 +31,7 @@ namespace SFW
 					(UINT)shaderData.ref().inputLayoutDesc.size(),
 					shaderData.ref().vsBlob->GetBufferPointer(),
 					shaderData.ref().vsBlob->GetBufferSize(),
-					&pso.inputLayout);
+					&overridePSO.inputLayout);
 
 				if (FAILED(hr)) {
 					LOG_ERROR("Failed to create input layout for PSO: %d", desc.shader);
@@ -39,9 +39,9 @@ namespace SFW
 				}
 			}
 
-			pso.shader = desc.shader;
-			pso.rasterizerState = desc.rasterizerState;
-			return pso;
+			overridePSO.shader = desc.shader;
+			overridePSO.rasterizerState = desc.rasterizerState;
+			return overridePSO;
 		}
 	}
 }

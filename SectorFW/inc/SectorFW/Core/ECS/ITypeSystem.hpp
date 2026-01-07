@@ -357,14 +357,14 @@ namespace SFW
 			template<IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 			void ForEachFrustumChunkWithAccessor(F&& func,
 				Partition& partition,
-				Math::Frustumf& fru,
+				const Math::Frustumf& fru,
 				CallArgs&&... args)
 			{
 				auto cullChunks = partition.CullChunks(fru);
 				auto& gEM = partition.GetGlobalEntityManager();
 
 				using DefaultAccess = ComponentAccess<AccessTypes...>;
-				ForEachFrustum_impl<Type.v>(static_cast<DefaultAccess*>(nullptr),
+				ForEachCulling_impl<Type.v>(static_cast<DefaultAccess*>(nullptr),
 					this, std::forward<F>(func), cullChunks, gEM,
 					std::forward<CallArgs>(args)...);
 			}
@@ -374,13 +374,13 @@ namespace SFW
 				requires ::SFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
 			void ForEachFrustumChunkWithAccessor(F&& func,
 				Partition& partition,
-				Math::Frustumf& fru,
+				const Math::Frustumf& fru,
 				CallArgs&&... args)
 			{
 				auto cullChunks = partition.CullChunks(fru);
 				auto& gEM = partition.GetGlobalEntityManager();
 
-				ForEachFrustum_impl<Type.v>(static_cast<AccessSpec*>(nullptr),
+				ForEachCulling_impl<Type.v>(static_cast<AccessSpec*>(nullptr),
 					this, std::forward<F>(func), cullChunks, gEM,
 					std::forward<CallArgs>(args)...);
 			}
@@ -391,13 +391,63 @@ namespace SFW
 			::SFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
 				void ForEachFrustumChunkWithAccessor(F&& func,
 					Partition& partition,
-					Math::Frustumf& fru,
+					const Math::Vec3f& fru,
 					CallArgs&&... args)
 			{
 				using Access = ComponentAccess<Override...>;
 				this->template ForEachFrustumChunkWithAccessor<Access, Type>(
 					std::forward<F>(func), partition, fru, std::forward<CallArgs>(args)...);
 			}
+
+			// A) 既定版：クラス定義の AccessTypes... を使う（制約なし）
+			template<IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
+			void ForEachSphereChunkWithAccessor(F&& func,
+				Partition& partition,
+				const Math::Vec3f& center,
+				float radius,
+				CallArgs&&... args)
+			{
+				auto cullChunks = partition.CullChunks(center, radius);
+				auto& gEM = partition.GetGlobalEntityManager();
+
+				using DefaultAccess = ComponentAccess<AccessTypes...>;
+				ForEachCulling_impl<Type.v>(static_cast<DefaultAccess*>(nullptr),
+					this, std::forward<F>(func), cullChunks, gEM,
+					std::forward<CallArgs>(args)...);
+			}
+
+			// B) 上書き版（単一 AccessSpec）…部分集合であることを要求
+			template<typename AccessSpec, IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
+				requires ::SFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
+			void ForEachSphereChunkWithAccessor(F&& func,
+				Partition& partition,
+				const Math::Vec3f& center,
+				float radius,
+				CallArgs&&... args)
+			{
+				auto cullChunks = partition.CullChunks(center, radius);
+				auto& gEM = partition.GetGlobalEntityManager();
+
+				ForEachCulling_impl<Type.v>(static_cast<AccessSpec*>(nullptr),
+					this, std::forward<F>(func), cullChunks, gEM,
+					std::forward<CallArgs>(args)...);
+			}
+
+			// C) 上書き版（従来の書き味：<Read<...>, Read<...>>）…内部で束ねて転送
+			template<typename... Override, IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
+				requires (sizeof...(Override) > 0) &&
+			::SFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
+				void ForEachSphereChunkWithAccessor(F&& func,
+					Partition& partition,
+					const Math::Vec3f& center,
+					float radius,
+					CallArgs&&... args)
+			{
+				using Access = ComponentAccess<Override...>;
+				this->template ForEachFrustumChunkWithAccessor<Access, Type>(
+					std::forward<F>(func), partition, center, radius, std::forward<CallArgs>(args)...);
+			}
+
 			/**
 			* @brief 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(フラスタムカリング近い順番付き)
 			* @param func 関数オブジェクトまたはラムダ式
@@ -410,7 +460,7 @@ namespace SFW
 			template<IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 			void ForEachFrustumNearChunkWithAccessor(F&& func,
 				Partition& partition,
-				Math::Frustumf& fru,
+				const Math::Frustumf& fru,
 				Math::Vec3f cp,
 				CallArgs&&... args)
 			{
@@ -418,7 +468,7 @@ namespace SFW
 				auto& gEM = partition.GetGlobalEntityManager();
 
 				using DefaultAccess = ComponentAccess<AccessTypes...>;
-				ForEachFrustum_impl<Type.v>(static_cast<DefaultAccess*>(nullptr),
+				ForEachCulling_impl<Type.v>(static_cast<DefaultAccess*>(nullptr),
 					this, std::forward<F>(func), cullChunks, gEM,
 					std::forward<CallArgs>(args)...);
 			}
@@ -435,7 +485,7 @@ namespace SFW
 				auto cullChunks = partition.CullChunksNear(fru, cp);
 				auto& gEM = partition.GetGlobalEntityManager();
 
-				ForEachFrustum_impl<Type.v>(static_cast<AccessSpec*>(nullptr),
+				ForEachCulling_impl<Type.v>(static_cast<AccessSpec*>(nullptr),
 					this, std::forward<F>(func), cullChunks, gEM,
 					std::forward<CallArgs>(args)...);
 			}
@@ -846,12 +896,12 @@ namespace SFW
 
 			// 展開ヘルパ（AccessSpec = ComponentAccess<Ts...> を Ts... に割り出す）
 			template<bool Parallel, class AccessSpec, class Self, class F, class CullChunks, class... Extra>
-			static void ForEachFrustum_impl(Self*, F&&, CullChunks&, EntityManager&, Extra&&...) {
+			static void ForEachCulling_impl(Self*, F&&, CullChunks&, EntityManager&, Extra&&...) {
 				static_assert(sizeof(AccessSpec) == 0, "AccessSpec must be ComponentAccess<...>");
 			}
 
 			template<bool Parallel, template<class...> class CA, class... Ts, class Self, class F, class CullChunks, class... Extra>
-			static void ForEachFrustum_impl(CA<Ts...>*, Self* self, F&& func, CullChunks& cullChunks, EntityManager& gEM, Extra&&... extra)
+			static void ForEachCulling_impl(CA<Ts...>*, Self* self, F&& func, CullChunks& cullChunks, EntityManager& gEM, Extra&&... extra)
 			{
 				Query query;
 				query.With<typename AccessPolicy<Ts>::ComponentType...>();
@@ -947,7 +997,7 @@ namespace SFW
 					// func(acc, entityCount, entityIDs, extra...)
 					std::apply(
 						[&](auto&... unpacked) {
-							std::invoke(func, acc, ch->GetEntityCount(), ch->GetEntities(), unpacked...);
+							std::invoke(func, acc, ch->GetEntityCount(), ch->GetEntityIDs(), unpacked...);
 						},
 						extraPack
 					);

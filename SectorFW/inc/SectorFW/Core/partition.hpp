@@ -32,10 +32,14 @@ namespace SFW
 	 * @brief Partitionが実装する必要のあるインターフェースを定義するコンセプト
 	 */
 	template <typename Derived>
-	concept PartitionConcept = requires(Derived t, Math::Vec3f v, ChunkSizeType size, float chunkSize,
+	concept PartitionConcept = requires(
+		Derived t, 
+		Math::Vec3f v, ChunkSizeType size, float chunkSize,
 		EOutOfBoundsPolicy policy,
 		SpatialChunkRegistry & reg, LevelID level,
-		const Math::Frustumf & fr, Math::Vec3f cp, float hy,
+		const Math::Frustumf & fr,
+		const Math::Vec3f & center, float radius,
+		Math::Vec3f cp, float hy,
 		Debug::LineVertex * outLine, uint32_t lineCapacity, uint32_t displayCount
 		)
 	{
@@ -51,6 +55,8 @@ namespace SFW
 		{ t.GetEntityNum() } -> std::same_as<size_t>;
 		//フラスタムカリング
 		{ t.CullChunks(fr) } -> std::same_as<std::vector<SpatialChunk*>>;
+		//半径カリング
+		{ t.CullChunks(center, radius) } -> std::same_as<std::vector<SpatialChunk*>>;
 		//フラスタムカリング（近い順番）
 		{ t.CullChunksNear(fr, cp) } -> std::same_as<std::vector<SpatialChunk*>>;
 		//チャンクのワイヤーフレームを取得

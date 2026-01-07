@@ -24,6 +24,15 @@
     <ClCompile Include="app\stdafx.cpp">
       <Filter>App</Filter>
     </ClCompile>
+    <ClCompile Include="app\FireflyService.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="app\FireflyParticlePool.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="app\DebugRenderType.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\VS_ClipUV.hlsl">
@@ -128,12 +137,42 @@
     <FxCompile Include="shader\VS_SpriteAnimation.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\CS_FireflyInitFreeList.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CS_FireflySpawn.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CS_FireflyArgs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CS_FireflyUpdate.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_FireflyBillboard.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_Firefly.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_BrightExtract.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_BlurH.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_Composite.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\_GlobalTypes.hlsli">
       <Filter>Shader</Filter>
     </None>
     <None Include="shader\_ShadowTypes.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shader\_FireflyParticles.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -211,6 +250,24 @@
       <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="system\SpriteAnimationSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="app\FireflyService.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="system\FireflySystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="app\FireflyParticlePool.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="app\D3D11Helpers.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="app\DebugRenderType.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="system\GlobalDebugRenderSystem.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

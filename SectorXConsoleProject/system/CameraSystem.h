@@ -1,5 +1,11 @@
 #pragma once
 
+#include "../app/DeferredRenderingService.h"
+#include "../app/FireflyService.h"
+
+/**
+ * @brief カメラのバッファの更新、フルスクリーン描画用のカメラバッファとFireflyServiceのカメラバッファも更新,
+ */
 template<typename Partition>
 class CameraSystem : public ITypeSystem<
 	CameraSystem,
@@ -10,7 +16,9 @@ class CameraSystem : public ITypeSystem<
 	ServiceContext<
 		InputService,
 		Graphics::I3DPerCameraService,
-		Graphics::I2DCameraService
+		Graphics::I2DCameraService,
+		DeferredRenderingService,
+		FireflyService
 #ifdef _DEBUG
 		,Graphics::RenderService
 #endif
@@ -24,12 +32,15 @@ public:
 	void UpdateImpl(
 		NoDeletePtr<InputService> inputService,
 		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService,
-		NoDeletePtr<Graphics::I2DCameraService> camera2DService
+		NoDeletePtr<Graphics::I2DCameraService> camera2DService,
+		NoDeletePtr<DeferredRenderingService> deferredService,
+		NoDeletePtr<FireflyService> fireflyService
 #ifdef _DEBUG
 		, NoDeletePtr<Graphics::RenderService> renderService
 #endif
 	)
 	{
+		//※ここのデバック処理はDX11固有なので、perCameraServiceがDX11版であることが前提
 #ifdef _DEBUG
 		// デバッグのためにカメラ固定
 		if (inputService->IsKeyTrigger(Input::Key::F2)) {
@@ -149,6 +160,23 @@ public:
 			cbUpdateDesc.size = sizeof(Graphics::CameraBuffer);
 			bufferManager->UpdateBuffer(cbUpdateDesc, currentSlot);
 
+			Math::ToBasis<float, Math::LH_ZForward>(debugRot, r, u, f);
+
+			//ディファ―ド用のバッファ更新
+			LightCameraBuffer lightCameraBufferData{};
+			lightCameraBufferData.invViewProj = Math::Inverse(buffer.viewProj);
+			lightCameraBufferData.camForward = f.normalized();
+			lightCameraBufferData.camPos = debugEye;
+
+			deferredService->UpdateBufferData(lightCameraBufferData);
+
+			FireflyService::CameraCB fireflyCamBuffer{};
+			fireflyCamBuffer.gViewProj = buffer.viewProj;
+			fireflyCamBuffer.gCamRightWS = r.normalized();
+			fireflyCamBuffer.gCamUpWS = u.normalized();
+
+			fireflyService->SetCameraBuffer(fireflyCamBuffer);
+
 			return;
 		}
 #endif
@@ -196,6 +224,25 @@ public:
 				camera2DService->Zoom((float)mouseWheelV);
 			}
 		}
+
+		const auto& viewProj = perCameraService->GetCameraBufferDataNoLock().viewProj;
+
+		Math::Vec3f r, u, f;
+		perCameraService->MakeBasis(r, u, f);
+
+		LightCameraBuffer lightCameraBufferData{};
+		lightCameraBufferData.invViewProj = Math::Inverse(viewProj);
+		lightCameraBufferData.camForward = f.normalized();
+		lightCameraBufferData.camPos = perCameraService->GetEyePos();
+
+		deferredService->UpdateBufferData(lightCameraBufferData);
+
+		FireflyService::CameraCB fireflyCamBuffer{};
+		fireflyCamBuffer.gViewProj = viewProj;
+		fireflyCamBuffer.gCamRightWS = r.normalized();
+		fireflyCamBuffer.gCamUpWS = u.normalized();
+
+		fireflyService->SetCameraBuffer(fireflyCamBuffer);
 	}
 private:
 	float moveSpeed = 1.0f;

@@ -75,7 +75,7 @@ public:
 
 			Graphics::DrawCommand cmd;
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.pso = psoHandle.index;
+			cmd.overridePSO = psoHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;
 

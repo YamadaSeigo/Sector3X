@@ -279,7 +279,7 @@ namespace SFW
 					// =============================================================================
 					const std::wstring srcW = canonicalPath.wstring() + L"#" + std::to_wstring(meshIndex++);
 					bool ok = meshMgr.AddFromSoA_R8Snorm(
-						srcW, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, sub.lods[0].mesh, desc.pCustomNomWFunc);
+						srcW, positions, normals, tangents, tex0, skinIdx, skinWgt, indices, sub.lods[0].mesh, desc.pCustomNrmWFunc);
 					if (!ok) {
 						assert(false && "MeshManager::AddFromSoA_R8Snorm failed");
 						continue;
@@ -376,7 +376,7 @@ namespace SFW
 
 					ShaderHandle shaderHandle;
 					{
-						auto psoData = psoMgr.Get(desc.pso);
+						auto psoData = psoMgr.Get(desc.overridePSO);
 						shaderHandle = psoData.ref().shader;
 					}
 
@@ -615,7 +615,7 @@ namespace SFW
 					// -----------------------------------------------
 
 					sub.material = matHandle;
-					sub.pso = desc.pso;
+					sub.overridePSO = desc.overridePSO;
 
 					{
 						SFW::Graphics::LodAssetStats as{
@@ -964,7 +964,7 @@ namespace SFW
 				outStreams.positions, outStreams.normals,
 				outStreams.tangents, outStreams.tex0,
 				outStreams.skinIdx, outStreams.skinWgt,
-				outIdx, outMesh.mesh, desc.pCustomNomWFunc))
+				outIdx, outMesh.mesh, desc.pCustomNrmWFunc))
 				return false;
 
 #ifdef USE_MESHOPTIMIZER

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../app/DeferredRenderingService.h"
 
 template<typename Partition>
 class DeferredRenderingSystem : public ITypeSystem<
@@ -21,12 +20,7 @@ public:
 	{
 		using namespace Graphics;
 
-		LightCameraBuffer lightCameraBufferData{};
-		lightCameraBufferData.invViewProj = Math::Inverse(perCameraService->GetCameraBufferDataNoLock().viewProj);
-		lightCameraBufferData.camForward = perCameraService->GetForward();
-		lightCameraBufferData.camPos = perCameraService->GetEyePos();
-
-		deferredService->UpdateBufferData(lightCameraBufferData);
+		
 	}
 };
 

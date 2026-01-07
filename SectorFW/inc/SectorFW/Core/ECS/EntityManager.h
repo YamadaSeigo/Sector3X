@@ -309,7 +309,7 @@ namespace SFW
 					const size_t lastIndexBefore = oldChunk->GetEntityCount() - 1;
 					std::unique_lock<std::shared_mutex> wlock(locationsMutex);
 					if (oldIndex < lastIndexBefore) {
-						EntityID swappedId = ArchetypeChunk::Accessor::GetEntities(oldChunk)[lastIndexBefore];
+						EntityID swappedId = ArchetypeChunk::Accessor::GetEntityIDs(oldChunk)[lastIndexBefore];
 						auto it = locations.find(swappedId);
 						if (it != locations.end()) [[unlikely]] it->second = { oldChunk, oldIndex };
 					}
@@ -377,7 +377,7 @@ namespace SFW
 					const size_t lastIndexBefore = oldChunk->GetEntityCount() - 1;
 					std::unique_lock<std::shared_mutex> wlock(locationsMutex);
 					if (oldIndex < lastIndexBefore) {
-						EntityID swappedId = ArchetypeChunk::Accessor::GetEntities(oldChunk)[lastIndexBefore];
+						EntityID swappedId = ArchetypeChunk::Accessor::GetEntityIDs(oldChunk)[lastIndexBefore];
 						auto it = locations.find(swappedId);
 						if (it != locations.end()) it->second = { oldChunk, oldIndex };
 					}

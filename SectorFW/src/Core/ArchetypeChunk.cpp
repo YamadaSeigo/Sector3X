@@ -1,5 +1,5 @@
 #include "Core/ECS/ArchetypeChunk.h"
-#include "message.h"
+#include "Debug/message.h"
 
 namespace SFW
 {
@@ -7,7 +7,7 @@ namespace SFW
 	{
 		size_t ArchetypeChunk::AddEntity(EntityID id)
 		{
-			DYNAMIC_ASSERT_MESSAGE(entityCount < layout.capacity, "entityCount(%d) over capacity(%d)", entityCount, layout.capacity);
+			SFW::Debug::DYNAMIC_ASSERT_MESSAGE(entityCount < layout.capacity, "entityCount(%d) over capacity(%d)", entityCount, layout.capacity);
 			size_t index = entityCount++;
 			entities[index] = id;
 			return index;

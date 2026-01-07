@@ -112,16 +112,16 @@ namespace SFW
 			UINT indexCount = 0;
 			UINT startIndex = 0;
 			{
-				auto pso = psoManager->GetDirect(psoIdx);
+				auto overridePSO = psoManager->GetDirect(psoIdx);
 
 				if (usePSORasterizer) {
-					SetRasterizerStateImpl(pso.ref().rasterizerState);
+					SetRasterizerStateImpl(overridePSO.ref().rasterizerState);
 				}
 
 				// PSOƒoƒCƒ“ƒh
-				context->IASetInputLayout(pso.ref().inputLayout.Get());
+				context->IASetInputLayout(overridePSO.ref().inputLayout.Get());
 
-				auto shader = shaderManager->Get(pso.ref().shader);
+				auto shader = shaderManager->Get(overridePSO.ref().shader);
 				context->VSSetShader(shader.ref().vs.Get(), nullptr, 0);
 				auto& ps = shader.ref().ps;
 				isPSBind = (ps != nullptr);

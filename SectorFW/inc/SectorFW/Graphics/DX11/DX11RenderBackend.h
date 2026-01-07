@@ -168,7 +168,7 @@ namespace SFW
 				struct DrawBatch {
 					uint32_t mesh;
 					uint32_t material;
-					uint32_t pso;
+					uint32_t overridePSO;
 					uint32_t base;
 					uint32_t instanceCount; // instances[idx]
 				};
@@ -209,7 +209,7 @@ namespace SFW
 				{
 
 					while (i < cmdCount) {
-						auto currentPSO = cmds[i].pso;
+						auto currentPSO = cmds[i].overridePSO;
 						auto currentMat = cmds[i].material;
 
 						uint32_t currentMesh = cmds[i].mesh;
@@ -222,7 +222,7 @@ namespace SFW
 
 						// “¯‚¶PSO + Material + Mesh‚ð‚Ü‚Æ‚ß‚é
 						while (i < cmdCount &&
-							cmds[i].pso == currentPSO &&
+							cmds[i].overridePSO == currentPSO &&
 							cmds[i].material == currentMat &&
 							cmds[i].mesh == currentMesh &&
 							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
@@ -248,7 +248,7 @@ namespace SFW
 					memcpy(m.pData, &perDraw, sizeof(perDraw));
 					context->Unmap(m_perDrawCB.Get(), 0);
 
-					DrawInstanced(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer);
+					DrawInstanced(b.mesh, b.material, b.overridePSO, b.instanceCount, usePSORasterizer);
 				}
 			}
 			/**
@@ -263,7 +263,7 @@ namespace SFW
 				struct DrawBatch {
 					uint32_t mesh;
 					uint32_t material;
-					uint32_t pso;
+					uint32_t overridePSO;
 					uint32_t base;
 					uint32_t instanceCount; // instances[idx]
 				};
@@ -298,7 +298,7 @@ namespace SFW
 					while (k < K) {
 						const DrawCommand& first = cmds[indices[k]];
 
-						auto currentPSO = first.pso;
+						auto currentPSO = first.overridePSO;
 						auto currentMat = first.material;
 						auto currentMesh = first.mesh;
 						uint32_t instanceCount = 0;
@@ -307,7 +307,7 @@ namespace SFW
 						auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
 
 						while (k < K &&
-							cmds[indices[k]].pso == currentPSO &&
+							cmds[indices[k]].overridePSO == currentPSO &&
 							cmds[indices[k]].material == currentMat &&
 							cmds[indices[k]].mesh == currentMesh &&
 							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
@@ -334,7 +334,7 @@ namespace SFW
 					memcpy(m.pData, &perDraw, sizeof(perDraw));
 					context->Unmap(m_perDrawCB.Get(), 0);
 
-					DrawInstanced(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer);
+					DrawInstanced(b.mesh, b.material, b.overridePSO, b.instanceCount, usePSORasterizer);
 				}
 			}
 
