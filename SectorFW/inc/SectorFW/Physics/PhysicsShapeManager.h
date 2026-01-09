@@ -344,7 +344,7 @@ namespace SFW
 					else if constexpr (std::is_same_v<T, MeshDesc>) {
 						MeshShapeSettings st;
 						st.mTriangleVertices.reserve(d.vertices.size());
-						for (auto& v : d.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
+						for (const auto& v : d.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
 						st.mIndexedTriangles.reserve(d.indices.size() / 3);
 						for (size_t i = 0; i + 2 < d.indices.size(); i += 3)
 							st.mIndexedTriangles.emplace_back(d.indices[i], d.indices[i + 1], d.indices[i + 2]);
@@ -438,8 +438,6 @@ namespace SFW
 						}
 						else
 						{
-							bool debug = d.path == "generated/convex/RuinTower.chullbin";
-
 							if (!LoadVHACDFile(d.path, hulls, desc.scale.s, d.rhFlip) || hulls.empty()) {
 								// 読み込み失敗 → フォールバック Box
 								RefConst<Shape> base = new BoxShape(Vec3(0.5f, 0.5f, 0.5f));

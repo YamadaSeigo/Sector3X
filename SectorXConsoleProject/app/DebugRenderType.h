@@ -5,7 +5,7 @@ struct DebugRenderType
 {
 	DebugRenderType();
 
-	static bool showEnable;
+	static bool isHit;
 	static bool drawPartitionBounds;
 	static bool drawFrustumBounds;
 	static bool drawModelAABB;

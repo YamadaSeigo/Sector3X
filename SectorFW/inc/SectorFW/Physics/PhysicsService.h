@@ -85,6 +85,18 @@ namespace SFW
 			{
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ CapsuleDesc{halfHeight, radius}, s }, h); return h;
 			}
+
+			/**
+			 * @brief メッシュ形状を生成する
+			 * @param vertex 頂点群
+			 * @param indices 頂点インデックス群
+			 * @param s スケール（デフォルトは {1,1,1}）
+			 * @return ShapeHandle 生成されたメッシュ形状のハンドル
+			 */
+			[[nodiscard]] ShapeHandle MakeMesh(const std::vector<Vec3f>& vertex, const std::vector<uint32_t>& indices, ShapeScale s = { {1,1,1} }) {
+				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ MeshDesc{vertex, indices}, s }, h); return h;
+			}
+
 			/**
 			 * @brief 凸形状を生成する
 			 * @param pts 凸形状を作成する頂点群

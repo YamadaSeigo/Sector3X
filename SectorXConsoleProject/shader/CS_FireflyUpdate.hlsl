@@ -50,22 +50,25 @@ cbuffer CBParams : register(b2)
     float gWanderFreq; // ふわふわノイズ周波数
     float gWanderStrength; // ふわふわノイズ強さ
     float gCenterPull; // ボリューム中心への引き戻し強さ
+
     float gGroundBand; // 地面からの高さ帯
     float gGroundPull; // 地面付近への引き戻し強さ
-    float gMaxSpeed; // 速度上限
-    float pad3;
+    float gHeightRange; //散りばめる高さの範囲
 
     float gBurstStrength; // 例：3.0
     float gBurstRadius; // 例：4.0（プレイヤーから何mまで強いか）
     float gBurstSwirl; // 例：1.5（渦成分）
     float gBurstUp; // 例：1.0（上方向の押し上げ）
+
+    float gMaxSpeed; // 速度上限
 };
 
 float SampleGroundY(float2 xz)
 {
     float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
     float2 uv = saturate((xz - gOriginXZ) / terrainSize);
-    return gHeightMap.SampleLevel(gHeightSamp, uv, 0);
+    float h = gHeightMap.SampleLevel(gHeightSamp, uv, 0);
+    return (h * 2.0f - 1.0f) * heightScale / 2.0f;
 }
 
 // 軽いハッシュ乱数（0..1）
@@ -151,10 +154,12 @@ void main(uint3 tid : SV_DispatchThreadID)
     // (C) ふわふわノイズ
     {
         float tt = gTime + p.phase;
-        float3 wander =
-        float3(sin(tt * gWanderFreq + 1.0f),
-               sin(tt * gWanderFreq * 0.9f + 2.0f),
-               sin(tt * gWanderFreq * 1.1f + 3.0f)) * gWanderStrength;
+        float f = gWanderFreq * (0.7f + 0.6f * frac(p.band01 * 13.37f)); // 粒子ごとに0.7..1.3倍
+        float3 wander = float3(
+        sin(tt * f + 1.0f),
+        sin(tt * f * 0.9f + 2.0f),
+        sin(tt * f * 1.1f + 3.0f)
+        ) * gWanderStrength;
         p.velWS += wander * gDt;
     }
 
@@ -167,7 +172,7 @@ void main(uint3 tid : SV_DispatchThreadID)
     // (E) 地面帯へ寄せる（草の上を漂う）
     {
         float groundY = SampleGroundY(p.posWS.xz);
-        float band = gGroundBand + (p.band01 - 0.5f) * 1.0f; // ±0.5m の分散（調整）
+        float band = gGroundBand + (p.band01 - 0.5f) * gHeightRange; // ±(gHeightRange / 2)m の分散
         float targetY = groundY + band;
         float dy = targetY - p.posWS.y;
         p.velWS.y += dy * (gGroundPull * gDt);

@@ -9014,7 +9014,7 @@ static bool IsRootOfOpenMenuSet()
 	return upper_popup->Window && (upper_popup->Window->Flags & ImGuiWindowFlags_ChildMenu) && ImGui::IsWindowChildOf(upper_popup->Window, window, true, false);
 }
 
-bool ImGui::BeginMenuEx(const char* label, const char* icon, bool showEnable)
+bool ImGui::BeginMenuEx(const char* label, const char* icon, bool isHit)
 {
 	ImGuiWindow* window = GetCurrentWindow();
 	if (window->SkipItems)
@@ -9059,7 +9059,7 @@ bool ImGui::BeginMenuEx(const char* label, const char* icon, bool showEnable)
 	// e.g. Menus tend to overlap each other horizontally to amplify relative Z-ordering.
 	ImVec2 popup_pos, pos = window->DC.CursorPos;
 	PushID(label);
-	if (!showEnable)
+	if (!isHit)
 		BeginDisabled();
 	const ImGuiMenuColumns* offsets = &window->DC.MenuColumns;
 	bool pressed;
@@ -9100,10 +9100,10 @@ bool ImGui::BeginMenuEx(const char* label, const char* icon, bool showEnable)
 			RenderText(pos + ImVec2(offsets->OffsetIcon, 0.0f), icon);
 		RenderArrow(window->DrawList, pos + ImVec2(offsets->OffsetMark + extra_w + g.FontSize * 0.30f, 0.0f), GetColorU32(ImGuiCol_Text), ImGuiDir_Right);
 	}
-	if (!showEnable)
+	if (!isHit)
 		EndDisabled();
 
-	const bool hovered = (g.HoveredId == id) && showEnable && !g.NavHighlightItemUnderNav;
+	const bool hovered = (g.HoveredId == id) && isHit && !g.NavHighlightItemUnderNav;
 	if (menuset_is_open)
 		PopItemFlag();
 
@@ -9175,7 +9175,7 @@ bool ImGui::BeginMenuEx(const char* label, const char* icon, bool showEnable)
 		}
 	}
 
-	if (!showEnable) // explicitly close if an open menu becomes disabled, facilitate users code a lot in pattern such as 'if (BeginMenu("options", has_object)) { ..use object.. }'
+	if (!isHit) // explicitly close if an open menu becomes disabled, facilitate users code a lot in pattern such as 'if (BeginMenu("options", has_object)) { ..use object.. }'
 		want_close = true;
 	if (want_close && IsPopupOpen(id, ImGuiPopupFlags_None))
 		ClosePopupToLevel(g.BeginPopupStack.Size, true);
@@ -9226,9 +9226,9 @@ bool ImGui::BeginMenuEx(const char* label, const char* icon, bool showEnable)
 	return menu_is_open;
 }
 
-bool ImGui::BeginMenu(const char* label, bool showEnable)
+bool ImGui::BeginMenu(const char* label, bool isHit)
 {
-	return BeginMenuEx(label, NULL, showEnable);
+	return BeginMenuEx(label, NULL, isHit);
 }
 
 void ImGui::EndMenu()
@@ -9249,7 +9249,7 @@ void ImGui::EndMenu()
 	EndPopup();
 }
 
-bool ImGui::MenuItemEx(const char* label, const char* icon, const char* shortcut, bool selected, bool showEnable)
+bool ImGui::MenuItemEx(const char* label, const char* icon, const char* shortcut, bool selected, bool isHit)
 {
 	ImGuiWindow* window = GetCurrentWindow();
 	if (window->SkipItems)
@@ -9269,7 +9269,7 @@ bool ImGui::MenuItemEx(const char* label, const char* icon, const char* shortcut
 	// but I am unsure whether this should be kept at all. For now moved it to be an opt-in feature used by menus only.
 	bool pressed;
 	PushID(label);
-	if (!showEnable)
+	if (!isHit)
 		BeginDisabled();
 
 	// We use ImGuiSelectableFlags_NoSetKeyOwner to allow down on one menu item, move, up on another.
@@ -9317,7 +9317,7 @@ bool ImGui::MenuItemEx(const char* label, const char* icon, const char* shortcut
 		}
 	}
 	IMGUI_TEST_ENGINE_ITEM_INFO(g.LastItemData.ID, label, g.LastItemData.StatusFlags | ImGuiItemStatusFlags_Checkable | (selected ? ImGuiItemStatusFlags_Checked : 0));
-	if (!showEnable)
+	if (!isHit)
 		EndDisabled();
 	PopID();
 	if (menuset_is_open)
@@ -9326,14 +9326,14 @@ bool ImGui::MenuItemEx(const char* label, const char* icon, const char* shortcut
 	return pressed;
 }
 
-bool ImGui::MenuItem(const char* label, const char* shortcut, bool selected, bool showEnable)
+bool ImGui::MenuItem(const char* label, const char* shortcut, bool selected, bool isHit)
 {
-	return MenuItemEx(label, NULL, shortcut, selected, showEnable);
+	return MenuItemEx(label, NULL, shortcut, selected, isHit);
 }
 
-bool ImGui::MenuItem(const char* label, const char* shortcut, bool* p_selected, bool showEnable)
+bool ImGui::MenuItem(const char* label, const char* shortcut, bool* p_selected, bool isHit)
 {
-	if (MenuItemEx(label, NULL, shortcut, p_selected ? *p_selected : false, showEnable))
+	if (MenuItemEx(label, NULL, shortcut, p_selected ? *p_selected : false, isHit))
 	{
 		if (p_selected)
 			*p_selected = !*p_selected;

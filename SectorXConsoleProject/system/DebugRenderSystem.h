@@ -40,13 +40,13 @@ enum class CirclePlane { XY, XZ, YZ };
 // segments: 8 以上推奨。LINELIST なので閉ループは (i, i+1), (last, first) を張る
 void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
 	std::vector<Debug::LineVertex>& verts, std::vector<uint32_t>& idx,
-	float yOffset = 0.0f, float rotY = 0.0f);
+	float yOffset = 0.0f, float rotY = 0.0f, uint32_t rgba = 0xFFFFFFFF);
 
 // 十字（3 本）のみ
 void MakeSphereCrossLines(float radius, uint32_t segments,
 	std::vector<Debug::LineVertex>& outVerts,
 	std::vector<uint32_t>& outIndices,
-	bool addXY = true, bool addYZ = true, bool addXZ = true);
+	bool addXY = true, bool addYZ = true, bool addXZ = true, uint32_t rgba = 0xFFFFFFFF);
 
 void MakeCapsuleLines(float radius, float halfHeight,
 	uint32_t meridianSegments, uint32_t ringSegments,
@@ -150,15 +150,27 @@ public:
 
 		//MakeSphere(0.5f, 8, 8, sphereVerts, sphereIndices);
 		MakeSphereCrossLines(radius, segment * 4, sphereVerts, sphereIndices, true, true, true);
-		DX11::MeshCreateDesc sphereDesc{
+		DX11::MeshCreateDesc sphereWhiteDesc{
 			.vertices = sphereVerts.data(),
 			.vSize = (uint32_t)sphereVerts.size() * sizeof(LineVertex),
 			.stride = sizeof(LineVertex),
 			.indices = sphereIndices.data(),
 			.iSize = (uint32_t)sphereIndices.size() * sizeof(uint32_t),
-			.sourcePath = L"__internal__/Sphere"
+			.sourcePath = L"__internal__/SphereWhite"
 		};
-		meshMgr->Add(sphereDesc, sphereHandle);
+		meshMgr->Add(sphereWhiteDesc, sphereWhiteHandle);
+
+		MakeSphereCrossLines(radius, segment * 4, sphereVerts, sphereIndices, true, true, true, 0x00FF00FF);
+		DX11::MeshCreateDesc sphereGreenDesc{
+			.vertices = sphereVerts.data(),
+			.vSize = (uint32_t)sphereVerts.size() * sizeof(LineVertex),
+			.stride = sizeof(LineVertex),
+			.indices = sphereIndices.data(),
+			.iSize = (uint32_t)sphereIndices.size() * sizeof(uint32_t),
+			.sourcePath = L"__internal__/SphereGreen"
+		};
+		meshMgr->Add(sphereGreenDesc, sphereGreenHandle);
+
 
 		std::vector<LineVertex> capsuleLineVerts;
 		std::vector<uint32_t> capsuleLineIndices;
@@ -232,7 +244,7 @@ public:
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr <Physics::PhysicsService> physicsService)
 	{
-		if (!DebugRenderType::showEnable) return;
+		if (!DebugRenderType::isHit) return;
 
 		//機能を制限したRenderQueueを取得
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
@@ -534,7 +546,8 @@ public:
 							break;
 						}
 #ifdef CACHE_SHAPE_WIRE_DATA
-						case  Physics::ShapeDims::Type::CMHC:
+						case Physics::ShapeDims::Type::Mesh:
+						case Physics::ShapeDims::Type::CMHC:
 						{
 							auto wireData = physicsService->GetShapeWireframeData(d.handle);
 							if (wireData.has_value())
@@ -560,7 +573,7 @@ public:
 							break;
 						}
 					}
-				}, partition, fru, cameraPos, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereHandle.index, capsuleLineHandle.index);
+				}, partition, fru, cameraPos, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereWhiteHandle.index, capsuleLineHandle.index);
 		}
 
 		if (DebugRenderType::drawFireflyVolumes)
@@ -577,14 +590,19 @@ public:
 						auto volume = fireflyVolume.value()[i];
 
 						auto transMtx = Math::MakeTranslationMatrix(volume.centerWS);
-						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.radius * 2.0f }); // 球は均一スケーリング
+						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.spawnRadius * 2.0f }); // 球は均一スケーリング
 						Graphics::DrawCommand cmd;
 						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
-						cmd.mesh = sphereHandle.index;
+						cmd.mesh = sphereGreenHandle.index;
 						cmd.material = 0;
 						cmd.overridePSO = psoLineHandle.index;
 						cmd.sortKey = 0; // 適切なソートキーを設定
 						cmd.viewMask = PASS_UI_3DLINE;
+						uiSession.Push(cmd);
+
+						mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.hitRadius * 2.0f }); // 球は均一スケーリング
+						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
+						cmd.mesh = sphereWhiteHandle.index;
 						uiSession.Push(std::move(cmd));
 					}
 
@@ -651,6 +669,7 @@ private:
 	std::unique_ptr<Debug::LineVertex> line2DVertices;
 
 	Graphics::MeshHandle boxHandle = {}; // デフォルトメッシュ（立方体）
-	Graphics::MeshHandle sphereHandle = {}; // デフォルトメッシュ（球）
+	Graphics::MeshHandle sphereWhiteHandle = {}; // デフォルトメッシュ（球）
+	Graphics::MeshHandle sphereGreenHandle = {};
 	Graphics::MeshHandle capsuleLineHandle = {}; //カプセルの真ん中の直線
 };

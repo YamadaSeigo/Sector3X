@@ -141,6 +141,10 @@ namespace SFW
 							{
 							case DebugControlKind::DC_SLIDERFLOAT:
 							{
+								if (ctrl->f_target) {
+									ctrl->f_value = *ctrl->f_target;
+								}
+
 								float v = ctrl->f_value;
 								if (ImGui::DragFloat(ctrl->label.c_str(), &v, ctrl->f_speed, ctrl->f_min, ctrl->f_max))
 								{
@@ -151,6 +155,10 @@ namespace SFW
 							}
 							case DebugControlKind::DC_SLIDERINT:
 							{
+								if (ctrl->i_target) {
+									ctrl->i_value = *ctrl->i_target;
+								}
+
 								int v = ctrl->i_value;
 								if (ImGui::DragInt(ctrl->label.c_str(), &v, ctrl->f_speed, ctrl->i_min, ctrl->i_max))
 								{
@@ -161,6 +169,10 @@ namespace SFW
 							}
 							case DebugControlKind::DC_CHECKBOX:
 							{
+								if (ctrl->b_target) {
+									ctrl->b_value = *ctrl->b_target;
+								}
+
 								bool v = ctrl->b_value;
 								if (ImGui::Checkbox(ctrl->label.c_str(), &v))
 								{

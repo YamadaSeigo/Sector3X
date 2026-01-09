@@ -133,14 +133,16 @@ void FireflyParticlePool::Create(ID3D11Device* dev)
 	BIND_DEBUG_FIREFLY_PRAM_FLOAT(gWanderFreq, 0.0f, 10.0f, 0.01f);
     BIND_DEBUG_FIREFLY_PRAM_FLOAT(gWanderStrength, 0.0f, 10.0f, 0.01f);
 	BIND_DEBUG_FIREFLY_PRAM_FLOAT(gCenterPull, 0.0f, 10.0f, 0.01f);
-    BIND_DEBUG_FIREFLY_PRAM_FLOAT(gGroundBand, 0.0f, 10.0f, 0.01f);
+    BIND_DEBUG_FIREFLY_PRAM_FLOAT(gGroundBand, 0.0f, 50.0f, 0.01f);
     BIND_DEBUG_FIREFLY_PRAM_FLOAT(gGroundPull, 0.0f, 10.0f, 0.01f);
-	BIND_DEBUG_FIREFLY_PRAM_FLOAT(gMaxSpeed, 0.0f, 50.0f, 0.01f);
+	BIND_DEBUG_FIREFLY_PRAM_FLOAT(gHeightRange, 0.0f, 50.0f, 0.01f);
 
     BIND_DEBUG_FIREFLY_PRAM_FLOAT(burstStrength, 0.0f, 100.0f, 0.01f);
     BIND_DEBUG_FIREFLY_PRAM_FLOAT(burstRadius, 0.0f, 20.0f, 0.01f);
-    BIND_DEBUG_FIREFLY_PRAM_FLOAT(burstSwirl, 0.0f, 10.0f, 0.01f);
+    BIND_DEBUG_FIREFLY_PRAM_FLOAT(burstSwirl, 0.0f, 50.0f, 0.01f);
 	BIND_DEBUG_FIREFLY_PRAM_FLOAT(burstUp, 0.0f, 50.0f, 0.01f);
+
+    BIND_DEBUG_FIREFLY_PRAM_FLOAT(gMaxSpeed, 0.0f, 50.0f, 0.01f);
 
 #endif
 }

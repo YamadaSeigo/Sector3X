@@ -208,6 +208,10 @@ namespace SFW
 			int   i_value = 0, i_min = 0, i_max = 100;
 			bool  b_value = false;
 
+			float* f_target = nullptr;
+			int* i_target = nullptr;
+			bool* b_target = nullptr;
+
 			// 文字列用のバッファ（簡単のため固定長）
 			static constexpr size_t TextBufSize = 256;
 			char textBuf[TextBufSize] = {};
@@ -253,7 +257,8 @@ namespace SFW
 			float minValue,
 			float maxValue,
 			float speed,
-			std::function<void(float)> onChange);
+			std::function<void(float)> onChange,
+			float* bound = nullptr);
 
 		/**
 		 * @brief 変数ポインタを直接バインドする簡易版.
@@ -279,7 +284,8 @@ namespace SFW
 				minValue,
 				maxValue,
 				speed,
-				[target](float v) { *target = v; } // ここで代入
+				[target](float v) { *target = v; }, // ここで代入
+				target
 			);
 		}
 
@@ -287,7 +293,8 @@ namespace SFW
 			const std::string& category,
 			const std::string& label,
 			bool initialValue,
-			std::function<void(bool)> onChange);
+			std::function<void(bool)> onChange,
+			bool* bound = nullptr);
 
 		inline void BindDebugCheckBox(
 			const std::string& category,
@@ -299,7 +306,8 @@ namespace SFW
 				category,
 				label,
 				*target,
-				[target](bool v) { *target = v; }
+				[target](bool v) { *target = v; },
+				target
 			);
 		}
 

@@ -54,7 +54,25 @@ public:
 		NoDeletePtr<Audio::AudioService> audioService,
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService)
 	{
-		auto sunDirWS = lightShadowService->GetDirectionalLight().directionWS;
+		const auto& timeOfDayKey = environmentService->GetCurrentTimeOfDayKey();
+		Math::Vec3f sunDirWS = environmentService->GetSunDirection();
+
+		if (environmentService->IsUpdateTimeOfDay()) {
+
+			lightShadowService->SetEnvironment(
+				Graphics::DirectionalLight{
+					.directionWS = sunDirWS,
+					.color = timeOfDayKey.sunColor,
+					.intensity = timeOfDayKey.sunIntensity
+				},
+				Graphics::AmbientLight{
+					.color = timeOfDayKey.ambientColor,
+					.intensity = timeOfDayKey.ambientIntensity
+				},
+				timeOfDayKey.emissiveBoost
+			);
+		}
+
 		auto camPos = cameraService->GetEyePos();
 		const auto& viewProj = cameraService->GetCameraBufferDataNoLock().viewProj;
 		const auto& view = cameraService->GetCameraBufferDataNoLock().view;

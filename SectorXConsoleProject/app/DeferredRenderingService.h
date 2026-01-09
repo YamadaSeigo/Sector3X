@@ -3,11 +3,11 @@
 #include "RenderDefine.h"
 
 struct LightCameraBuffer {
-	Math::Matrix4x4f invViewProj;
-	Math::Vec3f camForward;
-	float padding;
-	Math::Vec3f camPos;
-	float padding2;
+	Math::Matrix4x4f invViewProj = {};
+	Math::Vec3f camForward = {};
+	float padding = {};
+	Math::Vec3f camPos = {};
+	float padding2 = {};
 };
 
 class DeferredRenderingService : public ECS::IUpdateService
@@ -31,15 +31,23 @@ public:
 		DX11::TextureRecipe recipe;
 		recipe.width = w;
 		recipe.height = h;
-		recipe.format = DXGI_FORMAT_R11G11B10_FLOAT;
+		recipe.format = DXGI_FORMAT_R16G16B16A16_FLOAT;
 		recipe.mipLevels = 1;
 		recipe.bindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 		recipe.usage = D3D11_USAGE_DEFAULT;
 		recipe.arraySize = 1;
 
+		//AlbedoもHDRに対応させる場合はDXGI_FORMAT_R16G16B16A16_FLOATにする
+		DXGI_FORMAT texFormats[DeferredTextureCount] = {
+			DXGI_FORMAT_R8G8B8A8_UNORM,		//"AlbedoAO",
+			DXGI_FORMAT_R8G8B8A8_UNORM,		//"NormalRoughness",
+			DXGI_FORMAT_R16G16B16A16_FLOAT  //"EmissiveMetallic"
+		};
+
 		for (int i = 0; i < DeferredTextureCount; ++i)
 		{
 			DX11::TextureCreateDesc texDesc;
+			recipe.format = texFormats[i];
 			texDesc.recipe = &recipe;
 			texDesc.path = ""; // 空パスで生成モード
 			textureManager->Add(texDesc, GBufferHandle[i]);

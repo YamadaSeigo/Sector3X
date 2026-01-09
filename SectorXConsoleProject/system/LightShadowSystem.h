@@ -34,11 +34,19 @@ public:
 
 		lightShadowService->UpdateCascade(camParams, cascadeSceneAABB);
 
-		REGISTER_DEBUG_SLIDER_FLOAT("Light", "AmbientIntensity", 1.0f, 0.0f, 10.0f, 0.05f, [=](float value) {
+		float ambientIntensity = lightShadowService->GetAmbientLight().intensity;
+
+		REGISTER_DEBUG_SLIDER_FLOAT("Light", "AmbientIntensity", ambientIntensity, 0.0f, 10.0f, 0.05f, [=](float value) {
 			Graphics::AmbientLight ambient = lightShadowService->GetAmbientLight();
 			ambient.intensity = value;
 
 			lightShadowService->SetAmbientLight(ambient);
+			});
+
+		float emissiveBoost = lightShadowService->GetEmissiveBoost();
+
+		REGISTER_DEBUG_SLIDER_FLOAT("Light", "EmissiveBoost", emissiveBoost, 0.0f, 10.0f, 0.01f, [=](float value) {
+			lightShadowService->SetEmissiveBoost(value);
 			});
 	}
 
@@ -104,7 +112,7 @@ public:
 			lightShadowService->SetDirectionalLight(dirLight);
 		}
 
-		//if (/*perCameraService->IsUpdateBuffer() || */updateCascade)
+		//カスケードとライトデータの更新
 		{
 			Graphics::CameraParams camParams;
 			camParams.view = perCameraService->MakeViewMatrix();

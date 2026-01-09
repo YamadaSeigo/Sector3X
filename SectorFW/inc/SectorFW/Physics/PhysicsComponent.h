@@ -97,12 +97,13 @@ namespace SFW
 		 */
 		struct ShapeDims {
 			enum Type : uint8_t {
-				Box = 0,
-				Sphere = 1,
-				Capsule = 2,
-				Cylinder = 3,
-				Tapered = 4,
-				CMHC = 5,
+				Box			= 0,
+				Sphere		= 1,
+				Capsule		= 2,
+				Cylinder	= 3,
+				Tapered		= 4,
+				Mesh		= 5,
+				CMHC		= 6,
 			};
 
 			// 代表寸法（例）：x,y,z = 幅/高さ/奥行 or 直径など

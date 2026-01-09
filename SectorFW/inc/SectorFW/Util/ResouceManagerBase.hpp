@@ -40,9 +40,10 @@ namespace SFW
 				const T*, T*
 			>;
 
-			LockedResource(ref_type resource, mutex_type& m)
-				: ptr_(&resource), lock_(m) {
-				assert(lock_.owns_lock()); // デバッグ時の保険
+			// ロックを取得してから呼ぶこと
+			LockedResource(ptr_type p, Lock<mutex_type>&& lk)
+				: ptr_(p), lock_(std::move(lk)) {
+				assert(lock_.owns_lock());
 			}
 
 			// ムーブのみ可
@@ -116,9 +117,15 @@ namespace SFW
 			// 新規確保(再利用できる場合はそのハンドルを返す)
 			HandleType h = AllocateHandle();
 
-			slots[h.index].data = static_cast<Derived*>(this)->CreateResource(desc, h);
-			slots[h.index].alive = true;
-			refCount[h.index].store(1, std::memory_order_relaxed);
+			// リソースの実際の生成はロック外でやってもよい（重いので）
+			ResourceType res = static_cast<Derived*>(this)->CreateResource(desc, h);
+
+			{
+				std::unique_lock lk(mapMutex);
+				slots[h.index].data = std::move(res);
+				slots[h.index].alive = true;
+				refCount[h.index].store(1, std::memory_order_relaxed);
+			}
 
 			static_cast<Derived*>(this)->RegisterKey(desc, h);
 
@@ -180,7 +187,8 @@ namespace SFW
 		 */
 		[[nodiscard]] LockedResource<ResourceType, std::shared_lock> Get(HandleType h) const {
 			assert(IsValid(h));
-			return { slots[h.index].data, mapMutex };
+			std::shared_lock lk(mapMutex); // 先にロック
+			return { &slots[h.index].data, std::move(lk) };
 		}
 
 		/**
@@ -190,7 +198,8 @@ namespace SFW
 	 */
 		[[nodiscard]] LockedResource<ResourceType, std::unique_lock> GetWrite(HandleType h) {
 			assert(IsValid(h));
-			return { slots[h.index].data, mapMutex };
+			std::unique_lock lk(mapMutex); // 先にロック
+			return { &slots[h.index].data, std::move(lk)};
 		}
 		/**
 		 * @brief GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）
@@ -198,7 +207,8 @@ namespace SFW
 		 * @return Resource リソースのラッパー
 		 */
 		[[nodiscard]] LockedResource<ResourceType, std::shared_lock> GetDirect(uint32_t idx) const {
-			return { slots[idx].data, mapMutex };
+			std::shared_lock lk(mapMutex); // 先にロック
+			return { &slots[idx].data, std::move(lk)};
 		}
 		/**
 		 * @brief GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）
@@ -206,7 +216,8 @@ namespace SFW
 		 * @return Resource リソースのラッパー
 		 */
 		[[nodiscard]] LockedResource<ResourceType, std::unique_lock> GetDirectWrite(uint32_t idx) {
-			return { slots[idx].data, mapMutex };
+			std::unique_lock lk(mapMutex); // 先にロック
+			return { &slots[idx].data, std::move(lk)};
 		}
 		/**
 		 * @brief 期限到達で最終判断：ref == 0 なら破棄、>0 なら削除キャンセル

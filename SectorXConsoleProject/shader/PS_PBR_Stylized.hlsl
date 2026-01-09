@@ -18,6 +18,9 @@ cbuffer LightingCB : register(b12)
     // Ambient + counts
     float3 gAmbientColor;
     uint gPointLightCount;
+    
+    float emissiveBoost; // Emissiveの強調係数
+    float3 _pad3;
 };
 
 // Stylized 用パラメータ

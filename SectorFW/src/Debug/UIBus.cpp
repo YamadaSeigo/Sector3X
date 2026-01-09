@@ -47,7 +47,8 @@ namespace SFW
 			float minValue,
 			float maxValue,
 			float speed,
-			std::function<void(float)> onChange)
+			std::function<void(float)> onChange,
+			float* bound)
 		{
 			auto& bus = GetUIBus();
 			if (!bus.alive.load(std::memory_order_acquire)) return;
@@ -62,10 +63,12 @@ namespace SFW
 			c.f_speed = speed;
 			c.onChangeF = std::move(onChange);
 
+			c.f_target = bound;
+
 			bus.debugControlRegisterQ.push(std::move(c));
 		}
 
-		void RegisterDebugCheckBox(const std::string& category, const std::string& label, bool initialValue, std::function<void(bool)> onChange)
+		void RegisterDebugCheckBox(const std::string& category, const std::string& label, bool initialValue, std::function<void(bool)> onChange, bool* bound)
 		{
 			auto& bus = GetUIBus();
 			if (!bus.alive.load(std::memory_order_acquire)) return;
@@ -76,6 +79,8 @@ namespace SFW
 			c.label = label;
 			c.b_value = initialValue;
 			c.onChangeB = std::move(onChange);
+
+			c.b_target = bound;
 
 			bus.debugControlRegisterQ.push(std::move(c));
 		}

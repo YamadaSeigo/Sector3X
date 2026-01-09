@@ -395,6 +395,22 @@ namespace SFW
 				}
 			}
 
+			//ShadowBias用ステート
+			{
+				rasterizer.FillMode = D3D11_FILL_SOLID;
+				rasterizer.CullMode = D3D11_CULL_BACK; // 必要に応じて FRONT/ NONE
+				rasterizer.FrontCounterClockwise = TRUE;
+				rasterizer.DepthBias = 1000;   // 要調整
+				rasterizer.SlopeScaledDepthBias = 1.0f;   // 要調整
+				rasterizer.DepthBiasClamp = 0.0f;
+				rasterizer.DepthClipEnable = FALSE;
+				rasterizer.ScissorEnable = FALSE;
+				rasterizer.MultisampleEnable = FALSE;
+				rasterizer.AntialiasedLineEnable = FALSE;
+				hr = device->CreateRasterizerState(&rasterizer, rasterizerStates[(size_t)RasterizerStateID::ShadowBias].GetAddressOf());
+				if (FAILED(hr)) { return hr; }
+			}
+
 			SetRasterizerStateImpl(RasterizerStateID::SolidCullBack); // デフォルト
 
 			return S_OK;

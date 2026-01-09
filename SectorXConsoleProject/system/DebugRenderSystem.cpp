@@ -152,7 +152,7 @@ void MakeSphere(float radius, uint32_t slices, uint32_t stacks,
 // segments: 8 以上推奨。LINELIST なので閉ループは (i, i+1), (last, first) を張る
 void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
 	std::vector<Debug::LineVertex>& verts, std::vector<uint32_t>& idx,
-	float yOffset, float rotY) // rotY は Y 軸回り回転（YZ->任意子午線用）
+	float yOffset, float rotY, uint32_t rgba) // rotY は Y 軸回り回転（YZ->任意子午線用）
 {
 	segments = std::max<uint32_t>(segments, 4u);
 	const uint16_t base = static_cast<uint16_t>(verts.size());
@@ -189,7 +189,7 @@ void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
 			break;
 		}
 		}
-		verts.push_back({ Math::Vec3f{ x, y, z }, 0xFFFFFFFF });
+		verts.push_back({ Math::Vec3f{ x, y, z }, rgba });
 	}
 
 	for (uint32_t i = 0; i < segments; ++i) {
@@ -203,12 +203,12 @@ void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
 void MakeSphereCrossLines(float radius, uint32_t segments,
 	std::vector<Debug::LineVertex>& outVerts,
 	std::vector<uint32_t>& outIndices,
-	bool addXY, bool addYZ, bool addXZ)
+	bool addXY, bool addYZ, bool addXZ, uint32_t rgba)
 {
 	outVerts.clear(); outIndices.clear();
-	if (addXZ) AppendCircle(radius, segments, CirclePlane::XZ, outVerts, outIndices);             // 赤道
-	if (addYZ) AppendCircle(radius, segments, CirclePlane::YZ, outVerts, outIndices, 0.0f, 0.0f); // 子午線
-	if (addXY) AppendCircle(radius, segments, CirclePlane::XY, outVerts, outIndices);             // 直交子午線
+	if (addXZ) AppendCircle(radius, segments, CirclePlane::XZ, outVerts, outIndices, 0.0f, 0.0f, rgba);		// 赤道
+	if (addYZ) AppendCircle(radius, segments, CirclePlane::YZ, outVerts, outIndices, 0.0f, 0.0f, rgba);		// 子午線
+	if (addXY) AppendCircle(radius, segments, CirclePlane::XY, outVerts, outIndices, 0.0f, 0.0f, rgba);		// 直交子午線
 }
 
 // カプセルの縦ループ（XY / ZY）の生成

@@ -27,6 +27,9 @@ cbuffer LightingCB : register(b11)
     // Ambient + counts
     float3 gAmbientColor;
     uint gPointLightCount; // 16B
+
+    float emissiveBoost; // Emissiveの強調係数
+    float3 _pad3;
 };
 
 cbuffer FogCB : register(b12)
@@ -462,7 +465,7 @@ float4 main(VSOut i) : SV_Target
     float3 plAdd = AccumulatePointLights_UnlitWithTranslucency(wp.xyz, N, albedo, translucency, transColor);
 
     // Emissive（必要ならそのまま加算）
-    float3 color = base + plAdd + emiMetal.rgb;
+    float3 color = base + plAdd + emiMetal.rgb * emissiveBoost;
 
     // 距離フォグ
     float fogDist = ComputeFogFactor(viewDepth);

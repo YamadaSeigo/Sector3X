@@ -14,20 +14,20 @@ struct FireflyParticleGPU
 
 struct FireflyUpdatePram
 {
-    float gDamping = 0.1f; // 速度減衰係数
-    float gWanderFreq = 0.4f; // ふわふわノイズ周波数
-    float gWanderStrength = 1.2f; // ふわふわノイズ強さ
+    float gDamping = 0.5f; // 速度減衰係数
+    float gWanderFreq = 1.0f; // ふわふわノイズ周波数
+    float gWanderStrength = 10.0f; // ふわふわノイズ強さ
     float gCenterPull = 0.01f; // ボリューム中心への引き戻し強さ
-    float gGroundBand = 0.18f; // 地面からの高さ帯
-    float gGroundPull = 0.2f; // 地面付近への引き戻し強さ
-    float gMaxSpeed = 1.8f; // 速度上限
-
-    float pad3 = {};
+    float gGroundBand = 20.0f; // 地面からの高さ帯
+    float gGroundPull = 0.2f; // 地面付近への引き戻し強さ(小さいほうが強)
+    float gHeightRange = 15.0f;
 
     float burstStrength = 8.0f; // 例：3.0
     float burstRadius = 8.0f; // 例：4.0（プレイヤーから何mまで強いか）
     float burstSwirl = 4.5f; // 例：1.5（渦成分）
     float burstUp = 6.0f; // 例：1.0（上方向の押し上げ）
+
+    float gMaxSpeed = 1.8f; // 速度上限
 };
 
 class FireflyParticlePool

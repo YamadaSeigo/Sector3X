@@ -195,6 +195,7 @@ void InitializeRenderPipeLine(
 	vp.height = (float)SHADOW_MAP_HEIGHT;
 
 	passDesc.viewport = vp;
+	passDesc.rasterizerState = RasterizerStateID::ShadowBias;
 
 	for (UINT i = 0; i < cascadeCount; ++i)
 	{
@@ -224,6 +225,7 @@ void InitializeRenderPipeLine(
 
 	passDesc.dsv = mainDepthStencilView;
 	passDesc.cbvs = { BindSlotBuffer{cameraHandle3D} };
+	passDesc.rasterizerState = std::nullopt;
 	passDesc.psoOverride = psoHandle;
 	passDesc.customExecute = {};
 
@@ -296,10 +298,10 @@ void InitializeRenderPipeLine(
 
 	auto deferredCameraHandle = bufferMgr->FindByName(DeferredRenderingService::BUFFER_NAME);
 
-	static ComPtr<ID3D11Buffer> deferredBuffer;
+	static ComPtr<ID3D11Buffer> invCameraBuffer;
 	{
 		auto bufData = bufferMgr->Get(deferredCameraHandle);
-		deferredBuffer = bufData.ref().buffer;
+		invCameraBuffer = bufData.ref().buffer;
 	}
 
 	auto samplerManager = renderGraph->GetRenderService()->GetResourceManager<DX11::SamplerManager>();
@@ -342,11 +344,11 @@ void InitializeRenderPipeLine(
 		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
 		};
 
-	auto createFullScreenTex = [&](ComPtr<ID3D11ShaderResourceView>& outSRV, ComPtr<ID3D11RenderTargetView>& outRTV, DXGI_FORMAT format, TextureHandle* outH = nullptr) {
+	auto createScreenTex = [&](ComPtr<ID3D11ShaderResourceView>& outSRV, ComPtr<ID3D11RenderTargetView>& outRTV, DXGI_FORMAT format, uint32_t w, uint32_t h, TextureHandle* outH = nullptr) {
 
 		DX11::TextureRecipe recipe;
-		recipe.width = WINDOW_WIDTH;
-		recipe.height = WINDOW_HEIGHT;
+		recipe.width = w;
+		recipe.height = h;
 		recipe.format = format;
 		recipe.mipLevels = 1;
 		recipe.bindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
@@ -393,19 +395,23 @@ void InitializeRenderPipeLine(
 			assert(SUCCEEDED(hr) && "Failed to create pixel shader.");
 		};
 
+	//　解像度を落とすことでにじみ表現と負荷軽減
+	constexpr uint32_t BLOOM_TEX_WIDTH = WINDOW_WIDTH / 2;
+	constexpr uint32_t BLOOM_TEX_HEIGHT = WINDOW_HEIGHT / 2;
+
 	static ComPtr<ID3D11ShaderResourceView> sceneColorSRV;
 	static ComPtr<ID3D11RenderTargetView> sceneColorRTV;
 	// 1.0以上でも潰れないフォーマット
-	createFullScreenTex(sceneColorSRV, sceneColorRTV, DXGI_FORMAT_R11G11B10_FLOAT);
+	createScreenTex(sceneColorSRV, sceneColorRTV, DXGI_FORMAT_R11G11B10_FLOAT, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	static ComPtr<ID3D11ShaderResourceView> brightSRV;
 	static ComPtr<ID3D11RenderTargetView> brightRTV;
-	createFullScreenTex(brightSRV, brightRTV, DXGI_FORMAT_R8G8B8A8_UNORM);
+	createScreenTex(brightSRV, brightRTV, DXGI_FORMAT_R8G8B8A8_UNORM, BLOOM_TEX_WIDTH, BLOOM_TEX_HEIGHT);
 
 	static ComPtr<ID3D11ShaderResourceView> bloomSRV;
 	static ComPtr<ID3D11RenderTargetView> bloomRTV;
 	//デバックのためにハンドルを保持しておく
-	createFullScreenTex(bloomSRV, bloomRTV, DXGI_FORMAT_R8G8B8A8_UNORM, &DebugRenderType::debugBloomTexHandle);
+	createScreenTex(bloomSRV, bloomRTV, DXGI_FORMAT_R8G8B8A8_UNORM, BLOOM_TEX_WIDTH, BLOOM_TEX_HEIGHT, &DebugRenderType::debugBloomTexHandle);
 
 	static ComPtr<ID3D11PixelShader> brightPS;
 	static ComPtr<ID3D11PixelShader> bloomHPS;
@@ -418,10 +424,10 @@ void InitializeRenderPipeLine(
 		float gBloomThreshold; // 例: 1.0（HDR前提） / LDRなら0.8等
 		float gBloomKnee; // 例: 0.5（soft threshold）
 		float gBloomIntensity; // 合成側で使ってもOK
-		float _pad;
+		float gBloomMaxDist;
 	};
 
-	static BloomCB cpuBloomData = { 0.8f, 0.5f, 1.0f, 0.0f };
+	static BloomCB cpuBloomData = { 1.0f, 0.5f, 1.0f, 200.0f };
 	static bool bloomDataChanged = true;
 	REGISTER_DEBUG_SLIDER_FLOAT("Bloom", "threshold", cpuBloomData.gBloomThreshold, 0.0f, 1.0f, 0.001f, [](float value) {
 		bloomDataChanged = true; cpuBloomData.gBloomThreshold = value;
@@ -431,6 +437,9 @@ void InitializeRenderPipeLine(
 		});
 	REGISTER_DEBUG_SLIDER_FLOAT("Bloom", "intensity", cpuBloomData.gBloomIntensity, 0.0f, 5.0f, 0.01f, [](float value) {
 		bloomDataChanged = true; cpuBloomData.gBloomIntensity = value;
+		});
+	REGISTER_DEBUG_SLIDER_FLOAT("Bloom", "distance", cpuBloomData.gBloomMaxDist, 0.0f, 400.0f, 0.1f, [](float value) {
+		bloomDataChanged = true; cpuBloomData.gBloomMaxDist = value;
 		});
 
 	DX11::BufferCreateDesc cbBloomDesc;
@@ -447,7 +456,7 @@ void InitializeRenderPipeLine(
 		Math::Vec2f _pad;
 	};
 
-	static BlurCB cpuBlurData = { Math::Vec2f(1.0f / WINDOW_WIDTH, 1.0f / WINDOW_HEIGHT), Math::Vec2f(0.0f, 0.0f) };
+	static BlurCB cpuBlurData = { Math::Vec2f(1.0f / BLOOM_TEX_WIDTH, 1.0f / BLOOM_TEX_HEIGHT), Math::Vec2f(0.0f, 0.0f) };
 	DX11::BufferCreateDesc cbBlurDesc;
 	cbBlurDesc.name = "BlurCB";
 	cbBlurDesc.size = sizeof(BlurCB);
@@ -479,7 +488,7 @@ void InitializeRenderPipeLine(
 		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
 		ctx->PSSetShaderResources(15, 1, srvPointLight.GetAddressOf());
 
-		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), deferredBuffer.Get(), cbLightBuffer.Get(), fogBuffer.Get(), godRayBuffer.Get() }, 9);
+		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), cbLightBuffer.Get(), fogBuffer.Get(), godRayBuffer.Get() }, 9);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 		ctx->PSSetSamplers(1, 1, shadowSampler.GetAddressOf());
@@ -497,14 +506,35 @@ void InitializeRenderPipeLine(
 
 		if (bloomDataChanged) {
 			bloomDataChanged = false;
-			ctx->UpdateSubresource(bloomCBBuffer.Get(), 0, nullptr, &cpuBloomData, 0, 0);
+
+			D3D11_MAPPED_SUBRESOURCE mapped;
+			HRESULT hr = ctx->Map(bloomCBBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+			if (SUCCEEDED(hr))
+			{
+				memcpy(mapped.pData, &cpuBloomData, sizeof(BloomCB));
+				ctx->Unmap(bloomCBBuffer.Get(), 0);
+			}
 		}
+
+		D3D11_VIEWPORT vp;
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+		vp.Width = static_cast<FLOAT>(BLOOM_TEX_WIDTH);
+		vp.Height = static_cast<FLOAT>(BLOOM_TEX_HEIGHT);
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+		ctx->RSSetViewports(1, &vp);
 
 		ctx->OMSetRenderTargets(1, brightRTV.GetAddressOf(), nullptr);
 
 		ctx->PSSetConstantBuffers(0, 1, bloomCBBuffer.GetAddressOf());
 
+		ctx->PSSetConstantBuffers(1, 1, invCameraBuffer.GetAddressOf());
+
 		ctx->PSSetShaderResources(0, 1, sceneColorSRV.GetAddressOf());
+
+		//DepthをSRVとしてバインド
+		ctx->PSSetShaderResources(1, 1, &derreredSRVs.back());
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 
@@ -536,6 +566,8 @@ void InitializeRenderPipeLine(
 		//=========================================================================
 
 		gGraphics->SetMainRenderTargetNoDepth();
+
+		ctx->RSSetViewports(1, &gGraphics->GetMainViewport());
 
 		ctx->PSSetConstantBuffers(0, 1, bloomCBBuffer.GetAddressOf());
 
@@ -700,7 +732,7 @@ int main(void)
 	Graphics::LightShadowService::CascadeConfig cascadeConfig;
 	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
 	cascadeConfig.cascadeCount = 3;
-	cascadeConfig.shadowDistance = 60.0f;
+	cascadeConfig.shadowDistance = 80.0f;
 	cascadeConfig.casterExtrusion = 0.0f;
 	lightShadowService.SetCascadeConfig(cascadeConfig);
 
@@ -998,6 +1030,7 @@ int main(void)
 			uint32_t height = (uint32_t)resolution.y;
 
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
+			graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
 
 			static Graphics::DX11::BlockReservedContext::ShadowDepthParams shadowParams{};
 
@@ -1008,9 +1041,21 @@ int main(void)
 			for (int c = 0; c < Graphics::kMaxShadowCascades; ++c) {
 				shadowParams.cascadeDSV[c] = cascadeDSV[c].Get();
 			}
+
 			auto& cascade = lightShadowService.GetCascades();
 			memcpy(shadowParams.lightViewProj, cascade.lightViewProj.data(), sizeof(shadowParams.lightViewProj));
-			memcpy(shadowParams.cascadeFrustumPlanes, cascade.frustumWS.data(), sizeof(shadowParams.cascadeFrustumPlanes));
+			shadowParams.cascadeFrustumPlanes = cascade.frustumWS;
+
+			// フラスタムをライトの逆方向に押し出して影の判定を緩める
+			auto pushDir = lightShadowService.GetDirectionalLight().directionWS * -1.0f;
+			float lenDot = pushDir.normalized().dot({ 0.0f, 1.0f,0.0f });
+
+			// 垂直になるほど大きくなる
+			float pushLen = 200.0f * (1.0f - std::abs(lenDot));
+
+			for (auto& fru : shadowParams.cascadeFrustumPlanes) {
+				fru = fru.PushedAlongDirection(pushDir, pushLen);
+			}
 
 			shadowParams.screenW = WINDOW_WIDTH;
 			shadowParams.screenH = WINDOW_HEIGHT;
@@ -1037,7 +1082,9 @@ int main(void)
 			}
 
 			blockRevert.RunShadowDepth(deviceContext, std::move(cameraCB),
-				shadowParams, &lightShadowResourceService.GetCascadeViewport());
+				shadowParams,
+				lightShadowResourceService.GetShadowRasterizerState(),
+				&lightShadowResourceService.GetCascadeViewport(), true);
 		};
 
 	auto drawTerrainColor = [](uint64_t frame)
@@ -1368,13 +1415,16 @@ int main(void)
 				modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
 				modelDesc.buildOccluders = false;
 				modelDesc.viewMax = 50.0f;
+				modelDesc.minAreaFrec = 0.0004f;
 				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeGrassWeight;
 				modelDesc.overridePSO = cullNoneWindEntityPSOHandle;
+
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
 				modelDesc.path = "assets/model/Stylized/Tree01.gltf";
 				modelDesc.viewMax = 100.0f;
 				modelDesc.overridePSO = cullNoneWindEntityPSOHandle;
+				modelDesc.minAreaFrec = 0.001f;
 				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeTreeWeight;
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
@@ -1382,6 +1432,7 @@ int main(void)
 				modelDesc.viewMax = 50.0f;
 				modelDesc.overridePSO = cullNoneWindEntityPSOHandle;
 				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.minAreaFrec = 0.0004f;
 				modelDesc.path = "assets/model/Stylized/WhiteCosmos.gltf";
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
 
@@ -1396,6 +1447,7 @@ int main(void)
 				modelDesc.overridePSO = cullDefaultPSOHandle;
 				modelDesc.path = "assets/model/BlackGhost.glb";
 				modelDesc.pCustomNrmWFunc = nullptr;
+				modelDesc.minAreaFrec = 0.001f;
 				modelAssetMgr->Add(modelDesc, playerModelHandle);
 
 				ModelAssetHandle grassModelHandle;
@@ -1446,11 +1498,8 @@ int main(void)
 				modelDesc.viewMax = 1000.0f;
 				modelDesc.overridePSO = cullDefaultPSOHandle;
 				modelDesc.minAreaFrec = 0.0f;
-				modelDesc.path = "assets/model/RuinTower.gltf";
+				modelDesc.path = "assets/model/Ruins/RuinTower.gltf";
 				modelDesc.buildOccluders = true;
-				modelDesc.meltResolution = 64;
-				modelDesc.meltFillPct = 1.0f;
-				modelDesc.meltBoxType = Graphics::MeltBoxType::SIDES;
 				existingModel = modelAssetMgr->Add(modelDesc, ruinTowerModelHandle);
 
 				if(!existingModel)
@@ -1464,11 +1513,12 @@ int main(void)
 					occAABB.ub.z *= 0.4f;
 				}
 
-				//float occScoreThreshold = 0.5f;// このスコア以上ならOccluder化（0..1）
-				//int   meltResolution = 16;      // meltのボクセル解像度。小さくするほどボクセルが大きくなる（64 or 96 程度が実用。性能と品質のトレードオフ）
-				//float meltStopRatio = 0.3f;   // meltの停止しきい（小AABB生成を抑える目安。0.1～0.7）
-				//float minWorldSizeM = 1.0f;    // 小さすぎるモデルはOccluder対象外（対角長[m]）
-				//float minThicknessRatio = 0.01f;// 最小厚み比。これ未満は超薄板として減点
+				ModelAssetHandle ruinStoneModelHandle;
+				modelDesc.instancesPeak = 10;
+				modelDesc.viewMax = 200.0f;
+				modelDesc.path = "assets/model/Ruins/RuinStoneA.gltf";
+				modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを
+				modelAssetMgr->Add(modelDesc, ruinStoneModelHandle);
 
 				auto ps = serviceLocator->Get<Physics::PhysicsService>();
 
@@ -1664,13 +1714,18 @@ int main(void)
 					}
 				}
 
+				auto getTerrainLocation = [&](float u, float v) {
+
+					Math::Vec3f location = { p.cellsX * p.cellSize * u, 0.0f, p.cellsZ * p.cellSize * v };
+					terrain.SampleHeightNormalBilinear(location.x, location.z, location.y);
+					return location;
+					};
 
 				//プレイヤー生成
 				{
-					//Math::Vec3f playerStartPos = { p.cellsX * p.cellSize / 2.0f, 0.0f,  p.cellsZ * p.cellSize / 2.0f };
-					Math::Vec3f playerStartPos = { 10.0f, 0.0f,  10.0f };
+					Math::Vec3f playerStartPos = getTerrainLocation(0.5f, 0.5f); //中央
+					//Math::Vec3f playerStartPos = { 10.0f, 0.0f,  10.0f };
 
-					terrain.SampleHeightNormalBilinear(playerStartPos.x, playerStartPos.z, playerStartPos.y);
 					playerStartPos.y += 10.0f; // 少し浮かせる
 
 					Physics::ShapeCreateDesc shapeDesc;
@@ -1729,12 +1784,10 @@ int main(void)
 
 				// 塔生成
 				{
-					Math::Vec3f location = { p.cellsX * p.cellSize * 0.9f, 0.0f, p.cellsZ * p.cellSize * 0.9f};
-
-					terrain.SampleHeightNormalBilinear(location.x, location.z, location.y);
+					Math::Vec3f location = getTerrainLocation(0.7f, 0.7f);
 					location.y -= 10.0f; // 少し埋める
 
-					auto shape = ps->MakeConvexCompound("generated/convex/RuinTower.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+					auto shape = ps->MakeConvexCompound("generated/convex/Ruins/RuinTower.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 #ifdef _DEBUG
 					auto shapeDims = ps->GetShapeDims(shape);
 #endif
@@ -1762,15 +1815,45 @@ int main(void)
 					}
 				}
 
+				//石碑生成
+				{
+					Math::Vec3f location = getTerrainLocation(0.3f, 0.3f);
+					location.y -= 4.0f; // 少し埋める
+
+					auto shape = ps->MakeConvexCompound("generated/convex/Ruins/RuinStoneA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+#ifdef _DEBUG
+					auto shapeDims = ps->GetShapeDims(shape);
+#endif
+					CModel modelComp{ ruinStoneModelHandle };
+					modelComp.castShadow = true;
+					Physics::CPhyBody staticBody{};
+					staticBody.type = Physics::BodyType::Static; // staticにする
+					staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
+					auto tf = CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } };
+					auto id = levelSession.AddGlobalEntity(
+						tf,
+						modelComp,
+						staticBody
+#ifdef _DEBUG
+						, shapeDims.value()
+#endif
+					);
+					if (id) {
+						// チャンクに属さないので直接ボディ作成コマンドを発行
+						auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shape);
+						ps->CreateBody(bodyCmd);
+					}
+				}
+
 				//蛍の領域生成
 				{
-					Math::Vec3f location = { 80.0f,0.0f,80.0f };
-					terrain.SampleHeightNormalBilinear(location.x, location.z, location.y);
-					location.y += 12.0f; // 少し浮かせる
+					Math::Vec3f location = getTerrainLocation(0.4f, 0.4f);
+					location.y += 0.0f; // 少し浮かせる
 
 					CFireflyVolume fireflyVolume;
 					fireflyVolume.centerWS = location;
-					fireflyVolume.radius = 50.0f;
+					fireflyVolume.hitRadius = 40.0f;
+					fireflyVolume.spawnRadius = 50.0f;
 
 					//位置を指定して追加
 					levelSession.AddEntityWithLocation(fireflyVolume.centerWS, fireflyVolume);

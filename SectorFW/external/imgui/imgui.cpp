@@ -6685,12 +6685,12 @@ void ImGui::EndChild()
 	g.LogLinePosY = -FLT_MAX; // To enforce a carriage return
 }
 
-static void SetWindowConditionAllowFlags(ImGuiWindow* window, ImGuiCond flags, bool showEnable)
+static void SetWindowConditionAllowFlags(ImGuiWindow* window, ImGuiCond flags, bool isHit)
 {
-	window->SetWindowPosAllowFlags = showEnable ? (window->SetWindowPosAllowFlags | flags) : (window->SetWindowPosAllowFlags & ~flags);
-	window->SetWindowSizeAllowFlags = showEnable ? (window->SetWindowSizeAllowFlags | flags) : (window->SetWindowSizeAllowFlags & ~flags);
-	window->SetWindowCollapsedAllowFlags = showEnable ? (window->SetWindowCollapsedAllowFlags | flags) : (window->SetWindowCollapsedAllowFlags & ~flags);
-	window->SetWindowDockAllowFlags = showEnable ? (window->SetWindowDockAllowFlags | flags) : (window->SetWindowDockAllowFlags & ~flags);
+	window->SetWindowPosAllowFlags = isHit ? (window->SetWindowPosAllowFlags | flags) : (window->SetWindowPosAllowFlags & ~flags);
+	window->SetWindowSizeAllowFlags = isHit ? (window->SetWindowSizeAllowFlags | flags) : (window->SetWindowSizeAllowFlags & ~flags);
+	window->SetWindowCollapsedAllowFlags = isHit ? (window->SetWindowCollapsedAllowFlags | flags) : (window->SetWindowCollapsedAllowFlags & ~flags);
+	window->SetWindowDockAllowFlags = isHit ? (window->SetWindowDockAllowFlags | flags) : (window->SetWindowDockAllowFlags & ~flags);
 }
 
 ImGuiWindow* ImGui::FindWindowByID(ImGuiID id)
@@ -8612,12 +8612,12 @@ void ImGui::End()
 		SetCurrentViewport(g.CurrentWindow, g.CurrentWindow->Viewport);
 }
 
-void ImGui::PushItemFlag(ImGuiItemFlags option, bool showEnable)
+void ImGui::PushItemFlag(ImGuiItemFlags option, bool isHit)
 {
 	ImGuiContext& g = *GImGui;
 	ImGuiItemFlags item_flags = g.CurrentItemFlags;
 	IM_ASSERT(item_flags == g.ItemFlagsStack.back());
-	if (showEnable)
+	if (isHit)
 		item_flags |= option;
 	else
 		item_flags &= ~option;
@@ -22555,13 +22555,13 @@ void ImGui::DebugNodeColumns(ImGuiOldColumns* columns)
 	TreePop();
 }
 
-static void DebugNodeDockNodeFlags(ImGuiDockNodeFlags* p_flags, const char* label, bool showEnable)
+static void DebugNodeDockNodeFlags(ImGuiDockNodeFlags* p_flags, const char* label, bool isHit)
 {
 	using namespace ImGui;
 	PushID(label);
 	PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0.0f, 0.0f));
 	Text("%s:", label);
-	if (!showEnable)
+	if (!isHit)
 		BeginDisabled();
 	CheckboxFlags("NoResize", p_flags, ImGuiDockNodeFlags_NoResize);
 	CheckboxFlags("NoResizeX", p_flags, ImGuiDockNodeFlags_NoResizeX);
@@ -22578,7 +22578,7 @@ static void DebugNodeDockNodeFlags(ImGuiDockNodeFlags* p_flags, const char* labe
 	CheckboxFlags("NoDockingOverOther", p_flags, ImGuiDockNodeFlags_NoDockingOverOther);
 	CheckboxFlags("NoDockingOverEmpty", p_flags, ImGuiDockNodeFlags_NoDockingOverEmpty);
 	CheckboxFlags("NoUndocking", p_flags, ImGuiDockNodeFlags_NoUndocking);
-	if (!showEnable)
+	if (!isHit)
 		EndDisabled();
 	PopStyleVar();
 	PopID();

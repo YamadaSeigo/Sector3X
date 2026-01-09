@@ -38,7 +38,8 @@ float SampleGroundY(float2 xz)
 {
     float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
     float2 uv = saturate((xz - gOriginXZ) / terrainSize);
-    return gHeightMap.SampleLevel(gHeightSamp, uv, 0);
+    float h = gHeightMap.SampleLevel(gHeightSamp, uv, 0);
+    return (h * 2.0f - 1.0f) * heightScale / 2.0f;
 }
 
 // 軽いハッシュ乱数（0..1）
@@ -98,12 +99,15 @@ void main(uint3 tid : SV_DispatchThreadID)
     // 初期化
     uint seed = v.seed ^ (slot * 9781u) ^ (id * 6271u) ^ Hash_u32((uint) (gTime * 60.0f));
 
-    float2 rnd = float2(Hash01(seed + 1u) * 2 - 1, Hash01(seed + 2u) * 2 - 1);
-    rnd = normalize(rnd) * (Hash01(seed + 3u)); // 円内一様のつもり
-    float2 xz = v.centerWS.xz + rnd * v.radius;
+    // 角度と半径でディスク一様サンプル
+    float ang = Hash01(seed + 1u) * 6.2831853f; // 0..2π
+    float r01 = sqrt(Hash01(seed + 2u)); // 0..1 を sqrt して面積一様
+    float2 offset = float2(cos(ang), sin(ang)) * (r01 * v.radius);
 
+    float2 xz = v.centerWS.xz + offset;
+    
     float groundY = SampleGroundY(xz);
-    float startY = v.centerWS.y + (groundY * 2.0f - 1.0f) * heightScale / 2.0f;
+    float startY = v.centerWS.y + groundY;
     startY += Hash01(seed + 4u) * 1.0f; // 地面直上 0..100cm
 
     float3 pos = float3(xz.x, startY, xz.y);

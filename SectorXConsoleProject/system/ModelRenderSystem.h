@@ -80,7 +80,12 @@ public:
 
 		float maxShadowDistance = lightShadowService->GetMaxShadowDistance();
 		Math::Vec3f shadowDir = lightShadowService->GetDirectionalLight().directionWS.normalized() * -1.0f;
-		auto shadowFru = fru.PushedAlongDirection(shadowDir, maxShadowDistance);
+
+		float shadowUpDot = shadowDir.dot({ 0.0f, 1.0f,0.0f });
+
+		// 垂直になるほど大きくなる
+		float pushLen = 100.0f * (1.0f - std::abs(shadowUpDot));
+		auto shadowFru = fru.PushedAlongDirection(shadowDir, pushLen);
 
 		const Graphics::OccluderViewport vp = { (int)resolution.x, (int)resolution.y, cameraService->GetFOV() };
 
@@ -130,6 +135,7 @@ public:
 			Math::AABB3f* occAABBs;
 			Graphics::OccluderViewport vp;
 			bool drawOcc;
+			bool castShadow;
 		};
 
 		Math::Vec3f camRight;
@@ -156,7 +162,8 @@ public:
 			occluderAABBCount,
 			occluderAABBs,
 			vp,
-			drawOcc
+			drawOcc,
+			true
 		};
 
 #if PROFILE_MODEL_UPDATE_TIME
@@ -241,6 +248,8 @@ public:
 
 						BSVisState visRes = Math::BoundingSpheref::IsVisible_LocalCenter_WorldRadius(WVP, kp->viewProj, centerBS, bsRadiusWS, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth);
 
+						bool castShadow = kp->castShadow && modelComp.castShadow;
+
 						bool shadowOnly = false;
 						switch (visRes)
 						{
@@ -248,7 +257,7 @@ public:
 							break;
 						case BSVisState::Culled:
 						{
-							if (!modelComp.castShadow) continue;
+							if (!castShadow) continue;
 
 							Math::MulPoint_RowMajor_ColVec(
 								worldMtxSoA.AoS(i),
@@ -275,7 +284,7 @@ public:
 							if (kp->frustum.IntersectsSphere(centerBS, bsRadiusWS))
 								break;
 
-							if (!modelComp.castShadow) continue;
+							if (!castShadow) continue;
 
 							//影だけ映るか判定
 							shadowOnly = kp->shadowFrustum.IntersectsSphere(centerBS, bsRadiusWS);
@@ -339,7 +348,7 @@ public:
 
 							if (!ndc.valid)
 							{
-								if (!modelComp.castShadow) continue;
+								if (!castShadow) continue;
 
 								// Visbleはまだ計算していないため、ここで計算
 								if(visRes == BSVisState::Visible) {
@@ -420,7 +429,7 @@ public:
 
 							cmd.viewMask |= modelComp.outline ? PASS_3DMAIN_OUTLINE : PASS_3DMAIN_OPAQUE;
 
-							if (modelComp.castShadow)
+							if (castShadow)
 							{
 								//Visibleはまだ計算していないため、ここで計算
 								if (visRes == BSVisState::Visible) {

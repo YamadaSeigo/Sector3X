@@ -446,7 +446,7 @@ namespace SFW::Graphics::DX11 {
             ID3D11DepthStencilView* cascadeDSV[kMaxShadowCascades] = {};
             //D3D11_VIEWPORT          cascadeViewport[kMaxShadowCascades]{};
             float                   lightViewProj[kMaxShadowCascades][16];
-            float                   cascadeFrustumPlanes[kMaxShadowCascades][6][4]; // 省略するなら 1 セットでも可
+            std::array<Math::Frustumf, kMaxShadowCascades> cascadeFrustumPlanes; // 省略するなら 1 セットでも可
 
             // 画面サイズ（LOD 用）
             UINT screenW = 0;
@@ -464,7 +464,9 @@ namespace SFW::Graphics::DX11 {
             ID3D11DeviceContext* ctx,
             ComPtr<ID3D11Buffer>&& cameraCB,
             const ShadowDepthParams& p,
-			const D3D11_VIEWPORT* cascadeViewport = nullptr)
+            ID3D11RasterizerState* shadowBiasRS,
+			const D3D11_VIEWPORT* cascadeViewport = nullptr,
+            bool castShadow = true)
         {
 			if (p.cascadeCount == 0 || p.cascadeCount > kMaxShadowCascades) [[unlikely]] return;
 
@@ -519,7 +521,7 @@ namespace SFW::Graphics::DX11 {
 
                     auto* csp = reinterpret_cast<CSParamsShadowCombined*>(ms.pData);
                     memcpy(csp->MainFrustum , p.mainFrustumPlanes, sizeof(float) * 24);
-                    memcpy(csp->CascadeFrustum, p.cascadeFrustumPlanes, sizeof(csp->CascadeFrustum));
+                    memcpy(csp->CascadeFrustum, p.cascadeFrustumPlanes.data(), sizeof(csp->CascadeFrustum));
                     csp->MaxVisibleIndices = maxVisibleIndices;
                     csp->LodLevels = p.lodLevels;
                     memcpy(csp->ViewProj, p.mainViewProj.data(), sizeof(float) * 16);
@@ -619,51 +621,54 @@ namespace SFW::Graphics::DX11 {
                 ctx->DrawInstancedIndirect(argsBuf.Get(), 0);
             }
 
-    //        if (cascadeViewport)
-    //        {
-				//ctx->RSSetViewports(1, cascadeViewport);
-    //        }
+            if (!castShadow) return;
 
-    //        // 5) カスケードシャドウ DepthOnly パス
-    //        for (UINT ci = 0; ci < p.cascadeCount; ++ci)
-    //        {
-    //            ctx->OMSetRenderTargets(0, nullptr, p.cascadeDSV[ci]);
-    //            //ctx->RSSetViewports(1, &p.cascadeViewport[ci]);
+            if (cascadeViewport)
+            {
+				ctx->RSSetViewports(1, cascadeViewport);
+            }
 
-    //            // LightViewProj + World
-    //            D3D11_MAPPED_SUBRESOURCE ms{};
-    //            HRESULT hr = ctx->Map(cbVSShadow.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
-				//assert(SUCCEEDED(hr) && "頂点シェーダーの定数バッファのマップオープンに失敗しました");
-    //            if (SUCCEEDED(hr))
-    //            {
-    //                auto* vsp = reinterpret_cast<VSDepthParams*>(ms.pData);
-    //                //ViewProjしか使用しない
-    //                memcpy(vsp->ViewProj, p.lightViewProj[ci], sizeof(float) * 16);
+            ctx->RSSetState(shadowBiasRS);
 
-    //                ctx->Unmap(cbVSShadow.Get(), 0);
-    //            }
+            // 5) カスケードシャドウ DepthOnly パス
+            for (UINT ci = 0; ci < p.cascadeCount; ++ci)
+            {
+                ctx->OMSetRenderTargets(0, nullptr, p.cascadeDSV[ci]);
 
-				////各カスケードごとのoffsetで生成したSRVをセット
-    //            ctx->VSSetShaderResources(20, 1, shadowVisibleSRV[ci].GetAddressOf());
+                // LightViewProj + World
+                D3D11_MAPPED_SUBRESOURCE ms{};
+                HRESULT hr = ctx->Map(cbVSShadow.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
+				assert(SUCCEEDED(hr) && "頂点シェーダーの定数バッファのマップオープンに失敗しました");
+                if (SUCCEEDED(hr))
+                {
+                    auto* vsp = reinterpret_cast<VSDepthParams*>(ms.pData);
+                    //ViewProjしか使用しない
+                    memcpy(vsp->ViewProj, p.lightViewProj[ci], sizeof(float) * 16);
 
-    //            ctx->VSSetConstantBuffers(10, 1, cbVSShadow.GetAddressOf());
+                    ctx->Unmap(cbVSShadow.Get(), 0);
+                }
 
-    //            ctx->VSSetShader(vsShadow.Get(), nullptr, 0);
-    //            ctx->PSSetShader(nullptr, nullptr, 0);
+				//各カスケードごとのoffsetで生成したSRVをセット
+                ctx->VSSetShaderResources(20, 1, shadowVisibleSRV[ci].GetAddressOf());
 
-    //            ID3D11ShaderResourceView* vsSRVs[] = {
-    //                posSRV.Get(),
-    //                //nrmSRV.Get(),
-    //                //uvSRV.Get()
-    //            };
-    //            ctx->VSSetShaderResources(21, 1, vsSRVs);
+                ctx->VSSetConstantBuffers(10, 1, cbVSShadow.GetAddressOf());
 
-    //            ctx->IASetInputLayout(nullptr);
-    //            ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+                ctx->VSSetShader(vsShadow.Get(), nullptr, 0);
+                ctx->PSSetShader(nullptr, nullptr, 0);
 
-    //            // オフセットでカスケードごとの Args
-    //            ctx->DrawInstancedIndirect(shadowArgsBuf.Get(), ci * sizeof(D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS));
-    //        }
+                ID3D11ShaderResourceView* vsSRVs[] = {
+                    posSRV.Get(),
+                    //nrmSRV.Get(),
+                    //uvSRV.Get()
+                };
+                ctx->VSSetShaderResources(21, 1, vsSRVs);
+
+                ctx->IASetInputLayout(nullptr);
+                ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+                // オフセットでカスケードごとの Args
+                ctx->DrawInstancedIndirect(shadowArgsBuf.Get(), ci * sizeof(D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS));
+            }
 
 			// 後始末
             constexpr ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };

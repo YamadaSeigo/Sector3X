@@ -7,10 +7,11 @@ struct CFireflyVolume
 {
     // 空間（最低限）
     Math::Vec3f centerWS = {};
-    float       radius = 30.0f;          // 球ボリューム（まずは球が楽）
+    float       hitRadius = 20.0f;      // 球ボリューム（まずは球が楽）
+	float       spawnRadius = 30.0f;    // 発生範囲
 
     // 見た目（emissive / bloom 基準）
-    Math::Vec3f color = {1.0f, 5.0f, 0.0f};
+    Math::Vec3f color = {0.4f, 1.5f, 0.0f};
     float       emissiveIntensity = 1.0f;
 
     // 群れ密度（GPU targetCount の元）
@@ -31,7 +32,7 @@ struct CFireflyVolume
 
 	float burstT = 0.0f; // 0..1（1=発動直後、時間で0へ）
 
-    bool        showEnable = false;
+    bool        isHit = false;
 
     // 例：index 20bit + generation 12bit = 32bit
     uint32_t MakeUID(uint32_t index, uint32_t gen)
@@ -92,14 +93,14 @@ public:
                 //範囲外の場合はスキップ
 				auto length = (volume.centerWS - playerPos).lengthSquared();
 
-                if (length > volume.radius * volume.radius) {
-                    volume.showEnable = false;
+                if (length > volume.hitRadius * volume.hitRadius) {
+                    volume.isHit = false;
                     continue;
                 }
 
                 FireflyVolumeGPU gpuVolume{};
                 gpuVolume.centerWS = volume.centerWS;
-                gpuVolume.radius = volume.radius;
+                gpuVolume.radius = volume.spawnRadius;
                 gpuVolume.color = volume.color;
                 gpuVolume.intensity = volume.emissiveIntensity;
                 gpuVolume.targetCount = static_cast<float>(volume.maxCountNear);
@@ -108,9 +109,9 @@ public:
                 gpuVolume.nearLightBudget = volume.nearLightBudget;
                 gpuVolume.seed = volume.seed;
 
-                if (volume.showEnable == false){
+                if (volume.isHit == false){
 					volume.burstT = 1.0f; // 発動直後
-                    volume.showEnable = true;
+                    volume.isHit = true;
                 }
 
 				gpuVolume.burstT = volume.burstT;

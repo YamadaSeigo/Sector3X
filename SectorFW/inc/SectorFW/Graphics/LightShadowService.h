@@ -33,7 +33,7 @@ namespace SFW
         struct AmbientLight
         {
             Math::Vec3f color = Math::Vec3f(0.1f, 0.1f, 0.1f);
-            float intensity = 4.0f;
+            float intensity = 1.0f;
         };
 
         // -------------------------------------------------------------
@@ -81,6 +81,9 @@ namespace SFW
             // Ambient + counts
             Math::Vec3f gAmbientColor;
             uint32_t gPointLightCount; // 16B
+
+			float emissiveBoost = 3.0f; // 16B
+			float _padding[3]; // パディング
         };
 
         class LightShadowService
@@ -98,6 +101,16 @@ namespace SFW
 
             LightShadowService() = default;
 
+            void SetEnvironment(const DirectionalLight& dirLight,
+                const AmbientLight& ambientLight,
+                float emissiveBoost)
+            {
+                std::unique_lock lock(m_updateMutex);
+                m_directional = dirLight;
+                m_ambient = ambientLight;
+                m_emissiveBoost = emissiveBoost;
+            }
+
             // ライト設定
             void SetDirectionalLight(const DirectionalLight& d)
             {
@@ -107,8 +120,15 @@ namespace SFW
 
             void SetAmbientLight(const AmbientLight& a)
             {
+                std::unique_lock lock(m_updateMutex);
                 m_ambient = a;
             }
+
+            void SetEmissiveBoost(float boost)
+            {
+                std::unique_lock lock(m_updateMutex);
+                m_emissiveBoost = boost;
+			}
 
             const DirectionalLight& GetDirectionalLight() const noexcept {
                 std::shared_lock lock(m_updateMutex);
@@ -117,6 +137,11 @@ namespace SFW
             const AmbientLight& GetAmbientLight()     const noexcept {
 				std::shared_lock lock(m_updateMutex);
                 return m_ambient;
+            }
+
+            float GetEmissiveBoost() const noexcept {
+                std::shared_lock lock(m_updateMutex);
+				return m_emissiveBoost;
             }
 
 			// ポイントライトの数はここで管理しない
@@ -129,6 +154,7 @@ namespace SFW
                 data.gSunIntensity = m_directional.intensity;
                 data.gAmbientColor = m_ambient.color;
                 data.gAmbientIntensity = m_ambient.intensity;
+				data.emissiveBoost = m_emissiveBoost;
 				return data;
             }
 
@@ -559,6 +585,8 @@ namespace SFW
 
             DirectionalLight m_directional{};
             AmbientLight     m_ambient{};
+
+			float m_emissiveBoost = 3.0f;
 
             CascadeConfig m_cascadeCfg{};
             std::uint32_t m_cascadeCount = 0;

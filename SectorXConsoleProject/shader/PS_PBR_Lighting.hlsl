@@ -19,6 +19,9 @@ cbuffer LightingCB : register(b12)
     // Ambient + counts
     float3 gAmbientColor;
     uint gPointLightCount;
+    
+    float emissiveBoost; // Emissive‚Ì‹­’²ŒW”
+    float3 _pad3;
 };
 
 Texture2D gAlbedoAO : register(t11); // RGB: Albedo, A: Occlusion

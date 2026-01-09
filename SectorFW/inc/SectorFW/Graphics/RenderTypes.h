@@ -164,6 +164,7 @@ namespace SFW
 			WireCullBack,
 			WireCullFront,
 			WireCullNone,
+			ShadowBias,
 			// ...
 			MAX_COUNT, // 有効なラスタライザーステートの数
 		};

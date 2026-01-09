@@ -171,8 +171,8 @@ namespace SFW
 
 		// 三角メッシュ（凸性チェック・BVHは Jolt 側）
 		struct MeshDesc {
-			std::vector<Vec3f> vertices;
-			std::vector<uint32_t> indices; // 3*i の連続三角形
+			const std::vector<Vec3f>& vertices;
+			const std::vector<uint32_t>& indices; // 3*i の連続三角形
 		};
 
 		/**

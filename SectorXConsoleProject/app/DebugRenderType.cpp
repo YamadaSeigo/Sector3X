@@ -3,7 +3,7 @@
 
 #include "DeferredRenderingService.h"
 
-bool DebugRenderType::showEnable = false;
+bool DebugRenderType::isHit = false;
 bool DebugRenderType::drawPartitionBounds = false;
 bool DebugRenderType::drawFrustumBounds = false;
 bool DebugRenderType::drawModelAABB = false;
@@ -27,7 +27,7 @@ DebugRenderType::DebugRenderType()
 	//ã≠êßìIÇ…UI BusÇäJénÇµÇƒÇ®Ç≠
 	Debug::StartUIBus();
 
-	BIND_DEBUG_CHECKBOX("Show", "enabled", &showEnable);
+	BIND_DEBUG_CHECKBOX("Show", "enabled", &isHit);
 	BIND_DEBUG_CHECKBOX("Show", "partition", &drawPartitionBounds);
 	BIND_DEBUG_CHECKBOX("Show", "frustum", &drawFrustumBounds);
 	BIND_DEBUG_CHECKBOX("Show", "modelAABB", &drawModelAABB);

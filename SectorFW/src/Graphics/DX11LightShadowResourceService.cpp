@@ -31,6 +31,7 @@ namespace SFW
             // 既存を破棄（ComPtr は代入でリセットされる）
             m_shadowTex.Reset();
             m_shadowSRV.Reset();
+
             for (auto& dsv : m_cascadeDSV) dsv.Reset();
             m_shadowSampler.Reset();
             m_shadowRS.Reset();
@@ -118,15 +119,15 @@ namespace SFW
             {
                 D3D11_RASTERIZER_DESC rsDesc = {};
                 rsDesc.FillMode = D3D11_FILL_SOLID;
-                rsDesc.CullMode = D3D11_CULL_BACK; // 必要に応じて FRONT/ NONE
+                rsDesc.CullMode = D3D11_CULL_NONE; // 必要に応じて FRONT/ NONE
                 rsDesc.FrontCounterClockwise = TRUE;
-                //rsDesc.DepthBias = 1000;   // 要調整
-                //rsDesc.SlopeScaledDepthBias = 1.0f;   // 要調整
-                //rsDesc.DepthBiasClamp = 0.0f;
-                //rsDesc.DepthClipEnable = FALSE;
-                //rsDesc.ScissorEnable = FALSE;
-                //rsDesc.MultisampleEnable = FALSE;
-                //rsDesc.AntialiasedLineEnable = FALSE;
+                rsDesc.DepthBias = 1000;   // 要調整
+                rsDesc.SlopeScaledDepthBias = 1.0f;   // 要調整
+                rsDesc.DepthBiasClamp = 0.0f;
+                rsDesc.DepthClipEnable = FALSE;
+                rsDesc.ScissorEnable = FALSE;
+                rsDesc.MultisampleEnable = FALSE;
+                rsDesc.AntialiasedLineEnable = FALSE;
 
                 hr = device->CreateRasterizerState(&rsDesc, &m_shadowRS);
                 if (FAILED(hr)) return false;
