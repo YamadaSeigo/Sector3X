@@ -23,7 +23,7 @@ namespace SFW
 
 		PSOData PSOManager::CreateResource(const PSOCreateDesc& desc, PSOHandle h)
 		{
-			PSOData overridePSO{};
+			PSOData pso{};
 			{
 				auto shaderData = shaderManager->Get(desc.shader);
 
@@ -31,7 +31,23 @@ namespace SFW
 					(UINT)shaderData.ref().inputLayoutDesc.size(),
 					shaderData.ref().vsBlob->GetBufferPointer(),
 					shaderData.ref().vsBlob->GetBufferSize(),
-					&overridePSO.inputLayout);
+					&pso.inputLayout);
+
+				if(desc.rebindShader.has_value())
+				{
+					auto rebindShaderData = shaderManager->Get(desc.rebindShader.value());
+					hr = device->CreateInputLayout(rebindShaderData.ref().inputLayoutDesc.data(),
+						(UINT)rebindShaderData.ref().inputLayoutDesc.size(),
+						rebindShaderData.ref().vsBlob->GetBufferPointer(),
+						rebindShaderData.ref().vsBlob->GetBufferSize(),
+						&pso.rebindInputLayout);
+					pso.rebindShader = desc.rebindShader.value();
+				}
+				else
+				{
+					pso.rebindInputLayout = pso.inputLayout;
+					pso.rebindShader = desc.shader;
+				}
 
 				if (FAILED(hr)) {
 					LOG_ERROR("Failed to create input layout for PSO: %d", desc.shader);
@@ -39,9 +55,9 @@ namespace SFW
 				}
 			}
 
-			overridePSO.shader = desc.shader;
-			overridePSO.rasterizerState = desc.rasterizerState;
-			return overridePSO;
+			pso.shader = desc.shader;
+			pso.rasterizerState = desc.rasterizerState;
+			return pso;
 		}
 	}
 }

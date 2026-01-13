@@ -80,12 +80,6 @@
     <FxCompile Include="shader\VS_TerrainClusteredDepth.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\PS_ShadowColor.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\VS_ShadowDepth.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="shader\PS_DepthOnly.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
@@ -104,7 +98,7 @@
     <FxCompile Include="shader\VS_WindGrassUnlit.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\VS_WindEntityUnlit.hlsl">
+    <FxCompile Include="shader\VS_WindEntityShadow.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_HighLight.hlsl">
@@ -122,13 +116,7 @@
     <FxCompile Include="shader\VS_ClipUVNrm.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\PS_PBR_Lighting.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="shader\PS_DebugDeferred.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\PS_PBR_Stylized.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_PBR_Unlit_Shadow.hlsl">
@@ -162,6 +150,15 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\PS_Composite.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_ShadowDepth.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_NormalMap.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_NormalMap.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

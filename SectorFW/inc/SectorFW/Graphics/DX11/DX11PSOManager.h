@@ -22,6 +22,7 @@ namespace SFW
 		struct PSOCreateDesc {
 			ShaderHandle shader;
 			RasterizerStateID rasterizerState = RasterizerStateID::SolidCullBack;
+			std::optional<ShaderHandle> rebindShader = std::nullopt; // シェーダーリバインド用（オプション）
 		};
 		/**
 		 * @brief DirectX 11のパイプラインステートオブジェクト（PSO）のデータ構造体
@@ -29,6 +30,8 @@ namespace SFW
 		struct PSOData {
 			ComPtr<ID3D11InputLayout> inputLayout = nullptr;
 			ShaderHandle shader;
+			ComPtr<ID3D11InputLayout> rebindInputLayout = nullptr;		// シェーダーリバインド用（オプション）
+			ShaderHandle rebindShader;									// シェーダーリバインド用（オプション）
 			RasterizerStateID rasterizerState = RasterizerStateID::SolidCullBack;
 		};
 		/**

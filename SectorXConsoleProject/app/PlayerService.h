@@ -18,8 +18,9 @@ public:
 		static const int MAX_FOOT = 4;
 		Math::Vec4f gFootPosWRadiusWS[MAX_FOOT] = {}; // ワールド座標 (足元 or カプセル中心付近)
 		float  gFootStrength = 2.0f;         // 全体の曲がり強さ
+		float gFootHeightRange = 5.0f;		//影響する高さの範囲
 		int    gFootCount = 0;            // 有効な足の数
-		Math::Vec2f _pad = {};
+		float pad = {};
 	};
 
 	PlayerService(Graphics::DX11::BufferManager* bufferMgr): bufferMgr(bufferMgr)
@@ -34,6 +35,7 @@ public:
 		BIND_DEBUG_SLIDER_FLOAT("Player", "MoveSpeed", &MOVE_SPEED, 0.0f, 50.0f, 0.1f);
 		BIND_DEBUG_SLIDER_FLOAT("Player", "TurnSpeed", &TURN_SPEED, 0.0f, 20.0f, 0.1f);
 		BIND_DEBUG_SLIDER_FLOAT("Player", "FootStrength", &grassFoot_buf.gFootStrength, 0.0f, 10.0f, 0.01f);
+		BIND_DEBUG_SLIDER_FLOAT("Player", "HeightRange", &grassFoot_buf.gFootHeightRange, 0.0f, 50.0f, 0.01f);
 		BIND_DEBUG_SLIDER_FLOAT("Player", "DefaultFootRadius", &DEFAULT_FOOT_RADIUS, 0.1f, 20.0f, 0.1f);
 	}
 

@@ -17,7 +17,7 @@ namespace SFW
 	void InitializeGameEngine(bool initialize)
 	{
 		// グラフィックデバイスが初期化されていない場合は、エラーを出す
-		SFW::Debug::DYNAMIC_ASSERT_MESSAGE(initialize, "GraphicsDevice is not Configure");
+		DYNAMIC_ASSERT_MESSAGE(initialize, "GraphicsDevice is not Configure");
 
 		SIMD::SimdInit(); // SIMD 初期化
 

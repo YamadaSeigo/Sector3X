@@ -137,7 +137,27 @@ public:
 
 		BIND_DEBUG_CHECKBOX("TimeOfDay", "enable", &isUpdateTimeOfDay);
 		BIND_DEBUG_SLIDER_FLOAT("TimeOfDay", "dayLengthSec", &m_dayLengthSec, m_dayLengthSec, 1000.0f, 1.0f);
-		BIND_DEBUG_SLIDER_FLOAT("TimeOfDay", "timeOfDay", &m_timeOfDay, 0.0f, m_dayLengthSec, 0.1f);
+
+		REGISTER_DEBUG_BOUND_SLIDER_FLOAT("TimeOfDay", "timeOfDay", m_timeOfDay, 0.0f, m_dayLengthSec, 0.1f, [&](float value) {
+			m_timeOfDay = std::fmod(value, m_dayLengthSec);
+			CalcCurrentTimeOfDayKey();
+			// Update fog parameters
+			{
+				std::lock_guard lock(updateFogMutex);
+				cpuFogBuf.gFogColor = currentTimeOfDayKey.fogColor;
+				cpuFogBuf.gFogStart = currentTimeOfDayKey.fogStart;
+				cpuFogBuf.gFogEnd = currentTimeOfDayKey.fogEnd;
+				cpuFogBuf.gHeightFogDensity = currentTimeOfDayKey.heightFogDensity;
+				isUpdateFogBuffer = true;
+			}
+			// Update god ray parameters
+			{
+				std::lock_guard lock(updateGodRayMutex);
+				cpuGodRayBuf.gGodRayTint = currentTimeOfDayKey.godRayTint;
+				cpuGodRayBuf.gGodRayIntensity = currentTimeOfDayKey.godRayIntensity;
+				isUpdateGodRayBuffer = true;
+			}
+			}, &m_timeOfDay);
 
 		REGISTER_DEBUG_CHECKBOX("Fog", "gEnableDistanceFog", cpuFogBuf.gEnableDistanceFog, [&](bool value) { isUpdateFogBuffer = true; cpuFogBuf.gEnableDistanceFog = value; });
 
@@ -162,6 +182,34 @@ public:
 		BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayMaxDepth, 0.0f, 1.0f, 0.0001f);
 	}
 
+	void CalcCurrentTimeOfDayKey() noexcept {
+		float t = m_timeOfDay / m_dayLengthSec;
+		TimeOfDayKey beforeKey = timeOfDayKeys.back();
+		TimeOfDayKey afterKey = timeOfDayKeys.front();
+		for (size_t i = 0; i < timeOfDayKeys.size(); ++i)
+		{
+			if (timeOfDayKeys[i].t >= t)
+			{
+				afterKey = timeOfDayKeys[i];
+				beforeKey = (i == 0) ? timeOfDayKeys.back() : timeOfDayKeys[i - 1];
+				break;
+			}
+		}
+		float factor = 0.0f;
+		if (afterKey.t >= beforeKey.t){
+			factor = (t - beforeKey.t) / (afterKey.t - beforeKey.t);
+		}
+		else{
+			// ループしている場合
+			factor = (t - beforeKey.t) / (afterKey.t + 1.0f - beforeKey.t);
+		}
+		currentTimeOfDayKey = beforeKey.Lerp(afterKey, factor);
+
+		// SunDirectionも更新
+		float theta = Math::Deg2Rad(START_SUN_ANGLE + (END_SUN_ANGLE - START_SUN_ANGLE) * t);
+		m_sunDirection = Math::Vec3f{ 0.0f, -sin(theta), -cos(theta) }.normalized();
+	}
+
 	void PreUpdate(double deltaTime) override {
 
 		slot = (slot + 1) % Graphics::RENDER_BUFFER_COUNT;
@@ -171,32 +219,7 @@ public:
 			m_elapsedTime += static_cast<float>(deltaTime);
 			m_timeOfDay = std::fmod(m_elapsedTime, m_dayLengthSec);
 
-			float t = m_timeOfDay / m_dayLengthSec;
-			TimeOfDayKey beforeKey = timeOfDayKeys.back();
-			TimeOfDayKey afterKey = timeOfDayKeys.front();
-			for (size_t i = 0; i < timeOfDayKeys.size(); ++i)
-			{
-				if (timeOfDayKeys[i].t >= t)
-				{
-					afterKey = timeOfDayKeys[i];
-					beforeKey = (i == 0) ? timeOfDayKeys.back() : timeOfDayKeys[i - 1];
-					break;
-				}
-			}
-
-			float factor = 0.0f;
-			if (afterKey.t >= beforeKey.t){
-				factor = (t - beforeKey.t) / (afterKey.t - beforeKey.t);
-			}
-			else{
-				// ループしている場合
-				factor = (t - beforeKey.t) / (afterKey.t + 1.0f - beforeKey.t);
-			}
-
-			currentTimeOfDayKey = beforeKey.Lerp(afterKey, factor);
-
-			float theta = Math::Deg2Rad(START_SUN_ANGLE + (END_SUN_ANGLE - START_SUN_ANGLE) * t);
-			m_sunDirection = Math::Vec3f{ 0.0f, -sin(theta), -cos(theta) }.normalized();
+			CalcCurrentTimeOfDayKey();
 
 			// Update fog parameters
 			{
@@ -302,7 +325,7 @@ private:
 	bool isUpdateFogBuffer = false;
 	bool isUpdateGodRayBuffer = false;
 
-	bool isUpdateTimeOfDay = false;
+	bool isUpdateTimeOfDay = true;
 
 public:
 	STATIC_SERVICE_TAG

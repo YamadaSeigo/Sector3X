@@ -5,11 +5,11 @@ struct CSprite
 	static inline constexpr uint32_t invalidPSOIndex = 0xFFFFFFFF;
 
 	Graphics::MaterialHandle hMat = {};
-	Graphics::PSOHandle overridePSO = { invalidPSOIndex, 0};
+	Graphics::PSOHandle pso = { invalidPSOIndex, 0};
 	uint32_t layer = 0;
 
 	bool IsOverridePso() const noexcept {
-		return overridePSO.index != invalidPSOIndex;
+		return pso.index != invalidPSOIndex;
 	}
 };
 
@@ -82,7 +82,7 @@ public:
 
 			Graphics::DrawCommand cmd;
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.overridePSO = psoHandle.index;
+			cmd.pso = psoHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;
 
@@ -90,7 +90,7 @@ public:
 				const auto& sp = sprite.value()[i];
 
 				if(sp.IsOverridePso())
-					cmd.overridePSO = sp.overridePSO.index;
+					cmd.pso = sp.pso.index;
 
 				cmd.material = sp.hMat.index;
 				cmd.instanceIndex = instanceIndices[i];

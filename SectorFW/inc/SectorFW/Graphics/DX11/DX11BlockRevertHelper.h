@@ -464,7 +464,6 @@ namespace SFW::Graphics::DX11 {
             ID3D11DeviceContext* ctx,
             ComPtr<ID3D11Buffer>&& cameraCB,
             const ShadowDepthParams& p,
-            ID3D11RasterizerState* shadowBiasRS,
 			const D3D11_VIEWPORT* cascadeViewport = nullptr,
             bool castShadow = true)
         {
@@ -627,8 +626,6 @@ namespace SFW::Graphics::DX11 {
             {
 				ctx->RSSetViewports(1, cascadeViewport);
             }
-
-            ctx->RSSetState(shadowBiasRS);
 
             // 5) カスケードシャドウ DepthOnly パス
             for (UINT ci = 0; ci < p.cascadeCount; ++ci)

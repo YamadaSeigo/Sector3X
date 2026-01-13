@@ -250,7 +250,7 @@ public:
 						Graphics::DrawCommand cmd;
 						cmd.sortKey = 0;
 						cmd.instanceIndex = instanceIdx;
-						cmd.overridePSO = subMesh.overridePSO.index;
+						cmd.pso = subMesh.pso.index;
 						cmd.mesh = subMesh.lods[0].mesh.index;
 						cmd.material = subMesh.material.index;
 						cmd.viewMask = PASS_3DMAIN_HIGHLIGHT;

@@ -1,5 +1,6 @@
 #include "Graphics/DX11/DX11RenderBackend.h"
 #include "Graphics/RenderQueue.h"
+#include "Graphics/LightShadowService.h"
 #include "Debug/logger.h"
 
 namespace SFW
@@ -105,23 +106,23 @@ namespace SFW
 			modelAssetManager->ProcessDeferredDeletes(currentFrame);
 		}
 
-		void RenderBackend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer) const
+		void RenderBackend::DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer, bool rebindPSO) const
 		{
 			MaterialTemplateID templateID = MaterialTemplateID::MAX_COUNT;
 			bool isPSBind = true;
 			UINT indexCount = 0;
 			UINT startIndex = 0;
 			{
-				auto overridePSO = psoManager->GetDirect(psoIdx);
+				auto pso = psoManager->GetDirect(psoIdx);
 
 				if (usePSORasterizer) {
-					SetRasterizerStateImpl(overridePSO.ref().rasterizerState);
+					SetRasterizerStateImpl(pso.ref().rasterizerState);
 				}
 
 				// PSOバインド
-				context->IASetInputLayout(overridePSO.ref().inputLayout.Get());
+				context->IASetInputLayout(rebindPSO ? pso.ref().rebindInputLayout.Get() : pso.ref().inputLayout.Get());
 
-				auto shader = shaderManager->Get(overridePSO.ref().shader);
+				auto shader = shaderManager->Get(rebindPSO ? pso.ref().rebindShader : pso.ref().shader);
 				context->VSSetShader(shader.ref().vs.Get(), nullptr, 0);
 				auto& ps = shader.ref().ps;
 				isPSBind = (ps != nullptr);
@@ -395,21 +396,38 @@ namespace SFW
 				}
 			}
 
-			//ShadowBias用ステート
+			//ShadowBias
+
+			D3D11_RASTERIZER_DESC shadowBiasDesc = {};
+			shadowBiasDesc.FillMode = D3D11_FILL_SOLID;
+			shadowBiasDesc.CullMode = D3D11_CULL_BACK;
+			shadowBiasDesc.FrontCounterClockwise = TRUE;
+			shadowBiasDesc.DepthBias = 8000; // 適宜調整
+
+			//float dummyInput;
+			//std::cin >> dummyInput; // ダミー入力でコンパイルエラー回避
+			//shadowBiasDesc.DepthBias = static_cast<INT>(dummyInput); // ダミーコード（実際には適宜調整してください）
+
+			//shadowBiasDesc.SlopeScaledDepthBias = 5.0f; // 適宜調整
+
+			//std::cin >> dummyInput; // ダミー入力でコンパイルエラー回避
+
+			shadowBiasDesc.DepthBiasClamp = 0.0f;
+
+			float depthBias[kMaxShadowCascades][2] = {
+			{ 8000.0f, 2.0f },
+			{ 15000.0f, 4.0f },
+			{ 20000.0f, 5.0f },
+			};
+
+			for (int i = 0; i < kMaxShadowCascades; i++)
 			{
-				rasterizer.FillMode = D3D11_FILL_SOLID;
-				rasterizer.CullMode = D3D11_CULL_BACK; // 必要に応じて FRONT/ NONE
-				rasterizer.FrontCounterClockwise = TRUE;
-				rasterizer.DepthBias = 1000;   // 要調整
-				rasterizer.SlopeScaledDepthBias = 1.0f;   // 要調整
-				rasterizer.DepthBiasClamp = 0.0f;
-				rasterizer.DepthClipEnable = FALSE;
-				rasterizer.ScissorEnable = FALSE;
-				rasterizer.MultisampleEnable = FALSE;
-				rasterizer.AntialiasedLineEnable = FALSE;
-				hr = device->CreateRasterizerState(&rasterizer, rasterizerStates[(size_t)RasterizerStateID::ShadowBias].GetAddressOf());
+				shadowBiasDesc.DepthBias = static_cast<INT>(depthBias[i][0]);
+				shadowBiasDesc.SlopeScaledDepthBias = depthBias[i][1];
+				hr = device->CreateRasterizerState(&shadowBiasDesc, rasterizerStates[(size_t)RasterizerStateID::ShadowBiasLow + i].GetAddressOf());
 				if (FAILED(hr)) { return hr; }
 			}
+
 
 			SetRasterizerStateImpl(RasterizerStateID::SolidCullBack); // デフォルト
 

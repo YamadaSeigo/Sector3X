@@ -163,12 +163,12 @@ namespace SFW
 			 * @param usePSORasterizer PSOのラスタライザーステートを使用するかどうか
 			 */
 			template<typename VecT>
-			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::optional<PSOHandle> psoOverride, bool usePSORasterizer)
+			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::optional<PSOHandle> psoOverride, bool usePSORasterizer, bool rebindPSO)
 			{
 				struct DrawBatch {
 					uint32_t mesh;
 					uint32_t material;
-					uint32_t overridePSO;
+					uint32_t pso;
 					uint32_t base;
 					uint32_t instanceCount; // instances[idx]
 				};
@@ -209,7 +209,7 @@ namespace SFW
 				{
 
 					while (i < cmdCount) {
-						auto currentPSO = cmds[i].overridePSO;
+						auto currentPSO = cmds[i].pso;
 						auto currentMat = cmds[i].material;
 
 						uint32_t currentMesh = cmds[i].mesh;
@@ -222,7 +222,7 @@ namespace SFW
 
 						// 同じPSO + Material + Meshをまとめる
 						while (i < cmdCount &&
-							cmds[i].overridePSO == currentPSO &&
+							cmds[i].pso == currentPSO &&
 							cmds[i].material == currentMat &&
 							cmds[i].mesh == currentMesh &&
 							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
@@ -248,7 +248,7 @@ namespace SFW
 					memcpy(m.pData, &perDraw, sizeof(perDraw));
 					context->Unmap(m_perDrawCB.Get(), 0);
 
-					DrawInstanced(b.mesh, b.material, b.overridePSO, b.instanceCount, usePSORasterizer);
+					DrawInstanced(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer, rebindPSO);
 				}
 			}
 			/**
@@ -258,12 +258,12 @@ namespace SFW
 			 * @param usePSORasterizer PSOのラスタライザーステートを使用するかどうか
 			 */
 			template<typename VecT>
-			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::span<const uint32_t> indices,std::optional<PSOHandle> psoOverride,  bool usePSORasterizer)
+			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::span<const uint32_t> indices,std::optional<PSOHandle> psoOverride,  bool usePSORasterizer, bool rebindPSO)
 			{
 				struct DrawBatch {
 					uint32_t mesh;
 					uint32_t material;
-					uint32_t overridePSO;
+					uint32_t pso;
 					uint32_t base;
 					uint32_t instanceCount; // instances[idx]
 				};
@@ -273,7 +273,34 @@ namespace SFW
 				size_t k = 0;
 				size_t K = indices.size();
 				std::vector<DrawBatch> batches;
-				if (psoOverride.has_value()) {
+				if (rebindPSO){
+					uint32_t overriddenPSO = psoOverride.value().index;
+
+					auto isRebindPSO = [](uint8_t flags) -> bool {
+						return (flags & static_cast<uint8_t>(DrawFlags::RebindPSONeeded)) != 0;
+						};
+
+					while (k < K) {
+						const DrawCommand& first = cmds[indices[k]];
+						auto currentPSO = isRebindPSO(first.flags) ? first.pso : overriddenPSO;
+						auto currentMat = first.material;
+						auto currentMesh = first.mesh;
+						uint32_t instanceCount = 0;
+						const uint32_t base = m_idxHead;
+						auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
+						while (k < K &&
+							(isRebindPSO(first.flags) ? cmds[indices[k]].pso : overriddenPSO) == currentPSO &&
+							cmds[indices[k]].material == currentMat &&
+							cmds[indices[k]].mesh == currentMesh &&
+							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
+							dst[instanceCount++] = cmds[indices[k]].instanceIndex.index;
+							++k;
+						}
+						m_idxHead += instanceCount;
+						batches.push_back({ currentMesh, currentMat, currentPSO, base, instanceCount });
+					}
+				}
+				else if (psoOverride.has_value()) {
 					// PSOオーバーライドがある場合、すべて同じPSOで描画する
 					uint32_t overriddenPSO = psoOverride.value().index;
 					while (k < K) {
@@ -298,7 +325,7 @@ namespace SFW
 					while (k < K) {
 						const DrawCommand& first = cmds[indices[k]];
 
-						auto currentPSO = first.overridePSO;
+						auto currentPSO = first.pso;
 						auto currentMat = first.material;
 						auto currentMesh = first.mesh;
 						uint32_t instanceCount = 0;
@@ -307,7 +334,7 @@ namespace SFW
 						auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
 
 						while (k < K &&
-							cmds[indices[k]].overridePSO == currentPSO &&
+							cmds[indices[k]].pso == currentPSO &&
 							cmds[indices[k]].material == currentMat &&
 							cmds[indices[k]].mesh == currentMesh &&
 							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
@@ -334,7 +361,7 @@ namespace SFW
 					memcpy(m.pData, &perDraw, sizeof(perDraw));
 					context->Unmap(m_perDrawCB.Get(), 0);
 
-					DrawInstanced(b.mesh, b.material, b.overridePSO, b.instanceCount, usePSORasterizer);
+					DrawInstanced(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer, rebindPSO);
 				}
 			}
 
@@ -359,7 +386,7 @@ namespace SFW
 			 * @param count インスタンス数
 			 * @param usePSORasterizer PSOのラスタライザーステートを使用するかどうか
 			 */
-			void DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer) const;
+			void DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer, bool rebindPSO) const;
 		private:
 			void BindMeshVertexStreamsForPSO(ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader, MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const;
 			void BindMeshVertexStreamsFromOverrides(ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader, MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const;

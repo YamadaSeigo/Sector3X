@@ -51,6 +51,8 @@ namespace SFW
 			// このパスが見る viewMask のビット
 			uint16_t viewBit = 0;   // 例: 1<<0=ZPre, 1<<1=Opaque, 1<<2=ID...
 
+			bool rebindPSO = false; // PSOリバインドを行うかどうか
+
 			/**
 			 * @brief デフォルトコンストラクタ
 			 */
@@ -80,7 +82,8 @@ namespace SFW
 				std::optional<Viewport> viewport = std::nullopt,
 				std::optional<PSOHandle> psoOverride = std::nullopt,
 				const std::vector<PassCustomFuncType>& customExecute = {},
-				uint32_t stencilRef = 0)
+				uint32_t stencilRef = 0,
+				bool rebindPSO = false)
 				: rtvs(rtvs)
 				, dsv(dsv)
 				, queue(queue)
@@ -92,7 +95,8 @@ namespace SFW
 				, viewport(viewport)
 				, psoOverride(psoOverride)
 				, customExecute(customExecute)
-				, stencilRef(stencilRef){
+				, stencilRef(stencilRef)
+				, rebindPSO(rebindPSO){
 
 				rtvsRaw.resize(rtvs.size());
 				for (size_t i = 0; i < rtvs.size(); ++i) {
@@ -115,7 +119,8 @@ namespace SFW
 				, viewport(other.viewport)
 				, psoOverride(other.psoOverride)
 				, customExecute(std::move(other.customExecute))
-				, stencilRef(other.stencilRef){
+				, stencilRef(other.stencilRef)
+				, rebindPSO(other.rebindPSO) {
 				other.dsv = nullptr; // 安全のためヌルクリア
 				queue = other.queue;
 
@@ -143,6 +148,7 @@ namespace SFW
 					psoOverride = other.psoOverride;
 					customExecute = other.customExecute;
 					stencilRef = other.stencilRef;
+					rebindPSO = other.rebindPSO;
 					other.dsv = nullptr;
 
 					rtvsRaw.resize(rtvs.size());
@@ -185,6 +191,7 @@ namespace SFW
 			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
 			std::vector<PassCustomFuncType> customExecute = {}; // FullscreenQuadなど
 			uint32_t stencilRef = 0;
+			bool rebindPSO = false; // PSOリバインドを行うかどうか
 		};
 	}
 }

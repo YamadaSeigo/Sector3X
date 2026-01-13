@@ -11,7 +11,7 @@ namespace SFW
 
 			if (iter == meta.end())
 			{
-				SFW::Debug::DYNAMIC_ASSERT_MESSAGE(false, "Not Registry ComponentType!");
+				DYNAMIC_ASSERT_MESSAGE(false, "Not Registry ComponentType!");
 				return nullptr;
 			}
 

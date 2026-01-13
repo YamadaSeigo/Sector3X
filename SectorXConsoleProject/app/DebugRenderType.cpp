@@ -1,7 +1,8 @@
 
 #include "DebugRenderType.h"
-
 #include "DeferredRenderingService.h"
+
+#include <SectorFW/Debug/UIBus.h>
 
 bool DebugRenderType::isHit = false;
 bool DebugRenderType::drawPartitionBounds = false;

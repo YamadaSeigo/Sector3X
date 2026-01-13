@@ -94,6 +94,10 @@ struct PointLight
 
 StructuredBuffer<PointLight> gPointLights : register(t15);
 
+// 比較サンプラ（ShadowMapService が作っているもの）
+SamplerComparisonState gShadowSampler : register(s1);
+SamplerState gDepthPointSamp: register(s2);
+
 float ToonStep3(float x)
 {
     // 0..1 を 3段階に（好みで値調整）
@@ -165,6 +169,27 @@ struct VSOut
     float4 pos : SV_POSITION;
     float2 uv : TEXCOORD0;
 };
+
+uint ChooseCascade(float viewDepth)
+{
+    // viewDepth はカメラ view-space の Z（LHなら +Z が前）、
+    // gCascadeSplits[i] には LightShadowService の splitFar[i] を入れる想定
+
+    uint idx = 0;
+
+    // gCascadeCount-1 まで比較し、閾値を超えたら次のカスケードへ
+    [unroll]
+    for (uint i = 0; i < NUM_CASCADES - 1; ++i)
+    {
+        if (i < gCascadeCount - 1)
+        {
+            // viewDepth が split を超えたらインデックスを進める
+            idx += (viewDepth > gCascadeSplits[i]) ? 1u : 0u;
+        }
+    }
+
+    return min(idx, gCascadeCount - 1);
+}
 
 // shadowPos は LightViewProj 後の clip（もしくは同等）を想定
 float SampleShadowPCF(float4 shadowClip, uint cascade)
@@ -427,7 +452,7 @@ float4 main(VSOut i) : SV_Target
     float4 ndc;
     ndc.xy = uv * 2.0f - 1.0f;
     ndc.y = -ndc.y; // D3DのUV(上0) と NDC(Y+上)の差を吸収
-    ndc.z = gDepth.Sample(gSampler, uv);
+    ndc.z = gDepth.Sample(gDepthPointSamp, uv);
     ndc.w = 1.0f;
 
     // View-Projection 逆行列でワールド位置を復元
@@ -448,12 +473,42 @@ float4 main(VSOut i) : SV_Target
     // 影の濃さ(0.7)は元の意図を踏襲
     float shadowMul = lerp(0.6f, 1.0f, vis);
 
-    // GBuffer
+     // GBuffer
     float3 albedo = albedoAO.rgb;
     float3 N = normalize(nr.rgb * 2.0f - 1.0f);
 
+    // -----------------------------
+    //  弱いノーマルライティング
+    // -----------------------------
+    // gSunDirectionWS は「太陽の向き」想定なので、
+    // 光が“来る”方向は -gSunDirectionWS として扱う
+    float3 L = normalize(-gSunDirectionWS);
+
+    // 通常の N・L
+    float ndl = saturate(dot(N, L));
+
+    // Wrap で少し回り込みを増やして、カートゥーン寄りに
+    float wrap = 0.3f; // 0..1 大きいほど回り込みが強い
+    float ndlWrap = saturate((ndl + wrap) / (1.0f + wrap));
+
+    // 少しだけカーブさせて中間を強調（好みで調整）
+    ndlWrap = pow(ndlWrap, 1.2f);
+
+    // 「どれくらいの強さでノーマル感を出すか」
+    // 0 なら完全Unlit、1なら最大（ここでは太陽強度を軽くスケールに利用）
+    float detailStrength = saturate(gSunIntensity * 0.5f); // 0..1 くらいを想定
+
+    // 0.85 ~ 1.15 の範囲で明るさを揺らす（弱めの陰影）
+    float normalFactorRaw = lerp(0.8f, 1.15f, ndlWrap);
+
+    // detailStrength でフェードイン
+    float normalFactor = lerp(1.0f, normalFactorRaw, detailStrength);
+
     // Ambient（Unlitの基礎明るさ）
     float3 base = albedo * (gAmbientColor * gAmbientIntensity);
+
+    // ノーマルによる“ごつごつ感”をここで掛ける
+    base *= normalFactor;
 
     // 影で暗くする（既存 shadowMul を利用）
     base *= shadowMul;

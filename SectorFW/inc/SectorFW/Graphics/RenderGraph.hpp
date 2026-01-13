@@ -97,7 +97,8 @@ namespace SFW
 					desc.viewport,
 					desc.psoOverride,
 					desc.customExecute,
-					desc.stencilRef));
+					desc.stencilRef,
+					desc.rebindPSO));
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 				// パスごとのランタイムを初期化（常駐アリーナを作っておく）
@@ -146,7 +147,8 @@ namespace SFW
 					desc.viewport,
 					desc.psoOverride,
 					desc.customExecute,
-					desc.stencilRef
+					desc.stencilRef,
+					desc.rebindPSO
 				));
 
 				auto* pass = passes.back().get();
@@ -312,7 +314,7 @@ namespace SFW
 					auto* idxEnd = idxBegin + r.count;
 
 					// 共通cmds + このパスの indexビューで描画
-					backend.ExecuteDrawIndexedInstanced(gs.cmds, std::span<const uint32_t>(idxBegin, idxEnd), pass->psoOverride, !useRasterizer);
+					backend.ExecuteDrawIndexedInstanced(gs.cmds, std::span<const uint32_t>(idxBegin, idxEnd), pass->psoOverride, !useRasterizer, pass->rebindPSO);
 
 					for (auto& func : pass->customExecute)
 						func(currentFrame);

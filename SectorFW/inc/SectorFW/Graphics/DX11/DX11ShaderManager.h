@@ -11,7 +11,7 @@
 
 #include "_dx11inc.h"
 #include "../RenderTypes.h"
-#include "Util/ResouceManagerBase.hpp"
+#include "../../Util/ResouceManagerBase.hpp"
 
 #include <filesystem>
 #include <unordered_map>

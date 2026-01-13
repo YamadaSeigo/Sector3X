@@ -4,6 +4,8 @@
 
 #include "cgltf/cgltf.h"
 
+#include "mikktspace/mikktspace.h" // tangentspace生成ライブラリ
+
 #include "Debug/logger.h"
 
 #include "Math/aabb_util.h"
@@ -54,35 +56,6 @@ namespace SFW
 			return score;
 		}
 
-		ModelAssetManager::ModelAssetManager(
-			MeshManager& meshMgr, MaterialManager& matMgr,
-			ShaderManager& shaderMgr, PSOManager& psoMgr,
-			TextureManager& texMgr,BufferManager& cbMgr,
-			SamplerManager& samplMgr, ID3D11Device* device) :
-			meshMgr(meshMgr), matMgr(matMgr), shaderMgr(shaderMgr), psoMgr(psoMgr),
-			texMgr(texMgr), cbManager(cbMgr), samplerManager(samplMgr), device(device) {
-		}
-
-		void ModelAssetManager::RemoveFromCaches(uint32_t idx)
-		{
-			auto& data = slots[idx].data;
-			auto cacheIt = pathToHandle.find(data.path.to_path());
-			if (cacheIt != pathToHandle.end()) {
-				pathToHandle.erase(cacheIt);
-			}
-		}
-
-		void ModelAssetManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
-		{
-			auto& data = slots[idx].data;
-			for (auto& sm : data.subMeshes) {
-				matMgr.Release(sm.material, currentFrame + RENDER_BUFFER_COUNT);
-				for (auto& lod : sm.lods) {
-					meshMgr.Release(lod.mesh, currentFrame + RENDER_BUFFER_COUNT);
-				}
-			}
-		}
-
 		int FindParentIndex(const cgltf_node* joint, cgltf_node* const* joints, cgltf_size jointCount)
 		{
 			if (!joint || !joint->parent)
@@ -112,6 +85,150 @@ namespace SFW
 				for (size_t col = 0; col < 4; ++col)
 					m[row][col] = matrixValues[col + row * 4]; // glTF は column-major
 			return m;
+		}
+
+		// -------------------------
+		// MikkTSpace 用ユーザーデータ
+		// -------------------------
+		struct MikkUserData
+		{
+			std::vector<Math::Vec3f>* positions;
+			std::vector<Math::Vec3f>* normals;
+			std::vector<Math::Vec2f>* tex0;
+			std::vector<Math::Vec4f>* tangents;   // 出力先 (xyz + w = sign)
+			const std::vector<uint32_t>* indices;
+		};
+
+		// -------------------------
+		// MikkTSpace コールバック
+		// -------------------------
+		static int MikkGetNumFaces(const SMikkTSpaceContext* pContext)
+		{
+			const MikkUserData* ud = (const MikkUserData*)pContext->m_pUserData;
+			return (int)(ud->indices->size() / 3);
+		}
+
+		static int MikkGetNumVertsOfFace(const SMikkTSpaceContext* pContext, const int iFace)
+		{
+			(void)pContext; (void)iFace;
+			return 3; // 三角形メッシュ前提
+		}
+
+		static void MikkGetPosition(const SMikkTSpaceContext* pContext,
+			float fvPosOut[3], const int iFace, const int iVert)
+		{
+			const MikkUserData* ud = (const MikkUserData*)pContext->m_pUserData;
+			uint32_t idx = (*ud->indices)[iFace * 3 + iVert];
+			const auto& p = (*ud->positions)[idx];
+			fvPosOut[0] = p.x;
+			fvPosOut[1] = p.y;
+			fvPosOut[2] = p.z;
+		}
+
+		static void MikkGetNormal(const SMikkTSpaceContext* pContext,
+			float fvNormOut[3], const int iFace, const int iVert)
+		{
+			const MikkUserData* ud = (const MikkUserData*)pContext->m_pUserData;
+			uint32_t idx = (*ud->indices)[iFace * 3 + iVert];
+			const auto& n = (*ud->normals)[idx];
+			fvNormOut[0] = n.x;
+			fvNormOut[1] = n.y;
+			fvNormOut[2] = n.z;
+		}
+
+		static void MikkGetTexCoord(const SMikkTSpaceContext* pContext,
+			float fvTexcOut[2], const int iFace, const int iVert)
+		{
+			const MikkUserData* ud = (const MikkUserData*)pContext->m_pUserData;
+			uint32_t idx = (*ud->indices)[iFace * 3 + iVert];
+			const auto& uv = (*ud->tex0)[idx];
+			fvTexcOut[0] = uv.x;
+			fvTexcOut[1] = uv.y;
+		}
+
+		static void MikkSetTSpaceBasic(const SMikkTSpaceContext* pContext,
+			const float fvTangent[3],
+			const float fSign,
+			const int iFace, const int iVert)
+		{
+			MikkUserData* ud = (MikkUserData*)pContext->m_pUserData;
+			uint32_t idx = (*ud->indices)[iFace * 3 + iVert];
+			auto& t = (*ud->tangents)[idx];
+			t.x = fvTangent[0];
+			t.y = fvTangent[1];
+			t.z = fvTangent[2];
+			t.w = fSign; // bitangent の符号
+		}
+
+		// -------------------------
+		// Tangent 生成本体
+		// -------------------------
+		static void GenerateTangentsWithMikkTSpace(
+			std::vector<Math::Vec3f>& positions,
+			std::vector<Math::Vec3f>& normals,
+			std::vector<Math::Vec2f>& tex0,
+			const std::vector<uint32_t>& indices,
+			std::vector<Math::Vec4f>& tangents)
+		{
+			if (positions.empty() || normals.empty() || tex0.empty() || indices.empty())
+				return;
+
+			// glTF の頂点数ぶん確保
+			tangents.clear();
+			tangents.resize(positions.size(), Math::Vec4f(0, 0, 1, 1));
+
+			MikkUserData ud{
+				&positions,
+				&normals,
+				&tex0,
+				&tangents,
+				&indices
+			};
+
+			SMikkTSpaceInterface iface{};
+			iface.m_getNumFaces = MikkGetNumFaces;
+			iface.m_getNumVerticesOfFace = MikkGetNumVertsOfFace;
+			iface.m_getPosition = MikkGetPosition;
+			iface.m_getNormal = MikkGetNormal;
+			iface.m_getTexCoord = MikkGetTexCoord;
+			iface.m_setTSpaceBasic = MikkSetTSpaceBasic;
+			iface.m_setTSpace = nullptr; // Basic だけ使う
+
+			SMikkTSpaceContext ctx{};
+			ctx.m_pUserData = &ud;
+			ctx.m_pInterface = &iface;
+
+			// Mikktspace で接線生成（Blender / glTF と同じ規格）
+			genTangSpaceDefault(&ctx);
+		}
+
+		ModelAssetManager::ModelAssetManager(
+			MeshManager& meshMgr, MaterialManager& matMgr,
+			ShaderManager& shaderMgr, PSOManager& psoMgr,
+			TextureManager& texMgr,BufferManager& cbMgr,
+			SamplerManager& samplMgr, ID3D11Device* device) :
+			meshMgr(meshMgr), matMgr(matMgr), shaderMgr(shaderMgr), psoMgr(psoMgr),
+			texMgr(texMgr), cbManager(cbMgr), samplerManager(samplMgr), device(device) {
+		}
+
+		void ModelAssetManager::RemoveFromCaches(uint32_t idx)
+		{
+			auto& data = slots[idx].data;
+			auto cacheIt = pathToHandle.find(data.path.to_path());
+			if (cacheIt != pathToHandle.end()) {
+				pathToHandle.erase(cacheIt);
+			}
+		}
+
+		void ModelAssetManager::DestroyResource(uint32_t idx, uint64_t currentFrame)
+		{
+			auto& data = slots[idx].data;
+			for (auto& sm : data.subMeshes) {
+				matMgr.Release(sm.material, currentFrame + RENDER_BUFFER_COUNT);
+				for (auto& lod : sm.lods) {
+					meshMgr.Release(lod.mesh, currentFrame + RENDER_BUFFER_COUNT);
+				}
+			}
 		}
 
 		ModelAssetData ModelAssetManager::LoadFromGLTF(const ModelAssetCreateDesc& desc)
@@ -258,6 +375,38 @@ namespace SFW
 					//AABBからBoundingSphereを生成
 					sub.bs = Math::BoundingSpheref::FromAABB(sub.aabb.lb, sub.aabb.ub);
 
+					// ---------------------------------------------------
+					// Tangent が glTF に無い場合は MikkTSpace で生成する
+					// ---------------------------------------------------
+					const bool needsTangent =
+						tangents.empty() &&                 // glTFから来ていない
+						!normals.empty() &&                 // 法線あり
+						!tex0.empty() &&                    // UVあり
+						!indices.empty();                   // インデックス（三角形）
+
+					if (needsTangent)
+					{
+						GenerateTangentsWithMikkTSpace(
+							positions,
+							normals,
+							tex0,
+							indices,
+							tangents
+						);
+
+						// 右手Z反転（rhFlipZ）の場合は normal と同じように tangent も反転
+						if (desc.rhFlipZ)
+						{
+							for (auto& t : tangents)
+							{
+								// あなたの flip_tangent と同じ規則に合わせる
+								// auto flip_tangent = [](float& x, float& y, float& z, float& w) { z = -z; w = -w; };
+								t.z = -t.z;
+								t.w = -t.w;
+							}
+						}
+					}
+
 					// LOD生成
 					//============================================================================
 
@@ -376,21 +525,23 @@ namespace SFW
 
 					ShaderHandle shaderHandle;
 					{
-						auto psoData = psoMgr.Get(desc.overridePSO);
+						auto psoData = psoMgr.Get(desc.pso);
 						shaderHandle = psoData.ref().shader;
+						bool isRebind = psoData.ref().rebindShader.index != shaderHandle.index;
+						if (isRebind)
+							asset.flags |= (uint8_t)DrawFlags::RebindPSONeeded;
 					}
 
 					{
-						auto psShader = shaderMgr.Get(shaderHandle);
-						const auto& psBindings = psShader.ref().psBindings;
+						auto shaderData = shaderMgr.Get(shaderHandle);
+						const auto& psBindings = shaderData.ref().psBindings;
 						for (const auto& b : psBindings) {
 							if (b.type == D3D_SIT_CBUFFER && b.name == gMaterialBindName) {
 								psCBVMap[b.bindPoint] = matCB;
 							}
 						}
 
-						auto vsShader = shaderMgr.Get(shaderHandle);
-						const auto& vsBindings = vsShader.ref().vsBindings;
+						const auto& vsBindings = shaderData.ref().vsBindings;
 						for (const auto& b : vsBindings) {
 							if (b.type == D3D_SIT_CBUFFER && b.name == gMaterialBindName) {
 								vsCBVMap[b.bindPoint] = matCB;
@@ -615,7 +766,7 @@ namespace SFW
 					// -----------------------------------------------
 
 					sub.material = matHandle;
-					sub.overridePSO = desc.overridePSO;
+					sub.pso = desc.pso;
 
 					{
 						SFW::Graphics::LodAssetStats as{

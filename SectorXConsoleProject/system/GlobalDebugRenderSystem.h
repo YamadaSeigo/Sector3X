@@ -169,7 +169,7 @@ public:
 			Graphics::DrawCommand cmd;
 			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.overridePSO = deferredPsoHandle.index;
+			cmd.pso = deferredPsoHandle.index;
 			cmd.material = deferredMaterialHandle[i].index;
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;
@@ -185,7 +185,7 @@ public:
 			Graphics::DrawCommand cmd;
 			cmd.instanceIndex = uiSession.AllocInstance(scaleMat);
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.overridePSO = deferredPsoHandle.index;
+			cmd.pso = deferredPsoHandle.index;
 			cmd.material = dummyMatHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;
@@ -206,7 +206,7 @@ public:
 			Graphics::DrawCommand cmd;
 			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.overridePSO = psoMOCHandle.index;
+			cmd.pso = psoMOCHandle.index;
 			cmd.material = mocMaterialHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;
@@ -221,7 +221,7 @@ public:
 			Graphics::DrawCommand cmd;
 			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
-			cmd.overridePSO = spritePsoHandle.index;
+			cmd.pso = spritePsoHandle.index;
 			cmd.material = bloomMaterialHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;

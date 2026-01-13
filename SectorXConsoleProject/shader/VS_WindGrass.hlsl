@@ -38,8 +38,9 @@ cbuffer GrassFootCB : register(b12)
     static const int MAX_FOOT = 4;
     float4 gFootPosWRadiusWS[MAX_FOOT]; // ワールド座標 (足元 or カプセル中心付近)
     float gFootStrength; // 全体の曲がり強さ
+    float gFootHeightRange;
     int gFootCount; // 有効な足の数
-    float2 _pad;
+    float _pad;
 };
 
 Texture2D<float> gHeightMap : register(t10);
@@ -160,9 +161,8 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
             // 高さ方向での制限（足よりだいぶ上はあまり動かさない）
             // footPos.y を地面 or 足裏の高さとして扱う想定
-            float heightRange = 2.5f; // 50cm くらいまで強く影響
             float dy = wp.y - footPos.y;
-            float hFactor = saturate(1.0f - abs(dy) / heightRange);
+            float hFactor = saturate(1.0f - abs(dy) / gFootHeightRange);
 
             // どの方向に倒すか：足の中心から外側に逃がすイメージ
             float2 dirXZ = (dist > 1e-3f) ? (dXZ / dist) : float2(0.0f, 0.0f);

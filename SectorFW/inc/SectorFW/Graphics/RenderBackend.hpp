@@ -117,13 +117,13 @@ namespace SFW
 			 * @param usePSORastarizer ラスタライザーステートをPSOから設定するかどうか
 			 */
 			template<typename VecT>
-			void ExecuteDrawIndexedInstanced(const VecT& cmds, std::optional<PSOHandle> psoOverride = std::nullopt, bool usePSORastarizer = true) {
-				static_cast<Derived*>(this)->ExecuteDrawIndexedInstancedImpl(cmds, psoOverride, usePSORastarizer);
+			void ExecuteDrawIndexedInstanced(const VecT& cmds, std::optional<PSOHandle> psoOverride = std::nullopt, bool usePSORasterizer = true, bool rebindPSO = false) {
+				static_cast<Derived*>(this)->ExecuteDrawIndexedInstancedImpl(cmds, psoOverride, usePSORasterizer, rebindPSO);
 			}
 
 			template<typename VecT>
-			void ExecuteDrawIndexedInstanced(const VecT& cmds, std::span<const uint32_t> indices, std::optional<PSOHandle> psoOverride = std::nullopt, bool usePSORastarizer = true) {
-				static_cast<Derived*>(this)->ExecuteDrawIndexedInstancedImpl(cmds, indices, psoOverride, usePSORastarizer);
+			void ExecuteDrawIndexedInstanced(const VecT& cmds, std::span<const uint32_t> indices, std::optional<PSOHandle> psoOverride = std::nullopt, bool usePSORasterizer = true, bool rebindPSO = false) {
+				static_cast<Derived*>(this)->ExecuteDrawIndexedInstancedImpl(cmds, indices, psoOverride, usePSORasterizer, rebindPSO);
 			}
 			/**
 			 * @brief フレーム終了時に遅延削除を処理する関数

@@ -470,7 +470,7 @@ public:
 
 		if (DebugRenderType::drawShapeDims)
 		{
-			this->ForEachFrustumNearChunkWithAccessor<ShapeDimsAccessor>([&](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto overridePSO, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
+			this->ForEachFrustumNearChunkWithAccessor<ShapeDimsAccessor>([&](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
 				{
 					auto shapeDims = accessor.Get<Read<Physics::ShapeDims>>();
 					auto tf = accessor.Get<Read<CTransform>>();
@@ -491,7 +491,7 @@ public:
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
 							cmd.mesh = boxMesh;
 							cmd.material = 0;
-							cmd.overridePSO = overridePSO;
+							cmd.pso = pso;
 							cmd.sortKey = 0; // 適切なソートキーを設定
 							cmd.viewMask = PASS_UI_3DLINE;
 							queue->Push(std::move(cmd));
@@ -504,7 +504,7 @@ public:
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
 							cmd.mesh = sphereMesh;
 							cmd.material = 0;
-							cmd.overridePSO = overridePSO;
+							cmd.pso = pso;
 							cmd.sortKey = 0; // 適切なソートキーを設定
 							cmd.viewMask = PASS_UI_3DLINE;
 							queue->Push(std::move(cmd));
@@ -522,7 +522,7 @@ public:
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
 							cmd.mesh = sphereMesh;
 							cmd.material = 0;
-							cmd.overridePSO = overridePSO;
+							cmd.pso = pso;
 							cmd.sortKey = 0; // 適切なソートキーを設定
 							cmd.viewMask = PASS_UI_3DLINE;
 							queue->Push(cmd);
@@ -595,7 +595,7 @@ public:
 						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
 						cmd.mesh = sphereGreenHandle.index;
 						cmd.material = 0;
-						cmd.overridePSO = psoLineHandle.index;
+						cmd.pso = psoLineHandle.index;
 						cmd.sortKey = 0; // 適切なソートキーを設定
 						cmd.viewMask = PASS_UI_3DLINE;
 						uiSession.Push(cmd);
@@ -629,7 +629,7 @@ public:
 			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
 			cmd.mesh = line3DHandle.index;
 			cmd.material = 0;
-			cmd.overridePSO = psoLineHandle.index;
+			cmd.pso = psoLineHandle.index;
 			cmd.sortKey = 0; // 本来は適切なソートキーを設定
 			cmd.viewMask = PASS_UI_3DLINE;
 			uiSession.Push(cmd);
@@ -655,7 +655,7 @@ public:
 			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
 			cmd.mesh = line2DHandle.index;
 			cmd.material = 0;
-			cmd.overridePSO = psoLineHandle.index;
+			cmd.pso = psoLineHandle.index;
 			cmd.viewMask = PASS_UI_LINE;
 			cmd.sortKey = 0; // 本来は適切なソートキーを設定
 			uiSession.Push(cmd);

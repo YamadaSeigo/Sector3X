@@ -7,7 +7,7 @@ namespace SFW
 	{
 		size_t ArchetypeChunk::AddEntity(EntityID id)
 		{
-			SFW::Debug::DYNAMIC_ASSERT_MESSAGE(entityCount < layout.capacity, "entityCount(%d) over capacity(%d)", entityCount, layout.capacity);
+			DYNAMIC_ASSERT_MESSAGE(entityCount < layout.capacity, "entityCount(%d) over capacity(%d)", entityCount, layout.capacity);
 			size_t index = entityCount++;
 			entities[index] = id;
 			return index;

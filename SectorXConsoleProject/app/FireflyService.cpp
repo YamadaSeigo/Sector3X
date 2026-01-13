@@ -76,7 +76,7 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
             HRESULT hr = D3DReadFileToBlob(path, csBlob.GetAddressOf());
 #ifdef _DEBUG
             std::string msgPath = SFW::WCharToUtf8_portable(path);
-            SFW::Debug::DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
+            DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
 #endif
             hr = pDevice->CreateComputeShader(csBlob->GetBufferPointer(), csBlob->GetBufferSize(), nullptr, &outCS);
             assert(SUCCEEDED(hr) && "Failed to create compute shader.");
@@ -92,7 +92,7 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
     HRESULT hr = D3DReadFileToBlob(vsPath, vsBlob.GetAddressOf());
 #ifdef _DEBUG
     std::string msgPath = SFW::WCharToUtf8_portable(vsPath);
-    SFW::Debug::DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
+    DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
 #endif
     hr = pDevice->CreateVertexShader(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), nullptr, &m_fireflyVS);
     assert(SUCCEEDED(hr) && "Failed to create vertex shader.");
@@ -101,7 +101,7 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
     hr = D3DReadFileToBlob(psPath, psBlob.GetAddressOf());
 #ifdef _DEBUG
     msgPath = SFW::WCharToUtf8_portable(psPath);
-    SFW::Debug::DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
+    DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
 #endif
     hr = pDevice->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, &m_fireflyPS);
     assert(SUCCEEDED(hr) && "Failed to create pixel shader.");

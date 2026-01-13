@@ -31,7 +31,7 @@ cbuffer TerrainGridCB : register(b1)
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
     float heightScale;
-    uint _pad11;
+    float offsetY;
 };
 
 float SampleGroundY(float2 xz)
@@ -39,7 +39,7 @@ float SampleGroundY(float2 xz)
     float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
     float2 uv = saturate((xz - gOriginXZ) / terrainSize);
     float h = gHeightMap.SampleLevel(gHeightSamp, uv, 0);
-    return (h * 2.0f - 1.0f) * heightScale / 2.0f;
+    return h * heightScale + offsetY;
 }
 
 // 軽いハッシュ乱数（0..1）
@@ -107,7 +107,7 @@ void main(uint3 tid : SV_DispatchThreadID)
     float2 xz = v.centerWS.xz + offset;
     
     float groundY = SampleGroundY(xz);
-    float startY = v.centerWS.y + groundY;
+    float startY = /*v.centerWS.y +*/groundY; // 地面の高さを基準に
     startY += Hash01(seed + 4u) * 1.0f; // 地面直上 0..100cm
 
     float3 pos = float3(xz.x, startY, xz.y);

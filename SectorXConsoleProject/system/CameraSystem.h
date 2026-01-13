@@ -215,7 +215,7 @@ public:
 				inputService->GetMouseDelta(dx, dy);
 				perCameraService->SetMouseDelta(static_cast<float>(dx), static_cast<float>(dy));
 
-				moveSpeed = std::clamp(moveSpeed + (float)mouseWheelV * MOVE_SPEED_WHEEL_RATE * (std::max)(1.0f, moveSpeed / 20.0f), 0.1f, 200.0f);
+				moveSpeed = std::clamp(moveSpeed + (float)mouseWheelV * MOVE_SPEED_WHEEL_RATE * (std::max)(1.0f, moveSpeed / 20.0f), 0.1f, 400.0f);
 			}
 		}
 		else

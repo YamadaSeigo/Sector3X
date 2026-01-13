@@ -107,7 +107,7 @@ namespace SFW
                 sampDesc.BorderColor[1] = 1.0f;
                 sampDesc.BorderColor[2] = 1.0f;
                 sampDesc.BorderColor[3] = 1.0f;
-                sampDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+                sampDesc.ComparisonFunc = D3D11_COMPARISON_LESS;
                 sampDesc.MinLOD = 0.0f;
                 sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
 

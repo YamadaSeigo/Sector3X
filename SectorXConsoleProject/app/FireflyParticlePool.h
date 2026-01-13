@@ -19,7 +19,7 @@ struct FireflyUpdatePram
     float gWanderStrength = 10.0f; // ふわふわノイズ強さ
     float gCenterPull = 0.01f; // ボリューム中心への引き戻し強さ
     float gGroundBand = 20.0f; // 地面からの高さ帯
-    float gGroundPull = 0.2f; // 地面付近への引き戻し強さ(小さいほうが強)
+    float gGroundPull = 0.25f; // 地面付近への引き戻し強さ(小さいほうが強)
     float gHeightRange = 15.0f;
 
     float burstStrength = 8.0f; // 例：3.0
@@ -27,7 +27,7 @@ struct FireflyUpdatePram
     float burstSwirl = 4.5f; // 例：1.5（渦成分）
     float burstUp = 6.0f; // 例：1.0（上方向の押し上げ）
 
-    float gMaxSpeed = 1.8f; // 速度上限
+    float gMaxSpeed = 2.0f; // 速度上限
 };
 
 class FireflyParticlePool

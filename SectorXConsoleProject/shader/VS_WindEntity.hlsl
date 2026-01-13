@@ -28,8 +28,9 @@ cbuffer GrassFootCB : register(b12)
     static const int MAX_FOOT = 4;
     float4 gFootPosWRadiusWS[MAX_FOOT]; // ワールド座標 (足元 or カプセル中心付近)
     float gFootStrength; // 全体の曲がり強さ
+    float gHeightRange;
     int gFootCount; // 有効な足の数
-    float2 _pad;
+    float _pad;
 };
 
 
@@ -111,8 +112,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     if (gFootCount > 0)
     {
-        const float heightRange = 2.5f;
-        const float invHeightRange = rcp(heightRange);
+        const float invHeightRange = rcp(gHeightRange);
         const float eps = 1e-8f;
 
         // MAX_FOOT は 4 なので固定 unroll が強い

@@ -75,8 +75,8 @@ struct MaterialRecord {
 
 static std::unordered_map<uint32_t, MaterialRecord> gMaterials = {
 	{ Mat_Grass, { "assets/texture/terrain/grass.png", true } },
-	{ Mat_Rock,  { "assets/texture/terrain/small+rocks+ground.jpg",  true } },
-	{ Mat_Dirt,  { "assets/texture/terrain/DirtHight.png",  true } },
+	{ Mat_Rock,  { "assets/texture/terrain/RockHigh.jpg",  true } },
+	{ Mat_Dirt,  { "assets/texture/terrain/DirtHigh.png",  true } },
 	{ Mat_Snow,  { "assets/texture/terrain/snow.png",  true } },
 };
 
@@ -195,7 +195,14 @@ void InitializeRenderPipeLine(
 	vp.height = (float)SHADOW_MAP_HEIGHT;
 
 	passDesc.viewport = vp;
-	passDesc.rasterizerState = RasterizerStateID::ShadowBias;
+
+	RasterizerStateID shadowRasterizerStates[Graphics::kMaxShadowCascades] = {
+		RasterizerStateID::ShadowBiasLow,
+		RasterizerStateID::ShadowBiasMedium,
+		RasterizerStateID::ShadowBiasHigh
+	};
+
+	passDesc.rebindPSO = true;
 
 	for (UINT i = 0; i < cascadeCount; ++i)
 	{
@@ -208,11 +215,13 @@ void InitializeRenderPipeLine(
 		bufferMgr->Add(cbDesc, cascadeIndexHandle);
 		passDesc.cbvs = { BindSlotBuffer{13, cascadeIndexHandle} };
 
+		passDesc.rasterizerState = shadowRasterizerStates[i];
 		passDesc.dsv = cascadeDSVs[i];
 
 		renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_CASCADE0 << i);
 	}
 
+	passDesc.rebindPSO = false;
 	shaderDesc.vsPath = L"assets/shader/VS_ZPrepass.cso";
 
 	shaderMgr->Add(shaderDesc, shaderHandle);
@@ -240,7 +249,7 @@ void InitializeRenderPipeLine(
 
 	DX11::ModelAssetCreateDesc modelDesc;
 	modelDesc.path = "assets/model/SkyStars.gltf";
-	modelDesc.overridePSO = psoHandle;
+	modelDesc.pso = psoHandle;
 	modelDesc.rhFlipZ = true;
 	ModelAssetHandle skyboxModelHandle;
 	auto modelMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
@@ -306,12 +315,36 @@ void InitializeRenderPipeLine(
 
 	auto samplerManager = renderGraph->GetRenderService()->GetResourceManager<DX11::SamplerManager>();
 
-	D3D11_SAMPLER_DESC sampDesc = {};
-	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	SamplerHandle samp = samplerManager->AddWithDesc(sampDesc);
-	auto sampData = samplerManager->Get(samp);
-	static ComPtr<ID3D11SamplerState> linearSampler = sampData.ref().state;
+	static ComPtr<ID3D11SamplerState> linearSampler;
+	{
+		D3D11_SAMPLER_DESC sampDesc = {};
+		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		SamplerHandle samp = samplerManager->AddWithDesc(sampDesc);
+		auto sampData = samplerManager->Get(samp);
+		linearSampler = sampData.ref().state;
+	}
+
+	static ComPtr<ID3D11SamplerState> pointSampler;
+	{
+		D3D11_SAMPLER_DESC sampDesc;
+		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // 全部 POINT
+		sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;    // 0～1 の外はクランプ
+		sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		sampDesc.MipLODBias = 0.0f;
+		sampDesc.MaxAnisotropy = 1;
+		sampDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;        // 普通のサンプラなので ALWAYS
+		sampDesc.BorderColor[0] = 0.0f;
+		sampDesc.BorderColor[1] = 0.0f;
+		sampDesc.BorderColor[2] = 0.0f;
+		sampDesc.BorderColor[3] = 0.0f;
+		sampDesc.MinLOD = 0.0f;
+		sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+		SamplerHandle samp = samplerManager->AddWithDesc(sampDesc);
+		auto sampData = samplerManager->Get(samp);
+		pointSampler = sampData.ref().state;
+	}
 
 	static ComPtr<ID3D11SamplerState> shadowSampler;
 	shadowSampler = resourceService.GetShadowSampler();
@@ -341,7 +374,7 @@ void InitializeRenderPipeLine(
 		renderBackend->UpdateBufferDataImpl(SkyCBBuffer.Get(), &skyboxData, sizeof(skyboxData));
 		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
 		renderBackend->BindPSCBVs({ SkyCBBuffer.Get() }, 9);
-		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true);
+		renderBackend->DrawInstanced(skyboxMeshHandle.index, skyboxMaterialHandle.index, skyboxPsoHandle.index, 1, true, false);
 		};
 
 	auto createScreenTex = [&](ComPtr<ID3D11ShaderResourceView>& outSRV, ComPtr<ID3D11RenderTargetView>& outRTV, DXGI_FORMAT format, uint32_t w, uint32_t h, TextureHandle* outH = nullptr) {
@@ -389,7 +422,7 @@ void InitializeRenderPipeLine(
 			HRESULT hr = D3DReadFileToBlob(psPath, psBlob.GetAddressOf());
 #ifdef _DEBUG
 			std::string msgPath = SFW::WCharToUtf8_portable(psPath);
-			SFW::Debug::DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
+			DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
 #endif
 			hr = graphics->GetDevice()->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, outPS.GetAddressOf());
 			assert(SUCCEEDED(hr) && "Failed to create pixel shader.");
@@ -492,6 +525,7 @@ void InitializeRenderPipeLine(
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 		ctx->PSSetSamplers(1, 1, shadowSampler.GetAddressOf());
+		ctx->PSSetSamplers(2, 1, pointSampler.GetAddressOf());
 
 		ctx->VSSetShader(defferedVS.Get(), nullptr, 0);
 		ctx->PSSetShader(defferedPS.Get(), nullptr, 0);
@@ -785,7 +819,7 @@ int main(void)
 		High = 4
 	};
 
-	int terrainRank = (int)TerrainRank::Middle;
+	int terrainRank = (int)TerrainRank::High;
 
 	Graphics::TerrainBuildParams p;
 	p.cellsX = 256 * terrainRank;
@@ -1060,18 +1094,14 @@ int main(void)
 			shadowParams.screenW = WINDOW_WIDTH;
 			shadowParams.screenH = WINDOW_HEIGHT;
 
-			// シャドウマップ用のCB/SRV/サンプラーを解除
-			constexpr ID3D11Buffer* nullBuffer = nullptr;
-			deviceContext->PSSetConstantBuffers(5, 1, &nullBuffer);
+			// シャドウマップ用のSRVを解除
 			constexpr ID3D11ShaderResourceView* nullSRV = nullptr;
 			deviceContext->PSSetShaderResources(7, 1, &nullSRV);
-			constexpr ID3D11SamplerState* nullSampler = nullptr;
-			deviceContext->PSSetSamplers(1, 1, &nullSampler);
 
 			lightShadowResourceService.ClearDepthBuffer(deviceContext);
 
 			//CBの5, Samplerの1にバインド
-			lightShadowResourceService.BindShadowResources(deviceContext, 5, 1);
+			lightShadowResourceService.BindShadowResources(deviceContext, 5);
 
 			auto bufMgr = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
 			auto cameraHandle = bufMgr->FindByName(Graphics::DX11::PerCamera3DService::BUFFER_NAME);
@@ -1083,8 +1113,7 @@ int main(void)
 
 			blockRevert.RunShadowDepth(deviceContext, std::move(cameraCB),
 				shadowParams,
-				lightShadowResourceService.GetShadowRasterizerState(),
-				&lightShadowResourceService.GetCascadeViewport(), true);
+				&lightShadowResourceService.GetCascadeViewport(), false);
 		};
 
 	auto drawTerrainColor = [](uint64_t frame)
@@ -1161,7 +1190,10 @@ int main(void)
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<CameraSystem>());
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<EnvironmentSystem>());
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<LightShadowSystem>());
+
+#ifdef _DEBUG
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<GlobalDebugRenderSystem>());
+#endif
 
 		// レベル追加コマンドを実行キューにプッシュ
 		for (auto& cmd : reqCmds) {
@@ -1215,7 +1247,7 @@ int main(void)
 				matMgr->Add(matDesc, matHandle);
 				CSprite sprite;
 				sprite.hMat = matHandle;
-				sprite.overridePSO = psoHandle;
+				sprite.pso = psoHandle;
 				auto levelSession = pLevel->GetSession();
 
 				auto getPos = [](float x, float y)->Math::Vec3f {
@@ -1388,9 +1420,23 @@ int main(void)
 				shaderMgr->Add(shaderDesc, shaderHandle);
 				PSOHandle cullNoneWindEntityPSOHandle;
 				psoDesc.shader = shaderHandle;
+
+				shaderDesc.vsPath = L"assets/shader/VS_WindEntityShadow.cso";
+				shaderDesc.psPath.clear();// 頂点シェーダのみ
+				shaderMgr->Add(shaderDesc, shaderHandle);
+				psoDesc.rebindShader = shaderHandle;
+
 				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullNone;
 				psoMgr->Add(psoDesc, cullNoneWindEntityPSOHandle);
+				psoDesc.rebindShader = std::nullopt;
 				psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
+
+				shaderDesc.vsPath = L"assets/shader/VS_NormalMap.cso";
+				shaderDesc.psPath = L"assets/shader/PS_NormalMap.cso";
+				shaderMgr->Add(shaderDesc, shaderHandle);
+				PSOHandle normalMapPSOHandle;
+				psoDesc.shader = shaderHandle;
+				psoMgr->Add(psoDesc, normalMapPSOHandle);
 
 				ModelAssetHandle modelAssetHandle[5];
 
@@ -1401,7 +1447,7 @@ int main(void)
 				// モデルアセットの読み込み
 				DX11::ModelAssetCreateDesc modelDesc;
 				modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_1.gltf";
-				modelDesc.overridePSO = cullDefaultPSOHandle;
+				modelDesc.pso = cullDefaultPSOHandle;
 				modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
 				modelDesc.instancesPeak = 1000;
 				modelDesc.viewMax = 100.0f;
@@ -1417,20 +1463,20 @@ int main(void)
 				modelDesc.viewMax = 50.0f;
 				modelDesc.minAreaFrec = 0.0004f;
 				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeGrassWeight;
-				modelDesc.overridePSO = cullNoneWindEntityPSOHandle;
+				modelDesc.pso = cullNoneWindEntityPSOHandle;
 
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
 
 				modelDesc.path = "assets/model/Stylized/Tree01.gltf";
 				modelDesc.viewMax = 100.0f;
-				modelDesc.overridePSO = cullNoneWindEntityPSOHandle;
+				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelDesc.minAreaFrec = 0.001f;
 				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeTreeWeight;
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 				modelDesc.instancesPeak = 100;
 				modelDesc.viewMax = 50.0f;
-				modelDesc.overridePSO = cullNoneWindEntityPSOHandle;
+				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeGrassWeight;
 				modelDesc.minAreaFrec = 0.0004f;
 				modelDesc.path = "assets/model/Stylized/WhiteCosmos.gltf";
@@ -1438,13 +1484,13 @@ int main(void)
 
 				modelDesc.instancesPeak = 100;
 				modelDesc.viewMax = 50.0f;
-				modelDesc.overridePSO = cullNoneWindEntityPSOHandle;
+				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelDesc.path = "assets/model/Stylized/YellowCosmos.gltf";
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
 				modelDesc.ClearAdditionalBindings();
 
 				ModelAssetHandle playerModelHandle;
-				modelDesc.overridePSO = cullDefaultPSOHandle;
+				modelDesc.pso = cullDefaultPSOHandle;
 				modelDesc.path = "assets/model/BlackGhost.glb";
 				modelDesc.pCustomNrmWFunc = nullptr;
 				modelDesc.minAreaFrec = 0.001f;
@@ -1464,7 +1510,7 @@ int main(void)
 
 				modelDesc.instancesPeak = 10000;
 				modelDesc.viewMax = 50.0f;
-				modelDesc.overridePSO = windGrassPSOHandle;
+				modelDesc.pso = windGrassPSOHandle;
 				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeGrassWeight;
 				modelDesc.minAreaFrec = 0.005f;
 				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
@@ -1496,7 +1542,7 @@ int main(void)
 				ModelAssetHandle ruinTowerModelHandle;
 				modelDesc.instancesPeak = 2;
 				modelDesc.viewMax = 1000.0f;
-				modelDesc.overridePSO = cullDefaultPSOHandle;
+				modelDesc.pso = normalMapPSOHandle;
 				modelDesc.minAreaFrec = 0.0f;
 				modelDesc.path = "assets/model/Ruins/RuinTower.gltf";
 				modelDesc.buildOccluders = true;
@@ -1516,6 +1562,7 @@ int main(void)
 				ModelAssetHandle ruinStoneModelHandle;
 				modelDesc.instancesPeak = 10;
 				modelDesc.viewMax = 200.0f;
+				modelDesc.pso = normalMapPSOHandle;
 				modelDesc.path = "assets/model/Ruins/RuinStoneA.gltf";
 				modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを
 				modelAssetMgr->Add(modelDesc, ruinStoneModelHandle);
@@ -1646,23 +1693,25 @@ int main(void)
 					}
 				}*/
 
+				auto getTerrainLocation = [&](float u, float v) {
+
+					Math::Vec3f location = { p.cellsX * p.cellSize * u, 0.0f, p.cellsZ * p.cellSize * v };
+					terrain.SampleHeightNormalBilinear(location.x, location.z, location.y);
+					return location;
+					};
+
 				// Entity生成
-				std::uniform_int_distribution<uint32_t> distX(1, uint32_t(p.cellsX* p.cellSize));
-				std::uniform_int_distribution<uint32_t> distZ(1, uint32_t(p.cellsZ* p.cellSize));
+				std::uniform_int_distribution<uint32_t> distX(0, (std::numeric_limits< uint32_t>::max)());
+				std::uniform_int_distribution<uint32_t> distZ(0, (std::numeric_limits< uint32_t>::max)());
+
 
 				for (int j = 0; j < (100 * terrainRank); ++j) {
 					for (int k = 0; k < (100 * terrainRank); ++k) {
 						for (int n = 0; n < 1; ++n) {
-							Math::Vec3f location = { (float)distX(rng), 0.0f, (float)distZ(rng)};
+							float u = distX(rng) / float((std::numeric_limits< uint32_t>::max)());
+							float v = distZ(rng) / float((std::numeric_limits< uint32_t>::max)());
+							Math::Vec3f location = getTerrainLocation(u, v);
 							//Math::Vec3f location = { 30.0f + j * 10.0f,0.0f, 30.0f + k * 10.0f};
-							auto gridX = (uint32_t)std::floor(location.x / p.cellSize);
-							auto gridZ = (uint32_t)std::floor(location.z / p.cellSize);
-							if (gridX >= 0 && gridX < p.cellsX - 1 && gridZ >= 0 && gridZ < p.cellsZ - 1)
-							{
-								float y0 = heightMap[Graphics::TerrainClustered::VIdx(gridX, gridZ, p.cellsX + 1)];
-								location.y = y0 * p.heightScale;
-								location += p.offset;
-							}
 
 							int modelIdx = dist(rng);
 							float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
@@ -1713,13 +1762,6 @@ int main(void)
 						}
 					}
 				}
-
-				auto getTerrainLocation = [&](float u, float v) {
-
-					Math::Vec3f location = { p.cellsX * p.cellSize * u, 0.0f, p.cellsZ * p.cellSize * v };
-					terrain.SampleHeightNormalBilinear(location.x, location.z, location.y);
-					return location;
-					};
 
 				//プレイヤー生成
 				{
@@ -1847,8 +1889,8 @@ int main(void)
 
 				//蛍の領域生成
 				{
-					Math::Vec3f location = getTerrainLocation(0.4f, 0.4f);
-					location.y += 0.0f; // 少し浮かせる
+					Math::Vec3f location = getTerrainLocation(0.45f, 0.45f);
+					//location.y += 5.0f; // 少し浮かせる
 
 					CFireflyVolume fireflyVolume;
 					fireflyVolume.centerWS = location;
@@ -1869,11 +1911,14 @@ int main(void)
 				//scheduler.AddSystem<PhysicsSystem>(*serviceLocator);
 				scheduler.AddSystem<BuildBodiesFromIntentsSystem>(*serviceLocator);
 				scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(*serviceLocator);
-				scheduler.AddSystem<DebugRenderSystem>(*serviceLocator);
 				scheduler.AddSystem<PlayerSystem>(*serviceLocator);
 				scheduler.AddSystem<PointLightSystem>(*serviceLocator);
 				scheduler.AddSystem<FireflySystem>(*serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(*serviceLocator);
+
+#ifdef _DEBUG
+				scheduler.AddSystem<DebugRenderSystem>(*serviceLocator);
+#endif
 
 				//カスタムの処理を開始
 				isExecuteCustomFunc.store(true, std::memory_order_relaxed);

@@ -97,7 +97,7 @@ namespace SFW
 
 			uint32_t mesh = 0;             // 24Bまで：ハンドル/ID（32bit想定）
 			uint32_t material = 0;
-			uint32_t overridePSO = 0;
+			uint32_t pso = 0;
 			InstanceIndex instanceIndex = {0};    // InstanceData プールへのインデックス
 
 			// ここが“空白の活用”パート（合計 8B）
@@ -116,14 +116,8 @@ namespace SFW
 		 * @brief DrawCommand のフラグビットフィールド
 		 */
 		enum class DrawFlags : uint8_t {
-			DF_BindPSONeeded = 1u << 0, // 前のコマンドから PSO を切り替える必要あり
-			DF_BindMaterial = 1u << 1, // マテリアルバインドが必要
-			DF_BindMesh = 1u << 2, // VB/IB 再バインドが必要
-			DF_AlphaTest = 1u << 3, // αテスト有無（ソートキーにも入れて良い）
-			DF_ShadowCaster = 1u << 4, // 影を落とす
-			DF_DoubleSided = 1u << 5, // 両面
-			DF_Skinned = 1u << 6, // スキンあり（シェーダバリアント切替のヒント）
-			// 1bit 余り
+			RebindPSONeeded = 1u << 0,   // PSO再バインドが必要
+			// ... あと7ビット分
 		};
 		/**
 		 * @brief マテリアルテンプレートID列挙型
@@ -164,7 +158,9 @@ namespace SFW
 			WireCullBack,
 			WireCullFront,
 			WireCullNone,
-			ShadowBias,
+			ShadowBiasLow,
+			ShadowBiasMedium,
+			ShadowBiasHigh,
 			// ...
 			MAX_COUNT, // 有効なラスタライザーステートの数
 		};

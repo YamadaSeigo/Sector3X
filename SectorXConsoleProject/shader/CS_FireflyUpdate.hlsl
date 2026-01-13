@@ -41,7 +41,7 @@ cbuffer TerrainGridCB : register(b1)
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
     float heightScale;
-    uint _pad11;
+    float offsetY;
 };
 
 cbuffer CBParams : register(b2)
@@ -68,7 +68,7 @@ float SampleGroundY(float2 xz)
     float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
     float2 uv = saturate((xz - gOriginXZ) / terrainSize);
     float h = gHeightMap.SampleLevel(gHeightSamp, uv, 0);
-    return (h * 2.0f - 1.0f) * heightScale / 2.0f;
+    return h * heightScale + offsetY;
 }
 
 // 軽いハッシュ乱数（0..1）

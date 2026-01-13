@@ -118,6 +118,9 @@
     <Filter Include="Src\Audio\SoLoud\audiosource\wav">
       <UniqueIdentifier>{dc09b70e-ee2c-43c5-90cb-73a6001c039e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\mikktspace">
+      <UniqueIdentifier>{e49086ed-7fbb-462a-969b-5cc174c82104}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utility\doxygen_sample.h">
@@ -1129,6 +1132,9 @@
     </ClCompile>
     <ClCompile Include="src\Debug\message.cpp">
       <Filter>Src\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="external\mikktspace\mikktspace.cpp">
+      <Filter>Src\Graphics\mikktspace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
