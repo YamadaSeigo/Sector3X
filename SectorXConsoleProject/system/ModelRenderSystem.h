@@ -79,13 +79,14 @@ public:
 		fru = fru.ClampedFar(camPos, 200.0f);
 
 		float maxShadowDistance = lightShadowService->GetMaxShadowDistance();
-		Math::Vec3f shadowDir = lightShadowService->GetDirectionalLight().directionWS.normalized() * -1.0f;
+		Math::Vec3f shadowDir = lightShadowService->GetDirectionalLight().directionWS.normalized();
 
 		float shadowUpDot = shadowDir.dot({ 0.0f, 1.0f,0.0f });
 
 		// 垂直になるほど大きくなる
 		float pushLen = 100.0f * (1.0f - std::abs(shadowUpDot));
-		auto shadowFru = fru.PushedAlongDirection(shadowDir, pushLen);
+		// シャドウの方向と逆方向にフラスタムを押し出す
+		auto shadowFru = fru.PushedAlongDirection(shadowDir * -1.0f, pushLen);
 
 		const Graphics::OccluderViewport vp = { (int)resolution.x, (int)resolution.y, cameraService->GetFOV() };
 
@@ -444,20 +445,31 @@ public:
 								auto centerVec = centerBS - kp->cp;
 								float camDepth = centerVec.dot(kp->camForward);
 
-								// 影方向とカメラ Forward の cosθ
-								float cosLF = std::fabs(kp->shadowDir.dot(kp->camForward)); // 0..1
-
-								// 影としてどこまで考慮するか（ワールド距離）
-								// 例：一番遠いカスケードの far クリップ距離 - near 距離
 								float maxShadowLenWS = kp->maxShadowDistance;
 
-								// カメラ深度方向に投影される「影の余白」
-								// 光がカメラとほぼ平行だと cosLF ≈ 1 になって深く伸びる
-								float extraDepth = bsRadiusWS + maxShadowLenWS * cosLF;
+								// オブジェクト自身の深度範囲
+								float baseMin = camDepth - bsRadiusWS;
+								float baseMax = camDepth + bsRadiusWS;
 
-								// これでカスケード範囲を決める
-								float minD = camDepth - extraDepth;
-								float maxD = camDepth + extraDepth;
+								// 光方向とカメラ Forward の dot（符号込み）
+								float lfDot = kp->shadowDir.dot(kp->camForward);
+
+								// デフォルトは「オブジェクトそのもの」だけ
+								float minD = baseMin;
+								float maxD = baseMax;
+
+								// lfDot < 0: 光がカメラの方へ向かっている（= 影がカメラ側に伸びる）ときだけ手前に伸ばす
+								if (lfDot < 0.0f)
+								{
+									minD -= maxShadowLenWS;
+								}
+								else
+								{
+									// 逆に、光がカメラと同じ向きなら影は奥方向に伸びるので、必要なら奥側を伸ばす
+									maxD += maxShadowLenWS;
+								}
+
+								maxD = (std::max)(maxD, minD);
 
 								auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(minD, maxD);
 
@@ -472,20 +484,31 @@ public:
 							auto centerVec = centerBS - kp->cp;
 							float camDepth = centerVec.dot(kp->camForward);
 
-							// 影方向とカメラ Forward の cosθ
-							float cosLF = std::fabs(kp->shadowDir.dot(kp->camForward)); // 0..1
-
-							// 影としてどこまで考慮するか（ワールド距離）
-							// 例：一番遠いカスケードの far クリップ距離 - near 距離
 							float maxShadowLenWS = kp->maxShadowDistance;
 
-							// カメラ深度方向に投影される「影の余白」
-							// 光がカメラとほぼ平行だと cosLF ≈ 1 になって深く伸びる
-							float extraDepth = bsRadiusWS + maxShadowLenWS * cosLF;
+							// オブジェクト自身の深度範囲
+							float baseMin = camDepth - bsRadiusWS;
+							float baseMax = camDepth + bsRadiusWS;
 
-							// これでカスケード範囲を決める
-							float minD = camDepth - extraDepth;
-							float maxD = camDepth + extraDepth;
+							// 光方向とカメラ Forward の dot（符号込み）
+							float lfDot = kp->shadowDir.dot(kp->camForward);
+
+							// デフォルトは「オブジェクトそのもの」だけ
+							float minD = baseMin;
+							float maxD = baseMax;
+
+							// lfDot < 0: 光がカメラの方へ向かっている（= 影がカメラ側に伸びる）ときだけ手前に伸ばす
+							if (lfDot < 0.0f)
+							{
+								minD -= maxShadowLenWS;
+							}
+							else
+							{
+								// 逆に、光がカメラと同じ向きなら影は奥方向に伸びるので、必要なら奥側を伸ばす
+								maxD += maxShadowLenWS;
+							}
+
+							maxD = (std::max)(maxD, minD);
 
 							auto cascades = kp->lightShadowService->GetCascadeIndexRangeUnlock(minD, maxD);
 

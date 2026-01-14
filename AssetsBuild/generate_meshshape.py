@@ -2,7 +2,14 @@ import os
 import argparse
 from pathlib import Path
 import numpy as np
+
 import trimesh
+
+try:
+    from trimesh import repair
+except Exception:
+    repair = None
+
 import struct
 
 # ===== 引数パース: generate_convex.py と同じスタイル =====
@@ -42,16 +49,74 @@ def load_mesh(path: Path) -> trimesh.Trimesh:
         # Scene などの場合に 1 mesh に統合
         mesh = mesh.dump().sum()
 
-    # 念のため三角形メッシュにしておく
-    if not mesh.is_watertight:
-        # watertight でなくても今回は OK（静的メッシュコリジョン用途）
-        pass
+    # watertight でなくても今回は OK（静的メッシュコリジョン用途）
+    # if not mesh.is_watertight: ... は特に何もしないのでコメントアウトしても可
 
-    # faces は (F, 3) で三角形想定
-    mesh.remove_unreferenced_vertices()
-    mesh.remove_degenerate_faces()
-    mesh.remove_duplicate_faces()
-    mesh.remove_infinite_values()
+    # ---- クリーンアップ（使える関数だけ使う） ----
+    # 1) 未参照頂点を削除
+    if hasattr(mesh, "remove_unreferenced_vertices"):
+        try:
+            mesh.remove_unreferenced_vertices()
+        except Exception as e:
+            print(f"[Mesh][WARN] remove_unreferenced_vertices failed: {e}")
+
+    # 2) 退化面の削除
+    called = False
+    if hasattr(mesh, "remove_degenerate_faces"):
+        try:
+            mesh.remove_degenerate_faces()
+            called = True
+        except Exception as e:
+            print(f"[Mesh][WARN] mesh.remove_degenerate_faces failed: {e}")
+
+    if not called and repair is not None and hasattr(repair, "remove_degenerate_faces"):
+        try:
+            repair.remove_degenerate_faces(mesh)
+            called = True
+        except Exception as e:
+            print(f"[Mesh][WARN] repair.remove_degenerate_faces failed: {e}")
+
+    if not called:
+        # この trimesh バージョンには無い場合は普通にスキップ
+        print("[Mesh][INFO] remove_degenerate_faces not available, skip")
+
+    # 3) 重複面の削除
+    called = False
+    if hasattr(mesh, "remove_duplicate_faces"):
+        try:
+            mesh.remove_duplicate_faces()
+            called = True
+        except Exception as e:
+            print(f"[Mesh][WARN] mesh.remove_duplicate_faces failed: {e}")
+
+    if not called and repair is not None and hasattr(repair, "remove_duplicate_faces"):
+        try:
+            repair.remove_duplicate_faces(mesh)
+            called = True
+        except Exception as e:
+            print(f"[Mesh][WARN] repair.remove_duplicate_faces failed: {e}")
+
+    if not called:
+        print("[Mesh][INFO] remove_duplicate_faces not available, skip")
+
+    # 4) 無限値/NaN の削除
+    called = False
+    if hasattr(mesh, "remove_infinite_values"):
+        try:
+            mesh.remove_infinite_values()
+            called = True
+        except Exception as e:
+            print(f"[Mesh][WARN] mesh.remove_infinite_values failed: {e}")
+
+    if not called and repair is not None and hasattr(repair, "remove_infinite_values"):
+        try:
+            repair.remove_infinite_values(mesh)
+            called = True
+        except Exception as e:
+            print(f"[Mesh][WARN] repair.remove_infinite_values failed: {e}")
+
+    if not called:
+        print("[Mesh][INFO] remove_infinite_values not available, skip")
 
     return mesh
 

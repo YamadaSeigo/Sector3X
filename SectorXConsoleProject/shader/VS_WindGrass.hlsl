@@ -93,6 +93,14 @@ float SampleHeightMap(float2 xz)
     return gHeightMap.Load(int3(texel, 0));
 }
 
+float SampleGroundY(float2 xz)
+{
+    float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
+    float2 uv = saturate((xz - gOriginXZ) / terrainSize);
+    float h = gHeightMap.SampleLevel(gSampler, uv, 0);
+    return h * heightScale + offsetY;
+}
+
 VSOutput main(VSInput input, uint instId : SV_InstanceID)
 {
     uint pooledIndex = gInstIndices[gIndexBase + instId]; //ŠÔÚQÆ
@@ -108,11 +116,11 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     float3 wp = baseWS + translation;
 
-    float centerHeight = SampleHeightMap(translation.xz);
-    float worldHeight = SampleHeightMap(wp.xz);
+    float centerHeight = SampleGroundY(translation.xz);
+    float worldHeight = SampleGroundY(wp.xz);
 
     // transform‚ğŠˆ—p‚·‚é‚½‚ß‚É·•ª‚ÅŒvZ‚µ‚Ä‰ÁZ
-    wp.y += (worldHeight - centerHeight) * heightScale;
+    wp.y += (worldHeight - centerHeight);
 
    // ---- 1) ‘S‘Ì‚ğ‚Ü‚Æ‚ß‚ég‘å‚«‚È—h‚êh ----
    // ‹óŠÔü”g”‚ğ‚©‚È‚è’á‚­‚µ‚Äu‘å‚«‚È‚¤‚Ë‚èv
@@ -213,7 +221,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     wp = baseWS + offsetWS;
 
-    float swayAmount = gWindAmplitude * worldHeight * wave * weight;
+    float swayAmount = gWindAmplitude * wave * weight;
     float3 windDir3 = float3(gWindDirXZ.x, 0.0f, gWindDirXZ.y);
     wp += windDir3 * swayAmount;
 

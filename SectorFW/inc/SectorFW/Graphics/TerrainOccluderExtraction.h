@@ -62,14 +62,21 @@ namespace SFW {
             float maxx = -std::numeric_limits<float>::infinity();
             float maxy = -std::numeric_limits<float>::infinity();
             bool anyInFront = false;
+
+			Math::Vec4f clipPts[8];
+
+			Math::Matrix4x4f viewProjMat;
+			memcpy(viewProjMat.data(), viewProj, sizeof(float) * 16);
+            Math::TransformPoints(viewProjMat, c, clipPts, 8);
+
             for (int i = 0; i < 8; ++i) {
-                float h[4];
-                MulRowMajor4x4_Pos(viewProj, c[i], h);
-                if (h[3] > 0.0f) anyInFront = true; // at least one corner in front of near plane
+				auto v = clipPts[i];
+
+                if (v.w > 0.0f) anyInFront = true; // at least one corner in front of near plane
                 // If h.w <= 0, push it slightly in front (very conservative clamp) to keep bounds usable
-                const float w = (h[3] == 0.0f ? 1e-6f : h[3]);
-                const float ndcX = h[0] / w;
-                const float ndcY = h[1] / w;
+                const float w = (v.w == 0.0f ? 1e-6f : v.w);
+                const float ndcX = v.x / w;
+                const float ndcY = v.y / w;
                 // clamp ndc to [-2,2] to avoid numeric explosion when far behind; still conservative
                 const float nx = std::fmax(-2.f, std::fmin(2.f, ndcX));
                 const float ny = std::fmax(-2.f, std::fmin(2.f, ndcY));
@@ -801,12 +808,11 @@ namespace SFW {
             float targetCellPx = 24.f; // セル1辺の目標ピクセル
         };
 
-        inline void ChooseGridForCluster(const Math::AABB3f& bounds,
+        inline void ChooseGridForCluster(float area,
             const OccluderExtractOptions& opt,
             const AutoGridLodOpts& aopt,
             uint32_t& outGX, uint32_t& outGZ)
         {
-            const float area = AABBScreenAreaPx(bounds, opt.viewProj, opt.viewportW, opt.viewportH);
             const float sidePx = std::sqrt((std::max)(1.f, area));
             const float cellsF = sidePx / (std::max)(1.f, aopt.targetCellPx);
             const uint32_t cells = (uint32_t)std::round(std::fmax((float)aopt.minCells, std::fmin((float)aopt.maxCells, cellsF)));
@@ -832,6 +838,7 @@ namespace SFW {
 
         inline void BuildHeightCoarseSurfaceForCluster_Mapped(
             const Math::AABB3f& bounds,
+            float area,
             const HeightTexMapping& map,
             HeightCoarseOptions2 hopt,
             const OccluderExtractOptions& opt,
@@ -839,7 +846,7 @@ namespace SFW {
             std::vector<SoftTriClip>* outTrisClip)
         {
             // 自動LOD
-            ChooseGridForCluster(bounds, opt, hopt.gridLod, hopt.gridX, hopt.gridZ);
+            ChooseGridForCluster(area, opt, hopt.gridLod, hopt.gridX, hopt.gridZ);
 
             const uint32_t gx = std::max<uint32_t>(1, hopt.gridX);
             const uint32_t gz = std::max<uint32_t>(1, hopt.gridZ);
@@ -1005,12 +1012,16 @@ namespace SFW {
             outClusterIds.clear();
             outClusterIds.reserve(cap);
 
+            std::vector<float> areas;
+			areas.reserve(cap);
+
             // 中心窓から N 個“先取り”
             if (copt.enable && copt.reserveCenterN > 0) {
                 uint32_t taken = 0;
                 for (const auto& r : ranked) {
                     if (!r.inCenter) continue;
                     outClusterIds.push_back(r.id);
+					areas.push_back(r.area);
                     if (++taken >= copt.reserveCenterN || outClusterIds.size() >= cap) break;
                 }
             }
@@ -1023,6 +1034,7 @@ namespace SFW {
                 if (outClusterIds.size() >= cap) break;
                 if (already(r.id)) continue;
                 outClusterIds.push_back(r.id);
+                areas.push_back(r.area);
             }
 
             // “keep で ranked を再プッシュ”は不要！
@@ -1032,7 +1044,7 @@ namespace SFW {
                 const auto& cr = t.clusters[cid];
 
                 // 高さの粗サーフェスのみを出力（必要ならここに側面1枚の処理を足す）
-                BuildHeightCoarseSurfaceForCluster_Mapped(cr.bounds, map, hopt, opt, outTrisWorld, outTrisClip);
+                BuildHeightCoarseSurfaceForCluster_Mapped(cr.bounds, areas[i], map, hopt, opt, outTrisWorld, outTrisClip);
             }
         }
 
@@ -1053,6 +1065,7 @@ namespace SFW {
             // 画面占有率でクラスタ選別
             struct Scored { uint32_t id; float area; float d2; };
             std::vector<Scored> sc; sc.reserve(t.clusters.size());
+			std::vector<float> areas; areas.reserve(t.clusters.size());
             const float maxD2 = (opt.maxDistance > 0.0f) ? (opt.maxDistance * opt.maxDistance) : std::numeric_limits<float>::infinity();
             for (uint32_t id = 0; id < (uint32_t)t.clusters.size(); ++id) {
                 const auto& cr = t.clusters[id];
@@ -1061,6 +1074,7 @@ namespace SFW {
                 const float areaPx = AABBScreenAreaPx(cr.bounds, opt.viewProj, opt.viewportW, opt.viewportH);
                 if (areaPx < opt.minAreaPx) continue;
                 sc.push_back({ id, areaPx, d2 });
+				areas.push_back(areaPx);
             }
             if (sc.empty()) return;
             const uint32_t keep = std::min<uint32_t>((uint32_t)sc.size(), opt.maxClusters);
@@ -1093,7 +1107,7 @@ namespace SFW {
                 const auto& cr = t.clusters[cid];
 
                 // 1) 高さの粗サーフェス
-                BuildHeightCoarseSurfaceForCluster_Mapped(cr.bounds, map, hopt, opt, outTrisWorld, outTrisClip);
+                BuildHeightCoarseSurfaceForCluster_Mapped(cr.bounds, areas[i], map, hopt, opt, outTrisWorld, outTrisClip);
 
                 // 2) AABB側面 1枚だけ（寄与が大きいなら）
                 AabbFacesReduceOptions one = sideOpt; one.maxQuadsPerCluster = 1; // 念のため

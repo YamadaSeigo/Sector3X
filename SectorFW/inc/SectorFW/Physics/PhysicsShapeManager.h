@@ -9,7 +9,9 @@
 #include "IShapeResolver.h"
 #include "../Util/ResouceManagerBase.hpp"
 #include "PhysicsComponent.h"
+#include "PhysicsMeshShapeLoader.h"
 #include "PhysicsConvexHullLoader.h"
+
 
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Collision/Shape/Shape.h>
@@ -341,18 +343,43 @@ namespace SFW
 						base = make_scaled(base);
 						return make_rotated_translated(base);
 					}
-					else if constexpr (std::is_same_v<T, MeshDesc>) {
+					else if constexpr (std::is_same_v<T, MeshDesc> || std::is_same_v<T, MeshFileDesc>) {
+
 						MeshShapeSettings st;
-						st.mTriangleVertices.reserve(d.vertices.size());
-						for (const auto& v : d.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
-						st.mIndexedTriangles.reserve(d.indices.size() / 3);
-						for (size_t i = 0; i + 2 < d.indices.size(); i += 3)
-							st.mIndexedTriangles.emplace_back(d.indices[i], d.indices[i + 1], d.indices[i + 2]);
+					
+						if constexpr (std::is_same_v<T, MeshDesc>) {
+							st.mTriangleVertices.reserve(d.vertices.size());
+							for (const auto& v : d.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
+							st.mIndexedTriangles.reserve(d.indices.size() / 3);
+							for (size_t i = 0; i + 2 < d.indices.size(); i += 3)
+								st.mIndexedTriangles.emplace_back(d.indices[i], d.indices[i + 1], d.indices[i + 2]);
 
 #ifdef CACHE_SHAPE_WIRE_DATA
-						wireDataCache_.emplace(h.index,
-							BuildShapeWireframe(d.vertices, d.indices));
+							wireDataCache_.emplace(h.index,
+								BuildShapeWireframe(d.vertices, d.indices));
 #endif
+						}
+						else {
+							MeshShapeData meshData;
+
+							if(!LoadMeshShapeBin(d.path, meshData, d.rhFlip))
+							{
+								LOG_WARNING("PhysicsShapeManager: Failed to load VHACD file: {%s}", d.path.c_str());
+								// 読み込み失敗時のフォールバック
+								return make_rotated_translated(make_scaled(RefConst<Shape>(new BoxShape(Vec3(0.5f, 0.5f, 0.5f)))));
+							}
+
+							st.mTriangleVertices.reserve(meshData.vertices.size());
+							for (const auto& v : meshData.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
+							st.mIndexedTriangles.reserve(meshData.indices.size() / 3);
+							for (size_t i = 0; i + 2 < meshData.indices.size(); i += 3)
+								st.mIndexedTriangles.emplace_back(meshData.indices[i], meshData.indices[i + 1], meshData.indices[i + 2]);
+
+#ifdef CACHE_SHAPE_WIRE_DATA
+							wireDataCache_.emplace(h.index,
+								BuildShapeWireframe(meshData.vertices, meshData.indices));
+#endif
+						}
 
 						auto res = st.Create();
 						if (res.HasError()) return make_rotated_translated(make_scaled(RefConst<Shape>(new BoxShape(Vec3(0.5f, 0.5f, 0.5f)))));

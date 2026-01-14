@@ -102,7 +102,6 @@ namespace SFW
 				Capsule		= 2,
 				Cylinder	= 3,
 				Tapered		= 4,
-				Mesh		= 5,
 				CMHC		= 6,
 			};
 

@@ -38,7 +38,7 @@ public:
         uint32_t gActiveVolumeCount = 0;
         uint32_t gMaxSpawnPerVolumePerFrame = FireflyParticlePool::MaxSpawnPerVol; // 例：32
         uint32_t gMaxParticles = FireflyParticlePool::MaxParticles; // FreeListにインデックス埋める用
-        uint32_t pad0 = {};
+		float gAddSizeScale = 0.8f; // 追加サイズスケール（例: 0.02）
     };
 
     struct UpdateCB
@@ -54,7 +54,7 @@ public:
     {
         Math::Matrix4x4f gViewProj = {};
         Math::Vec3f gCamRightWS = {};
-        float gSize = 0.1f; // billboard half-size 例: 0.05
+        float gSize = 0.05f; // billboard half-size 例: 0.05
         Math::Vec3f gCamUpWS = {0,1,0};
         float gTime = 0.0f;
     };

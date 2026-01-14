@@ -470,7 +470,11 @@ public:
 
 		if (DebugRenderType::drawShapeDims)
 		{
-			this->ForEachFrustumNearChunkWithAccessor<ShapeDimsAccessor>([&](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
+			constexpr float maxDrawDistance = 100.0f;
+
+			auto clampedFrustum = fru.ClampedFar(cameraPos, maxDrawDistance);
+
+			this->ForEachFrustumChunkWithAccessor<ShapeDimsAccessor>([&](ShapeDimsAccessor& accessor, size_t entityCount, auto meshMgr, auto queue, auto pso, auto boxMesh, auto sphereMesh, auto capsuleLineMesh)
 				{
 					auto shapeDims = accessor.Get<Read<Physics::ShapeDims>>();
 					auto tf = accessor.Get<Read<CTransform>>();
@@ -479,7 +483,12 @@ public:
 					if (!tf) return;
 
 					for (int i = 0; i < entityCount; ++i) {
-						auto transMtx = Math::MakeTranslationMatrix(Math::Vec3f(tf->px()[i], tf->py()[i], tf->pz()[i]));
+						Math::Vec3f pos(tf->px()[i], tf->py()[i], tf->pz()[i]);
+
+						// ‰“‚·‚¬‚é‚à‚Ì‚Í•`‰æ‚µ‚È‚¢
+						if((cameraPos - pos).lengthSquared() > maxDrawDistance * maxDrawDistance) continue;
+
+						auto transMtx = Math::MakeTranslationMatrix(pos);
 						auto rotMtx = Math::MakeRotationMatrix(Math::Quatf(tf->qx()[i], tf->qy()[i], tf->qz()[i], tf->qw()[i]));
 
 						auto& d = shapeDims.value()[i];
@@ -546,7 +555,6 @@ public:
 							break;
 						}
 #ifdef CACHE_SHAPE_WIRE_DATA
-						case Physics::ShapeDims::Type::Mesh:
 						case Physics::ShapeDims::Type::CMHC:
 						{
 							auto wireData = physicsService->GetShapeWireframeData(d.handle);
@@ -573,7 +581,7 @@ public:
 							break;
 						}
 					}
-				}, partition, fru, cameraPos, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereWhiteHandle.index, capsuleLineHandle.index);
+				}, partition, clampedFrustum, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereWhiteHandle.index, capsuleLineHandle.index);
 		}
 
 		if (DebugRenderType::drawFireflyVolumes)

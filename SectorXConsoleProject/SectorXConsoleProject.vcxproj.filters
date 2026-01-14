@@ -95,9 +95,6 @@
     <FxCompile Include="shader\VS_WindEntity.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\VS_WindGrassUnlit.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="shader\VS_WindEntityShadow.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>

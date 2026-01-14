@@ -98,6 +98,17 @@ namespace SFW
 			}
 
 			/**
+			 * @brief メッシュ形状を生成する（ファイル読み込み版）
+			 * @param path メッシュファイルのパス
+			 * @param rhFlip 右手系変換が必要なら true
+			 * @param s スケール（デフォルトは {1,1,1}）
+			 * @return ShapeHandle 生成されたメッシュ形状のハンドル
+			 */
+			[[nodiscard]] ShapeHandle MakeMesh(const std::string& path, bool rhFlip = false, ShapeScale s = { {1,1,1} }) {
+				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ MeshFileDesc{path, rhFlip}, s }, h); return h;
+			}
+
+			/**
 			 * @brief 凸形状を生成する
 			 * @param pts 凸形状を作成する頂点群
 			 * @param idx 頂点インデックス群

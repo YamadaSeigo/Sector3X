@@ -819,7 +819,7 @@ int main(void)
 		High = 4
 	};
 
-	int terrainRank = (int)TerrainRank::High;
+	int terrainRank = (int)TerrainRank::Middle;
 
 	Graphics::TerrainBuildParams p;
 	p.cellsX = 256 * terrainRank;
@@ -1652,7 +1652,13 @@ int main(void)
 							}
 
 							//　薄いほど高さを下げる
-							location.y -= (1.0f - splatR / 255.0f) * 2.0f - 1.0f;
+							float t = splatR / 255.0f; // 0..1
+							constexpr float k = 1.0f;            // カーブの強さ（お好み）
+
+							// 0..1 に正規化した exp カーブ
+							float w = (std::exp(k * t) - 1.0f) / (std::exp(k) - 1.0f); // w: 0..1
+
+							location.y -= w * 8.0f;   // 最大で 4 下げる（0..4）
 
 							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 							auto modelComp = CModel{ grassModelHandle };
@@ -1829,7 +1835,7 @@ int main(void)
 					Math::Vec3f location = getTerrainLocation(0.7f, 0.7f);
 					location.y -= 10.0f; // 少し埋める
 
-					auto shape = ps->MakeConvexCompound("generated/convex/Ruins/RuinTower.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+					auto shape = ps->MakeMesh("generated/meshshape/Ruins/RuinTower.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 #ifdef _DEBUG
 					auto shapeDims = ps->GetShapeDims(shape);
 #endif

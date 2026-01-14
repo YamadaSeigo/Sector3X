@@ -21,7 +21,7 @@ cbuffer CBSpawn : register(b0)
     uint gActiveVolumeCount;
     uint gMaxSpawnPerVolumePerFrame; // 例：32
     uint gMaxParticles; // FreeList枯渇対策（使わなくてもOK）
-    uint pad0;
+    float gAddSize;
 };
 
 cbuffer TerrainGridCB : register(b1)
@@ -105,7 +105,7 @@ void main(uint3 tid : SV_DispatchThreadID)
     float2 offset = float2(cos(ang), sin(ang)) * (r01 * v.radius);
 
     float2 xz = v.centerWS.xz + offset;
-    
+
     float groundY = SampleGroundY(xz);
     float startY = /*v.centerWS.y +*/groundY; // 地面の高さを基準に
     startY += Hash01(seed + 4u) * 1.0f; // 地面直上 0..100cm
@@ -129,7 +129,7 @@ void main(uint3 tid : SV_DispatchThreadID)
     p.volumeSlot = slot;
     p.phase = Hash01(seed + 100u) * 6.2831853f;
     p.band01 = Hash01(seed + 200u); // 0..1
-    p.addSize = Hash01(seed + 300u); // 0..1
+    p.addSize = Hash01(seed + 300u) * gAddSize; // 0..1
     p.pad2 = 0.0f;
 
     gParticles[id] = p;

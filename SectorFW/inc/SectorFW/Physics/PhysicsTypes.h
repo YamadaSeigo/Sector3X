@@ -175,6 +175,11 @@ namespace SFW
 			const std::vector<uint32_t>& indices; // 3*i の連続三角形
 		};
 
+		struct MeshFileDesc {
+			std::string path; // glb と同じ相対/絶対パスなど、運用ルールに合わせて
+			bool rhFlip = false; // 右手系変換が必要なら true
+		};
+
 		/**
 		 * @brief 高さマップ
 		 */
@@ -222,7 +227,7 @@ namespace SFW
 		 * @brief ShapeDesc（形状記述子総合型）
 		 */
 		using ShapeDesc = std::variant<
-			BoxDesc, SphereDesc, CapsuleDesc, MeshDesc, HeightFieldDesc, ConvexHullDesc, ConvexCompoundDesc, ConvexCompoundFileDesc
+			BoxDesc, SphereDesc, CapsuleDesc, MeshDesc, MeshFileDesc, HeightFieldDesc, ConvexHullDesc, ConvexCompoundDesc, ConvexCompoundFileDesc
 		>;
 
 		/**

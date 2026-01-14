@@ -125,6 +125,7 @@
     <ClInclude Include="inc\SectorFW\Physics\PhysicsDevice.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsDevice_Util.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsLayers.h" />
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsMeshShapeLoader.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsService.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsShapeManager.h" />
     <ClInclude Include="inc\SectorFW\Physics\PhysicsSnapshot.h" />
@@ -499,6 +500,7 @@
     <ClCompile Include="src\Graphics\TerrainClustered.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />
     <ClCompile Include="src\Physics\PhysicsDevice.cpp" />
+    <ClCompile Include="src\Physics\PhysicsMeshShapeLoader.cpp" />
     <ClCompile Include="src\SIMD\simd_avx2.cpp" />
     <ClCompile Include="src\SIMD\simd_base.cpp" />
     <ClCompile Include="src\SIMD\simd_init.cpp" />

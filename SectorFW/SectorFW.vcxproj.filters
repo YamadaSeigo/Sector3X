@@ -528,6 +528,9 @@
     <ClInclude Include="inc\SectorFW\Util\convert_string.h">
       <Filter>Inc\Util</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Physics\PhysicsMeshShapeLoader.h">
+      <Filter>Inc\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">
@@ -1135,6 +1138,9 @@
     </ClCompile>
     <ClCompile Include="external\mikktspace\mikktspace.cpp">
       <Filter>Src\Graphics\mikktspace</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsMeshShapeLoader.cpp">
+      <Filter>Src\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

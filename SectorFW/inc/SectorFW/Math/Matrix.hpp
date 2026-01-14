@@ -1115,6 +1115,42 @@ namespace SFW {
 #endif
         }
 
+        inline void TransformPoints(const Matrix4x4f& M, const Vec3<float>* inPts, Vec4<float>* outPts, size_t n) noexcept {
+#if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
+            __m128 r0 = _mm_loadu_ps(M.m[0]);
+            __m128 r1 = _mm_loadu_ps(M.m[1]);
+            __m128 r2 = _mm_loadu_ps(M.m[2]);
+            __m128 r3 = _mm_loadu_ps(M.m[3]);
+            _MM_TRANSPOSE4_PS(r0, r1, r2, r3); // 列を取得
+
+            for (size_t i = 0; i < n; ++i) {
+                const __m128 vx = _mm_set1_ps(inPts[i].x);
+                const __m128 vy = _mm_set1_ps(inPts[i].y);
+                const __m128 vz = _mm_set1_ps(inPts[i].z);
+
+                __m128 res = _mm_mul_ps(vx, r0);
+                res = detail::fmadd_ps(vy, r1, res);
+                res = detail::fmadd_ps(vz, r2, res);
+                res = _mm_add_ps(res, r3); // +t
+
+                alignas(16) float t[4];
+                _mm_storeu_ps(t, res);
+                outPts[i].x = t[0];
+                outPts[i].y = t[1];
+                outPts[i].z = t[2];
+				outPts[i].w = t[3];
+            }
+#else
+            for (size_t i = 0; i < n; ++i) {
+                const float x = inPts[i].x, y = inPts[i].y, z = inPts[i].z;
+                outPts[i].x = M.m[0][0] * x + M.m[0][1] * y + M.m[0][2] * z + M.m[0][3];
+                outPts[i].y = M.m[1][0] * x + M.m[1][1] * y + M.m[1][2] * z + M.m[1][3];
+                outPts[i].z = M.m[2][0] * x + M.m[2][1] * y + M.m[2][2] * z + M.m[2][3];
+				outPts[i].w = 1.0f;
+            }
+#endif
+        }
+
         //==============================
         // 行列ビルダー (4x4) ※列ベクトル規約, 右列=平行移動
         //==============================

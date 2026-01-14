@@ -29,7 +29,8 @@ void CreateFireflyVolumeBuffer(
 }
 
 #ifdef _DEBUG
-float gDebugFireflySize = 0.1f;
+float gDebugFireflyAddSize = 0.02f;
+float gDebugFireflyBaseSize = 0.1f;
 #endif
 
 FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,
@@ -115,7 +116,8 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 		m_initFreeListCS.Get());
 
 #ifdef _DEBUG
-	BIND_DEBUG_SLIDER_FLOAT("Firefly", "size", &gDebugFireflySize, 0.01f, 1.0f, 0.001f);
+	BIND_DEBUG_SLIDER_FLOAT("Firefly", "addSize", &gDebugFireflyAddSize, 0.0f, 1.0f, 0.001f);
+	BIND_DEBUG_SLIDER_FLOAT("Firefly", "baseSize", &gDebugFireflyBaseSize, 0.01f, 1.0f, 0.001f);
 #endif
 }
 
@@ -206,8 +208,10 @@ void FireflyService::Commit(double deltaTime)
 		updateBuf.gTime = m_elapsedTime;
 
 		camBuf.gTime = m_elapsedTime;
+
 #ifdef _DEBUG
-		camBuf.gSize = gDebugFireflySize;
+		spawnBuf.gAddSizeScale = gDebugFireflyAddSize;
+		camBuf.gSize = gDebugFireflyBaseSize;
 #endif
     }
 
