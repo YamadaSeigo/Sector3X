@@ -158,7 +158,12 @@
 
     <Message Text="Running generate_convex.py for $(Configuration)..." Importance="high" />
 
-<Exec Command="py -3.9 &quot;$(ProjectDir)generate_convex.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration)" />
+	<Exec Command="py -3.9 &quot;$(ProjectDir)generate_convex.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration)" />
+  </Target>
+  
+   <!-- meshshape生成処理 -->
+  <Target Name="RunGenerateMeshShape" BeforeTargets="Build">
+	<Exec Command="py -3.9 &quot;$(ProjectDir)generate_meshshape.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration)" />
   </Target>
   
 </Project>

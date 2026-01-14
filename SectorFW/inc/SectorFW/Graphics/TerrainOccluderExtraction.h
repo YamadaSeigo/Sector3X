@@ -873,7 +873,11 @@ namespace SFW {
                 if (opt.backfaceCull && !IsFrontFacing(a, b, c, opt.cameraPos, opt.faceCosThreshold)) return;
                 outTrisWorld.push_back({ a,b,c });
                 if (outTrisClip && opt.makeClipSpace && opt.viewProj) {
-                    SoftTriClip tc{}; MulRowMajor4x4_Pos(opt.viewProj, a, tc.v0); MulRowMajor4x4_Pos(opt.viewProj, b, tc.v1); MulRowMajor4x4_Pos(opt.viewProj, c, tc.v2); outTrisClip->push_back(tc);
+                    SoftTriClip tc{};
+                    MulRowMajor4x4_Pos(opt.viewProj, a, tc.v0);
+                    MulRowMajor4x4_Pos(opt.viewProj, b, tc.v1);
+                    MulRowMajor4x4_Pos(opt.viewProj, c, tc.v2);
+                    outTrisClip->push_back(tc);
                 }
                 };
 

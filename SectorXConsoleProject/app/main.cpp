@@ -835,9 +835,8 @@ int main(void)
 	std::vector<float> heightMap;
 	static SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);
 
-
 	// ---- マッピング設定 ----
-	static Graphics::HeightTexMapping map = Graphics::MakeHeightTexMappingFromTerrainParams(p, heightMap);
+	static Graphics::HeightTexMapping heightTexMap = Graphics::MakeHeightTexMappingFromTerrainParams(p, heightMap);
 
 	static Graphics::DX11::CommonMaterialResources matRes;
 	const uint32_t matIds[4] = { Mat_Grass, Mat_Rock, Mat_Dirt, Mat_Snow }; // ← あなたの素材ID
@@ -1017,6 +1016,7 @@ int main(void)
 			opt.minAreaPx = 2000.f;
 			opt.maxClusters = 64;
 			opt.backfaceCull = true;
+			opt.maxDistance = 200.0f;
 
 			std::vector<uint32_t> clusterIds;
 			std::vector<Graphics::SoftTriWorld> trisW;
@@ -1024,7 +1024,7 @@ int main(void)
 
 			// ---- ハイブリッド抽出 ----
 			ExtractOccluderTriangles_HeightmapCoarse_Hybrid(
-				terrain, map, hopt, opt, clusterIds, trisW, &trisC);
+				terrain, heightTexMap, hopt, opt, clusterIds, trisW, &trisC);
 
 			// MOCバインディング
 			auto MyMOCRender = [renderService](const float* packedXYZW, uint32_t vertexCount,

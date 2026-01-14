@@ -8,7 +8,7 @@ cbuffer CBCamera : register(b0)
 {
     row_major float4x4 gViewProj;
     float3 gCamRightWS;
-    float gSize; // billboard half-size —á: 0.05
+    float gBaseSize; // billboard half-size —á: 0.05
     float3 gCamUpWS;
     float gTime;
 };
@@ -43,10 +43,12 @@ VSOut main(uint vid : SV_VertexID, uint iid : SV_InstanceID)
     uint c = kVidToCorner[vid];
     float2 s = kCornerCCW[c];
 
+    float size = gBaseSize + p.addSize;
+
     float3 worldPos =
         p.posWS +
-        gCamRightWS * (s.x * gSize) +
-        gCamUpWS * (s.y * gSize);
+        gCamRightWS * (s.x * size) +
+        gCamUpWS * (s.y * size);
 
     o.posH = mul(gViewProj, float4(worldPos, 1));
 

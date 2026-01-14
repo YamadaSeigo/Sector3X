@@ -18,9 +18,9 @@ struct FireflyVolumeGPU
 
     uint32_t    nearLightBudget = 3;
     uint32_t    seed = 0;
-  
+
     float burstT = 0.0f; // 0..1i1=”­“®’¼ŒãAŠÔ‚Å0‚Öj
- 
+
 	float pad0 = 0.0f;
 };
 

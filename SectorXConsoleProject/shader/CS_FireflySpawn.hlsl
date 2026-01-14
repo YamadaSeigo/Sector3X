@@ -129,7 +129,8 @@ void main(uint3 tid : SV_DispatchThreadID)
     p.volumeSlot = slot;
     p.phase = Hash01(seed + 100u) * 6.2831853f;
     p.band01 = Hash01(seed + 200u); // 0..1
-    p.pad1 = p.pad2 = 0.0f;
+    p.addSize = Hash01(seed + 300u); // 0..1
+    p.pad2 = 0.0f;
 
     gParticles[id] = p;
 

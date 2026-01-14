@@ -9,7 +9,7 @@ struct FireflyParticle
 
     float phase; // 点滅位相
     float band01; // 0..1（粒子固有の帯オフセット）
-    float pad1;
+    float addSize; // 加算サイズ
     float pad2;
 };
 
