@@ -142,7 +142,7 @@ void InitializeRenderPipeLine(
 	ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV,
 	Graphics::PassCustomFuncType drawTerrainColor,
 	Graphics::PassCustomFuncType drawFirefly,
-	Graphics::DX11::LightShadowResourceService& resourceService,
+	Graphics::DX11::LightShadowResourceService* resourceService,
 	const DeferredRenderingService& deferredService)
 {
 	using namespace SFW::Graphics;
@@ -183,7 +183,7 @@ void InitializeRenderPipeLine(
 		UINT padding[3];
 	};
 
-	const auto& cascadeDSVs = resourceService.GetCascadeDSV();
+	const auto& cascadeDSVs = resourceService->GetCascadeDSV();
 
 	auto cascadeCount = cascadeDSVs.size();
 
@@ -265,6 +265,7 @@ void InitializeRenderPipeLine(
 
 	static auto gGraphics = graphics;
 	static auto renderBackend = graphics->GetBackend();
+	static auto lightShadowService = resourceService;
 
 	struct SkyCB {
 		float time;
@@ -346,13 +347,13 @@ void InitializeRenderPipeLine(
 		pointSampler = sampData.ref().state;
 	}
 
-	static ComPtr<ID3D11SamplerState> shadowSampler;
+	/*static ComPtr<ID3D11SamplerState> shadowSampler;
 	shadowSampler = resourceService.GetShadowSampler();
 
 	static ComPtr<ID3D11Buffer> cbLightBuffer;
 	cbLightBuffer = resourceService.GetLightDataCB();
 	static ComPtr<ID3D11ShaderResourceView> srvPointLight;
-	srvPointLight = resourceService.GetPointLightSRV();
+	srvPointLight = resourceService.GetPointLightSRV();*/
 
 	static ComPtr<ID3D11Buffer> fogBuffer;
 
@@ -518,13 +519,17 @@ void InitializeRenderPipeLine(
 		// Depthはsrvとして使うので外す
 		ctx->OMSetRenderTargets(1, sceneColorRTV.GetAddressOf(), nullptr);
 
-		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
-		ctx->PSSetShaderResources(15, 1, srvPointLight.GetAddressOf());
+		//CBの5にシャドウマップのパラメーター, Samplerを1にバインド
+		lightShadowService->BindShadowResources(ctx, 5);
+		//　シャドウマップバインド
+		lightShadowService->BindShadowPSShadowMap(ctx, 7);
 
-		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), cbLightBuffer.Get(), fogBuffer.Get(), godRayBuffer.Get() }, 9);
+		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
+		ctx->PSSetShaderResources(15, 1, lightShadowService->GetPointLightSRV().GetAddressOf());
+		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), lightShadowService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get()}, 9);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
-		ctx->PSSetSamplers(1, 1, shadowSampler.GetAddressOf());
+		ctx->PSSetSamplers(1, 1, lightShadowService->GetShadowSampler().GetAddressOf());
 		ctx->PSSetSamplers(2, 1, pointSampler.GetAddressOf());
 
 		ctx->VSSetShader(defferedVS.Get(), nullptr, 0);
@@ -1151,10 +1156,6 @@ int main(void)
 
 			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 
-			lightShadowResourceService.BindShadowPSShadowMap(deviceContext, 7);
-
-			lightShadowResourceService.BindShadowRasterizer(deviceContext);
-
 			blockRevert.RunColor(deviceContext);
 		};
 
@@ -1191,7 +1192,7 @@ int main(void)
 		ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV)
 		{
 			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget, mainDepthStencilView, mainDepthStencilSRV,
-				drawTerrainColor, drawFirefly, lightShadowResourceService, deferredRenderingService);
+				drawTerrainColor, drawFirefly, &lightShadowResourceService, deferredRenderingService);
 		}
 	);
 
@@ -1207,7 +1208,7 @@ int main(void)
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<EnvironmentSystem>());
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<LightShadowSystem>());
 
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<GlobalDebugRenderSystem>());
 #endif
 
@@ -1769,7 +1770,7 @@ int main(void)
 								staticBody.type = Physics::BodyType::Static; // staticにする
 								staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
 								auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 								auto shapeDims = ps->GetShapeDims(shapeHandle);
 #endif
 								auto id = levelSession.AddEntity(
@@ -1780,7 +1781,7 @@ int main(void)
 									//	location, // 初期位置
 									//	rot // 初期回転
 									//),
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 									shapeDims.value(),
 #endif
 									tag
@@ -1811,7 +1812,7 @@ int main(void)
 					shapeDesc.shape = Physics::CapsuleDesc{ 2.0f, 1.0f };
 					shapeDesc.localOffset.y += 2.0f;
 					auto playerShape = ps->MakeShape(shapeDesc);
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 					auto playerDims = ps->GetShapeDims(playerShape);
 #endif
 
@@ -1821,7 +1822,7 @@ int main(void)
 						CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
 						modelComp,
 						PlayerComponent{}
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 						, playerDims.value()
 #endif
 					);
@@ -1867,7 +1868,7 @@ int main(void)
 					location.y -= 10.0f; // 少し埋める
 
 					auto shape = ps->MakeMesh("generated/meshshape/Ruins/RuinTower.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 					auto shapeDims = ps->GetShapeDims(shape);
 #endif
 					CModel modelComp{ ruinTowerModelHandle };
@@ -1883,7 +1884,7 @@ int main(void)
 						tf,
 						modelComp,
 						staticBody
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 						, shapeDims.value()
 #endif
 					);
@@ -1900,7 +1901,7 @@ int main(void)
 					location.y -= 4.0f; // 少し埋める
 
 					auto shape = ps->MakeMesh("generated/meshshape/Ruins/RuinBreakTowerA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 					auto shapeDims = ps->GetShapeDims(shape);
 #endif
 					CModel modelComp{ ruinBreakTowerModelHandle };
@@ -1916,7 +1917,7 @@ int main(void)
 						tf,
 						modelComp,
 						staticBody
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 						, shapeDims.value()
 #endif
 					);
@@ -1933,7 +1934,7 @@ int main(void)
 //					location.y -= 15.0f; // 少し埋める
 //
 //					auto shape = ps->MakeMesh("generated/meshshape/Ruins/MedievalBridge.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-//#ifdef _DEBUG
+//#ifdef _ENABLE_IMGUI
 //					auto shapeDims = ps->GetShapeDims(shape);
 //#endif
 //					CModel modelComp{ medievalBridgeModelHandle };
@@ -1949,7 +1950,7 @@ int main(void)
 //						tf,
 //						modelComp,
 //						staticBody
-//#ifdef _DEBUG
+//#ifdef _ENABLE_IMGUI
 //						, shapeDims.value()
 //#endif
 //					);
@@ -1966,7 +1967,7 @@ int main(void)
 					location.y -= 4.0f; // 少し埋める
 
 					auto shape = ps->MakeConvexCompound("generated/convex/Ruins/RuinStoneA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 					auto shapeDims = ps->GetShapeDims(shape);
 #endif
 					CModel modelComp{ ruinStoneModelHandle };
@@ -1979,7 +1980,7 @@ int main(void)
 						tf,
 						modelComp,
 						staticBody
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 						, shapeDims.value()
 #endif
 					);
@@ -2019,7 +2020,7 @@ int main(void)
 				scheduler.AddSystem<FireflySystem>(*serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(*serviceLocator);
 
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 				scheduler.AddSystem<DebugRenderSystem>(*serviceLocator);
 #endif
 

@@ -20,7 +20,7 @@ namespace SFW
 		 * @brief DirectX 11のパイプラインステートオブジェクト（PSO）を作成するための記述子構造体
 		 */
 		struct PSOCreateDesc {
-			ShaderHandle shader;
+			ShaderHandle shader = {};
 			RasterizerStateID rasterizerState = RasterizerStateID::SolidCullBack;
 			std::optional<ShaderHandle> rebindShader = std::nullopt; // シェーダーリバインド用（オプション）
 		};

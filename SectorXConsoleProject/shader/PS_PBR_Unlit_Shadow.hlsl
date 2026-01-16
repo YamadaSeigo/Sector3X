@@ -221,7 +221,7 @@ float SampleShadowPCF(float4 shadowClip, uint cascade)
             sum += gShadowMap.SampleCmpLevelZero(gShadowSampler, float3(uv + o, cascade), z);
         }
     }
-    return sum / 9.0f; // 1=Œõ‚ª“–‚½‚é, 0=Š®‘S‚É‰e
+    return sum / 1.0f; // 1=Œõ‚ª“–‚½‚é, 0=Š®‘S‚É‰e
 }
 
 float ComputeFogFactor(float viewDepth)

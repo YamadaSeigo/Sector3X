@@ -7,7 +7,8 @@ namespace SFW::Math {
 
     //-------------------------------
     // 乱数テーブル付き Perlin 2D
-       //-------------------------------
+    
+    //-------------------------------
     class Perlin2D {
     public:
         explicit Perlin2D(uint32_t seed) {

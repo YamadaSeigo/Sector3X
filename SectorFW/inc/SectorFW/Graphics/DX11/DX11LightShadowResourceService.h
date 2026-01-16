@@ -39,7 +39,7 @@ namespace SFW
 
             bool Initialize(ID3D11Device* device, const ShadowMapConfig& cfg);
 
-            /// 解像度変更したいとき用（必要なければ呼ばなくてOK）
+            // 解像度変更したいとき用（必要なければ呼ばなくてOK）
             bool Resize(ID3D11Device* device, std::uint32_t width, std::uint32_t height);
 
 			void ClearDepthBuffer(ID3D11DeviceContext* context, float clearValue = 1.0f)
@@ -66,7 +66,6 @@ namespace SFW
 			{
 				context->VSSetConstantBuffers(shadowDataCBSlot, 1, m_cbShadowCascades.GetAddressOf());
                 context->PSSetConstantBuffers(shadowDataCBSlot, 1, m_cbShadowCascades.GetAddressOf());
-				context->RSSetState(m_shadowRS.Get());
 			}
 
 			void BindShadowRasterizer(ID3D11DeviceContext* context) const
@@ -110,25 +109,25 @@ namespace SFW
 
             // ------------ メインパスから利用する情報 ------------
 
-            ID3D11ShaderResourceView* GetShadowMapSRV() const noexcept
+            ComPtr<ID3D11ShaderResourceView> GetShadowMapSRV() const noexcept
             {
-                return m_shadowSRV.Get();
+                return m_shadowSRV;
             }
 
-            ID3D11SamplerState* GetShadowSampler() const noexcept
+            ComPtr<ID3D11SamplerState> GetShadowSampler() const noexcept
             {
-                return m_shadowSampler.Get();
+                return m_shadowSampler;
             }
 
-            ID3D11RasterizerState* GetShadowRasterizerState() const noexcept
+            ComPtr<ID3D11RasterizerState> GetShadowRasterizerState() const noexcept
             {
-                return m_shadowRS.Get();
+                return m_shadowRS;
             }
 
             // カスケード用ライト行列 / split が入った定数バッファ
-            ID3D11Buffer* GetShadowCascadesCB() const noexcept
+            ComPtr<ID3D11Buffer> GetShadowCascadesCB() const noexcept
             {
-                return m_cbShadowCascades.Get();
+                return m_cbShadowCascades;
             }
 
             std::uint32_t GetCascadeCount() const noexcept { return m_cascadeCount; }
@@ -139,9 +138,9 @@ namespace SFW
                 return m_cascadeDSV;
             }
 
-            ID3D11DepthStencilView* GetCascadeDSV(std::uint32_t i) const noexcept
+            ComPtr<ID3D11DepthStencilView> GetCascadeDSV(std::uint32_t i) const noexcept
             {
-                return m_cascadeDSV[i].Get();
+                return m_cascadeDSV[i];
             }
 
             const D3D11_VIEWPORT& GetCascadeViewport() const noexcept
@@ -161,9 +160,9 @@ namespace SFW
                 return m_pointLightBuffer;
             }
 
-            ID3D11ShaderResourceView* GetPointLightSRV() const noexcept
+            ComPtr<ID3D11ShaderResourceView> GetPointLightSRV() const noexcept
             {
-                return m_pointLightSRV.Get();
+                return m_pointLightSRV;
 			}
 
         private:

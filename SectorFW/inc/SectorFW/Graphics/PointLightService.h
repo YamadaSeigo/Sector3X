@@ -55,10 +55,10 @@ namespace SFW::Graphics
 		{
 		}
 
-        Math::Vec3f positionWS; float range;
-        Math::Vec3f color;      float intensity;
-        float invRange;
-        uint32_t flags;    uint32_t _pad0[2] = {};
+        Math::Vec3f positionWS = {}; float range = {};
+        Math::Vec3f color = {};      float intensity = {};
+        float invRange = {};
+        uint32_t flags = {};    uint32_t _pad0[2] = {};
         // flags bit0: castsShadow ‚È‚Ç
     };
 
