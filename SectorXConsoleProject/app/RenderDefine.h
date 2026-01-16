@@ -19,7 +19,8 @@ enum Pass3DMain : uint16_t {
 	PASS_3DMAIN_ZPREPASS =		1u << 3,
 	PASS_3DMAIN_OUTLINE =		1u << 4,
 	PASS_3DMAIN_OPAQUE =		1u << 5,
-	PASS_3DMAIN_HIGHLIGHT =		1u << 6,
+	PASS_3DMAIN_TRANSPARENT =	1u << 6,
+	PASS_3DMAIN_HIGHLIGHT =		1u << 7,
 };
 
 enum PassUI : uint16_t {

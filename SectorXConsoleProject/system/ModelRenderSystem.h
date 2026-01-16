@@ -15,15 +15,23 @@
 #define PROFILE_MODEL_UPDATE_TIME 0
 #endif
 
+enum class EModelFlag : uint16_t
+{
+	None = 0,
+	CastShadow = 1 << 0,
+	Outline = 1 << 1,
+	Transparent = 1 << 2,
+};
+
+
 struct CModel
 {
 	Graphics::ModelAssetHandle handle;
 	Packed2Bits32 prevLODBits = {};
 	Packed2Bits32 prevOCCBits = {};
+	uint16_t flags = (uint16_t)EModelFlag::None;
 	bool occluded = false;
 	bool temporalSkip = false;
-	bool castShadow = false;
-	bool outline = false;
 };
 
 
@@ -249,7 +257,8 @@ public:
 
 						BSVisState visRes = Math::BoundingSpheref::IsVisible_LocalCenter_WorldRadius(WVP, kp->viewProj, centerBS, bsRadiusWS, kp->camRight, kp->camUp, kp->camForward, &ndc, &depth);
 
-						bool castShadow = kp->castShadow && modelComp.castShadow;
+						bool castShadow = (modelComp.flags & (uint16_t)EModelFlag::CastShadow) != 0;
+						castShadow = castShadow && kp->castShadow;
 
 						bool shadowOnly = false;
 						switch (visRes)
@@ -429,7 +438,16 @@ public:
 								}
 							}
 
-							cmd.viewMask |= modelComp.outline ? PASS_3DMAIN_OUTLINE : PASS_3DMAIN_OPAQUE;
+							bool isTransparent = (modelComp.flags & (uint16_t)EModelFlag::Transparent) != 0;
+							if (isTransparent)
+							{
+								cmd.viewMask |= PASS_3DMAIN_TRANSPARENT;
+							}
+							else
+							{
+								bool isOutline = (modelComp.flags & (uint16_t)EModelFlag::Outline) != 0;
+								cmd.viewMask |= isOutline ? PASS_3DMAIN_OUTLINE : PASS_3DMAIN_OPAQUE;
+							}
 
 							if (castShadow)
 							{

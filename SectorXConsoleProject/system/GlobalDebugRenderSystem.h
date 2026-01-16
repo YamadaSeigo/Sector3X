@@ -163,7 +163,6 @@ public:
 		{
 			if (!DebugRenderType::drawDeferredTextureFlags[i]) continue;
 
-
 			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(-resolution.x / DeferredTextureCount + (i % DeferredTextureCount) * resolution.x / DeferredTextureCount, -resolution.y / DeferredTextureCount * (i >= DeferredTextureCount ? -1.0f : 1.0f), 0.0f));
 			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ resolution.x / DeferredTextureCount, resolution.y / DeferredTextureCount, 1.0f });
 			Graphics::DrawCommand cmd;

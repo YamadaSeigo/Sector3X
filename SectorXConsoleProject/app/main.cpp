@@ -641,6 +641,21 @@ void InitializeRenderPipeLine(
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
 	shaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
+	shaderDesc.psPath = L"assets/shader/PS_Alpha.cso";
+	shaderMgr->Add(shaderDesc, shaderHandle);
+	psoDesc.shader = shaderHandle;
+	psoDesc.rasterizerState = RasterizerStateID::SolidCullBack;
+	psoMgr->Add(psoDesc, psoHandle);
+
+	passDesc.rtvs = mainRtv;
+	passDesc.customExecute = {};
+	passDesc.psoOverride = psoHandle;
+	passDesc.blendState = BlendStateID::AlphaBlend;
+	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;
+	passDesc.stencilRef = 2;
+	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_TRANSPARENT);
+
+	shaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
 	shaderDesc.psPath = L"assets/shader/PS_HighLight.cso";
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	psoDesc.shader = shaderHandle;
@@ -692,6 +707,7 @@ void InitializeRenderPipeLine(
 		{ 0, 4 },
 		{ 0, 5 },
 		{ 0, 6 },
+		{ 0, 7 },
 		{ 1, 0 },
 		{ 1, 1 },
 		{ 1, 2 }
@@ -1548,7 +1564,7 @@ int main(void)
 				modelDesc.buildOccluders = true;
 				existingModel = modelAssetMgr->Add(modelDesc, ruinTowerModelHandle);
 
-				if(!existingModel)
+				if(!existingModel && modelDesc.buildOccluders)
 				{
 					auto ruinTowerData = modelAssetMgr->GetWrite(ruinTowerModelHandle);
 					// 遮蔽AABBを少し小さくする
@@ -1559,12 +1575,27 @@ int main(void)
 					occAABB.ub.z *= 0.4f;
 				}
 
+
+				ModelAssetHandle ruinBreakTowerModelHandle;
+				modelDesc.path = "assets/model/Ruins/RuinBreakTowerA.gltf";
+				//中に入るタイプのモデルのオクル―ダーメッシュはまだできていないのでとりあえずfalse
+				modelDesc.buildOccluders = false;
+				existingModel = modelAssetMgr->Add(modelDesc, ruinBreakTowerModelHandle);
+
+				ModelAssetHandle medievalBridgeModelHandle;
+				modelDesc.path = "assets/model/Ruins/MedievalBridge.gltf";
+				//中に入るタイプのモデルのオクル―ダーメッシュはまだできていないのでとりあえずfalse
+				modelDesc.buildOccluders = false;
+				existingModel = modelAssetMgr->Add(modelDesc, medievalBridgeModelHandle);
+
+
 				ModelAssetHandle ruinStoneModelHandle;
 				modelDesc.instancesPeak = 10;
 				modelDesc.viewMax = 200.0f;
 				modelDesc.pso = normalMapPSOHandle;
 				modelDesc.path = "assets/model/Ruins/RuinStoneA.gltf";
 				modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを
+				modelDesc.buildOccluders = true;
 				modelAssetMgr->Add(modelDesc, ruinStoneModelHandle);
 
 				auto ps = serviceLocator->Get<Physics::PhysicsService>();
@@ -1724,8 +1755,8 @@ int main(void)
 							//float scale = 1.0f;
 							auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
 							auto modelComp = CModel{ modelAssetHandle[modelIdx] };
-							modelComp.castShadow = true;
-							modelComp.outline = enableOutline[modelIdx];
+							modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+							modelComp.flags |= enableOutline[modelIdx] ? (uint16_t)EModelFlag::Outline : (uint16_t)EModelFlag::None;
 
 							if (makeShapeHandleFunc[modelIdx] != nullptr)
 							{
@@ -1785,7 +1816,7 @@ int main(void)
 #endif
 
 					CModel modelComp{ playerModelHandle };
-					modelComp.castShadow = true;
+					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 					auto id = levelSession.AddGlobalEntity(
 						CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
 						modelComp,
@@ -1840,7 +1871,7 @@ int main(void)
 					auto shapeDims = ps->GetShapeDims(shape);
 #endif
 					CModel modelComp{ ruinTowerModelHandle };
-					modelComp.castShadow = true;
+					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 
 					Physics::CPhyBody staticBody{};
 					staticBody.type = Physics::BodyType::Static; // staticにする
@@ -1863,6 +1894,72 @@ int main(void)
 					}
 				}
 
+				// 壊れた塔生成
+				{
+					Math::Vec3f location = getTerrainLocation(0.4f, 0.62f);
+					location.y -= 4.0f; // 少し埋める
+
+					auto shape = ps->MakeMesh("generated/meshshape/Ruins/RuinBreakTowerA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+#ifdef _DEBUG
+					auto shapeDims = ps->GetShapeDims(shape);
+#endif
+					CModel modelComp{ ruinBreakTowerModelHandle };
+					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+
+					Physics::CPhyBody staticBody{};
+					staticBody.type = Physics::BodyType::Static; // staticにする
+					staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
+
+					auto tf = CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } };
+
+					auto id = levelSession.AddGlobalEntity(
+						tf,
+						modelComp,
+						staticBody
+#ifdef _DEBUG
+						, shapeDims.value()
+#endif
+					);
+					if (id) {
+						// チャンクに属さないので直接ボディ作成コマンドを発行
+						auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shape);
+						ps->CreateBody(bodyCmd);
+					}
+				}
+
+				//橋
+//				{
+//					Math::Vec3f location = getTerrainLocation(0.6f, 0.4f);
+//					location.y -= 15.0f; // 少し埋める
+//
+//					auto shape = ps->MakeMesh("generated/meshshape/Ruins/MedievalBridge.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+//#ifdef _DEBUG
+//					auto shapeDims = ps->GetShapeDims(shape);
+//#endif
+//					CModel modelComp{ medievalBridgeModelHandle };
+//					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+//
+//					Physics::CPhyBody staticBody{};
+//					staticBody.type = Physics::BodyType::Static; // staticにする
+//					staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
+//
+//					auto tf = CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } };
+//
+//					auto id = levelSession.AddGlobalEntity(
+//						tf,
+//						modelComp,
+//						staticBody
+//#ifdef _DEBUG
+//						, shapeDims.value()
+//#endif
+//					);
+//					if (id) {
+//						// チャンクに属さないので直接ボディ作成コマンドを発行
+//						auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shape);
+//						ps->CreateBody(bodyCmd);
+//					}
+//				}
+
 				//石碑生成
 				{
 					Math::Vec3f location = getTerrainLocation(0.3f, 0.3f);
@@ -1873,7 +1970,7 @@ int main(void)
 					auto shapeDims = ps->GetShapeDims(shape);
 #endif
 					CModel modelComp{ ruinStoneModelHandle };
-					modelComp.castShadow = true;
+					modelComp.flags = (uint16_t)EModelFlag::CastShadow;
 					Physics::CPhyBody staticBody{};
 					staticBody.type = Physics::BodyType::Static; // staticにする
 					staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
@@ -1895,7 +1992,7 @@ int main(void)
 
 				//蛍の領域生成
 				{
-					Math::Vec3f location = getTerrainLocation(0.45f, 0.45f);
+					Math::Vec3f location = getTerrainLocation(0.42f, 0.58f);
 					//location.y += 5.0f; // 少し浮かせる
 
 					CFireflyVolume fireflyVolume;

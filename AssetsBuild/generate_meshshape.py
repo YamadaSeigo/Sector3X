@@ -181,17 +181,57 @@ def to_compact_arrays(mesh: trimesh.Trimesh):
     Jolt MeshShape 用に、頂点とインデックスの配列を作る。
     - float32 の xyz
     - uint32 のインデックス（三角形リスト）
+    ついでに「退化三角形」は除去する。
     """
-    mesh.remove_unreferenced_vertices()
-
+    # 頂点配列
     verts = np.asarray(mesh.vertices, dtype=np.float32)
-    faces = np.asarray(mesh.faces, dtype=np.uint32).reshape(-1, 3)
 
-    # 念のためチェック
+    # faces は (F, 3) で三角形想定
+    faces = np.asarray(mesh.faces, dtype=np.int64).reshape(-1, 3)
+
     if verts.shape[0] == 0 or faces.shape[0] == 0:
         return verts, np.empty((0,), dtype=np.uint32)
 
-    faces_flat = faces.reshape(-1).astype(np.uint32)
+    # 退化判定のしきい値を、メッシュのスケールに応じて決める
+    # （非常に小さい三角形はコリジョン的には意味が薄いので落とす）
+    bbox_min = verts.min(axis=0)
+    bbox_max = verts.max(axis=0)
+    diag = np.linalg.norm(bbox_max - bbox_min)
+    # メッシュが極端に小さい場合に備えて +1e-6
+    eps_area2 = (diag * 1e-5 + 1e-6) ** 2  # 面積²のしきい値
+
+    kept_faces = []
+    degenerate_count = 0
+
+    for (i0, i1, i2) in faces:
+        # 同じ頂点を指している三角形は即 NG
+        if i0 == i1 or i1 == i2 or i2 == i0:
+            degenerate_count += 1
+            continue
+
+        v0 = verts[i0]
+        v1 = verts[i1]
+        v2 = verts[i2]
+
+        # 面積²を計算（cross の長さ²）
+        area2 = np.linalg.norm(np.cross(v1 - v0, v2 - v0)) ** 2
+        if area2 < eps_area2:
+            # 面積が小さすぎる三角形は捨てる
+            degenerate_count += 1
+            continue
+
+        kept_faces.append((i0, i1, i2))
+
+    if degenerate_count > 0:
+        print(f"  [Mesh] Removed {degenerate_count} degenerate triangles (out of {faces.shape[0]})")
+
+    if not kept_faces:
+        # 全部退化だった場合は空
+        return verts, np.empty((0,), dtype=np.uint32)
+
+    faces_clean = np.asarray(kept_faces, dtype=np.uint32)
+    faces_flat = faces_clean.reshape(-1)
+
     return verts, faces_flat
 
 

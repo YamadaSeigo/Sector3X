@@ -78,6 +78,7 @@ namespace SFW
 				Sphere,
 				Capsule,
 				Mesh,
+				MeshFile,
 				HeightField,
 				ConvexHull,
 				ConvexCompound,
@@ -382,7 +383,8 @@ namespace SFW
 						}
 
 						auto res = st.Create();
-						if (res.HasError()) return make_rotated_translated(make_scaled(RefConst<Shape>(new BoxShape(Vec3(0.5f, 0.5f, 0.5f)))));
+						if (res.HasError()) 
+							return make_rotated_translated(make_scaled(RefConst<Shape>(new BoxShape(Vec3(0.5f, 0.5f, 0.5f)))));
 						RefConst<Shape> base = res.Get();
 						return make_rotated_translated(base);
 					}
@@ -715,6 +717,11 @@ namespace SFW
 							k.vhash = HashBufferContent(s.vertices.data(), s.vertices.size() * sizeof(Vec3f));
 						if (!s.indices.empty())
 							k.ihash = HashBufferContent(s.indices.data(), s.indices.size() * sizeof(uint32_t));
+					}
+					else if constexpr (std::is_same_v<T, MeshFileDesc>) {
+						k.kind = ShapeKey::Kind::MeshFile;
+						// ファイルパスのハッシュを取る
+						k.fileHash = std::hash<std::string>{}(s.path);
 					}
 					else if constexpr (std::is_same_v<T, HeightFieldDesc>) {
 						k.kind = ShapeKey::Kind::HeightField;
