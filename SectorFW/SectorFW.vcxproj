@@ -90,6 +90,7 @@
     <ClInclude Include="inc\SectorFW\Graphics\I2DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\I3DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\IGraphicsDevice.hpp" />
+    <ClInclude Include="inc\SectorFW\Graphics\ImageLoader.h" />
     <ClInclude Include="inc\SectorFW\Graphics\LightShadowService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\LODPolicy.h" />
     <ClInclude Include="inc\SectorFW\Graphics\OccluderToolkit.h" />
@@ -498,6 +499,7 @@
     <ClCompile Include="src\Graphics\PointLightService.cpp" />
     <ClCompile Include="src\Graphics\RenderQueue.cpp" />
     <ClCompile Include="src\Graphics\TerrainClustered.cpp" />
+    <ClCompile Include="src\Graphics\ImageLoader.cpp" />
     <ClCompile Include="src\Input\WinMouseInput.cpp" />
     <ClCompile Include="src\Physics\PhysicsDevice.cpp" />
     <ClCompile Include="src\Physics\PhysicsMeshShapeLoader.cpp" />

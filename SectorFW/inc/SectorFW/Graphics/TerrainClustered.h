@@ -21,6 +21,45 @@ namespace SFW {
             Math::Vec2f uv;
         };
 
+        struct DesignerHeightMap
+        {
+            uint32_t width = 0;
+            uint32_t height = 0;
+            std::vector<float> data; // 0..1
+
+            bool IsValid() const { return width > 0 && height > 0 && !data.empty(); }
+
+            // u,v: 0..1 （タイル全体に対する UV）
+            float Sample(float u, float v) const
+            {
+                if (!IsValid()) return 0.0f;
+
+                u = std::clamp(u, 0.0f, 1.0f);
+                v = std::clamp(v, 0.0f, 1.0f);
+
+                float x = u * (width - 1);
+                float y = v * (height - 1);
+
+                int x0 = (int)std::floor(x);
+                int y0 = (int)std::floor(y);
+                int x1 = (std::min)(x0 + 1, (int)width - 1);
+                int y1 = (std::min)(y0 + 1, (int)height - 1);
+
+                float tx = x - (float)x0;
+                float ty = y - (float)y0;
+
+                float h00 = data[y0 * width + x0];
+                float h10 = data[y0 * width + x1];
+                float h01 = data[y1 * width + x0];
+                float h11 = data[y1 * width + x1];
+
+                float hx0 = std::lerp(h00, h10, tx);
+                float hx1 = std::lerp(h01, h11, tx);
+                return std::lerp(hx0, hx1, ty); // 0..1
+            }
+        };
+
+
         struct TerrainBuildParams {
             uint32_t cellsX = 256;      // X 方向セル数（頂点は +1）
             uint32_t cellsZ = 256;      // Z 方向セル数
@@ -39,14 +78,18 @@ namespace SFW {
             uint32_t clusterCellsZ = 32; // クラスターの高さ（セル数）
 
 			Math::Vec3f offset = Math::Vec3f(0.0f, 0.0f, 0.0f); // ワールドオフセット
+
+            const DesignerHeightMap* designer = nullptr;
         };
+
+
 
         struct TerrainClustered {
 
             struct ClusterRange {
-                uint32_t indexOffset; // IndexPool 内の開始オフセット（uint32_t 要素単位）
-                uint32_t indexCount;  // ここから何個の index を読むか
-                Math::AABB3f     bounds;
+                uint32_t indexOffset = {}; // IndexPool 内の開始オフセット（uint32_t 要素単位）
+                uint32_t indexCount = {};  // ここから何個の index を読むか
+                Math::AABB3f     bounds = {};
                 // 将来 LOD を足すなら std::array<ClusterRange, MaxLod> などにする
             };
 
@@ -141,6 +184,10 @@ namespace SFW {
                 float baseBias = 0.01f           // 微小押し上げ（めり込み防止, m単位）
             ) const;
         private:
+            static void GenerateHeightsOnlyPerlin(std::vector<float>& outH,
+                uint32_t vx, uint32_t vz,
+                const TerrainBuildParams& p);
+
             static void GenerateHeights(std::vector<float>& outH,
                 uint32_t vx, uint32_t vz,
                 const TerrainBuildParams& p);

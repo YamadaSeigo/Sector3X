@@ -25,8 +25,8 @@ cbuffer TerrainGridCB : register(b10)
     float2 gCellSizeXZ; // 1クラスタのサイズ (x,z)
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
-    uint _pad00;
-    uint _pad11;
+    float heightScale;
+    float offsetY; // 地形オフセット（ワールドY）
 };
 
 // VS 出力（worldPos を追加）
@@ -99,18 +99,7 @@ PS_PRBOutput main(VSOut i)
     float4 c2 = gLayer2.Sample(gSampler, suv * p.layerTiling[2]);
     float4 c3 = gLayer3.Sample(gSampler, suv * p.layerTiling[3]);
 
-    //uint cascade = ChooseCascade(i.viewDepth);
-
-    //float4 shadowPos = mul(gLightViewProj[cascade], float4(i.worldPos, 1.0f));
-
-    //float shadow = GetShadowMapDepth(shadowPos.xyz, cascade);
-
-    //float shadowBias = 1.0f;
-    //if (shadowPos.z - shadow > 0.001f)
-    //    shadowBias = 0.7f;
-
     float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
-    //final.rgb *= shadowBias;
 
     PS_PRBOutput output;
     output.AlbedoAO = float4(final.rgb, 1.0f);

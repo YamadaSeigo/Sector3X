@@ -7,22 +7,68 @@ namespace
         return std::clamp(x, 0.0f, 1.0f);
     }
 
-    // 0..1 を段々にするテラス関数（崖にだけ少し段差を入れたいとき用）
+    inline float SmoothStep01(float t)
+    {
+        t = Saturate(t);
+        return t * t * (3.0f - 2.0f * t);
+    }
+
+    inline float SmoothStep(float a, float b, float x)
+    {
+        return SmoothStep01((x - a) / (b - a));
+    }
+
+    // 0..1 を「段々」にするテラス関数
     float Terrace(float h, int steps, float blend)
     {
         if (steps <= 0) return h;
 
         float s = static_cast<float>(steps);
-        float t = h * s;                   // 何段目か
-        float base = std::floor(t) / s;    // 段の下端
-        float frac = t - std::floor(t);    // 段内の位置 0..1
+        float t = h * s;
+        float base = std::floor(t) / s;
+        float frac = t - std::floor(t);          // 0..1
 
-        // 段内の位置を少しなめらかに
-        float smooth = frac * frac * (3.0f - 2.0f * frac); // smoothstep(0,1,frac)
+        float smooth = frac * frac * (3.0f - 2.0f * frac); // smoothstep
         float stepped = base + (1.0f / s) * smooth;
 
-        // blend=0 なら完全階段, 1 なら元の h
+        // blend=0 なら完全段差, 1 なら元の h に近づく
         return std::lerp(stepped, h, Saturate(blend));
+    }
+
+    // rNorm(だいたい 0..1〜1.3) に対して
+    // 「谷 → 1段目の山 → 2段目の山 → 一番高い稜線 → 外側高原」
+    // という多段プロフィールを返す
+    float SampleRadialMountainProfile(float rNorm)
+    {
+        // 半径ノード
+        constexpr int N = 5;
+        const float rK[N] = {
+            0.0f,  // 中央
+            0.35f, // 1段目の山帯
+            0.65f, // 2段目の山帯の開始
+            0.95f, // 一番高い稜線
+            1.30f  // 外側高原
+        };
+        // 高さノード (0..1)
+        const float hK[N] = {
+            0.20f, // 谷
+            0.60f, // 内側の山
+            0.80f, // さらに外側の山
+            1.00f, // 稜線
+            0.50f  // 外側高原
+        };
+
+        if (rNorm <= rK[0]) return hK[0];
+        if (rNorm >= rK[N - 1]) return hK[N - 1];
+
+        for (int i = 0; i < N - 1; ++i) {
+            if (rNorm < rK[i + 1]) {
+                float t = (rNorm - rK[i]) / (rK[i + 1] - rK[i]);
+                t = SmoothStep01(t);
+                return std::lerp(hK[i], hK[i + 1], t);
+            }
+        }
+        return hK[N - 1];
     }
 }
 
@@ -657,6 +703,24 @@ namespace SFW {
             return out;
         }
 
+        void TerrainClustered::GenerateHeightsOnlyPerlin(std::vector<float>& outH,
+            uint32_t vx, uint32_t vz,
+            const TerrainBuildParams& p)
+        {
+            outH.resize(vx * vz);
+
+            SFW::Math::Perlin2D perlin(p.seed);
+
+            for (uint32_t z = 0; z < vz; ++z) {
+                for (uint32_t x = 0; x < vx; ++x) {
+                    float nx = float(x) * p.frequency;
+                    float nz = float(z) * p.frequency;
+                    float h01 = 0.5f * (perlin.fbm(nx, nz, p.octaves, p.lacunarity, p.gain) + 1.0f);
+                    outH[VIdx(x, z, vx)] = h01; // 0..1 の高さ（後で heightScale を掛ける）
+                }
+            }
+        }
+
         void TerrainClustered::GenerateHeights(std::vector<float>& outH,
             uint32_t vx, uint32_t vz,
             const TerrainBuildParams& p)
@@ -665,106 +729,57 @@ namespace SFW {
 
             SFW::Math::Perlin2D perlin(p.seed);
 
-            // ---- ノイズ設定（必要なら TerrainBuildParams に昇格させてOK） ----
+            // fBm ノイズ設定（ディテール用）
+            const float detailFreq = p.frequency * 1.0f;
+            const int   detailOctaves = 4;
+            const float detailLacunarity = 2.0f;
+            const float detailGain = 0.5f;
 
-            // ベース（なだらか）: 既存パラメータをそのまま使用
-            const float baseFreq = p.frequency;
-            const int   baseOctaves = p.octaves;
-            const float baseLacunarity = p.lacunarity;
-            const float baseGain = p.gain;
-
-            // 崖用リッジノイズ
-            const float cliffFreq = p.frequency * 4.0f; // ベースより細かめ
-            const int   cliffOctaves = 4;
-            const float cliffLacunarity = 2.2f;
-            const float cliffGain = 0.5f;
-            const float cliffSharpness = 3.0f;  // 大きいほど崖が鋭い
-
-            // 崖にテラス（段々）を入れたいとき用（0 なら無効）
-            const int   terraceSteps = 6;     // 0〜10 ぐらいで調整
-            const float terraceBlend = 0.3f;  // 0=ガチガチ段差, 1=なめらか
-
-            // 「どこを崖にするか」を決めるマスク
-            const float maskFreq = p.frequency * 0.5f; // ベースより低周波で大きな領域
-            const int   maskOctaves = 3;
-            const float maskLacunarity = 2.0f;
-            const float maskGain = 0.5f;
-            const float maskThreshold = 0.5f;  // これより上で崖寄り
-            const float maskFadeWidth = 0.3f;  // しきい値周辺のブレンド幅（0..1）
-
-            // 崖とベースのブレンド比率（崖側に寄せる強さ）
-            const float cliffWeight = 0.3f;  // 1.0 = マスク領域はほぼ崖に置き換え
+            const int   terraceSteps = 3;    // 平地/崖の段数
+            const float terraceBlend = 0.9f; // 0=ガチ段差, 1=なだらか
 
             for (uint32_t z = 0; z < vz; ++z) {
                 for (uint32_t x = 0; x < vx; ++x) {
 
-                    // ワールド座標系でノイズを引く（cellSize / offset を反映）
-                    float wx = p.offset.x + static_cast<float>(x) * p.cellSize;
-                    float wz = p.offset.z + static_cast<float>(z) * p.cellSize;
+                    // タイル内 UV（0..1）
+                    float u = (vx > 1) ? (float)x / (float)(vx - 1) : 0.0f;
+                    float v = (vz > 1) ? (float)z / (float)(vz - 1) : 0.0f;
 
-                    // -------------------------
-                    // 1) なだらかなベース地形
-                    // -------------------------
-                    float nxBase = wx * baseFreq;
-                    float nzBase = wz * baseFreq;
-
-                    float nBase = perlin.fbm(
-                        nxBase, nzBase,
-                        baseOctaves, baseLacunarity, baseGain);  // -1..1
-
-                    float hSmooth = nBase * 0.5f + 0.5f; // 0..1
-
-                    // -------------------------
-                    // 2) 崖用リッジノイズ
-                    // -------------------------
-                    float nxCliff = wx * cliffFreq;
-                    float nzCliff = wz * cliffFreq;
-
-                    float nCliff = perlin.fbm(
-                        nxCliff, nzCliff,
-                        cliffOctaves, cliffLacunarity, cliffGain); // -1..1
-
-                    // リッジ化: 0 付近だけ高くなるようにする
-                    float hCliff = 1.0f - std::fabs(nCliff); // 0..1
-                    hCliff = Saturate(hCliff);
-
-                    // 崖をさらに鋭く（0..1 のカーブを立ち上げる）
-                    hCliff = std::pow(hCliff, cliffSharpness);
-
-                    // 少しベース高さを混ぜて、完全な孤立崖にならないようにしてもよい
-                    // hCliff = std::lerp(hSmooth, hCliff, cliffWeight);
-
-                    // テラスをかけて段々の岩肌っぽくする（任意）
-                    hCliff = Terrace(hCliff, terraceSteps, terraceBlend);
-
-                    // -------------------------
-                    // 3) マスクで崖エリアを決める
-                    // -------------------------
-                    float nxMask = wx * maskFreq;
-                    float nzMask = wz * maskFreq;
-
-                    float nMask = perlin.fbm(
-                        nxMask, nzMask,
-                        maskOctaves, maskLacunarity, maskGain); // -1..1
-                    float mask = nMask * 0.5f + 0.5f; // 0..1
-
-                    // しきい値周辺だけなめらかに崖に遷移
-                    float t = 0.0f;
-                    if (maskFadeWidth > 0.0001f) {
-                        t = (mask - maskThreshold) / maskFadeWidth + 0.5f;
+                    // 1) 手書きマップからマクロ高さをサンプリング（0..1）
+                    float hMacro = 0.5f;
+                    if (p.designer && p.designer->IsValid()) {
+                        hMacro = p.designer->Sample(u, v);
                     }
-                    else {
-                        t = (mask > maskThreshold) ? 1.0f : 0.0f;
-                    }
-                    float cliffFactor = Saturate(t) * cliffWeight;
 
-                    // -------------------------
-                    // 4) 最終ブレンド（0..1）
-                    // -------------------------
-                    float h01 = std::lerp(hSmooth, hCliff, cliffFactor);
+                    outH[VIdx(x, z, vx)] = hMacro; // 0..1（後で heightScale 掛け）
 
-                    // ここでは 0..1 のまま格納
-                    outH[VIdx(x, z, vx)] = h01;
+                    continue;
+
+                    // 2) マクロ高さをテラス化して「平地→崖→平地」の段構造を作る
+                    float hTerraced = Terrace(hMacro, terraceSteps, terraceBlend);
+
+                    // 3) ディテールノイズ（Perlin fBm）
+                    //    ここは「山ほどノイズ強く・低地は弱く」でメリハリを付ける
+                    float wx = p.offset.x + (float)x * p.cellSize;
+                    float wz = p.offset.z + (float)z * p.cellSize;
+
+                    float n = perlin.fbm(
+                        wx * detailFreq,
+                        wz * detailFreq,
+                        detailOctaves, detailLacunarity, detailGain); // -1..1
+                    float n01 = n * 0.5f + 0.5f; // 0..1
+
+                    // 高さに応じてノイズ係数を変える（低いほど弱く、高いほど強く）
+                    float mountainMask = Saturate((hTerraced - 0.3f) / 0.5f); // 0.3〜0.8 で 0→1
+                    float plainMask = 1.0f - mountainMask;
+
+                    float detailAmp = 0.08f * plainMask + 0.20f * mountainMask; // 山だけ大きめ
+
+                    // 0.5 中心のオフセットとして加算
+                    float h01 = hTerraced + (n01 - 0.5f) * detailAmp;
+
+                    h01 = Saturate(h01);
+                    outH[VIdx(x, z, vx)] = h01; // 0..1（後で heightScale 掛け）
                 }
             }
         }

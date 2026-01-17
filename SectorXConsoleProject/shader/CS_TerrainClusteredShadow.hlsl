@@ -17,18 +17,6 @@ struct FrustumPlanes
     float4 planes[6]; // xyz = normal, w = d
 };
 
-//struct CSParamsShadowCombined
-//{
-//    float MainFrustum[6][4];
-//    float CascadeFrustum[MaxShadowCascades][6][4];
-//    float ViewProj[16];
-//    UINT ClusterCount;
-//    UINT LodLevels;
-//    float ScreenSize[2];
-//    float LodPxThreshold_Main[2];
-//    float LodPxThreshold_Shadow[2];
-//};
-
 // --------------------- cbuffer ---------------------
 cbuffer CSParams : register(b4)
 {
@@ -72,6 +60,17 @@ RWStructuredBuffer<uint> Visible_Main : register(u1);
 RWByteAddressBuffer CascadeCounters : register(u2);
 // u3: カスケード全体の VisibleIndices (4カスケード連結)
 RWStructuredBuffer<uint> Visible_Cascades : register(u3);
+
+cbuffer TerrainGridCB : register(b10)
+{
+    float2 gOriginXZ; // ワールド座標の基準 (x,z)
+    float2 gCellSizeXZ; // 1クラスタのサイズ (x,z)
+    uint gDimX; // クラスタ数X
+    uint gDimZ; // クラスタ数Z
+    float heightScale;
+    float offsetY; // 地形オフセット（ワールドY）
+};
+
 
 // ================================================================
 //  フラスタム判定ヘルパ

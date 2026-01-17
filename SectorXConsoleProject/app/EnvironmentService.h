@@ -123,6 +123,8 @@ public:
 			std::sort(timeOfDayKeys.begin(), timeOfDayKeys.end());
 		}
 
+		CalcCurrentTimeOfDayKey();
+
 		DX11::BufferCreateDesc fogCBDesc;
 		fogCBDesc.name = FOG_BUFFER_NAME;
 		fogCBDesc.size = sizeof(FogCB);
@@ -312,7 +314,7 @@ private:
 	Graphics::BufferHandle fogCBHandle;
 	Graphics::BufferHandle godRayCBHandle;
 
-	float m_elapsedTime = 0.0f;
+	float m_elapsedTime = 60.0f;
 	float m_dayLengthSec = 120.0f; // àÍé¸Ç…Ç©Ç©ÇÈéûä‘(ïb)
 	float m_timeOfDay = 0.0f; // åªç›ÇÃéûä‘(0.0~1.0)
 
@@ -325,7 +327,7 @@ private:
 	bool isUpdateFogBuffer = false;
 	bool isUpdateGodRayBuffer = false;
 
-	bool isUpdateTimeOfDay = true;
+	bool isUpdateTimeOfDay = false;
 
 public:
 	STATIC_SERVICE_TAG

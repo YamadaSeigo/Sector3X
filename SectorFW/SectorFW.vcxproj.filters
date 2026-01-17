@@ -531,6 +531,9 @@
     <ClInclude Include="inc\SectorFW\Physics\PhysicsMeshShapeLoader.h">
       <Filter>Inc\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Graphics\ImageLoader.h">
+      <Filter>Inc\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">
@@ -1141,6 +1144,9 @@
     </ClCompile>
     <ClCompile Include="src\Physics\PhysicsMeshShapeLoader.cpp">
       <Filter>Src\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ImageLoader.cpp">
+      <Filter>Src\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

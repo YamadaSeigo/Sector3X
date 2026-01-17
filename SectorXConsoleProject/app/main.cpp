@@ -18,6 +18,7 @@
 #include <SectorFW/Graphics/DX11/DX11BlockRevertHelper.h>
 #include <SectorFW/Graphics/DX11/DX11LightShadowResourceService.h>
 #include <SectorFW/Graphics/TerrainOccluderExtraction.h>
+#include <SectorFW/Graphics/ImageLoader.h>
 
 //System
 #include "system/CameraSystem.h"
@@ -840,18 +841,42 @@ int main(void)
 		High = 4
 	};
 
-	int terrainRank = (int)TerrainRank::Middle;
+	int terrainRank = (int)TerrainRank::High;
+
+	// Rチャンネルだけ使う想定
+	auto DesignerHeightMapImg = Graphics::LoadImageFromFile(
+		"assets/texture/terrain/dontuse.png", 1, false);
+
+	// 地形の属性をもった高さマップ
+	Graphics::DesignerHeightMap designerHeightMap;
+	designerHeightMap.width = DesignerHeightMapImg.width;
+	designerHeightMap.height = DesignerHeightMapImg.height;
+	designerHeightMap.data.resize(designerHeightMap.width* designerHeightMap.height);
+	for(auto y = 0; y < DesignerHeightMapImg.height; ++y)
+	{
+		for (auto x = 0; x < DesignerHeightMapImg.width; ++x)
+		{
+			auto index = y * DesignerHeightMapImg.width + x;
+			uint8_t r = (uint8_t)DesignerHeightMapImg.pixels.get()[index];
+			designerHeightMap.data[index] = static_cast<float>(r) / 255.0f;
+		}
+	}
+
 
 	Graphics::TerrainBuildParams p;
-	p.cellsX = 256 * terrainRank;
-	p.cellsZ = 256 * terrainRank;
-	p.clusterCellsX = 32;
-	p.clusterCellsZ = 32;
-	p.cellSize = 3.0f;
-	p.heightScale = 80.0f;
-	p.frequency = 1.0f / 96.0f * 1.0f;
+	p.cellsX = 512 * terrainRank;
+	p.cellsZ = 512 * terrainRank;
+	p.clusterCellsX = 64;
+	p.clusterCellsZ = 64;
+	p.cellSize = 4.0f;
+	p.heightScale = 500.0f;
+	p.frequency = 1.0f / 180.0f;
 	p.seed = 20251212;
 	p.offset.y -= 40.0f;
+	p.designer = &designerHeightMap;
+
+	//端まで見えるように
+	//perCameraService->SetFarClip(p.cellsX * p.cellSize);
 
 	std::vector<float> heightMap;
 	static SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);

@@ -821,6 +821,9 @@ namespace SFW::Graphics::DX11 {
         std::vector<uint32_t>& outLodBase,
         std::vector<uint32_t>& outLodCount)
     {
+
+        clock_t start = clock();
+
         outIndexPool.clear();
         outLodRanges.clear();
         outLodBase.assign(inRanges.size(), 0);
@@ -947,6 +950,12 @@ namespace SFW::Graphics::DX11 {
             }
             // outLodCount[cid] は並列側で設定済み
         }
+
+        clock_t end = clock();
+
+        const double time = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
+
+        LOG_INFO("generate clustered lod terrain mesh time {%f :ms}", time);
     }
 #endif
 
