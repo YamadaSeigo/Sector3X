@@ -1,13 +1,23 @@
 #include "_GlobalTypes.hlsli"
 
+// 地形グリッド情報
 cbuffer TerrainGridCB : register(b10)
 {
-    float2 gOriginXZ; // ワールド座標の基準 (x,z)
-    float2 gCellSizeXZ; // 1クラスタのサイズ (x,z)
+    float2 gOriginXZ; // ワールド座標の基準 (x,z) 
+    float2 gClusterXZ; // 1クラスタのワールドサイズ (x,z) ※同上
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
-    uint _pad00;
-    uint _pad11;
+    float heightScale;
+    float offsetY;
+
+    // Heightfield 全体の頂点数
+    uint gVertsX; // (= vertsX)
+    uint gVertsZ; // (= vertsZ)
+
+    uint2 padding; // 未使用
+    
+    float2 gCellSize; // Heightfield のセルサイズ (x,z)
+    float2 gHeightMapInvSize; // 1/width, 1/height
 };
 
 cbuffer WindCB : register(b11)

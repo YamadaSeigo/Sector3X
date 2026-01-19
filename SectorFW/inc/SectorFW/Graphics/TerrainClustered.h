@@ -90,7 +90,10 @@ namespace SFW {
                 uint32_t indexOffset = {}; // IndexPool 内の開始オフセット（uint32_t 要素単位）
                 uint32_t indexCount = {};  // ここから何個の index を読むか
                 Math::AABB3f     bounds = {};
-                // 将来 LOD を足すなら std::array<ClusterRange, MaxLod> などにする
+                
+                struct GridRect {
+                    uint32_t startX = {}, startZ = {}, cellsX = {}, cellsZ = {};
+                } gridRect = {};
             };
 
             // ---- Splat 用メタ（レンダラー非依存）----

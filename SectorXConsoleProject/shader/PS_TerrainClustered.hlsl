@@ -18,15 +18,24 @@ Texture2D gLayer3 : register(t23);
 Texture2DArray gSplat : register(t24); // クラスタごとの重み (RGBA) を slice で参照
 StructuredBuffer<ClusterParam> gClusters : register(t25); // 全クラスタのパラメータ表
 
-// b14: グリッド定数（DX11BlockRevertHelper::TerrainGridCB と一致）
+// 地形グリッド情報
 cbuffer TerrainGridCB : register(b10)
 {
-    float2 gOriginXZ; // ワールド座標の基準 (x,z)
-    float2 gCellSizeXZ; // 1クラスタのサイズ (x,z)
+    float2 gOriginXZ; // ワールド座標の基準 (x,z) 
+    float2 gClusterXZ; // 1クラスタのワールドサイズ (x,z) ※同上
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
     float heightScale;
-    float offsetY; // 地形オフセット（ワールドY）
+    float offsetY;
+
+    // Heightfield 全体の頂点数
+    uint gVertsX; // (= vertsX)
+    uint gVertsZ; // (= vertsZ)
+
+    uint2 padding; // 未使用
+    
+    float2 gCellSize; // Heightfield のセルサイズ (x,z)
+    float2 gHeightMapInvSize; // 1/width, 1/height
 };
 
 // VS 出力（worldPos を追加）
@@ -52,7 +61,7 @@ ClusterCoord ComputeCluster(float2 worldXZ)
 {
     ClusterCoord r;
 
-    float2 rel = (worldXZ - gOriginXZ) / gCellSizeXZ;
+    float2 rel = (worldXZ - gOriginXZ) / gClusterXZ;
 
     // セル index
     int2 ij = int2(floor(rel + 1e-6)); // ここでだけ epsilon をかける

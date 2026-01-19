@@ -55,8 +55,7 @@
 constexpr uint32_t WINDOW_WIDTH = uint32_t(1920 / 1.5f);	// ウィンドウの幅
 constexpr uint32_t WINDOW_HEIGHT = uint32_t(1080 / 1.5f);	// ウィンドウの高さ
 
-constexpr uint32_t SHADOW_MAP_WIDTH = 1024 / 2;	// シャドウマップの幅
-constexpr uint32_t SHADOW_MAP_HEIGHT = 1024 / 2;	// シャドウマップの高さ
+constexpr uint32_t SHADOW_MAP_SIZE = 1024 / 2;	// シャドウマップの幅
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
@@ -84,7 +83,7 @@ static std::unordered_map<uint32_t, MaterialRecord> gMaterials = {
 // 素材以外（スプラット重み等）は “テクスチャID” テーブルで受ける
 static std::unordered_map<uint32_t, std::pair<std::string, bool>> gTextures = {
 	// 重みテクスチャは “非 sRGB” 推奨（正規化済みのスカラー重みだから）
-	{ Tex_Splat_Control_0, { "assets/texture/terrain/splat.png", false } },
+	{ Tex_Splat_Control_0, { "assets/texture/terrain/splat_thin.png", false } },
 };
 
 // BuildClusterSplatSRVs に渡す
@@ -192,8 +191,8 @@ void InitializeRenderPipeLine(
 	cbDesc.size = sizeof(CascadeIndex);
 
 	Viewport vp;
-	vp.width = (float)SHADOW_MAP_WIDTH;
-	vp.height = (float)SHADOW_MAP_HEIGHT;
+	vp.width = (float)SHADOW_MAP_SIZE;
+	vp.height = (float)SHADOW_MAP_SIZE;
 
 	passDesc.viewport = vp;
 
@@ -722,6 +721,156 @@ void InitializeRenderPipeLine(
 	renderGraph->SetExecutionOrder(order);
 }
 
+// [-1,1] の値を UNORM 0..255 に変換
+inline uint8_t NormalToUNorm8(float v)
+{
+	// [-1,1] -> [0,1]
+	float u = v * 0.5f + 0.5f;
+	u = std::clamp(u, 0.0f, 1.0f);
+	return static_cast<uint8_t>(std::round(u * 255.0f));
+}
+
+// 4x4 texel の 1チャンネル (UNORM 0..255) から BC4 ブロック(8バイト)を生成
+// src[16] : 4x4 の各画素 (0..255)
+inline void EncodeBC4Block(const uint8_t src[16], uint8_t dst[8])
+{
+	// 1) ブロック内の最小値・最大値
+	uint8_t vMin = 255;
+	uint8_t vMax = 0;
+
+	for (int i = 0; i < 16; ++i)
+	{
+		vMin = (std::min)(vMin, src[i]);
+		vMax = (std::max)(vMax, src[i]);
+	}
+
+	// 全部同じ値なら、エッジケース処理
+	if (vMin == vMax)
+	{
+		dst[0] = vMax;
+		dst[1] = vMin;
+		// インデックスは全部 0 にしておく
+		for (int i = 0; i < 6; ++i) dst[i + 2] = 0;
+		return;
+	}
+
+	// 2) エンドポイントを決める
+	// BC4_UNORM では 0..255 のエンドポイント
+	uint8_t ep0 = vMax;
+	uint8_t ep1 = vMin;
+
+	// 「ep0 > ep1」の 8 ステップモードを強制
+	if (ep0 == ep1)
+	{
+		// 万一同じだったら適当にずらす
+		if (ep0 < 255) ++ep0;
+		else --ep1;
+	}
+
+	dst[0] = ep0;
+	dst[1] = ep1;
+
+	// 3) 8 エントリーのパレット生成
+	float palette[8];
+	palette[0] = ep0 / 255.0f;
+	palette[1] = ep1 / 255.0f;
+	for (int i = 1; i <= 6; ++i)
+	{
+		// 8 ステップモード: v_i = ((7-i)*ep0 + i*ep1) / 7
+		float v = ((7 - i) * ep0 + i * ep1) / 7.0f;
+		palette[i + 1] = v / 255.0f;
+	}
+
+	// 4) 各 texel の最適な index(0..7) を決める
+	uint8_t indices[16];
+
+	for (int i = 0; i < 16; ++i)
+	{
+		float val = src[i] / 255.0f;
+		float bestErr = 1e9f;
+		uint8_t bestIdx = 0;
+		for (uint8_t j = 0; j < 8; ++j)
+		{
+			float d = val - palette[j];
+			float err = d * d;
+			if (err < bestErr)
+			{
+				bestErr = err;
+				bestIdx = j;
+			}
+		}
+		indices[i] = bestIdx;
+	}
+
+	// 5) 16 個の 3bit index を 48bit (6 バイト) にパック
+	uint64_t bits = 0;
+	for (int i = 0; i < 16; ++i)
+	{
+		bits |= (uint64_t(indices[i] & 7u) << (3 * i));
+	}
+
+	for (int i = 0; i < 6; ++i)
+	{
+		dst[2 + i] = static_cast<uint8_t>((bits >> (8 * i)) & 0xFFu);
+	}
+}
+
+
+inline std::vector<uint8_t> EncodeNormalMapBC5(
+	const Math::Vec3f* normals,
+	int width,
+	int height)
+{
+	assert(normals);
+	assert(width > 0 && height > 0);
+	assert((width % 4) == 0 && (height % 4) == 0); // 4 の倍数前提
+
+	const int blockCountX = width / 4;
+	const int blockCountY = height / 4;
+	const int totalBlocks = blockCountX * blockCountY;
+
+	std::vector<uint8_t> out;
+	out.resize(size_t(totalBlocks) * 16); // 16 bytes per block (BC5)
+
+	uint8_t blockR[16];
+	uint8_t blockG[16];
+
+	size_t dstOffset = 0;
+
+	for (int by = 0; by < blockCountY; ++by)
+	{
+		for (int bx = 0; bx < blockCountX; ++bx)
+		{
+			// 4x4 ブロック分の R,G 成分を UNORM 0..255 に変換して blockR/blockG に詰める
+			for (int iy = 0; iy < 4; ++iy)
+			{
+				for (int ix = 0; ix < 4; ++ix)
+				{
+					int x = bx * 4 + ix;
+					int y = by * 4 + iy;
+					int srcIdx = y * width + x;
+					const Math::Vec3f& n = normals[srcIdx];
+
+					int texelIndex = iy * 4 + ix;
+					blockR[texelIndex] = NormalToUNorm8(n.x); // R チャンネル
+					blockG[texelIndex] = NormalToUNorm8(n.z); // G チャンネル
+				}
+			}
+
+			uint8_t* dstBlock = out.data() + dstOffset;
+
+			// 先頭 8バイト: R チャンネルの BC4
+			EncodeBC4Block(blockR, dstBlock + 0);
+			// 次の 8バイト: G チャンネルの BC4
+			EncodeBC4Block(blockG, dstBlock + 8);
+
+			dstOffset += 16;
+		}
+	}
+
+	return out;
+}
+
 
 int main(void)
 {
@@ -786,7 +935,7 @@ int main(void)
 
 	static Graphics::LightShadowService lightShadowService;
 	Graphics::LightShadowService::CascadeConfig cascadeConfig;
-	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_WIDTH), float(SHADOW_MAP_HEIGHT));
+	cascadeConfig.shadowMapResolution = Math::Vec2f(float(SHADOW_MAP_SIZE), float(SHADOW_MAP_SIZE));
 	cascadeConfig.cascadeCount = 3;
 	cascadeConfig.shadowDistance = 80.0f;
 	cascadeConfig.casterExtrusion = 0.0f;
@@ -804,8 +953,8 @@ int main(void)
 
 	static Graphics::DX11::LightShadowResourceService lightShadowResourceService;
 	Graphics::DX11::ShadowMapConfig shadowMapConfig;
-	shadowMapConfig.width = SHADOW_MAP_WIDTH;
-	shadowMapConfig.height = SHADOW_MAP_HEIGHT;
+	shadowMapConfig.width = SHADOW_MAP_SIZE;
+	shadowMapConfig.height = SHADOW_MAP_SIZE;
 	ok = lightShadowResourceService.Initialize(device, shadowMapConfig);
 	assert(ok && "Failed ShadowMapService Initialize");
 
@@ -844,36 +993,36 @@ int main(void)
 	int terrainRank = (int)TerrainRank::High;
 
 	// Rチャンネルだけ使う想定
-	auto DesignerHeightMapImg = Graphics::LoadImageFromFile(
-		"assets/texture/terrain/dontuse.png", 1, false);
+	//auto DesignerHeightMapImg = Graphics::LoadImageFromFile(
+	//	"assets/texture/terrain/dontuse.png", 1, false);
 
-	// 地形の属性をもった高さマップ
-	Graphics::DesignerHeightMap designerHeightMap;
-	designerHeightMap.width = DesignerHeightMapImg.width;
-	designerHeightMap.height = DesignerHeightMapImg.height;
-	designerHeightMap.data.resize(designerHeightMap.width* designerHeightMap.height);
-	for(auto y = 0; y < DesignerHeightMapImg.height; ++y)
-	{
-		for (auto x = 0; x < DesignerHeightMapImg.width; ++x)
-		{
-			auto index = y * DesignerHeightMapImg.width + x;
-			uint8_t r = (uint8_t)DesignerHeightMapImg.pixels.get()[index];
-			designerHeightMap.data[index] = static_cast<float>(r) / 255.0f;
-		}
-	}
+	//// 地形の属性をもった高さマップ
+	//Graphics::DesignerHeightMap designerHeightMap;
+	//designerHeightMap.width = DesignerHeightMapImg.width;
+	//designerHeightMap.height = DesignerHeightMapImg.height;
+	//designerHeightMap.data.resize(designerHeightMap.width* designerHeightMap.height);
+	//for(auto y = 0; y < DesignerHeightMapImg.height; ++y)
+	//{
+	//	for (auto x = 0; x < DesignerHeightMapImg.width; ++x)
+	//	{
+	//		auto index = y * DesignerHeightMapImg.width + x;
+	//		uint8_t r = (uint8_t)DesignerHeightMapImg.pixels.get()[index];
+	//		designerHeightMap.data[index] = static_cast<float>(r) / 255.0f;
+	//	}
+	//}
 
 
 	Graphics::TerrainBuildParams p;
-	p.cellsX = 512 * terrainRank;
-	p.cellsZ = 512 * terrainRank;
-	p.clusterCellsX = 64;
-	p.clusterCellsZ = 64;
-	p.cellSize = 4.0f;
-	p.heightScale = 500.0f;
-	p.frequency = 1.0f / 180.0f;
+	p.cellsX = 256 * terrainRank - 1;
+	p.cellsZ = 256 * terrainRank - 1;
+	p.clusterCellsX = 32;
+	p.clusterCellsZ = 32;
+	p.cellSize = 3.0f;
+	p.heightScale = 80.0f;
+	p.frequency = 1.0f / 90.0f;
 	p.seed = 20251212;
 	p.offset.y -= 40.0f;
-	p.designer = &designerHeightMap;
+	//p.designer = &designerHeightMap;
 
 	//端まで見えるように
 	//perCameraService->SetFarClip(p.cellsX * p.cellSize);
@@ -881,11 +1030,11 @@ int main(void)
 	std::vector<float> heightMap;
 	static SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);
 
-	// ---- マッピング設定 ----
+	// ---- マッピング設定(オクルージョンカリング用) ----
 	static Graphics::HeightTexMapping heightTexMap = Graphics::MakeHeightTexMappingFromTerrainParams(p, heightMap);
 
 	static Graphics::DX11::CommonMaterialResources matRes;
-	const uint32_t matIds[4] = { Mat_Grass, Mat_Rock, Mat_Dirt, Mat_Snow }; // ← あなたの素材ID
+	const uint32_t matIds[4] = { Mat_Grass, Mat_Rock, Mat_Dirt, Mat_Snow }; //素材ID
 	Graphics::DX11::BuildCommonMaterialSRVs(device, *textureManager, matIds, &ResolveTexturePath, matRes);
 
 	// 0) “シート画像” の ID（例: Tex_Splat_Sheet0）は ResolveTexturePathFn でパスに解決される想定
@@ -902,7 +1051,7 @@ int main(void)
 	);
 
 
-	// 2) 生成ハンドルにアプリ側の “ID” を割当て → terrain.splat[cid].splatTextureId に反映
+	// 2) 生成ハンドルにアプリ側の “ID” を割当て -> terrain.splat[cid].splatTextureId に反映
 	Graphics::DX11::AssignClusterSplatsFromHandles(terrain, terrain.clustersX, terrain.clustersZ, handles,
 		[](Graphics::TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid) { return (0x70000000u + cid); },
 		/*queryLayer*/nullptr,
@@ -924,78 +1073,32 @@ int main(void)
 	Graphics::DX11::FillClusterParamsCPU(terrain, id2slice, cp);
 
 	// グリッドCBを設定（TerrainClustered の定義に合わせて）
-	Graphics::DX11::SetupTerrainGridCB(/*originXZ=*/{ 0, 0 },
-		/*cellSize=*/{ p.clusterCellsX * p.cellSize, p.clusterCellsZ * p.cellSize },
-		/*dimX=*/terrain.clustersX, /*dimZ=*/terrain.clustersZ, p.heightScale, p.offset.y, cp);
+	Graphics::DX11::SetupTerrainGridCB(p, /*dimX=*/terrain.clustersX, /*dimZ=*/terrain.clustersZ, cp);
 
 	// 地形のクラスター専用GPUリソースを作る/初期更新
 	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
 	Graphics::DX11::BuildOrUpdateTerrainGridCB(device, deviceContext, bufferMgr, cp);
 
-	// LOD生成
-	std::vector<float> positions(terrain.vertices.size() * 3);
-	auto vertexSize = terrain.vertices.size();
-	for (auto i = 0; i < vertexSize; ++i)
-	{
-		positions[i * 3 + 0] = terrain.vertices[i].pos.x;
-		positions[i * 3 + 1] = terrain.vertices[i].pos.y;
-		positions[i * 3 + 2] = terrain.vertices[i].pos.z;
-	}
-	std::vector<float> lodTarget =
-	{
-		1.0f, 0.25f, 0.075f
-	};
-
-	std::vector<uint32_t> outIndexPool;
-	std::vector<Graphics::DX11::ClusterLodRange> outLodRanges;
-	std::vector<uint32_t> outLodBase;
-	std::vector<uint32_t> outLodCount;
-
-	bool check = Graphics::TerrainClustered::CheckClusterBorderEquality(terrain.indexPool, terrain.clusters, terrain.clustersX, terrain.clustersZ);
-
-	ThreadCountDownLatch latch(2);
-
-	auto lodGenTask = [&]() {
-		Graphics::DX11::GenerateClusterLODs_meshopt_fast(terrain.indexPool, terrain.clusters, positions.data(),
-			terrain.vertices.size(), sizeof(Math::Vec3f), lodTarget,
-			outIndexPool, outLodRanges, outLodBase, outLodCount);
-
-		latch.CountDown();
-		};
-
-	Graphics::DX11::CpuImage cpuSplatImage;
-
-	auto splatArrayTask = [&]() {
-		Graphics::DX11::ReadTexture2DToCPU(device, deviceContext, sheetTex.Get(), cpuSplatImage);
-		latch.CountDown();
-		};
-
-	//重い初期化処理を並列で実行
-	threadPool->Submit(lodGenTask);
-	threadPool->Submit(splatArrayTask);
-
-	latch.Wait();
+	static Graphics::DX11::CpuImage cpuSplatImage;
+	Graphics::DX11::ReadTexture2DToCPU(device, deviceContext, sheetTex.Get(), cpuSplatImage);
 
 	static Graphics::DX11::BlockReservedContext blockRevert;
 	ok = blockRevert.Init(graphics.GetDevice(),
 		L"assets/shader/CS_TerrainClustered.cso",
-		L"assets/shader/CS_TerrainClusteredShadow.cso",
+		L"assets/shader/CS_TerrainClustered_CSMCombined.cso",
 		L"assets/shader/CS_WriteArgs.cso",
 		L"assets/shader/CS_WriteArgsShadow.cso",
-		L"assets/shader/VS_TerrainClustered.cso",
-		L"assets/shader/VS_TerrainClusteredDepth.cso",
+		L"assets/shader/VS_TerrainClusteredGrid.cso",
+		L"assets/shader/VS_TerrainClusteredGridDepth.cso",
 		L"assets/shader/PS_TerrainClustered.cso",
 		/*maxVisibleIndices*/ (UINT)terrain.indexPool.size());
 
 	assert(ok && "Failed BlockRevert Init");
 
-	blockRevert.BuildLodSrvs(graphics.GetDevice(), outLodRanges, outLodBase, outLodCount);
-
-	terrain.indexPool = std::move(outIndexPool);
-
 	Graphics::DX11::BuildFromTerrainClustered(graphics.GetDevice(), terrain, blockRevert);
 
 	static Graphics::TextureHandle heightTexHandle;
+	static ComPtr<ID3D11ShaderResourceView> heightMapSRV;
 
 	//HeightMapを16bitテクスチャとして作成
 	{
@@ -1023,6 +1126,51 @@ int main(void)
 		texDesc.recipe = &recipeDesc;
 		auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
 		textureMgr->Add(texDesc, heightTexHandle);
+
+		auto texData = textureMgr->Get(heightTexHandle);
+		heightMapSRV = texData.ref().srv;
+	}
+
+	// ノーマルマップテクスチャの作成
+	static ComPtr<ID3D11ShaderResourceView> normalMapSRV;
+	{
+		using namespace Graphics;
+
+		size_t vertexCount = terrain.vertices.size();
+		std::vector<Math::Vec3f> normalMap(vertexCount);
+		for(auto i = 0; i < vertexCount; ++i)
+		{
+			normalMap[i] = terrain.vertices[i].nrm;
+		}
+
+		auto normalMapBC5 = EncodeNormalMapBC5(normalMap.data(), (int)(p.cellsX + 1), (int)(p.cellsZ + 1));
+
+		DX11::TextureCreateDesc texDesc;
+		DX11::TextureRecipe recipeDesc;
+		recipeDesc.width = (p.cellsX + 1) / 4;
+		recipeDesc.height = (p.cellsZ + 1) / 4;
+		recipeDesc.format = DXGI_FORMAT_BC5_UNORM;
+		recipeDesc.usage = D3D11_USAGE_IMMUTABLE;
+		recipeDesc.initialData = normalMapBC5.data();
+		recipeDesc.initialRowPitch = recipeDesc.width / 4 * 16;
+		texDesc.recipe = &recipeDesc;
+		auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
+		TextureHandle normalTexHandle = {};
+		auto texData = textureMgr->CreateResource(texDesc, normalTexHandle);
+		normalMapSRV = texData.srv;
+	}
+
+	static ComPtr<ID3D11SamplerState> linearSampler;
+	{
+		using namespace Graphics;
+		auto samplerManager = graphics.GetRenderService()->GetResourceManager<DX11::SamplerManager>();
+
+		D3D11_SAMPLER_DESC sampDesc = {};
+		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		SamplerHandle samp = samplerManager->AddWithDesc(sampDesc);
+		auto sampData = samplerManager->Get(samp);
+		linearSampler = sampData.ref().state;
 	}
 
 	auto terrainUpdateFunc = [](Graphics::RenderService* renderService)
@@ -1112,6 +1260,8 @@ int main(void)
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
 			graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
 
+			deviceContext->VSSetSamplers(3, 1, linearSampler.GetAddressOf());
+
 			static Graphics::DX11::BlockReservedContext::ShadowDepthParams shadowParams{};
 
 			shadowParams.mainDSV = graphics.GetMainDepthStencilView().Get();
@@ -1157,8 +1307,12 @@ int main(void)
 				cameraCB = cameraBufData->buffer;
 			}
 
-			blockRevert.RunShadowDepth(deviceContext, std::move(cameraCB),
+			blockRevert.RunShadowDepth(deviceContext,
+				std::move(cameraCB),
+				heightMapSRV,
+				normalMapSRV,
 				shadowParams,
+				cp,
 				&lightShadowResourceService.GetCascadeViewport(), false);
 		};
 
@@ -1177,11 +1331,10 @@ int main(void)
 
 			ID3D11ShaderResourceView* splatSrv = splatRes.splatArraySRV.Get();
 			deviceContext->PSSetShaderResources(24, 1, &splatSrv);       // t24
-			Graphics::DX11::BindClusterParamsForOneCall(deviceContext, cp);              // t25, b10
 
 			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 
-			blockRevert.RunColor(deviceContext);
+			blockRevert.RunColor(deviceContext, heightMapSRV, normalMapSRV, cp);
 		};
 
 	auto drawFirefly = [](uint64_t frame)
@@ -1199,7 +1352,7 @@ int main(void)
 			}
 
 			//ホタルのスポーン処理
-			fireflyService.SpawnParticles(deviceContext, heightMapSRV, cp.cbGrid, frame% Graphics::RENDER_BUFFER_COUNT);
+			fireflyService.SpawnParticles(deviceContext, heightMapSRV, cp.cbGrid, frame % Graphics::RENDER_BUFFER_COUNT);
 		};
 
 	renderService->SetCustomUpdateFunction(terrainUpdateFunc);
@@ -1608,12 +1761,6 @@ int main(void)
 				modelDesc.buildOccluders = false;
 				existingModel = modelAssetMgr->Add(modelDesc, ruinBreakTowerModelHandle);
 
-				ModelAssetHandle medievalBridgeModelHandle;
-				modelDesc.path = "assets/model/Ruins/MedievalBridge.gltf";
-				//中に入るタイプのモデルのオクル―ダーメッシュはまだできていないのでとりあえずfalse
-				modelDesc.buildOccluders = false;
-				existingModel = modelAssetMgr->Add(modelDesc, medievalBridgeModelHandle);
-
 
 				ModelAssetHandle ruinStoneModelHandle;
 				modelDesc.instancesPeak = 10;
@@ -1709,13 +1856,13 @@ int main(void)
 							}
 
 							//　薄いほど高さを下げる
-							float t = splatR / 255.0f; // 0..1
-							constexpr float k = 1.0f;            // カーブの強さ（お好み）
+							float t = 1.0f - splatR / 255.0f; // 0..1
+							constexpr float k = 8.0f;            // カーブの強さ（お好み）
 
 							// 0..1 に正規化した exp カーブ
 							float w = (std::exp(k * t) - 1.0f) / (std::exp(k) - 1.0f); // w: 0..1
 
-							location.y -= w * 8.0f;   // 最大で 4 下げる（0..4）
+							location.y -= w * 4.0f;   // 最大で 4 下げる（0..4）
 
 							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 							auto modelComp = CModel{ grassModelHandle };
@@ -1828,7 +1975,7 @@ int main(void)
 
 				//プレイヤー生成
 				{
-					Math::Vec3f playerStartPos = getTerrainLocation(0.5f, 0.5f); //中央
+					Math::Vec3f playerStartPos = getTerrainLocation(0.45f, 0.55f); //中央
 					//Math::Vec3f playerStartPos = { 10.0f, 0.0f,  10.0f };
 
 					playerStartPos.y += 10.0f; // 少し浮かせる
@@ -1952,39 +2099,6 @@ int main(void)
 						ps->CreateBody(bodyCmd);
 					}
 				}
-
-				//橋
-//				{
-//					Math::Vec3f location = getTerrainLocation(0.6f, 0.4f);
-//					location.y -= 15.0f; // 少し埋める
-//
-//					auto shape = ps->MakeMesh("generated/meshshape/Ruins/MedievalBridge.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-//#ifdef _ENABLE_IMGUI
-//					auto shapeDims = ps->GetShapeDims(shape);
-//#endif
-//					CModel modelComp{ medievalBridgeModelHandle };
-//					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
-//
-//					Physics::CPhyBody staticBody{};
-//					staticBody.type = Physics::BodyType::Static; // staticにする
-//					staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
-//
-//					auto tf = CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } };
-//
-//					auto id = levelSession.AddGlobalEntity(
-//						tf,
-//						modelComp,
-//						staticBody
-//#ifdef _ENABLE_IMGUI
-//						, shapeDims.value()
-//#endif
-//					);
-//					if (id) {
-//						// チャンクに属さないので直接ボディ作成コマンドを発行
-//						auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shape);
-//						ps->CreateBody(bodyCmd);
-//					}
-//				}
 
 				//石碑生成
 				{

@@ -34,14 +34,24 @@ cbuffer CBUpdate : register(b0)
     float gPlayerRepelRadius;
 };
 
+// 地形グリッド情報
 cbuffer TerrainGridCB : register(b1)
 {
-    float2 gOriginXZ; // ワールド座標の基準 (x,z)
-    float2 gCellSizeXZ; // 1クラスタのサイズ (x,z)
+    float2 gOriginXZ; // ワールド座標の基準 (x,z) 
+    float2 gClusterXZ; // 1クラスタのワールドサイズ (x,z) ※同上
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
     float heightScale;
     float offsetY;
+
+    // Heightfield 全体の頂点数
+    uint gVertsX; // (= vertsX)
+    uint gVertsZ; // (= vertsZ)
+
+    uint2 padding; // 未使用
+    
+    float2 gCellSize; // Heightfield のセルサイズ (x,z)
+    float2 gHeightMapInvSize; // 1/width, 1/height
 };
 
 cbuffer CBParams : register(b2)
@@ -65,7 +75,7 @@ cbuffer CBParams : register(b2)
 
 float SampleGroundY(float2 xz)
 {
-    float2 terrainSize = gCellSizeXZ * float2(gDimX, gDimZ);
+    float2 terrainSize = gClusterXZ * float2(gDimX, gDimZ);
     float2 uv = saturate((xz - gOriginXZ) / terrainSize);
     float h = gHeightMap.SampleLevel(gHeightSamp, uv, 0);
     return h * heightScale + offsetY;

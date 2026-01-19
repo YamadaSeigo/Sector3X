@@ -8,7 +8,7 @@ struct VSOutDepthOnly
 
 // ========================= VERTEX: VERTEX-PULL =========================
 
-cbuffer VSParams : register(b10)
+cbuffer VSParams : register(b11)
 {
     row_major float4x4 View;
     row_major float4x4 Proj;

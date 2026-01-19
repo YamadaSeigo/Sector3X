@@ -204,7 +204,7 @@ namespace SFW {
             // 1) 高さ場
             std::vector<float> H;
 
-            GenerateHeights(H, t.vertsX, t.vertsZ, p);
+            GenerateHeightsOnlyPerlin(H, t.vertsX, t.vertsZ, p);
 
             // 2) 頂点（位置・法線・UV）
             BuildVertices(t.vertices, H, t.vertsX, t.vertsZ, p.cellSize, p.heightScale, p.offset);
@@ -847,6 +847,7 @@ namespace SFW {
             // クラスターごとにローカルなインデックス蓄積 → 後で outIndexPool に連結
             std::vector<std::vector<uint32_t>> tempIndices(outClusters.size());
             std::vector<Math::AABB3f> tempBounds(outClusters.size());
+            std::vector<ClusterRange::GridRect> tempGridRect(outClusters.size());
 
             // AABB 初期化
             constexpr auto inf = std::numeric_limits<float>::infinity();
@@ -873,6 +874,7 @@ namespace SFW {
 
                     auto& indices = tempIndices[id];
                     auto& bounds = tempBounds[id];
+                    auto& gridRect = tempGridRect[id];
 
                     // AABB をセル範囲の頂点で更新（簡便）
                     for (uint32_t z = z0; z <= z1; ++z) {
@@ -897,6 +899,11 @@ namespace SFW {
                             indices.push_back(v00); indices.push_back(v11); indices.push_back(v01);
                         }
                     }
+
+                    gridRect.startX = x0;
+                    gridRect.startZ = z0;
+					gridRect.cellsX = x1 - x0;
+					gridRect.cellsZ = z1 - z0;
                 }
             }
 
@@ -918,6 +925,7 @@ namespace SFW {
                     r.indexOffset = running;
                     r.indexCount = static_cast<uint32_t>(local.size());
                     r.bounds = tempBounds[id];
+					r.gridRect = tempGridRect[id];
 
                     outClusters[id] = r;
 

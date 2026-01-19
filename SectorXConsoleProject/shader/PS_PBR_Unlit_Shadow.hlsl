@@ -107,8 +107,8 @@ float ToonStep3(float x)
 
 float3 AccumulatePointLights_UnlitWithTranslucency(
     float3 wp, float3 N, float3 albedo,
-    float translucency, // 0..1: 透けの強さ（素材ごと）
-    float3 transColor // 透け色（葉なら緑っぽい）
+    float translucency,
+    float3 transColor
 )
 {
     float3 sum = 0.0f;
@@ -126,36 +126,33 @@ float3 AccumulatePointLights_UnlitWithTranslucency(
         if (range <= 0.0f || distSq >= rangeSq)
             continue;
 
-        float dist = sqrt(distSq);
-        float3 L = toL / max(dist, 1e-6f);
+        distSq = max(distSq, 1e-6f);
+        float invDist = rsqrt(distSq);
+        float dist = distSq * invDist; // = sqrt(distSq)
+        float3 L = toL * invDist;
 
-        float t = saturate(dist * pl.invRadius); // 0 (中心) -> 1 (半径)
+        float t = saturate(dist * pl.invRadius);
         float att = 1.0f - t;
 
-        // 端(1付近)だけをなめらかに落とす：フェード帯
-        // fadeWidth: 0.05~0.2 くらい（大きいほど境界が消える）
-        float fadeWidth = 0.2f;
+        const float fadeWidth = 0.2f;
         float edge = 1.0f - smoothstep(1.0f - fadeWidth, 1.0f, t);
 
-        // 中心はそこそこ強く、端はさらに弱く
-        att = att * att; // 好み（^2）
+        att = att * att;
         att *= edge;
 
-        float wrap = 0.35f; // 0..1 大きいほど回り込み
+        const float wrap = 0.35f;
         float ndl = dot(N, L);
         float ndlWrap = saturate((ndl + wrap) / (1.0f + wrap));
 
-        float ndlBack = saturate(dot(-N, L)); // 裏（透け用）
+        float ndlBack = saturate(dot(-N, L));
 
-        // 表の"塗り"ライト（Unlit）
+        // pow(ndlBack, 1.5) ≒ ndlBack * sqrt(ndlBack)
+        float backSoft = ndlBack * sqrt(ndlBack);
+
         float3 radiance = pl.color * pl.intensity * att;
-        float3 frontLit = albedo * (ndlWrap);
-
-        // 裏の透け（柔らかめに）
-        float backSoft = pow(ndlBack, 1.5f); // 1.0~3.0くらい好み
+        float3 frontLit = albedo * ndlWrap;
         float3 backLit = transColor * backSoft * translucency;
 
-        // 合成：表 + 裏の透け
         sum += radiance * (frontLit + backLit);
     }
 
@@ -191,25 +188,18 @@ uint ChooseCascade(float viewDepth)
     return min(idx, gCascadeCount - 1);
 }
 
-// shadowPos は LightViewProj 後の clip（もしくは同等）を想定
 float SampleShadowPCF(float4 shadowClip, uint cascade)
 {
-    // clip -> ndc -> uv
     float3 ndc = shadowClip.xyz / shadowClip.w;
     float2 uv = ndc.xy * 0.5f + 0.5f;
-    uv.y = 1.0f - uv.y; // D3DのUV(上0) と NDC(Y+上)の差を吸収
+    uv.y = 1.0f - uv.y;
     float z = ndc.z;
 
-    // 範囲外は「影なし」扱い（好みで 0 にしてもOK）
     if (uv.x < 0 || uv.x > 1 || uv.y < 0 || uv.y > 1)
         return 1.0f;
 
-    // 解像度から1texelを取得
-    uint w, h, layers;
-    gShadowMap.GetDimensions(w, h, layers);
-    float2 texel = 1.0f / float2(w, h);
+    const float2 texel = 1.0f / float2(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE);
 
-    // 3x3 PCF
     float sum = 0.0f;
     [unroll]
     for (int y = -1; y <= 1; ++y)
@@ -221,7 +211,7 @@ float SampleShadowPCF(float4 shadowClip, uint cascade)
             sum += gShadowMap.SampleCmpLevelZero(gShadowSampler, float3(uv + o, cascade), z);
         }
     }
-    return sum / 9.0f; // 1=光が当たる, 0=完全に影
+    return sum / 9.0f;
 }
 
 float ComputeFogFactor(float viewDepth)
@@ -290,32 +280,29 @@ float GroundBandMask(float yRel)
 
 float ComputeFogNoiseMod(float3 worldPosWS, float timeSec)
 {
-    //基準高さからの相対Yで"地面付近" のみに効かせる
-
     float yRel = worldPosWS.y - gHeightFogBaseHeight;
 
-    // 追加の上下範囲（任意）
     float h01 = saturate((yRel - gFogNoiseMinHeight) / max(gFogNoiseMaxHeight - gFogNoiseMinHeight, 1e-4f));
-    float hMask = (1.0f - h01); // 上に行くほど弱い
+    float hMask = (1.0f - h01);
 
     float band = GroundBandMask(yRel) * hMask;
     if (band <= 0.0001f)
         return 1.0f;
 
-    // XZでノイズを作り、風で流す
+    // ほぼノイズ0なら計算しない
+    if (gFogNoiseAmount <= 0.001f || gFogNoiseScale <= 0.0f)
+        return 1.0f;
+
     float2 wind = gFogWindDirXZ * (gFogWindSpeed * timeSec);
     float2 p = (worldPosWS.xz * gFogNoiseScale) + wind;
 
     float n = FBM2D(p); // 0..1
-    // -1..+1 へ
     float nSigned = (n * 2.0f - 1.0f);
 
-    // 霧密度を "1 +- amount" の範囲で揺らす
     float mod = 1.0f + (nSigned * gFogNoiseAmount);
-
-    // 地面付近だけ強く適用
     return lerp(1.0f, mod, band);
 }
+
 
 
 float ComputeHeightFogFactor(float3 camPosWS, float3 worldPosWS, float viewDepth)
@@ -355,36 +342,35 @@ float ComputeHeightFogFactor(float3 camPosWS, float3 worldPosWS, float viewDepth
 }
 
 
+static const int GOD_NUM_SAMPLES = 32;
+
 float ComputeRadialGodRay(float2 uv)
 {
-    // 太陽が画面外なら弱める（完全に切ってもOK）
-    // ※clipしてもいいけど、ここでは軽くフェード
     float2 d = abs(gSunScreenUV - 0.5f) * 2.0f;
-    float sunIn = saturate(1.0f - max(d.x, d.y)); // 画面中心寄りほど1
+    float sunIn = saturate(1.0f - max(d.x, d.y));
 
-    const int NUM_SAMPLES = 48;
+    // ほとんど見えないなら早期リターン
+    [branch]
+    if (sunIn <= 0.001f || gGodRayIntensity <= 0.001f || gGodRayWeight <= 0.0f)
+        return 0.0f;
 
     float2 delta = (uv - gSunScreenUV);
-    delta *= (gGodRayDensity / (float) NUM_SAMPLES);
+    delta *= (gGodRayDensity / (float) GOD_NUM_SAMPLES);
 
     float illuminationDecay = 1.0f;
     float sum = 0.0f;
 
     float2 sampUV = uv;
 
-    [unroll]
-    for (int s = 0; s < NUM_SAMPLES; ++s)
+    [loop]
+    for (int s = 0; s < GOD_NUM_SAMPLES; ++s)
     {
         sampUV -= delta;
 
-        // 範囲外はスキップ（ブレにくい）
         if (any(sampUV < 0.0f) || any(sampUV > 1.0f))
-            continue;
+            break;
 
         float z = gDepth.SampleLevel(gSampler, sampUV, 0);
-
-        // “空/遠方”なら通す（= 1）、近いジオメトリなら遮る（= 0）
-        // ※あなたのDepthの性質に合わせて閾値を調整
         float occ = (z >= gGodRayMaxDepth) ? 1.0f : 0.0f;
 
         sum += occ * illuminationDecay * gGodRayWeight;
@@ -396,19 +382,18 @@ float ComputeRadialGodRay(float2 uv)
 
 float ComputeDirectionalGodRay(float2 uv, float shadow, float2 sunDirSS)
 {
-    // sunDirSS: スクリーン上の太陽方向（正規化）
-    // 例：上から差す光なら (0, -1) 近い値になる
+    [branch]
+    if (gGodRayIntensity <= 0.001f || gGodRayWeight <= 0.0f)
+        return 0.0f;
 
-    const int N = 48;
-
+    const int N = GOD_NUM_SAMPLES;
     float2 stepUV = sunDirSS * (gGodRayDensity / (float) N);
 
     float sum = 0.0;
     float decay = 1.0;
-
     float2 p = uv;
 
-    [unroll]
+    [loop]
     for (int i = 0; i < N; ++i)
     {
         p -= stepUV;
@@ -417,11 +402,8 @@ float ComputeDirectionalGodRay(float2 uv, float shadow, float2 sunDirSS)
             break;
 
         float z = gDepth.SampleLevel(gSampler, p, 0);
-
-        // “空/遠方なら通す” みたいな簡易遮蔽
         float occ = (z >= gGodRayMaxDepth) ? 1.0 : 0.0;
 
-        // 影があるところは筋が出にくい（木の影で切れる）
         float sh = shadow;
 
         sum += occ * sh * decay * gGodRayWeight;
@@ -431,14 +413,11 @@ float ComputeDirectionalGodRay(float2 uv, float shadow, float2 sunDirSS)
     return sum * gGodRayIntensity;
 }
 
+// 最適化版（入力は正規化されている前提）
 float ComputeRadialWeight(float3 camForwardWS, float3 sunDirWS)
 {
-    float3 V = normalize(camForwardWS);
-    float3 L = normalize(-sunDirWS); // 太陽“から来る”方向（必要なら符号反転）
-    float d = abs(dot(V, L)); // 0..1
-
-    // 0.2以下でDirectional寄り、0.6以上でRadial寄り、間はなめらかに補間
-    return smoothstep(0.2, 0.6, d); // -> wRadial
+    float d = abs(dot(camForwardWS, -sunDirWS));
+    return smoothstep(0.2, 0.6, d);
 }
 
 float4 main(VSOut i) : SV_Target
@@ -455,13 +434,28 @@ float4 main(VSOut i) : SV_Target
     ndc.z = gDepth.Sample(gDepthPointSamp, uv);
     ndc.w = 1.0f;
 
+    // 例: 1.0 が完全な空で、遠景ジオメトリがそこまで行かないなら
+    //[branch]
+    //if (ndc.z >= 0.9999f)
+    //{
+    //    float3 skyColor = emiMetal.rgb * emissiveBoost;
+
+    //    if (gEnableGodRay != 0)
+    //    {
+    //        float wRadial = ComputeRadialWeight(camForward.xyz, gSunDirectionWS);
+    //        float godRadial = ComputeRadialGodRay(uv);
+    //        float godDirectional = ComputeDirectionalGodRay(uv, 1.0f, gSunDirSS);
+    //        float god = lerp(godDirectional, godRadial, wRadial);
+    //        skyColor += gGodRayTint * god; // 空は霧 factor 無しでもOKならこうする
+    //    }
+
+    //    return float4(skyColor, 1.0f);
+    //}
+
     // View-Projection 逆行列でワールド位置を復元
     float4 wp = mul(invViewProj, ndc);
 
     wp /= wp.w;
-
-    // ベースの「夜の明るさ」（全体暗さ）
-    float3 ambient = albedoAO.rgb * (gAmbientColor * gAmbientIntensity);
 
     float viewDepth = dot(wp.xyz - camPos.xyz, camForward.xyz);
 
@@ -482,7 +476,8 @@ float4 main(VSOut i) : SV_Target
     // -----------------------------
     // gSunDirectionWS は「太陽の向き」想定なので、
     // 光が“来る”方向は -gSunDirectionWS として扱う
-    float3 L = normalize(-gSunDirectionWS);
+   // 最適化版（gSunDirectionWS を WS で正規化して渡す前提）
+    float3 L = -gSunDirectionWS;
 
     // 通常の N・L
     float ndl = saturate(dot(N, L));
@@ -515,9 +510,14 @@ float4 main(VSOut i) : SV_Target
 
     // PointLight（Unlit Toon）
     // とりあえずmetalを透けの強さに利用
-    float translucency = emiMetal.a; // 0..1
-    float3 transColor = albedo; // ざっくり「葉の色で透ける」でも良い
-    float3 plAdd = AccumulatePointLights_UnlitWithTranslucency(wp.xyz, N, albedo, translucency, transColor);
+    float3 plAdd = 0.0f;
+    [branch]
+    if (gPointLightCount > 0)
+    {
+        float translucency = emiMetal.a;
+        float3 transColor = albedo;
+        plAdd = AccumulatePointLights_UnlitWithTranslucency(wp.xyz, N, albedo, translucency, transColor);
+    }
 
     // Emissive（必要ならそのまま加算）
     float3 color = base + plAdd + emiMetal.rgb * emissiveBoost;

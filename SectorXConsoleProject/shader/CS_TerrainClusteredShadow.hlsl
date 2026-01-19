@@ -34,11 +34,12 @@ cbuffer CSParams : register(b4)
 
     float2 ScreenSize;
 
-    // メイン用 LOD しきい値 (px)
-    float2 LodPxThreshold_Main; // x: LOD0/1, y: LOD1/2
+     // メイン用 LOD しきい値 (px)
+    // x: LOD0/1 の境界, y: LOD1/2 の境界
+    float4 LodPxThreshold_Main;
 
     // シャドウ用 LOD しきい値 (px)
-    float2 LodPxThreshold_Shadow; // x: LOD0/1, y: LOD1/2
+    float4 LodPxThreshold_Shadow;
 };
 
 // --------------------- 入力バッファ ---------------------
@@ -60,16 +61,6 @@ RWStructuredBuffer<uint> Visible_Main : register(u1);
 RWByteAddressBuffer CascadeCounters : register(u2);
 // u3: カスケード全体の VisibleIndices (4カスケード連結)
 RWStructuredBuffer<uint> Visible_Cascades : register(u3);
-
-cbuffer TerrainGridCB : register(b10)
-{
-    float2 gOriginXZ; // ワールド座標の基準 (x,z)
-    float2 gCellSizeXZ; // 1クラスタのサイズ (x,z)
-    uint gDimX; // クラスタ数X
-    uint gDimZ; // クラスタ数Z
-    float heightScale;
-    float offsetY; // 地形オフセット（ワールドY）
-};
 
 
 // ================================================================

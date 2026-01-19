@@ -314,7 +314,7 @@ private:
 	Graphics::BufferHandle fogCBHandle;
 	Graphics::BufferHandle godRayCBHandle;
 
-	float m_elapsedTime = 60.0f;
+	float m_elapsedTime = 0.0f;
 	float m_dayLengthSec = 120.0f; // ˆêü‚É‚©‚©‚éŠÔ(•b)
 	float m_timeOfDay = 0.0f; // Œ»İ‚ÌŠÔ(0.0~1.0)
 
@@ -327,7 +327,7 @@ private:
 	bool isUpdateFogBuffer = false;
 	bool isUpdateGodRayBuffer = false;
 
-	bool isUpdateTimeOfDay = false;
+	bool isUpdateTimeOfDay = true;
 
 public:
 	STATIC_SERVICE_TAG

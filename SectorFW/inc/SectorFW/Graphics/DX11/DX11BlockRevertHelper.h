@@ -42,6 +42,99 @@ namespace SFW::Graphics::DX11 {
     struct ClusterRangeU32 { UINT offset; UINT count; }; // count in index units (tri-list)
     struct ClusterLodRange { UINT offset; UINT count; };
 
+    //============================================================
+   // 4レイヤ + スプラット制御 の “Texture2DArray 方式” 支援
+   //============================================================
+
+       // Resolve: あなたの資産DBから id -> (path, forceSRGB) を解決
+    using ResolveTexturePathFn = bool(*)(uint32_t id, std::string& path, bool& forceSRGB);
+
+    // クラスタ別スプラットの slice を保持・PS 定数で通知
+    struct SplatArrayResources {
+        // 共通のスプラット Array（t14 に張る想定）
+        ComPtr<ID3D11ShaderResourceView> splatArraySRV;
+        // PS用
+        ComPtr<ID3D11SamplerState>       sampLinearWrap; // s0
+        ComPtr<ID3D11Buffer>             cbSplat;        // b1
+        // クラスタごとのメタ
+        struct PerCluster {
+            int   splatSlice = 0;     // Texture2DArray のスライス番号
+            float layerTiling[4][2]{}; // 各素材のタイル
+            float splatST[2]{ 1,1 };
+            float splatOffset[2]{ 0,0 };
+
+        };
+        std::vector<PerCluster> perCluster;
+
+    };
+
+    // PS 側のレイアウトに合わせた CB 構造（b1）
+    struct SplatCBData {
+        float layerTiling[4][2];
+        float splatST[2];
+        float splatOffset[2];
+        int   splatSlice;
+        float _pad[3];
+
+    };
+
+    // ------------------------------------------------------------------
+        // 共通4素材（アルベド）: クラスタに依らず固定の4枚を t10..t13 に張る
+            // ------------------------------------------------------------------
+    using ResolveTexturePathFn = bool(*)(uint32_t id, std::string& path, bool& forceSRGB);
+
+    struct CommonMaterialResources {
+        // t10..t13 に貼る素材アルベド
+        ComPtr<ID3D11ShaderResourceView> layerSRV[4];
+        // 共通サンプラ（s0）。既存のスプラットと共有でOK
+        ComPtr<ID3D11SamplerState>       sampLinearWrap;
+        // 管理用: 指定IDを覚えておく（デバッグ/ホットリロードなど）
+        uint32_t materialId[4]{ 0,0,0,0 };
+
+    };
+
+    // クラスタ別に必要な最小情報（PSでインデックスして読む）
+    struct ClusterParam {
+        int   splatSlice;       // Texture2DArray のスライス
+        int   _pad0[3];
+        float layerTiling[4][2]; // 各素材のタイル(U,V)
+        float splatST[2];        // スプラットUVスケール
+        float splatOffset[2];    // スプラットUVオフセット
+
+    };
+
+    // グリッド定数（b2）
+    struct alignas(16) TerrainGridCB {
+        Math::Vec2f originXZ;     // ワールドX-Zの原点（グリッド(0,0)の左下 or 任意基準）
+        Math::Vec2f clusterSizeXZ;   // 各クラスタの幅・奥行（ワールド）
+        uint32_t dimX;       // クラスタ数X
+        uint32_t dimZ;       // クラスタ数Z
+        float heightScale;  // 高さスケール
+        float offsetY;      // 高さオフセット
+
+        // Heightfield 全体の頂点数
+        uint32_t gVertsX; // (= vertsX)
+        uint32_t gVertsZ; // (= vertsZ)
+
+        uint32_t padding[2];
+
+        Math::Vec2f gCellSize;    // heightMap のセルサイズ（ワールド）
+        Math::Vec2f gHeightMapInvSize; // heightMap の 1/サイズ（UV->テクスチャ座標変換用）
+    };
+
+    struct ClusterParamsGPU {
+        // SRV で読む StructuredBuffer
+        ComPtr<ID3D11Buffer>             sb;     // D3D11_BIND_SHADER_RESOURCE | D3D11_RESOURCE_MISC_BUFFER_STRUCTURED
+        ComPtr<ID3D11ShaderResourceView> srv;    // t15 にバインド
+        // グリッド用CB（b2）
+        ComPtr<ID3D11Buffer>             cbGrid;
+        // バッファハンドル
+        Graphics::BufferHandle           gridHandle;
+        // CPU側ミラー
+        std::vector<ClusterParam>        cpu;
+        TerrainGridCB                    grid;
+    };
+
     // ------------------------------------------------------------
     // Buffer helpers
     // ------------------------------------------------------------
@@ -165,16 +258,23 @@ namespace SFW::Graphics::DX11 {
             float CascadeFrustum[kMaxShadowCascades][6][4];
             float ViewProj[16];
             UINT  MaxVisibleIndices;
-            UINT  LodLevels = 3;
+            UINT  LodLevels = 5;
             float ScreenSize[2] = { 1980.0f,1080.0f };
-            float LodPxThreshold_Main[2] = {400.0f,160.0f};
-            float LodPxThreshold_Shadow[2] = { 400.0f,160.0f };
+            float LodPxThreshold_Main[4] = { 600.0f,300.0f, 150.0f, 50.0f };
+            float LodPxThreshold_Shadow[4] = { 600.0f,300.0f, 150.0f, 50.0f };
         };
 
         struct VSParams { float View[16]; float Proj[16]; float ViewProj[16];};
 
         struct CSParamsCB {
-            float planes[6][4]; UINT clusterCount; UINT _pad0, _pad1, _pad2; float VP[16]; float ScreenSize[2]; float LodPxThreshold[2]; UINT LodLevels; UINT _pad3;
+            float planes[6][4];
+            UINT clusterCount;
+            UINT _pad0, _pad1, _pad2;
+            float VP[16];
+            float ScreenSize[2];
+            float LodPxThreshold[2];
+            UINT LodLevels;
+            UINT _pad3;
         };
 
         struct VSDepthParams { float View[16]; float Proj[16]; float ViewProj[16]; };
@@ -190,15 +290,16 @@ namespace SFW::Graphics::DX11 {
         ComPtr<ID3D11UnorderedAccessView> visibleUAV;
 
         // Terrain source SRVs
-        ComPtr<ID3D11Buffer>             indexPoolBuf;    ComPtr<ID3D11ShaderResourceView> indexPoolSRV;      // t0
-        ComPtr<ID3D11Buffer>             clusterRangeBuf; ComPtr<ID3D11ShaderResourceView> clusterRangeSRV;   // t1 (optional for LOD0 only)
-        ComPtr<ID3D11Buffer>             aabbMinBuf;      ComPtr<ID3D11ShaderResourceView> aabbMinSRV;        // t2
-        ComPtr<ID3D11Buffer>             aabbMaxBuf;      ComPtr<ID3D11ShaderResourceView> aabbMaxSRV;        // t3
+        ComPtr<ID3D11Buffer>             indexPoolBuf;      ComPtr<ID3D11ShaderResourceView> indexPoolSRV;      // t0
+        ComPtr<ID3D11Buffer>             clusterRangeBuf;   ComPtr<ID3D11ShaderResourceView> clusterRangeSRV;   // t1 (optional for LOD0 only)
+        ComPtr<ID3D11Buffer>             aabbMinBuf;        ComPtr<ID3D11ShaderResourceView> aabbMinSRV;        // t2
+        ComPtr<ID3D11Buffer>             aabbMaxBuf;        ComPtr<ID3D11ShaderResourceView> aabbMaxSRV;        // t3
+        ComPtr<ID3D11Buffer>             clusterGridRectBuf;ComPtr<ID3D11ShaderResourceView> clusterGridRectSRV;   // t4
 
         // LOD metadata SRVs
-        ComPtr<ID3D11Buffer>             lodRangesBuf;    ComPtr<ID3D11ShaderResourceView> lodRangesSRV;      // t4
-        ComPtr<ID3D11Buffer>             lodBaseBuf;      ComPtr<ID3D11ShaderResourceView> lodBaseSRV;        // t5
-        ComPtr<ID3D11Buffer>             lodCountBuf;     ComPtr<ID3D11ShaderResourceView> lodCountSRV;       // t6
+        ComPtr<ID3D11Buffer>             lodRangesBuf;      ComPtr<ID3D11ShaderResourceView> lodRangesSRV;      // t4
+        ComPtr<ID3D11Buffer>             lodBaseBuf;        ComPtr<ID3D11ShaderResourceView> lodBaseSRV;        // t5
+        ComPtr<ID3D11Buffer>             lodCountBuf;       ComPtr<ID3D11ShaderResourceView> lodCountSRV;       // t6
 
         // Optional vertex streams (VS pulls)
         ComPtr<ID3D11Buffer> posBuf, nrmBuf, uvBuf;
@@ -403,6 +504,12 @@ namespace SFW::Graphics::DX11 {
             return true;
         }
 
+        bool BuildClusterGridRect(ID3D11Device* dev, const TerrainClustered::ClusterRange::GridRect* gridRect, UINT gridRectCount)
+        {
+            ComPtr<ID3D11UnorderedAccessView> dummy;
+            return CreateStructured(dev, gridRectCount, sizeof(TerrainClustered::ClusterRange::GridRect), D3D11_BIND_SHADER_RESOURCE, gridRect, clusterGridRectBuf, clusterGridRectSRV, dummy);
+        }
+
         bool BuildVertexStreams(ID3D11Device* dev, const float* pos3, const float* nrm3, const float* uv2, UINT vertCount)
         {
             auto makeStream = [&](const void* src, UINT stride, UINT count, ComPtr<ID3D11Buffer>& buf, ComPtr<ID3D11ShaderResourceView>& srv) {
@@ -435,7 +542,7 @@ namespace SFW::Graphics::DX11 {
         {
             // カスケード
             UINT cascadeCount = kMaxShadowCascades;
-            UINT  lodLevels = 3;
+            UINT  lodLevels = 5;
 
             // メインカメラ
             ID3D11DepthStencilView* mainDSV = nullptr;
@@ -455,15 +562,22 @@ namespace SFW::Graphics::DX11 {
             // LOD パラメータ
             float lodT0px = 400.f;
             float lodT1px = 160.f;
+			float lodT2px = 80.f;
+			float lodT3px = 40.f;
 
             float shadowLodT0px = 800.f;
             float shadowLodT1px = 320.f;
+			float shadowLodT2px = 160.f;
+			float shadowLodT3px = 80.f;
         };
 
         void RunShadowDepth(
             ID3D11DeviceContext* ctx,
             ComPtr<ID3D11Buffer>&& cameraCB,
+			ComPtr<ID3D11ShaderResourceView> heightMapSRV,
+            ComPtr<ID3D11ShaderResourceView> normalMapSRV,
             const ShadowDepthParams& p,
+            const ClusterParamsGPU& cp,
 			const D3D11_VIEWPORT* cascadeViewport = nullptr,
             bool castShadow = true)
         {
@@ -486,16 +600,17 @@ namespace SFW::Graphics::DX11 {
             {
                 ctx->CSSetShader(csCullWriteShadow.Get(), nullptr, 0);
 
-                ID3D11ShaderResourceView* srvs[7] = {
-                    indexPoolSRV.Get(),
-                    clusterRangeSRV.Get(),
+                ID3D11ShaderResourceView* srvs[3] = {
+                    //indexPoolSRV.Get(),
+                    //clusterRangeSRV.Get(),
                     aabbMinSRV.Get(),
                     aabbMaxSRV.Get(),
-                    lodRangesSRV.Get(),
+                    /*lodRangesSRV.Get(),
                     lodBaseSRV.Get(),
-                    lodCountSRV.Get()
+                    lodCountSRV.Get()*/
+					clusterGridRectSRV.Get(),
                 };
-                ctx->CSSetShaderResources(0, 7, srvs);
+                ctx->CSSetShaderResources(2, 3, srvs);
 
                 // u0: counterUAV（メイン＆シャドウ共通）
                 // u1: visibleUAV（メイン）
@@ -512,6 +627,7 @@ namespace SFW::Graphics::DX11 {
                 };
                 ctx->CSSetUnorderedAccessViews(0, 4, uavs, initial);
 
+				ctx->CSSetConstantBuffers(10, 1, cp.cbGrid.GetAddressOf());
 
                 // cbCS に「メイン + カスケードのフラスタム」と LOD 情報を詰める
                 {
@@ -528,8 +644,12 @@ namespace SFW::Graphics::DX11 {
                     csp->ScreenSize[1] = (float)p.screenH;
                     csp->LodPxThreshold_Main[0] = p.lodT0px;
                     csp->LodPxThreshold_Main[1] = p.lodT1px;
+					csp->LodPxThreshold_Main[2] = p.lodT2px;
+					csp->LodPxThreshold_Main[3] = p.lodT3px;
                     csp->LodPxThreshold_Shadow[0] = p.shadowLodT0px;
                     csp->LodPxThreshold_Shadow[1] = p.shadowLodT1px;
+					csp->LodPxThreshold_Shadow[2] = p.shadowLodT2px;
+					csp->LodPxThreshold_Shadow[3] = p.shadowLodT3px;
                     ctx->Unmap(cbCSShadow.Get(), 0);
                     ctx->CSSetConstantBuffers(4, 1, cbCSShadow.GetAddressOf());
                 }
@@ -601,18 +721,22 @@ namespace SFW::Graphics::DX11 {
                 ctx->OMSetRenderTargets(0, nullptr, p.mainDSV);
                 //ctx->RSSetViewports(1, &p.mainViewport);
 
-                ctx->VSSetConstantBuffers(10, 1, cbCameraFrame.GetAddressOf());
+				ctx->VSSetConstantBuffers(10, 1, cp.cbGrid.GetAddressOf());
+
+                ctx->VSSetConstantBuffers(11, 1, cbCameraFrame.GetAddressOf());
 
                 ctx->VSSetShader(vsDepth.Get(), nullptr, 0);
                 ctx->PSSetShader(nullptr, nullptr, 0); // DepthOnly
 
-                ID3D11ShaderResourceView* vsSRVs[2] = {
+                ID3D11ShaderResourceView* vsSRVs[3] = {
                     visibleSRV.Get(),  // メイン用 VisibleIndices
-                    posSRV.Get(),
+                    //posSRV.Get(),
                     //nrmSRV.Get(),
                     //uvSRV.Get()
+                    clusterGridRectSRV.Get(),
+					heightMapSRV.Get(),
                 };
-                ctx->VSSetShaderResources(20, 2, vsSRVs);
+                ctx->VSSetShaderResources(20, 3, vsSRVs);
 
                 ctx->IASetInputLayout(nullptr);
                 ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -648,17 +772,22 @@ namespace SFW::Graphics::DX11 {
 				//各カスケードごとのoffsetで生成したSRVをセット
                 ctx->VSSetShaderResources(20, 1, shadowVisibleSRV[ci].GetAddressOf());
 
-                ctx->VSSetConstantBuffers(10, 1, cbVSShadow.GetAddressOf());
+				ctx->VSSetConstantBuffers(10, 1, cp.cbGrid.GetAddressOf());
+
+                ctx->VSSetConstantBuffers(11, 1, cbVSShadow.GetAddressOf());
 
                 ctx->VSSetShader(vsShadow.Get(), nullptr, 0);
                 ctx->PSSetShader(nullptr, nullptr, 0);
 
                 ID3D11ShaderResourceView* vsSRVs[] = {
-                    posSRV.Get(),
+                    //posSRV.Get(),
                     //nrmSRV.Get(),
                     //uvSRV.Get()
+
+                    clusterGridRectSRV.Get(),
+					heightMapSRV.Get(),
                 };
-                ctx->VSSetShaderResources(21, 1, vsSRVs);
+                ctx->VSSetShaderResources(21, 2, vsSRVs);
 
                 ctx->IASetInputLayout(nullptr);
                 ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -672,18 +801,30 @@ namespace SFW::Graphics::DX11 {
             ctx->VSSetShaderResources(20, 4, nullVs);
         }
 
-        void RunColor(ID3D11DeviceContext* ctx)
+        void RunColor(ID3D11DeviceContext* ctx,
+            ComPtr<ID3D11ShaderResourceView> heightMapSRV,
+            ComPtr<ID3D11ShaderResourceView> normalMapSRV,
+            const ClusterParamsGPU& cp)
         {
-            ctx->VSSetConstantBuffers(10, 1, cbCameraFrame.GetAddressOf());
+            ID3D11ShaderResourceView* srv = cp.srv.Get();
+            ctx->PSSetShaderResources(25, 1, &srv); // t25: StructuredBuffer<ClusterParam>
+            ID3D11Buffer* cbs[] = { cp.cbGrid.Get() };
+            ctx->PSSetConstantBuffers(10, 1, cbs);   // b10: TerrainGridCB
+
+			ctx->VSSetConstantBuffers(10, 1, cbs);
+            ctx->VSSetConstantBuffers(11, 1, cbCameraFrame.GetAddressOf());
 
             ctx->VSSetShader(vs.Get(), nullptr, 0);
             ctx->PSSetShader(ps.Get(), nullptr, 0);
 
             ID3D11ShaderResourceView* vsSRVs[4] = {
                 visibleSRV.Get(),  // Depth プリパスで作った VisibleIndices_Main
-                posSRV.Get(),
+               /* posSRV.Get(),
                 nrmSRV.Get(),
-                uvSRV.Get()
+                uvSRV.Get()*/
+				clusterGridRectSRV.Get(),
+				heightMapSRV.Get(),
+				normalMapSRV.Get()
             };
             ctx->VSSetShaderResources(20, 4, vsSRVs);
 
@@ -716,14 +857,17 @@ namespace SFW::Graphics::DX11 {
         const UINT ccount = (UINT)t.clusters.size();
         std::vector<ClusterRangeU32> ranges(ccount);
         std::vector<float> mins(ccount * 3), maxs(ccount * 3);
+		std::vector<TerrainClustered::ClusterRange::GridRect> gridRects(ccount);
         for (UINT i = 0; i < ccount; ++i) {
             ranges[i].offset = t.clusters[i].indexOffset;
             ranges[i].count = t.clusters[i].indexCount;
             mins[i * 3 + 0] = t.clusters[i].bounds.lb[0]; mins[i * 3 + 1] = t.clusters[i].bounds.lb[1]; mins[i * 3 + 2] = t.clusters[i].bounds.lb[2];
             maxs[i * 3 + 0] = t.clusters[i].bounds.ub[0]; maxs[i * 3 + 1] = t.clusters[i].bounds.ub[1]; maxs[i * 3 + 2] = t.clusters[i].bounds.ub[2];
+			gridRects[i] = t.clusters[i].gridRect;
         }
         if (!out.BuildClusterRange(dev, ranges.data(), ccount)) return false;
         if (!out.BuildClusterAABBs(dev, mins.data(), maxs.data(), ccount)) return false;
+		if (!out.BuildClusterGridRect(dev, gridRects.data(), ccount)) return false;
 
         if (out.maxVisibleIndices < (UINT)t.indexPool.size()) {
             out.visibleBuf.Reset(); out.visibleSRV.Reset(); out.visibleUAV.Reset();
@@ -958,91 +1102,6 @@ namespace SFW::Graphics::DX11 {
         LOG_INFO("generate clustered lod terrain mesh time {%f :ms}", time);
     }
 #endif
-
-    //============================================================
-        // 4レイヤ + スプラット制御 の “Texture2DArray 方式” 支援
-        //============================================================
-
-        // Resolve: あなたの資産DBから id -> (path, forceSRGB) を解決
-    using ResolveTexturePathFn = bool(*)(uint32_t id, std::string& path, bool& forceSRGB);
-
-    // クラスタ別スプラットの slice を保持・PS 定数で通知
-    struct SplatArrayResources {
-        // 共通のスプラット Array（t14 に張る想定）
-        ComPtr<ID3D11ShaderResourceView> splatArraySRV;
-        // PS用
-        ComPtr<ID3D11SamplerState>       sampLinearWrap; // s0
-        ComPtr<ID3D11Buffer>             cbSplat;        // b1
-        // クラスタごとのメタ
-        struct PerCluster {
-            int   splatSlice = 0;     // Texture2DArray のスライス番号
-            float layerTiling[4][2]{}; // 各素材のタイル
-            float splatST[2]{ 1,1 };
-            float splatOffset[2]{ 0,0 };
-
-        };
-        std::vector<PerCluster> perCluster;
-
-    };
-
-    // PS 側のレイアウトに合わせた CB 構造（b1）
-    struct SplatCBData {
-        float layerTiling[4][2];
-        float splatST[2];
-        float splatOffset[2];
-        int   splatSlice;
-        float _pad[3];
-
-    };
-
-    // ------------------------------------------------------------------
-        // 共通4素材（アルベド）: クラスタに依らず固定の4枚を t10..t13 に張る
-            // ------------------------------------------------------------------
-    using ResolveTexturePathFn = bool(*)(uint32_t id, std::string& path, bool& forceSRGB);
-
-    struct CommonMaterialResources {
-        // t10..t13 に貼る素材アルベド
-        ComPtr<ID3D11ShaderResourceView> layerSRV[4];
-        // 共通サンプラ（s0）。既存のスプラットと共有でOK
-        ComPtr<ID3D11SamplerState>       sampLinearWrap;
-        // 管理用: 指定IDを覚えておく（デバッグ/ホットリロードなど）
-        uint32_t materialId[4]{ 0,0,0,0 };
-
-    };
-
-    // クラスタ別に必要な最小情報（PSでインデックスして読む）
-    struct ClusterParam {
-        int   splatSlice;       // Texture2DArray のスライス
-        int   _pad0[3];
-        float layerTiling[4][2]; // 各素材のタイル(U,V)
-        float splatST[2];        // スプラットUVスケール
-        float splatOffset[2];    // スプラットUVオフセット
-
-    };
-
-    // グリッド定数（b2）
-    struct alignas(16) TerrainGridCB {
-        Math::Vec2f originXZ;     // ワールドX-Zの原点（グリッド(0,0)の左下 or 任意基準）
-        Math::Vec2f cellSizeXZ;   // 各クラスタの幅・奥行（ワールド）
-        uint32_t dimX;       // クラスタ数X
-        uint32_t dimZ;       // クラスタ数Z
-		float heightScale;  // 高さスケール
-		float offsetY;      // 高さオフセット
-    };
-
-    struct ClusterParamsGPU {
-        // SRV で読む StructuredBuffer
-        ComPtr<ID3D11Buffer>             sb;     // D3D11_BIND_SHADER_RESOURCE | D3D11_RESOURCE_MISC_BUFFER_STRUCTURED
-        ComPtr<ID3D11ShaderResourceView> srv;    // t15 にバインド
-        // グリッド用CB（b2）
-        ComPtr<ID3D11Buffer>             cbGrid;
-        // バッファハンドル
-		Graphics::BufferHandle           gridHandle;
-        // CPU側ミラー
-        std::vector<ClusterParam>        cpu;
-        TerrainGridCB                    grid;
-
-    };
 
     // サンプラと SRV を構築（アルベドは sRGB 推奨）
     inline bool BuildCommonMaterialSRVs(ID3D11Device* dev,
@@ -1421,30 +1480,28 @@ namespace SFW::Graphics::DX11 {
         return true;
     }
 
-     // t15 と b2 のバインド（ワンドロー前に一度だけ）
-    inline void BindClusterParamsForOneCall(ID3D11DeviceContext* ctx,
-        const ClusterParamsGPU& P)
-    {
-        ID3D11ShaderResourceView* srv = P.srv.Get();
-        ctx->PSSetShaderResources(25, 1, &srv); // t15: StructuredBuffer<ClusterParam>
-        ID3D11Buffer* cbs[] = { P.cbGrid.Get() };
-        ctx->PSSetConstantBuffers(10, 1, cbs);   // b2: TerrainGridCB
-    }
-
         // 便利ユーティリティ：Terrain のグリッド定数を設定
-    inline void SetupTerrainGridCB(const Math::Vec2f& originXZ,
-        const Math::Vec2f& cellSizeXZ,
+    inline void SetupTerrainGridCB(
+        const TerrainBuildParams& p,
         uint32_t dimX, uint32_t dimZ,
-		float heightScale,
-		float offsetY,
         ClusterParamsGPU& out)
     {
-        out.grid.originXZ = originXZ;
-        out.grid.cellSizeXZ = cellSizeXZ;
+        out.grid.originXZ = { p.offset.x, p.offset.z };
+        out.grid.clusterSizeXZ = { p.clusterCellsX * p.cellSize, p.clusterCellsZ * p.cellSize };
         out.grid.dimX = dimX;
         out.grid.dimZ = dimZ;
-        out.grid.heightScale = heightScale;
-		out.grid.offsetY = offsetY;
+        out.grid.heightScale = p.heightScale;
+		out.grid.offsetY = p.offset.y;
+        out.grid.gVertsX = p.cellsX + 1;
+        out.grid.gVertsZ = p.cellsZ + 1;
+		out.grid.gCellSize = Math::Vec2f{
+            p.cellSize,
+            p.cellSize
+		};
+		out.grid.gHeightMapInvSize = Math::Vec2f{
+			1.0f / static_cast<float>(p.cellsX + 1),
+			1.0f / static_cast<float>(p.cellsZ + 1)
+		};
     }
 
         // 入力シート（ID）→ ID3D11Texture2D を取得
@@ -1456,9 +1513,7 @@ namespace SFW::Graphics::DX11 {
         std::string path{}; bool srgbFlag = forceSRGB;
         if (!resolve(sheetId, path, srgbFlag)) return {};
         TextureCreateDesc cd{}; cd.path = path; cd.forceSRGB = srgbFlag;
-//#ifdef _DEBUG
-//        cd.convertDSS = false;
-//#endif
+
         TextureHandle h = {};
         texMgr.Add(cd, h);
         auto data = texMgr.Get(h);
