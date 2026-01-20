@@ -11,6 +11,7 @@ struct VSOutput
 {
     float4 clip : SV_POSITION;
     float2 uv : TEXCOORD;
+    float4 color : COLOR0;
 };
 
 struct SpriteInfo
@@ -43,6 +44,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     float2 uv = spriteInfo.frameIdx * cellSize + input.uv * cellSize;
 
     output.uv = uv;
+    output.color = gInstanceMats[pooledIndex].color;
 
     return output;
 }

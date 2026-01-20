@@ -57,6 +57,7 @@ cbuffer CBShadowCascades : register(b5)
 struct InstanceMat
 {
     row_major float3x4 M;
+    float4 color;
 };
 StructuredBuffer<InstanceMat> gInstanceMats : register(t0);
 

@@ -56,6 +56,7 @@ namespace SFW
 		struct InstanceData
 		{
 			Math::Matrix4x4f worldMtx;
+			Math::Vec4f color = Math::Vec4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 			InstanceData() : worldMtx(Math::Matrix4x4f::Identity()) {
 				worldMtx[3][3] = 0.0f; // –³Œø‰»

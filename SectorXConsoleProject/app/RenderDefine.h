@@ -38,3 +38,8 @@ constexpr inline const char* DeferredTextureNames[] = {
 inline constexpr size_t DeferredTextureCount = sizeof(DeferredTextureNames) / sizeof(DeferredTextureNames[0]);
 
 inline static constexpr const char* BLOOM_TEXTURE_NAME = "BloomTexture";
+
+struct CColor
+{
+	Math::Vec4f color = Math::Vec4f(1.0f, 1.0f, 1.0f, 1.0f);
+};

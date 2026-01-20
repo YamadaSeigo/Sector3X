@@ -38,6 +38,7 @@
 #include "system/PointLightSystem.h"
 #include "system/SpriteAnimationSystem.h"
 #include "system/FireflySystem.h"
+#include "system/TitleSystem.h"
 #include "WindMovementService.h"
 #include "EnvironmentService.h"
 
@@ -885,10 +886,12 @@ int main(void)
 	ComponentTypeRegistry::Register<Physics::CPhyBody>();
 	ComponentTypeRegistry::Register<Physics::PhysicsInterpolation>();
 	ComponentTypeRegistry::Register<Physics::ShapeDims>();
+	ComponentTypeRegistry::Register<CColor>();
 	ComponentTypeRegistry::Register<CSprite>();
 	ComponentTypeRegistry::Register<CPointLight>();
 	ComponentTypeRegistry::Register<CSpriteAnimation>();
 	ComponentTypeRegistry::Register<CFireflyVolume>();
+
 	//======================================================================
 
 	// ウィンドウの作成
@@ -1374,14 +1377,14 @@ int main(void)
 		}
 	);
 
-	SFW::World<Grid2DPartition, VoidPartition> world(std::move(serviceLocator));
+	WorldType world(std::move(serviceLocator));
 	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
 
 	auto& worldRequestService = world.GetRequestServiceNoLock();
 
 	// グローバルシステムの追加
 	{
-		std::vector<std::unique_ptr<decltype(world)::IRequestCommand>> reqCmds;
+		std::vector<std::unique_ptr<WorldType::IRequestCommand>> reqCmds;
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<CameraSystem>());
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<EnvironmentSystem>());
 		reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<LightShadowSystem>());
@@ -1461,9 +1464,12 @@ int main(void)
 					return scale;
 					};
 
+				CColor color = { { 1.0f,1.0f,1.0f,1.0f} };
+
 				levelSession.AddGlobalEntity(
 					CTransform{ getPos(0.0f,0.4f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.7f,0.7f) },
-					sprite);
+					sprite,
+					color);
 
 				textureDesc.path = "assets/texture/sprite/PressEnter.png";
 				textureMgr->Add(textureDesc, texHandle);
@@ -1473,9 +1479,11 @@ int main(void)
 
 				levelSession.AddGlobalEntity(
 					CTransform{ getPos(0.0f,-0.7f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.25f,0.25f) },
-					sprite);
+					sprite,
+					color);
 
 				auto& scheduler = pLevel->GetScheduler();
+				scheduler.AddSystem<TitleSystem>(*serviceLocator);
 				scheduler.AddSystem<SpriteRenderSystem>(*serviceLocator);
 
 				perCameraService->SetTarget({ 100.0f,-1.0f,100.0f });
@@ -1552,10 +1560,13 @@ int main(void)
 					return scale;
 					};
 
+				CColor color = { { 1.0f,1.0f,1.0f,1.0f} };
+
 				auto levelSession = pLevel->GetSession();
 				levelSession.AddGlobalEntity(
 					CTransform{ getPos(0.9f, -0.85f), {0.0f,0.0f,0.0f,1.0f}, getScale(0.15f)},
-					spriteAnim);
+					spriteAnim,
+					color);
 
 				auto& scheduler = pLevel->GetScheduler();
 				scheduler.AddSystem<SpriteAnimationSystem>(*serviceLocator);
@@ -1851,18 +1862,18 @@ int main(void)
 							}
 
 							auto splatR = cpuSplatImage.bytes[byteIndex];
-							if (splatR < 20) {
+							if (splatR < 15) {
 								continue; // 草が薄い場所はスキップ
 							}
 
 							//　薄いほど高さを下げる
 							float t = 1.0f - splatR / 255.0f; // 0..1
-							constexpr float k = 8.0f;            // カーブの強さ（お好み）
+							constexpr float k = 5.0f;            // カーブの強さ（お好み）
 
 							// 0..1 に正規化した exp カーブ
 							float w = (std::exp(k * t) - 1.0f) / (std::exp(k) - 1.0f); // w: 0..1
 
-							location.y -= w * 4.0f;   // 最大で 4 下げる（0..4）
+							location.y -= w * 2.0f;   // 最大で 4 下げる（0..4）
 
 							auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 							auto modelComp = CModel{ grassModelHandle };
@@ -2189,7 +2200,7 @@ int main(void)
 			pSession->CleanLevel(LoadingLevelName);
 			};
 
-		world.LoadLevel("OpenField", true, true, loadedFunc);
+		world.LoadLevel("Title", true, true, loadedFunc);
 	}
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);

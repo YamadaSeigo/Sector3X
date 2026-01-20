@@ -9,14 +9,15 @@ class SpriteAnimationSystem : public ITypeSystem<
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
 		Write<CSpriteAnimation>,
-		Read<CTransform>
+		Read<CTransform>,
+		Read<CColor>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
 		SpriteAnimationService,
 		SFW::Graphics::RenderService
 	>>{
-	using Accessor = ComponentAccessor<Write<CSpriteAnimation>, Read<CTransform>>;
+	using Accessor = ComponentAccessor<Write<CSpriteAnimation>, Read<CTransform>, Read<CColor>>;
 public:
 	void StartImpl(
 		NoDeletePtr<SpriteAnimationService> spriteAnimationService,
@@ -58,6 +59,7 @@ public:
 
 			auto sprite = accessor.Get<Write<CSpriteAnimation>>();
 			auto transform = accessor.Get<Read<CTransform>>();
+			auto color = accessor.Get<Read<CColor>>();
 
 			Math::MTransformSoA mtf = {
 					transform->px(), transform->py(), transform->pz(),
@@ -71,7 +73,7 @@ public:
 			Math::BuildWorldMatrixSoA_FromTransformSoA(mtf, worldMtxSoA, false);
 
 			std::vector<Graphics::InstanceIndex> instanceIndices(entityCount);
-			uiSession.AllocInstancesFromWorldSoA(worldMtxSoA, instanceIndices.data());
+			uiSession.AllocInstancesFromWorldSoAAndColorSoA(worldMtxSoA, &color.value()->color, instanceIndices.data());
 
 			Graphics::DrawCommand cmd;
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;

@@ -13,3 +13,5 @@ using InputService = Input::InputDevice<Input::WinInput>;
 
 template<typename T>
 using NoDeletePtr = SFW::UndeletablePtr<T>;
+
+using WorldType = SFW::World<Grid2DPartition, VoidPartition>;

@@ -20,14 +20,15 @@ class SpriteRenderSystem : public ITypeSystem<
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
 		Read<CSprite>,
-		Read<CTransform>
+		Read<CTransform>,
+		Read<CColor>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
 		SFW::Graphics::RenderService
 	>>
 {
-	using Accessor = ComponentAccessor<Read<CSprite>,Read<CTransform>>;
+	using Accessor = ComponentAccessor<Read<CSprite>,Read<CTransform>, Read<CColor>>;
 public:
 	void StartImpl(NoDeletePtr<SFW::Graphics::RenderService> renderService)
 	{
@@ -37,7 +38,7 @@ public:
 		auto psoMgr = renderService->GetResourceManager<DX11::PSOManager>();
 
 		DX11::ShaderCreateDesc shaderDesc;
-		shaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
+		shaderDesc.vsPath = L"assets/shader/VS_ClipUVColor.cso";
 		shaderDesc.psPath = L"assets/shader/PS_Color.cso";
 		ShaderHandle shaderHandle;
 		shaderMgr->Add(shaderDesc, shaderHandle);
@@ -65,6 +66,7 @@ public:
 
 			auto sprite = accessor.Get<Read<CSprite>>();
 			auto transform = accessor.Get<Read<CTransform>>();
+			auto color = accessor.Get<Read<CColor>>();
 
 			Math::MTransformSoA mtf = {
 					transform->px(), transform->py(), transform->pz(),
@@ -78,7 +80,7 @@ public:
 			Math::BuildWorldMatrixSoA_FromTransformSoA(mtf, worldMtxSoA, false);
 
 			std::vector<Graphics::InstanceIndex> instanceIndices(entityCount);
-			uiSession.AllocInstancesFromWorldSoA(worldMtxSoA, instanceIndices.data());
+			uiSession.AllocInstancesFromWorldSoAAndColorSoA(worldMtxSoA, &color.value()->color, instanceIndices.data());
 
 			Graphics::DrawCommand cmd;
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;

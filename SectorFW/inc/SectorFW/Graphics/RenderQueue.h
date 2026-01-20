@@ -67,14 +67,19 @@ namespace SFW
 		// RenderQueue とは独立した“フレーム共有”アリーナ
 		struct SharedInstanceArena {
 			struct alignas(16) InstancePool {
-				SFW::Math::Matrix<3, 4, float> world;
+				SFW::Math::Matrix<3, 4, float> world = {};
+				Math::Vec4f color = {};
 
 				InstancePool& operator=(const InstanceData& data) noexcept {
+					// 4x4 行列を 3x4 にコピー
 					memcpy(&world, &data, sizeof(decltype(world)));
+					color = data.color;
 					return *this;
 				}
 				InstancePool& operator=(InstanceData&& data) noexcept {
+					// 4x4 行列を 3x4 にコピー
 					memcpy(&world, &data, sizeof(decltype(world)));
+					color = data.color;
 					return *this;
 				}
 			};
@@ -477,6 +482,11 @@ namespace SFW
 				* @return       実際に確保・書き込んだ件数（プール残量で小さくなる可能性あり）
 				*/
 				size_t AllocInstancesFromWorldSoA(const Math::Matrix3x4fSoA& wSoa, InstanceIndex* outIdx = nullptr);
+
+				/**
+				 * @brief WorldSoA と ColorSoA からまとめて Instance を確保・書き込み
+				 */
+				size_t AllocInstancesFromWorldSoAAndColorSoA(const Math::Matrix3x4fSoA& wSoa, const Math::Vec4f* cSoa, InstanceIndex* outIdx = nullptr);
 				/**
 				 * @brief 次に割り当てられるインスタンスインデックス
 				 * @details 実際にフレーム当たりのインスタンス数が増える

@@ -21,6 +21,7 @@ struct VSOutput
 {
     float4 clip : SV_POSITION;
     float2 uv : TEXCOORD;
+    float4 color : COLOR0;
 };
 
 VSOutput main(VSInput input, uint instId : SV_InstanceID)
@@ -61,5 +62,6 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     // クリップ座標
     output.clip = mul(uViewProj, float4(wp, 1.0));
     output.uv = input.uv;
+    output.color = gInstanceMats[pooledIndex].color;
     return output;
 }
