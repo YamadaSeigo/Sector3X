@@ -33,7 +33,8 @@ namespace SFW
 	 */
 	template <typename Derived>
 	concept PartitionConcept = requires(
-		Derived t, 
+		Derived t,
+		Math::Vec3f originWS,
 		Math::Vec3f v, ChunkSizeType size, float chunkSize,
 		EOutOfBoundsPolicy policy,
 		SpatialChunkRegistry & reg, LevelID level,
@@ -44,7 +45,8 @@ namespace SFW
 		)
 	{
 		//コンストラクタ
-		Derived{ size,size,chunkSize };
+		Derived{ originWS, size, size, chunkSize };
+
 		//ポイントからチャンクを取得
 		{ t.GetChunk(v, reg, level, policy) } -> std::same_as<std::optional<SpatialChunk*>>;
 		//分割に依存しないグローバルなエンティティマネージャーを取得

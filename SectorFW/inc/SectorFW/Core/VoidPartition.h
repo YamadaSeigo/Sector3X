@@ -10,7 +10,7 @@ namespace SFW
 	class VoidPartition
 	{
 	public:
-		VoidPartition(ChunkSizeType, ChunkSizeType, float) {}
+		VoidPartition(Math::Vec3f, ChunkSizeType, ChunkSizeType, float) {}
 
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f,
 			SpatialChunkRegistry&, LevelID,

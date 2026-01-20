@@ -52,12 +52,15 @@ namespace SFW
 		 * @param maxEntitiesPerLeaf 葉チャンク（SpatialChunk）あたりの最大エンティティ数
 		 * @param worldBlocksZ Z方向のブロックサイズ（省略時はXと同じ）
 		 */
-		explicit OctreePartition(ChunkSizeType worldBlocksX /*ignored for symmetry*/,
+		explicit OctreePartition(
+			Math::Vec3f originWS,
+			ChunkSizeType worldBlocksX /*ignored for symmetry*/,
 			ChunkSizeType worldBlocksY /*ignored for symmetry*/,
 			float minLeafSize,
 			ChunkSizeType worldBlocksZ = 0 /*ignored for symmetry*/,
 			uint32_t maxEntitiesPerLeaf = 1024) noexcept
-			: m_worldX(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksX* minLeafSize)))
+			: levelOriginWS(originWS)
+			, m_worldX(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksX* minLeafSize)))
 			, m_worldY(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksY* minLeafSize))) // 立方体に合わせる
 			, m_worldZ(std::max<ChunkSizeType>(1, ChunkSizeType((worldBlocksZ == ChunkSizeType(0) ? worldBlocksX : worldBlocksZ) * minLeafSize)))
 			, m_minLeaf(std::max<float>(1.f, minLeafSize))
@@ -84,23 +87,25 @@ namespace SFW
 		}
 		/**
 		 * @brief 点 p を含む葉チャンク（SpatialChunk）を取得
-		 * @param p ワールド座標系の点
+		 * @param wp ワールド座標系の点
 		 * @param reg チャンクレジストリ
 		 * @param level レベルID
 		 * @param policy 範囲外ポリシー
 		 * @return 点 p を含む葉チャンク（SpatialChunk）。範囲外でポリシーが Reject の場合は std::nullopt
 		 */
-		std::optional<SpatialChunk*> GetChunk(Math::Vec3f p,
+		std::optional<SpatialChunk*> GetChunk(Math::Vec3f wp,
 			SpatialChunkRegistry& reg, LevelID level,
 			EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept
 		{
-			if (!inBounds(p.x, p.y, p.z)) {
+			auto localPos = wp - levelOriginWS;
+
+			if (!inBounds(localPos.x, localPos.y, localPos.z)) {
 				if (policy == EOutOfBoundsPolicy::Reject) return std::nullopt;
-				p.x = std::clamp(p.x, 0.f, float(m_worldX) - 1e-6f);
-				p.y = std::clamp(p.y, 0.f, float(m_worldY) - 1e-6f);
-				p.z = std::clamp(p.z, 0.f, float(m_worldZ) - 1e-6f);
+				localPos.x = std::clamp(localPos.x, 0.f, float(m_worldX) - 1e-6f);
+				localPos.y = std::clamp(localPos.y, 0.f, float(m_worldY) - 1e-6f);
+				localPos.z = std::clamp(localPos.z, 0.f, float(m_worldZ) - 1e-6f);
 			}
-			Node* leaf = descendToLeaf(*m_root, p.x, p.y, p.z, /*createIfMissing=*/true);
+			Node* leaf = descendToLeaf(*m_root, localPos.x, localPos.y, localPos.z, /*createIfMissing=*/true);
 			EnsureKeyRegisteredForLeaf(*leaf, reg, level);
 			return &leaf->chunk;
 		}
@@ -214,7 +219,7 @@ namespace SFW
 
 			std::function<void(const Node&)> rec = [&](const Node& n) {
 				// node AABB vs sphere
-				const Math::Vec3f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
+				const Math::Vec3f c = levelOriginWS + (n.bounds.lb + n.bounds.ub) * 0.5f;
 				const Math::Vec3f e = (n.bounds.ub - n.bounds.lb) * 0.5f;
 				if (Dist2PointAABB3D(center, c, e) > r2) return;
 
@@ -257,7 +262,7 @@ namespace SFW
 			std::function<void(const Node&)> rec = [&](const Node& n) {
 				if (!nodeIntersectsFrustum3D(n, fr)) return;
 				if (n.isLeaf()) {
-					const Math::Vec3f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
+					const Math::Vec3f c = levelOriginWS + (n.bounds.lb + n.bounds.ub) * 0.5f;
 					const Math::Vec3f e = (n.bounds.ub - n.bounds.lb) * 0.5f;
 					const float d2 = Dist2PointAABB3D(eye, c, e);
 					if (n.chunk.GetEntityManager().GetEntityCount() > 0)
@@ -308,11 +313,11 @@ namespace SFW
 			// 2) 目線からの距離で前から優先（近い順）
 			struct Item { AABB box; float dist; };
 			std::vector<Item> items; items.reserve(boxes.size());
-			auto clampToBox = [](const AABB& b, const Math::Vec3f& p) {
+			auto clampToBox = [&](const AABB& b, const Math::Vec3f& p) {
 				return Math::Vec3f{
-					std::clamp(p.x, b.lb.x, b.ub.x),
-					std::clamp(p.y, b.lb.y, b.ub.y),
-					std::clamp(p.z, b.lb.z, b.ub.z)
+					std::clamp(p.x, b.lb.x + levelOriginWS.x, b.ub.x + levelOriginWS.x),
+					std::clamp(p.y, b.lb.y + levelOriginWS.y, b.ub.y + levelOriginWS.y),
+					std::clamp(p.z, b.lb.z + levelOriginWS.z, b.ub.z + levelOriginWS.z)
 				};
 				};
 			for (const auto& b : boxes) {
@@ -341,7 +346,7 @@ namespace SFW
 				const float t = items[i].dist / maxD; // 0..1
 				const uint32_t rgba = Math::LerpColor(0xFFFFFFFFu, 0x00000000u, t);
 
-				const Math::Vec3f c = box.center();
+				const Math::Vec3f c = box.center() + levelOriginWS;
 				const Math::Vec3f e = box.size() * 0.5f;
 				Math::Vec3f v[8]{
 					{c.x - e.x, c.y - e.y, c.z - e.z},
@@ -524,7 +529,7 @@ namespace SFW
 		// ---- 3D 版カリング（高さ範囲を使わず、八分木の AABB をそのまま使用）----
 		bool nodeIntersectsFrustum3D(const Node& n, const Math::Frustumf& fr) const noexcept
 		{
-			const Math::Vec3f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
+			const Math::Vec3f c = levelOriginWS + (n.bounds.lb + n.bounds.ub) * 0.5f;
 			const Math::Vec3f e = (n.bounds.ub - n.bounds.lb) * 0.5f;
 			return fr.IntersectsAABB(c, e);
 		}
@@ -834,6 +839,8 @@ namespace SFW
 	private:
 		ECS::EntityManager m_global;
 		std::unique_ptr<Node> m_root;
+
+		Math::Vec3f levelOriginWS;
 
 		ChunkSizeType m_worldX = 0;
 		ChunkSizeType m_worldY = 0;

@@ -34,22 +34,24 @@ namespace SFW
 		 * @param chunkHeight チャンクの高さ
 		 * @param chunkSize チャンクのサイズ
 		 */
-		explicit Grid2DPartition(ChunkSizeType chunkWidth, ChunkSizeType chunkHeight, float chunkSize) noexcept :
-			grid(chunkWidth, chunkHeight), chunkSize(chunkSize) {
+		explicit Grid2DPartition(Math::Vec3f originWS, ChunkSizeType chunkWidth, ChunkSizeType chunkHeight, float chunkSize) noexcept :
+			levelOriginWS(originWS), grid(chunkWidth, chunkHeight), chunkSize(chunkSize) {
 		}
 		/**
 		 * @brief 指定した位置に基づいてチャンクを取得します。
-		 * @param location 位置（Math::Vec3f型）
+		 * @param wp 位置（ワールド座標）
 		 * @param policy アウトオブバウンズポリシー
 		 * @return std::optional<SpatialChunk*> チャンクへのポインタ
 		 */
-		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location,
+		std::optional<SpatialChunk*> GetChunk(Math::Vec3f wp,
 			SpatialChunkRegistry& reg, LevelID level,
 			EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept
 		{
+			auto localPos = wp - levelOriginWS;
+
 			using Signed = long long;
-			const Signed cx = static_cast<Signed>(std::floor(double(location.x) / double(chunkSize)));
-			const Signed cz = static_cast<Signed>(std::floor(double(location.z) / double(chunkSize)));
+			const Signed cx = static_cast<Signed>(std::floor(double(localPos.x) / double(chunkSize)));
+			const Signed cz = static_cast<Signed>(std::floor(double(localPos.z) / double(chunkSize)));
 			const Signed w = static_cast<Signed>(grid.width());   // X方向セル数
 			const Signed d = static_cast<Signed>(grid.height());  // Z方向セル数（名はheightでも意味はDepth）
 
@@ -128,8 +130,8 @@ namespace SFW
 
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t x = 0; x < w; ++x) {
-					const float cx = (x + 0.5f) * cell;
-					const float cz = (z + 0.5f) * cell;
+					const float cx = levelOriginWS.x + (x + 0.5f) * cell;
+					const float cz = levelOriginWS.z + (z + 0.5f) * cell;
 
 					float cyEff, eyEff;
 					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, -chunkSize, chunkSize, cyEff, eyEff)) {
@@ -159,8 +161,8 @@ namespace SFW
 
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t x = 0; x < w; ++x) {
-					const float cx = (x + 0.5f) * cell;
-					const float cz = (z + 0.5f) * cell;
+					const float cx = levelOriginWS.x + (x + 0.5f) * cell;
+					const float cz = levelOriginWS.z + (z + 0.5f) * cell;
 
 					float cyEff, eyEff;
 					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, ymin, ymax, cyEff, eyEff)) {
@@ -225,8 +227,8 @@ namespace SFW
 
 			for (Signed z = iz0; z <= iz1; ++z) {
 				for (Signed x = ix0; x <= ix1; ++x) {
-					const float cx = (float(x) + 0.5f) * cell;
-					const float cz = (float(z) + 0.5f) * cell;
+					const float cx = levelOriginWS.x + (x + 0.5f) * cell;
+					const float cz = levelOriginWS.z + (z + 0.5f) * cell;
 
 					if (dist2_point_aabb_xz(center, cx, cz, e, e) > r2) continue;
 
@@ -264,8 +266,8 @@ namespace SFW
 
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t x = 0; x < w; ++x) {
-					const float cx = (x + 0.5f) * cell;
-					const float cz = (z + 0.5f) * cell;
+					const float cx = levelOriginWS.x + (x + 0.5f) * cell;
+					const float cz = levelOriginWS.z + (z + 0.5f) * cell;
 
 					float cyEff, eyEff;
 					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, -chunkSize, chunkSize, cyEff, eyEff)) continue;
@@ -318,8 +320,8 @@ namespace SFW
 
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t x = 0; x < w; ++x) {
-					const float cx = (x + 0.5f) * cell;
-					const float cz = (z + 0.5f) * cell;
+					const float cx = levelOriginWS.x + (x + 0.5f) * cell;
+					const float cz = levelOriginWS.z + (z + 0.5f) * cell;
 
 					Math::Vec2 vec = { cx - cp.x, cz - cp.z };
 					float len = vec.length();
@@ -410,6 +412,8 @@ namespace SFW
 		ECS::EntityManager globalEntityManager;
 		//2Dグリッド分割チャンクリスト
 		Grid2D<SpatialChunk, ChunkSizeType> grid;
+		//レベルの原点(ワールド座標)
+		Math::Vec3f levelOriginWS;
 		//チャンクのサイズ
 		float chunkSize;
 		//チャンクを登録したか

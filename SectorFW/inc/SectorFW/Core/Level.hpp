@@ -274,11 +274,11 @@ namespace SFW
 		 * @param _chunkCellSize チャンクのセルサイズ
 		 */
 		explicit Level(const std::string& name, SpatialChunkRegistry& reg, ELevelState _state = ELevelState::Main,
-			ChunkSizeType _chunkWidth = DefaultChunkWidth, ChunkSizeType _chunkHeight = DefaultChunkHeight,
+			Math::Vec3f originWS = { 0.0f,0.0f,0.0f }, ChunkSizeType _chunkWidth = DefaultChunkWidth, ChunkSizeType _chunkHeight = DefaultChunkHeight,
 			float _chunkCellSize = DefaultChunkCellSize
 		) noexcept
 			: name(name), state(static_cast<uint32_t>(_state)), entityManagerReg(reg),
-			partition(_chunkWidth, _chunkHeight, _chunkCellSize) {
+			partition(originWS, _chunkWidth, _chunkHeight, _chunkCellSize) {
 
 			// Active を落とす（他ビットの並行更新を壊さない）
 			state.fetch_and(~static_cast<uint32_t>(ELevelState::Active),
@@ -556,8 +556,7 @@ namespace SFW
 		std::atomic<uint32_t> state;
 		//スケジューラ
 		SchedulerType scheduler;
-		//限定的なシステムのリスト
-		//限定的な更新対象のシステムを格納します。
+		//限定的な場合に更新するシステムのリスト
 		std::vector<std::unique_ptr<SystemType>> limitedSystems;
 		//分割クラスのインスタンス
 		Partition partition;

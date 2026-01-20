@@ -48,11 +48,14 @@ namespace SFW
 		 * @param minLeafSize 最小葉のサイズ(ワールドサイズに対する比率、0.0~1.0)
 		 * @param maxEntitiesPerLeaf 1つの葉に格納できるエンティティの最大数
 		 */
-		explicit QuadTreePartition(ChunkSizeType worldW,
+		explicit QuadTreePartition(
+			Math::Vec3f originWS,
+			ChunkSizeType worldW,
 			ChunkSizeType worldH,
 			float minLeafSize,
 			uint32_t maxEntitiesPerLeaf = 1024) noexcept
-			: m_worldW(std::max<ChunkSizeType>(1, ChunkSizeType(worldW* minLeafSize)))
+			: levelOriginWS(originWS)
+			,m_worldW(std::max<ChunkSizeType>(1, ChunkSizeType(worldW* minLeafSize)))
 			, m_worldH(std::max<ChunkSizeType>(1, ChunkSizeType(worldH* minLeafSize)))
 			, m_minLeaf(std::max<float>(1.f, minLeafSize))
 			, m_maxPerLeafCount(std::max<uint32_t>(1, maxEntitiesPerLeaf))
@@ -75,23 +78,25 @@ namespace SFW
 		}
 		/**
 		 * @brief 指定した位置にあるチャンクを取得する関数
-		 * @param p 位置(x,z)
+		 * @param wp ワールド位置(x,z)
 		 * @param reg チャンクレジストリ
 		 * @param level レベルID
 		 * @param policy 範囲外ポリシー
 		 * @return チャンクへのポインタ(存在しない場合はstd::nullopt)
 		 */
-		std::optional<SpatialChunk*> GetChunk(Math::Vec3f p,
+		std::optional<SpatialChunk*> GetChunk(Math::Vec3f wp,
 			SpatialChunkRegistry& reg, LevelID level,
 			EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept
 		{
-			if (!inBounds(p.x, p.z)) {
+			auto localPos = wp - levelOriginWS;
+
+			if (!inBounds(localPos.x, localPos.z)) {
 				if (policy == EOutOfBoundsPolicy::Reject) return std::nullopt;
 				// Clamp to [0, W/H)
-				p.x = std::clamp(p.x, 0.f, float(m_worldW) - 1e-6f);
-				p.z = std::clamp(p.z, 0.f, float(m_worldH) - 1e-6f);
+				localPos.x = std::clamp(localPos.x, 0.f, float(m_worldW) - 1e-6f);
+				localPos.z = std::clamp(localPos.z, 0.f, float(m_worldH) - 1e-6f);
 			}
-			Node* leaf = descendToLeaf(*m_root, p.x, p.z, /*createIfMissing=*/true);
+			Node* leaf = descendToLeaf(*m_root, localPos.x, localPos.z, /*createIfMissing=*/true);
 			EnsureKeyRegisteredForLeaf(*leaf, reg, level);
 			return &leaf->chunk;
 		}
@@ -158,11 +163,13 @@ namespace SFW
 			const float r = (radius < 0.0f) ? 0.0f : radius;
 			const float r2 = r * r;
 
+			const auto localCenter = center - levelOriginWS;
+
 			auto dist2_point_aabb_xz = [&](const Node& n) -> float {
 				auto clamp = [](float v, float lo, float hi) { return v < lo ? lo : (v > hi ? hi : v); };
-				const float qx = clamp(center.x, n.bounds.lb.x, n.bounds.ub.x);
-				const float qz = clamp(center.z, n.bounds.lb.y, n.bounds.ub.y);
-				const float dx = center.x - qx, dz = center.z - qz;
+				const float qx = clamp(localCenter.x, n.bounds.lb.x, n.bounds.ub.x);
+				const float qz = clamp(localCenter.z, n.bounds.lb.y, n.bounds.ub.y);
+				const float dx = localCenter.x - qx, dz = localCenter.z - qz;
 				return dx * dx + dz * dz;
 				};
 
@@ -205,9 +212,11 @@ namespace SFW
 			std::function<void(const Node&)> rec = [&](const Node& n) {
 				if (!nodeIntersectsFrustum(n, fr, -m_minLeaf, m_minLeaf)) return;
 				if (n.isLeaf()) {
-					const Math::Vec2f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
+					Math::Vec2f c = (n.bounds.lb + n.bounds.ub) * 0.5f;
+					c.x += levelOriginWS.x;
+					c.y += levelOriginWS.z;
 					const Math::Vec2f e = (n.bounds.ub - n.bounds.lb) * 0.5f;
-					const float d2 = 10.0f;//this->Dist2PointAABB3D(camPos, c, e);
+					const float d2 = this->Dist2PointAABB3D(camPos, c, e);
 					if (n.chunk.GetEntityManager().GetEntityCount() > 0)
 						items.push_back({ const_cast<SpatialChunk*>(&n.chunk), d2 });
 					return;
@@ -265,10 +274,10 @@ namespace SFW
 
 			struct Item { AABB box; float dist; };
 			std::vector<Item> items; items.reserve(boxes.size());
-			auto clampToBox = [](const AABB& b, const Math::Vec3f& p) {
+			auto clampToBox = [&](const AABB& b, const Math::Vec3f& p) {
 				return Math::Vec2f{
-					std::clamp(p.x, b.lb.x, b.ub.x),
-					std::clamp(p.z, b.lb.y, b.ub.y)
+					std::clamp(p.x, b.lb.x + levelOriginWS.x, b.ub.x + levelOriginWS.x),
+					std::clamp(p.z, b.lb.y + levelOriginWS.z, b.ub.y + levelOriginWS.z)
 				};
 				};
 			for (const auto& b : boxes) {
@@ -287,7 +296,7 @@ namespace SFW
 
 			uint32_t written = 0;
 			for (const auto& box : boxes) {
-				const Math::Vec2f center = box.center();
+				const Math::Vec2f center = Math::Vec2f{ levelOriginWS.x, levelOriginWS.z } + box.center();
 				const Math::Vec2f extent = box.size() * 0.5f;
 
 				const Math::Vec2f vec{ center.x - cp.x, center.y - cp.z };
@@ -628,8 +637,8 @@ namespace SFW
 		bool nodeIntersectsFrustum(const Node& n, const Math::Frustumf& fr,
 			float ymin, float ymax) const noexcept
 		{
-			const float cx = 0.5f * (n.bounds.lb.x + n.bounds.ub.x);
-			const float cz = 0.5f * (n.bounds.lb.y + n.bounds.ub.y);
+			const float cx = levelOriginWS.x + 0.5f * (n.bounds.lb.x + n.bounds.ub.x);
+			const float cz = levelOriginWS.z + 0.5f * (n.bounds.lb.y + n.bounds.ub.y);
 			const float ex = 0.5f * (n.bounds.ub.x - n.bounds.lb.x);
 			const float ez = 0.5f * (n.bounds.ub.y - n.bounds.lb.y);
 
@@ -785,6 +794,8 @@ namespace SFW
 	private:
 		ECS::EntityManager m_global;
 		std::unique_ptr<Node> m_root;
+
+		Math::Vec3f levelOriginWS;
 
 		ChunkSizeType m_worldW = 0;
 		ChunkSizeType m_worldH = 0;

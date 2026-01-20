@@ -31,10 +31,11 @@ namespace SFW
 		 * @param chunkHeight Y方向セル数
 		 * @param chunkSize   各セルの一辺（ワールド単位）
 		 */
-		explicit Grid3DPartition(ChunkSizeType chunkWidth,
+		explicit Grid3DPartition(Math::Vec3f originWS,
+			ChunkSizeType chunkWidth,
 			ChunkSizeType chunkHeight,
 			float chunkSize) noexcept
-			: grid(chunkWidth, chunkHeight, (chunkWidth + chunkHeight) / 2)
+			: levelOriginWS(originWS), grid(chunkWidth, chunkHeight, (chunkWidth + chunkHeight) / 2)
 			, chunkSize(chunkSize) {
 		}
 
@@ -45,25 +46,29 @@ namespace SFW
 		* @param chunkDepth  Z方向セル数
 		* @param chunkSize   各セルの一辺（ワールド単位）
 		*/
-		explicit Grid3DPartition(ChunkSizeType chunkWidth,
+		explicit Grid3DPartition(
+			Math::Vec3f originWS,
+			ChunkSizeType chunkWidth,
 			ChunkSizeType chunkHeight,
 			ChunkSizeType chunkDepth,
 			float chunkSize) noexcept
-			: grid(chunkWidth, chunkHeight, chunkDepth)
+			: levelOriginWS(originWS), grid(chunkWidth, chunkHeight, chunkDepth)
 			, chunkSize(chunkSize) {
 		}
 
 		/**
 		 * @brief 指定位置が属するセル（SpatialChunk）を取得
 		 */
-		std::optional<SpatialChunk*> GetChunk(Math::Vec3f location,
+		std::optional<SpatialChunk*> GetChunk(Math::Vec3f wp,
 			SpatialChunkRegistry& reg, LevelID level,
 			EOutOfBoundsPolicy policy = EOutOfBoundsPolicy::ClampToEdge) noexcept
 		{
+			auto localPos = wp - levelOriginWS;
+
 			using Signed = long long;
-			const Signed cx = static_cast<Signed>(std::floor(double(location.x) / double(chunkSize)));
-			const Signed cy = static_cast<Signed>(std::floor(double(location.y) / double(chunkSize)));
-			const Signed cz = static_cast<Signed>(std::floor(double(location.z) / double(chunkSize)));
+			const Signed cx = static_cast<Signed>(std::floor(double(localPos.x) / double(chunkSize)));
+			const Signed cy = static_cast<Signed>(std::floor(double(localPos.y) / double(chunkSize)));
+			const Signed cz = static_cast<Signed>(std::floor(double(localPos.z) / double(chunkSize)));
 
 			const Signed w = static_cast<Signed>(grid.width());   // X
 			const Signed h = static_cast<Signed>(grid.height());  // Y
@@ -139,7 +144,8 @@ namespace SFW
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t y = 0; y < h; ++y) {
 					for (uint32_t x = 0; x < w; ++x) {
-						const Math::Vec3f center{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
+						Math::Vec3f center{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
+						center += levelOriginWS;
 						const Math::Vec3f extent{ e, e, e };
 						if (fr.IntersectsAABB(center, extent)) {
 							auto& chunk = grid(x, y, z);
@@ -164,7 +170,8 @@ namespace SFW
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t y = 0; y < h; ++y) {
 					for (uint32_t x = 0; x < w; ++x) {
-						const Math::Vec3f center{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
+						Math::Vec3f center{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
+						center += levelOriginWS;
 						const Math::Vec3f extent{ e, e, e };
 						if (fr.IntersectsAABB(center, extent)) {
 							auto& chunk = grid(x, y, z);
@@ -220,7 +227,7 @@ namespace SFW
 			for (Signed z = iz0; z <= iz1; ++z) {
 				for (Signed y = iy0; y <= iy1; ++y) {
 					for (Signed x = ix0; x <= ix1; ++x) {
-						const Math::Vec3f c{ (float(x) + 0.5f) * cell, (float(y) + 0.5f) * cell, (float(z) + 0.5f) * cell };
+						const Math::Vec3f c = levelOriginWS + Math::Vec3f{ (float(x) + 0.5f) * cell, (float(y) + 0.5f) * cell, (float(z) + 0.5f) * cell };
 						const Math::Vec3f ex{ e, e, e };
 						if (Dist2PointAABB3D(center, c, ex) > r2) continue;
 
@@ -259,7 +266,7 @@ namespace SFW
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t y = 0; y < h; ++y) {
 					for (uint32_t x = 0; x < w; ++x) {
-						const Math::Vec3f center{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
+						const Math::Vec3f center = levelOriginWS + Math::Vec3f{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
 						const Math::Vec3f extent{ e, e, e };
 						if (!fr.IntersectsAABB(center, extent)) continue;
 
@@ -320,7 +327,7 @@ namespace SFW
 					for (uint32_t x = 0; x < w; ++x) {
 						if (capacity - written < kVertsPerCell) return written; // これ以上書けない
 
-						const Math::Vec3f c{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
+						const Math::Vec3f c = levelOriginWS + Math::Vec3f{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
 						const Math::Vec3f ex{ e, e, e };
 
 						// 距離でフェード（XZ距離ではなく3D距離）
@@ -404,8 +411,10 @@ namespace SFW
 		}
 
 	private:
+
 		ECS::EntityManager globalEntityManager;                 ///< グローバルEM
 		Grid3D<SpatialChunk, ChunkSizeType> grid;               ///< 3Dグリッド
+		Math::Vec3f levelOriginWS;								/// レベルのワールド原点
 		float chunkSize;                                       ///< セル一辺
 		bool isRegistryChunk = false;
 	};

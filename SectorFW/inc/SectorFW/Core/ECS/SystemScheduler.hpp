@@ -25,11 +25,7 @@ namespace SFW
 {
 	namespace ECS
 	{
-		/**
-		 * @brief システムが特定のパーティションから派生しているかどうかを確認するコンセプト
-		 */
-		template<typename T, typename... Deps>
-		concept SystemDerived = std::is_base_of_v<ITypeSystem<Deps...>, T>;
+	
 		/**
 		 * @brief システムを管理し、競合がないようにスケジューリングするクラス
 		 * @tparam Partition パーティションの型
