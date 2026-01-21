@@ -25,6 +25,7 @@ class PlayerSystem : public ITypeSystem<
 		Graphics::RenderService,
 		InputService,
 		PlayerService,
+		TimerService,
 		Audio::AudioService
 	>>{
 
@@ -105,6 +106,7 @@ public:
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<InputService> inputService,
 		NoDeletePtr<PlayerService> playerService,
+		NoDeletePtr<TimerService> timerService,
 		NoDeletePtr<Audio::AudioService> audioService)
 	{
 		grassStepHandle = audioService->EnqueueLoadWav("assets/audio/SE/walk-on-grass.wav");
@@ -117,12 +119,13 @@ public:
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<InputService> inputService,
 		NoDeletePtr<PlayerService> playerService,
+		NoDeletePtr<TimerService> timerService,
 		NoDeletePtr<Audio::AudioService> audioService)
 	{
 		ECS::EntityManager& globalEntityManager = partition.GetGlobalEntityManager();
 
 		auto playerComponents = globalEntityManager.GetSparseComponents<PlayerComponent>();
-		float dt = static_cast<float>(physicsService->GetDeltaTime());
+		float dt = timerService->GetDeltaTime();
 
 		static bool playerCamera = true;
 		if (inputService->IsKeyTrigger(Input::Key::F1))
@@ -362,6 +365,7 @@ public:
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<InputService> inputService,
 		NoDeletePtr<PlayerService> playerService,
+		NoDeletePtr<TimerService> timerService,
 		NoDeletePtr<Audio::AudioService> audioService)
 	{
 		ECS::EntityManager& globalEntityManager = partition.GetGlobalEntityManager();

@@ -16,6 +16,7 @@ struct DebugRenderType
 	static bool drawShapeDims;
 	static bool drawMOCDepth;
 	static bool drawFireflyVolumes;
+	static bool drawLeafVolumes;
 	static bool drawBloom;
 
 	inline static constexpr const char* ShowDeferredBufferName[] =

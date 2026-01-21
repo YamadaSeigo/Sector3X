@@ -6,7 +6,7 @@
 //==============================================================
 // 依存関係的によくないがコンパクトにするためにDX11BufferManager(バッファ更新)に依存
 //==============================================================
-class WindMovementService : public SFW::ECS::IUpdateService
+class WindService : public SFW::ECS::IUpdateService
 {
 public:
 	using BufferManager = SFW::Graphics::DX11::BufferManager;
@@ -22,7 +22,7 @@ public:
 		Math::Vec2f   WindDirXZ = { 1.0f, 0.3f };   // 風向き(XZ平面)
     };
 
-    WindMovementService(BufferManager* bufferMgr) : bufferMgr(bufferMgr)
+    WindService(BufferManager* bufferMgr) : bufferMgr(bufferMgr)
     {
         Graphics::DX11::BufferCreateDesc cd;
 		cd.name = "GrassWindCB";

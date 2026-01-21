@@ -10,6 +10,7 @@
 
 #include "ModelRenderSystem.h"
 #include "FireflySystem.h"
+#include "LeafSytem.h"
 
 #include "../app/DebugRenderType.h"
 #include "../app/DeferredRenderingService.h"
@@ -91,7 +92,8 @@ class DebugRenderSystem : public ITypeSystem<
 		Read<Physics::PhysicsInterpolation>,
 		Read<CTransform>,
 		Read<CModel>,
-		Read<CFireflyVolume>
+		Read<CFireflyVolume>,
+		Read<CLeafVolume>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
@@ -105,6 +107,7 @@ class DebugRenderSystem : public ITypeSystem<
 	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<CTransform>>;
 	using ModelAccessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
 	using FireflyAccessor = ComponentAccessor<Read<CFireflyVolume>>;
+	using LeafAccessor = ComponentAccessor<Read<CLeafVolume>>;
 
 	static constexpr inline uint32_t MAX_CAPACITY_3DLINE = 65536 * 2;
 	static constexpr inline uint32_t MAX_CAPACITY_3DVERTEX = MAX_CAPACITY_3DLINE * 2;
@@ -614,6 +617,30 @@ public:
 						uiSession.Push(std::move(cmd));
 					}
 
+				}, partition, cameraPos, 100.0f);
+		}
+
+		if (DebugRenderType::drawLeafVolumes)
+		{
+			this->ForEachSphereChunkWithAccessor<LeafAccessor>([&](LeafAccessor accessor, size_t entityCount)
+				{
+					auto leafVolume = accessor.Get<Read<CLeafVolume>>();
+					if (!leafVolume.has_value()) [[unlikely]] {
+						return;
+					}
+					for (auto i = 0; i < entityCount; ++i) {
+						auto volume = leafVolume.value()[i];
+						auto transMtx = Math::MakeTranslationMatrix(volume.centerWS);
+						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.spawnRadius * 2.0f }); // 球は均一スケーリング
+						Graphics::DrawCommand cmd;
+						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
+						cmd.mesh = sphereGreenHandle.index;
+						cmd.material = 0;
+						cmd.pso = psoLineHandle.index;
+						cmd.sortKey = 0; // 適切なソートキーを設定
+						cmd.viewMask = PASS_UI_3DLINE;
+						uiSession.Push(cmd);
+					}
 				}, partition, cameraPos, 100.0f);
 		}
 

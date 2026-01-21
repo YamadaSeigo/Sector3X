@@ -534,6 +534,9 @@
     <ClInclude Include="inc\SectorFW\Graphics\ImageLoader.h">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\TimerService.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">

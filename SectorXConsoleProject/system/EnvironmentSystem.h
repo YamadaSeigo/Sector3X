@@ -11,7 +11,7 @@ class EnvironmentSystem : public ITypeSystem<
 	//受け取るサービスの指定
 	ServiceContext<
 		EnvironmentService,
-		WindMovementService,
+		WindService,
 		Graphics::RenderService,
 		Graphics::LightShadowService,
 		Audio::AudioService,
@@ -29,7 +29,7 @@ class EnvironmentSystem : public ITypeSystem<
 public:
 	void StartImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
-		NoDeletePtr<WindMovementService> grassService,
+		NoDeletePtr<WindService> grassService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,
@@ -51,7 +51,7 @@ public:
 
 	void UpdateImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
-		NoDeletePtr<WindMovementService> grassService,
+		NoDeletePtr<WindService> grassService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,
@@ -101,7 +101,7 @@ public:
 
 	void EndImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
-		NoDeletePtr<WindMovementService> grassService,
+		NoDeletePtr<WindService> grassService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,

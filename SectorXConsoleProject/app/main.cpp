@@ -38,6 +38,7 @@
 #include "system/PointLightSystem.h"
 #include "system/SpriteAnimationSystem.h"
 #include "system/FireflySystem.h"
+#include "system/LeafSytem.h"
 #include "system/TitleSystem.h"
 #include "WindMovementService.h"
 #include "EnvironmentService.h"
@@ -142,7 +143,7 @@ void InitializeRenderPipeLine(
 	ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
 	ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV,
 	Graphics::PassCustomFuncType drawTerrainColor,
-	Graphics::PassCustomFuncType drawFirefly,
+	Graphics::PassCustomFuncType drawParticle,
 	Graphics::DX11::LightShadowResourceService* resourceService,
 	const DeferredRenderingService& deferredService)
 {
@@ -642,7 +643,7 @@ void InitializeRenderPipeLine(
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OUTLINE);
 
-	passDesc.customExecute = { drawSky, drawFirefly, drawFullScreen};
+	passDesc.customExecute = { drawSky, drawParticle, drawFullScreen};
 	passDesc.stencilRef = 2;
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
@@ -878,10 +879,9 @@ int main(void)
 	LOG_INFO("SectorX Console Project started");
 
 	//==コンポーネントの登録===================================================
-	//main.cppに集めた方がコンパイル効率がいいので、ここで登録している
 	//※複数人で開発する場合は、各自のコンポーネントを別ファイルに分けて登録するようにする
 	ComponentTypeRegistry::Register<CModel>();
-	ComponentTypeRegistry::Register<TransformSoA>();
+	ComponentTypeRegistry::Register<CTransform>();
 	ComponentTypeRegistry::Register<SpatialMotionTag>();
 	ComponentTypeRegistry::Register<Physics::CPhyBody>();
 	ComponentTypeRegistry::Register<Physics::PhysicsInterpolation>();
@@ -891,6 +891,8 @@ int main(void)
 	ComponentTypeRegistry::Register<CPointLight>();
 	ComponentTypeRegistry::Register<CSpriteAnimation>();
 	ComponentTypeRegistry::Register<CFireflyVolume>();
+	ComponentTypeRegistry::Register<CLeafVolume>();
+	ComponentTypeRegistry::Register<CFade>();
 
 	//======================================================================
 
@@ -944,7 +946,7 @@ int main(void)
 	cascadeConfig.casterExtrusion = 0.0f;
 	lightShadowService.SetCascadeConfig(cascadeConfig);
 
-	WindMovementService grassService(bufferMgr);
+	static WindService windService(bufferMgr);
 
 	PlayerService playerService(bufferMgr);
 
@@ -969,20 +971,28 @@ int main(void)
 
 	//地形のコンピュートと同じタイミングで描画する
 	static FireflyService fireflyService(device, deviceContext, bufferMgr,
-		L"assets/shader/CS_FireflyInitFreeList.cso",
+		L"assets/shader/CS_ParticleInitFreeList.cso",
 		L"assets/shader/CS_FireflySpawn.cso",
 		L"assets/shader/CS_FireflyUpdate.cso",
-		L"assets/shader/CS_FireflyArgs.cso",
+		L"assets/shader/CS_ParticleArgs.cso",
 		L"assets/shader/VS_FireflyBillboard.cso",
 		L"assets/shader/PS_Firefly.cso");
 
+	static LeafService leafService(device, deviceContext, bufferMgr,
+		L"assets/shader/CS_ParticleInitFreeList.cso",
+		L"assets/shader/CS_LeafSpawn.cso",
+		L"assets/shader/CS_LeafUpdate.cso",
+		L"assets/shader/CS_ParticleArgs.cso",
+		L"assets/shader/VS_LeafBillboard.cso",
+		L"assets/shader/PS_Leaf.cso");
+
 	ECS::ServiceLocator serviceLocator(
 		renderService, &physicsService, inputService, perCameraService,
-		ortCameraService, camera2DService, &lightShadowService, &grassService,
+		ortCameraService, camera2DService, &lightShadowService, &windService,
 		&playerService, &audioService, &deferredRenderingService, &lightShadowResourceService,
-		&pointLightService, &environmentService, &spriteAnimationService, &fireflyService);
+		&pointLightService, &environmentService, &spriteAnimationService, &fireflyService, &leafService);
 
-	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
+	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry, TimerService>();
 
 	//スレッドプールクラス
 	static std::unique_ptr<SimpleThreadPool> threadPool = std::make_unique<SimpleThreadPool>();
@@ -1340,7 +1350,7 @@ int main(void)
 			blockRevert.RunColor(deviceContext, heightMapSRV, normalMapSRV, cp);
 		};
 
-	auto drawFirefly = [](uint64_t frame)
+	auto drawParticle = [](uint64_t frame)
 		{
 			auto deviceContext = graphics.GetDeviceContext();
 
@@ -1354,8 +1364,21 @@ int main(void)
 				heightMapSRV = heightMapData.ref().srv;
 			}
 
-			//ホタルのスポーン処理
-			fireflyService.SpawnParticles(deviceContext, heightMapSRV, cp.cbGrid, frame % Graphics::RENDER_BUFFER_COUNT);
+			uint32_t slot = frame % Graphics::RENDER_BUFFER_COUNT;
+
+			//ホタルのスポーンと描画処理
+			fireflyService.SpawnParticles(deviceContext, heightMapSRV, cp.cbGrid, slot);
+
+			ComPtr<ID3D11Buffer> windCb;
+			{
+				auto windHandle = windService.GetBufferHandle();
+
+				auto windBufData = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::BufferManager>()->Get(windHandle);
+				windCb = windBufData->buffer;
+			}
+
+			//葉っぱのスポーンと描画処理
+			leafService.SpawnParticles(deviceContext, heightMapSRV, cp.cbGrid, windCb, slot);
 		};
 
 	renderService->SetCustomUpdateFunction(terrainUpdateFunc);
@@ -1373,7 +1396,7 @@ int main(void)
 		ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV)
 		{
 			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget, mainDepthStencilView, mainDepthStencilSRV,
-				drawTerrainColor, drawFirefly, &lightShadowResourceService, deferredRenderingService);
+				drawTerrainColor, drawParticle, &lightShadowResourceService, deferredRenderingService);
 		}
 	);
 
@@ -1434,7 +1457,7 @@ int main(void)
 				textureMgr->Add(textureDesc, texHandle);
 				Graphics::DX11::MaterialCreateDesc matDesc;
 
-				auto windCBHandle = grassService.GetBufferHandle();
+				auto windCBHandle = windService.GetBufferHandle();
 
 				matDesc.shader = shaderHandle;
 				matDesc.samplerMap[0] = samp;
@@ -1465,11 +1488,13 @@ int main(void)
 					};
 
 				CColor color = { { 1.0f,1.0f,1.0f,1.0f} };
+				CFade fade;
 
 				levelSession.AddGlobalEntity(
 					CTransform{ getPos(0.0f,0.4f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.7f,0.7f) },
 					sprite,
-					color);
+					color,
+					fade);
 
 				textureDesc.path = "assets/texture/sprite/PressEnter.png";
 				textureMgr->Add(textureDesc, texHandle);
@@ -1480,7 +1505,8 @@ int main(void)
 				levelSession.AddGlobalEntity(
 					CTransform{ getPos(0.0f,-0.7f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.25f,0.25f) },
 					sprite,
-					color);
+					color,
+					fade);
 
 				auto& scheduler = pLevel->GetScheduler();
 				scheduler.AddSystem<TitleSystem>(*serviceLocator);
@@ -1646,7 +1672,7 @@ int main(void)
 
 				ModelAssetHandle modelAssetHandle[5];
 
-				auto windCBHandle = grassService.GetBufferHandle();
+				auto windCBHandle = windService.GetBufferHandle();
 				auto footCBHandle = playerService.GetFootBufferHandle();
 
 				auto materialMgr = graphics.GetRenderService()->GetResourceManager<DX11::MaterialManager>();
@@ -1668,7 +1694,7 @@ int main(void)
 				modelDesc.buildOccluders = false;
 				modelDesc.viewMax = 50.0f;
 				modelDesc.minAreaFrec = 0.0004f;
-				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.pCustomNrmWFunc = WindService::ComputeGrassWeight;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
 
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
@@ -1677,13 +1703,13 @@ int main(void)
 				modelDesc.viewMax = 100.0f;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
 				modelDesc.minAreaFrec = 0.001f;
-				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeTreeWeight;
+				modelDesc.pCustomNrmWFunc = WindService::ComputeTreeWeight;
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 				modelDesc.instancesPeak = 100;
 				modelDesc.viewMax = 50.0f;
 				modelDesc.pso = cullNoneWindEntityPSOHandle;
-				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.pCustomNrmWFunc = WindService::ComputeGrassWeight;
 				modelDesc.minAreaFrec = 0.0004f;
 				modelDesc.path = "assets/model/Stylized/WhiteCosmos.gltf";
 				modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
@@ -1717,7 +1743,7 @@ int main(void)
 				modelDesc.instancesPeak = 10000;
 				modelDesc.viewMax = 50.0f;
 				modelDesc.pso = windGrassPSOHandle;
-				modelDesc.pCustomNrmWFunc = WindMovementService::ComputeGrassWeight;
+				modelDesc.pCustomNrmWFunc = WindService::ComputeGrassWeight;
 				modelDesc.minAreaFrec = 0.005f;
 				modelDesc.path = "assets/model/Stylized/StylizedGrass.gltf";
 				bool existingModel = modelAssetMgr->Add(modelDesc, grassModelHandle);
@@ -2155,6 +2181,20 @@ int main(void)
 					levelSession.AddEntityWithLocation(fireflyVolume.centerWS, fireflyVolume);
 				}
 
+				//葉っぱの領域生成
+				{
+					Math::Vec3f location = getTerrainLocation(0.42f, 0.54f);
+					//location.y += 5.0f; // 少し浮かせる
+
+					CLeafVolume leafVolume;
+					leafVolume.centerWS = location;
+					leafVolume.hitRadius = 40.0f;
+					leafVolume.spawnRadius = 50.0f;
+
+					//位置を指定して追加
+					levelSession.AddEntityWithLocation(leafVolume.centerWS, leafVolume);
+				}
+
 
 				// System登録
 				auto& scheduler = pLevel->GetScheduler();
@@ -2168,6 +2208,7 @@ int main(void)
 				scheduler.AddSystem<PlayerSystem>(*serviceLocator);
 				scheduler.AddSystem<PointLightSystem>(*serviceLocator);
 				scheduler.AddSystem<FireflySystem>(*serviceLocator);
+				scheduler.AddSystem<LeafSystem>(*serviceLocator);
 				//scheduler.AddSystem<CleanModelSystem>(*serviceLocator);
 
 #ifdef _ENABLE_IMGUI
@@ -2200,7 +2241,7 @@ int main(void)
 			pSession->CleanLevel(LoadingLevelName);
 			};
 
-		world.LoadLevel("Title", true, true, loadedFunc);
+		world.LoadLevel("OpenField", true, true, loadedFunc);
 	}
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);

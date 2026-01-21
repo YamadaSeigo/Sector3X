@@ -33,6 +33,12 @@
     <ClCompile Include="app\DebugRenderType.cpp">
       <Filter>App</Filter>
     </ClCompile>
+    <ClCompile Include="app\LeafService.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="app\LeafParticlePool.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\VS_ClipUV.hlsl">
@@ -122,13 +128,13 @@
     <FxCompile Include="shader\VS_SpriteAnimation.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\CS_FireflyInitFreeList.hlsl">
+    <FxCompile Include="shader\CS_ParticleInitFreeList.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\CS_FireflySpawn.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\CS_FireflyArgs.hlsl">
+    <FxCompile Include="shader\CS_ParticleArgs.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\CS_FireflyUpdate.hlsl">
@@ -173,6 +179,18 @@
     <FxCompile Include="shader\VS_ClipUVColor.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\CS_LeafSpawn.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CS_LeafUpdate.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_Leaf.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_LeafBillboard.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\_GlobalTypes.hlsli">
@@ -182,6 +200,9 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="shader\_FireflyParticles.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shader\_LeafParticles.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -280,6 +301,15 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="system\TitleSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="app\LeafService.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="app\LeafParticlePool.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="system\LeafSytem.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

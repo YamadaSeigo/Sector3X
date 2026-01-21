@@ -38,7 +38,7 @@ public:
         uint32_t gActiveVolumeCount = 0;
         uint32_t gMaxSpawnPerVolumePerFrame = FireflyParticlePool::MaxSpawnPerVol; // 例：32
         uint32_t gMaxParticles = FireflyParticlePool::MaxParticles; // FreeListにインデックス埋める用
-		float gAddSizeScale = 0.8f; // 追加サイズスケール（例: 0.02）
+		float gAddSizeScale = 0.02f; // 追加サイズスケール（例: 0.02）
     };
 
     struct UpdateCB
@@ -54,7 +54,7 @@ public:
     {
         Math::Matrix4x4f gViewProj = {};
         Math::Vec3f gCamRightWS = {};
-        float gSize = 0.05f; // billboard half-size 例: 0.05
+        float gSize = 0.1f; // billboard half-size 例: 0.05
         Math::Vec3f gCamUpWS = {0,1,0};
         float gTime = 0.0f;
     };
@@ -76,9 +76,7 @@ public:
 		currentSlot = (currentSlot + 1) % Graphics::RENDER_BUFFER_COUNT;
 
         m_activeVolumes.clear();
-
-		m_deltaTime = static_cast<float>(deltaTime);
-        m_elapsedTime += m_deltaTime;
+        m_elapsedTime += static_cast<float>(deltaTime);
     }
 
     void SetPlayerPos(const Math::Vec3f pos) {
@@ -99,10 +97,6 @@ public:
     // GPUリソース取得（後段で使用）
     ID3D11ShaderResourceView* GetVolumeSRV() const {
 		return m_volumeSRV.Get();
-    }
-
-    float GetDeltaTime() const noexcept {
-        return m_deltaTime;
     }
 
     float GetElapsedTime() const noexcept {
@@ -148,7 +142,6 @@ private:
     CameraCB m_cpuCameraBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 
 	uint32_t currentSlot = 0;
-    float m_deltaTime = 0.0f;
 	float m_elapsedTime = 0.0f;
 
 private:

@@ -25,6 +25,8 @@
 #include "Core/OctreePartition.h"
 #include "Core/VoidPartition.h"
 
+#include "Core/TimerService.h"
+
 #include "Core/build_order.h"
 
 #include "Graphics/TerrainClustered.h"

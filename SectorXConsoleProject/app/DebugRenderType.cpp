@@ -15,6 +15,7 @@ bool DebugRenderType::drawCascadeAABB = false;
 bool DebugRenderType::drawShapeDims = false;
 bool DebugRenderType::drawMOCDepth = false;
 bool DebugRenderType::drawFireflyVolumes = false;
+bool DebugRenderType::drawLeafVolumes = false;
 bool DebugRenderType::drawBloom = false;
 
 Graphics::TextureHandle DebugRenderType::debugBloomTexHandle = {};
@@ -38,6 +39,7 @@ DebugRenderType::DebugRenderType()
 	BIND_DEBUG_CHECKBOX("Show", "cascadesAABB", &drawCascadeAABB);
 	BIND_DEBUG_CHECKBOX("Show", "shapeDims", &drawShapeDims);
 	BIND_DEBUG_CHECKBOX("Show", "fireflyVolumes", &drawFireflyVolumes);
+	BIND_DEBUG_CHECKBOX("Show", "leafVolumes", &drawLeafVolumes);
 
 	constexpr auto drawDeferredBufferCount = sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0]);
 	assert(drawDeferredBufferCount == DeferredTextureCount * 2);

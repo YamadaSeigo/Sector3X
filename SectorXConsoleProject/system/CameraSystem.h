@@ -2,6 +2,7 @@
 
 #include "../app/DeferredRenderingService.h"
 #include "../app/FireflyService.h"
+#include "../app/LeafService.h"
 
 /**
  * @brief カメラのバッファの更新、フルスクリーン描画用のカメラバッファとFireflyServiceのカメラバッファも更新,
@@ -18,7 +19,8 @@ class CameraSystem : public ITypeSystem<
 		Graphics::I3DPerCameraService,
 		Graphics::I2DCameraService,
 		DeferredRenderingService,
-		FireflyService
+		FireflyService,
+		LeafService
 #ifdef _DEBUG
 		,Graphics::RenderService
 #endif
@@ -34,7 +36,8 @@ public:
 		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService,
 		NoDeletePtr<Graphics::I2DCameraService> camera2DService,
 		NoDeletePtr<DeferredRenderingService> deferredService,
-		NoDeletePtr<FireflyService> fireflyService
+		NoDeletePtr<FireflyService> fireflyService,
+		NoDeletePtr<LeafService> leafService
 #ifdef _DEBUG
 		, NoDeletePtr<Graphics::RenderService> renderService
 #endif
@@ -237,12 +240,22 @@ public:
 
 		deferredService->UpdateBufferData(lightCameraBufferData);
 
+		auto right = r.normalized();
+		auto up = u.normalized();
+
 		FireflyService::CameraCB fireflyCamBuffer{};
 		fireflyCamBuffer.gViewProj = viewProj;
-		fireflyCamBuffer.gCamRightWS = r.normalized();
-		fireflyCamBuffer.gCamUpWS = u.normalized();
+		fireflyCamBuffer.gCamRightWS = right;
+		fireflyCamBuffer.gCamUpWS = up;
 
 		fireflyService->SetCameraBuffer(fireflyCamBuffer);
+
+		LeafService::CameraCB leafCamBuffer{};
+		leafCamBuffer.gViewProj = viewProj;
+		leafCamBuffer.gCamRightWS = right;
+		leafCamBuffer.gCamUpWS = up;
+
+		leafService->SetCameraBuffer(leafCamBuffer);
 	}
 private:
 	float moveSpeed = 1.0f;

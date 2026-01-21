@@ -1,18 +1,18 @@
 #pragma once
 
-#include "../app/FireflyService.h"
+#include "../app/LeafService.h"
 #include "../app/PlayerService.h"
 
 
-struct CFireflyVolume
+struct CLeafVolume
 {
     // 空間（最低限）
     Math::Vec3f centerWS = {};
     float       hitRadius = 20.0f;      // 球ボリューム（まずは球が楽）
-	float       spawnRadius = 30.0f;    // 発生範囲
+    float       spawnRadius = 30.0f;    // 発生範囲
 
     // 見た目（emissive / bloom 基準）
-    Math::Vec3f color = {0.4f, 1.5f, 0.0f};
+    Math::Vec3f color = { 0.4f, 1.5f, 0.0f };
     float       emissiveIntensity = 1.0f;
 
     // 群れ密度（GPU targetCount の元）
@@ -31,7 +31,7 @@ struct CFireflyVolume
 
     uint32_t seed = 0;
 
-	float burstT = 0.0f; // 0..1（1=発動直後、時間で0へ）
+    float burstT = 0.0f; // 0..1（1=発動直後、時間で0へ）
 
     bool        isHit = false;
 
@@ -43,65 +43,65 @@ struct CFireflyVolume
 };
 
 template<typename Partition>
-class FireflySystem : public ITypeSystem<
-	FireflySystem,
-	Partition,
-	//アクセスするコンポーネントの指定
-	ComponentAccess<
-		Read<CFireflyVolume>
+class LeafSystem : public ITypeSystem<
+    LeafSystem,
+    Partition,
+    //アクセスするコンポーネントの指定
+    ComponentAccess<
+        Read<CLeafVolume>
     >,
-	//受け取るサービスの指定
-	ServiceContext<
-		FireflyService,
+    //受け取るサービスの指定
+    ServiceContext<
+        LeafService,
         PlayerService,
         TimerService
-	>>
+    >>
 {
-	using Accessor = ComponentAccessor<Read<CFireflyVolume>>;
+    using Accessor = ComponentAccessor<Read<CLeafVolume>>;
 public:
 
-	//指定したサービスを関数の引数として受け取る
+    //指定したサービスを関数の引数として受け取る
     void UpdateImpl(Partition& partition,
-        NoDeletePtr< FireflyService> fireflyService,
+        NoDeletePtr<LeafService> leafService,
         NoDeletePtr<PlayerService> playerService,
         NoDeletePtr<TimerService> timerService) {
 
-		auto playerPos = playerService->GetPlayerPosition();
+        auto playerPos = playerService->GetPlayerPosition();
 
         //プレイヤーの位置をfireflyServiceにも教える
-		fireflyService->SetPlayerPos(playerPos);
+        leafService->SetPlayerPos(playerPos);
 
         constexpr float chunkRadius = 100.0f;
 
         auto spatialChunks = partition.CullChunks(playerPos, chunkRadius);
 
         Query query;
-        query.With<CFireflyVolume>();
+        query.With<CLeafVolume>();
 
         std::vector<ArchetypeChunk*> archetypeChunks = query.MatchingChunks<std::vector<SFW::SpatialChunk*>&>(spatialChunks);
 
         for (auto& chunk : archetypeChunks) {
-			Accessor accessor = Accessor(chunk);
-			size_t entityCount = chunk->GetEntityCount();
-			const auto& entities = chunk->GetEntityIDs();
+            Accessor accessor = Accessor(chunk);
+            size_t entityCount = chunk->GetEntityCount();
+            const auto& entities = chunk->GetEntityIDs();
 
-            auto fireflyVolume = accessor.Get<Read<CFireflyVolume>>();
-            if (!fireflyVolume.has_value()) [[unlikely]] {
+            auto leafVolume = accessor.Get<Read<CLeafVolume>>();
+            if (!leafVolume.has_value()) [[unlikely]] {
                 return;
             }
 
             for (auto i = 0; i < entityCount; ++i) {
-                auto volume = fireflyVolume.value()[i];
+                auto volume = leafVolume.value()[i];
 
                 //範囲外の場合はスキップ
-				auto length = (volume.centerWS - playerPos).lengthSquared();
+                auto length = (volume.centerWS - playerPos).lengthSquared();
 
                 if (length > volume.hitRadius * volume.hitRadius) {
                     volume.isHit = false;
                     continue;
                 }
 
-                FireflyVolumeGPU gpuVolume{};
+                LeafVolumeGPU gpuVolume{};
                 gpuVolume.centerWS = volume.centerWS;
                 gpuVolume.radius = volume.spawnRadius;
                 gpuVolume.color = volume.color;
@@ -112,18 +112,17 @@ public:
                 gpuVolume.nearLightBudget = volume.nearLightBudget;
                 gpuVolume.seed = volume.seed;
 
-                if (volume.isHit == false){
-					volume.burstT = 1.0f; // 発動直後
+                if (volume.isHit == false) {
+                    volume.burstT = 1.0f; // 発動直後
                     volume.isHit = true;
                 }
 
-				gpuVolume.burstT = volume.burstT;
+                gpuVolume.burstT = volume.burstT;
 
-				volume.burstT = (std::max)(0.0f, volume.burstT - timerService->GetDeltaTime() / 4.0f); //4秒継続
+                volume.burstT = (std::max)(0.0f, volume.burstT - timerService->GetDeltaTime() / 4.0f); //4秒継続
 
-				fireflyService->PushActiveVolume(entities[i].index, gpuVolume);
+                leafService->PushActiveVolume(entities[i].index, gpuVolume);
             }
         }
     }
 };
-

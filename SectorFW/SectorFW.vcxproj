@@ -53,6 +53,7 @@
     <ClInclude Include="inc\SectorFW\Core\RegistryTypes.h" />
     <ClInclude Include="inc\SectorFW\Core\SpatialChunk.h" />
     <ClInclude Include="inc\SectorFW\Core\ThreadPoolExecutor.h" />
+    <ClInclude Include="inc\SectorFW\Core\TimerService.h" />
     <ClInclude Include="inc\SectorFW\Core\VoidPartition.h" />
     <ClInclude Include="inc\SectorFW\Core\World.hpp" />
     <ClInclude Include="inc\SectorFW\Debug\assert_config.h" />

@@ -1,4 +1,3 @@
-#include "_FireflyParticles.hlsli"
 
 AppendStructuredBuffer<uint> gFreeList : register(u0);
 

@@ -49,8 +49,7 @@ class ModelRenderSystem : public ITypeSystem<
 	ServiceContext<
 		Graphics::RenderService,
 		Graphics::I3DPerCameraService,
-		Graphics::LightShadowService,
-		WindMovementService
+		Graphics::LightShadowService
 	>,
 	//Updateを並列化する
 	IsParallel{ true }
