@@ -2,7 +2,7 @@
 
 
 struct CSpriteAnimation {
-	
+
 	Graphics::MaterialHandle hMat = {};
 
 	struct alignas(4) Buffer {
@@ -11,7 +11,7 @@ struct CSpriteAnimation {
 		uint32_t frameX = 0;
 		uint32_t frameY = 0;
 	} buf = {};
-	
+
 	float frameTime = 0.0f;
 	float duration = 0.1f;
 	uint32_t layer = 0;
@@ -56,11 +56,11 @@ public:
 
 		auto instCount = instanceCounts.load(std::memory_order_relaxed);
 
-		if(instCount == 0){
+		if (instCount == 0) {
 			//更新不要
 			return;
 		}
-	
+
 		auto bufData = bufferManager->Get(instanceBufferHandle);
 
 		// バッファ更新
@@ -76,7 +76,7 @@ public:
 
 			for (auto i = 0; i < size; ++i) {
 				auto idx = srcBuf[i].idx.index;
-				dstBuf[i] = srcBuf[i].buf;
+				dstBuf[idx] = srcBuf[i].buf;
 			}
 			};
 

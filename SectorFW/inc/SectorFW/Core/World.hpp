@@ -26,7 +26,7 @@ namespace SFW
 		struct Session;
 
 		// ロード完了時に呼び出すカスタム関数の型
-		using LoadedCustomFunc = void(*)(Session*);
+		using LoadedCustomFunc = std::function<void(Session*)>; //void(*)(Session*);
 
 		template<typename T>
 		struct LevelHolder

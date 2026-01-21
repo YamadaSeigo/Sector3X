@@ -12,6 +12,7 @@ class TitleSystem : public ITypeSystem<
 		InputService
 	>>{
 	using Accessor = ComponentAccessor<>;
+
 public:
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(NoDeletePtr<WorldType::RequestService> worldRequestService,
@@ -24,7 +25,7 @@ public:
 			worldRequestService->PushCommand(std::move(loadLevelCmd));
 
 			//ロード完了後のコールバック
-			auto loadedFunc = [](WorldType::Session* pSession) {
+			auto loadedFunc = [&](WorldType::Session* pSession) {
 
 				//ローディングレベルをクリーンアップ
 				pSession->CleanLevel("Loading");

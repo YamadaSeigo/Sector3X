@@ -11,6 +11,7 @@ class EnvironmentSystem : public ITypeSystem<
 	//受け取るサービスの指定
 	ServiceContext<
 		EnvironmentService,
+		WindMovementService,
 		Graphics::RenderService,
 		Graphics::LightShadowService,
 		Audio::AudioService,
@@ -28,6 +29,7 @@ class EnvironmentSystem : public ITypeSystem<
 public:
 	void StartImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
+		NoDeletePtr<WindMovementService> grassService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,
@@ -49,11 +51,15 @@ public:
 
 	void UpdateImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
+		NoDeletePtr<WindMovementService> grassService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService)
 	{
+		//草のバッファの更新
+		grassService->UpdateBufferToGPU(renderService->GetProduceSlot());
+
 		const auto& timeOfDayKey = environmentService->GetCurrentTimeOfDayKey();
 		Math::Vec3f sunDirWS = environmentService->GetSunDirection();
 
@@ -95,6 +101,7 @@ public:
 
 	void EndImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
+		NoDeletePtr<WindMovementService> grassService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,

@@ -66,11 +66,8 @@ public:
 		NoDeletePtr<IThreadExecutor> threadPool,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
-		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
-		NoDeletePtr<WindMovementService> grassService)
+		NoDeletePtr<Graphics::LightShadowService> lightShadowService)
 	{
-		//草のバッファの更新
-		grassService->UpdateBufferToGPU(renderService->GetProduceSlot());
 
 		//機能を制限したRenderQueueを取得
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
