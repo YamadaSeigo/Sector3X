@@ -11,7 +11,12 @@ struct LeafParticleGPU
 {
     float posWS[3]; float life;          // 位置 + 残り寿命
     float velWS[3]; uint32_t volumeSlot; // 速度 + 所属 Volume Slot
-    float phase; float size; float pad0; float pad1;
+    float phase; float size;
+    uint32_t curveId; // which guide curve
+    float s; // 0..1 progress on curve
+
+    float lane; // offset along curve-right (meters)
+    float radial; // offset along curve-binormal (meters)
 };
 
 // Update 用のパラメータ（FireflyUpdatePram をそのまま流用しても良い）
@@ -57,6 +62,7 @@ public:
         ID3D11ComputeShader* updateCS,
         ID3D11ComputeShader* argsCS,
         ID3D11ShaderResourceView* volumeSRV,
+		ID3D11ShaderResourceView* guideCurveSRV,
         ID3D11ShaderResourceView* heightMapSRV,
         ID3D11Buffer* cbSpawnData,
         ID3D11Buffer* cbTerrain,

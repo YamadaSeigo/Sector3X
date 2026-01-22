@@ -517,7 +517,7 @@
     <ClInclude Include="app\LeafService.h" />
     <ClInclude Include="app\PlayerService.h" />
     <ClInclude Include="app\SpriteAnimationService.h" />
-    <ClInclude Include="app\WindMovementService.h" />
+    <ClInclude Include="app\WindService.h" />
     <ClInclude Include="app\Packed2Bits32.h" />
     <ClInclude Include="app\RenderDefine.h" />
     <ClInclude Include="app\stdafx.h" />

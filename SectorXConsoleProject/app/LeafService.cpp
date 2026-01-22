@@ -2,6 +2,27 @@
 #include <SectorFW/Debug/message.h>
 #include <SectorFW/Util/convert_string.h>
 
+static uint32_t Hash(uint32_t x)
+{
+    x ^= x >> 16;
+    x *= 0x7feb352d;
+    x ^= x >> 15;
+    x *= 0x846ca68b;
+    x ^= x >> 16;
+    return x;
+}
+
+static float Rand01(uint32_t& s)
+{
+    s = Hash(s);
+    return (s & 0x00FFFFFFu) / 16777216.0f;
+}
+
+static float RandRange(uint32_t& s, float a, float b)
+{
+    return a + (b - a) * Rand01(s);
+}
+
 void CreateLeafVolumeBuffer(
     ID3D11Device* dev,
     ID3D11Buffer** outBuf,
@@ -27,10 +48,53 @@ void CreateLeafVolumeBuffer(
     dev->CreateShaderResourceView(*outBuf, &srv, outSRV);
 }
 
+HRESULT CreateLeafGuideCurveBuffer(
+    ID3D11Device* dev,
+    ID3D11Buffer** outBuf,
+    ID3D11ShaderResourceView** outSRV
+)
+{
+    if (!dev || !outBuf || !outSRV) return E_INVALIDARG;
+
+    *outBuf = nullptr;
+    *outSRV = nullptr;
+
+    D3D11_BUFFER_DESC desc{};
+    desc.ByteWidth = UINT(sizeof(LeafService::GuideCurve) * LeafService::MaxGuideCurves);
+    desc.Usage = D3D11_USAGE_DYNAMIC;                    // 毎フレーム更新ならOK
+    desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+    desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+    desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+    desc.StructureByteStride = UINT(sizeof(LeafService::GuideCurve));
+
+    HRESULT hr = dev->CreateBuffer(&desc, nullptr, outBuf);
+    if (FAILED(hr)) return hr;
+
+    D3D11_SHADER_RESOURCE_VIEW_DESC srv{};
+    srv.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+    srv.Format = DXGI_FORMAT_UNKNOWN;
+    srv.Buffer.FirstElement = 0;                         // ★重要
+    srv.Buffer.NumElements = LeafService::MaxGuideCurves;
+
+    hr = dev->CreateShaderResourceView(*outBuf, &srv, outSRV);
+    if (FAILED(hr))
+    {
+        (*outBuf)->Release();
+        *outBuf = nullptr;
+        return hr;
+    }
+
+    return S_OK;
+}
+
 
 #ifdef _DEBUG
 float gDebugLeafAddSize = 0.02f;
 float gDebugLeafBaseSize = 0.1f;
+float gDebugKillRadiusScale = 1.5f; // e.g. 1.5 (kill if dist > radius*scale)
+float gDebugDamping = 0.96f; // e.g. 0.96
+float gDebugFollowK = 12.0f; // e.g. 12.0  (steer strength)
+float gDebugMaxSpeed = 6.0f; // e.g. 6.0
 #endif
 
 LeafService::LeafService(
@@ -54,6 +118,14 @@ LeafService::LeafService(
         &srv);
     m_volumeBuffer.Attach(buf);
     m_volumeSRV.Attach(srv);
+
+    CreateLeafGuideCurveBuffer(
+        pDevice,
+        &buf,
+        &srv
+    );
+	m_guideCurveBuffer.Attach(buf);
+    m_guideCurveSRV.Attach(srv);
 
     D3D11_BUFFER_DESC desc{};
     desc.ByteWidth = sizeof(SpawnCB);
@@ -117,9 +189,16 @@ LeafService::LeafService(
         m_spawnCB.Get(),
         m_initFreeListCS.Get());
 
+	// ガイド曲線パラメータ初期化
+	InitCurveParams(12345);
+
 #ifdef _DEBUG
-    BIND_DEBUG_SLIDER_FLOAT("Firefly", "addSize", &gDebugLeafAddSize, 0.0f, 1.0f, 0.001f);
-    BIND_DEBUG_SLIDER_FLOAT("Firefly", "baseSize", &gDebugLeafBaseSize, 0.01f, 1.0f, 0.001f);
+    BIND_DEBUG_SLIDER_FLOAT("Leaf", "addSize", &gDebugLeafAddSize, 0.0f, 1.0f, 0.001f);
+    BIND_DEBUG_SLIDER_FLOAT("Leaf", "baseSize", &gDebugLeafBaseSize, 0.01f, 1.0f, 0.001f);
+    BIND_DEBUG_SLIDER_FLOAT("Leaf", "killRadiusScale", &gDebugKillRadiusScale, 0.00f, 10.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Leaf", "damping", &gDebugDamping, 0.80f, 1.0f, 0.001f);
+	BIND_DEBUG_SLIDER_FLOAT("Leaf", "followK", &gDebugFollowK, 0.0f, 50.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Leaf", "maxSpeed", &gDebugMaxSpeed, 0.0f, 20.0f, 0.01f);
 #endif
 }
 
@@ -152,6 +231,16 @@ void LeafService::Commit(double deltaTime)
     updateDesc.data = bufferData;
     updateDesc.isDelete = true;
     updateDesc.isArray = true;
+    m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
+
+    //動的にガイドカーブを更新
+    BuildGuideCurves(m_elapsedTime);
+
+    // GPUも更新
+    updateDesc.buffer = m_guideCurveBuffer;
+    updateDesc.size = sizeof(GuideCurve) * MaxGuideCurves;
+    updateDesc.data = m_cpuGuideCurves;
+    updateDesc.isDelete = false;
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
     auto& spawnBuf = m_cpuSpawnBuffer[currentSlot];
@@ -200,6 +289,7 @@ void LeafService::SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderRe
         m_updateCS.Get(),
         m_argsCS.Get(),
         m_volumeSRV.Get(),
+		m_guideCurveSRV.Get(),
         heightMap.Get(),
         m_spawnCB.Get(),
         terrainCB.Get(),
@@ -250,5 +340,56 @@ void LeafService::ReleaseUnusedSlots()
                 m_uidToSlot.erase(m_slots[i].volumeUID);
             }
         }
+    }
+}
+
+void LeafService::InitCurveParams(uint32_t baseSeed)
+{
+    for (uint32_t i = 0; i < MaxGuideCurves; ++i)
+    {
+        uint32_t s = Hash(baseSeed ^ i);
+
+        CurveParams p{};
+        p.length = RandRange(s, 8.0f, 20.0f);
+
+        // 左右交互にすると“束”がきれい
+        float side = (i & 1) ? 1.0f : -1.0f;
+        p.bend = RandRange(s, 0.6f, 2.4f) * side;
+
+        // startは小さめ、endは少し広め
+        p.startOffXZ = { RandRange(s, -1.2f, 1.2f), RandRange(s, -1.2f, 1.2f) };
+        p.endOffXZ = { RandRange(s, -2.8f, 2.8f), RandRange(s, -2.8f, 2.8f) };
+
+        m_curveParams[i] = p;
+    }
+}
+
+void LeafService::BuildGuideCurves(float timeSec)
+{
+    using namespace SFW::Math;
+
+    for (uint32_t i = 0; i < MaxGuideCurves; ++i)
+    {
+        const auto& prm = m_curveParams[i];
+
+        float L = prm.length;
+
+        // ゆっくり揺らす（任意）
+        float bend = prm.bend * (0.85f + 0.15f * std::sinf(timeSec * 0.7f + i));
+
+        // ローカル: X=right, Y=up, Z=fwd
+        Vec3f P0 = { prm.startOffXZ.x, 0.0f, prm.startOffXZ.y };
+        Vec3f P3 = { prm.endOffXZ.x,   0.0f, prm.endOffXZ.y + L };
+
+        Vec3f P1 = P0 + Vec3f{ bend, 0.0f, L * 0.33f };
+        Vec3f P2 = P0 + Vec3f{ -bend, 0.0f, L * 0.66f };
+
+        GuideCurve& c = m_cpuGuideCurves[i];
+        c.p0L = P0;
+        c.p1L = P1;
+        c.p2L = P2;
+        c.p3L = P3;
+
+        c.lengthApprox = L; // 厳密じゃなくてもOK（ざっくりで良い）
     }
 }

@@ -24,11 +24,10 @@ cbuffer WindCB : register(b11)
 {
     float gTime; // 経過時間
     float gNoiseFreq; // ノイズ空間スケール（WorldPos に掛ける）
-    float gPhaseSpread; // ノイズからどれだけ位相をズラすか（ラジアン）
     float gBigWaveWeight; // 1本あたりの高さ（ローカルY の最大値）
     float gWindSpeed; // 風アニメ速度
     float gWindAmplitude; // 揺れの強さ
-    float2 gWindDirXZ; // XZ 平面の風向き (正規化済み)
+    float3 gWindDir; // XZ 平面の風向き (正規化済み)
 };
 
 
@@ -98,7 +97,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
    // ---- 1) 全体をまとめる“大きな揺れ” ----
    // 空間周波数をかなり低くして「大きなうねり」
-    float bigSpatial = dot(baseWorldPos.xz, gWindDirXZ * 0.03f);
+    float bigSpatial = dot(baseWorldPos, gWindDir * 0.03f);
 
    // GrassMovementService 側でグルーブさせた Time を使う前提
     float bigPhase = bigSpatial + gTime * gWindSpeed;
@@ -171,8 +170,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     // --------- ここまで踏まれ処理 ----------
 
     float swayAmount = gWindAmplitude * wave * weight;
-    float3 windDir3 = float3(gWindDirXZ.x, 0.0f, gWindDirXZ.y);
-    wp += windDir3 * swayAmount;
+    wp += gWindDir * swayAmount;
 
     output.posH = mul(gLightViewProj[gCascadeIndex.x], float4(wp, 1.0f));
 

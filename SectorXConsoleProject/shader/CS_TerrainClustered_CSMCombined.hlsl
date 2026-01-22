@@ -604,8 +604,8 @@ void main(uint3 groupID : SV_GroupID, uint3 gtid : SV_GroupThreadID)
                 else
                 {
                     Visible_Main[dst + 0] = top0;
-                    Visible_Main[dst + 1] = bot1;
-                    Visible_Main[dst + 2] = bot0;
+                    Visible_Main[dst + 1] = bot0;
+                    Visible_Main[dst + 2] = bot1;
                 }
             }
             triOffset += edgeTriCount;

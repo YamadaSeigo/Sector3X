@@ -4,12 +4,12 @@ cbuffer WindCB : register(b11)
 {
     float gTime; // 経過時間
     float gNoiseFreq; // ノイズ空間スケール（WorldPos に掛ける）
-    float gPhaseSpread; // ノイズからどれだけ位相をズラすか（ラジアン）
     float gBigWaveWeight; // 1本あたりの高さ（ローカルY の最大値）
     float gWindSpeed; // 風アニメ速度
     float gWindAmplitude; // 揺れの強さ
-    float2 gWindDirXZ; // XZ 平面の風向き (正規化済み)
+    float3 gWindDir; // XZ 平面の風向き (正規化済み)
 };
+
 
 struct VSInput
 {
@@ -42,8 +42,8 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     float w = h * h * (3.0 - 2.0 * h); // smoothstep
 
     // ---- 風の位相：ワールド位置＋時間 ----
-    float2 dir = normalize(gWindDirXZ);
-    float phaseBase = dot(t.xz, dir) * gNoiseFreq;
+    float3 dir = normalize(gWindDir);
+    float phaseBase = dot(t, dir) * gNoiseFreq;
     float phase = phaseBase + gTime * gWindSpeed;
 
     // ---- 揺れ量（基本波＋少し不規則）----

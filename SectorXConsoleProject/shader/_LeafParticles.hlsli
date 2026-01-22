@@ -6,14 +6,19 @@
 struct LeafParticle
 {
     float3 posWS;
-    float life; // 0..1 か 秒
+    float life; // seconds
 
     float3 velWS;
-    uint volumeSlot; // どの Volume に属するか
+    uint volumeSlot;
 
-    float phase; // ひらひらアニメ用
-    float size; // ビルボード半径
-    float2 pad;
+    float phase;
+    float size;
+
+    uint curveId; // which guide curve
+    float s; // 0..1 progress on curve
+
+    float lane; // offset along curve-right (meters)
+    float radial; // offset along curve-binormal (meters)
 };
 
 struct LeafVolumeGPU
@@ -24,16 +29,15 @@ struct LeafVolumeGPU
     float3 color;
     float intensity;
 
-    float targetCount; // LOD後の最終個数
-    float speed; // 風に乗る基本速度
-    float noiseScale; // 揺れのノイズスケール
-    uint volumeSlot; // GPU側 slot index
+    float targetCount;
+    float speed; // base speed along wind/curve
+    float noiseScale;
+    uint volumeSlot;
 
-    uint nearLightBudget; // 使わないなら 0 固定でOK
     uint seed;
-    float burstT; // 0..1（たくさん舞う瞬間を作りたいなら）
-
-    float pad0;
+    uint pad0;
+    float pad1;
+    float pad2;
 };
 
 static const uint LEAF_THREAD_GROUP_SIZE = 256;

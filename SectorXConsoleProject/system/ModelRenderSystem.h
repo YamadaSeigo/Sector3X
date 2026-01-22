@@ -9,7 +9,7 @@
 #include "../app/RenderDefine.h"
 
 //描画系のこのクラスでいったんバッファの更新
-#include "../app/WindMovementService.h"
+#include "../app/WindService.h"
 
 #ifdef _DEBUG
 #define PROFILE_MODEL_UPDATE_TIME 0

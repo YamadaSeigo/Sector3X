@@ -246,7 +246,7 @@
     <ClInclude Include="app\RenderDefine.h">
       <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="app\WindMovementService.h">
+    <ClInclude Include="app\WindService.h">
       <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="system\SpriteRenderSystem.h">

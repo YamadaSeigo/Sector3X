@@ -15,11 +15,10 @@ public:
     {
 		float    Time = 0.0f;                       // 経過時間
 		float    NoiseFreq = 0.05f;                 // ノイズ周波数
-		float    PhaseSpread = 3.14159f;            // ブレードごとの位相の広がり
         float    BigWaveWeight = 0.3f;              // おおきな波(全体)の重み
 		float    WindSpeed = 1.0f;                  // 風速
 		float    WindAmplitude = 2.0f;              // 風の振幅
-		Math::Vec2f   WindDirXZ = { 1.0f, 0.3f };   // 風向き(XZ平面)
+		Math::Vec3f   WindDir = { 1.0f, 0.0f, 0.3f };   // 風向き(XZ平面)
     };
 
     WindService(BufferManager* bufferMgr) : bufferMgr(bufferMgr)
@@ -34,8 +33,9 @@ public:
 		// デバッグUI登録
         BIND_DEBUG_SLIDER_FLOAT("Wind", "BigWaveWeight", &m_grassWindCB.BigWaveWeight, 0.0f, 1.0f, 0.01f);
         BIND_DEBUG_SLIDER_FLOAT("Wind", "Amplitude", &m_grassWindCB.WindAmplitude, 0.0f, 100.0f, 0.1f);
-        BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionX", &m_grassWindCB.WindDirXZ.x, -1.0f, 1.0f, 0.01f);
-        BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionZ", &m_grassWindCB.WindDirXZ.y, -1.0f, 1.0f, 0.01f);
+        BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionX", &m_grassWindCB.WindDir.x, -1.0f, 1.0f, 0.01f);
+        BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionY", &m_grassWindCB.WindDir.y, -1.0f, 1.0f, 0.01f);
+        BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionZ", &m_grassWindCB.WindDir.z, -1.0f, 1.0f, 0.01f);
     }
 
 	void PreUpdate(double deltaTime) noexcept override

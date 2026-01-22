@@ -20,8 +20,13 @@ cbuffer CBSpawn : register(b0)
 
     uint gActiveVolumeCount;
     uint gMaxSpawnPerVolumePerFrame; // 例：32
-    uint gMaxParticles; // FreeList枯渇対策（使わなくてもOK）
+    uint gCurvesPerCluster; // FreeList枯渇対策（使わなくてもOK）
     float gAddSize;
+
+    float gLaneMin;
+    float gLaneMax;
+    float gRadMin;
+    float gRadMax;
 };
 
 // 地形グリッド情報
@@ -93,12 +98,6 @@ void main(uint3 tid : SV_DispatchThreadID)
     uint deficit = target - cur;
     uint spawnThisFrame = min(deficit, gMaxSpawnPerVolumePerFrame);
 
-    // 侵入バースト中は少し多めに spawn（2～4倍まで）
-    if (v.burstT > 0.0f)
-    {
-        spawnThisFrame = min(deficit, gMaxSpawnPerVolumePerFrame * 3);
-    }
-
     if (lane >= spawnThisFrame)
         return;
 
@@ -138,7 +137,26 @@ void main(uint3 tid : SV_DispatchThreadID)
     p.volumeSlot = slot;
     p.phase = Hash01(seed + 100u) * 6.2831853f;
     p.size = Hash01(seed + 200u) * gAddSize; // 0..1
-    p.pad = float2(0.0f, 0.0f);
+    p.curveId = (volIdx * gCurvesPerCluster) + (Hash_u32(seed + 300u) % gCurvesPerCluster);
+    p.s = 0.0f;
+
+    //矩形分布でランダム
+    //p.lane = lerp(-gLaneMax, gLaneMax, Hash01(seed + 20u));
+    //p.radial = lerp(-gRadMax, gRadMax, Hash01(seed + 21u));
+
+
+    //中心が濃い「ガウスっぽい」分布
+    float u1 = Hash01(seed + 20u);
+    float u2 = Hash01(seed + 21u);
+    float centerBiased = (u1 - u2); // -1..1 で中心寄り
+
+    p.lane = centerBiased * gLaneMax;
+
+    // radialはさらに薄く
+    float v1 = Hash01(seed + 22u);
+    float v2 = Hash01(seed + 23u);
+    p.radial = (v1 - v2) * gRadMax;
+
 
     gParticles[id] = p;
 

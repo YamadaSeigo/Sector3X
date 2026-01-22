@@ -33,6 +33,11 @@ static_assert(sizeof(LeafVolumeGPU) % 16 == 0, "LeafVolumeGPU must be 16-byte al
 class LeafService : public ECS::IUpdateService, public ECS::ICommitService
 {
 public:
+
+    static constexpr uint32_t MaxVolumes = 256;
+    static constexpr uint32_t MaxGuideCurves = 32;
+
+
     struct SpawnCB
     {
         Math::Vec3f gPlayerPosWS = {};
@@ -40,9 +45,15 @@ public:
 
         uint32_t gActiveVolumeCount = 0;
         uint32_t gMaxSpawnPerVolumePerFrame = LeafParticlePool::MaxSpawnPerVol;
-        uint32_t gMaxParticles = LeafParticlePool::MaxParticles;
-        float    gAddSizeScale = 0.02f; // 葉っぱのサイズばらつき
+		uint32_t gCurvesPerCluster = MaxGuideCurves / 4; // 1クラスタあたりのガイド曲線数
+        float    gAddSizeScale = 0.02f; // 葉っぱのサイズばらつき]
+
+        float gLaneMin = 0.6f;
+        float gLaneMax = 1.2f;
+        float gRadialMin = 0.05f;
+        float gRadialMax = 0.25f;
     };
+
 
     struct UpdateCB
     {
@@ -52,6 +63,11 @@ public:
 
         Math::Vec3f gPlayerPosWS = {};
         float       gPlayerRepelRadius = 2.0f;   // プレイヤーの足元を空けるなら
+
+        float gKillRadiusScale = 1.5f; // e.g. 1.5 (kill if dist > radius*scale)
+        float gDamping = 0.96f; // e.g. 0.96
+        float gFollowK = 12.0f; // e.g. 12.0  (steer strength)
+        float gMaxSpeed = 6.0f; // e.g. 6.0
     };
 
     struct CameraCB
@@ -63,7 +79,22 @@ public:
         float            gTime = 0.0f;
     };
 
-    static constexpr uint32_t MaxVolumes = 256;
+    struct GuideCurve
+    {
+        Math::Vec3f p0L = {};
+        Math::Vec3f p1L = {};
+        Math::Vec3f p2L = {};
+        Math::Vec3f p3L = {};
+        float  lengthApprox = 1.0f;
+    };
+
+    struct CurveParams
+    {
+        float length = 15.0f;
+		float bend = 1.0f; //曲がり具合
+        Math::Vec2f startOffXZ = {};
+        Math::Vec2f endOffXZ = {};
+    };
 
     LeafService(
         ID3D11Device* pDevice,
@@ -137,6 +168,9 @@ private:
     ComPtr<ID3D11Buffer>            m_volumeBuffer;
     ComPtr<ID3D11ShaderResourceView> m_volumeSRV;
 
+	ComPtr<ID3D11Buffer>            m_guideCurveBuffer;
+    ComPtr<ID3D11ShaderResourceView> m_guideCurveSRV;
+
     ComPtr<ID3D11Buffer> m_spawnCB;
     ComPtr<ID3D11Buffer> m_updateCB;
     ComPtr<ID3D11Buffer> m_cameraCB;
@@ -157,6 +191,9 @@ private:
     UpdateCB m_cpuUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     CameraCB m_cpuCameraBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 
+	GuideCurve m_cpuGuideCurves[MaxGuideCurves] = {};
+    CurveParams m_curveParams[MaxGuideCurves] = {};
+
 	std::mutex  bufMutex;
 
     uint32_t currentSlot = 0;
@@ -165,6 +202,9 @@ private:
 private:
     uint32_t AllocateSlot(uint32_t volumeUID);
     void     ReleaseUnusedSlots();
+
+    void InitCurveParams(uint32_t baseSeed);
+	void BuildGuideCurves(float timeSec);
 
 public:
     STATIC_SERVICE_TAG

@@ -40,7 +40,7 @@
 #include "system/FireflySystem.h"
 #include "system/LeafSytem.h"
 #include "system/TitleSystem.h"
-#include "WindMovementService.h"
+#include "WindService.h"
 #include "EnvironmentService.h"
 
 #include <SectorFW/Debug/message.h>
