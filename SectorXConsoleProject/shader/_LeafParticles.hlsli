@@ -40,6 +40,17 @@ struct LeafVolumeGPU
     float pad2;
 };
 
+// Guide curve is stored in LOCAL space (volume-centered basis space):
+// x = right, y = up, z = forward (wind direction)
+struct LeafGuideCurve
+{
+    float3 p0L;
+    float3 p1L;
+    float3 p2L;
+    float3 p3L;
+    float lengthApprox; // used for ds/dt normalization
+};
+
 static const uint LEAF_THREAD_GROUP_SIZE = 256;
 
 #endif // LEAF_PARTICLES_HLSLI

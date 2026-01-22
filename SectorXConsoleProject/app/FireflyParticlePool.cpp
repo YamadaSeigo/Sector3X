@@ -109,7 +109,7 @@ void FireflyParticlePool::Create(ID3D11Device* dev)
         D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS | D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS,
         false, true);
 
-    m_heightMapSampler = CreateSamplerState(dev, D3D11_FILTER_MIN_MAG_MIP_LINEAR, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP);
+    m_linearSampler = CreateSamplerState(dev, D3D11_FILTER_MIN_MAG_MIP_LINEAR, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP);
 
     D3D11_BUFFER_DESC desc{};
     desc.ByteWidth = sizeof(FireflyUpdatePram);
@@ -117,7 +117,6 @@ void FireflyParticlePool::Create(ID3D11Device* dev)
     desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-    //FreeListを初期化するために、SpawnCBの初期データを用意
     D3D11_SUBRESOURCE_DATA initData{};
     initData.pSysMem = &m_cpuUpdateParam;
 
@@ -147,7 +146,7 @@ void FireflyParticlePool::Create(ID3D11Device* dev)
 #endif
 }
 
-void FireflyParticlePool::InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* spawnCB, ID3D11ComputeShader* initCS)
+void FireflyParticlePool::InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* initCB, ID3D11ComputeShader* initCS)
 {
     // FreeList の counter を 0 にしてから initCS で Append(i) する
     ID3D11UnorderedAccessView* uavs[1] = { m_free.uav.Get() };
@@ -156,7 +155,7 @@ void FireflyParticlePool::InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* s
 
     ctx->CSSetShader(initCS, nullptr, 0);
 
-    ctx->CSSetConstantBuffers(0, 1, &spawnCB);
+    ctx->CSSetConstantBuffers(0, 1, &initCB);
 
     const uint32_t threads = 256;
     uint32_t groups = (MaxParticles + threads - 1) / threads;
@@ -202,7 +201,7 @@ void FireflyParticlePool::Spawn(
 
 		ctx->CSSetShaderResources(1, 1, &heightMapSRV);
 
-		ctx->CSSetSamplers(0, 1, m_heightMapSampler.GetAddressOf());
+		ctx->CSSetSamplers(0, 1, m_linearSampler.GetAddressOf());
 
         // UAVs: u0 particles, u1 alivePong, u2 free(consume), u3 volumeCount
         ID3D11UnorderedAccessView* uavs[4] =

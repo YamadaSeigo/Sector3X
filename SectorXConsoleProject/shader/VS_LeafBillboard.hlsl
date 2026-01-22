@@ -17,8 +17,7 @@ struct VSOut
 {
     float4 posH : SV_Position;
     float2 uv : TEXCOORD0;
-    float3 col : TEXCOORD1;
-    float a : TEXCOORD2;
+    float3 col : COLOR0;
 };
 
 static const float2 kCornerCCW[4] =
@@ -55,11 +54,7 @@ VSOut main(uint vid : SV_VertexID, uint iid : SV_InstanceID)
     // uvは単純マップ
     o.uv = (s * 0.5f + 0.5f);
 
-    // 点滅（phase + time）
-    float blink = 0.5f + 0.5f * sin(gTime * 6.0f + p.phase);
-
     o.col = v.color * v.intensity;
-    o.a = blink;
 
     return o;
 }

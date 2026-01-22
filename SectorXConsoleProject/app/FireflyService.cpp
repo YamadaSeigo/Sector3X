@@ -60,11 +60,7 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
     desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-	//FreeListを初期化するために、SpawnCBの初期データを用意
-    D3D11_SUBRESOURCE_DATA initData{};
-	initData.pSysMem = &m_cpuSpawnBuffer[0];
-
-    pDevice->CreateBuffer(&desc, &initData, m_spawnCB.GetAddressOf());
+    pDevice->CreateBuffer(&desc, nullptr, m_spawnCB.GetAddressOf());
 
 	desc.ByteWidth = sizeof(UpdateCB);
 	pDevice->CreateBuffer(&desc, nullptr, m_updateCB.GetAddressOf());
@@ -111,10 +107,32 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
     m_particlePool.Create(pDevice);
 
 	// FreeList初期化
-    m_particlePool.InitFreeList(
-        pContext,
-        m_spawnCB.Get(),
-		m_initFreeListCS.Get());
+    {
+        struct InitCB
+        {
+            uint32_t gMaxParticles = FireflyParticlePool::MaxParticles;
+            uint32_t padding[3] = {};
+        };
+
+        ComPtr<ID3D11Buffer> initCB;
+
+        D3D11_BUFFER_DESC desc{};
+        desc.ByteWidth = sizeof(SpawnCB);
+        desc.Usage = D3D11_USAGE_IMMUTABLE;
+        desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+        desc.CPUAccessFlags = 0;
+
+        InitCB initData{};
+        D3D11_SUBRESOURCE_DATA initGPUData{};
+        initGPUData.pSysMem = &initData;
+
+        pDevice->CreateBuffer(&desc, &initGPUData, initCB.GetAddressOf());
+
+        m_particlePool.InitFreeList(
+            pContext,
+            initCB.Get(),
+            m_initFreeListCS.Get());
+    }
 
 #ifdef _DEBUG
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "addSize", &gDebugFireflyAddSize, 0.0f, 1.0f, 0.001f);

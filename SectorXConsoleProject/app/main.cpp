@@ -1350,6 +1350,18 @@ int main(void)
 			blockRevert.RunColor(deviceContext, heightMapSRV, normalMapSRV, cp);
 		};
 
+	static ComPtr<ID3D11ShaderResourceView> leafTextureSRV;
+	{
+		auto textureMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::TextureManager>();
+		Graphics::DX11::TextureCreateDesc texDesc;
+		texDesc.path = "assets/texture/sprite/Leaf.png";
+		texDesc.forceSRGB = true;
+		Graphics::TextureHandle texHandle;
+		textureMgr->Add(texDesc, texHandle);
+		auto texData = textureMgr->Get(texHandle);
+		leafTextureSRV = texData.ref().srv;
+	}
+
 	auto drawParticle = [](uint64_t frame)
 		{
 			auto deviceContext = graphics.GetDeviceContext();
@@ -1378,7 +1390,7 @@ int main(void)
 			}
 
 			//葉っぱのスポーンと描画処理
-			leafService.SpawnParticles(deviceContext, heightMapSRV, cp.cbGrid, windCb, slot);
+			leafService.SpawnParticles(deviceContext, heightMapSRV, leafTextureSRV, cp.cbGrid, windCb, slot);
 		};
 
 	renderService->SetCustomUpdateFunction(terrainUpdateFunc);

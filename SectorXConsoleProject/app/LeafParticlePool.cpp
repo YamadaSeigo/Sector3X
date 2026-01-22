@@ -131,7 +131,7 @@ void LeafParticlePool::Create(ID3D11Device* dev)
     );
 
     // 地形HeightMap用サンプラー（Firefly と同じ）
-    m_heightMapSampler = CreateSamplerState(
+    m_linearSampler = CreateSamplerState(
         dev,
         D3D11_FILTER_MIN_MAG_MIP_LINEAR,
         D3D11_TEXTURE_ADDRESS_WRAP,
@@ -158,27 +158,36 @@ void LeafParticlePool::Create(ID3D11Device* dev)
 #endif
 
 #ifdef _DEBUG
+    /**
+      float gKillRadiusScale = 1.5f; // e.g. 1.5 (kill if dist > radius*scale)
+    float gDamping = 0.96f; // e.g. 0.96
+    float gFollowK = 12.0f; // e.g. 12.0  (steer strength)
+    float gMaxSpeed = 6.0f; // e.g. 6.0
+
+    float gGroundBase = 0.25f; // e.g. 0.25  (meters above ground)
+    float gGroundWaveAmp = 0.35f; // e.g. 0.35  (meters)
+    float gGroundWaveFreq = 0.8f; // e.g. 0.8   (Hz-ish)
+    float gGroundFollowK = 2.0f; // e.g. 2.0   (y position spring)
+    float gGroundFollowD = 1.2f; // e.g. 1.2   (y velocity damping)
+     */
+
     // Firefly と同じように GUI からパラメータをいじる場合
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gDamping, 0.0f, 1.0f, 0.001f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gWanderFreq, 0.0f, 10.0f, 0.01f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gWanderStrength, 0.0f, 10.0f, 0.01f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gCenterPull, 0.0f, 10.0f, 0.01f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundBand, 0.0f, 100.0f, 0.1f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundPull, 0.0f, 1.0f, 0.01f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gHeightRange, 0.0f, 100.0f, 0.1f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gKillRadiusScale, 1.0f, 10.0f, 0.01f);
+	BIND_DEBUG_LEAF_PARAM_FLOAT(gDamping, 0.8f, 0.999f, 0.001f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gFollowK, 0.0f, 50.0f, 0.1f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gMaxSpeed, 0.1f, 20.0f, 0.1f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundBase, 0.0f, 50.0f, 0.01f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundWaveAmp, 0.0f, 50.0f, 0.01f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundWaveFreq, 0.0f, 5.0f, 0.01f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundFollowK, 0.0f, 20.0f, 0.01f);
+	BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundFollowD, 0.0f, 10.0f, 0.01f);
 
-    BIND_DEBUG_LEAF_PARAM_FLOAT(burstStrength, 0.0f, 20.0f, 0.1f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(burstRadius, 0.0f, 20.0f, 0.1f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(burstSwirl, 0.0f, 20.0f, 0.1f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(burstUp, 0.0f, 20.0f, 0.1f);
-
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gMaxSpeed, 0.0f, 20.0f, 0.1f);
 #endif
 }
 
 void LeafParticlePool::InitFreeList(
     ID3D11DeviceContext* ctx,
-    ID3D11Buffer* spawnCB,
+    ID3D11Buffer* initCB,
     ID3D11ComputeShader* initCS)
 {
     // FreeList の counter を 0 にしてから initCS で Append(i) する
@@ -189,7 +198,7 @@ void LeafParticlePool::InitFreeList(
     ctx->CSSetShader(initCS, nullptr, 0);
 
     // SpawnCB を使い回してもOK（中身はインデックス初期化用）
-    ctx->CSSetConstantBuffers(0, 1, &spawnCB);
+    ctx->CSSetConstantBuffers(0, 1, &initCB);
 
     const uint32_t threads = 256;
     uint32_t groups = (MaxParticles + threads - 1) / threads;
@@ -211,6 +220,7 @@ void LeafParticlePool::Spawn(
     ID3D11ShaderResourceView* volumeSRV,
     ID3D11ShaderResourceView* guideCurveSRV,
     ID3D11ShaderResourceView* heightMapSRV,
+	ID3D11ShaderResourceView* leafTextureSRV,
     ID3D11Buffer* cbSpawnData,
     ID3D11Buffer* cbTerrain,
     ID3D11Buffer* cbWind,
@@ -234,11 +244,17 @@ void LeafParticlePool::Spawn(
     // (1) Spawn: AlivePong に Append（新規生成）
     // -----------------------------
     {
-        // SRV
-        ctx->CSSetShaderResources(0, 1, &volumeSRV);
-        ctx->CSSetShaderResources(1, 1, &heightMapSRV);
+        ID3D11ShaderResourceView* srvs[] =
+        {
+            volumeSRV,
+            heightMapSRV,
+            guideCurveSRV
+        };
 
-        ctx->CSSetSamplers(0, 1, m_heightMapSampler.GetAddressOf());
+        // SRV
+        ctx->CSSetShaderResources(0, _countof(srvs), srvs);
+
+        ctx->CSSetSamplers(0, 1, m_linearSampler.GetAddressOf());
 
         // UAVs: u0 particles, u1 alivePong, u2 free(consume), u3 volumeCount
         ID3D11UnorderedAccessView* uavs[4] =
@@ -252,9 +268,15 @@ void LeafParticlePool::Spawn(
         UINT initialCounts[4] = { (UINT)-1, 0, (UINT)-1, (UINT)-1 };
         ctx->CSSetUnorderedAccessViews(0, 4, uavs, initialCounts);
 
-        // CB: 0 = SpawnCB, 1 = TerrainCB
-        ctx->CSSetConstantBuffers(0, 1, &cbSpawnData);
-        ctx->CSSetConstantBuffers(1, 1, &cbTerrain);
+        ID3D11Buffer* cbBuffers[] =
+        {
+            cbSpawnData,
+			cbTerrain,
+            cbWind,
+		};
+
+		// CB: 0 = SpawnCB, 1 = TerrainCB, 2 = WindCB
+        ctx->CSSetConstantBuffers(0, _countof(cbBuffers), cbBuffers);
 
         ctx->CSSetShader(spawnCS, nullptr, 0);
 
@@ -320,11 +342,9 @@ void LeafParticlePool::Spawn(
         ID3D11Buffer* cbBuffers[] =
         {
             cbUpdateData,           // b0: フレーム共通 UpdateCB
-			cbWind,                  // b1: WindCB
-
-			//必要なら追加
-            //cbTerrain,              // b2: TerrainCB
-            //m_cbUpdateParam.Get(), // b3: LeafUpdateParam,
+			cbTerrain,              // b1: TerrainCB
+			cbWind,                  // b2: WindCB
+            m_cbUpdateParam.Get(), // b3: LeafUpdateParam,
         };
         ctx->CSSetConstantBuffers(0, _countof(cbBuffers), cbBuffers);
 
@@ -394,6 +414,9 @@ void LeafParticlePool::Spawn(
 
     // CBCamera
     ctx->VSSetConstantBuffers(0, 1, &cbCameraData);
+
+	ctx->PSSetShaderResources(0, 1, &leafTextureSRV);
+	ctx->PSSetSamplers(0, 1, m_linearSampler.GetAddressOf());
 
     ctx->VSSetShader(vs, nullptr, 0);
     ctx->PSSetShader(ps, nullptr, 0);

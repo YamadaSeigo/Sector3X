@@ -1,15 +1,10 @@
 
 AppendStructuredBuffer<uint> gFreeList : register(u0);
 
-cbuffer CBSpawn : register(b0)
+cbuffer CBInit : register(b0)
 {
-    float3 gPlayerPosWS;
-    float gTime;
-
-    uint gActiveVolumeCount;
-    uint gMaxSpawnPerVolumePerFrame; // ó·ÅF32
     uint gMaxParticles;
-    uint pad0;
+    uint3 pad0;
 };
 
 [numthreads(256, 1, 1)]

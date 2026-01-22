@@ -7,6 +7,24 @@
 #include <unordered_map>
 #include <mutex>
 
+/**
+ * @brief float3 centerWS;
+    float radius;
+
+    float3 color;
+    float intensity;
+
+    float targetCount;
+    float speed; // base speed along wind/curve
+    float noiseScale;
+    uint volumeSlot;
+
+    uint seed;
+    uint pad0;
+    float pad1;
+    float pad2;
+ */
+
 struct LeafVolumeGPU
 {
     Math::Vec3f centerWS = {};
@@ -16,15 +34,14 @@ struct LeafVolumeGPU
     float       intensity = 1.0f;
 
     float       targetCount = 100.0f;     // LOD後の最終個数
-    float       speed = 0.5f;      // 風での移動速度
+    float       speed = 20.0f;      // 風での移動速度
     float       noiseScale = 0.5f;
     uint32_t    volumeSlot = 0;         // GPU側 slot index
 
-    uint32_t    nearLightBudget = 0;     // 使わないなら 0
     uint32_t    seed = 0;
+	uint32_t pad0 = 0;
 
-    float       burstT = 0.0f;  // 0..1（多く舞うタイミングなど）
-    float       pad0 = 0.0f;
+    float    pad1[2] = {};
 };
 
 static_assert(sizeof(LeafVolumeGPU) % 16 == 0, "LeafVolumeGPU must be 16-byte aligned");
@@ -45,7 +62,7 @@ public:
 
         uint32_t gActiveVolumeCount = 0;
         uint32_t gMaxSpawnPerVolumePerFrame = LeafParticlePool::MaxSpawnPerVol;
-		uint32_t gCurvesPerCluster = MaxGuideCurves / 4; // 1クラスタあたりのガイド曲線数
+		uint32_t gCurveCount = MaxGuideCurves; // 1クラスタあたりのガイド曲線数
         float    gAddSizeScale = 0.02f; // 葉っぱのサイズばらつき]
 
         float gLaneMin = 0.6f;
@@ -63,11 +80,6 @@ public:
 
         Math::Vec3f gPlayerPosWS = {};
         float       gPlayerRepelRadius = 2.0f;   // プレイヤーの足元を空けるなら
-
-        float gKillRadiusScale = 1.5f; // e.g. 1.5 (kill if dist > radius*scale)
-        float gDamping = 0.96f; // e.g. 0.96
-        float gFollowK = 12.0f; // e.g. 12.0  (steer strength)
-        float gMaxSpeed = 6.0f; // e.g. 6.0
     };
 
     struct CameraCB
@@ -137,6 +149,7 @@ public:
     void SpawnParticles(
         ID3D11DeviceContext* ctx,
         ComPtr<ID3D11ShaderResourceView>& heightMap,
+        ComPtr<ID3D11ShaderResourceView>& leafTex,
         ComPtr<ID3D11Buffer>& terrainCB,
         ComPtr<ID3D11Buffer>& windCB,
         uint32_t slot);

@@ -22,21 +22,18 @@ struct LeafParticleGPU
 // Update 用のパラメータ（FireflyUpdatePram をそのまま流用しても良い）
 struct LeafUpdateParam
 {
-    float gDamping = 0.5f;  // 速度減衰係数
-    float gWanderFreq = 1.0f;  // ふわふわノイズ周波数
-    float gWanderStrength = 10.0f; // ふわふわノイズ強さ
-    float gCenterPull = 0.01f; // ボリューム中心への引き戻し強さ
-    float gGroundBand = 20.0f; // 地面からの高さ帯
-    float gGroundPull = 0.25f; // 地面付近への引き戻し強さ(小さいほうが強)
-    float gHeightRange = 15.0f; // 高さ範囲
+    float gKillRadiusScale = 1.5f; // e.g. 1.5 (kill if dist > radius*scale)
+    float gDamping = 0.96f; // e.g. 0.96
+    float gFollowK = 12.0f; // e.g. 12.0  (steer strength)
+    float gMaxSpeed = 6.0f; // e.g. 6.0
 
-    // プレイヤーの近くで吹き上がるような「突風」用
-    float burstStrength = 8.0f;
-    float burstRadius = 8.0f;
-    float burstSwirl = 4.5f;
-    float burstUp = 6.0f;
+    float gGroundBase = 0.25f; // e.g. 0.25  (meters above ground)
+    float gGroundWaveAmp = 10.0f; // e.g. 0.35  (meters)
+    float gGroundWaveFreq = 0.8f; // e.g. 0.8   (Hz-ish)
+    float gGroundFollowK = 5.0f; // e.g. 2.0   (y position spring)
+    float gGroundFollowD = 3.0f; // e.g. 1.2   (y velocity damping)
 
-    float gMaxSpeed = 2.0f; // 速度上限
+    float padParams[3] = {};
 };
 
 class LeafParticlePool
@@ -64,6 +61,7 @@ public:
         ID3D11ShaderResourceView* volumeSRV,
 		ID3D11ShaderResourceView* guideCurveSRV,
         ID3D11ShaderResourceView* heightMapSRV,
+        ID3D11ShaderResourceView* leafTextureSRV,
         ID3D11Buffer* cbSpawnData,
         ID3D11Buffer* cbTerrain,
         ID3D11Buffer* cbWind,
@@ -98,7 +96,7 @@ private:
     RawBufferSRVUAV m_drawArgsRaw;         // DrawInstancedIndirect 用 Args
 
     Microsoft::WRL::ComPtr<ID3D11Buffer>        m_cbUpdateParam;
-    Microsoft::WRL::ComPtr<ID3D11SamplerState>  m_heightMapSampler;
+    Microsoft::WRL::ComPtr<ID3D11SamplerState>  m_linearSampler;
 
     LeafUpdateParam m_cpuUpdateParam{};
     bool            m_isUpdateParamDirty = true;

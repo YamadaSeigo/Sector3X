@@ -76,7 +76,7 @@ private:
 
 	ComPtr<ID3D11Buffer> m_cbUpdateParam;
 
-    ComPtr<ID3D11SamplerState> m_heightMapSampler;
+    ComPtr<ID3D11SamplerState> m_linearSampler;
 
 	FireflyUpdatePram m_cpuUpdateParam;
 	bool m_isUpdateParamDirty = true;

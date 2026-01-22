@@ -91,10 +91,6 @@ HRESULT CreateLeafGuideCurveBuffer(
 #ifdef _DEBUG
 float gDebugLeafAddSize = 0.02f;
 float gDebugLeafBaseSize = 0.1f;
-float gDebugKillRadiusScale = 1.5f; // e.g. 1.5 (kill if dist > radius*scale)
-float gDebugDamping = 0.96f; // e.g. 0.96
-float gDebugFollowK = 12.0f; // e.g. 12.0  (steer strength)
-float gDebugMaxSpeed = 6.0f; // e.g. 6.0
 #endif
 
 LeafService::LeafService(
@@ -133,11 +129,7 @@ LeafService::LeafService(
     desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-    //FreeListを初期化するために、SpawnCBの初期データを用意
-    D3D11_SUBRESOURCE_DATA initData{};
-    initData.pSysMem = &m_cpuSpawnBuffer[0];
-
-    pDevice->CreateBuffer(&desc, &initData, m_spawnCB.GetAddressOf());
+    pDevice->CreateBuffer(&desc, nullptr, m_spawnCB.GetAddressOf());
 
     desc.ByteWidth = sizeof(UpdateCB);
     pDevice->CreateBuffer(&desc, nullptr, m_updateCB.GetAddressOf());
@@ -184,10 +176,32 @@ LeafService::LeafService(
     m_particlePool.Create(pDevice);
 
     // FreeList初期化
-    m_particlePool.InitFreeList(
-        pContext,
-        m_spawnCB.Get(),
-        m_initFreeListCS.Get());
+    {
+        struct InitCB
+        {
+            uint32_t gMaxParticles = LeafParticlePool::MaxParticles;
+            uint32_t padding[3] = {};
+		};
+
+        ComPtr<ID3D11Buffer> initCB;
+
+        D3D11_BUFFER_DESC desc{};
+        desc.ByteWidth = sizeof(SpawnCB);
+        desc.Usage = D3D11_USAGE_IMMUTABLE;
+        desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+        desc.CPUAccessFlags = 0;
+
+		InitCB initData{};
+        D3D11_SUBRESOURCE_DATA initGPUData{};
+		initGPUData.pSysMem = &initData;
+
+		pDevice->CreateBuffer(&desc, &initGPUData, initCB.GetAddressOf());
+
+        m_particlePool.InitFreeList(
+            pContext,
+            initCB.Get(),
+            m_initFreeListCS.Get());
+    }
 
 	// ガイド曲線パラメータ初期化
 	InitCurveParams(12345);
@@ -195,10 +209,6 @@ LeafService::LeafService(
 #ifdef _DEBUG
     BIND_DEBUG_SLIDER_FLOAT("Leaf", "addSize", &gDebugLeafAddSize, 0.0f, 1.0f, 0.001f);
     BIND_DEBUG_SLIDER_FLOAT("Leaf", "baseSize", &gDebugLeafBaseSize, 0.01f, 1.0f, 0.001f);
-    BIND_DEBUG_SLIDER_FLOAT("Leaf", "killRadiusScale", &gDebugKillRadiusScale, 0.00f, 10.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Leaf", "damping", &gDebugDamping, 0.80f, 1.0f, 0.001f);
-	BIND_DEBUG_SLIDER_FLOAT("Leaf", "followK", &gDebugFollowK, 0.0f, 50.0f, 0.1f);
-	BIND_DEBUG_SLIDER_FLOAT("Leaf", "maxSpeed", &gDebugMaxSpeed, 0.0f, 20.0f, 0.01f);
 #endif
 }
 
@@ -282,7 +292,7 @@ void LeafService::Commit(double deltaTime)
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 }
 
-void LeafService::SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& heightMap, ComPtr<ID3D11Buffer>& terrainCB, ComPtr<ID3D11Buffer>& windCB, uint32_t slot)
+void LeafService::SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& heightMap, ComPtr<ID3D11ShaderResourceView>& leafTex, ComPtr<ID3D11Buffer>& terrainCB, ComPtr<ID3D11Buffer>& windCB, uint32_t slot)
 {
     m_particlePool.Spawn(
         ctx, m_spawnCS.Get(),
@@ -291,6 +301,7 @@ void LeafService::SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderRe
         m_volumeSRV.Get(),
 		m_guideCurveSRV.Get(),
         heightMap.Get(),
+        leafTex.Get(),
         m_spawnCB.Get(),
         terrainCB.Get(),
         windCB.Get(),
