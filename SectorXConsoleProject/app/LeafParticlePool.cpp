@@ -219,6 +219,7 @@ void LeafParticlePool::Spawn(
     ID3D11ComputeShader* argsCS,
     ID3D11ShaderResourceView* volumeSRV,
     ID3D11ShaderResourceView* guideCurveSRV,
+    ID3D11ShaderResourceView* clumpSRV,
     ID3D11ShaderResourceView* heightMapSRV,
 	ID3D11ShaderResourceView* leafTextureSRV,
     ID3D11Buffer* cbSpawnData,
@@ -248,7 +249,8 @@ void LeafParticlePool::Spawn(
         {
             volumeSRV,
             heightMapSRV,
-            guideCurveSRV
+            guideCurveSRV,
+            clumpSRV
         };
 
         // SRV
@@ -304,13 +306,14 @@ void LeafParticlePool::Spawn(
     // -----------------------------
     {
         // t0 = volumeSRV, t1 = alivePingSRV, t2 = aliveCountRawSRV, t3 = heightMapSRV
-        ID3D11ShaderResourceView* updateSrvs[5] =
+        ID3D11ShaderResourceView* updateSrvs[] =
         {
             volumeSRV,
             m_alivePing.srv.Get(),
             m_aliveCountRaw.srv.Get(),
             heightMapSRV,
-            guideCurveSRV
+            guideCurveSRV,
+            clumpSRV
         };
         ctx->CSSetShaderResources(0, _countof(updateSrvs), updateSrvs);
 

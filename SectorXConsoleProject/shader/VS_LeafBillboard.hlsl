@@ -40,14 +40,30 @@ VSOut main(uint vid : SV_VertexID, uint iid : SV_InstanceID)
     LeafVolumeGPU v = gVolumes[p.volumeSlot];
 
     uint c = kVidToCorner[vid];
+    // corner
     float2 s = kCornerCCW[c];
+
+    float2 v2 = float2(dot(p.velWS, gCamRightWS), dot(p.velWS, gCamUpWS));
+    float vlen2 = dot(v2, v2);
+    float velAngle = (vlen2 > 1e-6) ? atan2(v2.y, v2.x) : 0.0f;
+
+    // ランダム回転（phase）と速度方向をブレンド
+    float angle = lerp(p.phase, velAngle, 0.7f); // 0.0=ランダム優先, 1.0=速度優先
+
+    float sn, cs;
+    sincos(angle, sn, cs);
+
+    // ビルボード平面内で回転
+    float2 sr;
+    sr.x = s.x * cs - s.y * sn;
+    sr.y = s.x * sn + s.y * cs;
 
     float size = gBaseSize + p.size;
 
     float3 worldPos =
-        p.posWS +
-        gCamRightWS * (s.x * size) +
-        gCamUpWS * (s.y * size);
+    p.posWS +
+    gCamRightWS * (sr.x * size) +
+    gCamUpWS * (sr.y * size);
 
     o.posH = mul(gViewProj, float4(worldPos, 1));
 

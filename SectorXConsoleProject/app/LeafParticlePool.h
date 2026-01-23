@@ -25,7 +25,7 @@ struct LeafUpdateParam
     float gKillRadiusScale = 1.5f; // e.g. 1.5 (kill if dist > radius*scale)
     float gDamping = 0.96f; // e.g. 0.96
     float gFollowK = 12.0f; // e.g. 12.0  (steer strength)
-    float gMaxSpeed = 6.0f; // e.g. 6.0
+    float gMaxSpeed = 8.0f; // e.g. 6.0
 
     float gGroundBase = 0.25f; // e.g. 0.25  (meters above ground)
     float gGroundWaveAmp = 10.0f; // e.g. 0.35  (meters)
@@ -60,6 +60,7 @@ public:
         ID3D11ComputeShader* argsCS,
         ID3D11ShaderResourceView* volumeSRV,
 		ID3D11ShaderResourceView* guideCurveSRV,
+        ID3D11ShaderResourceView* clumpSRV,
         ID3D11ShaderResourceView* heightMapSRV,
         ID3D11ShaderResourceView* leafTextureSRV,
         ID3D11Buffer* cbSpawnData,

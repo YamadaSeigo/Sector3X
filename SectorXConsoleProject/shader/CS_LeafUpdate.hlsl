@@ -18,6 +18,8 @@ ByteAddressBuffer gAliveCountRaw : register(t2);
 
 StructuredBuffer<LeafGuideCurve> gCurves : register(t4);
 
+StructuredBuffer<LeafClump> gClumps : register(t5);
+
 // UAVs
 RWStructuredBuffer<LeafParticle> gParticles : register(u0);
 AppendStructuredBuffer<uint> gAliveOut : register(u1); // Append!
@@ -35,6 +37,12 @@ cbuffer CBUpdate : register(b0)
 
     float3 gPlayerPosWS;
     float gPlayerRepelRadius;
+    
+    // Clump関連
+    uint gClumpsPerVolume; // 例: 16
+    uint gCurvesPerVolume; // 例: 32（volumeごとに曲線がまとまってる場合）
+    uint gTotalClumps; // activeVolumeCount*gClumpsPerVolume（保険用）
+    float gClumpLength01; // 例: 0.12（塊の“長さ”= s方向の広がり）
 };
 
 // 地形グリッド情報
@@ -155,7 +163,7 @@ float3 SafeN(float3 v)
 [numthreads(LEAF_THREAD_GROUP_SIZE, 1, 1)]
 void main(uint3 tid : SV_DispatchThreadID)
 {
-    uint aliveCount = gAliveCountRaw.Load(0);
+   uint aliveCount = gAliveCountRaw.Load(0);
     uint idx = tid.x;
     if (idx >= aliveCount)
         return;
@@ -164,97 +172,104 @@ void main(uint3 tid : SV_DispatchThreadID)
     LeafParticle p = gParticles[id];
 
     LeafVolumeGPU vol = gVolumes[p.volumeSlot];
-
     float dt = gDt;
 
-    // --- Lifetime ---
+    // ---- lifetime ----
     p.life -= dt;
     if (p.life <= 0.0f)
     {
         gFreeList.Append(id);
-        InterlockedAdd(gVolumeCount[p.volumeSlot], (uint) -1);
+        InterlockedAdd(gVolumeCount[p.volumeSlot], (uint)-1);
         return;
     }
 
-    // --- Wind basis ---
+    // ---- wind basis ----
     float3 up = float3(0, 1, 0);
-
-    // Use XZ wind to avoid vertical degeneracy
     float3 fwd = SafeN(float3(gWindDir.x, 0.0f, gWindDir.z));
-    if (abs(dot(fwd, up)) > 0.98)
-        fwd = float3(0, 0, 1);
+    if (abs(dot(fwd, up)) > 0.98) fwd = float3(0, 0, 1);
 
     float3 right = SafeN(cross(up, fwd));
     float3 binorm = SafeN(cross(fwd, right));
 
-    // --- Curve eval (LOCAL) ---
-    uint curveId = p.curveId; // ※安全化するなら % gCurveCount
+    // ============================================================
+    // ★ Clump fetch
+    // ============================================================
+    uint clumpId = p.clumpId;
+    // 保険（clumpIdが壊れても落ちにくく）
+    if (clumpId >= gTotalClumps)
+    {
+        // とりあえず volume内に丸める
+        clumpId = (uint)p.volumeSlot * gClumpsPerVolume + (clumpId % max(gClumpsPerVolume,1u));
+    }
+    LeafClump cl = gClumps[clumpId];
+
+    // ============================================================
+    // ★ curve fetch (clump.curveId)
+    // ============================================================
+    uint curveId = cl.curveId;
+
+    // volumeごとに曲線がまとまっているなら、範囲外を丸める
+    // （設計が「曲線は全体共有でランダム」ならこのブロックは消してOK）
+    if (gCurvesPerVolume != 0)
+    {
+        uint base = (uint)p.volumeSlot * gCurvesPerVolume;
+        uint local = (curveId - base) % gCurvesPerVolume;
+        curveId = base + local;
+    }
+
     LeafGuideCurve c = gCurves[curveId];
 
-    float len = max(c.lengthApprox, 0.001);
-    float speedAlong = max(vol.speed, 0.0) * gWindAmplitude;
-    float speedVar = lerp(0.8, 1.2, Hash01(id * 9781u + 17u));
-    p.s = frac(p.s + (speedAlong * speedVar) * dt / len);
+    // ============================================================
+    // ★ clump.s を中心に「粒子は少し前後に散る」
+    //    p.s は個体差（-0.5..+0.5）として使う（Spawnでランダム入れておく）
+    // ============================================================
+    float s = frac(cl.s + (p.s - 0.5f) * max(gClumpLength01, 0.0f));
 
-    float3 centerL = Bezier3(c.p0L, c.p1L, c.p2L, c.p3L, p.s);
-    float3 tanL = Bezier3Tangent(c.p0L, c.p1L, c.p2L, c.p3L, p.s);
-    float3 tanWS = SafeN(LocalToWorld(tanL, right, up, fwd));
+    float3 centerL = Bezier3(c.p0L, c.p1L, c.p2L, c.p3L, s);
+    float3 tanL    = Bezier3Tangent(c.p0L, c.p1L, c.p2L, c.p3L, s);
+    float3 tanWS   = SafeN(LocalToWorld(tanL, right, up, fwd));
 
-    // --- Curve cross-section basis ---
+    // curve cross-section basis
     float3 curveRightWS = SafeN(cross(up, tanWS));
-    // fallback if degenerate
-    if (dot(curveRightWS, curveRightWS) < 1e-6)
-        curveRightWS = right;
+    if (dot(curveRightWS, curveRightWS) < 1e-6) curveRightWS = right;
 
     float3 curveBinormWS = SafeN(cross(tanWS, curveRightWS));
-    if (dot(curveBinormWS, curveBinormWS) < 1e-6)
-        curveBinormWS = up;
+    if (dot(curveBinormWS, curveBinormWS) < 1e-6) curveBinormWS = up;
 
-    // thickness offsets
-    float3 offsetWS = curveRightWS * p.lane + curveBinormWS * p.radial;
+    // ============================================================
+    // ★ offset: clump中心 + 粒子個体差
+    // ============================================================
+    float lane   = cl.laneCenter   + p.lane;   // 粒子は微小な散らし
+    float radial = cl.radialCenter + p.radial; // 上下（薄め推奨）
 
-    // center in world
+    float3 offsetWS = curveRightWS * lane + curveBinormWS * radial;
+
     float3 centerWS = vol.centerWS + LocalToWorld(centerL, right, up, fwd);
     float3 targetWS = centerWS + offsetWS;
 
-    // --- Ground-follow height (NEW) ---
-    // Make Y follow "ground + base + gentle wave + radial"
-    float groundY = SampleGroundY(p.posWS.xz);
-
-    // gentle wave (per-particle phase)  ※radialは上下の厚みとして維持
-    float wave = sin(gTime * (6.2831853f * gGroundWaveFreq) + p.phase) * gGroundWaveAmp;
-
-    float targetY = groundY + gGroundBase + wave + p.radial;
-    float dy = targetY - p.posWS.y;
-
-    // PD-ish on Y (soft)
-    // K: position -> accel, D: damp vertical velocity
-    float yAccel = dy * gGroundFollowK - p.velWS.y * gGroundFollowD;
-    p.velWS.y += yAccel * dt;
-
-    // prevent going under ground
-    p.posWS.y = max(p.posWS.y, groundY + 0.02f);
-
-    // --- Steering (lateral only) ---
+    // ============================================================
+    // steering: 横方向だけ（接線方向は追従しない）
+    // ============================================================
     float3 toTarget = targetWS - p.posWS;
-
     float3 lateral = toTarget - tanWS * dot(toTarget, tanWS);
-
-    // Optional: avoid strong vertical "pull to curve"; let ground-follow handle Y
-    lateral.y = 0.0f;
+    // 高さは別制御したいならY追従を切る（地面追従を入れる場合おすすめ）
+    // lateral.y = 0.0f;
 
     float3 steer = lateral * gFollowK;
 
-    // flow along tangent
+    // ============================================================
+    // flow: 接線方向へ流す（clump速度で統一）
+    // ============================================================
+    float speedAlong = max(vol.speed, 0.0f) * gWindAmplitude * max(cl.speedMul, 0.0f);
     float3 flow = tanWS * speedAlong;
 
-    // --- Flutter ---
-    uint nseed = Hash_u32(id ^ (uint) (gTime * 60.0));
+    // flutter（弱め推奨：束感を壊すので）
+    uint nseed = Hash_u32(id ^ cl.seed ^ (uint)(gTime * 60.0));
     float3 flutterDir = HashDir3(nseed);
     flutterDir.y *= 0.35;
     float3 flutter = flutterDir * (0.05f * vol.noiseScale);
 
-    // --- Player repel ---
+    // player repel
     float3 repel = 0;
     float3 toP = p.posWS - gPlayerPosWS;
     float dP = length(toP);
@@ -264,38 +279,39 @@ void main(uint3 tid : SV_DispatchThreadID)
         repel = (toP / dP) * (w * 6.0);
     }
 
-    // --- Integrate ---
+    // integrate
     float3 accel = steer + flutter + repel;
     p.velWS += accel * dt;
 
-    // Align toward flow
-    p.velWS = lerp(p.velWS, flow, saturate(0.08 + 0.12 * vol.noiseScale));
+    // flowへ寄せる（束感を出したいなら係数を上げる）
+    p.velWS = lerp(p.velWS, flow, saturate(0.15 + 0.10 * vol.noiseScale));
 
-    // Damping (multiply style; if you want dt-aware, use exp(-k*dt))
+    // damping (multiply)
     p.velWS *= gDamping;
 
-    // Clamp speed
+    // clamp speed
     float sp = length(p.velWS);
     if (sp > gMaxSpeed)
         p.velWS *= (gMaxSpeed / max(sp, 1e-6));
 
-    // Position
+    // pos
     p.posWS += p.velWS * dt;
 
-    // Kill if too far
+    // kill if too far
     float3 dv = p.posWS - vol.centerWS;
     float dist = length(dv);
     float killR = vol.radius * max(gKillRadiusScale, 1.0);
     if (dist > killR)
     {
         gFreeList.Append(id);
-        InterlockedAdd(gVolumeCount[p.volumeSlot], (uint) -1);
+        InterlockedAdd(gVolumeCount[p.volumeSlot], (uint)-1);
         return;
     }
 
-    // phase
+    // phase（ビルボード回転等に使う）
     p.phase += dt;
 
+    // store + alive out
     gParticles[id] = p;
     gAliveOut.Append(id);
 }

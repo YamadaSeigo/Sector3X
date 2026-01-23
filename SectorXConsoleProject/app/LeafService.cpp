@@ -48,10 +48,12 @@ void CreateLeafVolumeBuffer(
     dev->CreateShaderResourceView(*outBuf, &srv, outSRV);
 }
 
-HRESULT CreateLeafGuideCurveBuffer(
+HRESULT CreateLeafBuffer(
     ID3D11Device* dev,
     ID3D11Buffer** outBuf,
-    ID3D11ShaderResourceView** outSRV
+    ID3D11ShaderResourceView** outSRV,
+    uint32_t size,
+    uint32_t totalCount
 )
 {
     if (!dev || !outBuf || !outSRV) return E_INVALIDARG;
@@ -60,12 +62,12 @@ HRESULT CreateLeafGuideCurveBuffer(
     *outSRV = nullptr;
 
     D3D11_BUFFER_DESC desc{};
-    desc.ByteWidth = UINT(sizeof(LeafService::GuideCurve) * LeafService::MaxGuideCurves);
+    desc.ByteWidth = size * totalCount;
     desc.Usage = D3D11_USAGE_DYNAMIC;                    // 毎フレーム更新ならOK
     desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
     desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
     desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
-    desc.StructureByteStride = UINT(sizeof(LeafService::GuideCurve));
+    desc.StructureByteStride = size;
 
     HRESULT hr = dev->CreateBuffer(&desc, nullptr, outBuf);
     if (FAILED(hr)) return hr;
@@ -73,8 +75,8 @@ HRESULT CreateLeafGuideCurveBuffer(
     D3D11_SHADER_RESOURCE_VIEW_DESC srv{};
     srv.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
     srv.Format = DXGI_FORMAT_UNKNOWN;
-    srv.Buffer.FirstElement = 0;                         // ★重要
-    srv.Buffer.NumElements = LeafService::MaxGuideCurves;
+    srv.Buffer.FirstElement = 0;
+    srv.Buffer.NumElements = totalCount;
 
     hr = dev->CreateShaderResourceView(*outBuf, &srv, outSRV);
     if (FAILED(hr))
@@ -91,6 +93,8 @@ HRESULT CreateLeafGuideCurveBuffer(
 #ifdef _DEBUG
 float gDebugLeafAddSize = 0.02f;
 float gDebugLeafBaseSize = 0.1f;
+float gDebugLeafLaneMax = 1.2f;
+float gDebugLeafRadialMax = 0.25f;
 #endif
 
 LeafService::LeafService(
@@ -115,13 +119,25 @@ LeafService::LeafService(
     m_volumeBuffer.Attach(buf);
     m_volumeSRV.Attach(srv);
 
-    CreateLeafGuideCurveBuffer(
+    CreateLeafBuffer(
         pDevice,
         &buf,
-        &srv
+        &srv,
+        sizeof(GuideCurve),
+        TotalGuideCurves
     );
 	m_guideCurveBuffer.Attach(buf);
     m_guideCurveSRV.Attach(srv);
+
+    CreateLeafBuffer(
+        pDevice,
+        &buf,
+        &srv,
+        sizeof(Clump),
+        TotalClumps
+    );
+    m_clumpBuffer.Attach(buf);
+    m_clumpSRV.Attach(srv);
 
     D3D11_BUFFER_DESC desc{};
     desc.ByteWidth = sizeof(SpawnCB);
@@ -209,6 +225,8 @@ LeafService::LeafService(
 #ifdef _DEBUG
     BIND_DEBUG_SLIDER_FLOAT("Leaf", "addSize", &gDebugLeafAddSize, 0.0f, 1.0f, 0.001f);
     BIND_DEBUG_SLIDER_FLOAT("Leaf", "baseSize", &gDebugLeafBaseSize, 0.01f, 1.0f, 0.001f);
+    BIND_DEBUG_SLIDER_FLOAT("Leaf", "laneMax", &gDebugLeafLaneMax, 0.01f, 10.0f, 0.01f);
+    BIND_DEBUG_SLIDER_FLOAT("Leaf", "radialMax", &gDebugLeafRadialMax, 0.01f, 10.0f, 0.01f);
 #endif
 }
 
@@ -248,7 +266,7 @@ void LeafService::Commit(double deltaTime)
 
     // GPUも更新
     updateDesc.buffer = m_guideCurveBuffer;
-    updateDesc.size = sizeof(GuideCurve) * MaxGuideCurves;
+    updateDesc.size = sizeof(GuideCurve) * TotalGuideCurves;
     updateDesc.data = m_cpuGuideCurves;
     updateDesc.isDelete = false;
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
@@ -270,6 +288,8 @@ void LeafService::Commit(double deltaTime)
 
 #ifdef _DEBUG
         spawnBuf.gAddSizeScale = gDebugLeafAddSize;
+        spawnBuf.gLaneMax = gDebugLeafLaneMax;
+        spawnBuf.gRadialMax = gDebugLeafRadialMax;
         camBuf.gSize = gDebugLeafBaseSize;
 #endif
     }
@@ -356,7 +376,7 @@ void LeafService::ReleaseUnusedSlots()
 
 void LeafService::InitCurveParams(uint32_t baseSeed)
 {
-    for (uint32_t i = 0; i < MaxGuideCurves; ++i)
+    for (uint32_t i = 0; i < TotalGuideCurves; ++i)
     {
         uint32_t s = Hash(baseSeed ^ i);
 
@@ -379,7 +399,7 @@ void LeafService::BuildGuideCurves(float timeSec)
 {
     using namespace SFW::Math;
 
-    for (uint32_t i = 0; i < MaxGuideCurves; ++i)
+    for (uint32_t i = 0; i < TotalGuideCurves; ++i)
     {
         const auto& prm = m_curveParams[i];
 

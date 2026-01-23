@@ -7,23 +7,6 @@
 #include <unordered_map>
 #include <mutex>
 
-/**
- * @brief float3 centerWS;
-    float radius;
-
-    float3 color;
-    float intensity;
-
-    float targetCount;
-    float speed; // base speed along wind/curve
-    float noiseScale;
-    uint volumeSlot;
-
-    uint seed;
-    uint pad0;
-    float pad1;
-    float pad2;
- */
 
 struct LeafVolumeGPU
 {
@@ -51,9 +34,11 @@ class LeafService : public ECS::IUpdateService, public ECS::ICommitService
 {
 public:
 
-    static constexpr uint32_t MaxVolumes = 256;
-    static constexpr uint32_t MaxGuideCurves = 32;
-
+    static constexpr uint32_t MaxVolumes = 16;
+    static constexpr uint32_t CurvePerVolume = 16;
+    static constexpr uint32_t TotalGuideCurves = CurvePerVolume * MaxVolumes;
+    static constexpr uint32_t ClumpsPerVolume = 8;
+    static constexpr uint32_t TotalClumps = ClumpsPerVolume * MaxVolumes;
 
     struct SpawnCB
     {
@@ -62,7 +47,7 @@ public:
 
         uint32_t gActiveVolumeCount = 0;
         uint32_t gMaxSpawnPerVolumePerFrame = LeafParticlePool::MaxSpawnPerVol;
-		uint32_t gCurveCount = MaxGuideCurves; // 1クラスタあたりのガイド曲線数
+		uint32_t gClumpsPerVolume = ClumpsPerVolume; // 1クラスタあたりの群れの塊数
         float    gAddSizeScale = 0.02f; // 葉っぱのサイズばらつき]
 
         float gLaneMin = 0.6f;
@@ -80,6 +65,11 @@ public:
 
         Math::Vec3f gPlayerPosWS = {};
         float       gPlayerRepelRadius = 2.0f;   // プレイヤーの足元を空けるなら
+
+        uint32_t  gClumpsPerVolume = ClumpsPerVolume;     // 例: 16
+        uint32_t  gCurvesPerVolume = CurvePerVolume;     // 例: 32（volumeごとに曲線がまとまってる場合）
+        uint32_t  gTotalClumps = TotalClumps;         // activeVolumeCount*gClumpsPerVolume（保険用）
+        float gClumpLength01 = 0.12f;       // 例: 0.12（塊の“長さ”= s方向の広がり）
     };
 
     struct CameraCB
@@ -106,6 +96,21 @@ public:
 		float bend = 1.0f; //曲がり具合
         Math::Vec2f startOffXZ = {};
         Math::Vec2f endOffXZ = {};
+    };
+
+    struct Clump
+    {
+        uint32_t curveId;
+        float    s;
+
+        float    laneCenter;
+        float    radialCenter;
+
+        float    speedMul;
+        float    phase;
+
+        uint32_t seed;
+        uint32_t pad;
     };
 
     LeafService(
@@ -184,6 +189,9 @@ private:
 	ComPtr<ID3D11Buffer>            m_guideCurveBuffer;
     ComPtr<ID3D11ShaderResourceView> m_guideCurveSRV;
 
+    ComPtr<ID3D11Buffer>            m_clumpBuffer;
+    ComPtr<ID3D11ShaderResourceView> m_clumpSRV;
+
     ComPtr<ID3D11Buffer> m_spawnCB;
     ComPtr<ID3D11Buffer> m_updateCB;
     ComPtr<ID3D11Buffer> m_cameraCB;
@@ -204,8 +212,10 @@ private:
     UpdateCB m_cpuUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     CameraCB m_cpuCameraBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 
-	GuideCurve m_cpuGuideCurves[MaxGuideCurves] = {};
-    CurveParams m_curveParams[MaxGuideCurves] = {};
+	GuideCurve m_cpuGuideCurves[TotalGuideCurves] = {};
+    CurveParams m_curveParams[TotalGuideCurves] = {};
+
+    Clump m_cpuClumps[TotalClumps] = {};
 
 	std::mutex  bufMutex;
 

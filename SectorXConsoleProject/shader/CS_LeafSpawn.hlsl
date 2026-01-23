@@ -7,6 +7,9 @@ Texture2D<float> gHeightMap : register(t1);
 
 StructuredBuffer<LeafGuideCurve> gCurves : register(t2);
 
+StructuredBuffer<LeafClump> gClumps : register(t3);
+
+
 SamplerState gHeightSamp : register(s0);
 
 // 出力
@@ -22,7 +25,7 @@ cbuffer CBSpawn : register(b0)
 
     uint gActiveVolumeCount;
     uint gMaxSpawnPerVolumePerFrame; // 例：32
-    uint gCurveCount; // FreeList枯渇対策（使わなくてもOK）
+    uint gClumpsPerVolume;
     float gAddSize;
 
     float gLaneMin;
@@ -83,6 +86,10 @@ float Hash01(uint x)
 {
     return (Hash_u32(x) & 0x00FFFFFFu) / 16777216.0f;
 }
+float RandRange(uint s, float a, float b)
+{
+    return lerp(a, b, Hash01(s));
+}
 
 float3 Bezier3Tangent(float3 p0, float3 p1, float3 p2, float3 p3, float t)
 {
@@ -99,7 +106,7 @@ float3 LocalToWorld(float3 local, float3 right, float3 up, float3 fwd)
 [numthreads(64, 1, 1)]
 void main(uint3 tid : SV_DispatchThreadID)
 {
-    // 1D dispatch を「(volumeIndex * gMaxSpawnPerVolumePerFrame) + local」
+     // 1D dispatch を「(volumeIndex * gMaxSpawnPerVolumePerFrame) + local」
     uint global = tid.x;
     uint volIdx = global / gMaxSpawnPerVolumePerFrame;
     uint lane = global - volIdx * gMaxSpawnPerVolumePerFrame;
@@ -108,89 +115,82 @@ void main(uint3 tid : SV_DispatchThreadID)
         return;
 
     LeafVolumeGPU v = gVolumes[volIdx];
-
     uint slot = v.volumeSlot;
 
     // 現在数（slot単位）
     uint cur = gVolumeCount[slot];
 
-    // 目標数（float→uint）
+    // 目標数
     uint target = (uint) max(0.0f, v.targetCount);
-
     if (cur >= target)
         return;
 
     uint deficit = target - cur;
     uint spawnThisFrame = min(deficit, gMaxSpawnPerVolumePerFrame);
-
     if (lane >= spawnThisFrame)
         return;
 
-    // FreeList から空きIDを取得（枯渇時は未定義になるので本番は対策推奨）
+    // FreeList から空きID
     uint id = gFreeList.Consume();
 
-    // 初期化
+    // seed
     uint seed = v.seed ^ (slot * 9781u) ^ (id * 6271u) ^ Hash_u32((uint) (gTime * 60.0f));
 
-    // 角度と半径でディスク一様サンプル
-    float ang = Hash01(seed + 1u) * 6.2831853f; // 0..2π
-    float r01 = sqrt(Hash01(seed + 2u)); // 0..1 を sqrt して面積一様
+    // ----------------------------
+    // Spawn position
+    // ----------------------------
+    // ディスク一様サンプル（ボリューム半径内）
+    float ang = Hash01(seed + 1u) * 6.2831853f;
+    float r01 = sqrt(Hash01(seed + 2u));
     float2 offset = float2(cos(ang), sin(ang)) * (r01 * v.radius);
 
     float2 xz = v.centerWS.xz + offset;
 
     float groundY = SampleGroundY(xz);
-    float startY = /*v.centerWS.y +*/groundY; // 地面の高さを基準に
-    startY += Hash01(seed + 4u) * 10.0f; // 地面直上 0..100cm
-
-    float3 pos = float3(xz.x, startY, xz.y);
-    pos -= gWindDir * (v.radius * 0.5f); // 風下に少しずらす
+    float startY = groundY + Hash01(seed + 4u) * 1.0f; // 地面直上 0..1m
 
     LeafParticle p;
-    p.posWS = pos;
-    p.life = 1.0f;
-    p.volumeSlot = slot;
-    p.phase = Hash01(seed + 100u) * 6.2831853f;
-    p.size = Hash01(seed + 200u) * gAddSize; // 0..1
-    p.curveId = Hash_u32(seed + 300u) % max(gCurveCount, 1u);
+    p.posWS = float3(xz.x, startY, xz.y);
+    p.velWS = float3(0, 0, 0);
 
+    // ----------------------------
+    // Lifetime
+    // ----------------------------
+    // 例：3~8秒。好みで調整
+    float lifeSec = lerp(3.0f, 8.0f, Hash01(seed + 10u));
+    p.life = lifeSec;
+
+    p.volumeSlot = slot;
+
+    // phase：ビルボード回転に使うなら 0..2π
+    p.phase = Hash01(seed + 100u) * 6.2831853f;
+
+    // サイズ
+    p.size = Hash01(seed + 200u) * gAddSize;
+
+    // ----------------------------
+    // clump assignment (global clump id)
+    // ----------------------------
+    uint clLocal = (gClumpsPerVolume > 0) ? (Hash_u32(seed + 300u) % gClumpsPerVolume) : 0u;
+    p.clumpId = volIdx * gClumpsPerVolume + clLocal;
+
+    // ----------------------------
+    // clump内の前後散らし（0..1）
+    // Update側で cl.s を中心に (p.s-0.5)*clumpLength01 で使う想定
+    // ----------------------------
     p.s = Hash01(seed + 400u);
 
-    LeafGuideCurve c = gCurves[p.curveId];
-    float3 tanL = Bezier3Tangent(c.p0L, c.p1L, c.p2L, c.p3L, p.s);
-
-    // wind basis（Spawn側でも必要）
-    float3 up3 = float3(0, 1, 0);
-    float3 fwd = normalize(float3(gWindDir.x, 0, gWindDir.z));
-    float3 right = normalize(cross(up3, fwd));
-    float3 binorm = normalize(cross(fwd, right));
-
-    float3 tanWS = normalize(LocalToWorld(tanL, right, up3, fwd));
-    p.velWS = tanWS * v.speed;
-
-    //矩形分布でランダム
-    //p.lane = lerp(-gLaneMax, gLaneMax, Hash01(seed + 20u));
-    //p.radial = lerp(-gRadMax, gRadMax, Hash01(seed + 21u));
-
-
-    //中心が濃い「ガウスっぽい」分布
-    float u1 = Hash01(seed + 20u);
-    float u2 = Hash01(seed + 21u);
-    float centerBiased = (u1 - u2); // -1..1 で中心寄り
-
-    p.lane = centerBiased * gLaneMax;
-
-    // radialはさらに薄く
-    float v1 = Hash01(seed + 22u);
-    float v2 = Hash01(seed + 23u);
-    p.radial = (v1 - v2) * gRadMax;
-
+    // ----------------------------
+    // 個体差オフセット（clump中心に足されるので小さめ推奨）
+    // ----------------------------
+    p.lane = RandRange(seed + 20u, gLaneMin, gLaneMax);
+    p.radial = RandRange(seed + 21u, gRadMin, gRadMax);
 
     gParticles[id] = p;
 
-    // Alive に積む（描画・Updateの入力）
+    // Aliveへ
     gAlive.Append(id);
 
-    // slotの粒子数を増やす（競合するのでInterlockedAdd必須）
+    // slotの粒子数増加
     InterlockedAdd(gVolumeCount[slot], 1);
 }

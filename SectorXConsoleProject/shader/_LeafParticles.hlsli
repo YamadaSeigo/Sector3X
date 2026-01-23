@@ -14,7 +14,7 @@ struct LeafParticle
     float phase;
     float size;
 
-    uint curveId; // which guide curve
+    uint clumpId; // which guide curve
     float s; // 0..1 progress on curve
 
     float lane; // offset along curve-right (meters)
@@ -50,6 +50,21 @@ struct LeafGuideCurve
     float3 p3L;
     float lengthApprox; // used for ds/dt normalization
 };
+
+struct LeafClump
+{
+    uint curveId;
+    float s;
+
+    float laneCenter;
+    float radialCenter;
+
+    float speedMul; // 0.8..1.2
+    float phase;
+    uint seed;
+    uint _pad;
+};
+
 
 static const uint LEAF_THREAD_GROUP_SIZE = 256;
 
