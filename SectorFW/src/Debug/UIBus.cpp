@@ -26,6 +26,18 @@ namespace SFW
 		void PublishGpu(float v) {
 			if (GetUIBus().alive.load(std::memory_order_acquire)) GetUIBus().gpuLoad.publish(v);
 		}
+
+		void PublishLogicMs(float ms) {
+			if (GetUIBus().alive.load(std::memory_order_acquire)) GetUIBus().logicMs.publish(ms);
+		}
+		void PublishRenderMs(float ms) {
+			if (GetUIBus().alive.load(std::memory_order_acquire)) GetUIBus().renderMs.publish(ms);
+		}
+		void PublishGpuFrameMs(float ms) {
+			if (GetUIBus().alive.load(std::memory_order_acquire)) GetUIBus().gpuFrameMs.publish(ms);
+		}
+
+
 		void PublishStatus(std::string s) {
 			if (GetUIBus().alive.load(std::memory_order_acquire)) GetUIBus().status.publish(std::move(s));
 		}

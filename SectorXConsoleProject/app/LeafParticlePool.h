@@ -5,6 +5,8 @@
 #include <cstdint>
 #include "D3D11Helpers.h" // StructuredBufferSRVUAV / RawBufferSRVUAV / Create～ 系
 
+//#define DEBUG_DEPTH_HIT
+
 // GPU 側の LeafParticle と同じレイアウトにする想定
 // HLSL 側の struct LeafParticle と合わせてください。
 struct LeafParticleGPU
@@ -17,23 +19,26 @@ struct LeafParticleGPU
 
     float lane; // offset along curve-right (meters)
     float radial; // offset along curve-binormal (meters)
+
+    float life0; // 初期寿命(sec)
+    float tint[3]; // 葉っぱ固有色
+
+#ifdef DEBUG_DEPTH_HIT
+    float depthHit; // デバッグ用: 深度ヒット回数カウント
+#endif
 };
 
 // Update 用のパラメータ（FireflyUpdatePram をそのまま流用しても良い）
 struct LeafUpdateParam
 {
-    float gKillRadiusScale = 1.5f; // e.g. 1.5 (kill if dist > radius*scale)
-    float gDamping = 0.96f; // e.g. 0.96
-    float gFollowK = 12.0f; // e.g. 12.0  (steer strength)
-    float gMaxSpeed = 8.0f; // e.g. 6.0
+    float gKillRadiusScale = 1.5f; // 例: 1.5
+    float gDamping = 0.96f; // 例: 0.96（multiply）
+    float gFollowK = 12; // 例: 6..14
+    float gMaxSpeed = 8.0f; // 例: 6
 
-    float gGroundBase = 0.25f; // e.g. 0.25  (meters above ground)
-    float gGroundWaveAmp = 10.0f; // e.g. 0.35  (meters)
-    float gGroundWaveFreq = 0.8f; // e.g. 0.8   (Hz-ish)
-    float gGroundFollowK = 5.0f; // e.g. 2.0   (y position spring)
-    float gGroundFollowD = 3.0f; // e.g. 1.2   (y velocity damping)
-
-    float padParams[3] = {};
+    // ground params（Update側でも使うなら）
+    float gGroundMinClear = 0.05f; // 例: 0.05（地面押し上げ最小クリア）
+    float _padA = {}, _padB = {}, _padC = {};
 };
 
 class LeafParticlePool
@@ -55,6 +60,7 @@ public:
     // FireflyParticlePool::Spawn と同じインターフェース
     void Spawn(
         ID3D11DeviceContext* ctx,
+        ID3D11ComputeShader* clumpCS,
         ID3D11ComputeShader* spawnCS,
         ID3D11ComputeShader* updateCS,
         ID3D11ComputeShader* argsCS,
@@ -63,13 +69,16 @@ public:
         ID3D11ShaderResourceView* clumpSRV,
         ID3D11ShaderResourceView* heightMapSRV,
         ID3D11ShaderResourceView* leafTextureSRV,
+        ID3D11ShaderResourceView* depthSRV,
+		ID3D11UnorderedAccessView* clumpUAV,
+        ID3D11Buffer* cbClumpUpdate,
         ID3D11Buffer* cbSpawnData,
         ID3D11Buffer* cbTerrain,
         ID3D11Buffer* cbWind,
         ID3D11Buffer* cbUpdateData,
+        ID3D11Buffer* cbCameraData,
         ID3D11VertexShader* vs,
         ID3D11PixelShader* ps,
-        ID3D11Buffer* cbCameraData,
         uint32_t activeVolumeCount);
 
     // UpdateParam の設定（デバッグGUIなどからいじる用）
@@ -98,6 +107,7 @@ private:
 
     Microsoft::WRL::ComPtr<ID3D11Buffer>        m_cbUpdateParam;
     Microsoft::WRL::ComPtr<ID3D11SamplerState>  m_linearSampler;
+    Microsoft::WRL::ComPtr<ID3D11SamplerState>  m_pointSampler;
 
     LeafUpdateParam m_cpuUpdateParam{};
     bool            m_isUpdateParamDirty = true;

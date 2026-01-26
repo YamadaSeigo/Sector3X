@@ -180,6 +180,15 @@ public:
 
 			fireflyService->SetCameraBuffer(fireflyCamBuffer);
 
+			LeafService::CameraCB leafCamBuffer{};
+			leafCamBuffer.gViewProj = buffer.viewProj;
+			leafCamBuffer.gCamRightWS = r.normalized();
+			leafCamBuffer.gCamUpWS = u.normalized();
+			leafCamBuffer.gCameraPosWS = debugEye;
+			leafCamBuffer.gNearFar = { perCameraService->GetNearClip(), perCameraService->GetFarClip() };
+
+			leafService->SetCameraBuffer(leafCamBuffer);
+
 			return;
 		}
 #endif
@@ -233,10 +242,12 @@ public:
 		Math::Vec3f r, u, f;
 		perCameraService->MakeBasis(r, u, f);
 
+		auto camPos = perCameraService->GetEyePos();
+
 		LightCameraBuffer lightCameraBufferData{};
 		lightCameraBufferData.invViewProj = Math::Inverse(viewProj);
 		lightCameraBufferData.camForward = f.normalized();
-		lightCameraBufferData.camPos = perCameraService->GetEyePos();
+		lightCameraBufferData.camPos = camPos;
 
 		deferredService->UpdateBufferData(lightCameraBufferData);
 
@@ -254,6 +265,8 @@ public:
 		leafCamBuffer.gViewProj = viewProj;
 		leafCamBuffer.gCamRightWS = right;
 		leafCamBuffer.gCamUpWS = up;
+		leafCamBuffer.gCameraPosWS = camPos;
+		leafCamBuffer.gNearFar = { perCameraService->GetNearClip(), perCameraService->GetFarClip() };
 
 		leafService->SetCameraBuffer(leafCamBuffer);
 	}

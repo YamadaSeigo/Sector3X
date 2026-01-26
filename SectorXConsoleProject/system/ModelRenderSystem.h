@@ -11,7 +11,7 @@
 //描画系のこのクラスでいったんバッファの更新
 #include "../app/WindService.h"
 
-#ifdef _DEBUG
+#ifdef _ENABLE_IMGUI
 #define PROFILE_MODEL_UPDATE_TIME 0
 #endif
 

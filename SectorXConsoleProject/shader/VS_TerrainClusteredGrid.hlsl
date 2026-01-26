@@ -5,7 +5,6 @@
 struct VSOut
 {
     float4 pos : SV_Position;
-    float2 uv : TEXCOORD0;
     float3 worldPos : TEXCOORD1;
     float viewDepth : TEXCOORD2;
     float3 nrm : NORMAL0;
@@ -24,8 +23,8 @@ cbuffer TerrainGridCB : register(b10)
     uint gVertsX; // Heightfield 全体の頂点数X
     uint gVertsZ; // Heightfield 全体の頂点数Z
 
-    uint2 padding;
-
+    float2 gSplatInvSize; // 1/width, 1/height (splat texture用)
+    
     float2 gCellSize; // Heightfield のセルサイズ (x,z)
     float2 gHeightMapInvSize; // 1/width, 1/height (height/normal texture用)
 };
@@ -61,8 +60,8 @@ VSOut main(uint vtxId : SV_VertexID)
 
     // Height/Normal UV（0..1）
     float2 uvh;
-    uvh.x = (float) x * gHeightMapInvSize.x;
-    uvh.y = (float) z * gHeightMapInvSize.y;
+    uvh.x = ((float) x + 0.5f) * gHeightMapInvSize.x;
+    uvh.y = ((float) z + 0.5f) * gHeightMapInvSize.y;
 
     float h = HeightTex.SampleLevel(samplerLinearClamp, uvh, 0);
 
@@ -97,7 +96,6 @@ VSOut main(uint vtxId : SV_VertexID)
     o.worldPos = p;
     o.viewDepth = mul(View, wp).z;
     o.pos = mul(ViewProj, wp);
-    o.uv = uvh;
     o.nrm = n; // スカート底もとりあえず同じ normal
 
     return o;

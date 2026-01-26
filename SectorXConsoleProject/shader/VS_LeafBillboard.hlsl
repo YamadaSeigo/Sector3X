@@ -11,6 +11,12 @@ cbuffer CBCamera : register(b0)
     float gBaseSize; // billboard half-size 例: 0.05
     float3 gCamUpWS;
     float gTime;
+
+    float3 gCameraPosWS;
+    float _padCam0;
+    float2 gNearFar; // (near, far)  ※線形化に使う
+    uint gDepthIsLinear01; // 1: すでに線形(0..1) / 0: D3Dのハードウェア深度
+    float _padCam1;
 };
 
 struct VSOut
@@ -58,7 +64,15 @@ VSOut main(uint vid : SV_VertexID, uint iid : SV_InstanceID)
     sr.x = s.x * cs - s.y * sn;
     sr.y = s.x * sn + s.y * cs;
 
+    float life01 = saturate(p.life / max(p.life0, 1e-6));
+
+    // 末尾だけフェード（例：最後の25%）
+    float fadeStart = 0.25; // 0.25=最後25%
+    float a = saturate(life01 / fadeStart); // 0..1
+    a = a * a * (3 - 2 * a); // smoothstep
+
     float size = gBaseSize + p.size;
+    size *= a; // フェードに応じてサイズも縮小
 
     float3 worldPos =
     p.posWS +
@@ -70,7 +84,17 @@ VSOut main(uint vid : SV_VertexID, uint iid : SV_InstanceID)
     // uvは単純マップ
     o.uv = (s * 0.5f + 0.5f);
 
-    o.col = v.color * v.intensity;
+    float3 baseCol = v.color * v.intensity;
+
+    // 粒子固有色を乗算（p.tint を追加した前提）
+    baseCol *= p.tint;
+
+    o.col = baseCol;
+
+#ifdef DEBUG_HIT_DEPTH
+    float hit = p.debugHit / 255.0;
+    o.col = lerp(o.col, float3(1, 0, 0), hit); // 赤く
+#endif
 
     return o;
 }

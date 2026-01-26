@@ -91,9 +91,7 @@ public:
 			for (auto i = 0; i < entityCount; ++i) {
 				const auto& sp = sprite.value()[i];
 
-				if(sp.IsOverridePso())
-					cmd.pso = sp.pso.index;
-
+				cmd.pso = sp.IsOverridePso() ? sp.pso.index : psoHandle.index;
 				cmd.material = sp.hMat.index;
 				cmd.instanceIndex = instanceIndices[i];
 				cmd.sortKey = sp.layer;

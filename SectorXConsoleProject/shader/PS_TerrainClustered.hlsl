@@ -4,10 +4,7 @@
 struct ClusterParam
 {
     int splatSlice; // Texture2DArray のスライス番号
-    int _pad0[3];
     float2 layerTiling[4]; // 各素材のタイル(U,V)
-    float2 splatST; // スプラットUVスケール
-    float2 splatOffset; // スプラットUVオフセット
 };
 
 // ====== レジスタ割り当て（これまでの設計に準拠） ======
@@ -18,10 +15,12 @@ Texture2D gLayer3 : register(t23);
 Texture2DArray gSplat : register(t24); // クラスタごとの重み (RGBA) を slice で参照
 StructuredBuffer<ClusterParam> gClusters : register(t25); // 全クラスタのパラメータ表
 
+SamplerState gPointClamp : register(s3);
+
 // 地形グリッド情報
 cbuffer TerrainGridCB : register(b10)
 {
-    float2 gOriginXZ; // ワールド座標の基準 (x,z) 
+    float2 gOriginXZ; // ワールド座標の基準 (x,z)
     float2 gClusterXZ; // 1クラスタのワールドサイズ (x,z) ※同上
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
@@ -32,8 +31,8 @@ cbuffer TerrainGridCB : register(b10)
     uint gVertsX; // (= vertsX)
     uint gVertsZ; // (= vertsZ)
 
-    uint2 padding; // 未使用
-    
+    float2 gSplatInvSize; // 1/width, 1/height (splat texture用)
+
     float2 gCellSize; // Heightfield のセルサイズ (x,z)
     float2 gHeightMapInvSize; // 1/width, 1/height
 };
@@ -42,7 +41,6 @@ cbuffer TerrainGridCB : register(b10)
 struct VSOut
 {
     float4 pos : SV_Position;
-    float2 uv : TEXCOORD0; // 地形の基礎UV（0..1）
     float3 worldPos : TEXCOORD1; // 少なくとも x,z を使用
     float viewDepth : TEXCOORD2;
     float3 nrm : NORMAL0; // 必要なら
@@ -82,20 +80,56 @@ float4 NormalizeWeights(float4 w)
     return w / s;
 }
 
+float4 SampleSplatBilinear_NoMip(Texture2DArray tex, SamplerState sampPoint, float2 uv01, int slice, float2 invSize)
+{
+    // uv(0..1) -> texel space
+    float2 p = uv01 / invSize - 0.5f; // = uv*size - 0.5
+    float2 i = floor(p);
+    float2 f = p - i; // frac
+
+    // 4隅の中心UVに戻す
+    float2 uv00 = (i + float2(0.5f, 0.5f)) * invSize;
+    float2 uv10 = uv00 + float2(invSize.x, 0);
+    float2 uv01_ = uv00 + float2(0, invSize.y);
+    float2 uv11 = uv00 + invSize;
+
+    // 同一 slice だけをPointで4回
+    float4 s00 = tex.SampleLevel(sampPoint, float3(uv00, slice), 0);
+    float4 s10 = tex.SampleLevel(sampPoint, float3(uv10, slice), 0);
+    float4 s01v = tex.SampleLevel(sampPoint, float3(uv01_, slice), 0);
+    float4 s11 = tex.SampleLevel(sampPoint, float3(uv11, slice), 0);
+
+    // bilinear
+    float4 sx0 = lerp(s00, s10, f.x);
+    float4 sx1 = lerp(s01v, s11, f.x);
+    return lerp(sx0, sx1, f.y);
+}
+
 // === PS（ワンドロー本体） ===
 PS_PRBOutput main(VSOut i)
 {
     // ピクセルの worldPos.xz -> クラスタID
     ClusterCoord c = ComputeCluster(i.worldPos.xz);
     uint cid = c.id;
-    float2 uvC = c.localUV;
+    float2 suv = c.localUV;
 
     ClusterParam p = gClusters[cid];
 
     // 2) スプラット重み：Texture2DArray なら slice 指定
-    //    通常は p.splatST=(1,1), p.splatOffset=(0,0) 固定でOK
-    float2 suv = uvC * p.splatST + p.splatOffset;
-    float4 w = gSplat.Sample(gSampler, float3(suv, p.splatSlice));
+    float4 w = float4(1, 0, 0, 0);
+
+    //簡易的に距離でバイリニア補間にするかどうかを切り替え
+    if (i.viewDepth < 50.0f)
+    {
+        w = SampleSplatBilinear_NoMip(gSplat, gPointClamp, suv, p.splatSlice, gSplatInvSize);
+    }
+    else
+    {
+        // 遠距離なら簡易版でOK
+        w = gSplat.SampleLevel(gPointClamp, float3(suv, p.splatSlice), 0);
+    }
+
+    // 正規化
     w = saturate(w);
     w /= max(1e-5, dot(w, 1));
 

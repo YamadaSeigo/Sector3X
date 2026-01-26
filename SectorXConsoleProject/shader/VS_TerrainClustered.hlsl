@@ -3,7 +3,6 @@
 struct VSOut
 {
     float4 pos : SV_Position;
-    float2 uv : TEXCOORD0; // 地形の基礎UV（0..1）
     float3 worldPos : TEXCOORD1; // 少なくとも x,z を使用
     float viewDepth : TEXCOORD2;
     float3 nrm : NORMAL0; // 必要なら
@@ -36,7 +35,6 @@ VSOut main(uint vtxId : SV_VertexID)
     o.worldPos = wp.xyz;
     o.viewDepth = mul(View, wp).z;
     o.pos = mul(ViewProj, wp);
-    o.uv = uv;
     o.nrm = n;
 
     return o;

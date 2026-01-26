@@ -128,7 +128,7 @@ float3 AccumulatePointLights_UnlitWithTranslucency(
 
         distSq = max(distSq, 1e-6f);
         float invDist = rsqrt(distSq);
-        float dist = distSq * invDist; // = sqrt(distSq)
+        float dist = distSq * invDist; // = (distSq)
         float3 L = toL * invDist;
 
         float t = saturate(dist * pl.invRadius);
@@ -146,8 +146,8 @@ float3 AccumulatePointLights_UnlitWithTranslucency(
 
         float ndlBack = saturate(dot(-N, L));
 
-        // pow(ndlBack, 1.5) ≒ ndlBack * sqrt(ndlBack)
-        float backSoft = ndlBack * sqrt(ndlBack);
+        // pow(ndlBack, 1.5) ≒ ndlBack * (ndlBack)
+        float backSoft = ndlBack * (ndlBack);
 
         float3 radiance = pl.color * pl.intensity * att;
         float3 frontLit = albedo * ndlWrap;
@@ -370,7 +370,7 @@ float ComputeRadialGodRay(float2 uv)
         if (any(sampUV < 0.0f) || any(sampUV > 1.0f))
             break;
 
-        float z = gDepth.SampleLevel(gSampler, sampUV, 0);
+        float z = gDepth.SampleLevel(gDepthPointSamp, sampUV, 0);
         float occ = (z >= gGodRayMaxDepth) ? 1.0f : 0.0f;
 
         sum += occ * illuminationDecay * gGodRayWeight;
@@ -401,7 +401,7 @@ float ComputeDirectionalGodRay(float2 uv, float shadow, float2 sunDirSS)
         if (any(p < 0.0) || any(p > 1.0))
             break;
 
-        float z = gDepth.SampleLevel(gSampler, p, 0);
+        float z = gDepth.SampleLevel(gDepthPointSamp, p, 0);
         float occ = (z >= gGodRayMaxDepth) ? 1.0 : 0.0;
 
         float sh = shadow;
@@ -433,24 +433,6 @@ float4 main(VSOut i) : SV_Target
     ndc.y = -ndc.y; // D3DのUV(上0) と NDC(Y+上)の差を吸収
     ndc.z = gDepth.Sample(gDepthPointSamp, uv);
     ndc.w = 1.0f;
-
-    // 例: 1.0 が完全な空で、遠景ジオメトリがそこまで行かないなら
-    //[branch]
-    //if (ndc.z >= 0.9999f)
-    //{
-    //    float3 skyColor = emiMetal.rgb * emissiveBoost;
-
-    //    if (gEnableGodRay != 0)
-    //    {
-    //        float wRadial = ComputeRadialWeight(camForward.xyz, gSunDirectionWS);
-    //        float godRadial = ComputeRadialGodRay(uv);
-    //        float godDirectional = ComputeDirectionalGodRay(uv, 1.0f, gSunDirSS);
-    //        float god = lerp(godDirectional, godRadial, wRadial);
-    //        skyColor += gGodRayTint * god; // 空は霧 factor 無しでもOKならこうする
-    //    }
-
-    //    return float4(skyColor, 1.0f);
-    //}
 
     // View-Projection 逆行列でワールド位置を復元
     float4 wp = mul(invViewProj, ndc);

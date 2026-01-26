@@ -601,7 +601,7 @@ public:
 						auto volume = fireflyVolume.value()[i];
 
 						auto transMtx = Math::MakeTranslationMatrix(volume.centerWS);
-						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.spawnRadius * 2.0f }); // 球は均一スケーリング
+						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.radius * 2.0f }); // 球は均一スケーリング
 						Graphics::DrawCommand cmd;
 						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
 						cmd.mesh = sphereGreenHandle.index;
@@ -631,7 +631,7 @@ public:
 					for (auto i = 0; i < entityCount; ++i) {
 						auto volume = leafVolume.value()[i];
 						auto transMtx = Math::MakeTranslationMatrix(volume.centerWS);
-						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.spawnRadius * 2.0f }); // 球は均一スケーリング
+						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.radius * 2.0f }); // 球は均一スケーリング
 						Graphics::DrawCommand cmd;
 						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
 						cmd.mesh = sphereGreenHandle.index;

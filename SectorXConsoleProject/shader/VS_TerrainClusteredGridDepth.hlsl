@@ -22,7 +22,7 @@ cbuffer TerrainGridCB : register(b10)
     uint gVertsX; // (= vertsX)
     uint gVertsZ; // (= vertsZ)
 
-    uint2 padding; // 未使用
+    float2 gSplatInvSize; // 1/width, 1/height (splat texture用)
 
     float2 gCellSize; // Heightfield のセルサイズ (x,z)
     float2 gHeightMapInvSize; // 1/width, 1/height
@@ -61,8 +61,9 @@ VSOutDepthOnly main(uint vtxId : SV_VertexID)
 
     // Height/Normal UV（0..1）
     float2 uvh;
-    uvh.x = (float) x * gHeightMapInvSize.x;
-    uvh.y = (float) z * gHeightMapInvSize.y;
+    //+0.5してテクセル中心をサンプリング
+    uvh.x = ((float) x + 0.5f) * gHeightMapInvSize.x;
+    uvh.y = ((float) z + 0.5f) * gHeightMapInvSize.y;
 
     float h = HeightTex.SampleLevel(samplerLinearClamp, uvh, 0);
 

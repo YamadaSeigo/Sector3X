@@ -13,9 +13,14 @@ SamplerState gLeafSamp : register(s0);
 PS_PRBOutput main(VSOut i)
 {
     PS_PRBOutput output;
-    
-    float3 texCol = gLeafTex.Sample(gLeafSamp, i.uv).rgb;
-    float3 leafCol = i.col * texCol;
+
+    float4 texCol = gLeafTex.Sample(gLeafSamp, i.uv);
+
+    // アルファクリッピング
+    const float cutoff = 0.1f;
+    clip(texCol.a - cutoff);
+
+    float3 leafCol = i.col * texCol.rgb;
 
     output.AlbedoAO = float4(leafCol, 1);
     output.EmissionMetallic = float4(0, 0, 0, 1);

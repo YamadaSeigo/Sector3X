@@ -9,11 +9,11 @@ struct CFireflyVolume
     // 空間（最低限）
     Math::Vec3f centerWS = {};
     float       hitRadius = 20.0f;      // 球ボリューム（まずは球が楽）
-	float       spawnRadius = 30.0f;    // 発生範囲
+	float       radius = 30.0f;    // 発生範囲
 
     // 見た目（emissive / bloom 基準）
     Math::Vec3f color = {0.4f, 1.5f, 0.0f};
-    float       emissiveIntensity = 1.0f;
+    float       intensity = 1.0f;
 
     // 群れ密度（GPU targetCount の元）
     uint32_t    maxCountNear = 10000;    // 近距離での最大個体数
@@ -103,9 +103,9 @@ public:
 
                 FireflyVolumeGPU gpuVolume{};
                 gpuVolume.centerWS = volume.centerWS;
-                gpuVolume.radius = volume.spawnRadius;
+                gpuVolume.radius = volume.radius;
                 gpuVolume.color = volume.color;
-                gpuVolume.intensity = volume.emissiveIntensity;
+                gpuVolume.intensity = volume.intensity;
                 gpuVolume.targetCount = static_cast<float>(volume.maxCountNear);
                 gpuVolume.speed = volume.speed;
                 gpuVolume.noiseScale = volume.noiseScale;

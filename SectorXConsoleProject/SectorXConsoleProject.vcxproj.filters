@@ -122,7 +122,7 @@
     <FxCompile Include="shader\PS_DebugDeferred.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="shader\PS_PBR_Unlit_Shadow.hlsl">
+    <FxCompile Include="shader\PS_Fullscreen_Unlit_Shadow.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\VS_SpriteAnimation.hlsl">
@@ -189,6 +189,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="shader\VS_LeafBillboard.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CS_LeafClumpUpdate.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

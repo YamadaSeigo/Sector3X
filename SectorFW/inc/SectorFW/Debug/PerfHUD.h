@@ -100,6 +100,9 @@ namespace SFW
 			void TickAndDraw(float frameBudgetSec = 1.0f / 60.0f, bool overlayTopRight = true);
 		private:
 			RollingBuffer cpuBuf_, gpuBuf_, frameMsBuf_;
+			RollingBuffer logicMsBuf_, renderMsBuf_, gpuMsBuf_;
+			RollingBuffer criticalMsBuf_; // max(logic, render, gpu) ‚Ì—š—ð
+
 			float cpuEMA_ = 0.f, gpuEMA_ = 0.f;
 			bool  inited_ = false;
 
@@ -108,6 +111,10 @@ namespace SFW
 			void DrawSparkline(const char* label, RollingBuffer& buf, const ImVec2& size,
 				float scaleMin = 0.f, float scaleMax = 1.f, const char* fmt = "%.0f%%",
 				float scaleMul = 100.f);
+
+			void DrawStackedFrameBar(
+				float logicMs, float renderMs, float gpuMs,
+				float budgetMs, float barWidth, float barHeight);
 		};
 	}
 }

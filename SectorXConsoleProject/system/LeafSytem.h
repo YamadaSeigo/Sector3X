@@ -8,19 +8,23 @@ struct CLeafVolume
 {
     // 空間（最低限）
     Math::Vec3f centerWS = {};
-    float       hitRadius = 20.0f;      // 球ボリューム（まずは球が楽）
-    float       spawnRadius = 30.0f;    // 発生範囲
+    float       radius = 30.0f;    // 発生範囲
+
+    float orbitR = 2.0f;     // 回転半径
+    float orbitW = 0.9f;     // 回転速度(rad/sでもOK)
+	float k = 5.0f; // 追従の強さ
+
 
     // 見た目（emissive / bloom 基準）
-    Math::Vec3f color = { 0.4f, 1.5f, 0.0f };
-    float       emissiveIntensity = 1.0f;
+    Math::Vec3f color = { 1.0f, 1.0f, 1.0f };
+    float       intensity = 1.0f;
 
     // 群れ密度（GPU targetCount の元）
-    uint32_t    maxCountNear = 10000;    // 近距離での最大個体数
+    uint32_t    maxCountNear = 1000;    // 近距離での最大個体数
 
     // 動き（UpdateCSで使う）
     float       speed = 20.0f;
-    float       noiseScale = 0.25f;
+    float       noiseScale = 0.1f;
 
     // LOD距離（CPUがactive判定・targetCount計算）
     float       nearDistance = 0.1f;    // ここより近い：maxCountNear
@@ -43,23 +47,27 @@ class LeafSystem : public ITypeSystem<
     Partition,
     //アクセスするコンポーネントの指定
     ComponentAccess<
-        Read<CLeafVolume>
+        Write<CLeafVolume>,
+        Write<CSpatialMotionTag>
     >,
     //受け取るサービスの指定
     ServiceContext<
         LeafService,
         PlayerService,
-        TimerService
+        TimerService,
+        SpatialChunkRegistry
     >>
 {
-    using Accessor = ComponentAccessor<Read<CLeafVolume>>;
+    using Accessor = ComponentAccessor<Write<CLeafVolume>, Write<CSpatialMotionTag>>;
 public:
 
     //指定したサービスを関数の引数として受け取る
     void UpdateImpl(Partition& partition,
+        LevelContext<Partition>& levelCtx,
         NoDeletePtr<LeafService> leafService,
         NoDeletePtr<PlayerService> playerService,
-        NoDeletePtr<TimerService> timerService) {
+        NoDeletePtr<TimerService> timerService,
+        NoDeletePtr<SpatialChunkRegistry> chunkReg) {
 
         auto playerPos = playerService->GetPlayerPosition();
 
@@ -75,42 +83,82 @@ public:
 
         std::vector<ArchetypeChunk*> archetypeChunks = query.MatchingChunks<std::vector<SFW::SpatialChunk*>&>(spatialChunks);
 
+        BudgetMover::LocalBatch moveBatch(levelCtx.mover, 8);
+        bool chasePlayer = leafService->IsChasePlayer();
+
         for (auto& chunk : archetypeChunks) {
             Accessor accessor = Accessor(chunk);
             size_t entityCount = chunk->GetEntityCount();
             const auto& entities = chunk->GetEntityIDs();
 
-            auto leafVolume = accessor.Get<Read<CLeafVolume>>();
+            auto leafVolume = accessor.Get<Write<CLeafVolume>>();
+			auto motionTag = accessor.Get<Write<CSpatialMotionTag>>();
+
             if (!leafVolume.has_value()) [[unlikely]] {
                 return;
             }
 
             for (auto i = 0; i < entityCount; ++i) {
-                auto volume = leafVolume.value()[i];
+                auto& volume = leafVolume.value()[i];
 
-                //範囲外の場合はスキップ
-                auto length = (volume.centerWS - playerPos).lengthSquared();
+                if (chasePlayer)
+                {
+                    // dt（TimerServiceのAPIに合わせて修正）
+                    const float dt = static_cast<float>(timerService->GetDeltaTime()); // <-- ここだけ合わせる
 
-                if (length > volume.hitRadius * volume.hitRadius) {
-                    volume.isHit = false;
+                    const float t = leafService->GetElapsedTime();
+
+                    // 「まとわりつく」用の目標位置：プレイヤー周りをふわっと回す
+                    const float orbitR = volume.orbitR;     // 回転半径
+                    const float orbitW = volume.orbitW;     // 回転速度(rad/sでもOK)
+                    Math::Vec3f orbitOff{
+                        std::cos(t * orbitW) * orbitR,
+                        1.2f + std::sin(t * 1.7f) * 0.4f,   // 少し上下
+                        std::sin(t * orbitW) * orbitR
+                    };
+
+                    Math::Vec3f target = playerPos + orbitOff;
+
+                    // 追従状態（System内 static で十分：1プレイヤー想定）
+                    static Math::Vec3f s_pos = target;
+                    static Math::Vec3f s_vel = {};
+
+                    // ばね追従（軽い/見た目良い）
+                    const float k = volume.k;   // 追従の強さ
+                    const float d = volume.radius;    // 減衰（大きいほど粘る/遅れる）
+                    Math::Vec3f a = (target - s_pos) * k - s_vel * d;
+
+                    s_vel += a * dt;
+                    s_pos += s_vel * dt;
+
+                    volume.centerWS = s_pos;
+
+                    CSpatialMotionTag& tag = (*motionTag)[i];
+
+                    SFW::MoveIfCrossed_Deferred(entities[i], s_pos, partition, *chunkReg, levelCtx.GetID(), tag.handle, moveBatch);
+                }
+
+				float distSqrt = (playerPos - volume.centerWS).lengthSquared();
+				// 範囲外なら登録しない
+                if (distSqrt > volume.radius * volume.radius) {
                     continue;
                 }
 
-                LeafVolumeGPU gpuVolume{};
-                gpuVolume.centerWS = volume.centerWS;
-                gpuVolume.radius = volume.spawnRadius;
-                gpuVolume.color = volume.color;
-                gpuVolume.intensity = volume.emissiveIntensity;
-                gpuVolume.targetCount = static_cast<float>(volume.maxCountNear);
-                gpuVolume.speed = volume.speed;
-                gpuVolume.noiseScale = volume.noiseScale;
-                gpuVolume.seed = volume.seed;
+				float lodT = (std::sqrt(distSqrt) - volume.nearDistance) / (volume.farDistance - volume.nearDistance);
+				lodT = Math::clamp01(lodT);
+				float targetCount = Math::lerp((float)volume.maxCountNear, 0.0f, lodT);
 
-                if (volume.isHit == false) {
-                    volume.isHit = true;
-                }
+                LeafVolumeGPU follow{};
+                follow.centerWS = volume.centerWS;
+                follow.radius = volume.radius;              // プレイヤー周りの葉っぱ範囲
+                follow.color = volume.color;
+                follow.intensity = volume.intensity;
+                follow.targetCount = targetCount;
+                follow.speed = volume.speed;
+                follow.noiseScale = volume.noiseScale;
+                follow.seed = volume.seed;
 
-                leafService->PushActiveVolume(entities[i].index, gpuVolume);
+                leafService->PushActiveVolume(entities[i].index, follow);
             }
         }
     }

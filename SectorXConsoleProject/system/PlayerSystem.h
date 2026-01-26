@@ -30,7 +30,8 @@ class PlayerSystem : public ITypeSystem<
 	>>{
 
 public:
-	static inline const Math::Vec3f cameraOffset = {0.0f,3.0f,0.0f}; // 移動速度（m/s）
+	//実際のカメラの位置からのオフセット
+	static inline const Math::Vec3f cameraOffset = { 0.0f,3.0f,0.0f };
 
 	// 入力から希望する速度を計算する（仮実装）
 	Math::Vec3f CalcWishVelocityFromInput(
@@ -316,7 +317,7 @@ public:
 						{
 							if (rayHit.hit)
 							{
-								float focusDist = (std::max)(rayHit.distance - 1.0f, 1.0f); // 少し手前に
+								float focusDist = (std::max)(rayHit.distance - 0.5f, 1.0f); // 少し手前に
 								cameraService->SetFocusDistance(focusDist);
 								prevCameraHit = 2;
 							}
@@ -341,7 +342,7 @@ public:
 
 				//足元の位置をPlayerServiceにセット
 				playerService->SetFootData(playerPos);
-			
+
 				//PlayerServiceにも位置をセット
 				playerService->SetPlayerPosition(playerPos);
 

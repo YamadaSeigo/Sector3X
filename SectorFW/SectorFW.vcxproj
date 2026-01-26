@@ -66,6 +66,7 @@
     <ClInclude Include="inc\SectorFW\Debug\message.h" />
     <ClInclude Include="inc\SectorFW\Debug\PerfHUD.h" />
     <ClInclude Include="inc\SectorFW\Debug\ProcessCpuUsageWin32.h" />
+    <ClInclude Include="inc\SectorFW\Debug\ProcessGpu3DUtilPDH.h" />
     <ClInclude Include="inc\SectorFW\Debug\UIBus.h" />
     <ClInclude Include="inc\SectorFW\DX11Graphics.h" />
     <ClInclude Include="inc\SectorFW\DX11WinTerrainHelper.h" />

@@ -3,6 +3,11 @@
 #ifndef LEAF_PARTICLES_HLSLI
 #define LEAF_PARTICLES_HLSLI
 
+static const uint LEAF_THREAD_GROUP_SIZE = 256;
+
+//深度のヒット判定の可視フラグ(※CPUのほうのフラグも外す LeafParticlePool.h)
+//#define DEBUG_HIT_DEPTH
+
 struct LeafParticle
 {
     float3 posWS;
@@ -19,6 +24,13 @@ struct LeafParticle
 
     float lane; // offset along curve-right (meters)
     float radial; // offset along curve-binormal (meters)
+    
+    float life0; // 初期寿命(sec)
+    float3 tint; // 葉っぱ固有色
+
+#ifdef DEBUG_HIT_DEPTH
+    uint debugHit;
+#endif
 };
 
 struct LeafVolumeGPU
@@ -62,10 +74,12 @@ struct LeafClump
     float speedMul; // 0.8..1.2
     float phase;
     uint seed;
-    uint _pad;
+    float yOffset;
+    float yVel;
+
+    float2 anchorXZ; // clumpの水平アンカー（ボリューム中心からのオフセット）
+    float2 anchorVelXZ;
 };
 
-
-static const uint LEAF_THREAD_GROUP_SIZE = 256;
 
 #endif // LEAF_PARTICLES_HLSLI

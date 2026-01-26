@@ -149,7 +149,7 @@ namespace SFW
 	/**
 	 * @brief 動的エンティティ用タグ（チャンク跨ぎ検出とEM間移送の状態管理）
 	 */
-	struct SpatialMotionTag {
+	struct CSpatialMotionTag {
 		ChunkHandle handle;
 		SpatialChunkKey pendingKey{};
 		uint16_t stableFrames = 0;
@@ -165,7 +165,7 @@ namespace SFW
 		Partition& partition,
 		SpatialChunkRegistry& reg,
 		LevelID level,
-		SpatialMotionTag& tag,
+		CSpatialMotionTag& tag,
 		ECS::EntityManager& floatEM,
 		const SettleRule& rule)
 	{

@@ -17,7 +17,7 @@ class PhysicsSystem : public ITypeSystem<
 		Write<TransformSoA>,
 		Write<Physics::PhysicsInterpolation>,
 		Read<Physics::CPhyBody>,
-		Write<SpatialMotionTag>
+		Write<CSpatialMotionTag>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
@@ -25,7 +25,7 @@ class PhysicsSystem : public ITypeSystem<
 		SpatialChunkRegistry>
 	>
 {
-	using Accessor = ComponentAccessor<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>, Read<Physics::CPhyBody>, Write<SpatialMotionTag>>;
+	using Accessor = ComponentAccessor<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>, Read<Physics::CPhyBody>, Write<CSpatialMotionTag>>;
 public:
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition, LevelContext<Partition>& levelCtx, NoDeletePtr<Physics::PhysicsService> physicsService,
@@ -47,7 +47,7 @@ public:
 				auto bodyComponent = accessor.Get<Read<Physics::CPhyBody>>();
 				if (!bodyComponent) [[unlikely]] { LOG_ERROR("BodyComponent not found in PhysicsSystem"); return; }
 
-				auto motionTag = accessor.Get<Write<SpatialMotionTag>>();
+				auto motionTag = accessor.Get<Write<CSpatialMotionTag>>();
 				if (!motionTag) [[unlikely]] { LOG_ERROR("SpatialMotionTag component not found in PhysicsSystem"); return; }
 
 				size_t size = sizeof(float) * entityCount;
@@ -111,7 +111,7 @@ public:
 						(interpolation->cpz()[i] - interpolation->ppz()[i]) / (1.0f / 60.0f) };
 
 					// 1) 退避運用
-					SpatialMotionTag& tag = (*motionTag)[i];
+					CSpatialMotionTag& tag = (*motionTag)[i];
 					//constexpr SettleRule rule{ 0.3f, 6 }; // 速度0.3以下を6フレームで再アタッチ
 					//UpdateSpatialAttachment(
 					//	entityIDs[i],

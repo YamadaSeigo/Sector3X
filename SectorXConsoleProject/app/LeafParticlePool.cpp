@@ -1,5 +1,6 @@
 // LeafParticlePool.cpp
 #include "LeafParticlePool.h"
+#include "LeafService.h"
 
 #include <utility> // std::swap
 #include <cassert>
@@ -139,6 +140,14 @@ void LeafParticlePool::Create(ID3D11Device* dev)
         D3D11_TEXTURE_ADDRESS_WRAP
     );
 
+    m_pointSampler = CreateSamplerState(
+        dev,
+        D3D11_FILTER_MIN_MAG_MIP_POINT,
+        D3D11_TEXTURE_ADDRESS_CLAMP,
+        D3D11_TEXTURE_ADDRESS_CLAMP,
+        D3D11_TEXTURE_ADDRESS_CLAMP
+	);
+
     // UpdateParam のCB
     D3D11_BUFFER_DESC desc{};
     desc.ByteWidth = sizeof(LeafUpdateParam);
@@ -176,12 +185,8 @@ void LeafParticlePool::Create(ID3D11Device* dev)
 	BIND_DEBUG_LEAF_PARAM_FLOAT(gDamping, 0.8f, 0.999f, 0.001f);
     BIND_DEBUG_LEAF_PARAM_FLOAT(gFollowK, 0.0f, 50.0f, 0.1f);
     BIND_DEBUG_LEAF_PARAM_FLOAT(gMaxSpeed, 0.1f, 20.0f, 0.1f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundBase, 0.0f, 50.0f, 0.01f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundWaveAmp, 0.0f, 50.0f, 0.01f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundWaveFreq, 0.0f, 5.0f, 0.01f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundFollowK, 0.0f, 20.0f, 0.01f);
-	BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundFollowD, 0.0f, 10.0f, 0.01f);
 
+	BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundMinClear, 0.0f, 1.0f, 0.001f);
 #endif
 }
 
@@ -214,6 +219,7 @@ void LeafParticlePool::InitFreeList(
 
 void LeafParticlePool::Spawn(
     ID3D11DeviceContext* ctx,
+    ID3D11ComputeShader* clumpCS,
     ID3D11ComputeShader* spawnCS,
     ID3D11ComputeShader* updateCS,
     ID3D11ComputeShader* argsCS,
@@ -222,13 +228,16 @@ void LeafParticlePool::Spawn(
     ID3D11ShaderResourceView* clumpSRV,
     ID3D11ShaderResourceView* heightMapSRV,
 	ID3D11ShaderResourceView* leafTextureSRV,
+    ID3D11ShaderResourceView* depthSRV,
+    ID3D11UnorderedAccessView* clumpUAV,
+    ID3D11Buffer* cbClumpUpdate,
     ID3D11Buffer* cbSpawnData,
     ID3D11Buffer* cbTerrain,
     ID3D11Buffer* cbWind,
     ID3D11Buffer* cbUpdateData,
+    ID3D11Buffer* cbCameraData,
     ID3D11VertexShader* vs,
     ID3D11PixelShader* ps,
-    ID3D11Buffer* cbCameraData,
     uint32_t activeVolumeCount)
 {
     // -----------------------------
@@ -239,6 +248,43 @@ void LeafParticlePool::Spawn(
         UINT initCount = 0;
         // slotはどこでもOK。ここでは u1 相当の場所で一旦当ててリセットする
         ctx->CSSetUnorderedAccessViews(1, 1, &uav, &initCount);
+    }
+
+	// -----------------------------
+	// (0.5) Clump Update
+	// -----------------------------
+    {
+        ID3D11ShaderResourceView* srvs[] =
+        {
+            volumeSRV,
+            heightMapSRV,
+            guideCurveSRV,
+        };
+
+		ctx->CSSetShaderResources(0, _countof(srvs), srvs);
+
+        ctx->CSSetSamplers(0, 1, m_linearSampler.GetAddressOf());
+
+		UINT initialCounts[] = { (UINT)-1 };
+		ctx->CSSetUnorderedAccessViews(0, 1, &clumpUAV, initialCounts);
+
+        ID3D11Buffer* cbuffers[] =
+        {
+            cbClumpUpdate,
+            cbTerrain,
+            cbWind,
+        };
+        ctx->CSSetConstantBuffers(0, _countof(cbuffers), cbuffers);
+        ctx->CSSetShader(clumpCS, nullptr, 0);
+        uint32_t totalThreads = activeVolumeCount * LeafService::ClumpsPerVolume; // Spawn と同じ
+        uint32_t groups = (totalThreads + 256 - 1) / 256;             // ClumpCS: [numthreads(64,1,1)]
+        if (groups > 0)
+			ctx->Dispatch(groups, 1, 1);
+
+		// UAV解除
+		UINT dummy[] = { 0 };
+		ID3D11UnorderedAccessView* nullUAV[] = { nullptr };
+		ctx->CSSetUnorderedAccessViews(0, 1, nullUAV, dummy);
     }
 
     // -----------------------------
@@ -313,21 +359,25 @@ void LeafParticlePool::Spawn(
             m_aliveCountRaw.srv.Get(),
             heightMapSRV,
             guideCurveSRV,
-            clumpSRV
+            clumpSRV,
+            depthSRV
         };
         ctx->CSSetShaderResources(0, _countof(updateSrvs), updateSrvs);
 
+		ctx->CSSetSamplers(0, 1, m_linearSampler.GetAddressOf());
+		ctx->CSSetSamplers(1, 1, m_pointSampler.GetAddressOf());
+
         // u0 = particlesUAV, u1 = alivePongUAV, u2 = freeListUAV, u3 = volumeCountUAV
-        ID3D11UnorderedAccessView* updateUavs[4] =
+        ID3D11UnorderedAccessView* updateUavs[] =
         {
             m_particles.uav.Get(),   // u0
             m_alivePong.uav.Get(),   // u1 (Append)  ※ここは -1 で保持（0にしない）
             m_free.uav.Get(),        // u2 (Appendで返却)
-            m_volumeCount.uav.Get()  // u3
+            m_volumeCount.uav.Get(),  // u3
         };
         // PongはSpawnで0リセット済み＋Spawnが既にAppendしたので、ここで0にするとSpawn分が消える。
-        UINT updateInitialCounts[4] = { (UINT)-1, (UINT)-1, (UINT)-1, (UINT)-1 };
-        ctx->CSSetUnorderedAccessViews(0, 4, updateUavs, updateInitialCounts);
+        UINT updateInitialCounts[_countof(updateUavs)] = {(UINT)-1,(UINT)-1 ,(UINT)-1 ,(UINT)-1 };
+        ctx->CSSetUnorderedAccessViews(0, _countof(updateUavs), updateUavs, updateInitialCounts);
 
         // UpdateParamCB 更新（dirty のときだけ）
         if (m_isUpdateParamDirty)
@@ -348,6 +398,7 @@ void LeafParticlePool::Spawn(
 			cbTerrain,              // b1: TerrainCB
 			cbWind,                  // b2: WindCB
             m_cbUpdateParam.Get(), // b3: LeafUpdateParam,
+			cbCameraData			// b4: CameraCB
         };
         ctx->CSSetConstantBuffers(0, _countof(cbBuffers), cbBuffers);
 
@@ -360,11 +411,11 @@ void LeafParticlePool::Spawn(
         ctx->Dispatch(groups, 1, 1);
 
 		// unbind
-        ID3D11ShaderResourceView* nullSrvs[4] = { nullptr, nullptr, nullptr, nullptr };
-        ctx->CSSetShaderResources(0, 4, nullSrvs);
-        ID3D11UnorderedAccessView* nullUavs[4] = { nullptr, nullptr, nullptr, nullptr };
-        UINT dummy[4] = { 0,0,0,0 };
-        ctx->CSSetUnorderedAccessViews(0, 4, nullUavs, dummy);
+        ID3D11ShaderResourceView* nullSrvs[_countof(updateSrvs)] = { nullptr };
+        ctx->CSSetShaderResources(0, _countof(updateSrvs), nullSrvs);
+        ID3D11UnorderedAccessView* nullUavs[_countof(updateUavs)] = { nullptr };
+        UINT dummy[_countof(updateUavs)] = { 0 };
+        ctx->CSSetUnorderedAccessViews(0, _countof(updateUavs), nullUavs, dummy);
 		ctx->CSSetShader(nullptr, nullptr, 0);
     }
 

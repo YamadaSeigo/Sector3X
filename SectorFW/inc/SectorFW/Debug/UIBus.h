@@ -229,6 +229,11 @@ namespace SFW
 		struct UIBus {
 			std::atomic<bool> alive{ false }; // 生存フラグ
 			Latest<float>      cpuLoad, gpuLoad;
+
+			Latest<float> logicMs;   // ロジックスレッド1frameの処理時間
+			Latest<float> renderMs;  // レンダースレッド1frameの処理時間
+			Latest<float> gpuFrameMs; // GPUフレーム時間(ms)（Queryやtimestampから）
+
 			Latest<std::string> status;
 			UiQueue<std::string> logQ;
 			UiSnapshot          snap;
@@ -354,6 +359,20 @@ namespace SFW
 		 * @brief GPUの計測情報を発行。公開API（どこからでも呼べる“関数”だけを露出）
 		 */
 		void PublishGpu(float v);
+
+		/**
+		 * @brief ロジックの計測情報を発行。公開API（どこからでも呼べる“関数”だけを露出）
+		 */
+		void PublishLogicMs(float ms);
+		/**
+		 * @brief 描画のCPU部分の計測情報を発行。公開API（どこからでも呼べる“関数”だけを露出）
+		 */
+		void PublishRenderMs(float ms);
+		/**
+		 * @brief GPUフレーム時間の計測情報を発行。公開API（どこからでも呼べる“関数”だけを露出）
+		 */
+		void PublishGpuFrameMs(float ms);
+
 		/**
 		 * @brief ステータス文字列を発行。公開API（どこからでも呼べる“関数”だけを露出）
 		 */

@@ -96,11 +96,7 @@ namespace SFW::Graphics::DX11 {
     // クラスタ別に必要な最小情報（PSでインデックスして読む）
     struct ClusterParam {
         int   splatSlice;       // Texture2DArray のスライス
-        int   _pad0[3];
         float layerTiling[4][2]; // 各素材のタイル(U,V)
-        float splatST[2];        // スプラットUVスケール
-        float splatOffset[2];    // スプラットUVオフセット
-
     };
 
     // グリッド定数（b2）
@@ -116,7 +112,7 @@ namespace SFW::Graphics::DX11 {
         uint32_t gVertsX; // (= vertsX)
         uint32_t gVertsZ; // (= vertsZ)
 
-        uint32_t padding[2];
+		Math::Vec2f gSplatInvSize;   // splatMap の 1/サイズ（UV->テクスチャ座標変換用）
 
         Math::Vec2f gCellSize;    // heightMap のセルサイズ（ワールド）
         Math::Vec2f gHeightMapInvSize; // heightMap の 1/サイズ（UV->テクスチャ座標変換用）
@@ -1343,11 +1339,6 @@ namespace SFW::Graphics::DX11 {
                 dst.layerTiling[li][1] = meta.layers[li].uvTilingV;
 
             }
-            dst.splatST[0] = meta.splatUVScaleU;
-            dst.splatST[1] = meta.splatUVScaleV;
-            dst.splatOffset[0] = meta.splatUVOffsetU;
-            dst.splatOffset[1] = meta.splatUVOffsetV;
-
         }
 
 		if (!outUniqueIds) *outUniqueIds = std::move(uniqueIds);
@@ -1423,7 +1414,7 @@ namespace SFW::Graphics::DX11 {
         return true;
     }
 
-        // グリッドCBの作成/更新
+    // グリッドCBの作成/更新
     inline bool BuildOrUpdateTerrainGridCB(ID3D11Device* dev,
         ID3D11DeviceContext* ctx,
         BufferManager* bufferMgr,
@@ -1450,7 +1441,7 @@ namespace SFW::Graphics::DX11 {
 
         // TerrainClustered → ClusterParamsGPU（CPU側配列とGrid定数）へ詰め替え
         //  - unique splat を Texture2DArray にパック済み（splatSlice が確定している）前提
-        //  - ここでは slice は呼び出し側から与える（id→slice の辞書を使って設定）
+        //  - ここでは slice は呼び出し側から与える（id->slice の辞書を使って設定）
     inline bool FillClusterParamsCPU(const SFW::Graphics::TerrainClustered& terrain,
         const std::unordered_map<uint32_t, int>& id2slice,
         ClusterParamsGPU& out)
@@ -1470,10 +1461,6 @@ namespace SFW::Graphics::DX11 {
                 p.layerTiling[li][1] = meta.layers[li].uvTilingV;
 
             }
-            p.splatST[0] = meta.splatUVScaleU;
-            p.splatST[1] = meta.splatUVScaleV;
-            p.splatOffset[0] = meta.splatUVOffsetU;
-            p.splatOffset[1] = meta.splatUVOffsetV;
             out.cpu[cid] = p;
 
         }
@@ -1484,6 +1471,7 @@ namespace SFW::Graphics::DX11 {
     inline void SetupTerrainGridCB(
         const TerrainBuildParams& p,
         uint32_t dimX, uint32_t dimZ,
+        ComPtr<ID3D11Texture2D> splatSheetTex,
         ClusterParamsGPU& out)
     {
         out.grid.originXZ = { p.offset.x, p.offset.z };
@@ -1494,6 +1482,15 @@ namespace SFW::Graphics::DX11 {
 		out.grid.offsetY = p.offset.y;
         out.grid.gVertsX = p.cellsX + 1;
         out.grid.gVertsZ = p.cellsZ + 1;
+
+        D3D11_TEXTURE2D_DESC sd{}; splatSheetTex->GetDesc(&sd);
+		float splatW = static_cast<float>(sd.Width) / dimX;
+        float splatH = static_cast<float>(sd.Height) / dimZ;
+        out.grid.gSplatInvSize = Math::Vec2f{
+            1.0f / splatW,
+            1.0f / splatH
+		};
+
 		out.grid.gCellSize = Math::Vec2f{
             p.cellSize,
             p.cellSize
@@ -1547,7 +1544,10 @@ namespace SFW::Graphics::DX11 {
         if (sd.ArraySize != 1) return out; // 2Dのみ想定
 
         // 2) タイルのピクセル寸法
-        if (sd.Width % clustersX != 0 || sd.Height % clustersZ != 0) return out;
+        if (sd.Width % clustersX != 0 || sd.Height % clustersZ != 0) {
+			LOG_ERROR("BuildClusterSplatTexturesFromSingleSheet: sheet size is not divisible by cluster counts");
+            return out;
+        }
         const UINT tileW = sd.Width / clustersX;
         const UINT tileH = sd.Height / clustersZ;
         const UINT srcMipLevels = sd.MipLevels;
@@ -1759,9 +1759,7 @@ namespace SFW::Graphics::DX11 {
         uint32_t clustersX, uint32_t clustersZ,
         const std::vector<TextureHandle>& handles,
         AllocateSplatIdFn allocId,
-        QueryLayerTilingFn queryLayer = nullptr,
-        Math::Vec2f splatUVScale = {1.0f,1.0f},
-        Math::Vec2f splatUVOffset = {0.0f,0.0f})
+        QueryLayerTilingFn queryLayer = nullptr)
     {
         const size_t N = size_t(clustersX) * clustersZ;
         if (handles.size() != N) return;
@@ -1784,10 +1782,7 @@ namespace SFW::Graphics::DX11 {
                     sm.layers[li].uvTilingV = t.uvV;
 
                 }
-                // スプラットUV（必要に応じて）
-                sm.splatUVScaleU = splatUVScale.x; sm.splatUVScaleV = splatUVScale.y;
-                sm.splatUVOffsetU = splatUVOffset.x; sm.splatUVOffsetV = splatUVOffset.x;
-            }
+           }
         }
     }
 

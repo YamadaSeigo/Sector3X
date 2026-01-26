@@ -14,7 +14,7 @@ cbuffer CameraBuffer : register(b9)
 // 地形グリッド情報
 cbuffer TerrainGridCB : register(b10)
 {
-    float2 gOriginXZ; // ワールド座標の基準 (x,z) 
+    float2 gOriginXZ; // ワールド座標の基準 (x,z)
     float2 gClusterXZ; // 1クラスタのワールドサイズ (x,z) ※同上
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
@@ -25,8 +25,8 @@ cbuffer TerrainGridCB : register(b10)
     uint gVertsX; // (= vertsX)
     uint gVertsZ; // (= vertsZ)
 
-    uint2 padding; // 未使用
-    
+    float2 gSplatInvSize; // 1/width, 1/height (splat texture用)
+
     float2 gCellSize; // Heightfield のセルサイズ (x,z)
     float2 gHeightMapInvSize; // 1/width, 1/height
 };
@@ -125,11 +125,13 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     float3 wp = baseWS + translation;
 
-    float centerHeight = SampleGroundY(translation.xz);
-    float worldHeight = SampleGroundY(wp.xz);
+    //インスタンスごとの地形の高さ
+    float instHeight = SampleGroundY(translation.xz);
+    //頂点ごとの地形の高さ
+    float vertexHeight = SampleGroundY(wp.xz);
 
     // transformを活用するために差分で計算して加算
-    wp.y += (worldHeight - centerHeight);
+    wp.y += (vertexHeight - instHeight);
 
    // ---- 1) 全体をまとめる“大きな揺れ” ----
    // 空間周波数をかなり低くして「大きなうねり」
@@ -165,12 +167,17 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
         float3 footPos = gFootPosWRadiusWS[i].xyz;
         float radius = gFootPosWRadiusWS[i].w;
 
-        // XZ 平面上の距離
         float2 dXZ = wp.xz - footPos.xz;
-        float dist = length(dXZ);
+        float dist2 = dot(dXZ, dXZ); // sqrtなし
+        float r2 = radius * radius;
 
-        if (dist < radius)
+        if (dist2 < r2)
         {
+            // dist を使う箇所：t = 1 - dist/radius
+            // dist = sqrt(dist2) を避けたいので invDist を rsqrt で作る
+            float invDist = rsqrt(max(dist2, 1e-12f)); // 1/sqrt(dist2)
+            float dist = dist2 * invDist; // sqrt(dist2) と同等（rsqrt近似）
+
             // 半径内で 0～1 の減衰
             float t = 1.0f - dist / radius;
             // 少し滑らかに（内側ほど強く）したいので二乗

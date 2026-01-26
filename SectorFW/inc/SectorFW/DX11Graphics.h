@@ -16,6 +16,7 @@
 #include "Graphics/DX11/DX112DCameraService.h"
 
 #ifdef _ENABLE_IMGUI
+#include "Debug/ProcessGpu3DUtilPDH.h"
 #include "Debug/GPUTimerD3D11.h"
 #endif // _ENABLE_IMGUI
 
@@ -101,7 +102,7 @@ namespace SFW
 			template<typename F>
 			void ExecuteCustomFunc(F&& func)
 			{
-				func(renderGraph.get(), m_renderTargetView, m_depthStencilView, m_depthStencilSRV);
+				func(renderGraph.get(), m_renderTargetView, m_depthStencilView, m_depthStencilViewReadOnly, m_depthStencilSRV);
 			}
 
 			ID3D11Device* GetDevice() const noexcept { return m_device.Get(); }
@@ -116,6 +117,12 @@ namespace SFW
 			}
 			ComPtr<ID3D11DepthStencilView> GetMainDepthStencilView() const noexcept {
 				return m_depthStencilView;
+			}
+			ComPtr<ID3D11DepthStencilView> GetMainDepthStencilViewReadOnly() const noexcept {
+				return m_depthStencilViewReadOnly;
+			}
+			ComPtr<ID3D11ShaderResourceView> GetMainDepthStencilSRV() const noexcept {
+				return m_depthStencilSRV;
 			}
 
 			const D3D11_VIEWPORT& GetMainViewport() const noexcept {
@@ -165,6 +172,8 @@ namespace SFW
 			ComPtr<ID3D11Texture2D> m_depthStencilBuffer;
 			// デフォルトの深度ステンシルビュー
 			ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+			// 読み取り専用深度ステンシルビュー
+			ComPtr<ID3D11DepthStencilView> m_depthStencilViewReadOnly;
 			// デフォルトの深度のSRV
 			ComPtr<ID3D11ShaderResourceView> m_depthStencilSRV;
 
@@ -185,6 +194,10 @@ namespace SFW
 			std::shared_ptr<RTState> m_rt;
 
 #ifdef _ENABLE_IMGUI
+			Debug::ProcessGpu3DUtilPDH m_gpuUtilPDH;
+			DWORD m_lastSampledPID = 0;
+			double m_elapsedTime = 0.f;
+
 			Debug::GpuTimerD3D11 m_gpuTimer;
 			double m_gpuTimeBudget = 0.f;
 #endif // _ENABLE_IMGUI

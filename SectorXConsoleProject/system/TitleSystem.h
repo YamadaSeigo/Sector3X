@@ -2,7 +2,7 @@
 
 struct CFade
 {
-	float maxTime = 1.0f; //フェードにかかる時間
+	float maxTime = 2.5f; //フェードにかかる時間 // 0.0fにしたらロード時に消す
 };
 
 template<typename Partition>
@@ -32,6 +32,35 @@ public:
 		NoDeletePtr<InputService> inputService,
 		NoDeletePtr<TimerService> timerService) {
 
+		if (eraseSprite.exchange(false, std::memory_order_acq_rel))
+		{
+			auto& globalEntityManager = partition.GetGlobalEntityManager();
+
+			Query query;
+			query.With<CFade, CColor>();
+			auto chunks = query.MatchingChunks<ECS::EntityManager&>(globalEntityManager);
+
+			auto eraseFunc = [&](Accessor& accessor, size_t entityCount) {
+
+				auto colorComp = accessor.Get<Write<CColor>>();
+				auto fadeComp = accessor.Get<Read<CFade>>();
+				for (auto i = 0; i < entityCount; ++i)
+				{
+					// 即座に透明化
+					if (fadeComp.value()[i].maxTime == 0.0f)
+					{
+						colorComp.value()[i].color.a = 0.0f;
+					}
+				};
+				};
+
+			for (ECS::ArchetypeChunk* chunk : chunks)
+			{
+				Accessor accessor(chunk);
+				eraseFunc(accessor, chunk->GetEntityCount());
+			}
+		}
+
 		if (isLoadedGameLevel.load(std::memory_order_relaxed))
 		{
 			//フェードはタイムスケールを無視して進める
@@ -48,9 +77,11 @@ public:
 			auto updateFunc = [&](Accessor& accessor, size_t entityCount) {
 
 				auto colorComp = accessor.Get<Write<CColor>>();
+				auto fadeComp = accessor.Get<Read<CFade>>();
 				for (auto i = 0; i < entityCount; ++i)
 				{
-					colorComp.value()[i].color.a = 1.0f - t;
+					float lt = Math::clamp(fadeTime / fadeComp.value()[i].maxTime, 0.0f, 1.0f);
+					colorComp.value()[i].color.a = 1.0f - lt;
 				};
 				};
 
@@ -76,6 +107,8 @@ public:
 			auto loadLevelCmd = worldRequestService->CreateLoadLevelCommand("Loading");
 			worldRequestService->PushCommand(std::move(loadLevelCmd));
 
+			eraseSprite.store(true, std::memory_order_relaxed);
+
 			//ロード完了後のコールバック
 			auto loadedFunc = [&](WorldType::Session* pSession) {
 
@@ -94,5 +127,6 @@ public:
 	}
 private:
 	std::atomic<bool> isLoadedGameLevel = { false };
+	std::atomic<bool> eraseSprite = { false };
 	float fadeTime = 0.0f;
 };

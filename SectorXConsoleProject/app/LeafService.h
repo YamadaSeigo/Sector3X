@@ -40,6 +40,37 @@ public:
     static constexpr uint32_t ClumpsPerVolume = 8;
     static constexpr uint32_t TotalClumps = ClumpsPerVolume * MaxVolumes;
 
+    struct ClumpUpdateCB
+    {
+        float gDt = 0.0f;
+        float gTime = 0.0f;
+        uint32_t gActiveVolumeCount = 0;
+        uint32_t gClumpsPerVolume = ClumpsPerVolume;
+
+        uint32_t gCurvesPerVolume = CurvePerVolume; // 0なら全体共有とみなす
+        float gClumpLength01 = 12.0f; // 粒子側で使う: cl.s からの前後散らし幅（ここでは使用しない）
+
+        // ---- Swarm / wobble ----
+        float gClumpLaneAmp = 1.0f; // 例: 0.2～1.0（radiusに対して）
+        float gClumpRadialAmp = 0.3f; // 例: 0.05～0.3
+        float gClumpLaneFreq = 0.7f; // 例: 0.7
+        float gClumpRadialFreq = 0.9f; // 例: 0.9
+
+        // ---- Ground follow ----
+        float gGroundBase = 0.25f; // 例: 0.25 (m above ground)
+        float gGroundWaveAmp = 0.35f; // 例: 0.35
+        float gGroundWaveFreq = 0.8f; // 例: 0.8
+        float gGroundFollowK = 6.0f; // 例: 6.0 (spring strength)
+        float gGroundFollowD = 1.2f; // 例: 1.2 (damping on y-velocity)
+
+        // ---- Limits ----
+        float gLaneLimitScale = 1.0f; // 例: 1.0 (lane limit = radius*scale)
+        float gRadialLimitScale = 0.5f; // 例: 0.5
+        float gMaxYOffset = 5.0f; // 例: 5.0 (safety clamp)
+
+        float pad[2] = {};
+    };
+
     struct SpawnCB
     {
         Math::Vec3f gPlayerPosWS = {};
@@ -48,7 +79,7 @@ public:
         uint32_t gActiveVolumeCount = 0;
         uint32_t gMaxSpawnPerVolumePerFrame = LeafParticlePool::MaxSpawnPerVol;
 		uint32_t gClumpsPerVolume = ClumpsPerVolume; // 1クラスタあたりの群れの塊数
-        float    gAddSizeScale = 0.02f; // 葉っぱのサイズばらつき]
+        float    gAddSizeScale = 0.03f; // 葉っぱのサイズばらつき]
 
         float gLaneMin = 0.6f;
         float gLaneMax = 1.2f;
@@ -79,6 +110,12 @@ public:
         float            gSize = 0.15f; // 葉っぱの半サイズ
         Math::Vec3f      gCamUpWS = { 0, 1, 0 };
         float            gTime = 0.0f;
+
+        Math::Vec3f gCameraPosWS = {};
+        float _padCam0 = {};
+        Math::Vec2f gNearFar = {0.1f, 1000.0f}; // (near, far)  ※線形化に使う
+        uint32_t gDepthIsLinear01 = 0; // 1: すでに線形(0..1) / 0: D3Dのハードウェア深度
+        float _padCam1 = {};
     };
 
     struct GuideCurve
@@ -96,6 +133,9 @@ public:
 		float bend = 1.0f; //曲がり具合
         Math::Vec2f startOffXZ = {};
         Math::Vec2f endOffXZ = {};
+
+		float t1 = 0.4f, t2 = 0.6f; //p1/p2のz比率
+		float bendAsym = 1.0f; // 曲がりの非対称度
     };
 
     struct Clump
@@ -110,7 +150,11 @@ public:
         float    phase;
 
         uint32_t seed;
-        uint32_t pad;
+        float yOffset;
+        float yVel;
+
+        Math::Vec2f anchorXZ = {};   // clumpの水平アンカー（ボリューム中心からのオフセット）
+        Math::Vec2f anchorVelXZ = {};
     };
 
     LeafService(
@@ -118,6 +162,7 @@ public:
         ID3D11DeviceContext* pContext,
         Graphics::DX11::BufferManager* bufferMgr,
         const wchar_t* csInitFreeListPath,
+		const wchar_t* csClumpUpdatePath,
         const wchar_t* csSpawnPath,
         const wchar_t* csUpdatePath,
         const wchar_t* csArgsPath,
@@ -155,6 +200,7 @@ public:
         ID3D11DeviceContext* ctx,
         ComPtr<ID3D11ShaderResourceView>& heightMap,
         ComPtr<ID3D11ShaderResourceView>& leafTex,
+        ComPtr<ID3D11ShaderResourceView>& depthSRV,
         ComPtr<ID3D11Buffer>& terrainCB,
         ComPtr<ID3D11Buffer>& windCB,
         uint32_t slot);
@@ -168,6 +214,11 @@ public:
     {
         return m_elapsedTime;
     }
+
+    bool IsChasePlayer() const noexcept
+    {
+        return isChasePlayer;
+	}
 
 private:
     struct VolumeSlot
@@ -191,12 +242,15 @@ private:
 
     ComPtr<ID3D11Buffer>            m_clumpBuffer;
     ComPtr<ID3D11ShaderResourceView> m_clumpSRV;
+	ComPtr<ID3D11UnorderedAccessView> m_clumpUAV;
 
+	ComPtr<ID3D11Buffer> m_clumpUpdateCB;
     ComPtr<ID3D11Buffer> m_spawnCB;
     ComPtr<ID3D11Buffer> m_updateCB;
     ComPtr<ID3D11Buffer> m_cameraCB;
 
     ComPtr<ID3D11ComputeShader> m_initFreeListCS;
+	ComPtr<ID3D11ComputeShader> m_clumpUpdateCS;
     ComPtr<ID3D11ComputeShader> m_spawnCS;
     ComPtr<ID3D11ComputeShader> m_updateCS;
     ComPtr<ID3D11ComputeShader> m_argsCS;
@@ -208,6 +262,7 @@ private:
 
     LeafParticlePool m_particlePool;
 
+	ClumpUpdateCB m_cpuClumpUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     SpawnCB  m_cpuSpawnBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     UpdateCB m_cpuUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     CameraCB m_cpuCameraBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
@@ -222,12 +277,28 @@ private:
     uint32_t currentSlot = 0;
     float    m_elapsedTime = 0.0f;
 
+	bool isChasePlayer = true;
+
 private:
     uint32_t AllocateSlot(uint32_t volumeUID);
     void     ReleaseUnusedSlots();
 
     void InitCurveParams(uint32_t baseSeed);
 	void BuildGuideCurves(float timeSec);
+
+    void InitClumpsCPU(
+        uint32_t baseSeed,
+        float laneMax,      // 例: 1.5
+        float radialMax     // 例: 0.25
+    );
+
+    // 毎フレーム更新（最低限：sを進める＋lane/radialをゆらす）
+    void UpdateClumpsCPU(
+        float dt,
+        uint32_t activeVolumeCount,
+        float laneAmp,         // 例: 0.6
+        float radialAmp        // 例: 0.15
+    );
 
 public:
     STATIC_SERVICE_TAG

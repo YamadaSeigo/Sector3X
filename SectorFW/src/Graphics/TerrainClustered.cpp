@@ -426,7 +426,7 @@ namespace SFW {
             }
         }
 
-        void TerrainClustered::InitSplatDefault(uint32_t commonSplatTexId, const uint32_t materialIds[4], const float tilingUV[4][2], float splatScaleU, float splatScaleV, float splatOffsetU, float splatOffsetV)
+        void TerrainClustered::InitSplatDefault(uint32_t commonSplatTexId, const uint32_t materialIds[4], const float tilingUV[4][2])
         {
             // クラスターが確定済み前提
             splat.resize(clusters.size());
@@ -440,10 +440,6 @@ namespace SFW {
                     meta.layers[i].uvTilingV = tilingUV[i][1];
                 }
                 meta.splatTextureId = commonSplatTexId; // 全クラスターで同じスプラットでもOK（あとで差し替え可）
-                meta.splatUVScaleU = splatScaleU;
-                meta.splatUVScaleV = splatScaleV;
-                meta.splatUVOffsetU = splatOffsetU;
-                meta.splatUVOffsetV = splatOffsetV;
                 splat[cid] = meta;
             }
         }

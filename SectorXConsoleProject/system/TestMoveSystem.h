@@ -4,9 +4,9 @@ template<typename Partition>
 class TestMoveSystem : public ITypeSystem<
 	TestMoveSystem,
 	Partition,
-	ComponentAccess<Write<CTransform>, Write<SpatialMotionTag>>,//アクセスするコンポーネントの指定
+	ComponentAccess<Write<CTransform>, Write<CSpatialMotionTag>>,//アクセスするコンポーネントの指定
 	ServiceContext<SpatialChunkRegistry>>{//受け取るサービスの指定
-	using Accessor = ComponentAccessor<Write<CTransform>, Write<SpatialMotionTag>>;
+	using Accessor = ComponentAccessor<Write<CTransform>, Write<CSpatialMotionTag>>;
 public:
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition, LevelContext& levelCtx, SafePtr<SpatialChunkRegistry> registry) {
@@ -19,7 +19,7 @@ public:
 				auto transform = accessor.Get<Write<CTransform>>();
 				if (!transform) { LOG_ERROR("Transform component not found in VoidSystem"); return; }
 
-				auto tagPtr = accessor.Get<Write<SpatialMotionTag>>();
+				auto tagPtr = accessor.Get<Write<CSpatialMotionTag>>();
 				if (!tagPtr) { LOG_ERROR("SpatialMotionTag component not found in VoidSystem"); return; }
 
 				for (size_t i = 0; i < entityCount; ++i) {

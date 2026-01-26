@@ -99,11 +99,26 @@ namespace SFW
 		 */
 		void Update(double delta_time, IThreadExecutor* executor)
 		{
+#ifdef _ENABLE_IMGUI
+			//経過時間計測用
+			auto t0 = std::chrono::steady_clock::now();
+#endif //_ENABLE_IMGUI
+
 			m_world.UpdateServiceLocator(delta_time, executor);
 
 			m_world.UpdateAllLevels(delta_time, executor);
 
 			m_world.CommitServiceLocator(delta_time);
+
+#ifdef _ENABLE_IMGUI
+
+			auto t1 = std::chrono::steady_clock::now();
+			double ms = std::chrono::duration<double, std::milli>(t1 - t0).count();
+
+			// ロジックの実行時間をデバッグ情報に送信
+			Debug::PublishLogicMs(float(ms));
+
+#endif//_ENABLE_IMGUI
 		}
 		/**
 		 * @brief 描画処理

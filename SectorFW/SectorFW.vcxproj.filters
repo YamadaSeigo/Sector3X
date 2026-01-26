@@ -537,6 +537,9 @@
     <ClInclude Include="inc\SectorFW\Core\TimerService.h">
       <Filter>Inc\Core</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Debug\ProcessGpu3DUtilPDH.h">
+      <Filter>Inc\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">

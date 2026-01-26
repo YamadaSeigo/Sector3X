@@ -48,7 +48,7 @@ cbuffer TerrainGridCB : register(b1)
     uint gVertsX; // (= vertsX)
     uint gVertsZ; // (= vertsZ)
 
-    uint2 padding; // 未使用
+    float2 gSplatInvSize; // 1/width, 1/height (splat texture用)
 
     float2 gCellSize; // Heightfield のセルサイズ (x,z)
     float2 gHeightMapInvSize; // 1/width, 1/height
@@ -147,7 +147,7 @@ void main(uint3 tid : SV_DispatchThreadID)
     float2 xz = v.centerWS.xz + offset;
 
     float groundY = SampleGroundY(xz);
-    float startY = groundY + Hash01(seed + 4u) * 1.0f; // 地面直上 0..1m
+    float startY = groundY + Hash01(seed + 4u) * 6.0f; // 地面直上 0..1m
 
     LeafParticle p;
     p.posWS = float3(xz.x, startY, xz.y);
@@ -185,6 +185,29 @@ void main(uint3 tid : SV_DispatchThreadID)
     // ----------------------------
     p.lane = RandRange(seed + 20u, gLaneMin, gLaneMax);
     p.radial = RandRange(seed + 21u, gRadMin, gRadMax);
+
+    float t0 = Hash01(seed);
+    float t1 = Hash01(seed ^ 0xA53C9E1Bu);
+
+    // 例：緑->黄->茶 を軽くブレさせる
+    float3 baseA = float3(0.25, 0.75, 0.20); // green
+    float3 baseB = float3(0.70, 0.75, 0.20); // yellow-green
+    //float3 baseC = float3(0.55, 0.35, 0.15); // brown
+
+    //float3 tint = (t0 < 0.6) ? lerp(baseA, baseB, t0 / 0.6)
+    //                     : lerp(baseB, baseC, (t0 - 0.6) / 0.4);
+
+    float3 tint = lerp(baseA, baseB, t0);
+
+    // 明るさも少しブレ
+    tint *= lerp(0.85, 1.15, t1);
+
+    p.tint = tint;
+    p.life0 = p.life; // 生成直後の寿命を保存
+
+#ifdef DEBUG_HIT_DEPTH
+    p.debugHit = 0;
+#endif
 
     gParticles[id] = p;
 

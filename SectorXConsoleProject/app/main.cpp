@@ -141,6 +141,7 @@ void InitializeRenderPipeLine(
 	Graphics::DX11::GraphicsDevice* graphics,
 	ComPtr<ID3D11RenderTargetView>& mainRenderTarget,
 	ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
+	ComPtr<ID3D11DepthStencilView>& mainDepthStencilViewReadOnly,
 	ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV,
 	Graphics::PassCustomFuncType drawTerrainColor,
 	Graphics::PassCustomFuncType drawParticle,
@@ -287,7 +288,7 @@ void InitializeRenderPipeLine(
 
 	DX11::ShaderCreateDesc defferedShaderDesc;
 	defferedShaderDesc.vsPath = L"assets/shader/VS_Fullscreen.cso";
-	defferedShaderDesc.psPath = L"assets/shader/PS_PBR_Unlit_Shadow.cso";
+	defferedShaderDesc.psPath = L"assets/shader/PS_Fullscreen_Unlit_Shadow.cso";
 	ShaderHandle defferedShaderHandle = {};
 	auto shaderData = shaderMgr->CreateResource(defferedShaderDesc, defferedShaderHandle);
 	static ComPtr<ID3D11VertexShader> defferedVS = shaderData.vs;
@@ -882,7 +883,7 @@ int main(void)
 	//※複数人で開発する場合は、各自のコンポーネントを別ファイルに分けて登録するようにする
 	ComponentTypeRegistry::Register<CModel>();
 	ComponentTypeRegistry::Register<CTransform>();
-	ComponentTypeRegistry::Register<SpatialMotionTag>();
+	ComponentTypeRegistry::Register<CSpatialMotionTag>();
 	ComponentTypeRegistry::Register<Physics::CPhyBody>();
 	ComponentTypeRegistry::Register<Physics::PhysicsInterpolation>();
 	ComponentTypeRegistry::Register<Physics::ShapeDims>();
@@ -980,6 +981,7 @@ int main(void)
 
 	static LeafService leafService(device, deviceContext, bufferMgr,
 		L"assets/shader/CS_ParticleInitFreeList.cso",
+		L"assets/shader/CS_LeafClumpUpdate.cso",
 		L"assets/shader/CS_LeafSpawn.cso",
 		L"assets/shader/CS_LeafUpdate.cso",
 		L"assets/shader/CS_ParticleArgs.cso",
@@ -1025,26 +1027,26 @@ int main(void)
 	//}
 
 
-	Graphics::TerrainBuildParams p;
-	p.cellsX = 256 * terrainRank - 1;
-	p.cellsZ = 256 * terrainRank - 1;
-	p.clusterCellsX = 32;
-	p.clusterCellsZ = 32;
-	p.cellSize = 3.0f;
-	p.heightScale = 80.0f;
-	p.frequency = 1.0f / 90.0f;
-	p.seed = 20251212;
-	p.offset.y -= 40.0f;
+	Graphics::TerrainBuildParams tp;
+	tp.cellsX = 256 * terrainRank - 1;
+	tp.cellsZ = 256 * terrainRank - 1;
+	tp.clusterCellsX = 32;
+	tp.clusterCellsZ = 32;
+	tp.cellSize = 3.0f;
+	tp.heightScale = 80.0f;
+	tp.frequency = 1.0f / 90.0f;
+	tp.seed = 20251212;
+	tp.offset.y -= 40.0f;
 	//p.designer = &designerHeightMap;
 
 	//端まで見えるように
 	//perCameraService->SetFarClip(p.cellsX * p.cellSize);
 
 	std::vector<float> heightMap;
-	static SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(p, &heightMap);
+	static SFW::Graphics::TerrainClustered terrain = Graphics::TerrainClustered::Build(tp, &heightMap);
 
 	// ---- マッピング設定(オクルージョンカリング用) ----
-	static Graphics::HeightTexMapping heightTexMap = Graphics::MakeHeightTexMappingFromTerrainParams(p, heightMap);
+	static Graphics::HeightTexMapping heightTexMap = Graphics::MakeHeightTexMappingFromTerrainParams(tp, heightMap);
 
 	static Graphics::DX11::CommonMaterialResources matRes;
 	const uint32_t matIds[4] = { Mat_Grass, Mat_Rock, Mat_Dirt, Mat_Snow }; //素材ID
@@ -1067,9 +1069,7 @@ int main(void)
 	// 2) 生成ハンドルにアプリ側の “ID” を割当て -> terrain.splat[cid].splatTextureId に反映
 	Graphics::DX11::AssignClusterSplatsFromHandles(terrain, terrain.clustersX, terrain.clustersZ, handles,
 		[](Graphics::TextureHandle h, uint32_t cx, uint32_t cz, uint32_t cid) { return (0x70000000u + cid); },
-		/*queryLayer*/nullptr,
-		//サンプリングでクラスターの境界に線が発生する問題をとりあえずScaleとOffsetで解決
-		{ 0.985f, 0.985f }, { 0.0015f, 0.0015f });
+		/*queryLayer*/nullptr);
 
 	static Graphics::DX11::SplatArrayResources splatRes;
 	Graphics::DX11::InitSplatArrayResources(device, splatRes, terrain.clusters.size());
@@ -1086,7 +1086,7 @@ int main(void)
 	Graphics::DX11::FillClusterParamsCPU(terrain, id2slice, cp);
 
 	// グリッドCBを設定（TerrainClustered の定義に合わせて）
-	Graphics::DX11::SetupTerrainGridCB(p, /*dimX=*/terrain.clustersX, /*dimZ=*/terrain.clustersZ, cp);
+	Graphics::DX11::SetupTerrainGridCB(tp, /*dimX=*/terrain.clustersX, /*dimZ=*/terrain.clustersZ, sheetTex, cp);
 
 	// 地形のクラスター専用GPUリソースを作る/初期更新
 	Graphics::DX11::BuildOrUpdateClusterParamsSB(device, deviceContext, cp);
@@ -1129,8 +1129,8 @@ int main(void)
 
 		DX11::TextureCreateDesc texDesc;
 		DX11::TextureRecipe recipeDesc;
-		recipeDesc.width = p.cellsX + 1;
-		recipeDesc.height = p.cellsZ + 1;
+		recipeDesc.width = tp.cellsX + 1;
+		recipeDesc.height = tp.cellsZ + 1;
 		recipeDesc.format = DXGI_FORMAT_R16_UNORM;
 		recipeDesc.usage = D3D11_USAGE_IMMUTABLE;
 		recipeDesc.initialData = height16.data();
@@ -1156,12 +1156,12 @@ int main(void)
 			normalMap[i] = terrain.vertices[i].nrm;
 		}
 
-		auto normalMapBC5 = EncodeNormalMapBC5(normalMap.data(), (int)(p.cellsX + 1), (int)(p.cellsZ + 1));
+		auto normalMapBC5 = EncodeNormalMapBC5(normalMap.data(), (int)(tp.cellsX + 1), (int)(tp.cellsZ + 1));
 
 		DX11::TextureCreateDesc texDesc;
 		DX11::TextureRecipe recipeDesc;
-		recipeDesc.width = (p.cellsX + 1) / 4;
-		recipeDesc.height = (p.cellsZ + 1) / 4;
+		recipeDesc.width = (tp.cellsX + 1) / 4;
+		recipeDesc.height = (tp.cellsZ + 1) / 4;
 		recipeDesc.format = DXGI_FORMAT_BC5_UNORM;
 		recipeDesc.usage = D3D11_USAGE_IMMUTABLE;
 		recipeDesc.initialData = normalMapBC5.data();
@@ -1184,6 +1184,18 @@ int main(void)
 		SamplerHandle samp = samplerManager->AddWithDesc(sampDesc);
 		auto sampData = samplerManager->Get(samp);
 		linearSampler = sampData.ref().state;
+	}
+
+	static ComPtr<ID3D11SamplerState> pointSampler;
+	{
+		using namespace Graphics;
+		auto samplerManager = graphics.GetRenderService()->GetResourceManager<DX11::SamplerManager>();
+		D3D11_SAMPLER_DESC sampDesc = {};
+		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		SamplerHandle samp = samplerManager->AddWithDesc(sampDesc);
+		auto sampData = samplerManager->Get(samp);
+		pointSampler = sampData.ref().state;
 	}
 
 	auto terrainUpdateFunc = [](Graphics::RenderService* renderService)
@@ -1339,6 +1351,11 @@ int main(void)
 
 			auto deviceContext = graphics.GetDeviceContext();
 
+			deviceContext->VSSetSamplers(3, 1, linearSampler.GetAddressOf());
+
+			//重みテクスチャをポイントサンプラーで参照
+			deviceContext->PSSetSamplers(3, 1, pointSampler.GetAddressOf());
+
 			// フレームの先頭 or Terrainパスの先頭で 1回だけ：
 			Graphics::DX11::BindCommonMaterials(deviceContext, matRes);
 
@@ -1367,8 +1384,28 @@ int main(void)
 			auto deviceContext = graphics.GetDeviceContext();
 
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
-
 			graphics.SetBlendState(Graphics::BlendStateID::Additive);
+
+			//とりあえず安全にRTVをキャプチャして維持したままDSVだけ差し替え
+			// ※本来はRTVをキャッシュしておいて差し替えた方が軽量
+			{
+				ID3D11RenderTargetView* rtvs[DeferredTextureCount] = {};
+				ID3D11DepthStencilView* curDsv = nullptr;
+
+				deviceContext->OMGetRenderTargets(DeferredTextureCount, rtvs, &curDsv);
+
+				// ここで curDsv は使わないなら Release する
+				if (curDsv) curDsv->Release();
+
+				// 目的の DSV に差し替える
+				ID3D11DepthStencilView* newDsv = graphics.GetMainDepthStencilViewReadOnly().Get();
+
+				// RTV を維持したまま DSV だけ変更
+				deviceContext->OMSetRenderTargets(DeferredTextureCount, rtvs, newDsv);
+
+				// OMGetRenderTargets は AddRef して返すので Release 必須
+				for (auto& rtv : rtvs) if (rtv) rtv->Release();
+			}
 
 			ComPtr<ID3D11ShaderResourceView> heightMapSRV;
 			{
@@ -1381,6 +1418,9 @@ int main(void)
 			//ホタルのスポーンと描画処理
 			fireflyService.SpawnParticles(deviceContext, heightMapSRV, cp.cbGrid, slot);
 
+			// 葉っぱは不透明(ピクセルでアルファを抜く)
+			graphics.SetBlendState(Graphics::BlendStateID::AlphaBlend);
+
 			ComPtr<ID3D11Buffer> windCb;
 			{
 				auto windHandle = windService.GetBufferHandle();
@@ -1389,8 +1429,11 @@ int main(void)
 				windCb = windBufData->buffer;
 			}
 
+
+			ComPtr<ID3D11ShaderResourceView> mainDepthSRV = graphics.GetMainDepthStencilSRV();
+
 			//葉っぱのスポーンと描画処理
-			leafService.SpawnParticles(deviceContext, heightMapSRV, leafTextureSRV, cp.cbGrid, windCb, slot);
+			leafService.SpawnParticles(deviceContext, heightMapSRV, leafTextureSRV, mainDepthSRV, cp.cbGrid, windCb, slot);
 		};
 
 	renderService->SetCustomUpdateFunction(terrainUpdateFunc);
@@ -1405,9 +1448,11 @@ int main(void)
 		Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
 		ComPtr<ID3D11RenderTargetView>& mainRenderTarget,
 		ComPtr<ID3D11DepthStencilView>& mainDepthStencilView,
+		ComPtr<ID3D11DepthStencilView>& mainDepthStencilViewReadOnly,
 		ComPtr<ID3D11ShaderResourceView>& mainDepthStencilSRV)
 		{
-			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget, mainDepthStencilView, mainDepthStencilSRV,
+			InitializeRenderPipeLine(renderGraph, &graphics, mainRenderTarget,
+				mainDepthStencilView, mainDepthStencilViewReadOnly, mainDepthStencilSRV,
 				drawTerrainColor, drawParticle, &lightShadowResourceService, deferredRenderingService);
 		}
 	);
@@ -1502,6 +1547,8 @@ int main(void)
 				CColor color = { { 1.0f,1.0f,1.0f,1.0f} };
 				CFade fade;
 
+				sprite.layer = 1; // 手前に描画
+
 				levelSession.AddGlobalEntity(
 					CTransform{ getPos(0.0f,0.4f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.7f,0.7f) },
 					sprite,
@@ -1513,9 +1560,27 @@ int main(void)
 				matDesc.psSRV[2] = texHandle; // TEX2 にセット
 				matMgr->Add(matDesc, matHandle);
 				sprite.hMat = matHandle;
+				sprite.layer = 1; // 手前に描画
+				fade.maxTime = 0.0f;
 
 				levelSession.AddGlobalEntity(
 					CTransform{ getPos(0.0f,-0.7f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.25f,0.25f) },
+					sprite,
+					color,
+					fade);
+
+				textureDesc.path = "assets/texture/sprite/TitleBG.png";
+				textureMgr->Add(textureDesc, texHandle);
+				matDesc.psSRV[2] = texHandle; // TEX2 にセット
+				matDesc.vsCBV.clear(); // 風影響なし
+				matMgr->Add(matDesc, matHandle);
+				sprite.hMat = matHandle;
+				sprite.pso.index = CSprite::invalidPSOIndex; // PSO無効化（デフォルトパイプラインで描画）
+				sprite.layer = 0; // 一番奥に描画
+				fade.maxTime = 0.1f;
+
+				levelSession.AddGlobalEntity(
+					CTransform{ getPos(0.0f,-0.25f),{0.0f,0.0f,0.0f,1.0f}, getScale(1.0f,1.0f) },
 					sprite,
 					color,
 					fade);
@@ -1524,9 +1589,9 @@ int main(void)
 				scheduler.AddSystem<TitleSystem>(*serviceLocator);
 				scheduler.AddSystem<SpriteRenderSystem>(*serviceLocator);
 
-				perCameraService->SetTarget({ 100.0f,-1.0f,100.0f });
+				/*perCameraService->SetTarget({ 100.0f,-1.0f,100.0f });
 				Math::Quatf cameraRot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(-20.0f));
-				perCameraService->Rotate(cameraRot);
+				perCameraService->Rotate(cameraRot);*/
 
 			});
 
@@ -1579,6 +1644,7 @@ int main(void)
 				CSpriteAnimation spriteAnim;
 				spriteAnim.hMat = matHandle;
 				spriteAnim.buf.divX = 7; // 横分割数
+				spriteAnim.layer = 100; // 手前に描画
 
 				auto getPos = [](float x, float y)->Math::Vec3f {
 					Math::Vec3f pos;
@@ -1872,8 +1938,8 @@ int main(void)
 
 				//草Entity生成
 				Math::Vec2f terrainScale = {
-					p.cellsX * p.cellSize,
-					p.cellsZ * p.cellSize
+					tp.cellsX * tp.cellSize,
+					tp.cellsZ * tp.cellSize
 				};
 
 				auto levelSession = pLevel->GetSession();
@@ -1954,7 +2020,7 @@ int main(void)
 
 				auto getTerrainLocation = [&](float u, float v) {
 
-					Math::Vec3f location = { p.cellsX * p.cellSize * u, 0.0f, p.cellsZ * p.cellSize * v };
+					Math::Vec3f location = { tp.cellsX * tp.cellSize * u, 0.0f, tp.cellsZ * tp.cellSize * v };
 					terrain.SampleHeightNormalBilinear(location.x, location.z, location.y);
 					return location;
 					};
@@ -1984,7 +2050,7 @@ int main(void)
 							{
 								auto chunk = pLevel->GetChunk(location);
 								auto key = chunk.value()->GetNodeKey();
-								SpatialMotionTag tag{};
+								CSpatialMotionTag tag{};
 								tag.handle = { key, chunk.value() };
 
 								Physics::CPhyBody staticBody{};
@@ -2062,19 +2128,19 @@ int main(void)
 				{
 					Physics::ShapeCreateDesc terrainShapeDesc;
 					terrainShapeDesc.shape = Physics::HeightFieldDesc{
-						.sizeX = (int)p.cellsX + 1,
-						.sizeY = (int)p.cellsZ + 1,
+						.sizeX = (int)tp.cellsX + 1,
+						.sizeY = (int)tp.cellsZ + 1,
 						.samples = heightMap,
-						.scaleY = p.heightScale,
-						.cellSizeX = p.cellSize,
-						.cellSizeY = p.cellSize
+						.scaleY = tp.heightScale,
+						.cellSizeX = tp.cellSize,
+						.cellSizeY = tp.cellSize
 					};
 					auto terrainShape = ps->MakeShape(terrainShapeDesc);
 					Physics::CPhyBody terrainBody{};
 					terrainBody.type = Physics::BodyType::Static; // staticにする
 					terrainBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
 					auto id = levelSession.AddEntity(
-						CTransform{ 0.0f, -40.0f, 0.0f ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
+						CTransform{ tp.offset.x, tp.offset.y, tp.offset.z ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
 						terrainBody
 					);
 					if (id) {
@@ -2187,7 +2253,7 @@ int main(void)
 					CFireflyVolume fireflyVolume;
 					fireflyVolume.centerWS = location;
 					fireflyVolume.hitRadius = 40.0f;
-					fireflyVolume.spawnRadius = 50.0f;
+					fireflyVolume.radius = 50.0f;
 
 					//位置を指定して追加
 					levelSession.AddEntityWithLocation(fireflyVolume.centerWS, fireflyVolume);
@@ -2200,11 +2266,18 @@ int main(void)
 
 					CLeafVolume leafVolume;
 					leafVolume.centerWS = location;
-					leafVolume.hitRadius = 40.0f;
-					leafVolume.spawnRadius = 50.0f;
+					leafVolume.radius = 40.0f;
+					leafVolume.farDistance = 60.0f;
+
+					auto chunk = pLevel->GetChunk(location);
+					auto key = chunk.value()->GetNodeKey();
+
+					//動く前提でチャンク移動用のタグを付与
+					CSpatialMotionTag tag{};
+					tag.handle = { key, chunk.value() };
 
 					//位置を指定して追加
-					levelSession.AddEntityWithLocation(leafVolume.centerWS, leafVolume);
+					levelSession.AddEntityWithLocation(leafVolume.centerWS, leafVolume, tag);
 				}
 
 
@@ -2253,7 +2326,7 @@ int main(void)
 			pSession->CleanLevel(LoadingLevelName);
 			};
 
-		world.LoadLevel("OpenField", true, true, loadedFunc);
+		world.LoadLevel("Title", true, true, loadedFunc);
 	}
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), FPS_LIMIT);

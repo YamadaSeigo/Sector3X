@@ -146,17 +146,13 @@ namespace SFW {
                 uint32_t layerCount = 4;                         // 0..4
                 SplatLayerMeta layers[kSplatMaxLayers];          // 4レイヤ
                 uint32_t splatTextureId = 0;                     // RGBA ウェイトを持つスプラットテクスチャの論理ID
-                float    splatUVScaleU = 1.0f, splatUVScaleV = 1.0f; // スプラットUVタイル（頂点uvに乗算）
-                float    splatUVOffsetU = 0.0f, splatUVOffsetV = 0.0f;
             };
 
             std::vector<ClusterSplatMeta> splat; // size == clusters.size()
 
             void InitSplatDefault(uint32_t commonSplatTexId,
                 const uint32_t materialIds[4],
-                const float tilingUV[4][2],
-                float splatScaleU = 1.0f, float splatScaleV = 1.0f,
-                float splatOffsetU = 0.0f, float splatOffsetV = 0.0f);
+                const float tilingUV[4][2]);
 
             // 生成関数版：クラスターごとに好きなロジックで決める
             using SplatGenerator = std::function<ClusterSplatMeta(uint32_t cid, const ClusterRange& c)>;

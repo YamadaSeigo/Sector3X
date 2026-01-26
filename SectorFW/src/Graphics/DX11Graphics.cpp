@@ -176,6 +176,7 @@ namespace SFW
 			dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 			dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 			dsvDesc.Texture2D.MipSlice = 0;
+			dsvDesc.Flags = 0;
 
 			hr = m_device->CreateDepthStencilView(m_depthStencilBuffer.Get(), &dsvDesc, m_depthStencilView.GetAddressOf());
 			if (FAILED(hr)) {
@@ -183,7 +184,11 @@ namespace SFW
 				return false;
 			}
 
+			// 読み取り専用深度ステンシルビューの作成
+			dsvDesc.Flags = D3D11_DSV_READ_ONLY_DEPTH;
+			hr = m_device->CreateDepthStencilView(m_depthStencilBuffer.Get(), &dsvDesc, m_depthStencilViewReadOnly.GetAddressOf());
 
+			// 深度ステンシルバッファのシェーダーリソースビュー作成
 			D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 			srvDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
 			srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
@@ -231,6 +236,9 @@ namespace SFW
 			StartRenderThread();
 
 #ifdef _ENABLE_IMGUI
+			m_gpuUtilPDH.init();
+			m_lastSampledPID = GetCurrentProcessId();
+
 			m_gpuTimer.init(m_device.Get(), RENDER_BUFFER_COUNT);
 			m_gpuTimeBudget = 1.0f / fps;
 #endif
@@ -249,18 +257,42 @@ namespace SFW
 		void GraphicsDevice::DrawImpl()
 		{
 #ifdef _ENABLE_IMGUI
+			//GPU使用率を測定開始
 			m_gpuTimer.begin(m_context.Get());
+			//経過時間計測用
+			auto t0 = std::chrono::steady_clock::now();
 #endif
 
 			renderGraph->Execute();
 
 #ifdef _ENABLE_IMGUI
+			auto t1 = std::chrono::steady_clock::now();
+			double ms = std::chrono::duration<double, std::milli>(t1 - t0).count();
+
+			// 描画系のCPUの実行時間をデバッグ情報に送信
+			Debug::PublishRenderMs(float(ms));
+
+			constexpr double sampleInterval = 0.5; // サンプリング間隔（秒）
+
+			// 一定時間ごとにGPU使用率を取得してUIに送る
+			m_elapsedTime += m_gpuTimeBudget;
+			if(m_elapsedTime > sampleInterval)
+			{
+				m_elapsedTime = 0.0f;
+
+				double pct = 0.0;
+				if(m_gpuUtilPDH.sample(m_lastSampledPID, pct))
+				{
+					//GPU使用率をUIに送る
+					Debug::PublishGpu(float(pct / 100));
+				}
+			}
+
 			m_gpuTimer.end(m_context.Get());
-			// GPU負荷をUIに送る
 			double gpuSec = m_gpuTimer.tryResolve(m_context.Get());
 			if (gpuSec >= 0.0) {
-				double gpuScore = (std::min)(1.0, gpuSec / m_gpuTimeBudget); // 0..1
-				Debug::PublishGpu(float(gpuScore));             // UIBusへ
+				// GPU経過時間をデバッグ情報に送信
+				Debug::PublishGpuFrameMs(float(gpuSec * 1000.0));
 			}
 
 			//Imguiのためにメインのターゲットに戻す
@@ -270,6 +302,8 @@ namespace SFW
 
 		void GraphicsDevice::PresentImpl()
 		{
+
+
 			m_swapChain->Present(1, 0);
 		}
 
