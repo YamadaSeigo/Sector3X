@@ -39,37 +39,37 @@ namespace SoLoud
 	namespace Thread
 	{
 #ifdef WINDOWS_VERSION
-        struct ThreadHandleData
-        {
-            HANDLE thread;
-        };
-
-		void * createMutex()
+		struct ThreadHandleData
 		{
-			CRITICAL_SECTION * cs = new CRITICAL_SECTION;
+			HANDLE thread;
+		};
+
+		void* createMutex()
+		{
+			CRITICAL_SECTION* cs = new CRITICAL_SECTION;
 			InitializeCriticalSectionAndSpinCount(cs, 100);
 			return (void*)cs;
 		}
 
-		void destroyMutex(void *aHandle)
+		void destroyMutex(void* aHandle)
 		{
-			CRITICAL_SECTION *cs = (CRITICAL_SECTION*)aHandle;
+			CRITICAL_SECTION* cs = (CRITICAL_SECTION*)aHandle;
 			DeleteCriticalSection(cs);
 			delete cs;
 		}
 
-		void lockMutex(void *aHandle)
+		void lockMutex(void* aHandle)
 		{
-			CRITICAL_SECTION *cs = (CRITICAL_SECTION*)aHandle;
+			CRITICAL_SECTION* cs = (CRITICAL_SECTION*)aHandle;
 			if (cs)
 			{
 				EnterCriticalSection(cs);
 			}
 		}
 
-		void unlockMutex(void *aHandle)
+		void unlockMutex(void* aHandle)
 		{
-			CRITICAL_SECTION *cs = (CRITICAL_SECTION*)aHandle;
+			CRITICAL_SECTION* cs = (CRITICAL_SECTION*)aHandle;
 			if (cs)
 			{
 				LeaveCriticalSection(cs);
@@ -79,30 +79,30 @@ namespace SoLoud
 		struct soloud_thread_data
 		{
 			threadFunction mFunc;
-			void *mParam;
+			void* mParam;
 		};
 
 		static DWORD WINAPI threadfunc(LPVOID d)
 		{
-			soloud_thread_data *p = (soloud_thread_data *)d;
+			soloud_thread_data* p = (soloud_thread_data*)d;
 			p->mFunc(p->mParam);
 			delete p;
 			return 0;
 		}
 
-        ThreadHandle createThread(threadFunction aThreadFunction, void *aParameter)
+		ThreadHandle createThread(threadFunction aThreadFunction, void* aParameter)
 		{
-			soloud_thread_data *d = new soloud_thread_data;
+			soloud_thread_data* d = new soloud_thread_data;
 			d->mFunc = aThreadFunction;
 			d->mParam = aParameter;
-			HANDLE h = CreateThread(NULL,0,threadfunc,d,0,NULL);
-            if (0 == h)
-            {
-                return 0;
-            }
-            ThreadHandleData *threadHandle = new ThreadHandleData;
-            threadHandle->thread = h;
-            return threadHandle;
+			HANDLE h = CreateThread(NULL, 0, threadfunc, d, 0, NULL);
+			if (0 == h)
+			{
+				return 0;
+			}
+			ThreadHandleData* threadHandle = new ThreadHandleData;
+			threadHandle->thread = h;
+			return threadHandle;
 		}
 
 		void sleep(int aMSec)
@@ -110,16 +110,16 @@ namespace SoLoud
 			Sleep(aMSec);
 		}
 
-        void wait(ThreadHandle aThreadHandle)
-        {
-            WaitForSingleObject(aThreadHandle->thread, INFINITE);
-        }
+		void wait(ThreadHandle aThreadHandle)
+		{
+			WaitForSingleObject(aThreadHandle->thread, INFINITE);
+		}
 
-        void release(ThreadHandle aThreadHandle)
-        {
-            CloseHandle(aThreadHandle->thread);
-            delete aThreadHandle;
-        }
+		void release(ThreadHandle aThreadHandle)
+		{
+			CloseHandle(aThreadHandle->thread);
+			delete aThreadHandle;
+		}
 
 		int getTimeMillis()
 		{
@@ -127,27 +127,27 @@ namespace SoLoud
 		}
 
 #else // pthreads
-        struct ThreadHandleData
-        {
-            pthread_t thread;
-        };
-
-		void * createMutex()
+		struct ThreadHandleData
 		{
-			pthread_mutex_t *mutex;
+			pthread_t thread;
+		};
+
+		void* createMutex()
+		{
+			pthread_mutex_t* mutex;
 			mutex = new pthread_mutex_t;
-		
+
 			pthread_mutexattr_t attr;
 			pthread_mutexattr_init(&attr);
 
 			pthread_mutex_init(mutex, &attr);
-		
+
 			return (void*)mutex;
 		}
 
-		void destroyMutex(void *aHandle)
+		void destroyMutex(void* aHandle)
 		{
-			pthread_mutex_t *mutex = (pthread_mutex_t*)aHandle;
+			pthread_mutex_t* mutex = (pthread_mutex_t*)aHandle;
 
 			if (mutex)
 			{
@@ -156,18 +156,18 @@ namespace SoLoud
 			}
 		}
 
-		void lockMutex(void *aHandle)
+		void lockMutex(void* aHandle)
 		{
-			pthread_mutex_t *mutex = (pthread_mutex_t*)aHandle;
+			pthread_mutex_t* mutex = (pthread_mutex_t*)aHandle;
 			if (mutex)
 			{
 				pthread_mutex_lock(mutex);
 			}
 		}
 
-		void unlockMutex(void *aHandle)
+		void unlockMutex(void* aHandle)
 		{
-			pthread_mutex_t *mutex = (pthread_mutex_t*)aHandle;
+			pthread_mutex_t* mutex = (pthread_mutex_t*)aHandle;
 			if (mutex)
 			{
 				pthread_mutex_unlock(mutex);
@@ -177,46 +177,46 @@ namespace SoLoud
 		struct soloud_thread_data
 		{
 			threadFunction mFunc;
-			void *mParam;
+			void* mParam;
 		};
 
-		static void * threadfunc(void * d)
+		static void* threadfunc(void* d)
 		{
-			soloud_thread_data *p = (soloud_thread_data *)d;
+			soloud_thread_data* p = (soloud_thread_data*)d;
 			p->mFunc(p->mParam);
 			delete p;
 			return 0;
 		}
 
-		ThreadHandle createThread(threadFunction aThreadFunction, void *aParameter)
+		ThreadHandle createThread(threadFunction aThreadFunction, void* aParameter)
 		{
-			soloud_thread_data *d = new soloud_thread_data;
+			soloud_thread_data* d = new soloud_thread_data;
 			d->mFunc = aThreadFunction;
 			d->mParam = aParameter;
 
-			ThreadHandleData *threadHandle = new ThreadHandleData;
+			ThreadHandleData* threadHandle = new ThreadHandleData;
 			pthread_create(&threadHandle->thread, NULL, threadfunc, (void*)d);
-            return threadHandle;
+			return threadHandle;
 		}
 
 		void sleep(int aMSec)
 		{
 			//usleep(aMSec * 1000);
-			struct timespec req = {0};
+			struct timespec req = { 0 };
 			req.tv_sec = 0;
 			req.tv_nsec = aMSec * 1000000L;
-			nanosleep(&req, (struct timespec *)NULL);
+			nanosleep(&req, (struct timespec*)NULL);
 		}
 
-        void wait(ThreadHandle aThreadHandle)
-        {
-            pthread_join(aThreadHandle->thread, 0);
-        }
+		void wait(ThreadHandle aThreadHandle)
+		{
+			pthread_join(aThreadHandle->thread, 0);
+		}
 
-        void release(ThreadHandle aThreadHandle)
-        {
-            delete aThreadHandle;
-        }
+		void release(ThreadHandle aThreadHandle)
+		{
+			delete aThreadHandle;
+		}
 
 		int getTimeMillis()
 		{
@@ -226,12 +226,12 @@ namespace SoLoud
 		}
 #endif
 
-		static void poolWorker(void *aParam)
+		static void poolWorker(void* aParam)
 		{
-			Pool *myPool = (Pool*)aParam;
+			Pool* myPool = (Pool*)aParam;
 			while (myPool->mRunning)
 			{
-				PoolTask *t = myPool->getWork();
+				PoolTask* t = myPool->getWork();
 				if (!t)
 				{
 					sleep(1);
@@ -286,7 +286,7 @@ namespace SoLoud
 			}
 		}
 
-		void Pool::addWork(PoolTask *aTask)
+		void Pool::addWork(PoolTask* aTask)
 		{
 			if (mThreadCount == 0)
 			{
@@ -297,7 +297,7 @@ namespace SoLoud
 				if (mWorkMutex) lockMutex(mWorkMutex);
 				if (mMaxTask == MAX_THREADPOOL_TASKS)
 				{
-					// If we're at max tasks, do the task on calling thread 
+					// If we're at max tasks, do the task on calling thread
 					// (we're in trouble anyway, might as well slow down adding more work)
 					if (mWorkMutex) unlockMutex(mWorkMutex);
 					aTask->work();
@@ -311,9 +311,9 @@ namespace SoLoud
 			}
 		}
 
-		PoolTask * Pool::getWork()
+		PoolTask* Pool::getWork()
 		{
-			PoolTask *t = 0;
+			PoolTask* t = 0;
 			if (mWorkMutex) lockMutex(mWorkMutex);
 			if (mMaxTask > 0)
 			{

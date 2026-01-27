@@ -28,21 +28,21 @@ freely, subject to the following restrictions:
 
 namespace SoLoud
 {
-	BusInstance::BusInstance(Bus *aParent)
+	BusInstance::BusInstance(Bus* aParent)
 	{
 		mParent = aParent;
 		mScratchSize = 0;
-		mFlags |= PROTECTED | INAUDIBLE_TICK;		
+		mFlags |= PROTECTED | INAUDIBLE_TICK;
 		for (int i = 0; i < MAX_CHANNELS; i++)
 			mVisualizationChannelVolume[i] = 0;
 		for (int i = 0; i < 256; i++)
 			mVisualizationWaveData[i] = 0;
 	}
-	
-	unsigned int BusInstance::getAudio(float *aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize)
+
+	unsigned int BusInstance::getAudio(float* aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize)
 	{
 		int handle = mParent->mChannelHandle;
-		if (handle == 0) 
+		if (handle == 0)
 		{
 			// Avoid reuse of scratch data if this bus hasn't played anything yet
 			unsigned int i;
@@ -50,14 +50,14 @@ namespace SoLoud
 				aBuffer[i] = 0;
 			return aSamplesToRead;
 		}
-		
-		Soloud *s = mParent->mSoloud;
+
+		Soloud* s = mParent->mSoloud;
 		if (s->mScratchNeeded != mScratchSize)
 		{
 			mScratchSize = s->mScratchNeeded;
 			mScratch.init(mScratchSize * MAX_CHANNELS);
 		}
-		
+
 		s->mixBus_internal(aBuffer, aSamplesToRead, aBufferSize, mScratch.mData, handle, mSamplerate, mChannels);
 
 		int i;
@@ -111,7 +111,7 @@ namespace SoLoud
 
 	BusInstance::~BusInstance()
 	{
-		Soloud *s = mParent->mSoloud;
+		Soloud* s = mParent->mSoloud;
 		int i;
 		for (i = 0; i < (signed)s->mHighestVoice; i++)
 		{
@@ -133,8 +133,8 @@ namespace SoLoud
 			mWaveData[i] = 0;
 		}
 	}
-	
-	BusInstance * Bus::createInstance()
+
+	BusInstance* Bus::createInstance()
 	{
 		if (mChannelHandle)
 		{
@@ -162,7 +162,7 @@ namespace SoLoud
 		}
 	}
 
-	handle Bus::play(AudioSource &aSound, float aVolume, float aPan, bool aPaused)
+	handle Bus::play(AudioSource& aSound, float aVolume, float aPan, bool aPaused)
 	{
 		if (!mInstance || !mSoloud)
 		{
@@ -176,10 +176,9 @@ namespace SoLoud
 			return 0;
 		}
 		return mSoloud->play(aSound, aVolume, aPan, aPaused, mChannelHandle);
-	}	
+	}
 
-
-	handle Bus::playClocked(time aSoundTime, AudioSource &aSound, float aVolume, float aPan)
+	handle Bus::playClocked(time aSoundTime, AudioSource& aSound, float aVolume, float aPan)
 	{
 		if (!mInstance || !mSoloud)
 		{
@@ -194,9 +193,9 @@ namespace SoLoud
 		}
 
 		return mSoloud->playClocked(aSoundTime, aSound, aVolume, aPan, mChannelHandle);
-	}	
+	}
 
-	handle Bus::play3d(AudioSource &aSound, float aPosX, float aPosY, float aPosZ, float aVelX, float aVelY, float aVelZ, float aVolume, bool aPaused)
+	handle Bus::play3d(AudioSource& aSound, float aPosX, float aPosY, float aPosZ, float aVelX, float aVelY, float aVelZ, float aVolume, bool aPaused)
 	{
 		if (!mInstance || !mSoloud)
 		{
@@ -212,7 +211,7 @@ namespace SoLoud
 		return mSoloud->play3d(aSound, aPosX, aPosY, aPosZ, aVelX, aVelY, aVelZ, aVolume, aPaused, mChannelHandle);
 	}
 
-	handle Bus::play3dClocked(time aSoundTime, AudioSource &aSound, float aPosX, float aPosY, float aPosZ, float aVelX, float aVelY, float aVelZ, float aVolume)
+	handle Bus::play3dClocked(time aSoundTime, AudioSource& aSound, float aPosX, float aPosY, float aPosZ, float aVelX, float aVelY, float aVelZ, float aVolume)
 	{
 		if (!mInstance || !mSoloud)
 		{
@@ -236,7 +235,7 @@ namespace SoLoud
 		FOR_ALL_VOICES_POST_EXT
 	}
 
-	void Bus::setFilter(unsigned int aFilterId, Filter *aFilter)
+	void Bus::setFilter(unsigned int aFilterId, Filter* aFilter)
 	{
 		if (aFilterId >= FILTERS_PER_STREAM)
 			return;
@@ -248,7 +247,7 @@ namespace SoLoud
 			mSoloud->lockAudioMutex_internal();
 			delete mInstance->mFilter[aFilterId];
 			mInstance->mFilter[aFilterId] = 0;
-		
+
 			if (aFilter)
 			{
 				mInstance->mFilter[aFilterId] = mFilter[aFilterId]->createInstance();
@@ -276,8 +275,8 @@ namespace SoLoud
 			mFlags &= ~AudioSource::VISUALIZATION_DATA;
 		}
 	}
-		
-	float * Bus::calcFFT()
+
+	float* Bus::calcFFT()
 	{
 		if (mInstance && mSoloud)
 		{
@@ -286,10 +285,10 @@ namespace SoLoud
 			int i;
 			for (i = 0; i < 256; i++)
 			{
-				temp[i*2] = mInstance->mVisualizationWaveData[i];
-				temp[i*2+1] = 0;
-				temp[i+512] = 0;
-				temp[i+768] = 0;
+				temp[i * 2] = mInstance->mVisualizationWaveData[i];
+				temp[i * 2 + 1] = 0;
+				temp[i + 512] = 0;
+				temp[i + 768] = 0;
 			}
 			mSoloud->unlockAudioMutex_internal();
 
@@ -299,14 +298,14 @@ namespace SoLoud
 			{
 				float real = temp[i * 2];
 				float imag = temp[i * 2 + 1];
-				mFFTData[i] = (float)sqrt(real*real+imag*imag);
+				mFFTData[i] = (float)sqrt(real * real + imag * imag);
 			}
 		}
 
 		return mFFTData;
 	}
 
-	float * Bus::getWave()
+	float* Bus::getWave()
 	{
 		if (mInstance && mSoloud)
 		{

@@ -53,10 +53,10 @@ namespace SoLoud
 	int Soloud::getVoiceFromHandle_internal(handle aVoiceHandle) const
 	{
 		// If this is a voice group handle, pick the first handle from the group
-		handle *h = voiceGroupHandleToArray_internal(aVoiceHandle);
+		handle* h = voiceGroupHandleToArray_internal(aVoiceHandle);
 		if (h != NULL) aVoiceHandle = *h;
 
-		if (aVoiceHandle == 0) 
+		if (aVoiceHandle == 0)
 		{
 			return -1;
 		}
@@ -68,7 +68,7 @@ namespace SoLoud
 		{
 			return ch;
 		}
-		return -1;		
+		return -1;
 	}
 
 	unsigned int Soloud::getMaxActiveVoiceCount() const
@@ -93,7 +93,7 @@ namespace SoLoud
 		int c = 0;
 		for (i = 0; i < (signed)mHighestVoice; i++)
 		{
-			if (mVoice[i]) 
+			if (mVoice[i])
 			{
 				c++;
 			}
@@ -117,7 +117,6 @@ namespace SoLoud
 		unlockAudioMutex_internal();
 		return 0;
 	}
-
 
 	time Soloud::getLoopPoint(handle aVoiceHandle)
 	{
@@ -165,7 +164,7 @@ namespace SoLoud
 	{
 		lockAudioMutex_internal();
 		int ch = getVoiceFromHandle_internal(aVoiceHandle);
-		if (ch == -1) 
+		if (ch == -1)
 		{
 			unlockAudioMutex_internal();
 			return 0;
@@ -193,7 +192,7 @@ namespace SoLoud
 	{
 		lockAudioMutex_internal();
 		int ch = getVoiceFromHandle_internal(aVoiceHandle);
-		if (ch == -1) 
+		if (ch == -1)
 		{
 			unlockAudioMutex_internal();
 			return 0;
@@ -207,7 +206,7 @@ namespace SoLoud
 	{
 		lockAudioMutex_internal();
 		int ch = getVoiceFromHandle_internal(aVoiceHandle);
-		if (ch == -1) 
+		if (ch == -1)
 		{
 			unlockAudioMutex_internal();
 			return 0;
@@ -235,7 +234,7 @@ namespace SoLoud
 	{
 		lockAudioMutex_internal();
 		int ch = getVoiceFromHandle_internal(aVoiceHandle);
-		if (ch == -1) 
+		if (ch == -1)
 		{
 			unlockAudioMutex_internal();
 			return 1;
@@ -249,7 +248,7 @@ namespace SoLoud
 	{
 		lockAudioMutex_internal();
 		int ch = getVoiceFromHandle_internal(aVoiceHandle);
-		if (ch == -1) 
+		if (ch == -1)
 		{
 			unlockAudioMutex_internal();
 			return 0;
@@ -263,7 +262,7 @@ namespace SoLoud
 	{
 		lockAudioMutex_internal();
 		int ch = getVoiceFromHandle_internal(aVoiceHandle);
-		if (ch == -1) 
+		if (ch == -1)
 		{
 			unlockAudioMutex_internal();
 			return 0;
@@ -277,7 +276,7 @@ namespace SoLoud
 	{
 		lockAudioMutex_internal();
 		int ch = getVoiceFromHandle_internal(aVoiceHandle);
-		if (ch == -1) 
+		if (ch == -1)
 		{
 			unlockAudioMutex_internal();
 			return 0;
@@ -292,22 +291,22 @@ namespace SoLoud
 		int i;
 		unsigned int lowest_play_index_value = 0xffffffff;
 		int lowest_play_index = -1;
-		
+
 		// (slowly) drag the highest active voice index down
 		if (mHighestVoice > 0 && mVoice[mHighestVoice - 1] == NULL)
 			mHighestVoice--;
-		
+
 		for (i = 0; i < VOICE_COUNT; i++)
 		{
 			if (mVoice[i] == NULL)
 			{
-				if (i+1 > (signed)mHighestVoice)
+				if (i + 1 > (signed)mHighestVoice)
 				{
 					mHighestVoice = i + 1;
 				}
 				return i;
 			}
-			if (((mVoice[i]->mFlags & AudioSourceInstance::PROTECTED) == 0) && 
+			if (((mVoice[i]->mFlags & AudioSourceInstance::PROTECTED) == 0) &&
 				mVoice[i]->mPlayIndex < lowest_play_index_value)
 			{
 				lowest_play_index_value = mVoice[i]->mPlayIndex;
@@ -322,7 +321,7 @@ namespace SoLoud
 	{
 		lockAudioMutex_internal();
 		int ch = getVoiceFromHandle_internal(aVoiceHandle);
-		if (ch == -1) 
+		if (ch == -1)
 		{
 			unlockAudioMutex_internal();
 			return 0;
@@ -336,11 +335,10 @@ namespace SoLoud
 	unsigned int Soloud::getBackendId()
 	{
 		return mBackendID;
-
 	}
 
 	// Returns current backend string
-	const char * Soloud::getBackendString()
+	const char* Soloud::getBackendString()
 	{
 		return mBackendString;
 	}
@@ -364,7 +362,7 @@ namespace SoLoud
 	}
 
 	// Get speaker position in 3d space
-	result Soloud::getSpeakerPosition(unsigned int aChannel, float &aX, float &aY, float &aZ)
+	result Soloud::getSpeakerPosition(unsigned int aChannel, float& aX, float& aY, float& aZ)
 	{
 		if (aChannel >= mChannels)
 			return INVALID_PARAMETER;

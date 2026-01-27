@@ -232,7 +232,9 @@ namespace SFW
 
 			// Move-only（所有権の二重Flushを防ぐ）
 			LocalBatch(LocalBatch&& o) noexcept
-				: owner_(o.owner_), buf_(std::move(o.buf_)) { o.owner_ = nullptr; }
+				: owner_(o.owner_), buf_(std::move(o.buf_)) {
+				o.owner_ = nullptr;
+			}
 
 			LocalBatch& operator=(LocalBatch&& o) noexcept {
 				if (this == &o) return *this;
@@ -263,7 +265,8 @@ namespace SFW
 				if (buf_.empty() || owner_ == nullptr) return;
 				try {
 					owner_->EnqueueBulk(buf_);
-				} catch (...) {
+				}
+				catch (...) {
 					/*最後の手段：捨てずに保持*/
 				}
 				buf_.clear();

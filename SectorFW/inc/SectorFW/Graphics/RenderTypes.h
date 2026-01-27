@@ -99,7 +99,7 @@ namespace SFW
 			uint32_t mesh = 0;             // 24Bまで：ハンドル/ID（32bit想定）
 			uint32_t material = 0;
 			uint32_t pso = 0;
-			InstanceIndex instanceIndex = {0};    // InstanceData プールへのインデックス
+			InstanceIndex instanceIndex = { 0 };    // InstanceData プールへのインデックス
 
 			// ここが“空白の活用”パート（合計 8B）
 			uint32_t cbOffsetDiv256 = 0;   // 動的CBリングの 256B 単位オフセット（DX12/11.1 等で使える）
@@ -203,16 +203,15 @@ namespace SFW
 			uint32_t hasFlags = 0; // フラグビットフィールド
 
 			enum HasFlagsBits : uint32_t {
-				HasBaseColorTex			= 1u << 0,
-				HasNormalTex			= 1u << 1,
+				HasBaseColorTex = 1u << 0,
+				HasNormalTex = 1u << 1,
 				HasMetallicRoughnessTex = 1u << 2,
-				HasOcclusionTex			= 1u << 3,
-				HasORMCombined			= 1u << 4,
-				HasEmissiveTex			= 1u << 5,
+				HasOcclusionTex = 1u << 3,
+				HasORMCombined = 1u << 4,
+				HasEmissiveTex = 1u << 5,
 				// ...
 			};
 		};
-
 
 		/**
 		 * @brief シェーダステージ列挙型

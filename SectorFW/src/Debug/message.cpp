@@ -6,7 +6,6 @@
 
 namespace SFW::Debug
 {
-
 	inline void DebugBreakPortable() noexcept
 	{
 #if defined(_MSC_VER)
@@ -63,7 +62,6 @@ namespace SFW::Debug
 #endif
 	}
 
-
 	void assert_with_msg(bool expr, const char* file, int line, const char* func, const char* format, ...) {
 		if (!expr) {
 			constexpr size_t BUFFER_SIZE = 2048;
@@ -107,47 +105,47 @@ namespace SFW::Debug
 		}
 	}
 #else // !_WIN32
-	void assert_with_msg(bool expr, const char* file, int line, const char* func, const char* format, ...) {
-		if (!expr) {
-			constexpr size_t BUFFER_SIZE = 2048;
-			char messageBuffer[BUFFER_SIZE];
-			char finalBuffer[BUFFER_SIZE];
+void assert_with_msg(bool expr, const char* file, int line, const char* func, const char* format, ...) {
+	if (!expr) {
+		constexpr size_t BUFFER_SIZE = 2048;
+		char messageBuffer[BUFFER_SIZE];
+		char finalBuffer[BUFFER_SIZE];
 
-			va_list args;
-			va_start(args, format);
-			vsnprintf(messageBuffer, BUFFER_SIZE, format, args);
-			va_end(args);
+		va_list args;
+		va_start(args, format);
+		vsnprintf(messageBuffer, BUFFER_SIZE, format, args);
+		va_end(args);
 
-			// ファイル名・行番号・関数名を付加
-			snprintf(finalBuffer, BUFFER_SIZE, "[%s:%d][%s] %s", file, line, func, messageBuffer);
+		// ファイル名・行番号・関数名を付加
+		snprintf(finalBuffer, BUFFER_SIZE, "[%s:%d][%s] %s", file, line, func, messageBuffer);
 
-			std::cout << finalBuffer << std::endl;
+		std::cout << finalBuffer << std::endl;
 
-			if (r == IDRETRY) {
-				// デバッガがいるならここで止めて調査→(Continueで)処理継続が可能
-				if (IsDebuggerPresentPortable()) {
-					DebugBreakPortable();
-					return; // Continueで戻ってくる
-				}
-				else {
-					// デバッガ無しのRetryは意味が薄いので、好みで Abort と同等にする
-					std::_Exit(3); // or ::_exit(3)
-				}
+		if (r == IDRETRY) {
+			// デバッガがいるならここで止めて調査→(Continueで)処理継続が可能
+			if (IsDebuggerPresentPortable()) {
+				DebugBreakPortable();
+				return; // Continueで戻ってくる
 			}
-			else if (r == IDIGNORE) {
-				// 続行（ただしアサートを踏んでる＝状態が壊れている可能性あり）
-				return;
+			else {
+				// デバッガ無しのRetryは意味が薄いので、好みで Abort と同等にする
+				std::_Exit(3); // or ::_exit(3)
 			}
-
-			// IDABORT or fallback
-			std::_Exit(3); // or ::_exit(3)
 		}
+		else if (r == IDIGNORE) {
+			// 続行（ただしアサートを踏んでる＝状態が壊れている可能性あり）
+			return;
+		}
+
+		// IDABORT or fallback
+		std::_Exit(3); // or ::_exit(3)
 	}
+}
 #endif // _WIN32
 
-	void assert_with_msg(bool expr, const char* file, int line, const wchar_t* func, const char* format, ...)
-	{
-		std::string convertedFunc = SFW::WCharToUtf8_portable(func);
-		assert_with_msg(expr, file, line, convertedFunc.c_str(), format);
-	}
+void assert_with_msg(bool expr, const char* file, int line, const wchar_t* func, const char* format, ...)
+{
+	std::string convertedFunc = SFW::WCharToUtf8_portable(func);
+	assert_with_msg(expr, file, line, convertedFunc.c_str(), format);
+}
 }

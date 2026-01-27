@@ -224,8 +224,8 @@ namespace SFW::Physics {
 		const bool any = m_physics.GetNarrowPhaseQuery().CastRay(
 			rc,
 			hit,
-			BroadPhaseLayerFilterMask{c.broadPhaseMask},
-			ObjectLayerFilterMask{c.objectLayerMask},
+			BroadPhaseLayerFilterMask{ c.broadPhaseMask },
+			ObjectLayerFilterMask{ c.objectLayerMask },
 			RayBodyFilterIgnoreSelf{ (JPH::BodyID)c.ignoreBody }
 		);
 
@@ -323,7 +323,6 @@ namespace SFW::Physics {
 		m_characters.erase(it);
 	}
 
-
 	// ===== Step =====
 	void PhysicsDevice::Step(float fixed_dt, int substeps) {
 		m_physics.Update(
@@ -363,7 +362,6 @@ namespace SFW::Physics {
 
 	// ===== Snapshot =====
 	void PhysicsDevice::BuildSnapshot(PhysicsSnapshot& out) {
-
 		{
 			// --- ContactsÅiContactListener Ç™ó≠ÇﬂÇΩÇ‡ÇÃÇìfÇ´èoÇ∑Åj ---
 			std::scoped_lock lk(m_pendingContactsMutex);

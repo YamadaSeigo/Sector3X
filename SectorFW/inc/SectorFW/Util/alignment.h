@@ -9,7 +9,6 @@
 
 namespace SFW
 {
-
 	/**
 	 * @brief 指定したオフセットをアライメントに合わせて調整する関数
 	 * @param offset オフセット値

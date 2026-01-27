@@ -20,7 +20,7 @@ namespace SFW
 {
 	namespace Graphics
 	{
-		enum class ProjectionType : uint8_t{
+		enum class ProjectionType : uint8_t {
 			Perspective,
 			Orthographic
 		};
@@ -33,7 +33,6 @@ namespace SFW
 			Math::Matrix4x4f proj;
 			Math::Matrix4x4f viewProj;
 		};
-
 
 		/**
 		 * @brief 3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。
@@ -445,7 +444,6 @@ namespace SFW
 				UpdateCameraFromMouse();
 				isUpdateBuffer = false;
 			}
-
 
 		protected:
 			/**

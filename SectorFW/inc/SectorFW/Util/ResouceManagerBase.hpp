@@ -65,7 +65,6 @@ namespace SFW
 			LockedResource(const LockedResource&) = delete;
 			LockedResource& operator=(const LockedResource&) = delete;
 
-
 			const ResourceType& operator*() const&& = delete;		// rvalueは不可
 			const ResourceType& operator->() const&& = delete;		// rvalueは不可
 			const ResourceType& ref() const&& = delete;  	// rvalueは不可
@@ -199,7 +198,7 @@ namespace SFW
 		[[nodiscard]] LockedResource<ResourceType, std::unique_lock> GetWrite(HandleType h) {
 			assert(IsValid(h));
 			std::unique_lock lk(mapMutex); // 先にロック
-			return { &slots[h.index].data, std::move(lk)};
+			return { &slots[h.index].data, std::move(lk) };
 		}
 		/**
 		 * @brief GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）
@@ -208,7 +207,7 @@ namespace SFW
 		 */
 		[[nodiscard]] LockedResource<ResourceType, std::shared_lock> GetDirect(uint32_t idx) const {
 			std::shared_lock lk(mapMutex); // 先にロック
-			return { &slots[idx].data, std::move(lk)};
+			return { &slots[idx].data, std::move(lk) };
 		}
 		/**
 		 * @brief GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）
@@ -217,7 +216,7 @@ namespace SFW
 		 */
 		[[nodiscard]] LockedResource<ResourceType, std::unique_lock> GetDirectWrite(uint32_t idx) {
 			std::unique_lock lk(mapMutex); // 先にロック
-			return { &slots[idx].data, std::move(lk)};
+			return { &slots[idx].data, std::move(lk) };
 		}
 		/**
 		 * @brief 期限到達で最終判断：ref == 0 なら破棄、>0 なら削除キャンセル

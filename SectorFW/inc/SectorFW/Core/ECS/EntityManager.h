@@ -190,13 +190,12 @@ namespace SFW
 				MemorySetChunk<T>(loc.chunk, loc.index, value);
 			}
 
-
 			template<typename T>
 			void ReadWriteComponent(EntityID id, std::function<T(T)>&& f)
 			{
 				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
 					auto* ptr = GetSparseStore<T>().Get(id);
-					if (ptr == nullptr){
+					if (ptr == nullptr) {
 						LOG_ERROR("EntityManager::ReadWriteComponent: Sparse component not found");
 						return;
 					}

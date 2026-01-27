@@ -44,6 +44,11 @@ namespace SFW
 
 			{
 				std::unique_lock lock(locationsMutex);
+
+				for(auto& [id, loc] : locations) {
+					entityAllocator.Destroy(id);
+				}
+
 				locations.clear();
 			}
 			sparseStores.clear();

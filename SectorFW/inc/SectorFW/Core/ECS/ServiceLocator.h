@@ -91,7 +91,6 @@ namespace SFW
 			 */
 			template<typename... Services>
 			void InitAndRegisterStaticService() noexcept {
-
 				std::unique_lock<std::shared_mutex> lock(*mapMutex);
 				(AllRegisterStaticService<Services>(), ...);
 
@@ -185,7 +184,6 @@ namespace SFW
 					return;
 				}
 				for (const auto& phase : plan_->phases) {
-
 					// group>=1のグループを並列で更新
 					ThreadCountDownLatch latch((int)phase.parallelGroups.size());
 					for (auto& g : phase.parallelGroups)
@@ -323,7 +321,6 @@ namespace SFW
 			 * @brief UpdateServiceから実行プランを再構築する
 			 */
 			void RebuildPlan_NeedLock() {
-
 				// 登録済み UpdateEntry をフェーズ→グループ→order で束ね直す
 				// ここは、前回案の通り UpdateEntry ベクタを持っている前提
 				std::vector<UpdateEntry> entries;

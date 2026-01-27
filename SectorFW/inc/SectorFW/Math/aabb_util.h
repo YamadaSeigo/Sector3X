@@ -7,7 +7,6 @@
 #include "AABB.hpp"     // AABB3f
 #include "Matrix.hpp"
 
-
 #if defined(_MSC_VER)
 #include <immintrin.h>   // SSE2/AVX2 (MSVC x64 はSSE2常時有効)
 #elif defined(__SSE2__)
@@ -15,7 +14,6 @@
 #endif
 
 namespace SFW::Math {
-
 	//-------------------------------
 	// 共通ヘルパ
 	//-------------------------------
@@ -293,7 +291,6 @@ namespace SFW::Math {
 		return MakeAABB_FromAoSWithIndex(positions.data(), positions.size(), indices.data(), indices.size(), sizeof(Vec3f));
 	}
 
-
 	/// ついでに 8 コーナーだけ欲しい場合
 	inline std::array<Vec3f, 8> AABBCorners(const AABB3f& box)
 	{
@@ -362,5 +359,4 @@ namespace SFW::Math {
 		out.ub = { cx + ex, cy + ey, cz + ez };
 		return out;
 	}
-
 } // namespace SectorFW::Math

@@ -26,18 +26,18 @@ template<class T> CullingThreadpool::StateData<T>::StateData(unsigned int maxJob
 	mData = new T[mMaxJobs];
 }
 
-template<class T> CullingThreadpool::StateData<T>::~StateData() 
+template<class T> CullingThreadpool::StateData<T>::~StateData()
 {
 	SAFE_DELETE_ARRAY(mData);
 }
 
-template<class T> void CullingThreadpool::StateData<T>::AddData(const T &data) 
-{ 
-	mCurrentIdx++; mData[mCurrentIdx % mMaxJobs] = data; 
+template<class T> void CullingThreadpool::StateData<T>::AddData(const T& data)
+{
+	mCurrentIdx++; mData[mCurrentIdx % mMaxJobs] = data;
 }
 
-template<class T> const T *CullingThreadpool::StateData<T>::GetData() const
-{ 
+template<class T> const T* CullingThreadpool::StateData<T>::GetData() const
+{
 	return &mData[mCurrentIdx % mMaxJobs];
 }
 
@@ -45,7 +45,7 @@ template<class T> const T *CullingThreadpool::StateData<T>::GetData() const
 // Helper class: Mostly lockless queue for render jobs
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CullingThreadpool::RenderJobQueue::RenderJobQueue(unsigned int nBins, unsigned int maxJobs) : 
+CullingThreadpool::RenderJobQueue::RenderJobQueue(unsigned int nBins, unsigned int maxJobs) :
 	mNumBins(nBins),
 	mMaxJobs(maxJobs)
 {
@@ -69,11 +69,11 @@ CullingThreadpool::RenderJobQueue::RenderJobQueue(unsigned int nBins, unsigned i
 	{
 		for (unsigned int j = 0; j < mNumBins; ++j)
 		{
-			int idx = i*mNumBins + j;
-			TriList &tList = mJobs[i].mRenderJobs[j];
+			int idx = i * mNumBins + j;
+			TriList& tList = mJobs[i].mRenderJobs[j];
 			tList.mNumTriangles = MaxTrisPerJob;
 			tList.mTriIdx = 0;
-			tList.mPtr = mTrilistData + idx*MaxJobSize;
+			tList.mPtr = mTrilistData + idx * MaxJobSize;
 		}
 	}
 
@@ -138,7 +138,7 @@ inline bool CullingThreadpool::RenderJobQueue::CanBin() const
 	return mBinningPtr < mWritePtr && mBinningPtr - GetMinRenderPtr() < mMaxJobs;
 }
 
-inline CullingThreadpool::RenderJobQueue::Job *CullingThreadpool::RenderJobQueue::GetWriteJob()
+inline CullingThreadpool::RenderJobQueue::Job* CullingThreadpool::RenderJobQueue::GetWriteJob()
 {
 	return &mJobs[mWritePtr % mMaxJobs];
 }
@@ -148,7 +148,7 @@ inline void CullingThreadpool::RenderJobQueue::AdvanceWriteJob()
 	mWritePtr++;
 }
 
-inline CullingThreadpool::RenderJobQueue::Job *CullingThreadpool::RenderJobQueue::GetBinningJob()
+inline CullingThreadpool::RenderJobQueue::Job* CullingThreadpool::RenderJobQueue::GetBinningJob()
 {
 	unsigned int binningPtr = mBinningPtr;
 	if (binningPtr < mWritePtr && binningPtr - GetMinRenderPtr() < mMaxJobs)
@@ -162,12 +162,12 @@ inline CullingThreadpool::RenderJobQueue::Job *CullingThreadpool::RenderJobQueue
 	return nullptr;
 }
 
-inline void CullingThreadpool::RenderJobQueue::FinishedBinningJob(Job *job)
+inline void CullingThreadpool::RenderJobQueue::FinishedBinningJob(Job* job)
 {
 	job->mBinningJobCompletedIdx = job->mBinningJobStartedIdx;
 }
 
-inline CullingThreadpool::RenderJobQueue::Job *CullingThreadpool::RenderJobQueue::GetRenderJob(int binIdx)
+inline CullingThreadpool::RenderJobQueue::Job* CullingThreadpool::RenderJobQueue::GetRenderJob(int binIdx)
 {
 	// Attempt to lock bin mutex
 	unsigned int expected = 0;
@@ -216,10 +216,10 @@ void CullingThreadpool::SetupScissors()
 	{
 		for (unsigned int tx = 0; tx < mBinsW; ++tx)
 		{
-			unsigned int threadIdx = tx + ty*mBinsW;
+			unsigned int threadIdx = tx + ty * mBinsW;
 
 			// Adjust rects on final row / col to match resolution
-			mRects[threadIdx].mMinX = tx*binWidth;
+			mRects[threadIdx].mMinX = tx * binWidth;
 			mRects[threadIdx].mMaxX = tx + 1 == mBinsW ? width : (tx + 1) * binWidth;
 			mRects[threadIdx].mMinY = ty * binHeight;
 			mRects[threadIdx].mMaxY = ty + 1 == mBinsH ? height : (ty + 1) * binHeight;
@@ -227,9 +227,9 @@ void CullingThreadpool::SetupScissors()
 	}
 }
 
-void CullingThreadpool::ThreadRun(CullingThreadpool *threadPool, unsigned int threadId)
-{ 
-	threadPool->ThreadMain(threadId); 
+void CullingThreadpool::ThreadRun(CullingThreadpool* threadPool, unsigned int threadId)
+{
+	threadPool->ThreadMain(threadId);
 }
 
 void CullingThreadpool::ThreadMain(unsigned int threadIdx)
@@ -257,7 +257,7 @@ void CullingThreadpool::ThreadMain(unsigned int threadIdx)
 			// Prio 1: Process any render jobs local to this thread
 			unsigned int binIdx = threadBinIdx;
 			threadBinIdx = threadBinIdx + mNumThreads < mNumBins ? threadBinIdx + mNumThreads : threadIdx;
-			RenderJobQueue::Job *job = mRenderQueue->GetRenderJob(binIdx);
+			RenderJobQueue::Job* job = mRenderQueue->GetRenderJob(binIdx);
 			if (job != nullptr)
 			{
 				if (job->mRenderJobs[binIdx].mTriIdx > 0)
@@ -271,10 +271,10 @@ void CullingThreadpool::ThreadMain(unsigned int threadIdx)
 			if (mRenderQueue->CanBin())
 			{
 				// If no more rasterization jobs, get next binning job
-				RenderJobQueue::Job *job = mRenderQueue->GetBinningJob();
+				RenderJobQueue::Job* job = mRenderQueue->GetBinningJob();
 				if (job != nullptr)
 				{
-					RenderJobQueue::BinningJob &sjob = job->mBinningJob;
+					RenderJobQueue::BinningJob& sjob = job->mBinningJob;
 					for (unsigned int i = 0; i < mNumBins; ++i)
 						job->mRenderJobs[i].mTriIdx = 0;
 					mMOC->BinTriangles(sjob.mVerts, sjob.mTris, sjob.nTris, job->mRenderJobs, mBinsW, mBinsH, sjob.mMatrix, sjob.mBfWinding, sjob.mClipPlanes, *sjob.mVtxLayout);
@@ -289,7 +289,7 @@ void CullingThreadpool::ThreadMain(unsigned int threadIdx)
 				binIdx = mRenderQueue->GetBestGlobalQueue();
 				if (binIdx < mRenderQueue->mNumBins)
 				{
-					RenderJobQueue::Job *job = mRenderQueue->GetRenderJob(binIdx);
+					RenderJobQueue::Job* job = mRenderQueue->GetRenderJob(binIdx);
 					if (job != nullptr)
 					{
 						if (job->mRenderJobs[binIdx].mTriIdx > 0)
@@ -324,7 +324,7 @@ CullingThreadpool::CullingThreadpool(unsigned int numThreads, unsigned int binsW
 	mVertexLayouts(maxJobs),
 	mMOC(nullptr)
 {
-	mNumBins = mBinsW*mBinsH;
+	mNumBins = mBinsW * mBinsH;
 	assert(mNumBins >= mNumThreads);	// Having less bins than threads is a bad idea!
 
 	mRects = new ScissorRect[mNumBins];
@@ -337,7 +337,6 @@ CullingThreadpool::CullingThreadpool(unsigned int numThreads, unsigned int binsW
 	mThreads = new std::thread[mNumThreads];
 	for (unsigned int i = 0; i < mNumThreads; ++i)
 		mThreads[i] = std::thread(ThreadRun, this, i);
-
 }
 
 CullingThreadpool::~CullingThreadpool()
@@ -349,7 +348,6 @@ CullingThreadpool::~CullingThreadpool()
 		mKillThreads = true;
 		for (unsigned int i = 0; i < mNumThreads; ++i)
 			mThreads[i].join();
-
 	}
 
 	// Free memory
@@ -387,7 +385,7 @@ void CullingThreadpool::Flush()
 	mRenderQueue->Reset();
 }
 
-void CullingThreadpool::SetBuffer(MaskedOcclusionCulling *moc)
+void CullingThreadpool::SetBuffer(MaskedOcclusionCulling* moc)
 {
 	Flush();
 	mMOC = moc;
@@ -407,7 +405,7 @@ void CullingThreadpool::SetNearClipPlane(float nearDist)
 	mMOC->SetNearClipPlane(nearDist);
 }
 
-void CullingThreadpool::SetMatrix(const float *modelToClipMatrix)
+void CullingThreadpool::SetMatrix(const float* modelToClipMatrix)
 {
 	// Treat nullptr matrix as a special case, otherwise copy the contents of the pointer and add to state
 	if (modelToClipMatrix == nullptr)
@@ -419,7 +417,7 @@ void CullingThreadpool::SetMatrix(const float *modelToClipMatrix)
 	}
 }
 
-void CullingThreadpool::SetVertexLayout(const VertexLayout &vtxLayout)
+void CullingThreadpool::SetVertexLayout(const VertexLayout& vtxLayout)
 {
 	mVertexLayouts.AddData(vtxLayout);
 }
@@ -430,20 +428,20 @@ void CullingThreadpool::ClearBuffer()
 	mMOC->ClearBuffer();
 }
 
-void CullingThreadpool::RenderTriangles(const float *inVtx, const unsigned int *inTris, int nTris, BackfaceWinding bfWinding, ClipPlanes clipPlaneMask)
+void CullingThreadpool::RenderTriangles(const float* inVtx, const unsigned int* inTris, int nTris, BackfaceWinding bfWinding, ClipPlanes clipPlaneMask)
 {
 #if MOC_RECORDER_ENABLE != 0
-    mMOC->RecordRenderTriangles( inVtx, inTris, nTris, mCurrentMatrix, clipPlaneMask, bfWinding, *mVertexLayouts.GetData( ) );
+	mMOC->RecordRenderTriangles(inVtx, inTris, nTris, mCurrentMatrix, clipPlaneMask, bfWinding, *mVertexLayouts.GetData());
 #endif
 
-    for (int i = 0; i < nTris; i += TRIS_PER_JOB)
+	for (int i = 0; i < nTris; i += TRIS_PER_JOB)
 	{
-		// Yield if work queue is full 
+		// Yield if work queue is full
 		while (!mRenderQueue->CanWrite())
 			std::this_thread::yield();
 
 		// Create new renderjob
-		RenderJobQueue::Job *job = mRenderQueue->GetWriteJob();
+		RenderJobQueue::Job* job = mRenderQueue->GetWriteJob();
 		job->mBinningJob.mVerts = inVtx;
 		job->mBinningJob.mTris = inTris + i * 3;
 		job->mBinningJob.nTris = nTris - i < TRIS_PER_JOB ? nTris - i : TRIS_PER_JOB;
@@ -460,12 +458,12 @@ CullingThreadpool::CullingResult CullingThreadpool::TestRect(float xmin, float y
 	return mMOC->TestRect(xmin, ymin, xmax, ymax, wmin);
 }
 
-CullingThreadpool::CullingResult CullingThreadpool::TestTriangles(const float *inVtx, const unsigned int *inTris, int nTris, BackfaceWinding bfWinding, ClipPlanes clipPlaneMask)
+CullingThreadpool::CullingResult CullingThreadpool::TestTriangles(const float* inVtx, const unsigned int* inTris, int nTris, BackfaceWinding bfWinding, ClipPlanes clipPlaneMask)
 {
 	return mMOC->TestTriangles(inVtx, inTris, nTris, mCurrentMatrix, bfWinding, clipPlaneMask, *mVertexLayouts.GetData());
 }
 
-void CullingThreadpool::ComputePixelDepthBuffer(float *depthData, bool flipY)
+void CullingThreadpool::ComputePixelDepthBuffer(float* depthData, bool flipY)
 {
 	Flush();
 	mMOC->ComputePixelDepthBuffer(depthData, flipY);

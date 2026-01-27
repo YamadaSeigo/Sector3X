@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SectorFW/Debug/UIBus.h>
+
 struct alignas(16) FogCB
 {
 	// Distance fog

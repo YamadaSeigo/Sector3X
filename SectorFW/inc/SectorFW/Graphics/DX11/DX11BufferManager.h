@@ -273,7 +273,6 @@ namespace SFW
 			 * @brief 保留中のバッファ更新を処理
 			 */
 			void PendingUpdates(size_t frameIndex) {
-
 				uint16_t slot = frameIndex % RENDER_BUFFER_COUNT;
 				uint32_t count = pendingCount[slot].load(std::memory_order_relaxed);
 

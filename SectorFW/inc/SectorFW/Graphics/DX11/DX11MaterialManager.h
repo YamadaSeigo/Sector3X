@@ -105,7 +105,6 @@ namespace SFW
 				}
 				else
 				{
-
 					std::bitset<128> usedSlots;
 					for (auto i = 0; i < individualViews.size(); ++i)
 					{

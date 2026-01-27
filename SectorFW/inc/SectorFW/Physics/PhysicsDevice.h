@@ -213,7 +213,7 @@ namespace SFW
 
 			// Entity -> CharacterVirtual
 			std::unordered_map<Entity, CharacterVirtualInfo> m_characters;
-			std::unordered_map<const JPH::CharacterVirtual*, Entity>  m_charToEntity; 
+			std::unordered_map<const JPH::CharacterVirtual*, Entity>  m_charToEntity;
 
 #ifdef ENABLE_CHARACTER_CONTACT_LISTENER
 			std::unique_ptr<CharacterContactListenerImpl>             m_characterContactListener;

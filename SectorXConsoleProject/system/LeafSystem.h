@@ -20,7 +20,7 @@ struct CLeafVolume
     float       intensity = 1.0f;
 
     // 群れ密度（GPU targetCount の元）
-    uint32_t    maxCountNear = 2000;    // 近距離での最大個体数
+    uint32_t    maxCountNear = 1000;    // 近距離での最大個体数
 
     // 動き（UpdateCSで使う）
     float       speed = 20.0f;

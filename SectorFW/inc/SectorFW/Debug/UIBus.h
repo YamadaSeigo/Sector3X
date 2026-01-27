@@ -392,7 +392,6 @@ namespace SFW
 	}
 }
 
-
 #ifdef _ENABLE_IMGUI
 
 #define REGISTER_DEBUG_SLIDER_FLOAT(category, label, initialValue, minValue, maxValue, speed, onChange) \

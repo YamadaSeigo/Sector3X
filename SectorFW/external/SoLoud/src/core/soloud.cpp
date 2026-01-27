@@ -30,7 +30,6 @@ freely, subject to the following restrictions:
 #include "soloud_thread.h"
 #include "soloud_fft.h"
 
-
 #ifdef SOLOUD_SSE_INTRINSICS
 #include <xmmintrin.h>
 #ifdef _M_IX86
@@ -40,7 +39,6 @@ freely, subject to the following restrictions:
 
 //#define FLOATING_POINT_DEBUG
 
-
 #if !defined(WITH_SDL2) && !defined(WITH_SDL1) && !defined(WITH_PORTAUDIO) && \
    !defined(WITH_OPENAL) && !defined(WITH_XAUDIO2) && !defined(WITH_WINMM) && \
    !defined(WITH_WASAPI) && !defined(WITH_OSS) && !defined(WITH_SDL1_STATIC) && \
@@ -49,7 +47,6 @@ freely, subject to the following restrictions:
    !defined(WITH_JACK) && !defined(WITH_NOSOUND) && !defined(WITH_MINIAUDIO)
 #error It appears you haven't enabled any of the back-ends. Please #define one or more of the WITH_ defines (or use premake) '
 #endif
-
 
 namespace SoLoud
 {
@@ -75,7 +72,7 @@ namespace SoLoud
 		mBasePtr = new unsigned char[aFloats * sizeof(float) + 16];
 		if (mBasePtr == NULL)
 			return OUT_OF_MEMORY;
-		mData = (float *)(((size_t)mBasePtr + 15)&~15);
+		mData = (float*)(((size_t)mBasePtr + 15) & ~15);
 #endif
 		return SO_NO_ERROR;
 	}
@@ -92,8 +89,8 @@ namespace SoLoud
 
 	TinyAlignedFloatBuffer::TinyAlignedFloatBuffer()
 	{
-		unsigned char * basePtr = &mActualData[0];
-		mData = (float *)(((size_t)basePtr + 15)&~15);
+		unsigned char* basePtr = &mActualData[0];
+		mData = (float*)(((size_t)basePtr + 15) & ~15);
 	}
 
 	Soloud::Soloud()
@@ -221,7 +218,7 @@ namespace SoLoud
 #if defined(WITH_SDL1_STATIC)
 		if (!inited &&
 			(aBackend == Soloud::SDL1 ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
@@ -240,7 +237,7 @@ namespace SoLoud
 #if defined(WITH_SDL2_STATIC)
 		if (!inited &&
 			(aBackend == Soloud::SDL2 ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
@@ -259,7 +256,7 @@ namespace SoLoud
 #if defined(WITH_SDL2)
 		if (!inited &&
 			(aBackend == Soloud::SDL2 ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
@@ -278,7 +275,7 @@ namespace SoLoud
 #if defined(WITH_SDL1)
 		if (!inited &&
 			(aBackend == Soloud::SDL1 ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
@@ -316,7 +313,7 @@ namespace SoLoud
 #if defined(WITH_PORTAUDIO)
 		if (!inited &&
 			(aBackend == Soloud::PORTAUDIO ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
@@ -335,7 +332,7 @@ namespace SoLoud
 #if defined(WITH_XAUDIO2)
 		if (!inited &&
 			(aBackend == Soloud::XAUDIO2 ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 4096;
 
@@ -354,7 +351,7 @@ namespace SoLoud
 #if defined(WITH_WINMM)
 		if (!inited &&
 			(aBackend == Soloud::WINMM ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 4096;
 
@@ -373,7 +370,7 @@ namespace SoLoud
 #if defined(WITH_WASAPI)
 		if (!inited &&
 			(aBackend == Soloud::WASAPI ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 4096;
 			if (aSamplerate == Soloud::AUTO) samplerate = 48000;
@@ -393,7 +390,7 @@ namespace SoLoud
 #if defined(WITH_ALSA)
 		if (!inited &&
 			(aBackend == Soloud::ALSA ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
@@ -412,7 +409,7 @@ namespace SoLoud
 #if defined(WITH_JACK)
 		if (!inited &&
 			(aBackend == Soloud::JACK ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
@@ -431,7 +428,7 @@ namespace SoLoud
 #if defined(WITH_OSS)
 		if (!inited &&
 			(aBackend == Soloud::OSS ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
@@ -450,7 +447,7 @@ namespace SoLoud
 #if defined(WITH_OPENAL)
 		if (!inited &&
 			(aBackend == Soloud::OPENAL ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 4096;
 
@@ -469,7 +466,7 @@ namespace SoLoud
 #if defined(WITH_COREAUDIO)
 		if (!inited &&
 			(aBackend == Soloud::COREAUDIO ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
@@ -488,7 +485,7 @@ namespace SoLoud
 #if defined(WITH_OPENSLES)
 		if (!inited &&
 			(aBackend == Soloud::OPENSLES ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			if (aBufferSize == Soloud::AUTO) buffersize = 4096;
 
@@ -507,7 +504,7 @@ namespace SoLoud
 #if defined(WITH_VITA_HOMEBREW)
 		if (!inited &&
 			(aBackend == Soloud::VITA_HOMEBREW ||
-			aBackend == Soloud::AUTO))
+				aBackend == Soloud::AUTO))
 		{
 			int ret = vita_homebrew_init(this, aFlags, samplerate, buffersize, aChannels);
 			if (ret == 0)
@@ -539,7 +536,6 @@ namespace SoLoud
 				return ret;
 		}
 #endif
-
 
 #if defined(WITH_NULL)
 		if (!inited &&
@@ -579,7 +575,7 @@ namespace SoLoud
 		mScratch.init(mScratchSize * MAX_CHANNELS);
 		mOutputScratch.init(mScratchSize * MAX_CHANNELS);
 		mResampleData = new AlignedFloatBuffer[mMaxActiveVoices * 2];
-		mResampleDataOwner = new AudioSourceInstance*[mMaxActiveVoices];
+		mResampleDataOwner = new AudioSourceInstance * [mMaxActiveVoices];
 		unsigned int i;
 		for (i = 0; i < mMaxActiveVoices * 2; i++)
 			mResampleData[i].init(SAMPLE_GRANULARITY * MAX_CHANNELS);
@@ -680,7 +676,7 @@ namespace SoLoud
 		}
 	}
 
-	const char * Soloud::getErrorString(result aErrorCode) const
+	const char* Soloud::getErrorString(result aErrorCode) const
 	{
 		switch (aErrorCode)
 		{
@@ -691,13 +687,12 @@ namespace SoLoud
 		case DLL_NOT_FOUND: return "DLL not found, or wrong DLL";
 		case OUT_OF_MEMORY: return "Out of memory";
 		case NOT_IMPLEMENTED: return "Feature not implemented";
-		/*case UNKNOWN_ERROR: return "Other error";*/
+			/*case UNKNOWN_ERROR: return "Other error";*/
 		}
 		return "Other error";
 	}
 
-
-	float * Soloud::getWave()
+	float* Soloud::getWave()
 	{
 		int i;
 		lockAudioMutex_internal();
@@ -718,18 +713,17 @@ namespace SoLoud
 		return vol;
 	}
 
-
-	float * Soloud::calcFFT()
+	float* Soloud::calcFFT()
 	{
 		lockAudioMutex_internal();
 		float temp[1024];
 		int i;
 		for (i = 0; i < 256; i++)
 		{
-			temp[i*2] = mVisualizationWaveData[i];
-			temp[i*2+1] = 0;
-			temp[i+512] = 0;
-			temp[i+768] = 0;
+			temp[i * 2] = mVisualizationWaveData[i];
+			temp[i * 2 + 1] = 0;
+			temp[i + 512] = 0;
+			temp[i + 768] = 0;
 		}
 		unlockAudioMutex_internal();
 
@@ -739,14 +733,14 @@ namespace SoLoud
 		{
 			float real = temp[i * 2];
 			float imag = temp[i * 2 + 1];
-			mFFTData[i] = (float)sqrt(real*real+imag*imag);
+			mFFTData[i] = (float)sqrt(real * real + imag * imag);
 		}
 
 		return mFFTData;
 	}
 
 #if defined(SOLOUD_SSE_INTRINSICS)
-	void Soloud::clip_internal(AlignedFloatBuffer &aBuffer, AlignedFloatBuffer &aDestBuffer, unsigned int aSamples, float aVolume0, float aVolume1)
+	void Soloud::clip_internal(AlignedFloatBuffer& aBuffer, AlignedFloatBuffer& aDestBuffer, unsigned int aSamples, float aVolume0, float aVolume1)
 	{
 		float vd = (aVolume1 - aVolume0) / aSamples;
 		float v = aVolume0;
@@ -852,7 +846,7 @@ namespace SoLoud
 		}
 	}
 #else // fallback code
-	void Soloud::clip_internal(AlignedFloatBuffer &aBuffer, AlignedFloatBuffer &aDestBuffer, unsigned int aSamples, float aVolume0, float aVolume1)
+	void Soloud::clip_internal(AlignedFloatBuffer& aBuffer, AlignedFloatBuffer& aDestBuffer, unsigned int aSamples, float aVolume0, float aVolume1)
 	{
 		float vd = (aVolume1 - aVolume0) / aSamples;
 		float v = aVolume0;
@@ -908,24 +902,24 @@ namespace SoLoud
 					aDestBuffer.mData[d] = f2 * mPostClipScaler; d++;
 					aDestBuffer.mData[d] = f3 * mPostClipScaler; d++;
 					aDestBuffer.mData[d] = f4 * mPostClipScaler; d++;
+				}
 			}
 		}
 	}
-}
 #endif
 
 #define FIXPOINT_FRAC_BITS 20
 #define FIXPOINT_FRAC_MUL (1 << FIXPOINT_FRAC_BITS)
 #define FIXPOINT_FRAC_MASK ((1 << FIXPOINT_FRAC_BITS) - 1)
 
-	void resample(float *aSrc,
-		          float *aSrc1,
-				  float *aDst,
-				  int aSrcOffset,
-				  int aDstSampleCount,
-				  float /*aSrcSamplerate*/,
-				  float /*aDstSamplerate*/,
-				  int aStepFixed)
+	void resample(float* aSrc,
+		float* aSrc1,
+		float* aDst,
+		int aSrcOffset,
+		int aDstSampleCount,
+		float /*aSrcSamplerate*/,
+		float /*aDstSamplerate*/,
+		int aStepFixed)
 	{
 #if 0
 
@@ -948,7 +942,7 @@ namespace SoLoud
 			float s2 = aSrc[p];
 			if (p != 0)
 			{
-				s1 = aSrc[p-1];
+				s1 = aSrc[p - 1];
 			}
 			aDst[i] = s1 + (s2 - s1) * f * (1 / (float)FIXPOINT_FRAC_MUL);
 		}
@@ -964,7 +958,7 @@ namespace SoLoud
 #endif
 	}
 
-	void panAndExpand(AudioSourceInstance *aVoice, float *aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize, float *aScratch, unsigned int aChannels)
+	void panAndExpand(AudioSourceInstance* aVoice, float* aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize, float* aScratch, unsigned int aChannels)
 	{
 		float pan[MAX_CHANNELS]; // current speaker volume
 		float pand[MAX_CHANNELS]; // destination speaker volume
@@ -1007,7 +1001,7 @@ namespace SoLoud
 					float s6 = aScratch[aBufferSize * 5 + j];
 					float s7 = aScratch[aBufferSize * 6 + j];
 					float s8 = aScratch[aBufferSize * 7 + j];
-					aBuffer[j + 0]           += 0.2f * (s1 + s3 + s4 + s5 + s7) * pan[0];
+					aBuffer[j + 0] += 0.2f * (s1 + s3 + s4 + s5 + s7) * pan[0];
 					aBuffer[j + aBufferSize] += 0.2f * (s2 + s3 + s4 + s6 + s8) * pan[1];
 				}
 				break;
@@ -1081,8 +1075,8 @@ namespace SoLoud
 					float s7 = aScratch[aBufferSize * 6 + j];
 					float s8 = aScratch[aBufferSize * 7 + j];
 					float c = (s3 + s4) * 0.7f;
-					aBuffer[j + 0]               += s1 * pan[0] + c;
-					aBuffer[j + aBufferSize]     += s2 * pan[1] + c;
+					aBuffer[j + 0] += s1 * pan[0] + c;
+					aBuffer[j + aBufferSize] += s2 * pan[1] + c;
 					aBuffer[j + aBufferSize * 2] += 0.5f * (s5 + s7) * pan[2];
 					aBuffer[j + aBufferSize * 3] += 0.5f * (s6 + s8) * pan[3];
 				}
@@ -1403,7 +1397,7 @@ namespace SoLoud
 			aVoice->mCurrentChannelVolume[k] = pand[k];
 	}
 
-	void Soloud::mixBus_internal(float *aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize, float *aScratch, unsigned int aBus, float aSamplerate, unsigned int aChannels)
+	void Soloud::mixBus_internal(float* aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize, float* aScratch, unsigned int aBus, float aSamplerate, unsigned int aChannels)
 	{
 		unsigned int i, j;
 		// Clear accumulation buffer
@@ -1418,7 +1412,7 @@ namespace SoLoud
 		// Accumulate sound sources
 		for (i = 0; i < mActiveVoiceCount; i++)
 		{
-			AudioSourceInstance *voice = mVoice[mActiveVoice[i]];
+			AudioSourceInstance* voice = mVoice[mActiveVoice[i]];
 			if (voice &&
 				voice->mBusHandle == aBus &&
 				!(voice->mFlags & AudioSourceInstance::PAUSED) &&
@@ -1457,7 +1451,7 @@ namespace SoLoud
 					if (voice->mLeftoverSamples == 0)
 					{
 						// Swap resample buffers (ping-pong)
-						AlignedFloatBuffer * t = voice->mResampleData[0];
+						AlignedFloatBuffer* t = voice->mResampleData[0];
 						voice->mResampleData[0] = voice->mResampleData[1];
 						voice->mResampleData[1] = t;
 
@@ -1482,7 +1476,7 @@ namespace SoLoud
 							}
 						}
 
-                        // Clear remaining of the resample data if the full scratch wasn't used
+						// Clear remaining of the resample data if the full scratch wasn't used
 						if (readcount < SAMPLE_GRANULARITY)
 						{
 							unsigned int k;
@@ -1500,7 +1494,6 @@ namespace SoLoud
 							// We have new block of data, move pointer backwards
 							voice->mSrcOffset -= SAMPLE_GRANULARITY * FIXPOINT_FRAC_MUL;
 						}
-
 
 						// Run the per-stream filters to get our source data
 
@@ -1536,7 +1529,6 @@ namespace SoLoud
 							writesamples--;
 					}
 
-
 					// If this is too much for our output buffer, don't write that many:
 					if (writesamples + outofs > aSamplesToRead)
 					{
@@ -1551,12 +1543,12 @@ namespace SoLoud
 						{
 							resample(voice->mResampleData[0]->mData + SAMPLE_GRANULARITY * j,
 								voice->mResampleData[1]->mData + SAMPLE_GRANULARITY * j,
-									 aScratch + aBufferSize * j + outofs,
-									 voice->mSrcOffset,
-									 writesamples,
-									 voice->mSamplerate,
-									 aSamplerate,
-									 step_fixed);
+								aScratch + aBufferSize * j + outofs,
+								voice->mSrcOffset,
+								writesamples,
+								voice->mSamplerate,
+								aSamplerate,
+								step_fixed);
 						}
 					}
 
@@ -1582,109 +1574,108 @@ namespace SoLoud
 					!(voice->mFlags & AudioSourceInstance::PAUSED) &&
 					(voice->mFlags & AudioSourceInstance::INAUDIBLE) &&
 					(voice->mFlags & AudioSourceInstance::INAUDIBLE_TICK))
-			{
-				// Inaudible but needs ticking. Do minimal work (keep counters up to date and ask audiosource for data)
-				float step = voice->mSamplerate / aSamplerate;
-				int step_fixed = (int)floor(step * FIXPOINT_FRAC_MUL);
-				unsigned int outofs = 0;
-
-				if (voice->mDelaySamples)
 				{
-					if (voice->mDelaySamples > aSamplesToRead)
-					{
-						outofs = aSamplesToRead;
-						voice->mDelaySamples -= aSamplesToRead;
-					}
-					else
-					{
-						outofs = voice->mDelaySamples;
-						voice->mDelaySamples = 0;
-					}
-				}
+					// Inaudible but needs ticking. Do minimal work (keep counters up to date and ask audiosource for data)
+					float step = voice->mSamplerate / aSamplerate;
+					int step_fixed = (int)floor(step * FIXPOINT_FRAC_MUL);
+					unsigned int outofs = 0;
 
-				while (step_fixed != 0 && outofs < aSamplesToRead)
-				{
-					if (voice->mLeftoverSamples == 0)
+					if (voice->mDelaySamples)
 					{
-						// Swap resample buffers (ping-pong)
-						AlignedFloatBuffer * t = voice->mResampleData[0];
-						voice->mResampleData[0] = voice->mResampleData[1];
-						voice->mResampleData[1] = t;
-
-						// Get a block of source data
-
-						int readcount = 0;
-						if (!voice->hasEnded() || voice->mFlags & AudioSourceInstance::LOOPING)
+						if (voice->mDelaySamples > aSamplesToRead)
 						{
-							readcount = voice->getAudio(voice->mResampleData[0]->mData, SAMPLE_GRANULARITY, SAMPLE_GRANULARITY);
-							if (readcount < SAMPLE_GRANULARITY)
-							{
-								if (voice->mFlags & AudioSourceInstance::LOOPING)
-								{
-									while (readcount < SAMPLE_GRANULARITY && voice->seek(voice->mLoopPoint, mScratch.mData, mScratchSize) == SO_NO_ERROR)
-									{
-										voice->mLoopCount++;
-										readcount += voice->getAudio(voice->mResampleData[0]->mData + readcount, SAMPLE_GRANULARITY - readcount, SAMPLE_GRANULARITY);
-									}
-								}
-							}
-						}
-
-						// If we go past zero, crop to zero (a bit of a kludge)
-						if (voice->mSrcOffset < SAMPLE_GRANULARITY * FIXPOINT_FRAC_MUL)
-						{
-							voice->mSrcOffset = 0;
+							outofs = aSamplesToRead;
+							voice->mDelaySamples -= aSamplesToRead;
 						}
 						else
 						{
-							// We have new block of data, move pointer backwards
-							voice->mSrcOffset -= SAMPLE_GRANULARITY * FIXPOINT_FRAC_MUL;
+							outofs = voice->mDelaySamples;
+							voice->mDelaySamples = 0;
+						}
+					}
+
+					while (step_fixed != 0 && outofs < aSamplesToRead)
+					{
+						if (voice->mLeftoverSamples == 0)
+						{
+							// Swap resample buffers (ping-pong)
+							AlignedFloatBuffer* t = voice->mResampleData[0];
+							voice->mResampleData[0] = voice->mResampleData[1];
+							voice->mResampleData[1] = t;
+
+							// Get a block of source data
+
+							int readcount = 0;
+							if (!voice->hasEnded() || voice->mFlags & AudioSourceInstance::LOOPING)
+							{
+								readcount = voice->getAudio(voice->mResampleData[0]->mData, SAMPLE_GRANULARITY, SAMPLE_GRANULARITY);
+								if (readcount < SAMPLE_GRANULARITY)
+								{
+									if (voice->mFlags & AudioSourceInstance::LOOPING)
+									{
+										while (readcount < SAMPLE_GRANULARITY && voice->seek(voice->mLoopPoint, mScratch.mData, mScratchSize) == SO_NO_ERROR)
+										{
+											voice->mLoopCount++;
+											readcount += voice->getAudio(voice->mResampleData[0]->mData + readcount, SAMPLE_GRANULARITY - readcount, SAMPLE_GRANULARITY);
+										}
+									}
+								}
+							}
+
+							// If we go past zero, crop to zero (a bit of a kludge)
+							if (voice->mSrcOffset < SAMPLE_GRANULARITY * FIXPOINT_FRAC_MUL)
+							{
+								voice->mSrcOffset = 0;
+							}
+							else
+							{
+								// We have new block of data, move pointer backwards
+								voice->mSrcOffset -= SAMPLE_GRANULARITY * FIXPOINT_FRAC_MUL;
+							}
+
+							// Skip filters
+						}
+						else
+						{
+							voice->mLeftoverSamples = 0;
 						}
 
-						// Skip filters
+						// Figure out how many samples we can generate from this source data.
+						// The value may be zero.
+
+						unsigned int writesamples = 0;
+
+						if (voice->mSrcOffset < SAMPLE_GRANULARITY * FIXPOINT_FRAC_MUL)
+						{
+							writesamples = ((SAMPLE_GRANULARITY * FIXPOINT_FRAC_MUL) - voice->mSrcOffset) / step_fixed + 1;
+
+							// avoid reading past the current buffer..
+							if (((writesamples * step_fixed + voice->mSrcOffset) >> FIXPOINT_FRAC_BITS) >= SAMPLE_GRANULARITY)
+								writesamples--;
+						}
+
+						// If this is too much for our output buffer, don't write that many:
+						if (writesamples + outofs > aSamplesToRead)
+						{
+							voice->mLeftoverSamples = (writesamples + outofs) - aSamplesToRead;
+							writesamples = aSamplesToRead - outofs;
+						}
+
+						// Skip resampler
+
+						// Keep track of how many samples we've written so far
+						outofs += writesamples;
+
+						// Move source pointer onwards (writesamples may be zero)
+						voice->mSrcOffset += writesamples * step_fixed;
 					}
-					else
+
+					// clear voice if the sound is over
+					if (!(voice->mFlags & AudioSourceInstance::LOOPING) && voice->hasEnded())
 					{
-						voice->mLeftoverSamples = 0;
+						stopVoice_internal(mActiveVoice[i]);
 					}
-
-					// Figure out how many samples we can generate from this source data.
-					// The value may be zero.
-
-					unsigned int writesamples = 0;
-
-					if (voice->mSrcOffset < SAMPLE_GRANULARITY * FIXPOINT_FRAC_MUL)
-					{
-						writesamples = ((SAMPLE_GRANULARITY * FIXPOINT_FRAC_MUL) - voice->mSrcOffset) / step_fixed + 1;
-
-						// avoid reading past the current buffer..
-						if (((writesamples * step_fixed + voice->mSrcOffset) >> FIXPOINT_FRAC_BITS) >= SAMPLE_GRANULARITY)
-							writesamples--;
-					}
-
-
-					// If this is too much for our output buffer, don't write that many:
-					if (writesamples + outofs > aSamplesToRead)
-					{
-						voice->mLeftoverSamples = (writesamples + outofs) - aSamplesToRead;
-						writesamples = aSamplesToRead - outofs;
-					}
-
-					// Skip resampler
-
-					// Keep track of how many samples we've written so far
-					outofs += writesamples;
-
-					// Move source pointer onwards (writesamples may be zero)
-					voice->mSrcOffset += writesamples * step_fixed;
 				}
-
-				// clear voice if the sound is over
-				if (!(voice->mFlags & AudioSourceInstance::LOOPING) && voice->hasEnded())
-				{
-					stopVoice_internal(mActiveVoice[i]);
-				}
-			}
 		}
 	}
 
@@ -1792,7 +1783,7 @@ namespace SoLoud
 		// Iterative partial quicksort:
 		int left = 0, stack[24], pos = 0, right;
 		int len = candidates - mustlive;
-		unsigned int *data = mActiveVoice + mustlive;
+		unsigned int* data = mActiveVoice + mustlive;
 		int k = mActiveVoiceCount;
 		for (;;)
 		{
@@ -1807,13 +1798,11 @@ namespace SoLoud
 					do
 					{
 						right++;
-					}
-					while (mVoice[data[right]]->mOverallVolume > pivotvol);
+					} while (mVoice[data[right]]->mOverallVolume > pivotvol);
 					do
 					{
 						len--;
-					}
-					while (pivotvol > mVoice[data[len]]->mOverallVolume);
+					} while (pivotvol > mVoice[data[len]]->mOverallVolume);
 					if (right >= len) break;
 					int temp = data[right];
 					data[right] = data[len];
@@ -2021,19 +2010,19 @@ namespace SoLoud
 		}
 	}
 
-	void Soloud::mix(float *aBuffer, unsigned int aSamples)
+	void Soloud::mix(float* aBuffer, unsigned int aSamples)
 	{
 		mix_internal(aSamples);
 		interlace_samples_float(mScratch.mData, aBuffer, aSamples, mChannels);
 	}
 
-	void Soloud::mixSigned16(short *aBuffer, unsigned int aSamples)
+	void Soloud::mixSigned16(short* aBuffer, unsigned int aSamples)
 	{
 		mix_internal(aSamples);
 		interlace_samples_s16(mScratch.mData, aBuffer, aSamples, mChannels);
 	}
 
-	void deinterlace_samples_float(const float *aSourceBuffer, float *aDestBuffer, unsigned int aSamples, unsigned int aChannels)
+	void deinterlace_samples_float(const float* aSourceBuffer, float* aDestBuffer, unsigned int aSamples, unsigned int aChannels)
 	{
 		// 121212 -> 111222
 		unsigned int i, j, c;
@@ -2048,7 +2037,7 @@ namespace SoLoud
 		}
 	}
 
-	void interlace_samples_float(const float *aSourceBuffer, float *aDestBuffer, unsigned int aSamples, unsigned int aChannels)
+	void interlace_samples_float(const float* aSourceBuffer, float* aDestBuffer, unsigned int aSamples, unsigned int aChannels)
 	{
 		// 111222 -> 121212
 		unsigned int i, j, c;
@@ -2071,7 +2060,7 @@ namespace SoLoud
 	   Leaving it here for future reference for now if a more
 	   working solution is found.
 	 */
-	void interlace_samples_s16_mono(const float *aSourceBuffer, short *aDestBuffer, unsigned int aSamples)
+	void interlace_samples_s16_mono(const float* aSourceBuffer, short* aDestBuffer, unsigned int aSamples)
 	{
 		const __m128 scale = _mm_set1_ps(0x7fff);
 		const unsigned int blockSize = 16;
@@ -2094,8 +2083,8 @@ namespace SoLoud
 			__m128i u = _mm_setr_epi64(d0, d1);
 			__m128i v = _mm_setr_epi64(d2, d3);
 
-			_mm_store_si128(reinterpret_cast<__m128i *>(&aDestBuffer[16 * i + 0]), u);
-			_mm_store_si128(reinterpret_cast<__m128i *>(&aDestBuffer[16 * i + 8]), v);
+			_mm_store_si128(reinterpret_cast<__m128i*>(&aDestBuffer[16 * i + 0]), u);
+			_mm_store_si128(reinterpret_cast<__m128i*>(&aDestBuffer[16 * i + 8]), v);
 		}
 
 		_mm_empty();
@@ -2107,7 +2096,7 @@ namespace SoLoud
 		}
 	}
 
-	void interlace_samples_s16_stereo(const float *aSourceBuffer, short *aDestBuffer, unsigned int aSamples)
+	void interlace_samples_s16_stereo(const float* aSourceBuffer, short* aDestBuffer, unsigned int aSamples)
 	{
 		const __m128 scale = _mm_set1_ps(0x7fff);
 		const unsigned int blockSize = 8u;
@@ -2135,8 +2124,8 @@ namespace SoLoud
 			__m128i u = _mm_setr_epi64(d0, d1);
 			__m128i v = _mm_setr_epi64(d2, d3);
 
-			_mm_store_si128(reinterpret_cast<__m128i *>(&aDestBuffer[16 * i + 0]), u);
-			_mm_store_si128(reinterpret_cast<__m128i *>(&aDestBuffer[16 * i + 8]), v);
+			_mm_store_si128(reinterpret_cast<__m128i*>(&aDestBuffer[16 * i + 0]), u);
+			_mm_store_si128(reinterpret_cast<__m128i*>(&aDestBuffer[16 * i + 8]), v);
 		}
 
 		_mm_empty();
@@ -2150,7 +2139,7 @@ namespace SoLoud
 	}
 #endif
 
-	void interlace_samples_s16(const float *aSourceBuffer, short *aDestBuffer, unsigned int aSamples, unsigned int aChannels)
+	void interlace_samples_s16(const float* aSourceBuffer, short* aDestBuffer, unsigned int aSamples, unsigned int aChannels)
 	{
 #if 0 // defined(SOLOUD_SSE_INTRINSICS) && defined(_M_IX86)
 		switch (aChannels)
@@ -2200,5 +2189,4 @@ namespace SoLoud
 			Thread::unlockMutex(mAudioThreadMutex);
 		}
 	}
-
 };

@@ -171,7 +171,6 @@ namespace SFW
 				return twist;
 			}
 
-
 			// 指定軸 axis 周りの回転成分(twist)だけを除去したクォータニオンを返す。
 			// -> swing だけを返す
 			Quat RemoveTwist(const Vec3<T>& axis) const noexcept

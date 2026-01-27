@@ -29,7 +29,7 @@
 	// AVX-SSE transition penalties, see https://software.intel.com/en-us/articles/avoiding-avx-sse-transition-penalties). However, this file
 	// _must_ be compiled without VEX encoding to allow backwards compatibility. Best practice is to use lowest supported target platform
 	// (/arch:SSE2) as project default, and elevate only the MaskedOcclusionCullingAVX2/512.cpp files.
-	#error The MaskedOcclusionCulling.cpp should be compiled with lowest supported target platform, e.g. /arch:SSE2
+#error The MaskedOcclusionCulling.cpp should be compiled with lowest supported target platform, e.g. /arch:SSE2
 #endif
 
 static MaskedOcclusionCulling::Implementation DetectCPUFeatures(MaskedOcclusionCulling::pfnAlignedAlloc alignedAlloc, MaskedOcclusionCulling::pfnAlignedFree alignedFree)
@@ -40,11 +40,11 @@ static MaskedOcclusionCulling::Implementation DetectCPUFeatures(MaskedOcclusionC
 	int regs[4];
 	__cpuidex(regs, 0, 0);
 
-    //  MOCVectorAllocator<CpuInfo> mocalloc( alignedAlloc, alignedFree );
-    //  std::vector<CpuInfo, MOCVectorAllocator<CpuInfo>> cpuId( mocalloc ), cpuIdEx( mocalloc );
-    //  cpuId.resize( regs[0] );
-    size_t cpuIdCount = regs[0];
-    CpuInfo * cpuId = (CpuInfo*)alignedAlloc( 64, sizeof(CpuInfo) * cpuIdCount );
+	//  MOCVectorAllocator<CpuInfo> mocalloc( alignedAlloc, alignedFree );
+	//  std::vector<CpuInfo, MOCVectorAllocator<CpuInfo>> cpuId( mocalloc ), cpuIdEx( mocalloc );
+	//  cpuId.resize( regs[0] );
+	size_t cpuIdCount = regs[0];
+	CpuInfo* cpuId = (CpuInfo*)alignedAlloc(64, sizeof(CpuInfo) * cpuIdCount);
 
 	for (size_t i = 0; i < cpuIdCount; ++i)
 		__cpuidex(cpuId[i].regs, (int)i, 0);
@@ -52,23 +52,23 @@ static MaskedOcclusionCulling::Implementation DetectCPUFeatures(MaskedOcclusionC
 	// Get extended CPUID values
 	__cpuidex(regs, 0x80000000, 0);
 
-    //cpuIdEx.resize(regs[0] - 0x80000000);
-    size_t cpuIdExCount = regs[0] - 0x80000000;
-    CpuInfo * cpuIdEx = (CpuInfo*)alignedAlloc( 64, sizeof( CpuInfo ) * cpuIdExCount );
+	//cpuIdEx.resize(regs[0] - 0x80000000);
+	size_t cpuIdExCount = regs[0] - 0x80000000;
+	CpuInfo* cpuIdEx = (CpuInfo*)alignedAlloc(64, sizeof(CpuInfo) * cpuIdExCount);
 
-    for (size_t i = 0; i < cpuIdExCount; ++i)
+	for (size_t i = 0; i < cpuIdExCount; ++i)
 		__cpuidex(cpuIdEx[i].regs, 0x80000000 + (int)i, 0);
 
-	#define TEST_BITS(A, B)            (((A) & (B)) == (B))
-	#define TEST_FMA_MOVE_OXSAVE       (cpuIdCount >= 1 && TEST_BITS(cpuId[1].regs[2], (1 << 12) | (1 << 22) | (1 << 27)))
-	#define TEST_LZCNT                 (cpuIdExCount >= 1 && TEST_BITS(cpuIdEx[1].regs[2], 0x20))
-	#define TEST_SSE41                 (cpuIdCount >= 1 && TEST_BITS(cpuId[1].regs[2], (1 << 19)))
-	#define TEST_XMM_YMM               (cpuIdCount >= 1 && TEST_BITS(_xgetbv(0), (1 << 2) | (1 << 1)))
-	#define TEST_OPMASK_ZMM            (cpuIdCount >= 1 && TEST_BITS(_xgetbv(0), (1 << 7) | (1 << 6) | (1 << 5)))
-	#define TEST_BMI1_BMI2_AVX2        (cpuIdCount >= 7 && TEST_BITS(cpuId[7].regs[1], (1 << 3) | (1 << 5) | (1 << 8)))
-	#define TEST_AVX512_F_BW_DQ        (cpuIdCount >= 7 && TEST_BITS(cpuId[7].regs[1], (1 << 16) | (1 << 17) | (1 << 30)))
+#define TEST_BITS(A, B)            (((A) & (B)) == (B))
+#define TEST_FMA_MOVE_OXSAVE       (cpuIdCount >= 1 && TEST_BITS(cpuId[1].regs[2], (1 << 12) | (1 << 22) | (1 << 27)))
+#define TEST_LZCNT                 (cpuIdExCount >= 1 && TEST_BITS(cpuIdEx[1].regs[2], 0x20))
+#define TEST_SSE41                 (cpuIdCount >= 1 && TEST_BITS(cpuId[1].regs[2], (1 << 19)))
+#define TEST_XMM_YMM               (cpuIdCount >= 1 && TEST_BITS(_xgetbv(0), (1 << 2) | (1 << 1)))
+#define TEST_OPMASK_ZMM            (cpuIdCount >= 1 && TEST_BITS(_xgetbv(0), (1 << 7) | (1 << 6) | (1 << 5)))
+#define TEST_BMI1_BMI2_AVX2        (cpuIdCount >= 7 && TEST_BITS(cpuId[7].regs[1], (1 << 3) | (1 << 5) | (1 << 8)))
+#define TEST_AVX512_F_BW_DQ        (cpuIdCount >= 7 && TEST_BITS(cpuId[7].regs[1], (1 << 16) | (1 << 17) | (1 << 30)))
 
-    MaskedOcclusionCulling::Implementation retVal = MaskedOcclusionCulling::SSE2;
+	MaskedOcclusionCulling::Implementation retVal = MaskedOcclusionCulling::SSE2;
 	if (TEST_FMA_MOVE_OXSAVE && TEST_LZCNT && TEST_SSE41)
 	{
 		if (TEST_XMM_YMM && TEST_OPMASK_ZMM && TEST_BMI1_BMI2_AVX2 && TEST_AVX512_F_BW_DQ)
@@ -76,18 +76,18 @@ static MaskedOcclusionCulling::Implementation DetectCPUFeatures(MaskedOcclusionC
 		else if (TEST_XMM_YMM && TEST_BMI1_BMI2_AVX2)
 			retVal = MaskedOcclusionCulling::AVX2;
 	}
-    else if (TEST_SSE41)
+	else if (TEST_SSE41)
 		retVal = MaskedOcclusionCulling::SSE41;
-    alignedFree( cpuId );
-    alignedFree( cpuIdEx );
-    return retVal;
+	alignedFree(cpuId);
+	alignedFree(cpuIdEx);
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Utility functions (not directly related to the algorithm/rasterizer)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void MaskedOcclusionCulling::TransformVertices(const float *mtx, const float *inVtx, float *xfVtx, unsigned int nVtx, const VertexLayout &vtxLayout)
+void MaskedOcclusionCulling::TransformVertices(const float* mtx, const float* inVtx, float* xfVtx, unsigned int nVtx, const VertexLayout& vtxLayout)
 {
 	// This function pretty slow, about 10-20% slower than if the vertices are stored in aligned SOA form.
 	if (nVtx == 0)
@@ -101,8 +101,8 @@ void MaskedOcclusionCulling::TransformVertices(const float *mtx, const float *in
 	__m128 mtxCol3 = _mm_loadu_ps(mtx + 12);
 
 	int stride = vtxLayout.mStride;
-	const char *vPtr = (const char *)inVtx;
-	float *outPtr = xfVtx;
+	const char* vPtr = (const char*)inVtx;
+	float* outPtr = xfVtx;
 
 	// Iterate through all vertices and transform
 	for (unsigned int vtx = 0; vtx < nVtx; ++vtx)
@@ -227,15 +227,15 @@ MAKE_ACCESSOR(simd_i32, __m128i, int, const, 4)
 // Specialized SSE input assembly function for general vertex gather
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-FORCE_INLINE void GatherVertices(__m128 *vtxX, __m128 *vtxY, __m128 *vtxW, const float *inVtx, const unsigned int *inTrisPtr, int numLanes, const VertexLayout &vtxLayout)
+FORCE_INLINE void GatherVertices(__m128* vtxX, __m128* vtxY, __m128* vtxW, const float* inVtx, const unsigned int* inTrisPtr, int numLanes, const VertexLayout& vtxLayout)
 {
 	for (int lane = 0; lane < numLanes; lane++)
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			char *vPtrX = (char *)inVtx + inTrisPtr[lane * 3 + i] * vtxLayout.mStride;
-			char *vPtrY = vPtrX + vtxLayout.mOffsetY;
-			char *vPtrW = vPtrX + vtxLayout.mOffsetW;
+			char* vPtrX = (char*)inVtx + inTrisPtr[lane * 3 + i] * vtxLayout.mStride;
+			char* vPtrY = vPtrX + vtxLayout.mOffsetY;
+			char* vPtrW = vPtrX + vtxLayout.mOffsetW;
 
 			simd_f32(vtxX[i])[lane] = *((float*)vPtrX);
 			simd_f32(vtxY[i])[lane] = *((float*)vPtrY);
@@ -250,21 +250,21 @@ FORCE_INLINE void GatherVertices(__m128 *vtxX, __m128 *vtxY, __m128 *vtxW, const
 
 namespace MaskedOcclusionCullingSSE41
 {
-	FORCE_INLINE __m128i _mmw_mullo_epi32(const __m128i &a, const __m128i &b) { return _mm_mullo_epi32(a, b); }
-	FORCE_INLINE __m128i _mmw_min_epi32(const __m128i &a, const __m128i &b) { return _mm_min_epi32(a, b); }
-	FORCE_INLINE __m128i _mmw_max_epi32(const __m128i &a, const __m128i &b) { return _mm_max_epi32(a, b); }
-	FORCE_INLINE __m128i _mmw_abs_epi32(const __m128i &a) { return _mm_abs_epi32(a); }
-	FORCE_INLINE __m128 _mmw_blendv_ps(const __m128 &a, const __m128 &b, const __m128 &c) { return _mm_blendv_ps(a, b, c); }
-	FORCE_INLINE int _mmw_testz_epi32(const __m128i &a, const __m128i &b) { return _mm_testz_si128(a, b); }
-	FORCE_INLINE __m128 _mmx_dp4_ps(const __m128 &a, const __m128 &b) { return _mm_dp_ps(a, b, 0xFF); }
-	FORCE_INLINE __m128 _mmw_floor_ps(const __m128 &a) { return _mm_round_ps(a, _MM_FROUND_TO_NEG_INF | _MM_FROUND_NO_EXC); }
-	FORCE_INLINE __m128 _mmw_ceil_ps(const __m128 &a) { return _mm_round_ps(a, _MM_FROUND_TO_POS_INF | _MM_FROUND_NO_EXC);	}
-	FORCE_INLINE __m128i _mmw_transpose_epi8(const __m128i &a)
+	FORCE_INLINE __m128i _mmw_mullo_epi32(const __m128i& a, const __m128i& b) { return _mm_mullo_epi32(a, b); }
+	FORCE_INLINE __m128i _mmw_min_epi32(const __m128i& a, const __m128i& b) { return _mm_min_epi32(a, b); }
+	FORCE_INLINE __m128i _mmw_max_epi32(const __m128i& a, const __m128i& b) { return _mm_max_epi32(a, b); }
+	FORCE_INLINE __m128i _mmw_abs_epi32(const __m128i& a) { return _mm_abs_epi32(a); }
+	FORCE_INLINE __m128 _mmw_blendv_ps(const __m128& a, const __m128& b, const __m128& c) { return _mm_blendv_ps(a, b, c); }
+	FORCE_INLINE int _mmw_testz_epi32(const __m128i& a, const __m128i& b) { return _mm_testz_si128(a, b); }
+	FORCE_INLINE __m128 _mmx_dp4_ps(const __m128& a, const __m128& b) { return _mm_dp_ps(a, b, 0xFF); }
+	FORCE_INLINE __m128 _mmw_floor_ps(const __m128& a) { return _mm_round_ps(a, _MM_FROUND_TO_NEG_INF | _MM_FROUND_NO_EXC); }
+	FORCE_INLINE __m128 _mmw_ceil_ps(const __m128& a) { return _mm_round_ps(a, _MM_FROUND_TO_POS_INF | _MM_FROUND_NO_EXC); }
+	FORCE_INLINE __m128i _mmw_transpose_epi8(const __m128i& a)
 	{
 		const __m128i shuff = _mm_setr_epi8(0x0, 0x4, 0x8, 0xC, 0x1, 0x5, 0x9, 0xD, 0x2, 0x6, 0xA, 0xE, 0x3, 0x7, 0xB, 0xF);
 		return _mm_shuffle_epi8(a, shuff);
 	}
-	FORCE_INLINE __m128i _mmw_sllv_ones(const __m128i &ishift)
+	FORCE_INLINE __m128i _mmw_sllv_ones(const __m128i& ishift)
 	{
 		__m128i shift = _mm_min_epi32(ishift, _mm_set1_epi32(32));
 
@@ -286,15 +286,15 @@ namespace MaskedOcclusionCullingSSE41
 	// Include common algorithm implementation (general, SIMD independent code)
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	#include "MaskedOcclusionCullingCommon.inl"
+#include "MaskedOcclusionCullingCommon.inl"
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Utility function to create a new object using the allocator callbacks
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Utility function to create a new object using the allocator callbacks
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	MaskedOcclusionCulling *CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
+	MaskedOcclusionCulling* CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
 	{
-		MaskedOcclusionCullingPrivate *object = (MaskedOcclusionCullingPrivate *)alignedAlloc(64, sizeof(MaskedOcclusionCullingPrivate));
+		MaskedOcclusionCullingPrivate* object = (MaskedOcclusionCullingPrivate*)alignedAlloc(64, sizeof(MaskedOcclusionCullingPrivate));
 		new (object) MaskedOcclusionCullingPrivate(alignedAlloc, alignedFree);
 		return object;
 	}
@@ -306,38 +306,38 @@ namespace MaskedOcclusionCullingSSE41
 
 namespace MaskedOcclusionCullingSSE2
 {
-	FORCE_INLINE __m128i _mmw_mullo_epi32(const __m128i &a, const __m128i &b)
+	FORCE_INLINE __m128i _mmw_mullo_epi32(const __m128i& a, const __m128i& b)
 	{
 		// Do products for even / odd lanes & merge the result
 		__m128i even = _mm_and_si128(_mm_mul_epu32(a, b), _mm_setr_epi32(~0, 0, ~0, 0));
 		__m128i odd = _mm_slli_epi64(_mm_mul_epu32(_mm_srli_epi64(a, 32), _mm_srli_epi64(b, 32)), 32);
 		return _mm_or_si128(even, odd);
 	}
-	FORCE_INLINE __m128i _mmw_min_epi32(const __m128i &a, const __m128i &b)
+	FORCE_INLINE __m128i _mmw_min_epi32(const __m128i& a, const __m128i& b)
 	{
 		__m128i cond = _mm_cmpgt_epi32(a, b);
 		return _mm_or_si128(_mm_andnot_si128(cond, a), _mm_and_si128(cond, b));
 	}
-	FORCE_INLINE __m128i _mmw_max_epi32(const __m128i &a, const __m128i &b)
+	FORCE_INLINE __m128i _mmw_max_epi32(const __m128i& a, const __m128i& b)
 	{
 		__m128i cond = _mm_cmpgt_epi32(b, a);
 		return _mm_or_si128(_mm_andnot_si128(cond, a), _mm_and_si128(cond, b));
 	}
-	FORCE_INLINE __m128i _mmw_abs_epi32(const __m128i &a)
+	FORCE_INLINE __m128i _mmw_abs_epi32(const __m128i& a)
 	{
 		__m128i mask = _mm_cmplt_epi32(a, _mm_setzero_si128());
 		return _mm_add_epi32(_mm_xor_si128(a, mask), _mm_srli_epi32(mask, 31));
 	}
-	FORCE_INLINE int _mmw_testz_epi32(const __m128i &a, const __m128i &b)
+	FORCE_INLINE int _mmw_testz_epi32(const __m128i& a, const __m128i& b)
 	{
 		return _mm_movemask_epi8(_mm_cmpeq_epi8(_mm_and_si128(a, b), _mm_setzero_si128())) == 0xFFFF;
 	}
-	FORCE_INLINE __m128 _mmw_blendv_ps(const __m128 &a, const __m128 &b, const __m128 &c)
+	FORCE_INLINE __m128 _mmw_blendv_ps(const __m128& a, const __m128& b, const __m128& c)
 	{
 		__m128 cond = _mm_castsi128_ps(_mm_srai_epi32(_mm_castps_si128(c), 31));
 		return _mm_or_ps(_mm_andnot_ps(cond, a), _mm_and_ps(cond, b));
 	}
-	FORCE_INLINE __m128 _mmx_dp4_ps(const __m128 &a, const __m128 &b)
+	FORCE_INLINE __m128 _mmx_dp4_ps(const __m128& a, const __m128& b)
 	{
 		// Product and two shuffle/adds pairs (similar to hadd_ps)
 		__m128 prod = _mm_mul_ps(a, b);
@@ -345,7 +345,7 @@ namespace MaskedOcclusionCullingSSE2
 		dp = _mm_add_ps(dp, _mm_shuffle_ps(dp, dp, _MM_SHUFFLE(0, 1, 2, 3)));
 		return dp;
 	}
-	FORCE_INLINE __m128 _mmw_floor_ps(const __m128 &a)
+	FORCE_INLINE __m128 _mmw_floor_ps(const __m128& a)
 	{
 		int originalMode = _MM_GET_ROUNDING_MODE();
 		_MM_SET_ROUNDING_MODE(_MM_ROUND_DOWN);
@@ -353,7 +353,7 @@ namespace MaskedOcclusionCullingSSE2
 		_MM_SET_ROUNDING_MODE(originalMode);
 		return rounded;
 	}
-	FORCE_INLINE __m128 _mmw_ceil_ps(const __m128 &a)
+	FORCE_INLINE __m128 _mmw_ceil_ps(const __m128& a)
 	{
 		int originalMode = _MM_GET_ROUNDING_MODE();
 		_MM_SET_ROUNDING_MODE(_MM_ROUND_UP);
@@ -361,7 +361,7 @@ namespace MaskedOcclusionCullingSSE2
 		_MM_SET_ROUNDING_MODE(originalMode);
 		return rounded;
 	}
-	FORCE_INLINE __m128i _mmw_transpose_epi8(const __m128i &a)
+	FORCE_INLINE __m128i _mmw_transpose_epi8(const __m128i& a)
 	{
 		// Perform transpose through two 16->8 bit pack and byte shifts
 		__m128i res = a;
@@ -370,7 +370,7 @@ namespace MaskedOcclusionCullingSSE2
 		res = _mm_packus_epi16(_mm_and_si128(res, mask), _mm_srli_epi16(res, 8));
 		return res;
 	}
-	FORCE_INLINE __m128i _mmw_sllv_ones(const __m128i &ishift)
+	FORCE_INLINE __m128i _mmw_sllv_ones(const __m128i& ishift)
 	{
 		__m128i shift = _mmw_min_epi32(ishift, _mm_set1_epi32(32));
 
@@ -394,15 +394,15 @@ namespace MaskedOcclusionCullingSSE2
 	// Include common algorithm implementation (general, SIMD independent code)
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	#include "MaskedOcclusionCullingCommon.inl"
+#include "MaskedOcclusionCullingCommon.inl"
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Utility function to create a new object using the allocator callbacks
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Utility function to create a new object using the allocator callbacks
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	MaskedOcclusionCulling *CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
+	MaskedOcclusionCulling* CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
 	{
-		MaskedOcclusionCullingPrivate *object = (MaskedOcclusionCullingPrivate *)alignedAlloc(64, sizeof(MaskedOcclusionCullingPrivate));
+		MaskedOcclusionCullingPrivate* object = (MaskedOcclusionCullingPrivate*)alignedAlloc(64, sizeof(MaskedOcclusionCullingPrivate));
 		new (object) MaskedOcclusionCullingPrivate(alignedAlloc, alignedFree);
 		return object;
 	}
@@ -413,22 +413,22 @@ namespace MaskedOcclusionCullingSSE2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace MaskedOcclusionCullingAVX512
 {
-	extern MaskedOcclusionCulling *CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree);
+	extern MaskedOcclusionCulling* CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree);
 }
 
 namespace MaskedOcclusionCullingAVX2
 {
-	extern MaskedOcclusionCulling *CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree);
+	extern MaskedOcclusionCulling* CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree);
 }
 
-MaskedOcclusionCulling *MaskedOcclusionCulling::Create(Implementation RequestedSIMD)
+MaskedOcclusionCulling* MaskedOcclusionCulling::Create(Implementation RequestedSIMD)
 {
 	return Create(RequestedSIMD, aligned_alloc, aligned_free);
 }
 
-MaskedOcclusionCulling *MaskedOcclusionCulling::Create(Implementation RequestedSIMD, pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
+MaskedOcclusionCulling* MaskedOcclusionCulling::Create(Implementation RequestedSIMD, pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
 {
-	MaskedOcclusionCulling *object = nullptr;
+	MaskedOcclusionCulling* object = nullptr;
 
 	MaskedOcclusionCulling::Implementation impl = DetectCPUFeatures(alignedAlloc, alignedFree);
 
@@ -448,7 +448,7 @@ MaskedOcclusionCulling *MaskedOcclusionCulling::Create(Implementation RequestedS
 	return object;
 }
 
-void MaskedOcclusionCulling::Destroy(MaskedOcclusionCulling *moc)
+void MaskedOcclusionCulling::Destroy(MaskedOcclusionCulling* moc)
 {
 	pfnAlignedFree alignedFreeCallback = moc->mAlignedFreeCallback;
 	moc->~MaskedOcclusionCulling();

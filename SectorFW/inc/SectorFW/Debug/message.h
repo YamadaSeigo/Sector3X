@@ -6,10 +6,9 @@
 
 namespace SFW::Debug
 {
+	void assert_with_msg(bool expr, const char* file, int line, const char* func, const char* format, ...);
 
-    void assert_with_msg(bool expr, const char* file, int line, const char* func, const char* format, ...);
-
-    void assert_with_msg(bool expr, const char* file, int line, const wchar_t* func, const char* format, ...);
+	void assert_with_msg(bool expr, const char* file, int line, const wchar_t* func, const char* format, ...);
 }
 
 #ifdef _DEBUG

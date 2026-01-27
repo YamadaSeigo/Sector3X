@@ -34,7 +34,6 @@ namespace SFW
 				bufferMgr->Add(BufferCreateDesc{ BUFFER_NAME, sizeof(CameraBuffer) }, h);
 				return h;
 					}()), bufferManager(bufferMgr) {
-
 				virtualWidth = (float)width, virtualHeight = (float)height;
 			}
 

@@ -42,7 +42,6 @@ namespace SFW
 					 * @param deltaTime 前のフレームからの経過時間（秒）
 					 */
 					void PreUpdate(double deltaTime) override {
-
 						++frameIdx;
 
 						if (!isUpdateBuffer) return;
@@ -115,7 +114,7 @@ namespace SFW
 				BufferHandle h;
 				bufferMgr->Add(BufferCreateDesc{ BUFFER_NAME, sizeof(CameraBuffer) }, h);
 				return h;
-					}()), bufferManager(bufferMgr){
+					}()), bufferManager(bufferMgr) {
 				right = (float)width, bottom = (float)height;
 			}
 

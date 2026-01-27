@@ -29,7 +29,7 @@ freely, subject to the following restrictions:
 
 namespace SoLoud
 {
-	handle Soloud::play(AudioSource &aSound, float aVolume, float aPan, bool aPaused, unsigned int aBus)
+	handle Soloud::play(AudioSource& aSound, float aVolume, float aPan, bool aPaused, unsigned int aBus)
 	{
 		if (aSound.mFlags & AudioSource::SINGLE_INSTANCE)
 		{
@@ -40,11 +40,11 @@ namespace SoLoud
 		// Creation of an audio instance may take significant amount of time,
 		// so let's not do it inside the audio thread mutex.
 		aSound.mSoloud = this;
-		SoLoud::AudioSourceInstance *instance = aSound.createInstance();
+		SoLoud::AudioSourceInstance* instance = aSound.createInstance();
 
 		lockAudioMutex_internal();
 		int ch = findFreeVoice_internal();
-		if (ch < 0) 
+		if (ch < 0)
 		{
 			unlockAudioMutex_internal();
 			delete instance;
@@ -64,7 +64,7 @@ namespace SoLoud
 		mPlayIndex++;
 
 		// 20 bits, skip the last one (top bits full = voice group)
-		if (mPlayIndex == 0xfffff) 
+		if (mPlayIndex == 0xfffff)
 		{
 			mPlayIndex = 0;
 		}
@@ -84,7 +84,7 @@ namespace SoLoud
 			setVoiceVolume_internal(ch, aVolume);
 		}
 
-		// Fix initial voice volume ramp up		
+		// Fix initial voice volume ramp up
 		int i;
 		for (i = 0; i < MAX_CHANNELS; i++)
 		{
@@ -92,7 +92,7 @@ namespace SoLoud
 		}
 
 		setVoiceRelativePlaySpeed_internal(ch, 1);
-		
+
 		for (i = 0; i < FILTERS_PER_STREAM; i++)
 		{
 			if (aSound.mFilter[i])
@@ -109,7 +109,7 @@ namespace SoLoud
 		return handle;
 	}
 
-	handle Soloud::playClocked(time aSoundTime, AudioSource &aSound, float aVolume, float aPan, unsigned int aBus)
+	handle Soloud::playClocked(time aSoundTime, AudioSource& aSound, float aVolume, float aPan, unsigned int aBus)
 	{
 		handle h = play(aSound, aVolume, aPan, 1, aBus);
 		lockAudioMutex_internal();
@@ -123,14 +123,14 @@ namespace SoLoud
 		unlockAudioMutex_internal();
 		int samples = (int)floor((aSoundTime - lasttime) * mSamplerate);
 		// Make sure we don't delay too much (or overflow)
-		if (samples < 0 || samples > 2048)		
+		if (samples < 0 || samples > 2048)
 			samples = 0;
 		setDelaySamples(h, samples);
 		setPause(h, 0);
 		return h;
 	}
 
-	handle Soloud::playBackground(AudioSource &aSound, float aVolume, bool aPaused, unsigned int aBus)
+	handle Soloud::playBackground(AudioSource& aSound, float aVolume, bool aPaused, unsigned int aBus)
 	{
 		handle h = play(aSound, aVolume, 0.0f, aPaused, aBus);
 		setPanAbsolute(h, 1.0f, 1.0f);
@@ -146,9 +146,8 @@ namespace SoLoud
 		if (singleres != SO_NO_ERROR)
 			res = singleres;
 		FOR_ALL_VOICES_POST
-		return res;
+			return res;
 	}
-
 
 	void Soloud::stop(handle aVoiceHandle)
 	{
@@ -157,12 +156,12 @@ namespace SoLoud
 		FOR_ALL_VOICES_POST
 	}
 
-	void Soloud::stopAudioSource(AudioSource &aSound)
+	void Soloud::stopAudioSource(AudioSource& aSound)
 	{
 		if (aSound.mAudioSourceID)
 		{
 			lockAudioMutex_internal();
-			
+
 			int i;
 			for (i = 0; i < (signed)mHighestVoice; i++)
 			{
@@ -186,7 +185,7 @@ namespace SoLoud
 		unlockAudioMutex_internal();
 	}
 
-	int Soloud::countAudioSource(AudioSource &aSound)
+	int Soloud::countAudioSource(AudioSource& aSound)
 	{
 		int count = 0;
 		if (aSound.mAudioSourceID)
@@ -205,5 +204,4 @@ namespace SoLoud
 		}
 		return count;
 	}
-
 }

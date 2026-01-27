@@ -177,7 +177,7 @@ namespace SFW
 			/// @brief ワールド座標→virtual解像度のスクリーン座標(x,y)
 			Math::Vec2f WorldToScreen(const Math::Vec2f& world) const noexcept {
 				std::shared_lock lock(sharedMutex);
-				Math::Vec4f p = cameraBuffer[currentSlot].viewProj * Math::Vec4f{world.x, world.y, 0.0f, 1.0f};
+				Math::Vec4f p = cameraBuffer[currentSlot].viewProj * Math::Vec4f{ world.x, world.y, 0.0f, 1.0f };
 				if (std::abs(p.w) > 1e-6f) { p.x /= p.w; p.y /= p.w; }
 				// NDC→スクリーン
 				float sx = (p.x * 0.5f + 0.5f) * virtualWidth;
@@ -247,14 +247,13 @@ namespace SFW
 			BufferHandle  cameraBufferHandle;
 			size_t frameIdx{ 0 };
 			uint16_t currentSlot{ 0 };
-			CameraBuffer  cameraBuffer[RENDER_BUFFER_COUNT] {};
+			CameraBuffer  cameraBuffer[RENDER_BUFFER_COUNT]{};
 			Math::Matrix4x4f cameraBufferInv{ Math::Matrix4x4f::Identity() };
 
 			// 2D カメラ状態
 			Math::Vec2f center{ 0.0f, 0.0f };       // 画面中央に対応するワールド座標
 			float       rotZ{ 0.0f };             // 画面の傾き（rad）
 			float       zoom{ 1.0f };             // >1 拡大、<1 縮小
-
 
 			Math::Vec2f moveVec{ 0.0f, 0.0f };   // 移動ベクトル（Updateで加算）
 			float moveZoom{ 0.0f };           // ズーム倍率（Updateで乗算）

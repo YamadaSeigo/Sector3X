@@ -62,7 +62,7 @@ namespace SFW
 			: levelOriginWS(originWS)
 			, m_worldX(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksX* minLeafSize)))
 			, m_worldY(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksY* minLeafSize))) // óßï˚ëÃÇ…çáÇÌÇπÇÈ
-			, m_worldZ(std::max<ChunkSizeType>(1, ChunkSizeType((worldBlocksZ == ChunkSizeType(0) ? worldBlocksX : worldBlocksZ) * minLeafSize)))
+			, m_worldZ(std::max<ChunkSizeType>(1, ChunkSizeType((worldBlocksZ == ChunkSizeType(0) ? worldBlocksX : worldBlocksZ)* minLeafSize)))
 			, m_minLeaf(std::max<float>(1.f, minLeafSize))
 			, m_maxPerLeafCount(std::max<uint32_t>(1, maxEntitiesPerLeaf))
 		{
@@ -234,7 +234,6 @@ namespace SFW
 
 			return out;
 		}
-
 
 		static inline float Dist2PointAABB3D(const Math::Vec3f& p,
 			const Math::Vec3f& c,
@@ -536,7 +535,7 @@ namespace SFW
 		void cullRecursive3D(Node& n, const Math::Frustumf& fr, std::vector<SpatialChunk*>& out)
 		{
 			if (!nodeIntersectsFrustum3D(n, fr)) return;
-			if (n.isLeaf()) { if(n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
+			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(&n.chunk); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive3D(*n.child[i], fr, out);
 		}
 		void cullRecursive3D(const Node& n, const Math::Frustumf& fr, std::vector<const SpatialChunk*>& out) const

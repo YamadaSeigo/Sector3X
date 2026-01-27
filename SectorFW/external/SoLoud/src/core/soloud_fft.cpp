@@ -30,12 +30,11 @@ freely, subject to the following restrictions:
 
 namespace fftimpl
 {
-// Based on http://www.kurims.kyoto-u.ac.jp/~ooura/fft.html
-// "Copyright Takuya OOURA, 1996-2001 
-//  You may use, copy, modify and distribute this code for any purpose 
-//  (include commercial use) and without fee. Please refer to this package 
-//  when you modify this code."
-
+	// Based on http://www.kurims.kyoto-u.ac.jp/~ooura/fft.html
+	// "Copyright Takuya OOURA, 1996-2001
+	//  You may use, copy, modify and distribute this code for any purpose
+	//  (include commercial use) and without fee. Please refer to this package
+	//  when you modify this code."
 
 #ifndef M_PI_2
 #define M_PI_2      1.570796326794896619231321691639751442098584699687f
@@ -74,7 +73,7 @@ namespace fftimpl
 #define DCST_LOOP_DIV 64
 #endif
 
-	void bitrv2(int n, float *a)
+	void bitrv2(int n, float* a)
 	{
 		int j0, k0, j1, k1, l, m, i, j, k, nh;
 		float xr, xi, yr, yi;
@@ -424,8 +423,7 @@ namespace fftimpl
 		}
 	}
 
-
-	void bitrv2conj(int n, float *a)
+	void bitrv2conj(int n, float* a)
 	{
 		int j0, k0, j1, k1, l, m, i, j, k, nh;
 		float xr, xi, yr, yi;
@@ -783,8 +781,7 @@ namespace fftimpl
 		}
 	}
 
-
-	void bitrv216(float *a)
+	void bitrv216(float* a)
 	{
 		float x1r, x1i, x2r, x2i, x3r, x3i, x4r, x4i,
 			x5r, x5i, x7r, x7i, x8r, x8i, x10r, x10i,
@@ -840,8 +837,7 @@ namespace fftimpl
 		a[29] = x7i;
 	}
 
-
-	void bitrv216neg(float *a)
+	void bitrv216neg(float* a)
 	{
 		float x1r, x1i, x2r, x2i, x3r, x3i, x4r, x4i,
 			x5r, x5i, x6r, x6i, x7r, x7i, x8r, x8i,
@@ -910,8 +906,7 @@ namespace fftimpl
 		a[31] = x8i;
 	}
 
-
-	void bitrv208(float *a)
+	void bitrv208(float* a)
 	{
 		float x1r, x1i, x3r, x3i, x4r, x4i, x6r, x6i;
 
@@ -933,8 +928,7 @@ namespace fftimpl
 		a[13] = x3i;
 	}
 
-
-	void bitrv208neg(float *a)
+	void bitrv208neg(float* a)
 	{
 		float x1r, x1i, x2r, x2i, x3r, x3i, x4r, x4i,
 			x5r, x5i, x6r, x6i, x7r, x7i;
@@ -969,7 +963,7 @@ namespace fftimpl
 		a[15] = x4i;
 	}
 
-	void cftb1st(int n, float *a)
+	void cftb1st(int n, float* a)
 	{
 		int i, i0, j, j0, j1, j2, j3, m, mh;
 		float ew, w1r, w1i, wk1r, wk1i, wk3r, wk3i,
@@ -1196,7 +1190,7 @@ namespace fftimpl
 		a[j3 + 3] = wk3i * x0i - wk3r * x0r;
 	}
 
-	void cftmdl1(int n, float *a)
+	void cftmdl1(int n, float* a)
 	{
 		int i, i0, j, j0, j1, j2, j3, m, mh;
 		float ew, w1r, w1i, wk1r, wk1i, wk3r, wk3i,
@@ -1423,8 +1417,7 @@ namespace fftimpl
 		a[j3 + 3] = wk3i * x0i - wk3r * x0r;
 	}
 
-
-	void cftmdl2(int n, float *a)
+	void cftmdl2(int n, float* a)
 	{
 		int i, i0, j, j0, j1, j2, j3, m, mh;
 		float ew, w1r, w1i, wn4r, wk1r, wk1i, wk3r, wk3i,
@@ -1710,7 +1703,7 @@ namespace fftimpl
 		a[j3 + 3] = y0i - y2i;
 	}
 
-	void cftf161(float *a)
+	void cftf161(float* a)
 	{
 		float wn4r, wk1r, wk1i,
 			x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i,
@@ -1868,8 +1861,7 @@ namespace fftimpl
 		a[7] = x1i - x3r;
 	}
 
-
-	void cftf162(float *a)
+	void cftf162(float* a)
 	{
 		float wn4r, wk1r, wk1i, wk2r, wk2i, wk3r, wk3i,
 			x0r, x0i, x1r, x1i, x2r, x2i,
@@ -2051,8 +2043,7 @@ namespace fftimpl
 		a[31] = x1i - x2r;
 	}
 
-
-	void cftf081(float *a)
+	void cftf081(float* a)
 	{
 		float wn4r, x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i,
 			y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i,
@@ -2113,8 +2104,7 @@ namespace fftimpl
 		a[7] = y2i - y6r;
 	}
 
-
-	void cftf082(float *a)
+	void cftf082(float* a)
 	{
 		float wn4r, wk1r, wk1i, x0r, x0i, x1r, x1i,
 			y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i,
@@ -2185,7 +2175,7 @@ namespace fftimpl
 		a[15] = x0i - x1r;
 	}
 
-	void cftf040(float *a)
+	void cftf040(float* a)
 	{
 		float x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i;
 
@@ -2207,7 +2197,7 @@ namespace fftimpl
 		a[7] = x1i - x3r;
 	}
 
-	void cftb040(float *a)
+	void cftb040(float* a)
 	{
 		float x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i;
 
@@ -2229,7 +2219,7 @@ namespace fftimpl
 		a[7] = x1i + x3r;
 	}
 
-	void cftx020(float *a)
+	void cftx020(float* a)
 	{
 		float x0r, x0i;
 
@@ -2241,7 +2231,7 @@ namespace fftimpl
 		a[3] = x0i;
 	}
 
-	void cftfx41(int n, float *a)
+	void cftfx41(int n, float* a)
 	{
 		if (n == 128) {
 			cftf161(a);
@@ -2257,7 +2247,7 @@ namespace fftimpl
 		}
 	}
 
-	int cfttree(int n, int j, int k, float *a)
+	int cfttree(int n, int j, int k, float* a)
 	{
 		int i, isplt, m;
 
@@ -2292,7 +2282,7 @@ namespace fftimpl
 		return isplt;
 	}
 
-	void cftleaf(int n, int isplt, float *a)
+	void cftleaf(int n, int isplt, float* a)
 	{
 		if (n == 512) {
 			cftmdl1(128, a);
@@ -2352,7 +2342,7 @@ namespace fftimpl
 		}
 	}
 
-	void cftrec4(int n, float *a)
+	void cftrec4(int n, float* a)
 	{
 		int isplt, j, k, m;
 
@@ -2370,7 +2360,7 @@ namespace fftimpl
 		}
 	}
 
-	void cftfsub(int n, float *a)
+	void cftfsub(int n, float* a)
 	{
 		if (n > 8) {
 			if (n > 32) {
@@ -2403,8 +2393,7 @@ namespace fftimpl
 		}
 	}
 
-
-	void cftbsub(int n, float *a)
+	void cftbsub(int n, float* a)
 	{
 		if (n > 8) {
 			if (n > 32) {
@@ -2438,37 +2427,36 @@ namespace fftimpl
 	}
 } // fftimpl
 
-
 namespace SoLoud
 {
-    namespace FFT
-    {
-        void fft1024(float *aBuffer)
-        {
-			fft(aBuffer, 1024);			
-        }    
+	namespace FFT
+	{
+		void fft1024(float* aBuffer)
+		{
+			fft(aBuffer, 1024);
+		}
 
-        void fft256(float *aBuffer)
-        {
+		void fft256(float* aBuffer)
+		{
 			fft(aBuffer, 256);
-        }
-        
-        void ifft256(float *aBuffer)
-        {
+		}
+
+		void ifft256(float* aBuffer)
+		{
 			ifft(aBuffer, 256);
 		}
 
-		void fft(float *aBuffer, unsigned int aBufferLength)
+		void fft(float* aBuffer, unsigned int aBufferLength)
 		{
 			fftimpl::cftbsub(aBufferLength, aBuffer);
 		}
 
-		void ifft(float *aBuffer, unsigned int aBufferLength)
+		void ifft(float* aBuffer, unsigned int aBufferLength)
 		{
 			unsigned int i;
 			fftimpl::cftfsub(aBufferLength, aBuffer);
 			for (i = 0; i < aBufferLength; i++)
 				aBuffer[i] *= 1.0f / float(aBufferLength / 2);
 		}
-    };
+	};
 };

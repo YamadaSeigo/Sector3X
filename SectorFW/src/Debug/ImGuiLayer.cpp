@@ -59,7 +59,7 @@ namespace SFW
 			ImGui::Begin("Log");
 			for (auto& s : logBuf) ImGui::TextUnformatted(s.c_str());
 
-			if(oldLogSize != logBuf.size()) {
+			if (oldLogSize != logBuf.size()) {
 				// スクロールを一番下に移動
 				ImGui::SetScrollHereY(1.0f);
 				oldLogSize = logBuf.size();
@@ -100,7 +100,6 @@ namespace SFW
 			// 3) 残っている分だけ閉じる（Push された数だけ）
 			while (openDepth > 0) { ImGui::TreePop(); --openDepth; }
 			ImGui::End();
-
 
 			ImGuiIO& io = ImGui::GetIO();
 			ImGui::Begin("MouseDebug");

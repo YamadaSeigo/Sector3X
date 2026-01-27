@@ -62,5 +62,4 @@ namespace SFW
 		 */
 		Container& container_;
 	};
-
 }

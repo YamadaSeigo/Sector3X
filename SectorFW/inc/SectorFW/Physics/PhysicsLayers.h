@@ -44,7 +44,6 @@ namespace SFW {
 			return 1u << (ObjectLayerMask)layer;
 		}
 
-
 		// ObjectLayer ¨ BroadPhaseLayer ‚Ì‘Î‰ž
 		class BroadPhaseLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
 		public:

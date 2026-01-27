@@ -89,7 +89,6 @@ namespace SFW::Math {
 	enum class FrustumPlane : int { Left = 0, Right, Bottom, Top, Near, Far };
 
 	struct Frustumf {
-
 		std::array<Planef, 6> p{};
 
 		inline float* data() noexcept { return reinterpret_cast<float*>(p.data()); }
@@ -310,7 +309,6 @@ namespace SFW::Math {
 			return FromRowMajorWithZ(m, zrange, normalize);
 		}
 
-
 		// 任意：面の向きを「内側=正」に揃える（判定式 s+r<0 と整合させる保険）
 		static void FaceInward(Frustumf& fr,
 			const Vec3f& camPos,
@@ -404,7 +402,6 @@ namespace SFW::Math {
 						   (aabb.ub.z - aabb.lb.z) * 0.5f };
 			return IntersectsAABB(c, e);
 		}
-
 
 		//-----------------------------
 		// 方向光に沿ってフラスタムを押し伸ばす

@@ -26,7 +26,7 @@ namespace SFW
 			AABB& operator+=(const VecT& v) noexcept { lb += v; ub += v; return *this; }
 			AABB operator-(const VecT& v) const noexcept { return AABB(lb - v, ub - v); }
 			AABB& operator-=(const VecT& v) noexcept { lb -= v; ub -= v; return *this; }
-			AABB operator*(const T& s) const noexcept {	return AABB(lb * s, ub * s); }
+			AABB operator*(const T& s) const noexcept { return AABB(lb * s, ub * s); }
 			AABB& operator*=(const T& s) noexcept { lb *= s; ub *= s; return *this; }
 			AABB operator/(const T& s) const noexcept { return AABB(lb / s, ub / s); }
 			AABB& operator/=(const T& s) noexcept { lb /= s; ub /= s; return *this; }

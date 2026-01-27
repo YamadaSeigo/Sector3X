@@ -138,7 +138,7 @@ namespace SFW
 				startIndex = mesh.ref().startIndex;
 
 				using BindFunc = void(RenderBackend::*)(
-					ShaderManager::LockedResource<ShaderData, std::shared_lock>& ,
+					ShaderManager::LockedResource<ShaderData, std::shared_lock>&,
 					MeshManager::LockedResource<MeshData, std::shared_lock>&) const;
 
 				static constexpr BindFunc pBindFunctions[(uint8_t)InputBindingMode::BINDMODE_MAX] =
@@ -428,7 +428,6 @@ namespace SFW
 				if (FAILED(hr)) { return hr; }
 			}
 
-
 			SetRasterizerStateImpl(RasterizerStateID::SolidCullBack); // デフォルト
 
 			return S_OK;
@@ -485,7 +484,6 @@ namespace SFW
 
 			return S_OK;
 		}
-
 
 		HRESULT RenderBackend::CreateDepthStencilStates()
 		{

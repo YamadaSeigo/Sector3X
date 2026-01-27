@@ -5,12 +5,12 @@
  * @date   September 2025
  *********************************************************************/
 
-//インスタンスの情報を変更する場合は以下のマクロを使用する
-/*
-	SFW_MAX_INSTANCES_PER_FRAME : フレーム当たりの最大インスタンス数(パス全体)
-	SFW_MAX_INSTANCE_INDICES_PER_PASS : パス当たりの最大インスタンスインデックス数
-	SFW_DRAWCOMMAND_TMPBUF_SIZE : 描画コマンドをキューから取り出す際のバッチサイズ
- */
+ //インスタンスの情報を変更する場合は以下のマクロを使用する
+ /*
+	 SFW_MAX_INSTANCES_PER_FRAME : フレーム当たりの最大インスタンス数(パス全体)
+	 SFW_MAX_INSTANCE_INDICES_PER_PASS : パス当たりの最大インスタンスインデックス数
+	 SFW_DRAWCOMMAND_TMPBUF_SIZE : 描画コマンドをキューから取り出す際のバッチサイズ
+  */
 
 #pragma once
 
@@ -23,14 +23,13 @@
 #include <optional>
 #include <array>
 
- //#define NO_USE_PMR_RENDER_QUEUE
+  //#define NO_USE_PMR_RENDER_QUEUE
 
 #ifndef NO_USE_PMR_RENDER_QUEUE
 #include <memory_resource>
 #endif
 
 #include "RenderTypes.h"
-
 
 namespace SFW
 {
@@ -99,7 +98,6 @@ namespace SFW
 			InstancePool* Data(int slot) noexcept { return pools[slot].get(); }
 			uint32_t      Size(int slot) const noexcept { return head[slot].load(std::memory_order_acquire); }
 		};
-
 
 		/**
 		 * @brief 描画コマンドの発行。管理、ソート、バッチングを行うクラス
@@ -396,7 +394,6 @@ namespace SFW
 			 * @details 外部からバッファを渡す
 			 */
 			class ProducerSessionExternal {
-
 			public:
 				// まとめ用固定長バッファ（ヒープなし）
 				static constexpr size_t kChunk = 128;
@@ -499,7 +496,6 @@ namespace SFW
 				 */
 				void MemsetInstancePool(InstanceIndex index, const InstancePool& inst) noexcept;
 
-
 				/**
 				 * @brief 全バッファをキューへフラッシュ
 				 */
@@ -514,7 +510,6 @@ namespace SFW
 				moodycamel::ConcurrentQueue<DrawCommand>* boundQueue = nullptr;
 				std::optional<moodycamel::ProducerToken> token; // インライン保持（ヒープなし）
 				SmallBuf& buf;
-
 
 				inline void flushChunk() {
 					boundQueue->enqueue_bulk(*token, buf.data, buf.size);
@@ -549,7 +544,7 @@ namespace SFW
 			 * @param maxInstancesPerFrame フレーム当たりの最大インスタンス数（1～MAX_INSTANCES_PER_FRAME）
 			 */
 			RenderQueue(const std::atomic<uint16_t>& bufSlot, SharedInstanceArena* instanceArena, uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME) :
-				current(bufSlot), sharedInstanceArena(instanceArena), maxInstancesPerFrame(maxInstancesPerFrame){
+				current(bufSlot), sharedInstanceArena(instanceArena), maxInstancesPerFrame(maxInstancesPerFrame) {
 				assert(maxInstancesPerFrame > 0 && maxInstancesPerFrame <= MAX_INSTANCES_PER_FRAME);
 
 				for (uint16_t i = 0; i < RENDER_BUFFER_COUNT; ++i) {
@@ -695,6 +690,5 @@ namespace SFW
 			SortContext sortContext;
 #endif
 		};
-
 	}
 }

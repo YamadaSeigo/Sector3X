@@ -74,7 +74,7 @@ namespace SFW
 
 				produceSlot.exchange((produceSlot.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT, std::memory_order_acq_rel);
 
-				if(updateFunc) updateFunc(this);
+				if (updateFunc) updateFunc(this);
 			}
 			/**
 			 * @brief カスタム関数の更新
@@ -248,7 +248,7 @@ namespace SFW
 			PreDrawFuncType preDrawFunc = nullptr;
 		public:
 			STATIC_SERVICE_TAG
-			DEFINE_UPDATESERVICE_GROUP(GROUP_GRAPHICS)
+				DEFINE_UPDATESERVICE_GROUP(GROUP_GRAPHICS)
 		};
 
 		// AABBFrontFaceQuad を 2トライで提出できるバッチに変換

@@ -70,7 +70,6 @@ namespace SoLoud
 			}
 			double t = aCurrentTime - mStartTime;
 			return (float)(sin(t * mEndTime) * mDelta + (mFrom + mDelta));
-			
 		}
 		if (mStartTime > aCurrentTime)
 		{

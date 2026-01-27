@@ -53,13 +53,12 @@ namespace SoLoud
 		return d;
 	}
 
-DiskFile::DiskFile(FILE *fp):
-mFileHandle(fp)
-{
+	DiskFile::DiskFile(FILE* fp) :
+		mFileHandle(fp)
+	{
+	}
 
-}
-
-	unsigned int DiskFile::read(unsigned char *aDst, unsigned int aBytes)
+	unsigned int DiskFile::read(unsigned char* aDst, unsigned int aBytes)
 	{
 		return (unsigned int)fread(aDst, 1, aBytes, mFileHandle);
 	}
@@ -85,7 +84,7 @@ mFileHandle(fp)
 		return (unsigned int)ftell(mFileHandle);
 	}
 
-	FILE *DiskFile::getFilePtr()
+	FILE* DiskFile::getFilePtr()
 	{
 		return mFileHandle;
 	}
@@ -101,7 +100,7 @@ mFileHandle(fp)
 		mFileHandle = 0;
 	}
 
-	result DiskFile::open(const char *aFilename)
+	result DiskFile::open(const char* aFilename)
 	{
 		if (!aFilename)
 			return INVALID_PARAMETER;
@@ -116,9 +115,7 @@ mFileHandle(fp)
 		return feof(mFileHandle);
 	}
 
-
-
-	unsigned int MemoryFile::read(unsigned char *aDst, unsigned int aBytes)
+	unsigned int MemoryFile::read(unsigned char* aDst, unsigned int aBytes)
 	{
 		if (mOffset + aBytes >= mDataLength)
 			aBytes = mDataLength - mOffset;
@@ -140,8 +137,8 @@ mFileHandle(fp)
 			mOffset = aOffset;
 		else
 			mOffset = mDataLength + aOffset;
-		if (mOffset > mDataLength-1)
-			mOffset = mDataLength-1;
+		if (mOffset > mDataLength - 1)
+			mOffset = mDataLength - 1;
 	}
 
 	unsigned int MemoryFile::pos()
@@ -149,7 +146,7 @@ mFileHandle(fp)
 		return mOffset;
 	}
 
-	const unsigned char * MemoryFile::getMemPtr()
+	const unsigned char* MemoryFile::getMemPtr()
 	{
 		return mDataPtr;
 	}
@@ -168,7 +165,7 @@ mFileHandle(fp)
 		mDataOwned = false;
 	}
 
-	result MemoryFile::openMem(const unsigned char *aData, unsigned int aDataLength, bool aCopy, bool aTakeOwnership)
+	result MemoryFile::openMem(const unsigned char* aData, unsigned int aDataLength, bool aCopy, bool aTakeOwnership)
 	{
 		if (aData == NULL || aDataLength == 0)
 			return INVALID_PARAMETER;
@@ -186,7 +183,7 @@ mFileHandle(fp)
 			mDataPtr = new unsigned char[aDataLength];
 			if (mDataPtr == NULL)
 				return OUT_OF_MEMORY;
-			memcpy((void *)mDataPtr, aData, aDataLength);
+			memcpy((void*)mDataPtr, aData, aDataLength);
 			return SO_NO_ERROR;
 		}
 
@@ -195,7 +192,7 @@ mFileHandle(fp)
 		return SO_NO_ERROR;
 	}
 
-	result MemoryFile::openToMem(const char *aFile)
+	result MemoryFile::openToMem(const char* aFile)
 	{
 		if (!aFile)
 			return INVALID_PARAMETER;
@@ -218,7 +215,7 @@ mFileHandle(fp)
 		return SO_NO_ERROR;
 	}
 
-	result MemoryFile::openFileToMem(File *aFile)
+	result MemoryFile::openFileToMem(File* aFile)
 	{
 		if (!aFile)
 			return INVALID_PARAMETER;
@@ -246,24 +243,23 @@ mFileHandle(fp)
 
 extern "C"
 {
-	int Soloud_Filehack_fgetc(Soloud_Filehack *f)
+	int Soloud_Filehack_fgetc(Soloud_Filehack* f)
 	{
-		SoLoud::File *fp = (SoLoud::File *)f;
+		SoLoud::File* fp = (SoLoud::File*)f;
 		if (fp->eof())
 			return EOF;
 		return fp->read8();
 	}
 
-	int Soloud_Filehack_fread(void *dst, int s, int c, Soloud_Filehack *f)
+	int Soloud_Filehack_fread(void* dst, int s, int c, Soloud_Filehack* f)
 	{
-		SoLoud::File *fp = (SoLoud::File *)f;
-		return fp->read((unsigned char*)dst, s*c) / s;
-
+		SoLoud::File* fp = (SoLoud::File*)f;
+		return fp->read((unsigned char*)dst, s * c) / s;
 	}
 
-	int Soloud_Filehack_fseek(Soloud_Filehack *f, int idx, int base)
+	int Soloud_Filehack_fseek(Soloud_Filehack* f, int idx, int base)
 	{
-		SoLoud::File *fp = (SoLoud::File *)f;
+		SoLoud::File* fp = (SoLoud::File*)f;
 		switch (base)
 		{
 		case SEEK_CUR:
@@ -278,22 +274,22 @@ extern "C"
 		return 0;
 	}
 
-	int Soloud_Filehack_ftell(Soloud_Filehack *f)
+	int Soloud_Filehack_ftell(Soloud_Filehack* f)
 	{
-		SoLoud::File *fp = (SoLoud::File *)f;
+		SoLoud::File* fp = (SoLoud::File*)f;
 		return fp->pos();
 	}
 
-	int Soloud_Filehack_fclose(Soloud_Filehack *f)
+	int Soloud_Filehack_fclose(Soloud_Filehack* f)
 	{
-		SoLoud::File *fp = (SoLoud::File *)f;
+		SoLoud::File* fp = (SoLoud::File*)f;
 		delete fp;
 		return 0;
 	}
 
-	Soloud_Filehack * Soloud_Filehack_fopen(const char *aFilename, char * /*aMode*/)
+	Soloud_Filehack* Soloud_Filehack_fopen(const char* aFilename, char* /*aMode*/)
 	{
-		SoLoud::DiskFile *df = new SoLoud::DiskFile();
+		SoLoud::DiskFile* df = new SoLoud::DiskFile();
 		int res = df->open(aFilename);
 		if (res != SoLoud::SO_NO_ERROR)
 		{

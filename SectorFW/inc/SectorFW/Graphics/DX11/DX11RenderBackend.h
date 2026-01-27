@@ -207,7 +207,6 @@ namespace SFW
 				}
 				else
 				{
-
 					while (i < cmdCount) {
 						auto currentPSO = cmds[i].pso;
 						auto currentMat = cmds[i].material;
@@ -258,7 +257,7 @@ namespace SFW
 			 * @param usePSORasterizer PSOのラスタライザーステートを使用するかどうか
 			 */
 			template<typename VecT>
-			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::span<const uint32_t> indices,std::optional<PSOHandle> psoOverride,  bool usePSORasterizer, bool rebindPSO)
+			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::span<const uint32_t> indices, std::optional<PSOHandle> psoOverride, bool usePSORasterizer, bool rebindPSO)
 			{
 				struct DrawBatch {
 					uint32_t mesh;
@@ -273,7 +272,7 @@ namespace SFW
 				size_t k = 0;
 				size_t K = indices.size();
 				std::vector<DrawBatch> batches;
-				if (rebindPSO){
+				if (rebindPSO) {
 					uint32_t overriddenPSO = psoOverride.value().index;
 
 					auto isRebindPSO = [](uint8_t flags) -> bool {
@@ -338,7 +337,6 @@ namespace SFW
 							cmds[indices[k]].material == currentMat &&
 							cmds[indices[k]].mesh == currentMesh &&
 							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
-
 							dst[instanceCount++] = cmds[indices[k]].instanceIndex.index;
 							++k;
 						}

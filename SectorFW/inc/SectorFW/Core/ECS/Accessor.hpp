@@ -185,8 +185,7 @@ namespace SFW
 			}
 
 			template<typename T, std::size_t... Is>
-			static void StoreSoAToAoSImpl(const typename T::ToPtr& p, size_t index, T& out, std::index_sequence<Is...>) noexcept{
-
+			static void StoreSoAToAoSImpl(const typename T::ToPtr& p, size_t index, T& out, std::index_sequence<Is...>) noexcept {
 				auto& aos_tuple = T::member_ptr_tuple;			// AoSメンバ変数ポインタ
 				auto& soa_tuple = p.ptr_tuple;					// SoAメンバ変数ポインタ
 
@@ -208,7 +207,7 @@ namespace SFW
 			 * @brief コンストラクタ
 			 * @param chunk アクセスするアーキタイプチャンク
 			 */
-			explicit ComponentAccessor(ArchetypeChunk* chunk) noexcept : ComponentAccessorBase(chunk){}
+			explicit ComponentAccessor(ArchetypeChunk* chunk) noexcept : ComponentAccessorBase(chunk) {}
 			/**
 			 * @brief 指定したアクセス型に対して、コンポーネントを取得する関数
 			 * @tparam AccessType アクセスするコンポーネントの型(AccessInfo.h参照)

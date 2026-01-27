@@ -132,7 +132,7 @@ public:
 		matMgr->Add(matDesc, dummyMatHandle);
 
 		DX11::ShaderCreateDesc spriteShaderDesc;
-		spriteShaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
+		spriteShaderDesc.vsPath = L"assets/shader/VS_ClipUVColor.cso";
 		spriteShaderDesc.psPath = L"assets/shader/PS_Color.cso";
 		ShaderHandle spriteShaderHandle;
 		shaderMgr->Add(spriteShaderDesc, spriteShaderHandle);
@@ -208,7 +208,7 @@ public:
 			cmd.pso = psoMOCHandle.index;
 			cmd.material = mocMaterialHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
+			cmd.sortKey = 90;
 
 			uiSession.Push(std::move(cmd));
 		}
@@ -223,7 +223,7 @@ public:
 			cmd.pso = spritePsoHandle.index;
 			cmd.material = bloomMaterialHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
+			cmd.sortKey = 90;
 			uiSession.Push(std::move(cmd));
 		}
 	}

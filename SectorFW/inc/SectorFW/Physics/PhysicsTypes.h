@@ -244,7 +244,7 @@ namespace SFW
 		struct ShapeCreateDesc {
 			ShapeDesc   shape;
 			ShapeScale  scale;     // オプション
-			 //物理シェイプのローカルオフセット（ボディ原点からのシフト）
+			//物理シェイプのローカルオフセット（ボディ原点からのシフト）
 			Vec3f localOffset{ 0.0f, 0.0f, 0.0f };
 			// 物理シェイプのローカル回転（ボディローカル）
 			Quatf localRotation = Quatf::Identity(); // なければ {0,0,0,1} でもOK

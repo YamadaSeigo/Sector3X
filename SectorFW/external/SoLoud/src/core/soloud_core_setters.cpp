@@ -37,23 +37,23 @@ namespace SoLoud
 	{
 		mGlobalVolumeFader.mActive = 0;
 		mGlobalVolume = aVolume;
-	}		
+	}
 
 	result Soloud::setRelativePlaySpeed(handle aVoiceHandle, float aSpeed)
 	{
 		result retVal = 0;
 		FOR_ALL_VOICES_PRE
 			mVoice[ch]->mRelativePlaySpeedFader.mActive = 0;
-			retVal = setVoiceRelativePlaySpeed_internal(ch, aSpeed);
-			FOR_ALL_VOICES_POST
-		return retVal;
+		retVal = setVoiceRelativePlaySpeed_internal(ch, aSpeed);
+		FOR_ALL_VOICES_POST
+			return retVal;
 	}
 
 	void Soloud::setSamplerate(handle aVoiceHandle, float aSamplerate)
 	{
 		FOR_ALL_VOICES_PRE
 			mVoice[ch]->mBaseSamplerate = aSamplerate;
-			updateVoiceRelativePlaySpeed_internal(ch);
+		updateVoiceRelativePlaySpeed_internal(ch);
 		FOR_ALL_VOICES_POST
 	}
 
@@ -73,7 +73,7 @@ namespace SoLoud
 		delete[] mResampleData;
 		delete[] mResampleDataOwner;
 		mResampleData = new AlignedFloatBuffer[aVoiceCount * 2];
-		mResampleDataOwner = new AudioSourceInstance*[aVoiceCount];
+		mResampleDataOwner = new AudioSourceInstance * [aVoiceCount];
 		unsigned int i;
 		for (i = 0; i < aVoiceCount * 2; i++)
 			mResampleData[i].init(SAMPLE_GRANULARITY * MAX_CHANNELS);
@@ -110,7 +110,7 @@ namespace SoLoud
 	}
 
 	void Soloud::setPan(handle aVoiceHandle, float aPan)
-	{		
+	{
 		FOR_ALL_VOICES_PRE
 			setVoicePan_internal(ch, aPan);
 		FOR_ALL_VOICES_POST
@@ -119,45 +119,45 @@ namespace SoLoud
 	void Soloud::setPanAbsolute(handle aVoiceHandle, float aLVolume, float aRVolume, float aLBVolume, float aRBVolume, float aCVolume, float aSVolume)
 	{
 		FOR_ALL_VOICES_PRE
-			mVoice[ch]->mPanFader.mActive = 0;	
-			mVoice[ch]->mChannelVolume[0] = aLVolume;			
-			mVoice[ch]->mChannelVolume[1] = aRVolume;
-			if (mVoice[ch]->mChannels == 4)
-			{
-				mVoice[ch]->mChannelVolume[2] = aLBVolume;
-				mVoice[ch]->mChannelVolume[3] = aRBVolume;
-			}
-			if (mVoice[ch]->mChannels == 6)
-			{
-				mVoice[ch]->mChannelVolume[2] = aCVolume;
-				mVoice[ch]->mChannelVolume[3] = aSVolume;
-				mVoice[ch]->mChannelVolume[4] = aLBVolume;
-				mVoice[ch]->mChannelVolume[5] = aRBVolume;
-			}
-			if (mVoice[ch]->mChannels == 8)
-			{
-				mVoice[ch]->mChannelVolume[2] = aCVolume;
-				mVoice[ch]->mChannelVolume[3] = aSVolume;
-				mVoice[ch]->mChannelVolume[4] = (aLVolume + aLBVolume) * 0.5f;
-				mVoice[ch]->mChannelVolume[5] = (aRVolume + aRBVolume) * 0.5f;
-				mVoice[ch]->mChannelVolume[6] = aLBVolume;
-				mVoice[ch]->mChannelVolume[7] = aRBVolume;
-			}
-			FOR_ALL_VOICES_POST
+			mVoice[ch]->mPanFader.mActive = 0;
+		mVoice[ch]->mChannelVolume[0] = aLVolume;
+		mVoice[ch]->mChannelVolume[1] = aRVolume;
+		if (mVoice[ch]->mChannels == 4)
+		{
+			mVoice[ch]->mChannelVolume[2] = aLBVolume;
+			mVoice[ch]->mChannelVolume[3] = aRBVolume;
+		}
+		if (mVoice[ch]->mChannels == 6)
+		{
+			mVoice[ch]->mChannelVolume[2] = aCVolume;
+			mVoice[ch]->mChannelVolume[3] = aSVolume;
+			mVoice[ch]->mChannelVolume[4] = aLBVolume;
+			mVoice[ch]->mChannelVolume[5] = aRBVolume;
+		}
+		if (mVoice[ch]->mChannels == 8)
+		{
+			mVoice[ch]->mChannelVolume[2] = aCVolume;
+			mVoice[ch]->mChannelVolume[3] = aSVolume;
+			mVoice[ch]->mChannelVolume[4] = (aLVolume + aLBVolume) * 0.5f;
+			mVoice[ch]->mChannelVolume[5] = (aRVolume + aRBVolume) * 0.5f;
+			mVoice[ch]->mChannelVolume[6] = aLBVolume;
+			mVoice[ch]->mChannelVolume[7] = aRBVolume;
+		}
+		FOR_ALL_VOICES_POST
 	}
 
 	void Soloud::setInaudibleBehavior(handle aVoiceHandle, bool aMustTick, bool aKill)
 	{
 		FOR_ALL_VOICES_PRE
 			mVoice[ch]->mFlags &= ~(AudioSourceInstance::INAUDIBLE_KILL | AudioSourceInstance::INAUDIBLE_TICK);
-			if (aMustTick)
-			{
-				mVoice[ch]->mFlags |= AudioSourceInstance::INAUDIBLE_TICK;
-			}
-			if (aKill)
-			{
-				mVoice[ch]->mFlags |= AudioSourceInstance::INAUDIBLE_KILL;
-			}
+		if (aMustTick)
+		{
+			mVoice[ch]->mFlags |= AudioSourceInstance::INAUDIBLE_TICK;
+		}
+		if (aKill)
+		{
+			mVoice[ch]->mFlags |= AudioSourceInstance::INAUDIBLE_KILL;
+		}
 		FOR_ALL_VOICES_POST
 	}
 
@@ -182,12 +182,11 @@ namespace SoLoud
 		FOR_ALL_VOICES_POST
 	}
 
-
 	void Soloud::setVolume(handle aVoiceHandle, float aVolume)
 	{
 		FOR_ALL_VOICES_PRE
 			mVoice[ch]->mVolumeFader.mActive = 0;
-			setVoiceVolume_internal(ch, aVolume);
+		setVoiceVolume_internal(ch, aVolume);
 		FOR_ALL_VOICES_POST
 	}
 
@@ -219,5 +218,4 @@ namespace SoLoud
 		m3dSpeakerPosition[3 * aChannel + 2] = aZ;
 		return SO_NO_ERROR;
 	}
-
 }

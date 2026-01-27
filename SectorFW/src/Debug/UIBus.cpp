@@ -37,7 +37,6 @@ namespace SFW
 			if (GetUIBus().alive.load(std::memory_order_acquire)) GetUIBus().gpuFrameMs.publish(ms);
 		}
 
-
 		void PublishStatus(std::string s) {
 			if (GetUIBus().alive.load(std::memory_order_acquire)) GetUIBus().status.publish(std::move(s));
 		}
@@ -50,8 +49,8 @@ namespace SFW
 		UiTreeSnapshot::WriteGuard BeginTreeWrite() { return GetUIBus().tree.beginWrite(); }
 
 		// ================================
-	    // デバッグコントロール登録実装
-	    // ================================
+		// デバッグコントロール登録実装
+		// ================================
 		void RegisterDebugSliderFloat(
 			const std::string& category,
 			const std::string& label,
@@ -134,7 +133,6 @@ namespace SFW
 
 			bus.debugControlRegisterQ.push(std::move(c));
 		}
-
 	}
 
 #ifdef _ENABLE_IMGUI

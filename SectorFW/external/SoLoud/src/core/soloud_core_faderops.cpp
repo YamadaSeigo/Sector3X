@@ -36,7 +36,7 @@ namespace SoLoud
 			return;
 		}
 		FOR_ALL_VOICES_PRE
-		mVoice[ch]->mPauseScheduler.set(1, 0, aTime, mVoice[ch]->mStreamTime);
+			mVoice[ch]->mPauseScheduler.set(1, 0, aTime, mVoice[ch]->mStreamTime);
 		FOR_ALL_VOICES_POST
 	}
 
@@ -48,7 +48,7 @@ namespace SoLoud
 			return;
 		}
 		FOR_ALL_VOICES_PRE
-		mVoice[ch]->mStopScheduler.set(1, 0, aTime, mVoice[ch]->mStreamTime);
+			mVoice[ch]->mStopScheduler.set(1, 0, aTime, mVoice[ch]->mStreamTime);
 		FOR_ALL_VOICES_POST
 	}
 
@@ -62,7 +62,7 @@ namespace SoLoud
 		}
 
 		FOR_ALL_VOICES_PRE
-		mVoice[ch]->mVolumeFader.set(from, aTo, aTime, mVoice[ch]->mStreamTime);
+			mVoice[ch]->mVolumeFader.set(from, aTo, aTime, mVoice[ch]->mStreamTime);
 		FOR_ALL_VOICES_POST
 	}
 
@@ -76,7 +76,7 @@ namespace SoLoud
 		}
 
 		FOR_ALL_VOICES_PRE
-		mVoice[ch]->mPanFader.set(from, aTo, aTime, mVoice[ch]->mStreamTime);
+			mVoice[ch]->mPanFader.set(from, aTo, aTime, mVoice[ch]->mStreamTime);
 		FOR_ALL_VOICES_POST
 	}
 
@@ -89,7 +89,7 @@ namespace SoLoud
 			return;
 		}
 		FOR_ALL_VOICES_PRE
-		mVoice[ch]->mRelativePlaySpeedFader.set(from, aTo, aTime, mVoice[ch]->mStreamTime);
+			mVoice[ch]->mRelativePlaySpeedFader.set(from, aTo, aTime, mVoice[ch]->mStreamTime);
 		FOR_ALL_VOICES_POST
 	}
 
@@ -104,7 +104,6 @@ namespace SoLoud
 		mGlobalVolumeFader.set(from, aTo, aTime, mStreamTime);
 	}
 
-
 	void Soloud::oscillateVolume(handle aVoiceHandle, float aFrom, float aTo, time aTime)
 	{
 		if (aTime <= 0 || aTo == aFrom)
@@ -114,7 +113,7 @@ namespace SoLoud
 		}
 
 		FOR_ALL_VOICES_PRE
-		mVoice[ch]->mVolumeFader.setLFO(aFrom, aTo, aTime, mVoice[ch]->mStreamTime);
+			mVoice[ch]->mVolumeFader.setLFO(aFrom, aTo, aTime, mVoice[ch]->mStreamTime);
 		FOR_ALL_VOICES_POST
 	}
 
@@ -127,7 +126,7 @@ namespace SoLoud
 		}
 
 		FOR_ALL_VOICES_PRE
-		mVoice[ch]->mPanFader.setLFO(aFrom, aTo, aTime, mVoice[ch]->mStreamTime);
+			mVoice[ch]->mPanFader.setLFO(aFrom, aTo, aTime, mVoice[ch]->mStreamTime);
 		FOR_ALL_VOICES_POST
 	}
 
@@ -138,9 +137,9 @@ namespace SoLoud
 			setRelativePlaySpeed(aVoiceHandle, aTo);
 			return;
 		}
-		
+
 		FOR_ALL_VOICES_PRE
-		mVoice[ch]->mRelativePlaySpeedFader.setLFO(aFrom, aTo, aTime, mVoice[ch]->mStreamTime);
+			mVoice[ch]->mRelativePlaySpeedFader.setLFO(aFrom, aTo, aTime, mVoice[ch]->mStreamTime);
 		FOR_ALL_VOICES_POST
 	}
 

@@ -148,7 +148,5 @@ namespace SFW
 			static constexpr auto ptr_tuple = std::make_tuple(WRAP_MEMBER_FOREACH(ToPtr,WRAP_MEMBER_PTR,__VA_ARGS__)); public:\
 			FOR_EACH(DEFINE_GET_FUNCTION,SPACE,__VA_ARGS__)\
 			friend class SFW::ECS::ComponentAccessorBase;};
-
-
 	}
 }

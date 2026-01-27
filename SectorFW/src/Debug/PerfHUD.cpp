@@ -139,7 +139,6 @@ namespace SFW
 			gpuBuf_.push(gpuEMA_);
 			frameMsBuf_.push(ms);
 
-
 			float logicMs = GetUIBus().logicMs.consume();
 			float renderMs = GetUIBus().renderMs.consume();
 			float gpuMs = GetUIBus().gpuFrameMs.consume();

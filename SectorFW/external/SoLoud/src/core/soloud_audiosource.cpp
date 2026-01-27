@@ -26,7 +26,6 @@ freely, subject to the following restrictions:
 
 namespace SoLoud
 {
-
 	AudioSourceInstance3dData::AudioSourceInstance3dData()
 	{
 		m3dAttenuationModel = 0;
@@ -51,7 +50,7 @@ namespace SoLoud
 			mChannelVolume[i] = 0;
 	}
 
-	void AudioSourceInstance3dData::init(AudioSource &aSource)
+	void AudioSourceInstance3dData::init(AudioSource& aSource)
 	{
 		m3dAttenuationModel = aSource.m3dAttenuationModel;
 		m3dAttenuationRolloff = aSource.m3dAttenuationRolloff;
@@ -73,7 +72,7 @@ namespace SoLoud
 		// Default all volumes to 1.0 so sound behind N mix busses isn't super quiet.
 		int i;
 		for (i = 0; i < MAX_CHANNELS; i++)
-			mChannelVolume[i] = 1.0f;		
+			mChannelVolume[i] = 1.0f;
 		mSetVolume = 1.0f;
 		mBaseSamplerate = 44100.0f;
 		mSamplerate = 44100.0f;
@@ -110,10 +109,10 @@ namespace SoLoud
 		for (i = 0; i < FILTERS_PER_STREAM; i++)
 		{
 			delete mFilter[i];
-		}		
+		}
 	}
 
-	void AudioSourceInstance::init(AudioSource &aSource, int aPlayIndex)
+	void AudioSourceInstance::init(AudioSource& aSource, int aPlayIndex)
 	{
 		mPlayIndex = aPlayIndex;
 		mBaseSamplerate = aSource.mBaseSamplerate;
@@ -150,7 +149,7 @@ namespace SoLoud
 		return NOT_IMPLEMENTED;
 	}
 
-	result AudioSourceInstance::seek(double aSeconds, float *mScratch, unsigned int mScratchSize)
+	result AudioSourceInstance::seek(double aSeconds, float* mScratch, unsigned int mScratchSize)
 	{
 		double offset = aSeconds - mStreamPosition;
 		if (offset <= 0)
@@ -176,16 +175,15 @@ namespace SoLoud
 		return SO_NO_ERROR;
 	}
 
-
-	AudioSource::AudioSource() 
-	{ 
+	AudioSource::AudioSource()
+	{
 		int i;
 		for (i = 0; i < FILTERS_PER_STREAM; i++)
 		{
 			mFilter[i] = 0;
 		}
-		mFlags = 0; 
-		mBaseSamplerate = 44100; 
+		mFlags = 0;
+		mBaseSamplerate = 44100;
 		mAudioSourceID = 0;
 		mSoloud = 0;
 		mChannels = 1;
@@ -201,7 +199,7 @@ namespace SoLoud
 		mLoopPoint = 0;
 	}
 
-	AudioSource::~AudioSource() 
+	AudioSource::~AudioSource()
 	{
 		stop();
 	}
@@ -245,7 +243,7 @@ namespace SoLoud
 		}
 	}
 
-	void AudioSource::setFilter(unsigned int aFilterId, Filter *aFilter)
+	void AudioSource::setFilter(unsigned int aFilterId, Filter* aFilter)
 	{
 		if (aFilterId >= FILTERS_PER_STREAM)
 			return;
@@ -289,7 +287,6 @@ namespace SoLoud
 		}
 	}
 
-
 	void AudioSource::set3dDistanceDelay(bool aDistanceDelay)
 	{
 		if (aDistanceDelay)
@@ -302,13 +299,13 @@ namespace SoLoud
 		}
 	}
 
-	void AudioSource::set3dCollider(AudioCollider *aCollider, int aUserData)
+	void AudioSource::set3dCollider(AudioCollider* aCollider, int aUserData)
 	{
 		mCollider = aCollider;
 		mColliderData = aUserData;
 	}
 
-	void AudioSource::set3dAttenuator(AudioAttenuator *aAttenuator)
+	void AudioSource::set3dAttenuator(AudioAttenuator* aAttenuator)
 	{
 		mAttenuator = aAttenuator;
 	}
@@ -326,12 +323,8 @@ namespace SoLoud
 		}
 	}
 
-
 	float AudioSourceInstance::getInfo(unsigned int /*aInfoKey*/)
 	{
-	    return 0;
+		return 0;
 	}
-
-
 };
-

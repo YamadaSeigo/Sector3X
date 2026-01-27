@@ -11,21 +11,19 @@
 #include <cstdlib>
 
 namespace SFW::Debug {
-
-    inline void ReportAssertFailure(const char* expr, const char* file, int line, const char* msg = nullptr)
-    {
-        std::fprintf(stderr,
-            "[ASSERT] %s\n  at %s(%d)\n  message: %s\n",
-            expr, file, line, msg ? msg : "(none)");
-        // ここでログファイルに書いたり、MessageBox 出したりも可
-    }
+	inline void ReportAssertFailure(const char* expr, const char* file, int line, const char* msg = nullptr)
+	{
+		std::fprintf(stderr,
+			"[ASSERT] %s\n  at %s(%d)\n  message: %s\n",
+			expr, file, line, msg ? msg : "(none)");
+		// ここでログファイルに書いたり、MessageBox 出したりも可
+	}
 
 #if defined(_MSC_VER)
 #define DEBUG_BREAK() __debugbreak()
 #else
 #define DEBUG_BREAK() std::abort()
 #endif
-
 } // namespace Debug
 
 //-------------------------
@@ -40,7 +38,7 @@ namespace SFW::Debug {
             }                                                                    \
         } while (0)
 #else
-    // Release では無効 (式も評価しない)
+	// Release では無効 (式も評価しない)
 #define SFW_ASSERT(expr) ((void)0)
 #endif
 

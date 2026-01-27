@@ -27,10 +27,10 @@
 #if USE_AVX512 != 0 && ((defined(_MSC_VER) && _MSC_VER >= 1911) || (defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 1600) || (defined(__clang__) && __clang_major__ >= 4) || (defined(__GNUC__) && __GNUC__ >= 5))
 
 // The MaskedOcclusionCullingAVX512.cpp file should be compiled avx2/avx512 architecture options turned on in the compiler. However, the SSE
-// version in MaskedOcclusionCulling.cpp _must_ be compiled with SSE2 architecture allow backwards compatibility. Best practice is to 
+// version in MaskedOcclusionCulling.cpp _must_ be compiled with SSE2 architecture allow backwards compatibility. Best practice is to
 // use lowest supported target platform (e.g. /arch:SSE2) as project default, and elevate only the MaskedOcclusionCullingAVX2/512.cpp files.
 #ifndef __AVX2__
-	#error For best performance, MaskedOcclusionCullingAVX512.cpp should be compiled with /arch:AVX2
+#error For best performance, MaskedOcclusionCullingAVX512.cpp should be compiled with /arch:AVX2
 #endif
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,18 +156,18 @@ MAKE_ACCESSOR(simd_i32, __m512i, int, , 16)
 MAKE_ACCESSOR(simd_i32, __m512i, int, const, 16)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Specialized AVX input assembly function for general vertex gather 
+// Specialized AVX input assembly function for general vertex gather
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 typedef MaskedOcclusionCulling::VertexLayout VertexLayout;
 
-FORCE_INLINE void GatherVertices(__m512 *vtxX, __m512 *vtxY, __m512 *vtxW, const float *inVtx, const unsigned int *inTrisPtr, int numLanes, const VertexLayout &vtxLayout)
+FORCE_INLINE void GatherVertices(__m512* vtxX, __m512* vtxY, __m512* vtxW, const float* inVtx, const unsigned int* inTrisPtr, int numLanes, const VertexLayout& vtxLayout)
 {
 	assert(numLanes >= 1);
 
 	const __m512i SIMD_TRI_IDX_OFFSET = _mm512_setr_epi32(0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45);
 	static const __m512i SIMD_LANE_MASK[17] = {
-		_mm512_setr_epi32( 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0),
+		_mm512_setr_epi32(0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0),
 		_mm512_setr_epi32(~0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0),
 		_mm512_setr_epi32(~0, ~0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0),
 		_mm512_setr_epi32(~0, ~0, ~0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0),
@@ -189,20 +189,20 @@ FORCE_INLINE void GatherVertices(__m512 *vtxX, __m512 *vtxY, __m512 *vtxW, const
 	// Compute per-lane index list offset that guards against out of bounds memory accesses
 	__m512i safeTriIdxOffset = _mm512_and_si512(SIMD_TRI_IDX_OFFSET, SIMD_LANE_MASK[numLanes]);
 
-	// Fetch triangle indices. 
+	// Fetch triangle indices.
 	__m512i vtxIdx[3];
 	vtxIdx[0] = _mmw_mullo_epi32(_mm512_i32gather_epi32(safeTriIdxOffset, (const int*)inTrisPtr + 0, 4), _mmw_set1_epi32(vtxLayout.mStride));
 	vtxIdx[1] = _mmw_mullo_epi32(_mm512_i32gather_epi32(safeTriIdxOffset, (const int*)inTrisPtr + 1, 4), _mmw_set1_epi32(vtxLayout.mStride));
 	vtxIdx[2] = _mmw_mullo_epi32(_mm512_i32gather_epi32(safeTriIdxOffset, (const int*)inTrisPtr + 2, 4), _mmw_set1_epi32(vtxLayout.mStride));
 
-	char *vPtr = (char *)inVtx;
+	char* vPtr = (char*)inVtx;
 
 	// Fetch triangle vertices
 	for (int i = 0; i < 3; i++)
 	{
-		vtxX[i] = _mm512_i32gather_ps(vtxIdx[i], (float *)vPtr, 1);
-		vtxY[i] = _mm512_i32gather_ps(vtxIdx[i], (float *)(vPtr + vtxLayout.mOffsetY), 1);
-		vtxW[i] = _mm512_i32gather_ps(vtxIdx[i], (float *)(vPtr + vtxLayout.mOffsetW), 1);
+		vtxX[i] = _mm512_i32gather_ps(vtxIdx[i], (float*)vPtr, 1);
+		vtxY[i] = _mm512_i32gather_ps(vtxIdx[i], (float*)(vPtr + vtxLayout.mOffsetY), 1);
+		vtxW[i] = _mm512_i32gather_ps(vtxIdx[i], (float*)(vPtr + vtxLayout.mOffsetW), 1);
 	}
 }
 
@@ -258,17 +258,17 @@ namespace MaskedOcclusionCullingAVX512
 		return _mm512_castsi512_ps(_mm512_mask_mov_epi32(_mm512_set1_epi32(0), mask, _mm512_set1_epi32(~0)));
 	}
 
-	FORCE_INLINE __mmask16 _mmw_movemask_ps(const __m512 &a)
+	FORCE_INLINE __mmask16 _mmw_movemask_ps(const __m512& a)
 	{
 		__mmask16 mask = _mm512_cmp_epi32_mask(_mm512_and_si512(_mm512_castps_si512(a), _mm512_set1_epi32(0x80000000)), _mm512_set1_epi32(0), 4);	// a & 0x8000000 != 0
 		return mask;
 	}
 
-	FORCE_INLINE __m512 _mmw_blendv_ps(const __m512 &a, const __m512 &b, const __m512 &c)
+	FORCE_INLINE __m512 _mmw_blendv_ps(const __m512& a, const __m512& b, const __m512& c)
 	{
 		__mmask16 mask = _mmw_movemask_ps(c);
 		return _mm512_mask_mov_ps(a, mask, b);
-	} 
+	}
 
 	static MaskedOcclusionCulling::Implementation gInstructionSet = MaskedOcclusionCulling::AVX512;
 
@@ -276,18 +276,18 @@ namespace MaskedOcclusionCullingAVX512
 	// Include common algorithm implementation (general, SIMD independent code)
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	#include "MaskedOcclusionCullingCommon.inl"
+#include "MaskedOcclusionCullingCommon.inl"
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Utility function to create a new object using the allocator callbacks
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Utility function to create a new object using the allocator callbacks
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	typedef MaskedOcclusionCulling::pfnAlignedAlloc            pfnAlignedAlloc;
 	typedef MaskedOcclusionCulling::pfnAlignedFree             pfnAlignedFree;
 
-	MaskedOcclusionCulling *CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
+	MaskedOcclusionCulling* CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
 	{
-		MaskedOcclusionCullingPrivate *object = (MaskedOcclusionCullingPrivate *)alignedAlloc(64, sizeof(MaskedOcclusionCullingPrivate));
+		MaskedOcclusionCullingPrivate* object = (MaskedOcclusionCullingPrivate*)alignedAlloc(64, sizeof(MaskedOcclusionCullingPrivate));
 		new (object) MaskedOcclusionCullingPrivate(alignedAlloc, alignedFree);
 		return object;
 	}
@@ -300,7 +300,7 @@ namespace MaskedOcclusionCullingAVX512
 	typedef MaskedOcclusionCulling::pfnAlignedAlloc            pfnAlignedAlloc;
 	typedef MaskedOcclusionCulling::pfnAlignedFree             pfnAlignedFree;
 
-	MaskedOcclusionCulling *CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
+	MaskedOcclusionCulling* CreateMaskedOcclusionCulling(pfnAlignedAlloc alignedAlloc, pfnAlignedFree alignedFree)
 	{
 		return nullptr;
 	}

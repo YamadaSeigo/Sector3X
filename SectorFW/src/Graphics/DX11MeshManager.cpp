@@ -105,14 +105,12 @@ namespace SFW
 			if (iv < -128) iv = -128;
 			if (iv > 127) iv = 127;
 			return static_cast<uint8_t>(iv & 0xFF);
-
 		}
 		static inline uint32_t PackSnorm8x4(float x, float y, float z, float w) {
 			return  (uint32_t)ToSnorm8(x)
 				| ((uint32_t)ToSnorm8(y) << 8)
 				| ((uint32_t)ToSnorm8(z) << 16)
 				| ((uint32_t)ToSnorm8(w) << 24);
-
 		}
 
 		static inline uint32_t PackHalf2(float u, float v) {
@@ -122,7 +120,6 @@ namespace SFW
 			uint32_t out;
 			std::memcpy(&out, &h2, sizeof(uint32_t));
 			return out;
-
 		}
 
 		// VB 作成ショートハンド
@@ -135,7 +132,6 @@ namespace SFW
 			bd.ByteWidth = byteWidth;
 			D3D11_SUBRESOURCE_DATA sd{ pData };
 			return SUCCEEDED(device->CreateBuffer(&bd, &sd, vb.GetAddressOf()));
-
 		}
 
 		bool MeshManager::CreateFromGLTF_SoA_R8Snorm(
@@ -168,9 +164,7 @@ namespace SFW
 			if (!tangents.empty()) {
 				for (auto& t : tangents) {
 					packedTan.push_back(PackSnorm8x4(t.x, t.y, t.z, t.w)); // w=handedness
-
 				}
-
 			}
 			if (!normals.empty()) {
 				if (customFunc != nullptr)
@@ -180,7 +174,7 @@ namespace SFW
 						LOG_ERROR("カスタムw成分のリストと法線リストのサイズが一致しません。");
 					}
 
-					for (auto i = 0; i < normals.size();++i) {
+					for (auto i = 0; i < normals.size(); ++i) {
 						const auto& n = normals[i];
 						packedNrm.push_back(PackSnorm8x4(n.x, n.y, n.z, wList[i])); // w はカスタム関数で取得
 					}
@@ -230,7 +224,6 @@ namespace SFW
 				if (!MakeVB(device, out.vbs[1], (UINT)(packedTan.size() * sizeof(uint32_t)), /*stride*/4, packedTan.data())) return false;
 				out.strides[1] = 4; out.offsets[1] = 0; out.usedSlots.set(1);
 				out.attribMap.emplace("TANGENT0", MeshData::AttribBinding{ 1, DXGI_FORMAT_R8G8B8A8_SNORM, 0 });
-
 			}
 			if (!packedNrm.empty()) {
 				// Normal を slot=1 の“別オフセット”で同VBに入れたい場合は、連結した1本のバッファを作る。
@@ -238,7 +231,6 @@ namespace SFW
 				if (!MakeVB(device, out.vbs[5], (UINT)(packedNrm.size() * sizeof(uint32_t)), 4, packedNrm.data())) return false;
 				out.strides[5] = 4; out.offsets[5] = 0; out.usedSlots.set(5);
 				out.attribMap.emplace("NORMAL0", MeshData::AttribBinding{ 5, DXGI_FORMAT_R8G8B8A8_SNORM, 0 });
-
 			}
 
 			// slot2: UV0
@@ -246,7 +238,6 @@ namespace SFW
 				if (!MakeVB(device, out.vbs[2], (UINT)(packedUV.size() * sizeof(uint32_t)), /*stride*/4, packedUV.data())) return false;
 				out.strides[2] = 4; out.offsets[2] = 0; out.usedSlots.set(2);
 				out.attribMap.emplace("TEXCOORD0", MeshData::AttribBinding{ 2, DXGI_FORMAT_R16G16_FLOAT, 0 });
-
 			}
 
 			// slot3: Skin
@@ -257,7 +248,6 @@ namespace SFW
 				out.strides[4] = 4; out.offsets[4] = 0; out.usedSlots.set(4);
 				out.attribMap.emplace("BLENDINDICES0", MeshData::AttribBinding{ 3, DXGI_FORMAT_R8G8B8A8_UINT, 0 });
 				out.attribMap.emplace("BLENDWEIGHT0", MeshData::AttribBinding{ 4, DXGI_FORMAT_R8G8B8A8_UNORM, 0 });
-
 			}
 
 			// IB
@@ -389,27 +379,22 @@ namespace SFW
 			if (inNor && !inNor->empty()) {
 				out.normals.resize(outVertexCount);
 				meshopt_remapVertexBuffer(out.normals.data(), inNor->data(), inNor->size(), sizeof(Math::Vec3f), remap.data());
-
 			}
 			if (inTan && !inTan->empty()) {
 				out.tangents.resize(outVertexCount);
 				meshopt_remapVertexBuffer(out.tangents.data(), inTan->data(), inTan->size(), sizeof(Math::Vec4f), remap.data());
-
 			}
 			if (inUV && !inUV->empty()) {
 				out.tex0.resize(outVertexCount);
 				meshopt_remapVertexBuffer(out.tex0.data(), inUV->data(), inUV->size(), sizeof(Math::Vec2f), remap.data());
-
 			}
 			if (inSkinIdx && !inSkinIdx->empty()) {
 				out.skinIdx.resize(outVertexCount);
 				meshopt_remapVertexBuffer(out.skinIdx.data(), inSkinIdx->data(), inSkinIdx->size(), sizeof(std::array<uint8_t, 4>), remap.data());
-
 			}
 			if (inSkinWgt && !inSkinWgt->empty()) {
 				out.skinWgt.resize(outVertexCount);
 				meshopt_remapVertexBuffer(out.skinWgt.data(), inSkinWgt->data(), inSkinWgt->size(), sizeof(std::array<uint8_t, 4>), remap.data());
-
 			}
 		}
 

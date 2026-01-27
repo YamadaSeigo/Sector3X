@@ -33,7 +33,7 @@ namespace SFW
 					shaderData.ref().vsBlob->GetBufferSize(),
 					&pso.inputLayout);
 
-				if(desc.rebindShader.has_value())
+				if (desc.rebindShader.has_value())
 				{
 					auto rebindShaderData = shaderManager->Get(desc.rebindShader.value());
 					hr = device->CreateInputLayout(rebindShaderData.ref().inputLayoutDesc.data(),

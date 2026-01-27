@@ -276,12 +276,12 @@ namespace SFW
 
 			// 一定時間ごとにGPU使用率を取得してUIに送る
 			m_elapsedTime += m_gpuTimeBudget;
-			if(m_elapsedTime > sampleInterval)
+			if (m_elapsedTime > sampleInterval)
 			{
 				m_elapsedTime = 0.0f;
 
 				double pct = 0.0;
-				if(m_gpuUtilPDH.sample(m_lastSampledPID, pct))
+				if (m_gpuUtilPDH.sample(m_lastSampledPID, pct))
 				{
 					//GPU使用率をUIに送る
 					Debug::PublishGpu(float(pct / 100));
@@ -302,8 +302,6 @@ namespace SFW
 
 		void GraphicsDevice::PresentImpl()
 		{
-
-
 			m_swapChain->Present(1, 0);
 		}
 
@@ -372,14 +370,13 @@ namespace SFW
 
 		void GraphicsDevice::SetMainRenderTargetAndDepth()
 		{
-			backend->SetRenderTargets({m_renderTargetView.Get()}, m_depthStencilView.Get());
+			backend->SetRenderTargets({ m_renderTargetView.Get() }, m_depthStencilView.Get());
 		}
 
 		void GraphicsDevice::SetMainRenderTargetNoDepth()
 		{
 			backend->SetRenderTargets({ m_renderTargetView.Get() }, nullptr);
 		}
-
 
 		void GraphicsDevice::SetBlendState(BlendStateID state)
 		{

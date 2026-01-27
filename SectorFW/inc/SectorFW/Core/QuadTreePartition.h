@@ -55,7 +55,7 @@ namespace SFW
 			float minLeafSize,
 			uint32_t maxEntitiesPerLeaf = 1024) noexcept
 			: levelOriginWS(originWS)
-			,m_worldW(std::max<ChunkSizeType>(1, ChunkSizeType(worldW* minLeafSize)))
+			, m_worldW(std::max<ChunkSizeType>(1, ChunkSizeType(worldW* minLeafSize)))
 			, m_worldH(std::max<ChunkSizeType>(1, ChunkSizeType(worldH* minLeafSize)))
 			, m_minLeaf(std::max<float>(1.f, minLeafSize))
 			, m_maxPerLeafCount(std::max<uint32_t>(1, maxEntitiesPerLeaf))
@@ -186,7 +186,6 @@ namespace SFW
 
 			return out;
 		}
-
 
 		static inline float Dist2PointAABB3D(const Math::Vec3f& p,
 			const Math::Vec2f& c,

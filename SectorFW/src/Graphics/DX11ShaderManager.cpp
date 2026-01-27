@@ -57,7 +57,6 @@ namespace SFW
 			Microsoft::WRL::ComPtr<ID3DBlob> vsBlob;
 			hr = D3DReadFileToBlob(desc.vsPath.c_str(), vsBlob.GetAddressOf());
 			if (FAILED(hr)) {
-
 				LOG_ERROR("Failed to compile vertex shader: %s", desc.vsPath.c_str());
 				DYNAMIC_ASSERT_MESSAGE(false, "Failed to compile vertex shader {%s}", desc.vsPath.c_str());
 				return shader;

@@ -12,7 +12,6 @@
 #include "PhysicsMeshShapeLoader.h"
 #include "PhysicsConvexHullLoader.h"
 
-
 #include <Jolt/Jolt.h>
 #include <Jolt/Physics/Collision/Shape/Shape.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
@@ -231,7 +230,7 @@ namespace SFW
 			const WireframeData& data;
 
 			ShareWireframeData(const WireframeData& _data, std::shared_mutex& mutex)
-				: data(_data), lk_(mutex){
+				: data(_data), lk_(mutex) {
 			}
 		private:
 			std::shared_lock<std::shared_mutex> lk_;
@@ -345,9 +344,8 @@ namespace SFW
 						return make_rotated_translated(base);
 					}
 					else if constexpr (std::is_same_v<T, MeshDesc> || std::is_same_v<T, MeshFileDesc>) {
-
 						MeshShapeSettings st;
-					
+
 						if constexpr (std::is_same_v<T, MeshDesc>) {
 							st.mTriangleVertices.reserve(d.vertices.size());
 							for (const auto& v : d.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
@@ -363,7 +361,7 @@ namespace SFW
 						else {
 							MeshShapeData meshData;
 
-							if(!LoadMeshShapeBin(d.path, meshData, d.rhFlip))
+							if (!LoadMeshShapeBin(d.path, meshData, d.rhFlip))
 							{
 								LOG_WARNING("PhysicsShapeManager: Failed to load VHACD file: {%s}", d.path.c_str());
 								// 読み込み失敗時のフォールバック
@@ -383,7 +381,7 @@ namespace SFW
 						}
 
 						auto res = st.Create();
-						if (res.HasError()) 
+						if (res.HasError())
 							return make_rotated_translated(make_scaled(RefConst<Shape>(new BoxShape(Vec3(0.5f, 0.5f, 0.5f)))));
 						RefConst<Shape> base = res.Get();
 						return make_rotated_translated(base);
@@ -567,7 +565,6 @@ namespace SFW
 				auto d = this->Get(h);
 				return d.ref();
 			}
-
 
 			std::optional<ShapeDims> GetShapeDims(const JPH::Shape* s, ShapeHandle h)
 			{

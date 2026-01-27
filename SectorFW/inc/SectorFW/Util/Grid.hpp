@@ -37,7 +37,7 @@ namespace SFW
 		 */
 		template<typename... Args>
 		Grid2D(Size width, Size height, Args&&... args) noexcept
-			: m_width(width), m_height(height), m_data(width * height, T(std::forward<Args>(args)...)) {
+			: m_width(width), m_height(height), m_data(width* height, T(std::forward<Args>(args)...)) {
 		}
 
 		/**

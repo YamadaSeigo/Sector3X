@@ -23,9 +23,8 @@
 #include "../../Util/function_trait.h"
 #include "../ThreadPoolExecutor.h"
 
-//ParallelをtrueにしているのにExecutorがない場合警告を出す
+ //ParallelをtrueにしているのにExecutorがない場合警告を出す
 #define SFW_WARN_NO_EXECUTOR_PARALLEL 1
-
 
 namespace SFW
 {
@@ -48,10 +47,10 @@ namespace SFW
 			requires (Derived & t, Partition & partition, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, LevelContext<Partition>& ctx, UndeletablePtr<Services>... services) {
+			requires (Derived & t, LevelContext<Partition>&ctx, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(ctx, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, Partition & partition, LevelContext<Partition>& ctx, UndeletablePtr<Services>... services) {
+			requires (Derived & t, Partition & partition, LevelContext<Partition>&ctx, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, ctx, services...) } -> std::same_as<void>;
 		} ||
 			requires (Derived & t, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
@@ -60,10 +59,10 @@ namespace SFW
 			requires (Derived & t, Partition & partition, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, exe, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, LevelContext<Partition> & ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
+			requires (Derived & t, LevelContext<Partition> &ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(ctx, exe, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, Partition & partition, LevelContext<Partition> & ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
+			requires (Derived & t, Partition & partition, LevelContext<Partition> &ctx, UndeletablePtr<IThreadExecutor> exe, UndeletablePtr<Services>... services) {
 				{ t.UpdateImpl(partition, ctx, exe, services...) } -> std::same_as<void>;
 		};
 
@@ -88,7 +87,7 @@ namespace SFW
 			requires (Derived & t, LevelContext<Partition> ctx, UndeletablePtr<Services>... services) {
 				{ t.EndImpl(ctx, services...) } -> std::same_as<void>;
 		} ||
-			requires (Derived & t, Partition & partition, LevelContext<Partition> & ctx, UndeletablePtr<Services>... services) {
+			requires (Derived & t, Partition & partition, LevelContext<Partition> &ctx, UndeletablePtr<Services>... services) {
 				{ t.EndImpl(partition, ctx, services...) } -> std::same_as<void>;
 		};
 
@@ -98,8 +97,6 @@ namespace SFW
 			requires (Derived & t, UndeletablePtr<Services>... services) {
 				{ t.EndImpl(services...) } -> std::same_as<void>;
 		};
-
-
 
 		// ComponentAccess<Override...> が Allowed... の部分集合か？
 		template<class AccessSpec, class... Allowed>
@@ -228,7 +225,6 @@ namespace SFW
 				}
 			}
 
-
 			// 末尾型を取り出す
 			template<class... Ts> struct last_type;
 			template<class T> struct last_type<T> { using type = T; };
@@ -294,7 +290,7 @@ namespace SFW
 		}
 
 		//前方宣言
-		template<template<typename> class Derived, typename Partition, typename AccessSpec, typename ContextSpec, IsParallel ParallelUpdate = IsParallel{false}>
+		template<template<typename> class Derived, typename Partition, typename AccessSpec, typename ContextSpec, IsParallel ParallelUpdate = IsParallel{ false } >
 		class ITypeSystem;
 
 		/**
@@ -306,7 +302,6 @@ namespace SFW
 		 */
 		template<template<typename> class DerivedT, typename Partition, typename... AccessTypes, typename... Services, IsParallel ParallelUpdate>
 		class ITypeSystem<DerivedT, Partition, ComponentAccess<AccessTypes...>, ServiceContext<Services...>, ParallelUpdate> : public ISystem<Partition> {
-
 		protected:
 			using Derived = DerivedT<Partition>;
 
@@ -596,7 +591,6 @@ namespace SFW
 			}
 
 			void Update(const ServiceLocator& serviceLocator, IThreadExecutor* executor) override {
-
 				if constexpr (HasGlobalUpdateImpl<Derived, Services...>) {
 					// 静的サービスを使用する場合、サービスロケーターから直接取得
 					if constexpr (AllStaticServices<Services...>) {
@@ -618,7 +612,6 @@ namespace SFW
 					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
 					std::apply(
 						[&](Services*... unpacked) {
-
 							constexpr bool hasExecutor = function_mentions_v<decltype(&Derived::UpdateImpl), UndeletablePtr<IThreadExecutor>>;
 
 							if constexpr (hasExecutor)
@@ -636,11 +629,10 @@ namespace SFW
 			 * @param partition パーティションの参照
 			 * @details 自身のシステムのコンテキストを使用して、UpdateImplを呼び出す
 			 */
-			void Update(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override final{
+			void Update(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override final {
 				// UpdateImpl関数を持っている場合のみ呼び出す
 				//※このフラグで包まないと、UpdateImplを持たないシステムでコンパイルエラーになる
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
-
 					// 静的サービスを使用する場合、サービスロケーターから直接取得
 					if constexpr (AllStaticServices<Services...>) {
 						std::apply(
@@ -716,7 +708,7 @@ namespace SFW
 			 * @param serviceLocator サービスロケーターの参照
 			 * @details 自身のコンテキストを使用して、EndImplを呼び出す
 			 */
-			void End(const ServiceLocator& serviceLocator) override{
+			void End(const ServiceLocator& serviceLocator) override {
 				if constexpr (HasGlobalEndImpl<Derived, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
 						// 静的サービスを使用する場合、サービスロケーターから直接取得
@@ -892,7 +884,6 @@ namespace SFW
 
 				RunIndexRange<Parallel>(chunks.size(), body, exec);
 			}
-
 
 			// 展開ヘルパ（AccessSpec = ComponentAccess<Ts...> を Ts... に割り出す）
 			template<bool Parallel, class AccessSpec, class Self, class F, class CullChunks, class... Extra>

@@ -381,7 +381,6 @@ namespace SFW
 			grid(cx, cy, cz) = std::move(newCell);
 		}
 
-
 		/*
 		* @brief チャンクをリセットする
 		*/

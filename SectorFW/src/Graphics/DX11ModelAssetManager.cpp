@@ -205,7 +205,7 @@ namespace SFW
 		ModelAssetManager::ModelAssetManager(
 			MeshManager& meshMgr, MaterialManager& matMgr,
 			ShaderManager& shaderMgr, PSOManager& psoMgr,
-			TextureManager& texMgr,BufferManager& cbMgr,
+			TextureManager& texMgr, BufferManager& cbMgr,
 			SamplerManager& samplMgr, ID3D11Device* device) :
 			meshMgr(meshMgr), matMgr(matMgr), shaderMgr(shaderMgr), psoMgr(psoMgr),
 			texMgr(texMgr), cbManager(cbMgr), samplerManager(samplMgr), device(device) {
@@ -441,7 +441,7 @@ namespace SFW
 						positions, indices,
 						clusters, clusterTris, clusterVerts);
 #ifdef BUILD_CLUSTERS_FOR_MODEL_ASSET_MANAGER
-				 	sub.lods[0].clusters = std::move(clusters);
+					sub.lods[0].clusters = std::move(clusters);
 #endif
 
 					size_t beforeIndexCount = indices.size();
@@ -460,7 +460,7 @@ namespace SFW
 							sub.lods[li], idx, rs,
 							desc,
 							/*buildClusters=*/true
-							);
+						);
 						constexpr float kMinImprove = 0.98f; // 最低でも 2% 減っていて欲しい。満たせない場合に限り打ち切り
 						if (!ok || (float(idx.size()) >= float(beforeIndexCount) * kMinImprove)) {
 							lodLevelNum = li;
@@ -686,7 +686,6 @@ namespace SFW
 							if (b.type == D3D_SIT_SAMPLER && b.name == gSamplerBindName)
 								samplerMap[b.bindPoint] = samp;
 
-
 						// 追加バインド情報を適用
 						if (desc.additionalBindings)
 						{
@@ -753,7 +752,7 @@ namespace SFW
 
 					//再利用ではない場合呼び出し側の一時参照を返す
 					if (!find) {
-						for(auto& th : releaseTextures) {
+						for (auto& th : releaseTextures) {
 							texMgr.Release(th, 0);
 						}
 						for (auto& bh : releaseBuffers) {
@@ -808,7 +807,7 @@ namespace SFW
 								auto meltRes = GenerateOccluderAABBs_MaybeWithMelt(
 									positions, indices, desc.meltResolution, desc.meltFillPct, meltAABBs, desc.meltBoxType);
 
-								if(meltRes == MeltBuildStatus::Failed) {
+								if (meltRes == MeltBuildStatus::Failed) {
 									LOG_WARNING("Occluder melt AABB generation failed for model asset: %s", asset.name.c_str());
 								}
 
@@ -886,7 +885,6 @@ namespace SFW
 			if (si && !si->empty())  streams[sc++] = { reinterpret_cast<const unsigned char*>(si->data()), sizeof((*si)[0]), sizeof((*si)[0]) };
 			if (sw && !sw->empty())  streams[sc++] = { reinterpret_cast<const unsigned char*>(sw->data()), sizeof((*sw)[0]), sizeof((*sw)[0]) };
 		}
-
 
 		static bool SimplifyIndices(const ModelAssetManager::LodRecipe& r,
 			const std::vector<uint32_t>& baseIdx,
@@ -1256,5 +1254,5 @@ namespace SFW
 			if (!additionalBindings) additionalBindings = std::make_unique<std::vector<BindNode>>();
 			additionalBindings->emplace_back(BindNode{ name, h, BindType::SAMPLER });
 		}
-}
+	}
 }

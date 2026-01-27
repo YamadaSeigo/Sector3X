@@ -18,7 +18,6 @@ namespace SFW
 	 */
 	template<typename... LevelTypes>
 	class World {
-
 		template<typename T>
 		using LevelCustomFunc = std::function<void(const ECS::ServiceLocator*, Level<T>*)>;
 	public:
@@ -46,7 +45,6 @@ namespace SFW
 			 */
 			template<typename T>
 			void AddLevel(std::unique_ptr<Level<T>> level) {
-
 				static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
 
 				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
@@ -61,19 +59,17 @@ namespace SFW
 			 */
 			template<typename T, typename... Func>
 			void AddLevel(std::unique_ptr<Level<T>> level, Func&&... customFunc) {
-
 				static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
 
 				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
 				vec.emplace_back(LevelHolder<T>{
 					std::move(level),
-					std::forward<Func>(customFunc)...
+						std::forward<Func>(customFunc)...
 				});
 			}
 
 			template<typename T>
 			void AddLevel(LevelHolder<T>&& holder) {
-
 				static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
 
 				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
@@ -118,9 +114,10 @@ namespace SFW
 
 								ELevelState setBits = ELevelState::Loaded;
 								ELevelState clearBits = ELevelState::Loading;
-								if(active) {
+								if (active) {
 									setBits = setBits | ELevelState::Active;
-								} else {
+								}
+								else {
 									clearBits = clearBits | ELevelState::Active;
 								}
 
@@ -232,7 +229,6 @@ namespace SFW
 			World<LevelTypes...>& world;
 		};
 
-
 		/*
 		* @brief Worldに対するリクエストコマンドのインターフェース
 		*/
@@ -341,7 +337,7 @@ namespace SFW
 
 			RequestService(RequestService&& other) noexcept :
 				requestMutex(other.requestMutex),
-				requests(std::move(other.requests)){
+				requests(std::move(other.requests)) {
 			}
 
 			RequestService& operator=(RequestService&& other) {
@@ -393,7 +389,6 @@ namespace SFW
 			// すべてのコマンドを実行する関数
 			// WorldでLevelを更新する前に呼び出す
 			void FlashAllCommand(World<LevelTypes...>* pWorld, IThreadExecutor* executor) {
-
 				decltype(requests) localRequests;
 				{
 					std::lock_guard<std::mutex> lock(*requestMutex);
@@ -466,7 +461,6 @@ namespace SFW
 		 * @param deltaTime デルタタイム（秒）
 		 */
 		void UpdateAllLevels(double deltaTime, IThreadExecutor* executor) {
-
 #ifdef _ENABLE_IMGUI
 			{
 				auto g = Debug::BeginTreeWrite(); // lock & back buffer

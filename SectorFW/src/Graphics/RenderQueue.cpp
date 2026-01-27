@@ -7,7 +7,7 @@ namespace SFW
 	namespace Graphics
 	{
 		[[nodiscard]] InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(const InstanceData& inst) {
-            assert(inst.worldMtx.m[3][3] == 1.0f && "InstanceData.worldMtx should be affine matrix.");
+			assert(inst.worldMtx.m[3][3] == 1.0f && "InstanceData.worldMtx should be affine matrix.");
 
 			RebindIfNeeded();
 			// 現在のフレームスロット
@@ -105,7 +105,6 @@ namespace SFW
 			const int slot = rq->current.load(std::memory_order_acquire);
 			rq->sharedInstanceArena->Data(slot)[index.index] = inst;
 		}
-
 
 		size_t RenderQueue::ProducerSessionExternal::AllocInstancesFromWorldSoA(const Math::Matrix3x4fSoA& wSoa, InstanceIndex* outIdx)
 		{
@@ -214,7 +213,4 @@ namespace SFW
 			return toWrite;
 		}
 	}
-
 }
-
-

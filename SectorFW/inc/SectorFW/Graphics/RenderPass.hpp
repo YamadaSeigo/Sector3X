@@ -24,8 +24,7 @@ namespace SFW
 		template<typename RTV, typename DSV, typename SRV, typename Buffer,
 			typename RTVHandle = DefaultViewHandle<RTV>,
 			typename DSVHandle = DefaultViewHandle<DSV>>
-		struct RenderPass {
-
+			struct RenderPass {
 			// ハンドル型（スマートポインタ／生ポインタなど）
 			using RTVHandleT = RTVHandle;
 			using DSVHandleT = DSVHandle;
@@ -96,8 +95,7 @@ namespace SFW
 				, psoOverride(psoOverride)
 				, customExecute(customExecute)
 				, stencilRef(stencilRef)
-				, rebindPSO(rebindPSO){
-
+				, rebindPSO(rebindPSO) {
 				rtvsRaw.resize(rtvs.size());
 				for (size_t i = 0; i < rtvs.size(); ++i) {
 					rtvsRaw[i] = rtvs[i].Get();
@@ -172,7 +170,6 @@ namespace SFW
 		 */
 		template<typename RTV, typename DSV, template <typename> class ViewHandle = DefaultViewHandle>
 		struct RenderPassDesc {
-
 			// ハンドル型（スマートポインタ／生ポインタなど）
 			using RTVHandleT = ViewHandle<std::remove_pointer_t<RTV>>;
 			using DSVHandleT = ViewHandle<std::remove_pointer_t<DSV>>;

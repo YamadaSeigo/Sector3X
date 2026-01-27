@@ -28,7 +28,7 @@ freely, subject to the following restrictions:
 
 namespace SoLoud
 {
-	void Soloud::setGlobalFilter(unsigned int aFilterId, Filter *aFilter)
+	void Soloud::setGlobalFilter(unsigned int aFilterId, Filter* aFilter)
 	{
 		if (aFilterId >= FILTERS_PER_STREAM)
 			return;
@@ -36,7 +36,7 @@ namespace SoLoud
 		lockAudioMutex_internal();
 		delete mFilterInstance[aFilterId];
 		mFilterInstance[aFilterId] = 0;
-		
+
 		mFilter[aFilterId] = aFilter;
 		if (aFilter)
 		{
@@ -63,7 +63,7 @@ namespace SoLoud
 		}
 
 		int ch = getVoiceFromHandle_internal(aVoiceHandle);
-		if (ch == -1) 
+		if (ch == -1)
 		{
 			return ret;
 		}
@@ -74,7 +74,7 @@ namespace SoLoud
 			ret = mVoice[ch]->mFilter[aFilterId]->getFilterParameter(aAttributeId);
 		}
 		unlockAudioMutex_internal();
-		
+
 		return ret;
 	}
 
@@ -95,11 +95,11 @@ namespace SoLoud
 		}
 
 		FOR_ALL_VOICES_PRE
-		if (mVoice[ch] &&
-			mVoice[ch]->mFilter[aFilterId])
-		{
-			mVoice[ch]->mFilter[aFilterId]->setFilterParameter(aAttributeId, aValue);
-		}
+			if (mVoice[ch] &&
+				mVoice[ch]->mFilter[aFilterId])
+			{
+				mVoice[ch]->mFilter[aFilterId]->setFilterParameter(aAttributeId, aValue);
+			}
 		FOR_ALL_VOICES_POST
 	}
 
@@ -120,11 +120,11 @@ namespace SoLoud
 		}
 
 		FOR_ALL_VOICES_PRE
-		if (mVoice[ch] &&
-			mVoice[ch]->mFilter[aFilterId])
-		{
-			mVoice[ch]->mFilter[aFilterId]->fadeFilterParameter(aAttributeId, aTo, aTime, mStreamTime);
-		}
+			if (mVoice[ch] &&
+				mVoice[ch]->mFilter[aFilterId])
+			{
+				mVoice[ch]->mFilter[aFilterId]->fadeFilterParameter(aAttributeId, aTo, aTime, mStreamTime);
+			}
 		FOR_ALL_VOICES_POST
 	}
 
@@ -145,12 +145,11 @@ namespace SoLoud
 		}
 
 		FOR_ALL_VOICES_PRE
-		if (mVoice[ch] &&
-			mVoice[ch]->mFilter[aFilterId])
-		{
-			mVoice[ch]->mFilter[aFilterId]->oscillateFilterParameter(aAttributeId, aFrom, aTo, aTime, mStreamTime);
-		}
+			if (mVoice[ch] &&
+				mVoice[ch]->mFilter[aFilterId])
+			{
+				mVoice[ch]->mFilter[aFilterId]->oscillateFilterParameter(aAttributeId, aFrom, aTo, aTime, mStreamTime);
+			}
 		FOR_ALL_VOICES_POST
 	}
-
 }

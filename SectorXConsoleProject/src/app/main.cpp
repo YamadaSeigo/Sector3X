@@ -19,6 +19,7 @@
 #include <SectorFW/Graphics/DX11/DX11LightShadowResourceService.h>
 #include <SectorFW/Graphics/TerrainOccluderExtraction.h>
 #include <SectorFW/Graphics/ImageLoader.h>
+#include <SectorFW/Debug/UIBus.h>
 
 #include "app/AppConfig.h"
 #include "app/AppContext.h"
@@ -442,13 +443,13 @@ int main(void)
 			RenderPipe::Initialize(rg, ctx, mainRTV, mainDSV, mainDSVRO, mainDepthSRV, drawTerrainColor, drawParticle);
 		});
 
-	constexpr const char* loadLevelName = "Loading";
+	constexpr const char* LOADING_LEVEL_NAME = "Loading";
 
 	// World 構築 + level enqueue
 	WorldType world(std::move(serviceLocator));
 
 	Levels::EnqueueGlobalSystems(world);
-	Levels::EnqueueLoadingLevel(world, ctx, loadLevelName);
+	Levels::EnqueueLoadingLevel(world, ctx, LOADING_LEVEL_NAME);
 	Levels::EnqueueTitleLevel(world, ctx);
 
 	Levels::OpenFieldLevelParams openFieldParams =
@@ -467,13 +468,13 @@ int main(void)
 	//初めのレベルをロード
 	{
 		//ローディング中のレベルを先にロード
-		world.LoadLevel(loadLevelName);
+		world.LoadLevel(LOADING_LEVEL_NAME);
 
 		//ロード完了後のコールバック
 		auto loadedFunc = [](decltype(world)::Session* pSession) {
 
 			//ローディングレベルをクリーンアップ
-			pSession->CleanLevel(loadLevelName);
+			pSession->CleanLevel(LOADING_LEVEL_NAME);
 			};
 
 		world.LoadLevel("Title", true, true, loadedFunc);
@@ -483,9 +484,9 @@ int main(void)
 
 	//シーンロードのデバッグコールバック登録
 	{
-		static std::string loadingLevelName;
+		static std::string newLevelName;
 
-		BIND_DEBUG_TEXT("Level", "Name", &loadingLevelName);
+		BIND_DEBUG_TEXT("Level", "Name", &newLevelName);
 
 		static bool loadAsync = false;
 
@@ -496,7 +497,7 @@ int main(void)
 
 			if (loadAsync) {
 				//ローディング中のレベルを先にロード
-				auto loadingCmd = worldRequestService.CreateLoadLevelCommand(loadingLevelName, false);
+				auto loadingCmd = worldRequestService.CreateLoadLevelCommand(LOADING_LEVEL_NAME, false);
 				worldRequestService.PushCommand(std::move(loadingCmd));
 			}
 
@@ -504,16 +505,16 @@ int main(void)
 			auto loadedFunc = [](decltype(world)::Session* pSession) {
 
 				//ローディングレベルをクリーンアップ
-				pSession->CleanLevel(loadingLevelName);
+				pSession->CleanLevel(LOADING_LEVEL_NAME);
 				};
 
-			auto reqCmd = worldRequestService.CreateLoadLevelCommand(loadingLevelName, loadAsync, true, loadAsync ? loadedFunc : nullptr);
+			auto reqCmd = worldRequestService.CreateLoadLevelCommand(newLevelName, loadAsync, true, loadAsync ? loadedFunc : nullptr);
 			worldRequestService.PushCommand(std::move(reqCmd));
 			});
 
 		REGISTER_DEBUG_BUTTON("Level", "clean", [](bool) {
 			auto& worldRequestService = gameEngine.GetWorld().GetRequestServiceNoLock();
-			auto reqCmd = worldRequestService.CreateCleanLevelCommand(loadingLevelName);
+			auto reqCmd = worldRequestService.CreateCleanLevelCommand(newLevelName);
 			worldRequestService.PushCommand(std::move(reqCmd));
 			});
 	}

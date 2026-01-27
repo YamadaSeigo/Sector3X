@@ -27,12 +27,12 @@ namespace SFW
 	 * @brief レベルの状態を定義する列挙型
 	 */
 	enum class ELevelState : uint32_t {
-		None	= 0,
-		Main	= 1u << 0,
-		Sub		= 1u << 1,
-		Active	= 1u << 2,
+		None = 0,
+		Main = 1u << 0,
+		Sub = 1u << 1,
+		Active = 1u << 2,
 		Loading = 1u << 3,
-		Loaded	= 1u << 4,
+		Loaded = 1u << 4,
 	};
 
 	constexpr ELevelState operator|(ELevelState a, ELevelState b) {
@@ -82,15 +82,13 @@ namespace SFW
 			== static_cast<uint32_t>(bits);
 	}
 
-
 	/**
 	 * @brief Systemに渡すレベルの情報や操作を提供する構造体
 	 */
 	template<class Partition>
 	struct LevelContext {
-
 		class IRequestCommand {
-			public:
+		public:
 			virtual ~IRequestCommand() = default;
 			virtual void Execute(Level<Partition>::Session& pLevelSession) = 0;
 		};
@@ -193,7 +191,6 @@ namespace SFW
 				return id;
 			}
 
-
 			/**
 			 * @brief 位置を指定してエンティティを追加する関数
 			 * @param location エンティティの位置
@@ -279,7 +276,6 @@ namespace SFW
 		) noexcept
 			: name(name), state(static_cast<uint32_t>(_state)), entityManagerReg(reg),
 			partition(originWS, _chunkWidth, _chunkHeight, _chunkCellSize) {
-
 			// Active を落とす（他ビットの並行更新を壊さない）
 			state.fetch_and(~static_cast<uint32_t>(ELevelState::Active),
 				std::memory_order_acq_rel);
@@ -299,7 +295,6 @@ namespace SFW
 				Args&&... args) noexcept
 			: name(name), state(static_cast<uint32_t>(_state)), entityManagerReg(reg),
 			partition(std::forward<Args>(args)...) {
-
 			// Active を落とす（他ビットの並行更新を壊さない）
 			state.fetch_and(~static_cast<uint32_t>(ELevelState::Active),
 				std::memory_order_acq_rel);
@@ -460,7 +455,6 @@ namespace SFW
 		 */
 		void SetActive(bool active,
 			std::memory_order mo = std::memory_order_acq_rel) {
-
 			if (active) {
 				//念のためロード済みであることを確認
 				assert(state.load(std::memory_order_acquire) & static_cast<uint32_t>(ELevelState::Loaded) && "Cannot set level active when it is not loaded.");
@@ -529,7 +523,7 @@ namespace SFW
 		 */
 		[[nodiscard]] Session GetSession()
 		{
-			return Session{*this, this->updateEntityMutex };
+			return Session{ *this, this->updateEntityMutex };
 		}
 
 		void ShowDebugInactiveLevelInfoUI()

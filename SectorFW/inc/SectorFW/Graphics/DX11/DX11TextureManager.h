@@ -22,7 +22,6 @@ namespace SFW
 	{
 		//= 文字列ヘルパ
 		namespace detail {
-
 			inline std::string NormalizePath(std::string path) {
 				// 1) すべて '\\' に統一
 				std::replace(path.begin(), path.end(), '/', '\\');
@@ -61,7 +60,6 @@ namespace SFW
 					return (h ^ (hb(k.forceSRGB) + 0x9e3779b97f4a7c15ULL + (h << 6) + (h >> 2)));
 				}
 			};
-
 		} // namespace detail
 
 		//テクスチャを生データで作成する場合のレシピ
@@ -86,7 +84,7 @@ namespace SFW
 		 */
 		struct TextureCreateDesc {
 			std::string path;
-			
+
 			// --- 解像度を指定して生成する場合（path が空）----
 			TextureRecipe* recipe = nullptr; //指定しない場合はnullptr(必須ではない)
 
@@ -126,7 +124,6 @@ namespace SFW
 			D3D11_BOX box{};
 			// 自動 delete の挙動（BufferManager と同様）
 			bool isDelete = true;
-
 		};
 
 		/**

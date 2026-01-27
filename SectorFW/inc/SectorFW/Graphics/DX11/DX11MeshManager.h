@@ -85,7 +85,6 @@ namespace SFW
 				std::vector<Math::Vec2f> tex0;
 				std::vector<std::array<uint8_t, 4>> skinIdx;
 				std::vector<std::array<uint8_t, 4>> skinWgt;
-
 			};
 
 			/**
@@ -190,7 +189,6 @@ namespace SFW
 				float       radius;     // バウンディング球半径
 				Math::Vec3f coneAxis;   // 法線円錐の軸
 				float       coneCutoff; // 円錐カットオフ cosθ
-
 			};
 
 			// positions / indices から meshlets を生成して返す

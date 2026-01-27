@@ -40,7 +40,6 @@ namespace SFW
 		};
 
 		struct ModelAssetCreateDesc {
-
 			enum BindType : uint8_t
 			{
 				VS_CBV = 1u << 0,
@@ -82,7 +81,6 @@ namespace SFW
 				OccluderBox_AABB,      // AABB
 				OccluderBox_InnerAABBs // melt生成の内接AABB群
 			};
-
 
 			//法線のw成分のカスタム関数
 			MeshManager::NormalWCustomFunc pCustomNrmWFunc = nullptr;
@@ -262,7 +260,7 @@ namespace SFW
 				bool buildClusters = false,
 				bool hasNormal = true,
 				bool hasUV = true
-				);
+			);
 
 			// 返すのは LOD1..N 用のレシピ（LOD0は常に原型）
 			static std::vector<LodRecipe> BuildLodRecipes(const AssetStats& a);

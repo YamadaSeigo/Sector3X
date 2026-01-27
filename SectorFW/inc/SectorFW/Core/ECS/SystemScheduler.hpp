@@ -25,7 +25,6 @@ namespace SFW
 {
 	namespace ECS
 	{
-	
 		/**
 		 * @brief システムを管理し、競合がないようにスケジューリングするクラス
 		 * @tparam Partition パーティションの型

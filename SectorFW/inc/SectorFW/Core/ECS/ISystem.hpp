@@ -102,7 +102,7 @@ namespace SFW
 			 * @param partition 対象のパーティション
 			 * @param serviceLocator サービズロケーター
 			 */
-			virtual void End(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator){}
+			virtual void End(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator) {}
 			/**
 			 * @brief アクセス情報の取得関数
 			 * @return AccessInfo アクセス情報
