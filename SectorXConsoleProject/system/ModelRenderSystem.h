@@ -1,15 +1,16 @@
 ﻿#pragma once
 
 #include <SectorFW/Graphics/DX11/DX11ModelAssetManager.h>
+#include <SectorFW\Graphics/LightShadowService.h>
 #include <SectorFW/Debug/UIBus.h>
 #include <SectorFW/Math/Rectangle.hpp>
 
-#include "../app/Packed2Bits32.h"
+#include "util/Packed2Bits32.h"
 
-#include "../app/RenderDefine.h"
+#include "graphics/RenderDefine.h"
 
 //描画系のこのクラスでいったんバッファの更新
-#include "../app/WindService.h"
+#include "environment/WindService.h"
 
 #ifdef _ENABLE_IMGUI
 #define PROFILE_MODEL_UPDATE_TIME 0

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../app/DeferredRenderingService.h"
-#include "../app/FireflyService.h"
-#include "../app/LeafService.h"
+#include "graphics/DeferredRenderingService.h"
+#include "environment/FireflyService.h"
+#include "environment/LeafService.h"
 
 /**
  * @brief カメラのバッファの更新、フルスクリーン描画用のカメラバッファとFireflyServiceのカメラバッファも更新,

@@ -3,7 +3,7 @@
 #include <wrl.h>
 #include <d3d11.h>
 #include <cstdint>
-#include "D3D11Helpers.h" // StructuredBufferSRVUAV / RawBufferSRVUAV / CreateÅ` ån
+#include "graphics/D3D11Helpers.h" // StructuredBufferSRVUAV / RawBufferSRVUAV / CreateÅ` ån
 
 //#define DEBUG_DEPTH_HIT
 

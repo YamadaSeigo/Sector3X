@@ -38,10 +38,14 @@
 #include "system/PointLightSystem.h"
 #include "system/SpriteAnimationSystem.h"
 #include "system/FireflySystem.h"
-#include "system/LeafSytem.h"
+#include "system/LeafSystem.h"
 #include "system/TitleSystem.h"
-#include "WindService.h"
-#include "EnvironmentService.h"
+#include "environment/WindService.h"
+#include "environment/EnvironmentService.h"
+
+#include "graphics/RenderPipeline.h"
+#include "terrain/TerrainBoostRap.h"
+#include "level/LevelBuilders.h"
 
 #include <SectorFW/Debug/message.h>
 #include <SectorFW/Util/convert_string.h>
@@ -61,7 +65,7 @@ constexpr uint32_t SHADOW_MAP_SIZE = 1024 / 2;	// シャドウマップの幅
 
 constexpr double FPS_LIMIT = 60.0;	// フレームレート制限
 
-#include "RenderDefine.h"
+#include "Graphics/RenderDefine.h"
 
 enum : uint32_t {
 	Mat_Grass = 1, Mat_Rock = 2, Mat_Dirt = 3, Mat_Snow = 4,
@@ -113,26 +117,26 @@ struct RtPack
 	std::vector<ComPtr<ID3D11ShaderResourceView>> srv;
 };
 
-bool CreateMRT(ID3D11Device* dev, Graphics::DX11::TextureManager* texMgr, const DeferredRenderingService& deferredService, RtPack& out)
-{
-	using namespace Graphics;
-
-	out.rtv.resize(DeferredTextureCount);
-	out.srv.resize(DeferredTextureCount);
-
-	for (int i = 0; i < DeferredTextureCount; ++i)
-	{
-		const auto& texData = texMgr->Get(deferredService.GetGBufferHandles()[i]);
-
-		out.srv[i] = texData.ref().srv;
-
-		HRESULT hr;
-
-		hr = dev->CreateRenderTargetView(texData.ref().resource.Get(), nullptr, out.rtv[i].GetAddressOf());
-		if (FAILED(hr)) return false;
-	}
-	return true;
-}
+//bool CreateMRT(ID3D11Device* dev, Graphics::DX11::TextureManager* texMgr, const DeferredRenderingService& deferredService, RtPack& out)
+//{
+//	using namespace Graphics;
+//
+//	out.rtv.resize(DeferredTextureCount);
+//	out.srv.resize(DeferredTextureCount);
+//
+//	for (int i = 0; i < DeferredTextureCount; ++i)
+//	{
+//		const auto& texData = texMgr->Get(deferredService.GetGBufferHandles()[i]);
+//
+//		out.srv[i] = texData.ref().srv;
+//
+//		HRESULT hr;
+//
+//		hr = dev->CreateRenderTargetView(texData.ref().resource.Get(), nullptr, out.rtv[i].GetAddressOf());
+//		if (FAILED(hr)) return false;
+//	}
+//	return true;
+//}
 
 
 // 描画のパイプライン初期化
@@ -159,8 +163,10 @@ void InitializeRenderPipeLine(
 	auto textureMgr = renderGraph->GetRenderService()->GetResourceManager<DX11::TextureManager>();
 
 	static RtPack ttMRT;
-	bool ok = CreateMRT(graphics->GetDevice(), textureMgr, deferredService, ttMRT);
-	assert(ok);
+	/*bool ok = CreateMRT(graphics->GetDevice(), textureMgr, deferredService, ttMRT);
+	assert(ok);*/
+
+
 
 	std::vector<ComPtr<ID3D11RenderTargetView>> mainRtv = { mainRenderTarget };
 

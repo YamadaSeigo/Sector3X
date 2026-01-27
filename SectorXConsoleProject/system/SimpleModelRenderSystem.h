@@ -4,7 +4,7 @@
 #include <SectorFW/Debug/UIBus.h>
 #include <SectorFW/Math/Rectangle.hpp>
 
-#include "../app/Packed2Bits32.h"
+#include "util/Packed2Bits32.h"
 
 #include "ModelRenderSystem.h"
 

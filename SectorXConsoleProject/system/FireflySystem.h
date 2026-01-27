@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../app/FireflyService.h"
-#include "../app/PlayerService.h"
+#include "environment/FireflyService.h"
+#include "app/PlayerService.h"
 
 
 struct CFireflyVolume

@@ -10,10 +10,10 @@
 
 #include "ModelRenderSystem.h"
 #include "FireflySystem.h"
-#include "LeafSytem.h"
+#include "LeafSystem.h"
 
-#include "../app/DebugRenderType.h"
-#include "../app/DeferredRenderingService.h"
+#include "graphics/DebugRenderType.h"
+#include "graphics/DeferredRenderingService.h"
 
 
 using namespace SFW;

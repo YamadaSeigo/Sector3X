@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../app/SpriteAnimationService.h"
+#include "graphics/SpriteAnimationService.h"
 
 template<typename Partition>
 class SpriteAnimationSystem : public ITypeSystem<

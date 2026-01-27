@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../app/EnvironmentService.h"
+#include "environment/EnvironmentService.h"
 
 template<typename Partition>
 class EnvironmentSystem : public ITypeSystem<

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <SectorFW/Graphics/PointLightService.h>
+#include <SectorFW/Graphics/DX11/DX11LightShadowResourceService.h>
+
 template<typename Partition>
 class LightShadowSystem : public ITypeSystem<
 	LightShadowSystem,

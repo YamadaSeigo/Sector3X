@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../app/PlayerService.h"
-#include "../app/RenderDefine.h"
+#include "app/PlayerService.h"
+#include "graphics/RenderDefine.h"
 
 struct PlayerComponent
 {

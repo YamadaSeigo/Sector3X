@@ -16,7 +16,7 @@
  * @param shape ShapeHandle
  * @return CreateBodyCmd
  */
-Physics::CreateBodyCmd MakeNoMoveChunkCreateBodyCmd(
+inline Physics::CreateBodyCmd MakeNoMoveChunkCreateBodyCmd(
 	SFW::ECS::EntityID e,
 	const CTransform& tf,
 	const Physics::CPhyBody body,

@@ -3,7 +3,7 @@
 #include <wrl.h>
 #include <d3d11.h>
 #include <cstdint>
-#include "D3D11Helpers.h"
+#include "graphics/D3D11Helpers.h"
 
 struct FireflyParticleGPU
 {

@@ -115,9 +115,10 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)../SectorFW/inc;$(SolutionDir)../SectorFW/third_party;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../SectorFW/inc;$(SolutionDir)../SectorFW/third_party;$(ProjectDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,8 +142,9 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)../SectorFW/inc;$(SolutionDir)../SectorFW/third_party;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../SectorFW/inc;$(SolutionDir)../SectorFW/third_party;$(ProjectDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,16 +158,25 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app\DebugRenderType.cpp" />
-    <ClCompile Include="app\FireflyParticlePool.cpp" />
-    <ClCompile Include="app\FireflyService.cpp" />
-    <ClCompile Include="app\LeafParticlePool.cpp" />
-    <ClCompile Include="app\LeafService.cpp" />
-    <ClCompile Include="app\main.cpp" />
-    <ClCompile Include="app\stdafx.cpp">
+    <ClCompile Include="src\app\component_registration.cpp" />
+    <ClCompile Include="src\App\main.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\App\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\app\texture_registry.cpp" />
+    <ClCompile Include="src\Environment\FireflyParticlePool.cpp" />
+    <ClCompile Include="src\Environment\FireflyService.cpp" />
+    <ClCompile Include="src\Environment\LeafParticlePool.cpp" />
+    <ClCompile Include="src\Environment\LeafService.cpp" />
+    <ClCompile Include="src\Graphics\DebugRenderType.cpp" />
+    <ClCompile Include="src\graphics\RenderPipeline.cpp" />
+    <ClCompile Include="src\Level\LevelBuilder.cpp" />
+    <ClCompile Include="src\terrain\normalmap_bc5.cpp" />
+    <ClCompile Include="src\terrain\TerrainBoostrap.cpp" />
     <ClCompile Include="system\DebugRenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -517,20 +528,27 @@
     <None Include="shader\_ShadowTypes.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app\D3D11Helpers.h" />
-    <ClInclude Include="app\DebugRenderType.h" />
-    <ClInclude Include="app\DeferredRenderingService.h" />
-    <ClInclude Include="app\EnvironmentService.h" />
-    <ClInclude Include="app\FireflyParticlePool.h" />
-    <ClInclude Include="app\FireflyService.h" />
-    <ClInclude Include="app\LeafParticlePool.h" />
-    <ClInclude Include="app\LeafService.h" />
-    <ClInclude Include="app\PlayerService.h" />
-    <ClInclude Include="app\SpriteAnimationService.h" />
-    <ClInclude Include="app\WindService.h" />
-    <ClInclude Include="app\Packed2Bits32.h" />
-    <ClInclude Include="app\RenderDefine.h" />
-    <ClInclude Include="app\stdafx.h" />
+    <ClInclude Include="src\app\appconfig.h" />
+    <ClInclude Include="src\app\AppContext.h" />
+    <ClInclude Include="src\app\component_registration.h" />
+    <ClInclude Include="src\App\PlayerService.h" />
+    <ClInclude Include="src\App\stdafx.h" />
+    <ClInclude Include="src\app\texture_registry.h" />
+    <ClInclude Include="src\Environment\EnvironmentService.h" />
+    <ClInclude Include="src\Environment\FireflyParticlePool.h" />
+    <ClInclude Include="src\Environment\FireflyService.h" />
+    <ClInclude Include="src\Environment\LeafParticlePool.h" />
+    <ClInclude Include="src\Environment\LeafService.h" />
+    <ClInclude Include="src\Environment\WindService.h" />
+    <ClInclude Include="src\Graphics\D3D11Helpers.h" />
+    <ClInclude Include="src\Graphics\DebugRenderType.h" />
+    <ClInclude Include="src\Graphics\DeferredRenderingService.h" />
+    <ClInclude Include="src\Graphics\RenderDefine.h" />
+    <ClInclude Include="src\graphics\RenderPipeline.h" />
+    <ClInclude Include="src\Graphics\SpriteAnimationService.h" />
+    <ClInclude Include="src\Level\LevelBuilder.h" />
+    <ClInclude Include="src\terrain\normalmap_bc5.h" />
+    <ClInclude Include="src\terrain\TerrainBoostrap.h" />
     <ClInclude Include="system\BodyIDWriteBackFromEventSystem.hpp" />
     <ClInclude Include="system\BuildBodiesFromIntentsSystem.hpp" />
     <ClInclude Include="system\CameraSystem.h" />
@@ -540,7 +558,7 @@
     <ClInclude Include="system\EnvironmentSystem.h" />
     <ClInclude Include="system\FireflySystem.h" />
     <ClInclude Include="system\GlobalDebugRenderSystem.h" />
-    <ClInclude Include="system\LeafSytem.h" />
+    <ClInclude Include="system\LeafSystem.h" />
     <ClInclude Include="system\LightShadowSystem.h" />
     <ClInclude Include="system\ModelRenderSystem.h" />
     <ClInclude Include="system\PhysicsSystem.h" />

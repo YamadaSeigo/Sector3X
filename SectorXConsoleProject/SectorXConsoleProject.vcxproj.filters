@@ -13,31 +13,61 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{14207222-c950-488d-820a-09fd5d9e410d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Environment">
+      <UniqueIdentifier>{9bf7155b-ac48-49d8-aa56-77ba681ef0b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Terrain">
+      <UniqueIdentifier>{69c33fe8-4d86-4100-b383-59732f57f1e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{874047e7-f1fe-47a9-9c0f-f784fe55190e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="system\DebugRenderSystem.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="app\main.cpp">
+    <ClCompile Include="src\App\main.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="app\stdafx.cpp">
+    <ClCompile Include="src\App\stdafx.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="app\FireflyService.cpp">
+    <ClCompile Include="src\Graphics\DebugRenderType.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Environment\FireflyParticlePool.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Environment\FireflyService.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Environment\LeafParticlePool.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Environment\LeafService.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\component_registration.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="app\FireflyParticlePool.cpp">
+    <ClCompile Include="src\app\texture_registry.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="app\DebugRenderType.cpp">
-      <Filter>App</Filter>
+    <ClCompile Include="src\terrain\normalmap_bc5.cpp">
+      <Filter>Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="app\LeafService.cpp">
-      <Filter>App</Filter>
+    <ClCompile Include="src\terrain\TerrainBoostrap.cpp">
+      <Filter>Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="app\LeafParticlePool.cpp">
-      <Filter>App</Filter>
+    <ClCompile Include="src\graphics\RenderPipeline.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Level\LevelBuilder.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -237,20 +267,8 @@
     <ClInclude Include="system\CleanModelSystem.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="app\stdafx.h">
-      <Filter>App</Filter>
-    </ClInclude>
-    <ClInclude Include="app\Packed2Bits32.h">
-      <Filter>App</Filter>
-    </ClInclude>
     <ClInclude Include="system\SimpleModelRenderSystem.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="app\RenderDefine.h">
-      <Filter>App</Filter>
-    </ClInclude>
-    <ClInclude Include="app\WindService.h">
-      <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="system\SpriteRenderSystem.h">
       <Filter>System</Filter>
@@ -258,17 +276,11 @@
     <ClInclude Include="system\PlayerSystem.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="app\PlayerService.h">
-      <Filter>App</Filter>
-    </ClInclude>
     <ClInclude Include="system\EnvironmentSystem.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="system\DeferredRenderingSystem.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="app\DeferredRenderingService.h">
-      <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="system\LightShadowSystem.h">
       <Filter>System</Filter>
@@ -276,29 +288,11 @@
     <ClInclude Include="system\PointLightSystem.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="app\EnvironmentService.h">
-      <Filter>App</Filter>
-    </ClInclude>
-    <ClInclude Include="app\SpriteAnimationService.h">
-      <Filter>App</Filter>
-    </ClInclude>
     <ClInclude Include="system\SpriteAnimationSystem.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="app\FireflyService.h">
-      <Filter>App</Filter>
-    </ClInclude>
     <ClInclude Include="system\FireflySystem.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="app\FireflyParticlePool.h">
-      <Filter>App</Filter>
-    </ClInclude>
-    <ClInclude Include="app\D3D11Helpers.h">
-      <Filter>App</Filter>
-    </ClInclude>
-    <ClInclude Include="app\DebugRenderType.h">
-      <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="system\GlobalDebugRenderSystem.h">
       <Filter>System</Filter>
@@ -306,14 +300,71 @@
     <ClInclude Include="system\TitleSystem.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="app\LeafService.h">
-      <Filter>App</Filter>
-    </ClInclude>
-    <ClInclude Include="app\LeafParticlePool.h">
-      <Filter>App</Filter>
-    </ClInclude>
-    <ClInclude Include="system\LeafSytem.h">
+    <ClInclude Include="system\LeafSystem.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\PlayerService.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\stdafx.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\D3D11Helpers.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\DebugRenderType.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\DeferredRenderingService.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\RenderDefine.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\SpriteAnimationService.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Environment\EnvironmentService.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Environment\FireflyParticlePool.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Environment\FireflyService.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Environment\LeafParticlePool.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Environment\LeafService.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Environment\WindService.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\appconfig.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\AppContext.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\component_registration.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\texture_registry.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="src\terrain\normalmap_bc5.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\terrain\TerrainBoostrap.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\RenderPipeline.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Level\LevelBuilder.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
