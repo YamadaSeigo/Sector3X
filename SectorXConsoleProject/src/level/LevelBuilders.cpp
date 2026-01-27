@@ -1,4 +1,4 @@
-#include "LevelBuilder.h"
+#include "LevelBuilders.h"
 #include "app/AppContext.h"
 #include "app/appconfig.h"
 
@@ -180,7 +180,6 @@ void Levels::EnqueueLoadingLevel(WorldType& world, App::Context& ctx, const char
 
 	auto& worldRequestService = world.GetRequestServiceNoLock();
 	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
-	auto spriteAnimationService = world.GetServiceLocator().Get<SpriteAnimationService>();
 
 	auto level = std::unique_ptr<Level<VoidPartition>>(new Level<VoidPartition>(loadingName, *entityManagerReg, ELevelState::Main));
 
@@ -194,6 +193,7 @@ void Levels::EnqueueLoadingLevel(WorldType& world, App::Context& ctx, const char
 			auto shaderMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::ShaderManager>();
 			auto sampMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::SamplerManager>();
 
+			auto spriteAnimationService = serviceLocator->Get<SpriteAnimationService>();
 
 			DX11::ShaderCreateDesc shaderDesc;
 			shaderDesc.vsPath = L"assets/shader/VS_SpriteAnimation.cso";
@@ -863,6 +863,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				leafVolume.centerWS = location;
 				leafVolume.radius = 40.0f;
 				leafVolume.farDistance = 60.0f;
+				leafVolume.k = 20.0f;
 
 				auto chunk = pLevel->GetChunk(location);
 				auto key = chunk.value()->GetNodeKey();

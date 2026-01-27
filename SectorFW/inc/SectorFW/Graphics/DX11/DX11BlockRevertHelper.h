@@ -738,6 +738,9 @@ namespace SFW::Graphics::DX11 {
                 ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
                 ctx->DrawInstancedIndirect(argsBuf.Get(), 0);
+
+				ID3D11ShaderResourceView* nullSRVs[_countof(vsSRVs)] = { nullptr };
+				ctx->VSSetShaderResources(20, _countof(vsSRVs), nullSRVs);
             }
 
             if (!castShadow) return;

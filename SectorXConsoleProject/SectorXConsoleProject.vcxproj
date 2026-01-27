@@ -174,9 +174,9 @@
     <ClCompile Include="src\Environment\LeafService.cpp" />
     <ClCompile Include="src\Graphics\DebugRenderType.cpp" />
     <ClCompile Include="src\graphics\RenderPipeline.cpp" />
-    <ClCompile Include="src\Level\LevelBuilder.cpp" />
+    <ClCompile Include="src\Level\LevelBuilders.cpp" />
     <ClCompile Include="src\terrain\normalmap_bc5.cpp" />
-    <ClCompile Include="src\terrain\TerrainBoostrap.cpp" />
+    <ClCompile Include="src\terrain\TerrainBootstrap.cpp" />
     <ClCompile Include="system\DebugRenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -546,9 +546,9 @@
     <ClInclude Include="src\Graphics\RenderDefine.h" />
     <ClInclude Include="src\graphics\RenderPipeline.h" />
     <ClInclude Include="src\Graphics\SpriteAnimationService.h" />
-    <ClInclude Include="src\Level\LevelBuilder.h" />
+    <ClInclude Include="src\Level\LevelBuilders.h" />
     <ClInclude Include="src\terrain\normalmap_bc5.h" />
-    <ClInclude Include="src\terrain\TerrainBoostrap.h" />
+    <ClInclude Include="src\terrain\TerrainBootstrap.h" />
     <ClInclude Include="system\BodyIDWriteBackFromEventSystem.hpp" />
     <ClInclude Include="system\BuildBodiesFromIntentsSystem.hpp" />
     <ClInclude Include="system\CameraSystem.h" />

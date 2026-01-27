@@ -60,13 +60,13 @@
     <ClCompile Include="src\terrain\normalmap_bc5.cpp">
       <Filter>Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="src\terrain\TerrainBoostrap.cpp">
+    <ClCompile Include="src\terrain\TerrainBootstrap.cpp">
       <Filter>Terrain</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\RenderPipeline.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Level\LevelBuilder.cpp">
+    <ClCompile Include="src\Level\LevelBuilders.cpp">
       <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
@@ -357,13 +357,13 @@
     <ClInclude Include="src\terrain\normalmap_bc5.h">
       <Filter>Terrain</Filter>
     </ClInclude>
-    <ClInclude Include="src\terrain\TerrainBoostrap.h">
+    <ClInclude Include="src\terrain\TerrainBootstrap.h">
       <Filter>Terrain</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\RenderPipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Level\LevelBuilder.h">
+    <ClInclude Include="src\Level\LevelBuilders.h">
       <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>

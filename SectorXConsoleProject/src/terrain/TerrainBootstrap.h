@@ -27,6 +27,7 @@ namespace TerrainBoot
 {
     struct Result
     {
+		SFW::Graphics::TerrainBuildParams params{};
         SFW::Graphics::TerrainClustered* terrain = nullptr; // Build ‚ª static ‚ð•Ô‚·‚È‚çƒ|ƒCƒ“ƒ^‚Åˆµ‚¤
         std::vector<float> heightMap;
 
@@ -39,6 +40,7 @@ namespace TerrainBoot
 
         // textures
         SFW::Graphics::TextureHandle heightTexHandle{};
+		SFW::Graphics::TextureHandle normalTexHandle{};
         ComPtr<ID3D11ShaderResourceView> heightMapSRV;
         ComPtr<ID3D11ShaderResourceView> normalMapSRV;
     };

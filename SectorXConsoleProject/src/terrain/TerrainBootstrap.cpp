@@ -1,4 +1,4 @@
-#include "terrain/TerrainBoostrap.h"
+#include "terrain/TerrainBootstrap.h"
 #include "terrain/normalmap_bc5.h"
 #include "app/AppConfig.h"
 #include "app/texture_registry.h"
@@ -17,7 +17,8 @@ namespace TerrainBoot
         auto bufferMgr = graphics.GetRenderService()->GetResourceManager<DX11::BufferManager>();
         auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
 
-        TerrainBuildParams tp;
+        auto& tp = r.params;
+
         tp.cellsX = 256 * terrainRank - 1;
         tp.cellsZ = 256 * terrainRank - 1;
         tp.clusterCellsX = 32;
@@ -91,10 +92,65 @@ namespace TerrainBoot
         DX11::BuildFromTerrainClustered(graphics.GetDevice(), terrain, blockRevert);
         r.blockRevert = &blockRevert;
 
-        // HeightTex (R16_UNORM) + SRV
-        // NormalTex (BC5) + SRV  ← TerrainUtil::EncodeNormalMapBC5 を使う
+        //HeightMap
+        {
+            using namespace Graphics;
 
-        // …（あなたの既存コードをここに移すだけ）
+            size_t heightMapSize = heightMap.size();
+            std::vector<uint16_t> height16(heightMapSize);
+
+			//16bit正規化
+            for (int i = 0; i < heightMapSize; ++i)
+            {
+                float h01 = heightMap[i];
+                h01 = std::clamp(h01, 0.0f, 1.0f);
+                height16[i] = static_cast<uint16_t>(h01 * 65535.0f + 0.5f);
+            }
+
+            DX11::TextureCreateDesc texDesc;
+            DX11::TextureRecipe recipeDesc;
+            recipeDesc.width = tp.cellsX + 1;
+            recipeDesc.height = tp.cellsZ + 1;
+            recipeDesc.format = DXGI_FORMAT_R16_UNORM;
+            recipeDesc.usage = D3D11_USAGE_IMMUTABLE;
+            recipeDesc.initialData = height16.data();
+            recipeDesc.initialRowPitch = recipeDesc.width * (16 / 8);
+
+            texDesc.recipe = &recipeDesc;
+            auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
+            textureMgr->Add(texDesc, r.heightTexHandle);
+
+            auto texData = textureMgr->Get(r.heightTexHandle);
+            r.heightMapSRV = texData.ref().srv;
+        }
+
+		// NormalMap
+        {
+            using namespace Graphics;
+
+            size_t vertexCount = terrain.vertices.size();
+            std::vector<Math::Vec3f> normalMap(vertexCount);
+            for (auto i = 0; i < vertexCount; ++i)
+            {
+                normalMap[i] = terrain.vertices[i].nrm;
+            }
+
+            auto normalMapBC5 = TerrainUtil::EncodeNormalMapBC5(normalMap.data(), (int)(tp.cellsX + 1), (int)(tp.cellsZ + 1));
+
+            DX11::TextureCreateDesc texDesc;
+            DX11::TextureRecipe recipeDesc;
+            recipeDesc.width = (tp.cellsX + 1) / 4;
+            recipeDesc.height = (tp.cellsZ + 1) / 4;
+            recipeDesc.format = DXGI_FORMAT_BC5_UNORM;
+            recipeDesc.usage = D3D11_USAGE_IMMUTABLE;
+            recipeDesc.initialData = normalMapBC5.data();
+            recipeDesc.initialRowPitch = recipeDesc.width / 4 * 16;
+            texDesc.recipe = &recipeDesc;
+            auto textureMgr = graphics.GetRenderService()->GetResourceManager<DX11::TextureManager>();
+            textureMgr->Add(texDesc, r.normalTexHandle);
+			auto texData = textureMgr->Get(r.normalTexHandle);
+            r.normalMapSRV = texData.ref().srv;
+        }
 
         return r;
     }
