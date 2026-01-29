@@ -32,9 +32,6 @@ class PlayerSystem : public ITypeSystem<
 	>>{
 
 public:
-	//実際のカメラの位置からのオフセット
-	static inline const Math::Vec3f cameraOffset = { 0.0f,3.0f,0.0f };
-
 	// 入力から希望する速度を計算する（仮実装）
 	Math::Vec3f CalcWishVelocityFromInput(
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
@@ -267,7 +264,7 @@ public:
 				if (playerCamera)
 				{
 					// カメラに見てほしい理想位置（少し頭の上とか）
-					const Math::Vec3f desiredTarget = playerPos + cameraOffset;
+					const Math::Vec3f desiredTarget = playerPos + PlayerService::CAMERA_OFFSET;
 
 					static FollowCamState camState;
 

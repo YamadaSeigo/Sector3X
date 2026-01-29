@@ -3,6 +3,9 @@
 #include "app/appconfig.h"
 #include "system/PlayerSystem.h"
 
+#include <SectorFW/Graphics/I3DCameraService.h>
+#include <SectorFW/Math/ease.h>
+
 struct CTitleSprite
 {
 	float fadeTime = 2.5f; //フェードにかかる時間
@@ -22,7 +25,9 @@ class TitleSystem : public ITypeSystem<
 	ServiceContext<
 		WorldType::RequestService,
 		InputService,
-		TimerService
+		TimerService,
+		PlayerService,
+		Graphics::I3DPerCameraService
 	>>{
 
 	using Accessor = ComponentAccessor<Read<CTitleSprite>, Write<CColor>>;
@@ -31,12 +36,14 @@ public:
 	//ロード完了してからタイトルを見せるまで待つ時間
 	static inline constexpr float WAIT_FADE_TIME = 0.0f;
 	//Enterを押してからゲームが始まる時間
-	static inline constexpr float START_GAME_TIME = 2.5f;
+	static inline constexpr float START_GAME_TIME = 5.0f;
 
 	void StartImpl(
 		NoDeletePtr<WorldType::RequestService> worldRequestService,
 		NoDeletePtr<InputService> inputService,
-		NoDeletePtr<TimerService> timerService) {
+		NoDeletePtr<TimerService> timerService,
+		NoDeletePtr<PlayerService> playerService,
+		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService) {
 
 		//ローディング中のレベルを先にロード
 		{
@@ -63,7 +70,9 @@ public:
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<WorldType::RequestService> worldRequestService,
 		NoDeletePtr<InputService> inputService,
-		NoDeletePtr<TimerService> timerService) {
+		NoDeletePtr<TimerService> timerService,
+		NoDeletePtr<PlayerService> playerService,
+		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService) {
 
 		bool isLoadedMainLevel = loadedMainLevel.load(std::memory_order_relaxed);
 
@@ -102,15 +111,14 @@ public:
 		if (startGame)
 		{
 			//フェードはタイムスケールを無視して進める
-			fadeElapsedTime += timerService->GetUnscaledDeltaTime();
+			float dt = timerService->GetUnscaledDeltaTime();
+			fadeElapsedTime += dt;
 
 			auto& globalEntityManager = partition.GetGlobalEntityManager();
 
 			Query query;
 			query.With<CTitleSprite, CColor>();
 			auto chunks = query.MatchingChunks<ECS::EntityManager&>(globalEntityManager);
-
-			float t = Math::clamp(fadeElapsedTime / START_GAME_TIME, 0.0f, 1.0f);
 
 			auto updateFunc = [&](Accessor& accessor, size_t entityCount) {
 
@@ -135,6 +143,19 @@ public:
 				updateFunc(accessor, chunk->GetEntityCount());
 			}
 
+			float t = Math::clamp(fadeElapsedTime / START_GAME_TIME, 0.0f, 1.0f);
+
+			Math::Vec3f desertTarget = playerService->GetPlayerPosition() + PlayerService::CAMERA_OFFSET;
+			Math::Vec3f target = Math::Lerp(startCamTarget, desertTarget, Math::EaseSmoother(t));
+
+			target.y += sin(t * Math::pi_v<float>) * 5.0f; //少し持ち上げる
+
+			perCameraService->SetTarget(target);
+
+			float rotDeg = dt / START_GAME_TIME * 100.0f;
+			Math::Quatf rot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(rotDeg));
+			perCameraService->Rotate(rot);
+
 			if (t >= 1.0f)
 			{
 				//タイトルレベルをクリーンアップ
@@ -154,10 +175,12 @@ public:
 		{
 			startGame = true;
 			fadeElapsedTime = 0.0f;
+			startCamTarget = perCameraService->GetTarget();
 		}
 	}
 private:
-	bool startGame = { false };
+	Math::Vec3f startCamTarget = {};
 	std::atomic<bool> loadedMainLevel = { false };
 	float fadeElapsedTime = 0.0f;
+	bool startGame = { false };
 };

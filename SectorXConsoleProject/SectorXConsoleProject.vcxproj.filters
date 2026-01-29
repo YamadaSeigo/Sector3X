@@ -224,6 +224,9 @@
     <FxCompile Include="shader\CS_LeafClumpUpdate.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\PS_CircleAlpha.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\_GlobalTypes.hlsli">

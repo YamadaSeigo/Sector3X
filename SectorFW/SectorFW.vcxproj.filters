@@ -540,6 +540,9 @@
     <ClInclude Include="inc\SectorFW\Debug\ProcessGpu3DUtilPDH.h">
       <Filter>Inc\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SectorFW\Math\ease.h">
+      <Filter>Inc\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\doxygen_sample.cpp">

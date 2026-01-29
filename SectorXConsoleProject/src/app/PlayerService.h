@@ -3,6 +3,9 @@
 class PlayerService : public ECS::IUpdateService
 {
 public:
+	//実際のカメラの位置からのオフセット
+	static inline const Math::Vec3f CAMERA_OFFSET = { 0.0f,3.0f,0.0f };
+
 	static inline Math::Vec3f GRAVITY = Math::Vec3f(0.0f, -9.81f, 0.0f);
 	static inline Math::Vec3f UP = Math::Vec3f(0.0f, 1.0f, 0.0f);
 

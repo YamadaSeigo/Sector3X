@@ -48,6 +48,17 @@ int main(void)
 		App::FPS_LIMIT
 	);
 
+	enum class TerrainRank : int {
+		Low = 1,
+		Middle = 2,
+		High = 4
+	};
+
+	int terrainRank = (int)TerrainRank::High;
+
+	// Terrain 構築
+	static auto terrainRes = TerrainBoot::BuildAll(graphics, terrainRank);
+
 	// デバイス & サービス（Worldコンテナ）
 	Physics::PhysicsDevice::InitParams params;
 	params.maxBodies = 100000;
@@ -95,6 +106,15 @@ int main(void)
 	static WindService windService(bufferMgr);
 
 	PlayerService playerService(bufferMgr);
+	{
+		const auto& tp = terrainRes.params;
+		Math::Vec3f playerLocation = { tp.cellsX * tp.cellSize * 0.45f, 0.0f, tp.cellsZ * tp.cellSize * 0.55f };
+		terrainRes.terrain->SampleHeightNormalBilinear(playerLocation.x, playerLocation.z, playerLocation.y);
+
+		playerLocation.y += 2.0f; //少し浮かせる
+
+		playerService.SetPlayerPosition(playerLocation);
+	}
 
 	Audio::AudioService audioService;
 	ok = audioService.Initialize();
@@ -142,29 +162,6 @@ int main(void)
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry, TimerService>();
 
 
-	static App::Context ctx;
-	ctx.graphics = &graphics;
-	ctx.renderService = graphics.GetRenderService();
-	ctx.shadowRes = &lightShadowResourceService;
-	ctx.deferred = &deferredRenderingService;
-	ctx.wind = &windService;
-	ctx.player = &playerService;
-	ctx.env = &environmentService;
-	ctx.firefly = &fireflyService;
-	ctx.leaf = &leafService;
-
-
-	enum class TerrainRank : int {
-		Low = 1,
-		Middle = 2,
-		High = 4
-	};
-
-	int terrainRank = (int)TerrainRank::High;
-
-	// Terrain 構築
-	static auto terrainRes = TerrainBoot::BuildAll(graphics, terrainRank);
-
 	static ComPtr<ID3D11SamplerState> linearSampler;
 	{
 		using namespace Graphics;
@@ -189,6 +186,18 @@ int main(void)
 		auto sampData = samplerManager->Get(samp);
 		pointSampler = sampData.ref().state;
 	}
+
+
+	static App::Context ctx;
+	ctx.graphics = &graphics;
+	ctx.renderService = graphics.GetRenderService();
+	ctx.shadowRes = &lightShadowResourceService;
+	ctx.deferred = &deferredRenderingService;
+	ctx.wind = &windService;
+	ctx.player = &playerService;
+	ctx.env = &environmentService;
+	ctx.firefly = &fireflyService;
+	ctx.leaf = &leafService;
 
 	// ---- マッピング設定(オクルージョンカリング用) ----
 	static Graphics::HeightTexMapping heightTexMap = Graphics::MakeHeightTexMappingFromTerrainParams(terrainRes.params, terrainRes.heightMap);

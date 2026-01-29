@@ -26,6 +26,8 @@
 
 #include "graphics/SpriteAnimationService.h"
 
+constexpr float START_CAMERA_PLAYER_DISTANCE = 20.0f;
+
 
 void Levels::EnqueueGlobalSystems(WorldType& world)
 {
@@ -76,6 +78,14 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 			DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
 			PSOHandle psoHandle;
 			psoMgr->Add(psoDesc, psoHandle);
+
+			shaderDesc.vsPath = L"assets/shader/VS_ClipUVColor.cso";
+			shaderDesc.psPath = L"assets/shader/PS_CircleAlpha.cso";
+			shaderMgr->Add(shaderDesc, shaderHandle);
+
+			psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
+			PSOHandle alphaPsoHandle;
+			psoMgr->Add(psoDesc, alphaPsoHandle);
 
 			D3D11_SAMPLER_DESC sampDesc = {};
 			sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -147,7 +157,7 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 			CColor colorBlack = { { 0.0f,0.0f,0.0f,1.0f} };
 
 			sprite.hMat.index = CSprite::invalidIndex; // マテリアル無効化(真っ白マテリアルで描画）
-			sprite.pso.index = CSprite::invalidIndex; // PSO無効化（デフォルトパイプラインで描画）
+			sprite.pso = alphaPsoHandle;
 			sprite.layer = 2; // 一番前に描画
 			titleComp.fadeTime = 2.0f;
 			titleComp.isErased = true;
@@ -158,13 +168,22 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 				colorBlack,
 				titleComp);
 
+			auto perCameraService = serviceLocator->Get<Graphics::I3DPerCameraService>();
+			auto playerService = serviceLocator->Get<PlayerService>();
+
+			auto pp = playerService->GetPlayerPosition();
+
+			auto camRot = perCameraService->GetRotation();
+			Math::Vec3f r, u, f;
+			Math::ToBasis<float, Math::LH_ZForward>(camRot, r, u, f);
+
+			perCameraService->SetTarget(pp - f * START_CAMERA_PLAYER_DISTANCE + Math::Vec3f{ 0.0f, 4.0f, 0.0f });
+			Math::Quatf rot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(-20.0f));
+			perCameraService->Rotate(rot);
+
 			auto& scheduler = pLevel->GetScheduler();
 			scheduler.AddSystem<TitleSystem>(*serviceLocator);
 			scheduler.AddSystem<SpriteRenderSystem>(*serviceLocator);
-
-			/*perCameraService->SetTarget({ 100.0f,-1.0f,100.0f });
-			Math::Quatf cameraRot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(-20.0f));
-			perCameraService->Rotate(cameraRot);*/
 
 		});
 
@@ -356,6 +375,14 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.BindVS_CBV("WindCB", windCBHandle); // 草揺れ用CBVをバインド
 			modelDesc.BindVS_CBV("GrassFootCB", footCBHandle); // 草揺れ用CBVをバインド
 
+			modelDesc.path = "assets/model/Stylized/Tree01.gltf";
+			modelDesc.viewMax = 100.0f;
+			modelDesc.buildOccluders = false;
+			modelDesc.pso = cullNoneWindEntityPSOHandle;
+			modelDesc.minAreaFrec = 0.001f;
+			modelDesc.pCustomNrmWFunc = WindService::ComputeTreeWeight;
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
+
 			modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
 			modelDesc.buildOccluders = false;
 			modelDesc.viewMax = 50.0f;
@@ -363,13 +390,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.pCustomNrmWFunc = WindService::ComputeGrassWeight;
 			modelDesc.pso = cullNoneWindEntityPSOHandle;
 
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
-
-			modelDesc.path = "assets/model/Stylized/Tree01.gltf";
-			modelDesc.viewMax = 100.0f;
-			modelDesc.pso = cullNoneWindEntityPSOHandle;
-			modelDesc.minAreaFrec = 0.001f;
-			modelDesc.pCustomNrmWFunc = WindService::ComputeTreeWeight;
 			modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
 
 			modelDesc.instancesPeak = 100;
@@ -482,7 +502,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				{
 					return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_1.chullbin", true, scale);
 				},
-				nullptr,
 				[&](Math::Vec3f scale)
 				{
 					Physics::ShapeCreateDesc shapeDesc;
@@ -490,6 +509,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					shapeDesc.localOffset.y = 8.0f;
 					return ps->MakeShape(shapeDesc);
 				},
+				nullptr,
 				nullptr,
 				nullptr
 			};
@@ -507,10 +527,10 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			std::array<int, 5> weights{ 2, 8, 5, 5, 5 };
 			std::discrete_distribution<int> dist(weights.begin(), weights.end());
 
-			float modelScaleBase[5] = { 2.5f,1.5f,2.5f, 1.5f,1.5f };
+			float modelScaleBase[5] = { 2.5f,2.5f,1.5f, 1.5f,1.5f };
 			int modelScaleRange[5] = { 150,25,25, 25,25 };
 			int modelRotRange[5] = { 360,360,360, 360,360 };
-			bool enableOutline[5] = { true,false,true,false,false };
+			bool enableOutline[5] = { true,true,false,false,false };
 
 			std::vector<Math::Vec2f> grassAnchor;
 			{
@@ -611,6 +631,18 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				}
 			}*/
 
+			auto playerService = serviceLocator->Get<PlayerService>();
+			Math::Vec3f playerStartPos = playerService->GetPlayerPosition();
+
+			auto perCameraService = serviceLocator->Get<Graphics::I3DPerCameraService>();
+			auto camRot = perCameraService->GetRotation();
+			Math::Vec3f camR, camU, camF;
+			Math::ToBasis<float, Math::LH_ZForward>(camRot, camR, camU, camF);
+			Math::Vec2f camDirXZ = Math::Vec2f{ camF.x, camF.z }.normalized();
+
+			auto camFocusDis = perCameraService->GetFocusDistance();
+			auto camFOVHalf = perCameraService->GetFOV() / 2.0f;
+
 			auto getTerrainLocation = [&](float u, float v) {
 
 				Math::Vec3f location = { tp.cellsX * tp.cellSize * u, 0.0f, tp.cellsZ * tp.cellSize * v };
@@ -632,6 +664,28 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						//Math::Vec3f location = { 30.0f + j * 10.0f,0.0f, 30.0f + k * 10.0f};
 
 						int modelIdx = dist(rng);
+
+						Math::Vec2f dirXZ = {
+							 playerStartPos.x - location.x,
+							 playerStartPos.z - location.z
+						};
+
+						// プレイヤー近くアウトライン有効モデルが選ばれたらやり直し
+						const auto d2 = std::powf(START_CAMERA_PLAYER_DISTANCE + camFocusDis, 2.0f);
+						if (dirXZ.lengthSquared() < d2) {
+
+							dirXZ = dirXZ.normalized();
+							float cosAngle = dirXZ.dot(camDirXZ);
+							float angle = std::acosf(cosAngle);
+							if (angle < camFOVHalf)
+							{
+								while (enableOutline[modelIdx])
+								{
+									modelIdx = dist(rng);
+								}
+							}
+						}
+
 						float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
 						//float scale = 1.0f;
 						auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
@@ -683,11 +737,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			//プレイヤー生成
 			{
-				Math::Vec3f playerStartPos = getTerrainLocation(0.45f, 0.55f); //中央
-				//Math::Vec3f playerStartPos = { 10.0f, 0.0f,  10.0f };
-
-				playerStartPos.y += 10.0f; // 少し浮かせる
-
 				Physics::ShapeCreateDesc shapeDesc;
 				shapeDesc.shape = Physics::CapsuleDesc{ 2.0f, 1.0f };
 				shapeDesc.localOffset.y += 2.0f;

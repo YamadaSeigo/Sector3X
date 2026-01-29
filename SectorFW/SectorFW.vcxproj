@@ -111,6 +111,7 @@
     <ClInclude Include="inc\SectorFW\Math\AABB.hpp" />
     <ClInclude Include="inc\SectorFW\Math\BoundingSphere.hpp" />
     <ClInclude Include="inc\SectorFW\Math\convert.hpp" />
+    <ClInclude Include="inc\SectorFW\Math\ease.h" />
     <ClInclude Include="inc\SectorFW\Math\Frustum.hpp" />
     <ClInclude Include="inc\SectorFW\Math\aabb_util.h" />
     <ClInclude Include="inc\SectorFW\Math\Matrix.hpp" />
