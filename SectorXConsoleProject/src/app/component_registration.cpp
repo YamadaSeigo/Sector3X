@@ -25,6 +25,6 @@ namespace App
         ComponentTypeRegistry::Register<CSpriteAnimation>();
         ComponentTypeRegistry::Register<CFireflyVolume>();
         ComponentTypeRegistry::Register<CLeafVolume>();
-        ComponentTypeRegistry::Register<CFade>();
+        ComponentTypeRegistry::Register<CTitleSprite>();
     }
 }

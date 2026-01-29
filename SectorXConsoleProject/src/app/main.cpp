@@ -6,10 +6,6 @@
  * @date   December 2025
  *********************************************************************/
 
-//========================================================================
-// 一人のプロジェクトなので、とりあえず初期化関連の処理をmainに書いています
-// 将来的には適切に分割する
-//========================================================================
 
 //SectorFW
 #include <SectorFW/Debug/ImGuiBackendDX11Win32.h>
@@ -443,13 +439,11 @@ int main(void)
 			RenderPipe::Initialize(rg, ctx, mainRTV, mainDSV, mainDSVRO, mainDepthSRV, drawTerrainColor, drawParticle);
 		});
 
-	constexpr const char* LOADING_LEVEL_NAME = "Loading";
-
 	// World 構築 + level enqueue
 	WorldType world(std::move(serviceLocator));
 
 	Levels::EnqueueGlobalSystems(world);
-	Levels::EnqueueLoadingLevel(world, ctx, LOADING_LEVEL_NAME);
+	Levels::EnqueueLoadingLevel(world, ctx, App::LOADING_LEVEL_NAME);
 	Levels::EnqueueTitleLevel(world, ctx);
 
 	Levels::OpenFieldLevelParams openFieldParams =
@@ -467,17 +461,7 @@ int main(void)
 
 	//初めのレベルをロード
 	{
-		//ローディング中のレベルを先にロード
-		world.LoadLevel(LOADING_LEVEL_NAME);
-
-		//ロード完了後のコールバック
-		auto loadedFunc = [](decltype(world)::Session* pSession) {
-
-			//ローディングレベルをクリーンアップ
-			pSession->CleanLevel(LOADING_LEVEL_NAME);
-			};
-
-		world.LoadLevel("Title", true, true, loadedFunc);
+		world.LoadLevel("Title");
 	}
 
 	static GameEngine gameEngine(std::move(graphics), std::move(world), App::FPS_LIMIT);
@@ -497,7 +481,7 @@ int main(void)
 
 			if (loadAsync) {
 				//ローディング中のレベルを先にロード
-				auto loadingCmd = worldRequestService.CreateLoadLevelCommand(LOADING_LEVEL_NAME, false);
+				auto loadingCmd = worldRequestService.CreateLoadLevelCommand(App::LOADING_LEVEL_NAME, false);
 				worldRequestService.PushCommand(std::move(loadingCmd));
 			}
 
@@ -505,7 +489,7 @@ int main(void)
 			auto loadedFunc = [](decltype(world)::Session* pSession) {
 
 				//ローディングレベルをクリーンアップ
-				pSession->CleanLevel(LOADING_LEVEL_NAME);
+				pSession->CleanLevel(App::LOADING_LEVEL_NAME);
 				};
 
 			auto reqCmd = worldRequestService.CreateLoadLevelCommand(newLevelName, loadAsync, true, loadAsync ? loadedFunc : nullptr);

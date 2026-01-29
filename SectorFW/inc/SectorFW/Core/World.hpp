@@ -48,6 +48,7 @@ namespace SFW
 				static_assert(OneOf<T, LevelTypes...>, "指定されていないレベルの分割クラスです");
 
 				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
+
 				vec.emplace_back(LevelHolder<T>{
 					.level = std::move(level)
 				});
@@ -84,101 +85,122 @@ namespace SFW
 			 */
 			void LoadLevel(const std::string levelName, IThreadExecutor* executor = nullptr, bool active = true, LoadedCustomFunc loadedCustom = nullptr)
 			{
-#ifdef _DEBUG
-				bool find = false;
-#endif
+				LevelCustumFunc(levelName, [&](auto& holder) {
+					auto& level = holder.level;
 
-				auto loadOne = [&](auto& vecs)
+					// 1) メイン側で多重ロード防止（必須）
+					if (!level->TryBeginLoading()) {
+						LOG_WARNING("Level {%s} is already loaded or loading.", levelName.c_str());
+						return;
+					}
+
+					level->ChangeState(ELevelState::Loaded, false);// “ロード完了フラグを落とす
+
+					// 同期ロードなら従来通り
+					if (!executor)
 					{
-						for (auto& holder : vecs)
-						{
-							auto& level = holder.level;
-							if (level->GetName() != levelName) continue;
+						if (holder.loadingFunc) holder.loadingFunc(&world.GetServiceLocator(), level.get());
 
-#ifdef _DEBUG
-							find = true;
-#endif
-
-							// 1) メイン側で多重ロード防止（必須）
-							if (!level->TryBeginLoading()) {
-								LOG_WARNING("Level {%s} is already loaded or loading.", levelName.c_str());
-								return;
-							}
-
-							level->ChangeState(ELevelState::Loaded, false);// “ロード完了フラグを落とす
-
-							// 同期ロードなら従来通り
-							if (!executor)
-							{
-								if (holder.loadingFunc) holder.loadingFunc(&world.GetServiceLocator(), level.get());
-
-								ELevelState setBits = ELevelState::Loaded;
-								ELevelState clearBits = ELevelState::Loading;
-								if (active) {
-									setBits = setBits | ELevelState::Active;
-								}
-								else {
-									clearBits = clearBits | ELevelState::Active;
-								}
-
-								// ロード完了後、状態を更新
-								level->UpdateState(setBits, clearBits);
-
-								if (loadedCustom) loadedCustom(this);
-								return;
-							}
-
-							// 2) 非同期ロード：ワーカーに重い処理だけ投げる
-							auto* levelPtr = level.get();                 // レベルが破棄されない限り有効
-							auto loadingFunc = holder.loadingFunc;        // コピーして安全に（holder参照を掴まない）
-							auto* worldPtr = &world;                      // WorldはGameEngineが潰すまで生きてる想定
-
-							executor->Submit([worldPtr, levelPtr, loadingFunc, levelName, loadedCustom, active]()
-								{
-									// ここは “並列OKな処理だけ” に限定（GPU/レンダスレッド専用/World状態変更はNG）
-									if (loadingFunc) loadingFunc(&worldPtr->GetServiceLocator(), levelPtr);
-
-									// 3) 完了通知をメインに返す（Requestキューはmutexで守られてる）
-									auto& rs = worldPtr->GetRequestServiceNoLock();
-									rs.PushCommand(rs.CreateLambdaCommand(
-										[levelPtr, loadedCustom, active](Session* s, IThreadExecutor* ex)
-										{
-											ELevelState setBits = ELevelState::Loaded;
-											ELevelState clearBits = ELevelState::Loading;
-											if (active) {
-												setBits = setBits | ELevelState::Active;
-											}
-											else {
-												clearBits = clearBits | ELevelState::Active;
-											}
-
-											// メイン(=FlashAllCommand経由)で確定させる
-											levelPtr->UpdateState(setBits, clearBits);
-
-											if (loadedCustom) loadedCustom(s);
-										}
-									));
-								});
-
-							return;
+						ELevelState setBits = ELevelState::Loaded;
+						ELevelState clearBits = ELevelState::Loading;
+						if (active) {
+							setBits = setBits | ELevelState::Active;
 						}
-					};
+						else {
+							clearBits = clearBits | ELevelState::Active;
+						}
 
-				std::apply([&](auto&... levelVecs) { (..., loadOne(levelVecs)); }, world.levelSets);
+						// ロード完了後、状態を更新
+						level->UpdateState(setBits, clearBits);
 
-#ifdef _DEBUG
-				if (!find) LOG_WARNING("指定されたレベルが見つかりませんでした {%s}", levelName.c_str());
-#endif
+						if (loadedCustom) loadedCustom(this);
+						return;
+					}
+
+					// 2) 非同期ロード：ワーカーに重い処理だけ投げる
+					auto* levelPtr = level.get();                 // レベルが破棄されない限り有効
+					auto loadingFunc = holder.loadingFunc;        // コピーして安全に（holder参照を掴まない）
+					auto* worldPtr = &world;                      // WorldはGameEngineが潰すまで生きてる想定
+
+					executor->Submit([worldPtr, levelPtr, loadingFunc, levelName, loadedCustom, active]()
+						{
+							// ここは “並列OKな処理だけ” に限定（GPU/レンダスレッド専用/World状態変更はNG）
+							if (loadingFunc) loadingFunc(&worldPtr->GetServiceLocator(), levelPtr);
+
+							// 3) 完了通知をメインに返す（Requestキューはmutexで守られてる）
+							auto& rs = worldPtr->GetRequestServiceNoLock();
+							rs.PushCommand(rs.CreateLambdaCommand(
+								[levelPtr, loadedCustom, active](Session* s, IThreadExecutor* ex)
+								{
+									ELevelState setBits = ELevelState::Loaded;
+									ELevelState clearBits = ELevelState::Loading;
+									if (active) {
+										setBits = setBits | ELevelState::Active;
+									}
+									else {
+										clearBits = clearBits | ELevelState::Active;
+									}
+
+									// メイン(=FlashAllCommand経由)で確定させる
+									levelPtr->UpdateState(setBits, clearBits);
+
+									if (loadedCustom) loadedCustom(s);
+								}
+							));
+						});
+					});
 			}
 
 			void CleanLevel(const std::string levelName)
+			{
+				LevelCustumFunc(levelName, [&](auto& holder) {
+					auto& pLevel = holder.level;
+
+					auto state = pLevel->GetState();
+					// trueの場合Loadingビットを立てる
+					if (!pLevel->TryBeginClean()) {
+						// 未ロードまたはロード中の場合はスキップ
+						LOG_WARNING("Level {%s} is unloaded or loading.", levelName.c_str());
+						return;
+					};
+
+					// レベルを未ロード | 非アクティブにする
+					ELevelState clearBits = ELevelState::Loaded | ELevelState::Active;
+					pLevel->ChangeState(clearBits, false);
+
+					pLevel->Clean(world.serviceLocator);
+					if (holder.cleanFunc) {
+						holder.cleanFunc(&world.GetServiceLocator(), pLevel.get());
+					}
+
+					// クリーン完了後、Loadingビットを落とす
+					pLevel->ChangeState(ELevelState::Loading, false);
+					});
+			}
+
+			template<template<typename> class SystemType>
+			void AddGlobalSystem() {
+				world.globalSystem.AddSystem<SystemType>(world.serviceLocator);
+			}
+
+			template<template<typename> class SystemType>
+			void AddSystemToLevel(const std::string levelName) {
+
+				LevelCustumFunc(levelName, [&](auto& holder) {
+					auto& sc = holder.level->GetScheduler();
+					sc.AddSystem<SystemType>(world.GetServiceLocator());
+					});
+			}
+		private:
+			template<typename Func>
+			void LevelCustumFunc(const std::string& levelName, Func&& func)
 			{
 #ifdef _DEBUG
 				bool find = false;
 #endif
 
 				// 指定された名前のレベルをすべてロードする
-				auto cleanFunc = [&](auto& vecs)
+				auto findLevelFunc = [&](auto& vecs)
 					{
 						for (auto& holder : vecs)
 						{
@@ -187,42 +209,20 @@ namespace SFW
 #ifdef _DEBUG
 								find = true;
 #endif
-								auto state = level->GetState();
-								// trueの場合Loadingビットを立てる
-								if (!level->TryBeginClean()) {
-									// 未ロードまたはロード中の場合はスキップ
-									LOG_WARNING("Level {%s} is unloaded or loading.", levelName.c_str());
-									continue;
-								};
 
-								// レベルを未ロード | 非アクティブにする
-								ELevelState clearBits = ELevelState::Loaded | ELevelState::Active;
-								level->ChangeState(clearBits, false);
-
-								level->Clean(world.serviceLocator);
-								if (holder.cleanFunc) {
-									holder.cleanFunc(&world.GetServiceLocator(), level.get());
-								}
-
-								// クリーン完了後、Loadingビットを落とす
-								level->ChangeState(ELevelState::Loading, false);
+								func(holder);
 							}
 						}
 					};
 
 				std::apply([&](auto&... levelVecs)
 					{
-						(..., cleanFunc(levelVecs));
+						(..., findLevelFunc(levelVecs));
 					}, world.levelSets);
 
 #ifdef _DEBUG
 				if (!find) LOG_WARNING("指定されたレベルが見つかりませんでした {%s}", levelName.c_str());
 #endif
-			}
-
-			template<template<typename> class SystemType>
-			void AddGlobalSystem() {
-				world.globalSystem.AddSystem<SystemType>(world.serviceLocator);
 			}
 
 		private:
@@ -313,6 +313,19 @@ namespace SFW
 			}
 		};
 
+		template<template<typename> class SystemType>
+		class AddSystemCommand : public IRequestCommand
+		{
+		public:
+			AddSystemCommand(std::string levelName) : targetLevelName(levelName) {}
+
+			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
+				pWorldSession->AddSystemToLevel<SystemType>(targetLevelName);
+			}
+		private:
+			std::string targetLevelName = {};
+		};
+
 		class LambdaCommand : public IRequestCommand
 		{
 		public:
@@ -378,6 +391,11 @@ namespace SFW
 			template<template<typename> class System>
 			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateAddGlobalSystemCommand() const noexcept {
 				return std::make_unique<AddGlobalSystemCommand<System>>();
+			}
+
+			template<template<typename> class System>
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateAddSystemCommand(const std::string& levelName) const noexcept {
+				return std::make_unique<AddSystemCommand<System>>(levelName);
 			}
 
 			[[nodiscard]] std::unique_ptr<IRequestCommand>

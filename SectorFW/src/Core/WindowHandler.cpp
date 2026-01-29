@@ -93,7 +93,11 @@ namespace SFW
 			return 0; // Ž©‘O‚ÅŠ®—¹
 
 		case WM_KEYDOWN:
-			if (wParam == VK_ESCAPE && m_mouseInput->IsCaptured()) {
+			if (wParam == VK_RETURN && !m_mouseInput->IsCaptured()) {
+				m_mouseInput->ToggleCapture(true);
+				return 0; // Ž©‘O‚ÅŠ®—¹
+			}
+			else if (wParam == VK_ESCAPE && m_mouseInput->IsCaptured()) {
 				m_mouseInput->ToggleCapture(false);
 				return 0; // Ž©‘O‚ÅŠ®—¹
 			}

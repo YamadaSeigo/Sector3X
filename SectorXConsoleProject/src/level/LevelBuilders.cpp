@@ -119,16 +119,16 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 				return scale;
 				};
 
-			CColor color = { { 1.0f,1.0f,1.0f,1.0f} };
-			CFade fade;
+			CColor colorWhite = { { 1.0f,1.0f,1.0f,1.0f} };
+			CTitleSprite titleComp;
 
 			sprite.layer = 1; // 手前に描画
 
 			levelSession.AddGlobalEntity(
 				CTransform{ getPos(0.0f,0.4f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.7f,0.7f) },
 				sprite,
-				color,
-				fade);
+				colorWhite,
+				titleComp);
 
 			textureDesc.path = "assets/texture/sprite/PressEnter.png";
 			textureMgr->Add(textureDesc, texHandle);
@@ -136,29 +136,27 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 			matMgr->Add(matDesc, matHandle);
 			sprite.hMat = matHandle;
 			sprite.layer = 1; // 手前に描画
-			fade.maxTime = 0.0f;
+			titleComp.fadeTime = 2.5f;
 
 			levelSession.AddGlobalEntity(
 				CTransform{ getPos(0.0f,-0.7f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.25f,0.25f) },
 				sprite,
-				color,
-				fade);
+				colorWhite,
+				titleComp);
 
-			textureDesc.path = "assets/texture/sprite/TitleBG.png";
-			textureMgr->Add(textureDesc, texHandle);
-			matDesc.psSRV[2] = texHandle; // TEX2 にセット
-			matDesc.vsCBV.clear(); // 風影響なし
-			matMgr->Add(matDesc, matHandle);
-			sprite.hMat = matHandle;
-			sprite.pso.index = CSprite::invalidPSOIndex; // PSO無効化（デフォルトパイプラインで描画）
-			sprite.layer = 0; // 一番奥に描画
-			fade.maxTime = 0.1f;
+			CColor colorBlack = { { 0.0f,0.0f,0.0f,1.0f} };
+
+			sprite.hMat.index = CSprite::invalidIndex; // マテリアル無効化(真っ白マテリアルで描画）
+			sprite.pso.index = CSprite::invalidIndex; // PSO無効化（デフォルトパイプラインで描画）
+			sprite.layer = 2; // 一番前に描画
+			titleComp.fadeTime = 2.0f;
+			titleComp.isErased = true;
 
 			levelSession.AddGlobalEntity(
-				CTransform{ getPos(0.0f,-0.25f),{0.0f,0.0f,0.0f,1.0f}, getScale(1.0f,1.0f) },
+				CTransform{ getPos(0.0f,0.0f),{0.0f,0.0f,0.0f,1.0f}, getScale(1.0f,1.0f) },
 				sprite,
-				color,
-				fade);
+				colorBlack,
+				titleComp);
 
 			auto& scheduler = pLevel->GetScheduler();
 			scheduler.AddSystem<TitleSystem>(*serviceLocator);
@@ -272,7 +270,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 	auto& worldRequestService = world.GetRequestServiceNoLock();
 	auto entityManagerReg = world.GetServiceLocator().Get<SpatialChunkRegistry>();
 
-	auto level = std::unique_ptr<OpenFieldLevel>(new OpenFieldLevel("OpenField", *entityManagerReg, ELevelState::Main));
+	auto level = std::unique_ptr<OpenFieldLevel>(new OpenFieldLevel(App::MAIN_LEVEL_NAME, *entityManagerReg, ELevelState::Main));
 
 	auto& graphics = *ctx.graphics;
 
@@ -886,7 +884,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			//scheduler.AddSystem<PhysicsSystem>(*serviceLocator);
 			scheduler.AddSystem<BuildBodiesFromIntentsSystem>(*serviceLocator);
 			scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(*serviceLocator);
-			scheduler.AddSystem<PlayerSystem>(*serviceLocator);
+			//scheduler.AddSystem<PlayerSystem>(*serviceLocator);
 			scheduler.AddSystem<PointLightSystem>(*serviceLocator);
 			scheduler.AddSystem<FireflySystem>(*serviceLocator);
 			scheduler.AddSystem<LeafSystem>(*serviceLocator);

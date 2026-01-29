@@ -90,7 +90,6 @@ namespace SFW::Graphics::DX11 {
         ComPtr<ID3D11SamplerState>       sampLinearWrap;
         // 管理用: 指定IDを覚えておく（デバッグ/ホットリロードなど）
         uint32_t materialId[4]{ 0,0,0,0 };
-
     };
 
     // クラスタ別に必要な最小情報（PSでインデックスして読む）

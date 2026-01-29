@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SectorFW/Physics/PhysicsLayers.h>
+
 #include "app/PlayerService.h"
 #include "graphics/RenderDefine.h"
 

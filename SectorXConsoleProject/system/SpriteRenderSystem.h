@@ -2,14 +2,18 @@
 
 struct CSprite
 {
-	static inline constexpr uint32_t invalidPSOIndex = 0xFFFFFFFF;
+	static inline constexpr uint32_t invalidIndex = 0xFFFFFFFF;
 
-	Graphics::MaterialHandle hMat = {};
-	Graphics::PSOHandle pso = { invalidPSOIndex, 0};
+	Graphics::MaterialHandle hMat = { invalidIndex, 0 };
+	Graphics::PSOHandle pso = { invalidIndex, 0 };
 	uint32_t layer = 0;
 
+	bool IsOverrideMaterial() const noexcept {
+		return hMat.index != invalidIndex;
+	}
+
 	bool IsOverridePso() const noexcept {
-		return pso.index != invalidPSOIndex;
+		return pso.index != invalidIndex;
 	}
 };
 
@@ -36,6 +40,8 @@ public:
 
 		auto shaderMgr = renderService->GetResourceManager<DX11::ShaderManager>();
 		auto psoMgr = renderService->GetResourceManager<DX11::PSOManager>();
+		auto texMgr = renderService->GetResourceManager<DX11::TextureManager>();
+		auto materialMgr = renderService->GetResourceManager<DX11::MaterialManager>();
 
 		DX11::ShaderCreateDesc shaderDesc;
 		shaderDesc.vsPath = L"assets/shader/VS_ClipUVColor.cso";
@@ -45,6 +51,28 @@ public:
 
 		DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
 		psoMgr->Add(psoDesc, psoHandle);
+
+		uint32_t initialData[1] = { 0xFFFFFFFF }; // 1ピクセルの白色データ
+
+		DX11::TextureRecipe onePixelWhite = {};
+		onePixelWhite.width = 1;
+		onePixelWhite.height = 1;
+		onePixelWhite.format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		onePixelWhite.mipLevels = 1;
+		onePixelWhite.bindFlags = D3D11_BIND_SHADER_RESOURCE;
+		onePixelWhite.usage = D3D11_USAGE_IMMUTABLE;
+		onePixelWhite.initialData = initialData;
+		onePixelWhite.initialRowPitch = sizeof(initialData);
+
+		DX11::TextureCreateDesc textureDesc;
+		textureDesc.recipe = &onePixelWhite;
+		Graphics::TextureHandle onePixelTexHandle;
+		texMgr->Add(textureDesc, onePixelTexHandle);
+
+		DX11::MaterialCreateDesc matDesc;
+		matDesc.shader = shaderHandle;
+		matDesc.psSRV[2] = onePixelTexHandle; // TEX2 にセット
+		materialMgr->Add(matDesc, materialHandle);
 	}
 
 	//指定したサービスを関数の引数として受け取る
@@ -92,7 +120,7 @@ public:
 				const auto& sp = sprite.value()[i];
 
 				cmd.pso = sp.IsOverridePso() ? sp.pso.index : psoHandle.index;
-				cmd.material = sp.hMat.index;
+				cmd.material = sp.IsOverrideMaterial() ? sp.hMat.index : materialHandle.index;
 				cmd.instanceIndex = instanceIndices[i];
 				cmd.sortKey = sp.layer;
 				uiSession.Push(cmd);
@@ -107,4 +135,5 @@ public:
 	}
 private:
 	Graphics::PSOHandle psoHandle = {};
+	Graphics::MaterialHandle materialHandle = {};
 };
