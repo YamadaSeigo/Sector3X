@@ -36,6 +36,7 @@ struct PointLight
     uint2 _pad_pl;
 };
 
+
 // UAV Ç≈èëÇ≠ÅiPSÇÕSRVÇ≈ì«Çﬁ: t15Åj
 RWStructuredBuffer<PointLight> gPointLightsUAV : register(u4);
 

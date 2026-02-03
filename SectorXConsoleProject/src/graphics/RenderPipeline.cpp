@@ -203,12 +203,6 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 	// 深度ステンシルSRVも追加
 	derreredSRVs.push_back(mainDepthSRV.Get());
 
-	static std::vector<ID3D11ShaderResourceView*> nullSRVs;
-	for (int i = 0; i < derreredSRVs.size(); ++i)
-	{
-		nullSRVs.push_back(nullptr);
-	}
-
 	auto deferredCameraHandle = bufferMgr->FindByName(DeferredRenderingService::BUFFER_NAME);
 
 	static ComPtr<ID3D11Buffer> invCameraBuffer;
@@ -439,7 +433,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		ctx->Unmap(fireflyLightCountBuf, 0);
 
 		ID3D11Buffer* lightDataBuffer = lightShadowService->GetLightDataCB().Get();
-		hr = ctx->Map(lightDataBuffer, 0, D3D11_MAP_READ, 0, &mapped);
+		hr = ctx->Map(lightDataBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 		auto& lightCBData = *reinterpret_cast<Graphics::CPULightData*>(mapped.pData);
 		lightCBData.gFireflyLightCount = fireflyCount;
 		ctx->Unmap(lightDataBuffer, 0);
@@ -456,7 +450,9 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		ctx->Draw(3, 0);
 
 		// SRVを解除
-		ctx->PSSetShaderResources(11, (UINT)nullSRVs.size(), nullSRVs.data());
+		ID3D11ShaderResourceView* nullSRV[6] = { nullptr };
+
+		ctx->PSSetShaderResources(11, _countof(nullSRV), nullSRV);
 
 		//(2) ブライト抽出
 		//=========================================================================
@@ -500,7 +496,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		ctx->Draw(3, 0);
 
 		// SRVを解除
-		ctx->PSSetShaderResources(0, 1, nullSRVs.data());
+		ctx->PSSetShaderResources(0, 1, nullSRV);
 
 		//(3) ボケ（横）
 		//=========================================================================
@@ -517,7 +513,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 
 		ctx->Draw(3, 0);
 
-		ctx->PSSetShaderResources(0, 1, nullSRVs.data());
+		ctx->PSSetShaderResources(0, 1, nullSRV);
 
 		//(4) 合成
 		//=========================================================================
@@ -539,7 +535,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		ctx->Draw(3, 0);
 
 		// SRVを解除
-		ctx->PSSetShaderResources(0, 2, nullSRVs.data());
+		ctx->PSSetShaderResources(0, 2, nullSRV);
 
 		//=========================================================================
 

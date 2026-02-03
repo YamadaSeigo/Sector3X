@@ -311,11 +311,11 @@ void FireflyParticlePool::Spawn(
 
     // CSバインド解除（後続のCopyStructureCount/Drawで事故りにくくする）
     {
-        ID3D11ShaderResourceView* nullSrvs[3] = { nullptr, nullptr, nullptr };
-        ctx->CSSetShaderResources(0, 3, nullSrvs);
-        ID3D11UnorderedAccessView* nullUavs[4] = { nullptr, nullptr, nullptr, nullptr };
-        UINT dummy[4] = { 0,0,0,0 };
-        ctx->CSSetUnorderedAccessViews(0, 4, nullUavs, dummy);
+        ID3D11ShaderResourceView* nullSrvs[4] = { nullptr };
+        ctx->CSSetShaderResources(0, 4, nullSrvs);
+        ID3D11UnorderedAccessView* nullUavs[6] = { nullptr };
+        UINT dummy[6] = { 0 };
+        ctx->CSSetUnorderedAccessViews(0, 6, nullUavs, dummy);
         ctx->CSSetShader(nullptr, nullptr, 0);
     }
 

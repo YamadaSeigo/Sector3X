@@ -1,4 +1,5 @@
 #include "FireflyService.h"
+#include <SectorFW/Graphics/PointLightService.h>
 #include <SectorFW/Debug/message.h>
 #include <SectorFW/Util/convert_string.h>
 #include "LeafService.h"
@@ -137,7 +138,7 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
     // PointLight : RWStructuredBuffer<CPULightData>
     m_pointLight = CreateStructuredBufferSRVUAV(
         pDevice,
-        sizeof(Graphics::CPULightData),
+        sizeof(Graphics::GpuPointLight),
         FireflyParticlePool::MaxPointLight,
         true, true,
         0,
@@ -155,7 +156,7 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
     for (int i = 0; i < Graphics::RENDER_BUFFER_COUNT; ++i)
     {
         HRESULT hr = pDevice->CreateBuffer(&sdesc, nullptr, &m_stagingCountBuf[i]);
-        assert (FAILED(hr));
+        assert (SUCCEEDED(hr));
     }
 
 #ifdef _DEBUG
