@@ -24,6 +24,24 @@ AppendStructuredBuffer<uint> gFreeList : register(u2);
 // slot別の数
 RWStructuredBuffer<uint> gVolumeCount : register(u3);
 
+// ---- Firefly -> PointLight 追記先（SRV/UAV両対応の同一バッファ）----
+struct PointLight
+{
+    float3 positionWS;
+    float range; // 16B
+    float3 color;
+    float intensity; // 16B
+    float invRadius;
+    uint flag;
+    uint2 _pad_pl;
+};
+
+// UAV で書く（PSはSRVで読む: t15）
+RWStructuredBuffer<PointLight> gPointLightsUAV : register(u4);
+
+// 4byte raw counter（最終的に gPointLightCount へ）
+RWByteAddressBuffer gPointLightCounter : register(u5);
+
 cbuffer CBUpdate : register(b0)
 {
     float gDt;
@@ -32,6 +50,14 @@ cbuffer CBUpdate : register(b0)
 
     float3 gPlayerPosWS;
     float gPlayerRepelRadius;
+    
+    float3 gCamPosWS;
+    float gFireflyLightMaxDist;
+    
+    uint gPointLightMax;
+    float gFireflyLightRange;
+    float gFireflyLightIntensity;
+    float _pad_up;
 };
 
 // 地形グリッド情報
@@ -72,6 +98,7 @@ cbuffer CBParams : register(b2)
 
     float gMaxSpeed; // 速度上限
 };
+
 
 float SampleGroundY(float2 xz)
 {
@@ -223,4 +250,35 @@ void main(uint3 tid : SV_DispatchThreadID)
 
     gParticles[id] = p;
     gAliveOut.Append(id);
+    
+    // -------------------------
+// 4) Near firefly -> PointLight append
+// -------------------------
+{
+        float3 toC = p.posWS - gCamPosWS;
+        float d2 = dot(toC, toC);
+        float maxD = gFireflyLightMaxDist;
+        if (d2 <= maxD * maxD)
+        {
+            // counter から index を確保（4byte offset=0）
+            uint idx;
+            gPointLightCounter.InterlockedAdd(0, 1, idx); // idx = old value
+
+            if (idx < gPointLightMax)
+            {
+                PointLight pl;
+                pl.positionWS = p.posWS;
+                pl.range = gFireflyLightRange;
+                pl.color = float3(1.0, 0.95, 0.6); // 好みで調整（蛍色）
+                pl.intensity = gFireflyLightIntensity;
+
+                float r = max(pl.range, 1e-3f);
+                pl.invRadius = 1.0f / r;
+                pl.flag = 0;
+                pl._pad_pl = uint2(0, 0);
+
+                gPointLightsUAV[idx] = pl;
+            }
+        }
+    }
 }

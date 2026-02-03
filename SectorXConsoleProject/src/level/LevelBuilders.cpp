@@ -376,7 +376,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.BindVS_CBV("GrassFootCB", footCBHandle); // 草揺れ用CBVをバインド
 
 			modelDesc.path = "assets/model/Stylized/Tree01.gltf";
-			modelDesc.viewMax = 100.0f;
+			modelDesc.viewMax = 50.0f;
 			modelDesc.buildOccluders = false;
 			modelDesc.pso = cullNoneWindEntityPSOHandle;
 			modelDesc.minAreaFrec = 0.001f;
@@ -527,7 +527,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			std::array<int, 5> weights{ 2, 8, 5, 5, 5 };
 			std::discrete_distribution<int> dist(weights.begin(), weights.end());
 
-			float modelScaleBase[5] = { 2.5f,2.5f,1.5f, 1.5f,1.5f };
+			float modelScaleBase[5] = { 2.5f,4.0f,1.5f, 1.5f,1.5f };
 			int modelScaleRange[5] = { 150,25,25, 25,25 };
 			int modelRotRange[5] = { 360,360,360, 360,360 };
 			bool enableOutline[5] = { true,true,false,false,false };

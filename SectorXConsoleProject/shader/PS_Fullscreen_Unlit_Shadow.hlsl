@@ -29,7 +29,8 @@ cbuffer LightingCB : register(b11)
     uint gPointLightCount; // 16B
 
     float emissiveBoost; // Emissiveの強調係数
-    float3 _pad3;
+    uint gFireflyLightCount;
+    float2 _pad2;
 };
 
 cbuffer FogCB : register(b12)
@@ -94,6 +95,8 @@ struct PointLight
 
 StructuredBuffer<PointLight> gPointLights : register(t15);
 
+StructuredBuffer<PointLight> gFireflyLights : register(t16);
+
 // 比較サンプラ（ShadowMapService が作っているもの）
 SamplerComparisonState gShadowSampler : register(s1);
 SamplerState gDepthPointSamp: register(s2);
@@ -113,6 +116,9 @@ float3 AccumulatePointLights_UnlitWithTranslucency(
 {
     float3 sum = 0.0f;
 
+    // --------------------
+    // Normal point lights
+    // --------------------
     [loop]
     for (uint li = 0; li < gPointLightCount; ++li)
     {
@@ -128,7 +134,7 @@ float3 AccumulatePointLights_UnlitWithTranslucency(
 
         distSq = max(distSq, 1e-6f);
         float invDist = rsqrt(distSq);
-        float dist = distSq * invDist; // = (distSq)
+        float dist = distSq * invDist;
         float3 L = toL * invDist;
 
         float t = saturate(dist * pl.invRadius);
@@ -145,8 +151,50 @@ float3 AccumulatePointLights_UnlitWithTranslucency(
         float ndlWrap = saturate((ndl + wrap) / (1.0f + wrap));
 
         float ndlBack = saturate(dot(-N, L));
+        float backSoft = ndlBack * (ndlBack);
 
-        // pow(ndlBack, 1.5) ≒ ndlBack * (ndlBack)
+        float3 radiance = pl.color * pl.intensity * att;
+        float3 frontLit = albedo * ndlWrap;
+        float3 backLit = transColor * backSoft * translucency;
+
+        sum += radiance * (frontLit + backLit);
+    }
+
+    // --------------------
+    // Firefly point lights
+    // --------------------
+    [loop]
+    for (uint fi = 0; fi < gFireflyLightCount; ++fi)
+    {
+        PointLight pl = gFireflyLights[fi];
+
+        float3 toL = pl.positionWS - wp;
+        float distSq = dot(toL, toL);
+
+        float range = pl.range;
+        float rangeSq = range * range;
+        if (range <= 0.0f || distSq >= rangeSq)
+            continue;
+
+        distSq = max(distSq, 1e-6f);
+        float invDist = rsqrt(distSq);
+        float dist = distSq * invDist;
+        float3 L = toL * invDist;
+
+        float t = saturate(dist * pl.invRadius);
+        float att = 1.0f - t;
+
+        const float fadeWidth = 0.2f;
+        float edge = 1.0f - smoothstep(1.0f - fadeWidth, 1.0f, t);
+
+        att = att * att;
+        att *= edge;
+
+        const float wrap = 0.35f;
+        float ndl = dot(N, L);
+        float ndlWrap = saturate((ndl + wrap) / (1.0f + wrap));
+
+        float ndlBack = saturate(dot(-N, L));
         float backSoft = ndlBack * (ndlBack);
 
         float3 radiance = pl.color * pl.intensity * att;
@@ -494,7 +542,7 @@ float4 main(VSOut i) : SV_Target
     // とりあえずmetalを透けの強さに利用
     float3 plAdd = 0.0f;
     [branch]
-    if (gPointLightCount > 0)
+    if ((gPointLightCount | gFireflyLightCount) != 0u)
     {
         float translucency = emiMetal.a;
         float3 transColor = albedo;

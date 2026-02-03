@@ -31,32 +31,26 @@ float Hash12(float2 p)
     return frac(sin(h) * 43758.5453123);
 }
 
-// dir は normalize 済み想定
-float StarTwinkle(float2 uv, float time,
-                  int2 grid, // 例: 120.0 (大きいほど細かくなる)
-                  float minHz, float maxHz, // 瞬き速度範囲 例: 0.2..1.2
-                  float amp)          // 例: 0.35
+float Hash13(float3 p)
 {
-   // セルIDを作る（uvは0..1なので本来負にならない）
-    uint2 cell;
-    cell.x = (uint) floor(uv.x * (float) grid.x);
-    cell.y = (uint) floor(uv.y * (float) grid.y);
+    // 簡易 3D hash
+    p = frac(p * 0.1031);
+    p += dot(p, p.yzx + 33.33);
+    return frac((p.x + p.y) * p.z);
+}
 
-    // 念のため範囲内に丸める（uv=1.0 ちょうど対策）
-    cell.x = min(cell.x, grid.x - 1u);
-    cell.y = min(cell.y, grid.y - 1u);
+float StarTwinkle_Dir(float3 d, float time, float density,
+                      float minHz, float maxHz, float amp)
+{
+    // density: 例 400～1200（大きいほど細かい）
+    float3 q = floor(d * density);
+    float r0 = Hash13(q);
+    float r1 = Hash13(q + 17.0);
 
-    // 星ごとの乱数
-    float r0 = Hash12(cell);
-    float r1 = Hash12(cell + 17.0);
-
-    // 星ごとの周波数と位相
     float hz = lerp(minHz, maxHz, r0);
     float phase = 6.2831853 * r1;
-
     float w = 0.5 + 0.5 * sin(time * hz * 6.2831853 + phase);
 
-    // 1 ± amp に変換（明るさ係数）
     return 1.0 + (w - 0.5) * 2.0 * amp;
 }
 
@@ -92,10 +86,7 @@ PS_PRBOutput main(VSOutput i)
     float starMask = saturate(emissionColor.r); // 例：単純にRを使う（テクスチャに合わせて調整）
 
     // 瞬き係数（dirベース + time）
-    float tw = StarTwinkle(uv, gTime,
-                           int2(512, 512), // cellScale
-                           0.2, 1.4, // minHz/maxHz
-                           0.6); // amp
+    float tw = StarTwinkle_Dir(d, gTime, 1200.0, 0.8, 2.0, 1.2);
 
     // 星部分だけ強弱
     emissionColor.rgb *= lerp(1.0, tw, starMask);

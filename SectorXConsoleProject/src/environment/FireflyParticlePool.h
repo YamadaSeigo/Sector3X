@@ -4,6 +4,7 @@
 #include <d3d11.h>
 #include <cstdint>
 #include "graphics/D3D11Helpers.h"
+#include <SectorFW/Graphics/LightShadowService.h>
 
 struct FireflyParticleGPU
 {
@@ -36,6 +37,7 @@ public:
     static constexpr uint32_t MaxParticles = 100000;
     static constexpr uint32_t MaxVolumeSlots = 256;
     static constexpr uint32_t MaxSpawnPerVol = 32;
+    static constexpr uint32_t MaxPointLight = 128;
 
     void Create(ID3D11Device* dev);
     void InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* spawnCB, ID3D11ComputeShader* initCS);
@@ -48,9 +50,11 @@ public:
         ID3D11ComputeShader* argsCS,
         ID3D11ShaderResourceView* volumeSRV,
         ID3D11ShaderResourceView* heightMapSRV,
+        ID3D11UnorderedAccessView* pointLightUAV,
         ID3D11Buffer* cbSpawnData,
         ID3D11Buffer* cbTerrain,
         ID3D11Buffer* cbUpdateData,
+        ID3D11Buffer* stagingBuf,
         ID3D11VertexShader* vs,
         ID3D11PixelShader* ps,
 		ID3D11Buffer* cbCameraData,
@@ -73,6 +77,7 @@ private:
 
 	RawBufferSRVUAV m_aliveCountRaw;
     RawBufferSRVUAV m_drawArgsRaw;
+    RawBufferSRVUAV m_pointLightCount;
 
 	ComPtr<ID3D11Buffer> m_cbUpdateParam;
 

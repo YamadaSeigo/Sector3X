@@ -81,8 +81,9 @@ namespace SFW
 			Math::Vec3f gAmbientColor;
 			uint32_t gPointLightCount; // 16B
 
-			float emissiveBoost = 3.0f; // 16B
-			float _padding[3]; // パディング
+			float emissiveBoost = 3.0f;
+			uint32_t gFireflyLightCount;
+			float _padding[2]; // パディング// 16B
 		};
 
 		class LightShadowService

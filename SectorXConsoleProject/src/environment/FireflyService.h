@@ -48,6 +48,14 @@ public:
         float pad00[2] = {};
         Math::Vec3f gPlayerPosWS = {};
         float gPlayerRepelRadius = 10.0f;
+
+        Math::Vec3f gCamPosWS = {};
+        float gFireflyLightMaxDist = 25.0f;
+
+        uint32_t gPointLightMax = FireflyParticlePool::MaxPointLight;
+        float gFireflyLightRange = 3.0f;
+        float gFireflyLightIntensity = 1.2f;
+        float _pad_up = {};
 	};
 
     struct CameraCB
@@ -99,6 +107,14 @@ public:
 		return m_volumeSRV.Get();
     }
 
+    ID3D11ShaderResourceView* GetPointLightSRV() const {
+        return m_pointLight.srv.Get();
+    }
+
+    ID3D11Buffer* GetLightCountBuffer() const {
+        return m_stagingCountBuf[currentSlot].Get();
+    }
+
     float GetElapsedTime() const noexcept {
         return m_elapsedTime;
 	}
@@ -124,6 +140,8 @@ private:
 	ComPtr<ID3D11Buffer> m_updateCB;
 	ComPtr<ID3D11Buffer> m_cameraCB;
 
+    ComPtr<ID3D11Buffer> m_stagingCountBuf[Graphics::RENDER_BUFFER_COUNT];
+
 	ComPtr<ID3D11ComputeShader> m_initFreeListCS;
 	ComPtr<ID3D11ComputeShader> m_spawnCS;
     ComPtr<ID3D11ComputeShader> m_updateCS;
@@ -131,6 +149,8 @@ private:
 
 	ComPtr<ID3D11VertexShader> m_fireflyVS;
 	ComPtr<ID3D11PixelShader> m_fireflyPS;
+
+    StructuredBufferSRVUAV m_pointLight;
 
 	Graphics::DX11::BufferManager* m_bufferMgr = nullptr;
 

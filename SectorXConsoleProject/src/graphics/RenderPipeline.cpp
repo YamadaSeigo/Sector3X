@@ -1,9 +1,11 @@
 #include "RenderPipeline.h"
+#include "app/AppContext.h"
+#include "app/appconfig.h"
+
 #include "RenderDefine.h"
 #include "DeferredRenderingService.h"
 #include "environment/EnvironmentService.h"
-#include "app/AppContext.h"
-#include "app/appconfig.h"
+#include "environment/FireflyService.h"
 #include "graphics/DebugRenderType.h"
 
 #include <SectorFW/Math/Vector.hpp>
@@ -166,6 +168,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 	static auto gGraphics = ctx.graphics;
 	static auto renderBackend = ctx.graphics->GetBackend();
 	static auto lightShadowService = ctx.shadowRes;
+	static auto fireflyService = ctx.firefly;
 
 	struct SkyCB {
 		float time;
@@ -424,7 +427,24 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 
 		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
 		ctx->PSSetShaderResources(15, 1, lightShadowService->GetPointLightSRV().GetAddressOf());
-		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), lightShadowService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get() }, 9);
+
+		ID3D11ShaderResourceView* fireflyPointLiehgt = fireflyService->GetPointLightSRV();
+		ctx->PSSetShaderResources(16, 1, &fireflyPointLiehgt);
+
+		ID3D11Buffer* fireflyLightCountBuf = fireflyService->GetLightCountBuffer();
+
+		D3D11_MAPPED_SUBRESOURCE mapped{};
+		HRESULT hr = ctx->Map(fireflyLightCountBuf, 0, D3D11_MAP_READ, 0, &mapped);
+		uint32_t fireflyCount = *reinterpret_cast<const uint32_t*>(mapped.pData);
+		ctx->Unmap(fireflyLightCountBuf, 0);
+
+		ID3D11Buffer* lightDataBuffer = lightShadowService->GetLightDataCB().Get();
+		hr = ctx->Map(lightDataBuffer, 0, D3D11_MAP_READ, 0, &mapped);
+		auto& lightCBData = *reinterpret_cast<Graphics::CPULightData*>(mapped.pData);
+		lightCBData.gFireflyLightCount = fireflyCount;
+		ctx->Unmap(lightDataBuffer, 0);
+
+		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), lightDataBuffer, fogBuffer.Get(), godRayBuffer.Get() }, 9);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 		ctx->PSSetSamplers(1, 1, lightShadowService->GetShadowSampler().GetAddressOf());

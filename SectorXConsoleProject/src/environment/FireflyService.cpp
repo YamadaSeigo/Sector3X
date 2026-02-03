@@ -134,6 +134,30 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
             m_initFreeListCS.Get());
     }
 
+    // PointLight : RWStructuredBuffer<CPULightData>
+    m_pointLight = CreateStructuredBufferSRVUAV(
+        pDevice,
+        sizeof(Graphics::CPULightData),
+        FireflyParticlePool::MaxPointLight,
+        true, true,
+        0,
+        D3D11_USAGE_DEFAULT,
+        0);
+
+    D3D11_BUFFER_DESC sdesc{};
+    sdesc.ByteWidth = 4;
+    sdesc.Usage = D3D11_USAGE_STAGING;
+    sdesc.BindFlags = 0;
+    sdesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+    sdesc.MiscFlags = 0;
+    sdesc.StructureByteStride = 0;
+
+    for (int i = 0; i < Graphics::RENDER_BUFFER_COUNT; ++i)
+    {
+        HRESULT hr = pDevice->CreateBuffer(&sdesc, nullptr, &m_stagingCountBuf[i]);
+        assert (FAILED(hr));
+    }
+
 #ifdef _DEBUG
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "addSize", &gDebugFireflyAddSize, 0.0f, 1.0f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "baseSize", &gDebugFireflyBaseSize, 0.01f, 1.0f, 0.001f);
@@ -260,9 +284,11 @@ void FireflyService::SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11Shade
         m_argsCS.Get(),
         m_volumeSRV.Get(),
         heightMap.Get(),
+        m_pointLight.uav.Get(),
         m_spawnCB.Get(),
 		terrainCB.Get(),
         m_updateCB.Get(),
+        m_stagingCountBuf[currentSlot].Get(),
         m_fireflyVS.Get(),
 		m_fireflyPS.Get(),
 		m_cameraCB.Get(),

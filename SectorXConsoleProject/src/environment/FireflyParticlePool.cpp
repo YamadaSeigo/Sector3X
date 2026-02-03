@@ -109,6 +109,12 @@ void FireflyParticlePool::Create(ID3D11Device* dev)
         D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS | D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS,
         false, true);
 
+    m_pointLightCount = CreateRawBufferSRVUAV(
+        dev, 4,
+        D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS,
+        false, true
+    );
+
     m_linearSampler = CreateSamplerState(dev, D3D11_FILTER_MIN_MAG_MIP_LINEAR, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP);
 
     D3D11_BUFFER_DESC desc{};
@@ -174,9 +180,11 @@ void FireflyParticlePool::Spawn(
     ID3D11ComputeShader* argsCS,
     ID3D11ShaderResourceView* volumeSRV,
 	ID3D11ShaderResourceView* heightMapSRV,
+    ID3D11UnorderedAccessView* pointLightUAV,
 	ID3D11Buffer* cbSpawnData,
     ID3D11Buffer* cbTerrain,
 	ID3D11Buffer* cbUpdateData,
+    ID3D11Buffer* stagingBuf,
 	ID3D11VertexShader* vs,
     ID3D11PixelShader* ps,
 	ID3D11Buffer* cbCameraData,
@@ -252,6 +260,9 @@ void FireflyParticlePool::Spawn(
     // (3) Update: AlivePing(SRV) → AlivePong(Append)
     // -----------------------------
     {
+        uint32_t zero = 0;
+        ctx->UpdateSubresource(m_pointLightCount.buf.Get(), 0, nullptr, &zero, 0, 0);
+
         ID3D11ShaderResourceView* updateSrvs[4] = {
         volumeSRV,
         m_alivePing.srv.Get(),
@@ -260,15 +271,17 @@ void FireflyParticlePool::Spawn(
         };
         ctx->CSSetShaderResources(0, 4, updateSrvs);
 
-        ID3D11UnorderedAccessView* updateUavs[4] = {
-        m_particles.uav.Get(),   // u0
-        m_alivePong.uav.Get(),   // u1 (Append)  ※ここは -1 で保持（0にしない）
-        m_free.uav.Get(),        // u2 (Appendで返却)
-        m_volumeCount.uav.Get()  // u3
+        ID3D11UnorderedAccessView* updateUavs[6] = {
+        m_particles.uav.Get(),      // u0
+        m_alivePong.uav.Get(),      // u1 (Append)  ※ここは -1 で保持（0にしない）
+        m_free.uav.Get(),           // u2 (Appendで返却)
+        m_volumeCount.uav.Get(),    // u3
+        pointLightUAV,              // u4
+        m_pointLightCount.uav.Get() // u5
         };
         // PongはSpawnで0リセット済み＋Spawnが既にAppendしたので、ここで0にするとSpawn分が消える。
-        UINT updateInitialCounts[4] = { (UINT)-1, (UINT)-1, (UINT)-1, (UINT)-1 };
-        ctx->CSSetUnorderedAccessViews(0, 4, updateUavs, updateInitialCounts);
+        UINT updateInitialCounts[6] = { (UINT)-1, (UINT)-1, (UINT)-1, (UINT)-1, (UINT)0, (UINT)0};
+        ctx->CSSetUnorderedAccessViews(0, 6, updateUavs, updateInitialCounts);
 
         if (m_isUpdateParamDirty)
         {
@@ -292,6 +305,8 @@ void FireflyParticlePool::Spawn(
         uint32_t updateGroups = (MaxParticles + 256 - 1) / 256; // UpdateCS: [numthreads(256,1,1)]
         if (updateGroups > 0)
             ctx->Dispatch(updateGroups, 1, 1);
+
+        ctx->CopyResource(stagingBuf, m_pointLightCount.buf.Get());
     }
 
     // CSバインド解除（後続のCopyStructureCount/Drawで事故りにくくする）
