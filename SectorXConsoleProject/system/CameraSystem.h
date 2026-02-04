@@ -260,6 +260,7 @@ public:
 		fireflyCamBuffer.gCamUpWS = up;
 
 		fireflyService->SetCameraBuffer(fireflyCamBuffer);
+		fireflyService->SetCameraPos(camPos);
 
 		LeafService::CameraCB leafCamBuffer{};
 		leafCamBuffer.gViewProj = viewProj;

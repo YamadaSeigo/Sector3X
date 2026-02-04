@@ -289,7 +289,7 @@ void FireflyService::SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11Shade
         m_spawnCB.Get(),
 		terrainCB.Get(),
         m_updateCB.Get(),
-        m_stagingCountBuf[currentSlot].Get(),
+        m_stagingCountBuf[slot].Get(),
         m_fireflyVS.Get(),
 		m_fireflyPS.Get(),
 		m_cameraCB.Get(),

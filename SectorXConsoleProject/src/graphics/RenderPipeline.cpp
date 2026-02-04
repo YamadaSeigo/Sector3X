@@ -371,28 +371,49 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		bloomDataChanged = true; cpuBloomData.gBloomMaxDist = value;
 		});
 
-	DX11::BufferCreateDesc cbBloomDesc;
-	cbBloomDesc.name = "BloomCB";
-	cbBloomDesc.size = sizeof(BloomCB);
-	cbBloomDesc.initialData = &cpuBloomData;
-	BufferHandle bloomCBHandle = {};
-	auto bloomBufData = bufferMgr->CreateResource(cbBloomDesc, bloomCBHandle);
-
-	static ComPtr<ID3D11Buffer> bloomCBBuffer = bloomBufData.buffer;
+	static ComPtr<ID3D11Buffer> bloomCBBuffer;
+	{
+		DX11::BufferCreateDesc cbBloomDesc;
+		cbBloomDesc.name = "BloomCB";
+		cbBloomDesc.size = sizeof(BloomCB);
+		cbBloomDesc.initialData = &cpuBloomData;
+		BufferHandle bloomCBHandle = {};
+		auto bloomBufData = bufferMgr->CreateResource(cbBloomDesc, bloomCBHandle);
+		bloomCBBuffer = bloomBufData.buffer;
+	}
 
 	struct BlurCB {
 		SFW::Math::Vec2f gTexelSize; // 1/width, 1/height
 		SFW::Math::Vec2f _pad;
 	};
 
-	static BlurCB cpuBlurData = { SFW::Math::Vec2f(1.0f / BLOOM_TEX_WIDTH, 1.0f / BLOOM_TEX_HEIGHT), SFW::Math::Vec2f(0.0f, 0.0f) };
-	DX11::BufferCreateDesc cbBlurDesc;
-	cbBlurDesc.name = "BlurCB";
-	cbBlurDesc.size = sizeof(BlurCB);
-	cbBlurDesc.initialData = &cpuBlurData;
-	BufferHandle blurCBHandle = {};
-	auto blurBufData = bufferMgr->CreateResource(cbBlurDesc, blurCBHandle);
-	static ComPtr<ID3D11Buffer> blurCBBuffer = blurBufData.buffer;
+	static ComPtr<ID3D11Buffer> blurCBBuffer;
+	{
+		BlurCB cpuBlurData = { SFW::Math::Vec2f(1.0f / BLOOM_TEX_WIDTH, 1.0f / BLOOM_TEX_HEIGHT), SFW::Math::Vec2f(0.0f, 0.0f) };
+		DX11::BufferCreateDesc cbBlurDesc;
+		cbBlurDesc.name = "BlurCB";
+		cbBlurDesc.size = sizeof(BlurCB);
+		cbBlurDesc.initialData = &cpuBlurData;
+		BufferHandle blurCBHandle = {};
+		auto blurBufData = bufferMgr->CreateResource(cbBlurDesc, blurCBHandle);
+		blurCBBuffer = blurBufData.buffer;
+	}
+
+	struct FireflyLightCount
+	{
+		uint32_t gFireflyLightCount;
+		uint32_t _pad3_fl[3];
+	};
+
+	static ComPtr<ID3D11Buffer> fireflyLightCountCB;
+	{
+		DX11::BufferCreateDesc cbBlurDesc;
+		cbBlurDesc.name = "FireflyLightCountCB";
+		cbBlurDesc.size = sizeof(FireflyLightCount);
+		BufferHandle blurCBHandle = {};
+		auto fireflyLightCountData = bufferMgr->CreateResource(cbBlurDesc, blurCBHandle);
+		fireflyLightCountCB = fireflyLightCountData.buffer;
+	}
 
 	auto drawFullScreen = [](uint64_t frame) {
 
@@ -425,20 +446,26 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		ID3D11ShaderResourceView* fireflyPointLiehgt = fireflyService->GetPointLightSRV();
 		ctx->PSSetShaderResources(16, 1, &fireflyPointLiehgt);
 
-		ID3D11Buffer* fireflyLightCountBuf = fireflyService->GetLightCountBuffer();
+		uint32_t fireflyCount = 0;
+		{
+			uint32_t slot = frame % Graphics::RENDER_BUFFER_COUNT;
+			ID3D11Buffer* fireflyLightCountBuf = fireflyService->GetLightCountBuffer(slot);
 
-		D3D11_MAPPED_SUBRESOURCE mapped{};
-		HRESULT hr = ctx->Map(fireflyLightCountBuf, 0, D3D11_MAP_READ, 0, &mapped);
-		uint32_t fireflyCount = *reinterpret_cast<const uint32_t*>(mapped.pData);
-		ctx->Unmap(fireflyLightCountBuf, 0);
+			D3D11_MAPPED_SUBRESOURCE mapped{};
+			HRESULT hr = ctx->Map(fireflyLightCountBuf, 0, D3D11_MAP_READ, 0, &mapped);
+			fireflyCount = *reinterpret_cast<const uint32_t*>(mapped.pData);
+			ctx->Unmap(fireflyLightCountBuf, 0);
+		}
 
-		ID3D11Buffer* lightDataBuffer = lightShadowService->GetLightDataCB().Get();
-		hr = ctx->Map(lightDataBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
-		auto& lightCBData = *reinterpret_cast<Graphics::CPULightData*>(mapped.pData);
-		lightCBData.gFireflyLightCount = fireflyCount;
-		ctx->Unmap(lightDataBuffer, 0);
+		{
+			D3D11_MAPPED_SUBRESOURCE mapped{};
+			HRESULT hr = ctx->Map(fireflyLightCountCB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+			auto* FireflyLightCountData = reinterpret_cast<FireflyLightCount*>(mapped.pData);
+			FireflyLightCountData->gFireflyLightCount = fireflyCount;
+			ctx->Unmap(fireflyLightCountCB.Get(), 0);
+		}
 
-		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), lightDataBuffer, fogBuffer.Get(), godRayBuffer.Get() }, 9);
+		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), lightShadowService->GetLightDataCB().Get(), fireflyLightCountCB.Get(), fogBuffer.Get(), godRayBuffer.Get() }, 6);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 		ctx->PSSetSamplers(1, 1, lightShadowService->GetShadowSampler().GetAddressOf());

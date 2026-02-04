@@ -40,7 +40,7 @@ namespace SFW
 		// -------------------------------------------------------------
 		struct CameraParams
 		{
-			Math::Matrix4x4f view = {};      // カメラの View 行列
+			Math::Matrix4x4f view = {};  // カメラの View 行列
 			Math::Vec3f position = {};  // カメラ位置（World）
 			float nearPlane = 0.1f;
 			float farPlane = 1000.0f;
@@ -82,8 +82,7 @@ namespace SFW
 			uint32_t gPointLightCount; // 16B
 
 			float emissiveBoost = 3.0f;
-			uint32_t gFireflyLightCount;
-			float _padding[2]; // パディング// 16B
+			float _padding[3]; // パディング// 16B
 		};
 
 		class LightShadowService

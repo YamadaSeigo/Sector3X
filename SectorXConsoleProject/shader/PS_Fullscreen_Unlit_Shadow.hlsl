@@ -1,22 +1,23 @@
 
 #include "_GlobalTypes.hlsli"
 
+
 //Timeだけ使用
-cbuffer SkyCB : register(b9)
+cbuffer SkyCB : register(b6)
 {
     float gTime;
     float gRotateSpeed; // rad/sec 例: 0.01
     float2 _pad;
 };
 
-cbuffer CameraBuffer : register(b10)
+cbuffer CameraBuffer : register(b7)
 {
     row_major float4x4 invViewProj;
     float4 camForward; //wはpadding
     float4 camPos; // wはpadding
 }
 
-cbuffer LightingCB : register(b11)
+cbuffer LightingCB : register(b8)
 {
     // Sun / directional
     float3 gSunDirectionWS;
@@ -29,11 +30,16 @@ cbuffer LightingCB : register(b11)
     uint gPointLightCount; // 16B
 
     float emissiveBoost; // Emissiveの強調係数
-    uint gFireflyLightCount;
-    float2 _pad2;
+    float3 _pad3;
 };
 
-cbuffer FogCB : register(b12)
+cbuffer FireflyLightCount : register(b9)
+{
+    uint gFireflyLightCount;
+    uint3 _pad3_fl;
+};
+
+cbuffer FogCB : register(b10)
 {
     // Distance fog
     float3 gFogColor; //例: (0.8, 0.8, 1.0)
@@ -59,7 +65,7 @@ cbuffer FogCB : register(b12)
 }
 
 // GodRay(光の筋) パラメータ
-cbuffer GodRayCB : register(b13)
+cbuffer GodRayCB : register(b11)
 {
     float2 gSunScreenUV; // 太陽のスクリーンUV(0..1) ※CPUで計算して渡す
     float gGodRayIntensity; // 強さ（例: 0.6）

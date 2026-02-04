@@ -50,7 +50,7 @@ public:
         float gPlayerRepelRadius = 10.0f;
 
         Math::Vec3f gCamPosWS = {};
-        float gFireflyLightMaxDist = 25.0f;
+        float gFireflyLightMaxDist = 5.0f;
 
         uint32_t gPointLightMax = FireflyParticlePool::MaxPointLight;
         float gFireflyLightRange = 3.0f;
@@ -93,6 +93,11 @@ public:
 		m_cpuUpdateBuffer[currentSlot].gPlayerPosWS = pos;
     }
 
+    void SetCameraPos(const Math::Vec3f pos) {
+        std::lock_guard lock(bufMutex);
+        m_cpuUpdateBuffer[currentSlot].gCamPosWS = pos;
+    }
+
     void SetCameraBuffer(const CameraCB& camCB) {
         std::lock_guard lock(bufMutex);
         m_cpuCameraBuffer[currentSlot] = camCB;
@@ -111,8 +116,8 @@ public:
         return m_pointLight.srv.Get();
     }
 
-    ID3D11Buffer* GetLightCountBuffer() const {
-        return m_stagingCountBuf[currentSlot].Get();
+    ID3D11Buffer* GetLightCountBuffer(uint32_t slot) const {
+        return m_stagingCountBuf[slot].Get();
     }
 
     float GetElapsedTime() const noexcept {
