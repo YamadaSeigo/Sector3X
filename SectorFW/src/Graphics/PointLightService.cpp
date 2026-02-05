@@ -138,7 +138,8 @@ namespace SFW::Graphics
 
 		auto n = m_showCount[countSlot].load(std::memory_order_acquire);
 
-		auto& buffer = m_gpuLights[m_frameIndex % RENDER_BUFFER_COUNT];
+		uint32_t slot = m_frameIndex % RENDER_BUFFER_COUNT;
+		auto& buffer = m_gpuLights[slot];
 
 		for (uint32_t i = 0; i < n; ++i)
 		{
@@ -152,6 +153,8 @@ namespace SFW::Graphics
 			g.invRange = 1.0f / s.desc.range;
 			g.flags = s.desc.castsShadow ? 1u : 0u;
 		}
+
+		m_lightCount[slot].store(n, std::memory_order_relaxed);
 
 		outCount = n;
 

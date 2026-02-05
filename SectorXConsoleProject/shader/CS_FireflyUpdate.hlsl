@@ -33,7 +33,6 @@ struct PointLight
     float intensity; // 16B
     float invRadius;
     uint flag;
-    uint2 _pad_pl;
 };
 
 
@@ -51,10 +50,10 @@ cbuffer CBUpdate : register(b0)
 
     float3 gPlayerPosWS;
     float gPlayerRepelRadius;
-    
+
     float3 gCamPosWS;
     float gFireflyLightMaxDist;
-    
+
     uint gPointLightMax;
     float gFireflyLightRange;
     float gFireflyLightIntensity;
@@ -64,7 +63,7 @@ cbuffer CBUpdate : register(b0)
 // 地形グリッド情報
 cbuffer TerrainGridCB : register(b1)
 {
-    float2 gOriginXZ; // ワールド座標の基準 (x,z) 
+    float2 gOriginXZ; // ワールド座標の基準 (x,z)
     float2 gClusterXZ; // 1クラスタのワールドサイズ (x,z) ※同上
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
@@ -76,7 +75,7 @@ cbuffer TerrainGridCB : register(b1)
     uint gVertsZ; // (= vertsZ)
 
     float2 gSplatInvSize; // 1/width, 1/height (splat texture用)
-    
+
     float2 gCellSize; // Heightfield のセルサイズ (x,z)
     float2 gHeightMapInvSize; // 1/width, 1/height
 };
@@ -251,7 +250,7 @@ void main(uint3 tid : SV_DispatchThreadID)
 
     gParticles[id] = p;
     gAliveOut.Append(id);
-    
+
     // -------------------------
 // 4) Near firefly -> PointLight append
 // -------------------------
@@ -276,7 +275,6 @@ void main(uint3 tid : SV_DispatchThreadID)
                 float r = max(pl.range, 1e-3f);
                 pl.invRadius = 1.0f / r;
                 pl.flag = 0;
-                pl._pad_pl = uint2(0, 0);
 
                 gPointLightsUAV[idx] = pl;
             }

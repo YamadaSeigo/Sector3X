@@ -12,6 +12,7 @@ namespace SFW::Graphics::DX11 {
 }
 namespace SFW::Graphics {
     struct RenderService;
+	class PointLightService;
 }
 class DeferredRenderingService;
 class WindService;
@@ -33,6 +34,7 @@ namespace App
 
         // services
         SFW::Graphics::DX11::LightShadowResourceService* shadowRes = nullptr;
+        SFW::Graphics::PointLightService* pointLight = nullptr;
         DeferredRenderingService* deferred = nullptr;
         WindService* wind = nullptr;
         PlayerService* player = nullptr;

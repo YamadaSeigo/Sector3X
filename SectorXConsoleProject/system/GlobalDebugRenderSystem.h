@@ -100,6 +100,8 @@ public:
 
 		const auto* deferredTexHandle = deferredRenderService->GetGBufferHandles();
 
+		const auto tileLightTexHandle = deferredRenderService->GetLightTexHandle();
+
 		uint32_t matSlot = 10;
 		uint32_t texSlot = 10;
 		{
@@ -128,7 +130,12 @@ public:
 			matMgr->Add(matDesc, deferredMaterialHandle[i + DeferredTextureCount]);
 		}
 
+		matDesc.psSRV[texSlot] = tileLightTexHandle;
+		matDesc.psCBV[matSlot] = matCB_RGM;
+		matMgr->Add(matDesc, tileLightMaterialHandle);
+
 		matDesc.psSRV[texSlot] = mocDepthTexHandle;
+		matDesc.psCBV[matSlot] = matCB_A;
 		matMgr->Add(matDesc, dummyMatHandle);
 
 		DX11::ShaderCreateDesc spriteShaderDesc;
@@ -170,6 +177,22 @@ public:
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
 			cmd.pso = deferredPsoHandle.index;
 			cmd.material = deferredMaterialHandle[i].index;
+			cmd.viewMask = PASS_UI_MAIN;
+			cmd.sortKey = 0;
+			uiSession.Push(std::move(cmd));
+
+			showDeferred = true;
+		}
+
+		if (DebugRenderType::drawTileLight)
+		{
+			Math::Matrix4x4f transMat = Math::MakeTranslationMatrix(Math::Vec3f(resolution.x / 3.0f, 0.0f, 0.0f));
+			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ resolution.x / 3.0f, resolution.y / 3.0f, 1.0f });
+			Graphics::DrawCommand cmd;
+			cmd.instanceIndex = uiSession.AllocInstance(transMat * scaleMat);
+			cmd.mesh = meshManager->GetSpriteQuadHandle().index;
+			cmd.pso = deferredPsoHandle.index;
+			cmd.material = tileLightMaterialHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
 			cmd.sortKey = 0;
 			uiSession.Push(std::move(cmd));
@@ -237,6 +260,8 @@ private:
 
 	Graphics::PSOHandle deferredPsoHandle = {};
 	Graphics::MaterialHandle deferredMaterialHandle[DeferredTextureCount * 2] = {};
+
+	Graphics::MaterialHandle tileLightMaterialHandle = {};
 
 	Graphics::MaterialHandle dummyMatHandle;
 

@@ -79,7 +79,6 @@ namespace SFW
 
 			// Ambient + counts
 			Math::Vec3f gAmbientColor;
-			uint32_t gPointLightCount; // 16B
 
 			float emissiveBoost = 3.0f;
 			float _padding[3]; // パディング// 16B

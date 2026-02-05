@@ -36,7 +36,7 @@ namespace SFW::Graphics
 
 	// GPU転送用（例：StructuredBuffer向け）
 	// ※あなたのシェーダー定義に合わせて変更してOK
-	struct alignas(16) GpuPointLight
+	struct GpuPointLight
 	{
 		GpuPointLight() = default;
 		GpuPointLight(
@@ -117,6 +117,11 @@ namespace SFW::Graphics
 		uint32_t AliveCount() const noexcept { return m_aliveCount; }
 		uint32_t Capacity()  const noexcept { return (uint32_t)m_alive.size(); }
 
+		uint32_t GetLightCount(size_t frameSlot) const noexcept {
+			assert(frameSlot < RENDER_BUFFER_COUNT);
+			return m_lightCount[frameSlot].load(std::memory_order_acquire);
+		}
+
 	private:
 		struct Slot
 		{
@@ -143,6 +148,7 @@ namespace SFW::Graphics
 		std::atomic<uint32_t > m_showCount[2] = { 0,0 };
 
 		GpuPointLight m_gpuLights[RENDER_BUFFER_COUNT][MAX_FRAME_POINTLIGHT] = {};
+		std::atomic<uint32_t> m_lightCount[RENDER_BUFFER_COUNT] = {};
 
 	public:
 		STATIC_SERVICE_TAG

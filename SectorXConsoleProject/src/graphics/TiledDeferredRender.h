@@ -6,6 +6,10 @@ class TiledDeferredRender
 {
 public:
 
+	static constexpr uint32_t TILE_SIZE = 16;
+
+    static constexpr uint32_t MAX_LIGHTS_PER_TILE = 128;
+
 	static constexpr uint32_t BUILD_FRUSTUM_BLOCK_X = 8;
 	static constexpr uint32_t BUILD_FRUSTUM_BLOCK_Y = 8;
 
@@ -34,10 +38,27 @@ public:
     void Create(ID3D11Device* dev,
         uint32_t screenWidth,
         uint32_t screenHeight,
-        uint32_t tileSize,
-        const wchar_t* csBuildFrustum);
+        const wchar_t* csBuildFrustum,
+        const wchar_t* csTileCulling,
+        const wchar_t* csDrawTileLight);
 
 	void BuildTileFrustums(ID3D11DeviceContext* ctx, ID3D11Buffer* camCB);
+    void TileCullingLight(ID3D11DeviceContext* ctx, 
+        ID3D11ShaderResourceView* normalLightSRV,
+        ID3D11ShaderResourceView* fireflyLightSRV,
+        ID3D11ShaderResourceView* depthSRV,
+        ID3D11Buffer* camCB, 
+        ID3D11Buffer* lightCountCB);
+
+    void DrawTileLight(ID3D11DeviceContext* ctx,
+        ID3D11ShaderResourceView* normalLightSRV,
+        ID3D11ShaderResourceView* fireflyLightSRV,
+        ID3D11ShaderResourceView* albedoSRV,
+        ID3D11ShaderResourceView* normalSRV,
+        ID3D11ShaderResourceView* depthSRV,
+        ID3D11UnorderedAccessView* outLightTex,
+        ID3D11SamplerState* pointSampler,
+        ID3D11Buffer* camCB);
 
 private:
 
@@ -47,7 +68,12 @@ private:
 	uint32_t m_tilesY = 0;
 
 	StructuredBufferSRVUAV m_tileFrustums;
+	StructuredBufferSRVUAV m_tileLightIndices;
+	StructuredBufferSRVUAV m_lightIndexCounter;
+
 	ComPtr<ID3D11Buffer> m_tileCB;
 
 	ComPtr<ID3D11ComputeShader> m_csBuildFrustums;
+    ComPtr<ID3D11ComputeShader> m_csTileCulling;
+    ComPtr<ID3D11ComputeShader> m_csDrawTileLight;
 };

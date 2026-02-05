@@ -31,6 +31,8 @@ struct DebugRenderType
 
 	static bool drawDeferredTextureFlags[sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0])];
 
+	static bool drawTileLight;
+
 	static Graphics::TextureHandle debugBloomTexHandle;
 };
 

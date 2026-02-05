@@ -50,7 +50,7 @@ public:
         float gPlayerRepelRadius = 10.0f;
 
         Math::Vec3f gCamPosWS = {};
-        float gFireflyLightMaxDist = 5.0f;
+        float gFireflyLightMaxDist = 100.0f;
 
         uint32_t gPointLightMax = FireflyParticlePool::MaxPointLight;
         float gFireflyLightRange = 3.0f;

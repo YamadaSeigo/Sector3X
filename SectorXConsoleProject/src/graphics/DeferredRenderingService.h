@@ -12,7 +12,11 @@ struct DeferredCameraBuffer {
 };
 
 struct TileCameraBuffer {
+	Math::Matrix4x4f view = {};
 	Math::Matrix4x4f invProj = {};
+	Math::Matrix4x4f invViewProj = {};
+	Math::Vec3f camPos = {};
+	uint32_t pad;
 };
 
 class DeferredRenderingService : public ECS::IUpdateService
@@ -24,8 +28,10 @@ public:
 		ID3D11Device* device,
 		Graphics::DX11::BufferManager* bufferManager,
 		Graphics::DX11::TextureManager* textureManager,
-		uint32_t w, uint32_t h, uint32_t tileSize,
-		const wchar_t* csBuildFrustum)
+		uint32_t w, uint32_t h,
+		const wchar_t* csBuildFrustum,
+		const wchar_t* csTileCulling,
+		const wchar_t* csDrawTileLight)
 		:bufferManager(bufferManager)
 	{
 		using namespace Graphics;
@@ -73,7 +79,22 @@ public:
 			textureManager->Add(texDesc, GBufferHandle[i]);
 		}
 
-		tiledDeferredRender.Create(device, w, h, tileSize, csBuildFrustum);
+		{
+			DX11::TextureRecipe r;
+			r.width = w;
+			r.height = h;
+			r.format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+			r.mipLevels = 1;
+			r.bindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE;
+			r.usage = D3D11_USAGE_DEFAULT;
+			r.arraySize = 1;
+			DX11::TextureCreateDesc desc;
+			desc.recipe = &r;
+			desc.path = "";
+			textureManager->Add(desc, LightBufferTexHandle);
+		}
+
+		tiledDeferredRender.Create(device, w, h, csBuildFrustum, csTileCulling, csDrawTileLight);
 	}
 
 	void PreUpdate(double delta) override
@@ -119,9 +140,47 @@ public:
 		return GBufferHandle;
 	}
 
-	void DrawTiledLightPass(ID3D11DeviceContext* ctx)
+	const Graphics::TextureHandle GetLightTexHandle() const noexcept
 	{
+		return LightBufferTexHandle;
+	}
+
+	void DrawTiledLightPass(ID3D11DeviceContext* ctx,
+		ID3D11ShaderResourceView* normalLightSRV,
+		ID3D11ShaderResourceView* fireflyLightSRV,
+		ID3D11ShaderResourceView* albedoSRV,
+		ID3D11ShaderResourceView* normalSRV,
+		ID3D11ShaderResourceView* depthSRV,
+		ID3D11UnorderedAccessView* outLightUAV,
+		ID3D11Buffer* lightCountCB,
+		ID3D11SamplerState* pointSampler
+		)
+	{
+		// タイルフラスタム構築
 		tiledDeferredRender.BuildTileFrustums(ctx, tileCameraBuffer.Get());
+
+		// ライトカリング
+		tiledDeferredRender.TileCullingLight(
+			ctx,
+			normalLightSRV,
+			fireflyLightSRV,
+			depthSRV,
+			tileCameraBuffer.Get(),
+			lightCountCB
+		);
+
+		// タイルライト描画
+		tiledDeferredRender.DrawTileLight(
+			ctx,
+			normalLightSRV,
+			fireflyLightSRV,
+			albedoSRV,
+			normalSRV,
+			depthSRV,
+			outLightUAV,
+			pointSampler,
+			tileCameraBuffer.Get()
+		);
 	}
 
 private:
@@ -140,6 +199,8 @@ private:
 	uint8_t currentSlot = 0;
 
 	Graphics::TextureHandle GBufferHandle[DeferredTextureCount];
+
+	Graphics::TextureHandle LightBufferTexHandle;
 
 public:
 	STATIC_SERVICE_TAG

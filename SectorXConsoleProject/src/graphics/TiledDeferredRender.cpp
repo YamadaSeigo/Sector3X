@@ -5,12 +5,13 @@
 void TiledDeferredRender::Create(ID3D11Device* dev,
     uint32_t screenWidth,
     uint32_t screenHeight,
-    uint32_t tileSize,
-    const wchar_t* csBuildFrustum)
+    const wchar_t* csBuildFrustum,
+    const wchar_t* csTileCulling,
+    const wchar_t* csDrawTileLight)
 {
-    assert(tileSize > 0);
+    static_assert(TILE_SIZE > 0);
 
-    if (screenWidth % tileSize != 0 || screenHeight % tileSize != 0) {
+    if (screenWidth % TILE_SIZE != 0 || screenHeight % TILE_SIZE != 0) {
         LOG_WARNING("TiledDeferredRender: Screen size is not multiple of tile size. "
 			"Tiles will cover the entire screen, but some tiles may be partially outside the screen.");
     }
@@ -18,8 +19,8 @@ void TiledDeferredRender::Create(ID3D11Device* dev,
     m_screenWidth = screenWidth;
 	m_screenHeight = screenHeight;
 
-    m_tilesX = (screenWidth + tileSize - 1) / tileSize;
-    m_tilesY = (screenHeight + tileSize - 1) / tileSize;
+    m_tilesX = (screenWidth + TILE_SIZE - 1) / TILE_SIZE;
+    m_tilesY = (screenHeight + TILE_SIZE - 1) / TILE_SIZE;
 
 	m_tileFrustums = CreateStructuredBufferSRVUAV(
         dev,
@@ -27,6 +28,25 @@ void TiledDeferredRender::Create(ID3D11Device* dev,
         m_tilesX * m_tilesY,
         true, true,
         0,
+        D3D11_USAGE_DEFAULT,
+        0);
+
+    m_tileLightIndices = CreateStructuredBufferSRVUAV(
+        dev,
+        sizeof(uint32_t),
+        m_tilesX * m_tilesY * MAX_LIGHTS_PER_TILE,
+        true, true,
+        0,
+        D3D11_USAGE_DEFAULT,
+        0);
+
+
+    m_lightIndexCounter = CreateStructuredBufferSRVUAV(
+        dev,
+        sizeof(uint32_t),
+        m_tilesX * m_tilesY,
+        true, true,
+        D3D11_BUFFER_UAV_FLAG_COUNTER,
         D3D11_USAGE_DEFAULT,
         0);
 
@@ -63,6 +83,9 @@ void TiledDeferredRender::Create(ID3D11Device* dev,
         };
 
 	compileShader(csBuildFrustum, m_csBuildFrustums);
+    compileShader(csTileCulling, m_csTileCulling);
+    compileShader(csDrawTileLight, m_csDrawTileLight);
+
 }
 
 
@@ -79,4 +102,91 @@ void TiledDeferredRender::BuildTileFrustums(ID3D11DeviceContext* ctx, ID3D11Buff
     ctx->Dispatch(groupX, groupY, 1);
     ID3D11UnorderedAccessView* nullUAVs[] = { nullptr };
 	ctx->CSSetUnorderedAccessViews(0, 1, nullUAVs, nullptr);
+}
+
+void TiledDeferredRender::TileCullingLight(ID3D11DeviceContext* ctx,
+    ID3D11ShaderResourceView* normalLightSRV,
+    ID3D11ShaderResourceView* fireflyLightSRV,
+    ID3D11ShaderResourceView* depthSRV,
+    ID3D11Buffer* camCB,
+    ID3D11Buffer* lightCountCB)
+{
+    ID3D11ShaderResourceView* srvs[] =
+    {
+        normalLightSRV,
+        fireflyLightSRV,
+        m_tileFrustums.srv.Get(),
+        depthSRV
+    };
+
+	constexpr auto srvCount = _countof(srvs);
+	ctx->CSSetShaderResources(0, srvCount, srvs);
+
+    ID3D11UnorderedAccessView* uavs[] =
+    {
+        m_lightIndexCounter.uav.Get(),
+        m_tileLightIndices.uav.Get(),
+	};
+
+	constexpr auto uavCount = _countof(uavs);
+    ctx->CSSetUnorderedAccessViews(0, uavCount, uavs, nullptr);
+
+    ID3D11Buffer* cbs[] = {
+        m_tileCB.Get(),
+        camCB,
+        lightCountCB
+    };
+	ctx->CSSetConstantBuffers(0, _countof(cbs), cbs);
+
+    ctx->CSSetShader(m_csTileCulling.Get(), nullptr, 0);
+    ctx->Dispatch(m_tilesX, m_tilesY, 1);
+    ID3D11ShaderResourceView* nullSRVs[srvCount] = { nullptr };
+    ctx->CSSetShaderResources(0, srvCount, nullSRVs);
+    ID3D11UnorderedAccessView* nullUAVs[uavCount] = { nullptr };
+	ctx->CSSetUnorderedAccessViews(0, uavCount, nullUAVs, nullptr);
+
+}
+
+void TiledDeferredRender::DrawTileLight(ID3D11DeviceContext* ctx,
+    ID3D11ShaderResourceView* normalLightSRV,
+    ID3D11ShaderResourceView* fireflyLightSRV,
+    ID3D11ShaderResourceView* albedoSRV,
+    ID3D11ShaderResourceView* normalSRV,
+    ID3D11ShaderResourceView* depthSRV,
+    ID3D11UnorderedAccessView* outLightTex,
+    ID3D11SamplerState* pointSampler,
+    ID3D11Buffer* camCB)
+{
+    ID3D11ShaderResourceView* srvs[] =
+    {
+        normalLightSRV,
+        fireflyLightSRV,
+        m_lightIndexCounter.srv.Get(),
+        m_tileLightIndices.srv.Get(),
+        albedoSRV,
+        normalSRV,
+        depthSRV,
+	};
+
+    constexpr auto srvCount = _countof(srvs);
+	ctx->CSSetShaderResources(0, srvCount, srvs);
+
+	ctx->CSSetUnorderedAccessViews(0, 1, &outLightTex, nullptr);
+
+	ctx->CSSetSamplers(0, 1, &pointSampler);
+
+    ID3D11Buffer* cbs[] = {
+        m_tileCB.Get(),
+        camCB
+	};
+	ctx->CSSetConstantBuffers(0, _countof(cbs), cbs);
+
+    ctx->CSSetShader(m_csDrawTileLight.Get(), nullptr, 0);
+    ctx->Dispatch(m_tilesX, m_tilesY, 1);
+    ID3D11ShaderResourceView* nullSRVs[srvCount] = { nullptr };
+    ctx->CSSetShaderResources(0, srvCount, nullSRVs);
+
+	ID3D11UnorderedAccessView* nullUAVs[] = { nullptr };
+	ctx->CSSetUnorderedAccessViews(0, 1, nullUAVs, nullptr);
+
 }

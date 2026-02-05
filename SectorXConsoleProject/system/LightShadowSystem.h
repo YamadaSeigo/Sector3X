@@ -150,7 +150,8 @@ public:
 			auto& cpuLightData = m_cpuLightData[currentSlot];
 			cpuLightData = lightShadowService->GetCPULightData();
 
-			const auto* pointLightData = pointLightService->BuildGpuLights(cpuLightData.gPointLightCount);
+			uint32_t plCount = 0;
+			const auto* pointLightData = pointLightService->BuildGpuLights(plCount);
 
 			// CPU 側のライトデータを GPU 側に転送
 			cbUpdateDesc.buffer = resourceService->GetLightDataCB();
@@ -160,7 +161,7 @@ public:
 
 			cbUpdateDesc.buffer = resourceService->GetPointLightBuffer();
 			cbUpdateDesc.data = pointLightData;
-			cbUpdateDesc.size = sizeof(Graphics::GpuPointLight) * cpuLightData.gPointLightCount;
+			cbUpdateDesc.size = sizeof(Graphics::GpuPointLight) * plCount;
 			bufferMgr->UpdateBuffer(cbUpdateDesc, currentSlot);
 		}
 	}

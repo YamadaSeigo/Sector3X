@@ -126,8 +126,9 @@ int main(void)
 		textureManager,
 		App::WINDOW_WIDTH,
 		App::WINDOW_HEIGHT,
-		App::TILE_SIZE,
-		L"assets/shader/CS_TileFrustumGen.cso");
+		L"assets/shader/CS_TileFrustumGen.cso",
+		L"assets/shader/CS_TileCulling_TwoBuffers.cso",
+		L"assets/shader/CS_TileLightingAccum.cso");
 
 	static Graphics::DX11::LightShadowResourceService lightShadowResourceService;
 	Graphics::DX11::ShadowMapConfig shadowMapConfig;
@@ -199,6 +200,7 @@ int main(void)
 	ctx.graphics = &graphics;
 	ctx.renderService = graphics.GetRenderService();
 	ctx.shadowRes = &lightShadowResourceService;
+	ctx.pointLight = &pointLightService;
 	ctx.deferred = &deferredRenderingService;
 	ctx.wind = &windService;
 	ctx.player = &playerService;

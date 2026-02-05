@@ -3,6 +3,10 @@
 
 #include "_TileDeferred.hlsli"
 
+#ifndef FRUSTUM_BLOCK_SIZE
+#define FRUSTUM_BLOCK_SIZE 8
+#endif
+
 struct Plane
 {
     float3 n; // normal (points inward)
@@ -20,7 +24,7 @@ struct TileFrustum
 // Output: one frustum per tile
 RWStructuredBuffer<TileFrustum> gTileFrustums : register(u0);
 
-cbuffer TileFrustumCB : register(b0)
+cbuffer TileCB : register(b0)
 {
     uint gScreenWidth;
     uint gScreenHeight;
@@ -30,7 +34,11 @@ cbuffer TileFrustumCB : register(b0)
 
 cbuffer CameraCB : register(b1)
 {
-    float4x4 gInvProj; // inverse projection matrix (row-major)
+    row_major float4x4 gView; // world -> view (adjust mul order if column-vector convention)
+    row_major float4x4 gInvProj; // inverse projection (view space)
+    row_major float4x4 gInvViewProj; // clip->world
+    float3 gCamPosWS;
+    uint _pad0;
 };
 
 // Convert pixel coords to NDC.
@@ -50,7 +58,7 @@ float2 PixelToNDC(float2 pix)
 float3 NDCToViewNear(float2 ndc)
 {
     float4 clip = float4(ndc, 0.0f, 1.0f);
-    float4 v = mul(clip, gInvProj); // row_major + row-vector convention
+    float4 v = mul(gInvProj, clip); // row_major + col-vector convention
     v.xyz /= max(v.w, 1e-6f);
     return v.xyz;
 }
@@ -70,7 +78,7 @@ Plane MakeSidePlane(float3 a, float3 b, float3 insideTestRay)
     return p;
 }
 
-[numthreads(8, 8, 1)]
+[numthreads(FRUSTUM_BLOCK_SIZE, FRUSTUM_BLOCK_SIZE, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
     // We run 1 thread per tile (so dispatch gTilesX x gTilesY with numthreads 1x1 is simpler),

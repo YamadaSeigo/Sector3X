@@ -174,7 +174,10 @@ public:
 			deferredService->UpdateCameraBufferData(lightCameraBufferData);
 
 			TileCameraBuffer tileCamBufferData{};
+			tileCamBufferData.view = buffer.view;
 			tileCamBufferData.invProj = Math::Inverse(buffer.proj);
+			tileCamBufferData.invViewProj = Math::Inverse(buffer.viewProj);
+			tileCamBufferData.camPos = debugEye;
 			deferredService->UpdateTileCameraBufferData(tileCamBufferData);
 
 
@@ -242,8 +245,11 @@ public:
 			}
 		}
 
-		const auto& proj = perCameraService->GetCameraBufferDataNoLock().proj;
-		const auto& viewProj = perCameraService->GetCameraBufferDataNoLock().viewProj;
+		const auto& camBuffer = perCameraService->GetCameraBufferDataNoLock();
+
+		const auto& view = camBuffer.view;
+		const auto& proj = camBuffer.proj;
+		const auto& viewProj = camBuffer.viewProj;
 
 		Math::Vec3f r, u, f;
 		perCameraService->MakeBasis(r, u, f);
@@ -258,7 +264,10 @@ public:
 		deferredService->UpdateCameraBufferData(lightCameraBufferData);
 
 		TileCameraBuffer tileCamBufferData{};
+		tileCamBufferData.view = view;
 		tileCamBufferData.invProj = Math::Inverse(proj);
+		tileCamBufferData.invViewProj = Math::Inverse(viewProj);
+		tileCamBufferData.camPos = camPos;
 		deferredService->UpdateTileCameraBufferData(tileCamBufferData);
 
 		auto right = r.normalized();

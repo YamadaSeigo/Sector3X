@@ -8,8 +8,6 @@ namespace App
     constexpr uint32_t WINDOW_WIDTH = uint32_t(1920 / 1.5f);
     constexpr uint32_t WINDOW_HEIGHT = uint32_t(1080 / 1.5f);
 
-	constexpr uint32_t TILE_SIZE = 16;
-
     constexpr uint32_t SHADOW_MAP_SIZE = 1024 / 2;
     constexpr double   FPS_LIMIT = 60.0;
 

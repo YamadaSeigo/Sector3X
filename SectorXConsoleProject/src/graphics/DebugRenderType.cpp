@@ -21,6 +21,7 @@ bool DebugRenderType::drawBloom = false;
 Graphics::TextureHandle DebugRenderType::debugBloomTexHandle = {};
 
 bool DebugRenderType::drawDeferredTextureFlags[sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0])] = { false };
+bool DebugRenderType::drawTileLight = false;
 
 const DebugRenderType debugRenderType = {};
 
@@ -47,6 +48,8 @@ DebugRenderType::DebugRenderType()
 	{
 		BIND_DEBUG_CHECKBOX("Screen", ShowDeferredBufferName[i], &drawDeferredTextureFlags[i]);
 	}
+
+	BIND_DEBUG_CHECKBOX("Screen", "tileLight", &drawTileLight);
 
 	BIND_DEBUG_CHECKBOX("Screen", "moc", &drawMOCDepth);
 	BIND_DEBUG_CHECKBOX("Screen", "bloom", &drawBloom);

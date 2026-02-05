@@ -169,7 +169,8 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 	static auto gGraphics = ctx.graphics;
 	static auto renderBackend = ctx.graphics->GetBackend();
 	static auto deferredService = ctx.deferred;
-	static auto lightShadowService = ctx.shadowRes;
+	static auto lightShadowResService = ctx.shadowRes;
+	static auto pointLightService = ctx.pointLight;
 	static auto fireflyService = ctx.firefly;
 
 	struct SkyCB {
@@ -196,14 +197,37 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 	static ComPtr<ID3D11VertexShader> defferedVS = shaderData.vs;
 	static ComPtr<ID3D11PixelShader> defferedPS = shaderData.ps;
 
-	static std::vector<ID3D11ShaderResourceView*> derreredSRVs;
+	enum DeferredGBufferType {
+		ALBEDO_AO,
+		NORMAL_ROUGHNESS,
+		EMISSIVE_METALLIC,
+		DEPTH
+	};
+
+	static std::vector<ID3D11ShaderResourceView*> deferreredSRVs;
 	for (auto& srv : ttMRT.srv)
 	{
-		derreredSRVs.push_back(srv.Get());
+		deferreredSRVs.push_back(srv.Get());
 	}
 
 	// 深度ステンシルSRVも追加
-	derreredSRVs.push_back(mainDepthSRV.Get());
+	deferreredSRVs.push_back(mainDepthSRV.Get());
+
+	struct LightTexBufferPack {
+		ComPtr<ID3D11ShaderResourceView> srv;
+		ComPtr<ID3D11UnorderedAccessView> uav;
+	};
+
+	static LightTexBufferPack ligthTexBuffer;
+	{
+		auto lightTexBufData = textureMgr->Get(ctx.deferred->GetLightTexHandle());
+		ligthTexBuffer.srv = lightTexBufData.ref().srv;
+
+		D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
+		uavDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+		uavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
+		ctx.graphics->GetDevice()->CreateUnorderedAccessView(lightTexBufData.ref().resource.Get(), &uavDesc, ligthTexBuffer.uav.GetAddressOf());
+	}
 
 	auto deferredCameraHandle = bufferMgr->FindByName(DeferredRenderingService::BUFFER_NAME);
 
@@ -401,20 +425,21 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		blurCBBuffer = blurBufData.buffer;
 	}
 
-	struct FireflyLightCount
+	struct LightCountCB
 	{
+		uint32_t gNormalLightCount;
 		uint32_t gFireflyLightCount;
-		uint32_t _pad3_fl[3];
+		uint32_t _pad3_fl[2];
 	};
 
-	static ComPtr<ID3D11Buffer> fireflyLightCountCB;
+	static ComPtr<ID3D11Buffer> lightCountCB;
 	{
 		DX11::BufferCreateDesc cbBlurDesc;
-		cbBlurDesc.name = "FireflyLightCountCB";
-		cbBlurDesc.size = sizeof(FireflyLightCount);
+		cbBlurDesc.name = "LightCountCB";
+		cbBlurDesc.size = sizeof(LightCountCB);
 		BufferHandle blurCBHandle = {};
-		auto fireflyLightCountData = bufferMgr->CreateResource(cbBlurDesc, blurCBHandle);
-		fireflyLightCountCB = fireflyLightCountData.buffer;
+		auto LightCountData = bufferMgr->CreateResource(cbBlurDesc, blurCBHandle);
+		lightCountCB = LightCountData.buffer;
 	}
 
 	auto drawFullScreen = [](uint64_t frame) {
@@ -422,8 +447,43 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		// 全画面描画でライティング計算
 		auto ctx = gGraphics->GetDeviceContext();
 
-		// タイルドディファードのライティングパス
-		deferredService->DrawTiledLightPass(ctx);
+		uint32_t slot = frame % Graphics::RENDER_BUFFER_COUNT;
+
+		uint32_t fireflyCount = 0;
+		{
+			ID3D11Buffer* fireflyLightCountBuf = fireflyService->GetLightCountBuffer(slot);
+
+			D3D11_MAPPED_SUBRESOURCE mapped{};
+			HRESULT hr = ctx->Map(fireflyLightCountBuf, 0, D3D11_MAP_READ, 0, &mapped);
+			fireflyCount = *reinterpret_cast<const uint32_t*>(mapped.pData);
+			ctx->Unmap(fireflyLightCountBuf, 0);
+		}
+
+		{
+			D3D11_MAPPED_SUBRESOURCE mapped{};
+			HRESULT hr = ctx->Map(lightCountCB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+			auto* lightCountData = reinterpret_cast<LightCountCB*>(mapped.pData);
+			lightCountData->gNormalLightCount = pointLightService->GetLightCount(slot);
+			lightCountData->gFireflyLightCount = fireflyCount;
+			ctx->Unmap(lightCountCB.Get(), 0);
+		}
+
+		// Gbufferはsrvとして使うので外す
+		ctx->OMSetRenderTargets(1, sceneColorRTV.GetAddressOf(), nullptr);
+
+		//タイルドディファードのライティングパス
+		//========================================================================-
+		deferredService->DrawTiledLightPass(ctx,
+			lightShadowResService->GetPointLightSRV().Get(),
+			fireflyService->GetPointLightSRV(),
+			deferreredSRVs[DeferredGBufferType::ALBEDO_AO],
+			deferreredSRVs[DeferredGBufferType::NORMAL_ROUGHNESS],
+			deferreredSRVs[DeferredGBufferType::DEPTH],
+			ligthTexBuffer.uav.Get(),
+			lightCountCB.Get(),
+			pointSampler.Get()
+		);
+		//========================================================================-
 
 		gGraphics->SetBlendState(BlendStateID::Opaque);
 		gGraphics->SetRasterizerState(RasterizerStateID::SolidCullBack);
@@ -437,43 +497,18 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		//(1) ディファ―ドのフルスクリーン合成
 		//=========================================================================
 
-		// Depthはsrvとして使うので外す
-		ctx->OMSetRenderTargets(1, sceneColorRTV.GetAddressOf(), nullptr);
-
 		//CBの5にシャドウマップのパラメーター, Samplerを1にバインド
-		lightShadowService->BindShadowResources(ctx, 5);
+		lightShadowResService->BindShadowResources(ctx, 5);
 		//　シャドウマップバインド
-		lightShadowService->BindShadowPSShadowMap(ctx, 7);
+		lightShadowResService->BindShadowPSShadowMap(ctx, 7);
 
-		ctx->PSSetShaderResources(11, (UINT)derreredSRVs.size(), derreredSRVs.data());
-		ctx->PSSetShaderResources(15, 1, lightShadowService->GetPointLightSRV().GetAddressOf());
+		ctx->PSSetShaderResources(11, (UINT)deferreredSRVs.size(), deferreredSRVs.data());
+		ctx->PSSetShaderResources(15, 1, ligthTexBuffer.srv.GetAddressOf());
 
-		ID3D11ShaderResourceView* fireflyPointLiehgt = fireflyService->GetPointLightSRV();
-		ctx->PSSetShaderResources(16, 1, &fireflyPointLiehgt);
-
-		uint32_t fireflyCount = 0;
-		{
-			uint32_t slot = frame % Graphics::RENDER_BUFFER_COUNT;
-			ID3D11Buffer* fireflyLightCountBuf = fireflyService->GetLightCountBuffer(slot);
-
-			D3D11_MAPPED_SUBRESOURCE mapped{};
-			HRESULT hr = ctx->Map(fireflyLightCountBuf, 0, D3D11_MAP_READ, 0, &mapped);
-			fireflyCount = *reinterpret_cast<const uint32_t*>(mapped.pData);
-			ctx->Unmap(fireflyLightCountBuf, 0);
-		}
-
-		{
-			D3D11_MAPPED_SUBRESOURCE mapped{};
-			HRESULT hr = ctx->Map(fireflyLightCountCB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
-			auto* FireflyLightCountData = reinterpret_cast<FireflyLightCount*>(mapped.pData);
-			FireflyLightCountData->gFireflyLightCount = fireflyCount;
-			ctx->Unmap(fireflyLightCountCB.Get(), 0);
-		}
-
-		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), lightShadowService->GetLightDataCB().Get(), fireflyLightCountCB.Get(), fogBuffer.Get(), godRayBuffer.Get() }, 6);
+		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get() }, 6);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
-		ctx->PSSetSamplers(1, 1, lightShadowService->GetShadowSampler().GetAddressOf());
+		ctx->PSSetSamplers(1, 1, lightShadowResService->GetShadowSampler().GetAddressOf());
 		ctx->PSSetSamplers(2, 1, pointSampler.GetAddressOf());
 
 		ctx->VSSetShader(defferedVS.Get(), nullptr, 0);
@@ -519,7 +554,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		ctx->PSSetShaderResources(0, 1, sceneColorSRV.GetAddressOf());
 
 		//DepthをSRVとしてバインド
-		ctx->PSSetShaderResources(1, 1, &derreredSRVs.back());
+		ctx->PSSetShaderResources(1, 1, &deferreredSRVs.back());
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 

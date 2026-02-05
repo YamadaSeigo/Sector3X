@@ -27,19 +27,11 @@ cbuffer LightingCB : register(b8)
 
     // Ambient + counts
     float3 gAmbientColor;
-    uint gPointLightCount; // 16B
-
     float emissiveBoost; // Emissiveの強調係数
-    float3 _pad3;
 };
 
-cbuffer FireflyLightCount : register(b9)
-{
-    uint gFireflyLightCount;
-    uint3 _pad3_fl;
-};
 
-cbuffer FogCB : register(b10)
+cbuffer FogCB : register(b9)
 {
     // Distance fog
     float3 gFogColor; //例: (0.8, 0.8, 1.0)
@@ -65,7 +57,7 @@ cbuffer FogCB : register(b10)
 }
 
 // GodRay(光の筋) パラメータ
-cbuffer GodRayCB : register(b11)
+cbuffer GodRayCB : register(b10)
 {
     float2 gSunScreenUV; // 太陽のスクリーンUV(0..1) ※CPUで計算して渡す
     float gGodRayIntensity; // 強さ（例: 0.6）
@@ -88,23 +80,12 @@ Texture2D gNormalRough : register(t12); // RGB: Normal, A: Roughness
 Texture2D gEmiMetal : register(t13); // RGB: Emissive, A: Metallic
 Texture2D<float> gDepth : register(t14); // Depth
 
-struct PointLight
-{
-    float3 positionWS;
-    float range; // 16B
-    float3 color;
-    float intensity; // 16B
-    float invRadius;
-    uint flag;
-};
+Texture2D<float4> gLightAccum : register(t15);
 
-StructuredBuffer<PointLight> gPointLights : register(t15);
-
-StructuredBuffer<PointLight> gFireflyLights : register(t16);
 
 // 比較サンプラ（ShadowMapService が作っているもの）
 SamplerComparisonState gShadowSampler : register(s1);
-SamplerState gDepthPointSamp: register(s2);
+SamplerState gPointSamp: register(s2);
 
 float ToonStep3(float x)
 {
@@ -112,107 +93,6 @@ float ToonStep3(float x)
     // 例: 0, 0.5, 1.0
     return (x < 0.33f) ? 0.0f : (x < 0.66f) ? 0.5f : 1.0f;
 }
-
-float3 AccumulatePointLights_UnlitWithTranslucency(
-    float3 wp, float3 N, float3 albedo,
-    float translucency,
-    float3 transColor
-)
-{
-    float3 sum = 0.0f;
-
-    // --------------------
-    // Normal point lights
-    // --------------------
-    [loop]
-    for (uint li = 0; li < gPointLightCount; ++li)
-    {
-        PointLight pl = gPointLights[li];
-
-        float3 toL = pl.positionWS - wp;
-        float distSq = dot(toL, toL);
-
-        float range = pl.range;
-        float rangeSq = range * range;
-        if (range <= 0.0f || distSq >= rangeSq)
-            continue;
-
-        distSq = max(distSq, 1e-6f);
-        float invDist = rsqrt(distSq);
-        float dist = distSq * invDist;
-        float3 L = toL * invDist;
-
-        float t = saturate(dist * pl.invRadius);
-        float att = 1.0f - t;
-
-        const float fadeWidth = 0.2f;
-        float edge = 1.0f - smoothstep(1.0f - fadeWidth, 1.0f, t);
-
-        att = att * att;
-        att *= edge;
-
-        const float wrap = 0.35f;
-        float ndl = dot(N, L);
-        float ndlWrap = saturate((ndl + wrap) / (1.0f + wrap));
-
-        float ndlBack = saturate(dot(-N, L));
-        float backSoft = ndlBack * (ndlBack);
-
-        float3 radiance = pl.color * pl.intensity * att;
-        float3 frontLit = albedo * ndlWrap;
-        float3 backLit = transColor * backSoft * translucency;
-
-        sum += radiance * (frontLit + backLit);
-    }
-
-    // --------------------
-    // Firefly point lights
-    // --------------------
-    [loop]
-    for (uint fi = 0; fi < gFireflyLightCount; ++fi)
-    {
-        PointLight pl = gFireflyLights[fi];
-
-        float3 toL = pl.positionWS - wp;
-        float distSq = dot(toL, toL);
-
-        float range = pl.range;
-        float rangeSq = range * range;
-        if (range <= 0.0f || distSq >= rangeSq)
-            continue;
-
-        distSq = max(distSq, 1e-6f);
-        float invDist = rsqrt(distSq);
-        float dist = distSq * invDist;
-        float3 L = toL * invDist;
-
-        float t = saturate(dist * pl.invRadius);
-        float att = 1.0f - t;
-
-        const float fadeWidth = 0.2f;
-        float edge = 1.0f - smoothstep(1.0f - fadeWidth, 1.0f, t);
-
-        att = att * att;
-        att *= edge;
-
-        const float wrap = 0.35f;
-        float ndl = dot(N, L);
-        float ndlWrap = saturate((ndl + wrap) / (1.0f + wrap));
-
-        float ndlBack = saturate(dot(-N, L));
-        float backSoft = ndlBack * (ndlBack);
-
-        float3 radiance = pl.color * pl.intensity * att;
-        float3 frontLit = albedo * ndlWrap;
-        float3 backLit = transColor * backSoft * translucency;
-
-        sum += radiance * (frontLit + backLit);
-    }
-
-    return sum;
-}
-
-
 
 struct VSOut
 {
@@ -423,7 +303,7 @@ float ComputeRadialGodRay(float2 uv)
         if (any(sampUV < 0.0f) || any(sampUV > 1.0f))
             break;
 
-        float z = gDepth.SampleLevel(gDepthPointSamp, sampUV, 0);
+        float z = gDepth.SampleLevel(gPointSamp, sampUV, 0);
         float occ = (z >= gGodRayMaxDepth) ? 1.0f : 0.0f;
 
         sum += occ * illuminationDecay * gGodRayWeight;
@@ -454,7 +334,7 @@ float ComputeDirectionalGodRay(float2 uv, float shadow, float2 sunDirSS)
         if (any(p < 0.0) || any(p > 1.0))
             break;
 
-        float z = gDepth.SampleLevel(gDepthPointSamp, p, 0);
+        float z = gDepth.SampleLevel(gPointSamp, p, 0);
         float occ = (z >= gGodRayMaxDepth) ? 1.0 : 0.0;
 
         float sh = shadow;
@@ -484,7 +364,7 @@ float4 main(VSOut i) : SV_Target
     float4 ndc;
     ndc.xy = uv * 2.0f - 1.0f;
     ndc.y = -ndc.y; // D3DのUV(上0) と NDC(Y+上)の差を吸収
-    ndc.z = gDepth.Sample(gDepthPointSamp, uv);
+    ndc.z = gDepth.Sample(gPointSamp, uv);
     ndc.w = 1.0f;
 
     // View-Projection 逆行列でワールド位置を復元
@@ -544,15 +424,8 @@ float4 main(VSOut i) : SV_Target
     base *= shadowMul;
 
     // PointLight（Unlit Toon）
-    // とりあえずmetalを透けの強さに利用
-    float3 plAdd = 0.0f;
-    [branch]
-    if ((gPointLightCount | gFireflyLightCount) != 0u)
-    {
-        float translucency = emiMetal.a;
-        float3 transColor = albedo;
-        plAdd = AccumulatePointLights_UnlitWithTranslucency(wp.xyz, N, albedo, translucency, transColor);
-    }
+    uint2 pix = (uint2) i.pos.xy;
+    float3 plAdd = gLightAccum.Load(int3(pix, 0)).rgb;
 
     // Emissive（必要ならそのまま加算）
     float3 color = base + plAdd + emiMetal.rgb * emissiveBoost;
