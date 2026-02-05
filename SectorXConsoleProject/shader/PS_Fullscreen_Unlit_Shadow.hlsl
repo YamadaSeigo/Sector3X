@@ -96,7 +96,6 @@ struct PointLight
     float intensity; // 16B
     float invRadius;
     uint flag;
-    uint2 _pad_pl;
 };
 
 StructuredBuffer<PointLight> gPointLights : register(t15);

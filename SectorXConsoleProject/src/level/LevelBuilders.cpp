@@ -15,7 +15,6 @@
 #include "system/SpriteRenderSystem.h"
 #include "system/PlayerSystem.h"
 #include "system/EnvironmentSystem.h"
-#include "system/DeferredRenderingSystem.h"
 #include "system/LightShadowSystem.h"
 #include "system/PointLightSystem.h"
 #include "system/SpriteAnimationSystem.h"

@@ -174,6 +174,7 @@
     <ClCompile Include="src\Environment\LeafService.cpp" />
     <ClCompile Include="src\Graphics\DebugRenderType.cpp" />
     <ClCompile Include="src\graphics\RenderPipeline.cpp" />
+    <ClCompile Include="src\graphics\TiledDeferredRender.cpp" />
     <ClCompile Include="src\Level\LevelBuilders.cpp" />
     <ClCompile Include="src\terrain\normalmap_bc5.cpp" />
     <ClCompile Include="src\terrain\TerrainBootstrap.cpp" />
@@ -279,6 +280,16 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="shader\CS_TileFrustumGen.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="shader\CS_WriteArgs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
@@ -532,6 +543,7 @@
     <None Include="shader\_FireflyParticles.hlsli" />
     <None Include="shader\_GlobalTypes.hlsli" />
     <None Include="shader\_ShadowTypes.hlsli" />
+    <None Include="shader\_TileDeferred.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\appconfig.h" />
@@ -552,6 +564,7 @@
     <ClInclude Include="src\Graphics\RenderDefine.h" />
     <ClInclude Include="src\graphics\RenderPipeline.h" />
     <ClInclude Include="src\Graphics\SpriteAnimationService.h" />
+    <ClInclude Include="src\graphics\TiledDeferredRender.h" />
     <ClInclude Include="src\Level\LevelBuilders.h" />
     <ClInclude Include="src\terrain\normalmap_bc5.h" />
     <ClInclude Include="src\terrain\TerrainBootstrap.h" />
@@ -560,7 +573,6 @@
     <ClInclude Include="system\CameraSystem.h" />
     <ClInclude Include="system\CleanModelSystem.h" />
     <ClInclude Include="system\DebugRenderSystem.h" />
-    <ClInclude Include="system\DeferredRenderingSystem.h" />
     <ClInclude Include="system\EnvironmentSystem.h" />
     <ClInclude Include="system\FireflySystem.h" />
     <ClInclude Include="system\GlobalDebugRenderSystem.h" />

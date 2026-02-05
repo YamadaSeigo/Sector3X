@@ -69,6 +69,9 @@
     <ClCompile Include="src\Level\LevelBuilders.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics\TiledDeferredRender.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\VS_ClipUV.hlsl">
@@ -227,6 +230,9 @@
     <FxCompile Include="shader\PS_CircleAlpha.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\CS_TileFrustumGen.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\_GlobalTypes.hlsli">
@@ -239,6 +245,9 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="shader\_LeafParticles.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shader\_TileDeferred.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -280,9 +289,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="system\EnvironmentSystem.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="system\DeferredRenderingSystem.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="system\LightShadowSystem.h">
@@ -368,6 +374,9 @@
     </ClInclude>
     <ClInclude Include="src\Level\LevelBuilders.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\TiledDeferredRender.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

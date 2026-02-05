@@ -1,0 +1,7 @@
+
+#ifndef TILE_DEFERRED
+#define TILE_DEFERRED
+
+#define TILE_SIZE 16
+
+#endif // TILEDEFERRED

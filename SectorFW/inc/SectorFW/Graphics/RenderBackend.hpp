@@ -138,7 +138,7 @@ namespace SFW
 			 * @param data 更新データへのポインタ
 			 * @param size 更新データのサイズ（バイト単位）
 			 */
-			void UpdateBufferData(Buffer buffer, const void* data, size_t size) {
+			void UpdateCameraBufferData(Buffer buffer, const void* data, size_t size) {
 				static_cast<Derived*>(this)->UpdateBufferDataImpl(buffer, data, size);
 			}
 		};

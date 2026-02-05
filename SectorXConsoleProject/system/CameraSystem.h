@@ -166,12 +166,17 @@ public:
 			Math::ToBasis<float, Math::LH_ZForward>(debugRot, r, u, f);
 
 			//ディファ―ド用のバッファ更新
-			LightCameraBuffer lightCameraBufferData{};
+			DeferredCameraBuffer lightCameraBufferData{};
 			lightCameraBufferData.invViewProj = Math::Inverse(buffer.viewProj);
 			lightCameraBufferData.camForward = f.normalized();
 			lightCameraBufferData.camPos = debugEye;
 
-			deferredService->UpdateBufferData(lightCameraBufferData);
+			deferredService->UpdateCameraBufferData(lightCameraBufferData);
+
+			TileCameraBuffer tileCamBufferData{};
+			tileCamBufferData.invProj = Math::Inverse(buffer.proj);
+			deferredService->UpdateTileCameraBufferData(tileCamBufferData);
+
 
 			FireflyService::CameraCB fireflyCamBuffer{};
 			fireflyCamBuffer.gViewProj = buffer.viewProj;
@@ -237,6 +242,7 @@ public:
 			}
 		}
 
+		const auto& proj = perCameraService->GetCameraBufferDataNoLock().proj;
 		const auto& viewProj = perCameraService->GetCameraBufferDataNoLock().viewProj;
 
 		Math::Vec3f r, u, f;
@@ -244,12 +250,16 @@ public:
 
 		auto camPos = perCameraService->GetEyePos();
 
-		LightCameraBuffer lightCameraBufferData{};
+		DeferredCameraBuffer lightCameraBufferData{};
 		lightCameraBufferData.invViewProj = Math::Inverse(viewProj);
 		lightCameraBufferData.camForward = f.normalized();
 		lightCameraBufferData.camPos = camPos;
 
-		deferredService->UpdateBufferData(lightCameraBufferData);
+		deferredService->UpdateCameraBufferData(lightCameraBufferData);
+
+		TileCameraBuffer tileCamBufferData{};
+		tileCamBufferData.invProj = Math::Inverse(proj);
+		deferredService->UpdateTileCameraBufferData(tileCamBufferData);
 
 		auto right = r.normalized();
 		auto up = u.normalized();

@@ -120,7 +120,14 @@ int main(void)
 	ok = audioService.Initialize();
 	assert(ok && "Failed Audio Service Initialize");
 
-	DeferredRenderingService deferredRenderingService(bufferMgr, textureManager, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
+	DeferredRenderingService deferredRenderingService(
+		device,
+		bufferMgr,
+		textureManager,
+		App::WINDOW_WIDTH,
+		App::WINDOW_HEIGHT,
+		App::TILE_SIZE,
+		L"assets/shader/CS_TileFrustumGen.cso");
 
 	static Graphics::DX11::LightShadowResourceService lightShadowResourceService;
 	Graphics::DX11::ShadowMapConfig shadowMapConfig;

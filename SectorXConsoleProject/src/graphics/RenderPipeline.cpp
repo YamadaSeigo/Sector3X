@@ -1,4 +1,5 @@
 #include "RenderPipeline.h"
+#include "TiledDeferredRender.h"
 #include "app/AppContext.h"
 #include "app/appconfig.h"
 
@@ -167,6 +168,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 
 	static auto gGraphics = ctx.graphics;
 	static auto renderBackend = ctx.graphics->GetBackend();
+	static auto deferredService = ctx.deferred;
 	static auto lightShadowService = ctx.shadowRes;
 	static auto fireflyService = ctx.firefly;
 
@@ -419,6 +421,9 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 
 		// 全画面描画でライティング計算
 		auto ctx = gGraphics->GetDeviceContext();
+
+		// タイルドディファードのライティングパス
+		deferredService->DrawTiledLightPass(ctx);
 
 		gGraphics->SetBlendState(BlendStateID::Opaque);
 		gGraphics->SetRasterizerState(RasterizerStateID::SolidCullBack);
