@@ -295,7 +295,7 @@ namespace SFW
 		std::vector<PendingMove> temp_;         // Flush 用一時
 	public:
 		// 即時ではなく「後で」移すために積む
-		inline void Enqueue(ECS::EntityID id, const SpatialChunkKey& src, const SpatialChunkKey& dst) {
+		inline void TryEnqueue(ECS::EntityID id, const SpatialChunkKey& src, const SpatialChunkKey& dst) {
 			// ここでキー妥当性チェックを入れる場合は IsValid(src/dst) に置き換えてください
 			if (src == dst) return;
 			std::lock_guard<std::mutex> lock(mtx_);

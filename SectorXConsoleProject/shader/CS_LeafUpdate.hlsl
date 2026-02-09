@@ -75,16 +75,20 @@ cbuffer WindCB : register(b2)
     float3 gWindDir; // XZ平面想定
 };
 
+
 cbuffer CBParams : register(b3)
 {
-    float gKillRadiusScale; // 例: 1.5
-    float gDamping; // 例: 0.96（multiply）
-    float gFollowK; // 例: 6..14
-    float gMaxSpeed; // 例: 6
-
-    // ground params（Update側でも使うなら）
-    float gGroundMinClear; // 例: 0.05（地面押し上げ最小クリア）
-    float _padA, _padB, _padC;
+    float gKillRadiusScale;
+    float gDamping;
+    float gSteerKMin;
+    float gSteerKMax;
+    float gMaxSpeed;
+    float gGravity;
+    float gWindDrag;
+    float gLift;
+    float gWobbleAmp;
+    float gGroundMinClear;
+    float _padA, _padB;
 };
 
 cbuffer CBCamera : register(b4)
@@ -236,7 +240,9 @@ void main(uint3 tid : SV_DispatchThreadID)
     float3 centerWS = vol.centerWS + LocalToWorld(centerL, right3, up, fwd);
     centerWS.y += cl.yOffset; // 地面追従はclump側で作った yOffset を適用
 
-    float wobble = sin(gTime * 1.3f + cl.phase) * 3.0f; // ampは0.5～3mなど
+    float wind01 = saturate(abs(gWindSpeed));
+    float wobble = sin(gTime * 1.3f + cl.phase) * (gWobbleAmp * wind01);
+
     centerWS += right3 * wobble;
 
     centerWS.xz += cl.anchorXZ;
@@ -258,14 +264,12 @@ void main(uint3 tid : SV_DispatchThreadID)
     float targetY = max(centerWS.y, groundY + gGroundMinClear);
     float3 targetWS = float3(targetXZ.x, targetY, targetXZ.y);
 
-    // steer only lateral (not along tangent)
-    float3 toTarget = targetWS - p.posWS;
-    float3 lateral = toTarget - tanWS * dot(toTarget, tanWS);
-    float3 steer = lateral * gFollowK;
-
-    // flow along tangent (use volume speed; cl.speedMul already baked into cl.s update)
-    float speedAlong = max(vol.speed, 0.0f) * gWindAmplitude;
+    float speedAlong = max(vol.speed, 0.0f) * gWindSpeed;
     float3 flow = tanWS * speedAlong;
+    float speed01 = saturate(abs(speedAlong) / max(gMaxSpeed, 1e-3f));
+    float steerK = lerp(gSteerKMin, gSteerKMax, speed01);
+    float2 toXZ = targetXZ - p.posWS.xz;
+    float3 steer = float3(toXZ.x, 0.0f, toXZ.y) * steerK;
 
     // flutter (weak)
     uint nseed = Hash_u32(id ^ cl.seed ^ (uint) (gTime * 60.0f));
@@ -284,13 +288,11 @@ void main(uint3 tid : SV_DispatchThreadID)
     }
 
     // integrate
-    float3 accel = steer + flutter + repel;
+    float3 accel = 0;
+    accel += steer + flutter + repel;
+    accel.y += (-gGravity) + (gLift * wind01); // 風が弱いときはほぼ重力のみ
+    accel += (flow - p.velWS) * gWindDrag; // 急カーブの“吸い付き”を減らす
     p.velWS += accel * dt;
-
-    // blend toward flow for coherence
-    p.velWS = lerp(p.velWS, flow, saturate(0.15f + 0.10f * vol.noiseScale));
-
-    // damping
     p.velWS *= gDamping;
 
     // clamp speed
@@ -302,8 +304,20 @@ void main(uint3 tid : SV_DispatchThreadID)
     float3 prevPos = p.posWS;
     p.posWS += p.velWS * dt;
 
+    // ground clamp（簡易）
+    {
+        float gy = SampleGroundY(p.posWS.xz);
+        float minY = gy + gGroundMinClear;
+        if (p.posWS.y < minY)
+        {
+            p.posWS.y = minY;
+            if (p.velWS.y < 0.0f)
+                p.velWS.y = 0.0f;
+        }
+    }
+
     // ---- screen-space depth collision ----
-{
+    {
     // ワールド->クリップ->UV
         float4 clip = mul(gViewProj, float4(p.posWS, 1.0f));
         if (clip.w > 1e-6f)

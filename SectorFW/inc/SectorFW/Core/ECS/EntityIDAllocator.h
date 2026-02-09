@@ -74,6 +74,31 @@ namespace SFW
 				// Free queue full → ID leak（無視してもよい or ログ出力）
 				SFW_ASSERT(success && "EntityIDAllocator: Free queue is full, ID leak occurred.");
 			}
+
+			void DestroyBulk(const EntityID* ids, size_t count) {
+
+				std::vector<uint32_t> indices;
+				indices.reserve(count);
+
+				for (auto i = 0; i < count; ++i) {
+					auto id = ids[i];
+
+					if (id.index >= maxEntities) continue;
+
+					// Invalidate old ID
+					generations[id.index].fetch_add(1, std::memory_order_acq_rel);
+
+					indices.push_back(id.index);
+				}
+
+				moodycamel::ProducerToken pt(freeQueue);
+
+				// Reuse the indices
+				bool success = freeQueue.try_enqueue_bulk(pt, indices.data(), indices.size());
+				// Free queue full → ID leak（無視してもよい or ログ出力）
+				SFW_ASSERT(success && "EntityIDAllocator: Free queue is full, ID leak occurred.");
+			}
+
 			/**
 			 * @brief エンティティIDが有効かどうかを確認する関数
 			 * @param id エンティティID

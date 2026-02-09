@@ -66,7 +66,7 @@ public:
 		using namespace SFW::Physics;
 
 		std::vector<PhysicsService::CreateIntent> intents;
-		ps->SwapCreateIntents(intents);
+		ps->SwapCreateIntents(levelCtx.GetID(), intents);
 		if (intents.empty()) return;
 
 		bool stop = false;
@@ -95,7 +95,10 @@ public:
 			ECS::ArchetypeChunk* ch = locOpt->chunk;
 			const size_t row = locOpt->index;
 			const auto   count = ch->GetEntityCount();
-			if (row >= count) continue; // ê¢ë„ÉYÉåÇ»Ç«
+			if (row >= count) {
+				LOG_WARNING("Chunk row out of range");
+				continue; // ê¢ë„ÉYÉåÇ»Ç«
+			}
 
 			ComponentAccessor <
 				ECS::Read<CTransform>,
@@ -145,7 +148,7 @@ public:
 				intents.erase(intents.begin(), intents.begin() + (createCount - 1));
 
 			//ñ¢ê∂ê¨ÇÃintentÇñﬂÇ∑
-			ps->SwapCreateIntents(intents);
+			ps->SwapCreateIntents(levelCtx.GetID(), intents);
 		}
 	}
 

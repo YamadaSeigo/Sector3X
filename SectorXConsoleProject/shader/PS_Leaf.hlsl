@@ -17,7 +17,7 @@ PS_PRBOutput main(VSOut i)
     float4 texCol = gLeafTex.Sample(gLeafSamp, i.uv);
 
     // アルファクリッピング
-    const float cutoff = 0.1f;
+    const float cutoff = 0.5f;
     clip(texCol.a - cutoff);
 
     float3 leafCol = i.col * texCol.rgb;

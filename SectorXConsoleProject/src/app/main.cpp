@@ -22,7 +22,6 @@
 #include "app/component_registration.h"
 #include "graphics/RenderPipeline.h"
 #include "terrain/TerrainBootstrap.h"
-#include "level/LevelBuilders.h"
 
 #include "app/PlayerService.h"
 #include "graphics/DeferredRenderingService.h"
@@ -31,6 +30,8 @@
 #include "environment/EnvironmentService.h"
 #include "environment/FireflyService.h"
 #include "environment/LeafService.h"
+
+#include "level/LevelBuilders.h"
 
 
 int main(void)
@@ -74,7 +75,7 @@ int main(void)
 
 	Physics::PhysicsShapeManager shapeManager;
 	Physics::PhysicsService::Plan physicsPlan = { 1.0f / (float)App::FPS_LIMIT, 1, false };
-	Physics::PhysicsService physicsService(physics, shapeManager, physicsPlan);
+	Physics::PhysicsService physicsService(physics, shapeManager, physicsPlan, 1u << 14);
 
 	Input::WinInput winInput(WindowHandler::GetMouseInput());
 	InputService* inputService = &winInput;

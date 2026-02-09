@@ -13,6 +13,7 @@
 #include <optional>
 #include <mutex>
 #include <vector>
+#include <unordered_map>
 #include <immintrin.h>
 #include <cstddef>
 #include <cstdint>
@@ -176,9 +177,16 @@ namespace SFW
 			}
 
 			// ===== 作成完了イベントを取り出す（スレッド安全・O(1) swap）=====
-			void ConsumeCreatedBodies(std::vector<CreatedBody>& out) {
+			void ConsumeCreatedBodies(LevelID id, std::vector<CreatedBody>& out) {
 				std::scoped_lock lk(m_createdMutex);
-				out.swap(m_created);
+				auto it = m_created.find(id);
+				if (it == m_created.end()) {
+					out.clear();
+					return;
+				}
+
+				out.swap(it->second);
+				m_created.erase(it);
 			}
 
 			Entity ResolveCharacterEntity(const JPH::CharacterVirtual* ch) const
@@ -204,7 +212,7 @@ namespace SFW
 
 			// 作成完了イベント
 			std::mutex              m_createdMutex;
-			std::vector<CreatedBody> m_created;
+			std::unordered_map<LevelID, std::vector<CreatedBody>> m_created;
 
 			std::unique_ptr<MyContactListenerOwner> m_contactListener;
 			std::vector<ContactEvent> m_pendingContacts;

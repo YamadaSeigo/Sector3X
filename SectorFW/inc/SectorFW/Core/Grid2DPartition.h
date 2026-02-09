@@ -126,25 +126,65 @@ namespace SFW
 			std::vector<SpatialChunk*> out;
 			const uint32_t w = grid.width(), d = grid.height();
 			const float cell = float(chunkSize);
-			const float exz = 0.5f * cell; // x,z は各セルの半径
+			const float exz = 0.5f * cell; // x,z extents (cell half size)
 
-			for (uint32_t z = 0; z < d; ++z) {
-				for (uint32_t x = 0; x < w; ++x) {
-					const float cx = levelOriginWS.x + (x + 0.5f) * cell;
-					const float cz = levelOriginWS.z + (z + 0.5f) * cell;
+			// 1) Coarse: frustum AABB -> candidate cell range (XZ)
+			const Math::AABB3f frAabb = ComputeFrustumAABB_WS(fr);
+			using Signed = long long;
+			auto floor_div_x = [&](float worldX) noexcept -> Signed {
+				return static_cast<Signed>(std::floor(double(worldX - levelOriginWS.x) / double(cell)));
+				};
+			auto floor_div_z = [&](float worldZ) noexcept -> Signed {
+				return static_cast<Signed>(std::floor(double(worldZ - levelOriginWS.z) / double(cell)));
+				};
+
+			Signed ix0 = floor_div_x(frAabb.lb.x);
+			Signed ix1 = floor_div_x(frAabb.ub.x);
+			Signed iz0 = floor_div_z(frAabb.lb.z);
+			Signed iz1 = floor_div_z(frAabb.ub.z);
+
+			const Signed W = static_cast<Signed>(w);
+			const Signed D = static_cast<Signed>(d);
+			if (ix0 > ix1) std::swap(ix0, ix1);
+			if (iz0 > iz1) std::swap(iz0, iz1);
+
+			// If frustum AABB doesn't overlap this grid at all, early out.
+			if (ix1 < 0 || iz1 < 0 || ix0 >= W || iz0 >= D) {
+				return out;
+			}
+
+			ix0 = std::clamp<Signed>(ix0, 0, W - 1);
+			ix1 = std::clamp<Signed>(ix1, 0, W - 1);
+			iz0 = std::clamp<Signed>(iz0, 0, D - 1);
+			iz1 = std::clamp<Signed>(iz1, 0, D - 1);
+
+			// 2) Precise: per-chunk real AABB (if available). Otherwise fallback to cell AABB.
+			for (Signed z = iz0; z <= iz1; ++z) {
+				for (Signed x = ix0; x <= ix1; ++x) {
+					auto& chunk = grid(static_cast<ChunkSizeType>(x), static_cast<ChunkSizeType>(z));
+					if (chunk.GetEntityManager().GetEntityCount() == 0) continue;
+
+					// 最終判定：チャンクの実AABBがあるならそれを使う
+					if (chunk.HasStaticBounds()) {
+						if (fr.IntersectsAABB(chunk.GetStaticBoundsWS())) {
+							out.push_back(const_cast<SpatialChunk*>(&chunk));
+						}
+						continue;
+					}
+
+					// フォールバック（実AABB無し）：従来のセルAABB + YOverlap
+					const float cx = levelOriginWS.x + (float(x) + 0.5f) * cell;
+					const float cz = levelOriginWS.z + (float(z) + 0.5f) * cell;
 
 					float cyEff, eyEff;
 					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, -chunkSize, chunkSize, cyEff, eyEff)) {
-						continue; // 縦に一切重ならない → 可視になり得ない
+						continue;
 					}
 
-					const Math::Vec3f center{ cx,  cyEff, cz };
+					const Math::Vec3f center{ cx, cyEff, cz };
 					const Math::Vec3f extent{ exz, eyEff, exz };
-
 					if (fr.IntersectsAABB(center, extent)) {
-						auto& chunk = grid(x, z);
-						if (chunk.GetEntityManager().GetEntityCount() > 0)
-							out.push_back(const_cast<SpatialChunk*>(&chunk));
+						out.push_back(const_cast<SpatialChunk*>(&chunk));
 					}
 				}
 			}
@@ -159,23 +199,60 @@ namespace SFW
 			const float cell = float(chunkSize);
 			const float exz = 0.5f * cell;
 
-			for (uint32_t z = 0; z < d; ++z) {
-				for (uint32_t x = 0; x < w; ++x) {
-					const float cx = levelOriginWS.x + (x + 0.5f) * cell;
-					const float cz = levelOriginWS.z + (z + 0.5f) * cell;
+			// 1) Coarse: frustum AABB -> candidate cell range (XZ)
+			const Math::AABB3f frAabb = ComputeFrustumAABB_WS(fr);
+			using Signed = ChunkSizeType;
+			auto floor_div_x = [&](float worldX) noexcept -> Signed {
+				return static_cast<Signed>(std::floor(double(worldX - levelOriginWS.x) / double(cell)));
+				};
+			auto floor_div_z = [&](float worldZ) noexcept -> Signed {
+				return static_cast<Signed>(std::floor(double(worldZ - levelOriginWS.z) / double(cell)));
+				};
+
+			Signed ix0 = floor_div_x(frAabb.lb.x);
+			Signed ix1 = floor_div_x(frAabb.ub.x);
+			Signed iz0 = floor_div_z(frAabb.lb.z);
+			Signed iz1 = floor_div_z(frAabb.ub.z);
+
+			const Signed W = static_cast<Signed>(w);
+			const Signed D = static_cast<Signed>(d);
+			if (ix0 > ix1) std::swap(ix0, ix1);
+			if (iz0 > iz1) std::swap(iz0, iz1);
+
+			if (ix1 < 0 || iz1 < 0 || ix0 >= W || iz0 >= D) {
+				return;
+			}
+
+			ix0 = std::clamp<Signed>(ix0, 0, W - 1);
+			ix1 = std::clamp<Signed>(ix1, 0, W - 1);
+			iz0 = std::clamp<Signed>(iz0, 0, D - 1);
+			iz1 = std::clamp<Signed>(iz1, 0, D - 1);
+
+			// 2) Precise: per-chunk real AABB (if available). Otherwise fallback to cell AABB.
+			for (Signed z = iz0; z <= iz1; ++z) {
+				for (Signed x = ix0; x <= ix1; ++x) {
+					auto& chunk = grid(static_cast<ChunkSizeType>(x), static_cast<ChunkSizeType>(z));
+					if (chunk.GetEntityManager().GetEntityCount() == 0) continue;
+
+					if (chunk.HasStaticBounds()) {
+						if (fr.IntersectsAABB(chunk.GetStaticBoundsWS())) {
+							f(const_cast<SpatialChunk&>(chunk));
+						}
+						continue;
+					}
+
+					const float cx = levelOriginWS.x + (float(x) + 0.5f) * cell;
+					const float cz = levelOriginWS.z + (float(z) + 0.5f) * cell;
 
 					float cyEff, eyEff;
 					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, ymin, ymax, cyEff, eyEff)) {
 						continue;
 					}
 
-					const Math::Vec3f center{ cx,  cyEff, cz };
+					const Math::Vec3f center{ cx, cyEff, cz };
 					const Math::Vec3f extent{ exz, eyEff, exz };
-
 					if (fr.IntersectsAABB(center, extent)) {
-						auto& chunk = grid(x, z);
-						if (chunk.GetEntityManager().GetEntityCount() > 0)
-							f(const_cast<SpatialChunk&>(chunk));
+						f(const_cast<SpatialChunk&>(chunk));
 					}
 				}
 			}
@@ -194,7 +271,7 @@ namespace SFW
 			const float r = (radius < 0.0f) ? 0.0f : radius;
 			const float r2 = r * r;
 
-			using Signed = long long;
+			using Signed = ChunkSizeType;
 			const float cell = float(chunkSize);
 			const float e = 0.5f * cell;
 
@@ -257,30 +334,80 @@ namespace SFW
 			const Math::Vec3f& camPos,
 			size_t maxCount = (std::numeric_limits<size_t>::max)()) const noexcept
 		{
+			std::vector<SpatialChunk*> out;
+
 			struct Item { SpatialChunk* sc; float d2; };
 			std::vector<Item> items; items.reserve(128);
 
 			const uint32_t w = grid.width(), d = grid.height();
 			const float cell = float(chunkSize);
-			const float exz = 0.5f * cell;
+			const float exz = 0.5f * cell; // x,z extents (cell half size)
 
-			for (uint32_t z = 0; z < d; ++z) {
-				for (uint32_t x = 0; x < w; ++x) {
-					const float cx = levelOriginWS.x + (x + 0.5f) * cell;
-					const float cz = levelOriginWS.z + (z + 0.5f) * cell;
+			// 1) Coarse: frustum AABB -> candidate cell range (XZ)
+			const Math::AABB3f frAabb = ComputeFrustumAABB_WS(fr);
+			using Signed = ChunkSizeType;
+			auto floor_div_x = [&](float worldX) noexcept -> Signed {
+				return static_cast<Signed>(std::floor(double(worldX - levelOriginWS.x) / double(cell)));
+				};
+			auto floor_div_z = [&](float worldZ) noexcept -> Signed {
+				return static_cast<Signed>(std::floor(double(worldZ - levelOriginWS.z) / double(cell)));
+				};
+
+			Signed ix0 = floor_div_x(frAabb.lb.x);
+			Signed ix1 = floor_div_x(frAabb.ub.x);
+			Signed iz0 = floor_div_z(frAabb.lb.z);
+			Signed iz1 = floor_div_z(frAabb.ub.z);
+
+			const Signed W = static_cast<Signed>(w);
+			const Signed D = static_cast<Signed>(d);
+			if (ix0 > ix1) std::swap(ix0, ix1);
+			if (iz0 > iz1) std::swap(iz0, iz1);
+
+			// If frustum AABB doesn't overlap this grid at all, early out.
+			if (ix1 < 0 || iz1 < 0 || ix0 >= W || iz0 >= D) {
+				return out;
+			}
+
+			ix0 = std::clamp<Signed>(ix0, 0, W - 1);
+			ix1 = std::clamp<Signed>(ix1, 0, W - 1);
+			iz0 = std::clamp<Signed>(iz0, 0, D - 1);
+			iz1 = std::clamp<Signed>(iz1, 0, D - 1);
+
+			// 2) Precise: per-chunk real AABB (if available). Otherwise fallback to cell AABB.
+			for (Signed z = iz0; z <= iz1; ++z) {
+				for (Signed x = ix0; x <= ix1; ++x) {
+					auto& chunk = grid(static_cast<ChunkSizeType>(x), static_cast<ChunkSizeType>(z));
+					if (chunk.GetEntityManager().GetEntityCount() == 0) continue;
+
+					// 最終判定：チャンクの実AABBがあるならそれを使う
+					if (chunk.HasStaticBounds()) {
+						auto bounds = chunk.GetStaticBoundsWS();
+						if (fr.IntersectsAABB(bounds)) {
+							const float d2 = Dist2PointAABB3D(camPos, bounds.center() + levelOriginWS, bounds.extent());
+							auto& chunk = grid(x, z);
+							if (chunk.GetEntityManager().GetEntityCount() > 0)
+								items.push_back({ const_cast<SpatialChunk*>(&chunk), d2 });
+						}
+						continue;
+					}
+
+					// フォールバック（実AABB無し）：従来のセルAABB + YOverlap
+					const float cx = levelOriginWS.x + (float(x) + 0.5f) * cell;
+					const float cz = levelOriginWS.z + (float(z) + 0.5f) * cell;
 
 					float cyEff, eyEff;
-					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, -chunkSize, chunkSize, cyEff, eyEff)) continue;
+					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, -chunkSize, chunkSize, cyEff, eyEff)) {
+						continue;
+					}
 
 					const Math::Vec3f center{ cx, cyEff, cz };
 					const Math::Vec3f extent{ exz, eyEff, exz };
-
-					if (!fr.IntersectsAABB(center, extent)) continue;
-
-					const float d2 = Dist2PointAABB3D(camPos, center, extent);
-					auto& chunk = grid(x, z);
-					if (chunk.GetEntityManager().GetEntityCount() > 0)
-						items.push_back({ const_cast<SpatialChunk*>(&chunk), d2 });
+					if (fr.IntersectsAABB(center, extent)) {
+						const float d2 = Dist2PointAABB3D(camPos, center, extent);
+						auto& chunk = grid(x, z);
+						if (chunk.GetEntityManager().GetEntityCount() > 0)
+							items.push_back({ const_cast<SpatialChunk*>(&chunk), d2 });
+					}
 				}
 			}
 
@@ -292,7 +419,7 @@ namespace SFW
 			std::sort(items.begin(), items.end(),
 				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
 
-			std::vector<SpatialChunk*> out; out.reserve(K);
+			out.reserve(K);
 			for (auto& it : items) out.push_back(it.sc);
 			return out;
 		}
@@ -311,12 +438,17 @@ namespace SFW
 			Math::Vec3f cp, float hy, Debug::LineVertex* outLine,
 			uint32_t capacity, uint32_t displayCount) const noexcept
 		{
+			// 残りは従来のセルAABBで表示
 			const uint32_t w = grid.width(), d = grid.height();
 			const float cell = float(chunkSize);
 			const float exz = 0.5f * cell; // x,z は各セルの半径
 
 			uint32_t validCount = 0;
-			float maxLength = displayCount * chunkSize;
+			float maxLengthD2 = std::pow(displayCount * chunkSize, 2.0f);
+
+			Math::Vec3f localCamPos = cp - levelOriginWS;
+			const uint32_t centerX = static_cast<uint32_t>(std::clamp<int32_t>(static_cast<int32_t>(std::floor(localCamPos.x / cell)), 0, static_cast<int32_t>(w - 1)));
+			const uint32_t centerZ = static_cast<uint32_t>(std::clamp<int32_t>(static_cast<int32_t>(std::floor(localCamPos.z / cell)), 0, static_cast<int32_t>(d - 1)));
 
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t x = 0; x < w; ++x) {
@@ -324,11 +456,11 @@ namespace SFW
 					const float cz = levelOriginWS.z + (z + 0.5f) * cell;
 
 					Math::Vec2 vec = { cx - cp.x, cz - cp.z };
-					float len = vec.length();
+					float len = vec.lengthSquared();
 
-					if (len > maxLength) continue; // 表示距離外
+					if (len > maxLengthD2) continue; // 表示距離外
 
-					if (capacity - validCount < 6) break;
+					if (capacity - validCount < 30) break; // ラインバッファ不足
 
 					float cyEff, eyEff;
 					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz,
@@ -341,17 +473,31 @@ namespace SFW
 
 					if (fr.IntersectsAABB(center, extent))
 					{
-						uint32_t rgb = Math::LerpColor(0xFFFFFFFF, 0x000000FF, len / maxLength);
+						uint32_t rgb = Math::LerpColor(0xFFFFFFFF, 0x000000FF, len / maxLengthD2);
 
-						outLine[validCount + 0] = { Math::Vec3f(center.x - extent.x, center.y - extent.y, center.z - extent.z), rgb };
-						outLine[validCount + 1] = { Math::Vec3f(center.x - extent.x, center.y + extent.y, center.z - extent.z), rgb };
-						outLine[validCount + 2] = { Math::Vec3f(center.x + extent.x, center.y - extent.y, center.z - extent.z), rgb };
-						outLine[validCount + 3] = { Math::Vec3f(center.x + extent.x, center.y + extent.y, center.z - extent.z), rgb };
-						outLine[validCount + 4] = { Math::Vec3f(center.x - extent.x, center.y - extent.y, center.z + extent.z), rgb };
-						outLine[validCount + 5] = { Math::Vec3f(center.x - extent.x, center.y + extent.y, center.z + extent.z), rgb };
+						outLine[validCount++] = { Math::Vec3f(center.x - extent.x, center.y - extent.y, center.z - extent.z), rgb };
+						outLine[validCount++] = { Math::Vec3f(center.x - extent.x, center.y + extent.y, center.z - extent.z), rgb };
+						outLine[validCount++] = { Math::Vec3f(center.x + extent.x, center.y - extent.y, center.z - extent.z), rgb };
+						outLine[validCount++] = { Math::Vec3f(center.x + extent.x, center.y + extent.y, center.z - extent.z), rgb };
+						outLine[validCount++] = { Math::Vec3f(center.x - extent.x, center.y - extent.y, center.z + extent.z), rgb };
+						outLine[validCount++] = { Math::Vec3f(center.x - extent.x, center.y + extent.y, center.z + extent.z), rgb };
+
+						auto& chunk = grid(x, z);
+						if (chunk.HasStaticBounds())
+						{
+							Math::AABB3f aabb = chunk.GetStaticBoundsWS();
+							aabb += levelOriginWS;
+
+							const uint32_t baseColor = (x == centerX && z == centerZ) ?
+								0xFF0000FF : 0x00FF00FF;
+
+							const uint32_t rgba = Math::LerpColor(baseColor, 0x000000FF, len / maxLengthD2);
+							auto lineVertices = Debug::MakeAABBLineVertices(aabb, rgba);
+							for (const auto& v : lineVertices) {
+								outLine[validCount++] = v;
+							}
+						}
 					}
-
-					validCount += 6;
 				}
 			}
 

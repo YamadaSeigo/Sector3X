@@ -86,8 +86,6 @@
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11LightShadowResourceService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11TextureManager.h" />
     <ClInclude Include="inc\SectorFW\Graphics\DX11\_dx11inc.h" />
-    <ClInclude Include="inc\SectorFW\Graphics\DX12\dx12inc.h" />
-    <ClInclude Include="inc\SectorFW\Graphics\DX12\DX12RenderBackend.h" />
     <ClInclude Include="inc\SectorFW\Graphics\HeightmapBake.h" />
     <ClInclude Include="inc\SectorFW\Graphics\I2DCameraService.h" />
     <ClInclude Include="inc\SectorFW\Graphics\I3DCameraService.h" />

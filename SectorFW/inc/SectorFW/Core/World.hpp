@@ -12,6 +12,14 @@
 
 namespace SFW
 {
+	enum class EApplyLevelSystemOption
+	{
+		Add = 0,
+		Remove = 1,
+		Pause = 2,
+		Resume = 3
+	};
+
 	/**
 	 * @brief 各レベルを管理し、更新するクラス。サービスロケーターを保持する。
 	 * @details コピー不可
@@ -191,6 +199,27 @@ namespace SFW
 					sc.AddSystem<SystemType>(world.GetServiceLocator());
 					});
 			}
+
+			template<template<typename> class SystemType>
+			void RemoveSystemFromLevel(const std::string levelName) {
+				LevelCustumFunc(levelName, [&](auto& holder) {
+					auto& sc = holder.level->GetScheduler();
+					sc.RemoveSystem<SystemType>();
+					});
+			}
+
+			template<template<typename> class SystemType>
+			void PauseResumeSystemInLevel(const std::string levelName, bool pause) {
+				LevelCustumFunc(levelName, [&](auto& holder) {
+					auto& sc = holder.level->GetScheduler();
+					if (pause) {
+						sc.PauseSystem<SystemType>();
+					}
+					else {
+						sc.ResumeSystem<SystemType>();
+					}
+					});
+			}
 		private:
 			template<typename Func>
 			void LevelCustumFunc(const std::string& levelName, Func&& func)
@@ -314,16 +343,32 @@ namespace SFW
 		};
 
 		template<template<typename> class SystemType>
-		class AddSystemCommand : public IRequestCommand
+		class ApplyLevelSystemCommand : public IRequestCommand
 		{
 		public:
-			AddSystemCommand(std::string levelName) : targetLevelName(levelName) {}
+			ApplyLevelSystemCommand(std::string levelName, EApplyLevelSystemOption _option = EApplyLevelSystemOption::Add)
+				: targetLevelName(levelName), option(_option){}
 
 			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
-				pWorldSession->AddSystemToLevel<SystemType>(targetLevelName);
+				switch (option)
+				{
+					case EApplyLevelSystemOption::Add:
+						pWorldSession->AddSystemToLevel<SystemType>(targetLevelName);
+						break;
+					case EApplyLevelSystemOption::Remove:
+						pWorldSession->RemoveSystemFromLevel<SystemType>(targetLevelName);
+						break;
+					case EApplyLevelSystemOption::Pause:
+						pWorldSession->PauseResumeSystemInLevel<SystemType>(targetLevelName, true);
+						break;
+					case EApplyLevelSystemOption::Resume:
+						pWorldSession->PauseResumeSystemInLevel<SystemType>(targetLevelName, false);
+						break;
+				}
 			}
 		private:
 			std::string targetLevelName = {};
+			EApplyLevelSystemOption option;
 		};
 
 		class LambdaCommand : public IRequestCommand
@@ -394,9 +439,25 @@ namespace SFW
 			}
 
 			template<template<typename> class System>
-			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateAddSystemCommand(const std::string& levelName) const noexcept {
-				return std::make_unique<AddSystemCommand<System>>(levelName);
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateApplyLevelSystemCommand(const std::string& levelName, EApplyLevelSystemOption option) const noexcept {
+				return std::make_unique<ApplyLevelSystemCommand<System>>(levelName, option);
 			}
+
+			template<template<typename> class System>
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateAddSystemCommand(const std::string& levelName) const noexcept {
+				return std::make_unique<ApplyLevelSystemCommand<System>>(levelName, EApplyLevelSystemOption::Add);
+			}
+
+			template<template<typename> class System>
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateRemoveSystemCommand(const std::string& levelName) const noexcept {
+				return std::make_unique<ApplyLevelSystemCommand<System>>(levelName, EApplyLevelSystemOption::Remove);
+			}
+
+			template<template<typename> class System>
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreatePauseResumeSystemCommand(const std::string& levelName, bool pause = true) const noexcept {
+				return std::make_unique<ApplyLevelSystemCommand<System>>(levelName, pause ? EApplyLevelSystemOption::Pause : EApplyLevelSystemOption::Resume);
+			}
+
 
 			[[nodiscard]] std::unique_ptr<IRequestCommand>
 				CreateLambdaCommand(std::function<void(Session*, IThreadExecutor*)> fn) const {

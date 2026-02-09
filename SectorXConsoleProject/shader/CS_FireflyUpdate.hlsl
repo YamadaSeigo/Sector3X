@@ -57,7 +57,7 @@ cbuffer CBUpdate : register(b0)
     uint gPointLightMax;
     float gFireflyLightRange;
     float gFireflyLightIntensity;
-    float _pad_up;
+    float gFireflyPickProb; // 0..1 の確率で光源化
 };
 
 // 地形グリッド情報
@@ -252,9 +252,17 @@ void main(uint3 tid : SV_DispatchThreadID)
     gAliveOut.Append(id);
 
     // -------------------------
-// 4) Near firefly -> PointLight append
-// -------------------------
-{
+    // 4) Near firefly -> PointLight append
+    // -------------------------
+    {
+
+        uint h = Hash_u32(id * 1664525u + 1013904223u);
+        float r01 = (h & 0x00FFFFFFu) / 16777216.0f;
+
+        // 例：確率pで採用（pは0..1、CPUから調整してもOK）
+        if (r01 > gFireflyPickProb)
+            return;
+
         float3 toC = p.posWS - gCamPosWS;
         float d2 = dot(toC, toC);
         float maxD = gFireflyLightMaxDist;
@@ -268,8 +276,9 @@ void main(uint3 tid : SV_DispatchThreadID)
             {
                 PointLight pl;
                 pl.positionWS = p.posWS;
-                pl.range = gFireflyLightRange;
-                pl.color = float3(1.0, 0.95, 0.6); // 好みで調整（蛍色）
+                float blink = 0.5f + 0.5f * sin(gTime * 6.0f + p.phase);
+                pl.range = gFireflyLightRange * blink;
+                pl.color = v.color; // 好みで調整（蛍色）
                 pl.intensity = gFireflyLightIntensity;
 
                 float r = max(pl.range, 1e-3f);

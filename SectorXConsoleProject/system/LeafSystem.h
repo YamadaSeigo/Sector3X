@@ -23,7 +23,7 @@ struct CLeafVolume
     uint32_t    maxCountNear = 1000;    // 近距離での最大個体数
 
     // 動き（UpdateCSで使う）
-    float       speed = 20.0f;
+    float       speed = 1.0f;
     float       noiseScale = 0.1f;
 
     // LOD距離（CPUがactive判定・targetCount計算）

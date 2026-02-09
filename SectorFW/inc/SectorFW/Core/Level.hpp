@@ -192,6 +192,57 @@ namespace SFW
 			}
 
 			/**
+			 * @brief 静的境界ボリュームを持つエンティティを追加する関数
+			 * @param boundsWS ワールド空間での境界ボリューム
+			 * @param ...components 追加するコンポーネントの可変引数
+			 * @return std::optional<ECS::EntityID> エンティティID
+			 * */
+			template<typename... Components>
+			std::optional<ECS::EntityID> AddStaticBoundsEntity(SpatialChunk::Bounds3f boundsWS, const Components&... components)
+			{
+				using namespace ECS;
+
+				ComponentMask mask;
+				(SetMask<Components>(mask), ...);
+
+				// Transformコンポーネントが存在するかどうかをチェック
+				ComponentTypeID typeID = ComponentTypeRegistry::GetID<TransformType>();
+				bool hasTransform = mask.test(typeID);
+
+				EntityID id = EntityID::Invalid();
+
+				//Transformコンポーネントが存在する場合、パーティションからチャンクを取得
+				if (hasTransform)
+				{
+					auto transform = extract_first_of_type<TransformType>(components...);
+					if (transform)
+					{
+						auto chunk = level.partition.GetChunk(transform->location, level.entityManagerReg, level.levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transformの位置に基づいてチャンクを取得
+						if (chunk)
+						{
+							id = (*chunk)->GetEntityManager().AddEntity<Components...>(mask, components...);
+							// 静的境界ボリュームを拡張
+							(*chunk)->ExpandStaticBoundsWS(boundsWS);
+						}
+					}
+				}
+				// Transformコンポーネントが存在しない場合、グローバルエンティティマネージャーを使用
+				else
+				{
+					id = level.partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
+				}
+
+				// エンティティIDが無効な場合はエラーをログ出力
+				if (!id.IsValid()) {
+					LOG_ERROR("EntityID is not Valid : %d", id.index);
+					return std::nullopt; // エンティティの追加に失敗した場合
+				}
+
+				return id;
+			}
+
+
+			/**
 			 * @brief 位置を指定してエンティティを追加する関数
 			 * @param location エンティティの位置
 			 * @param ...components 追加するコンポーネントの可変引数

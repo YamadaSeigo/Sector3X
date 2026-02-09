@@ -21,7 +21,6 @@
 #include "system/FireflySystem.h"
 #include "system/LeafSystem.h"
 #include "system/TitleSystem.h"
-#include "system/BuildBodiesFromIntentsSystem.hpp"
 
 #include "graphics/SpriteAnimationService.h"
 
@@ -406,6 +405,19 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
 			modelDesc.ClearAdditionalBindings();
 
+			Math::AABB3f modelBounds[_countof(modelAssetHandle)];
+			{
+				auto readLock = modelAssetMgr->AcquireReadLock();
+				for (int i = 0; i < _countof(modelAssetHandle); ++i)
+				{
+					const auto& modelData = modelAssetMgr->GetNoLock(modelAssetHandle[i]);
+					for(const auto& mesh : modelData.subMeshes)
+					{
+						modelBounds[i].expandToInclude(mesh.aabb);
+					}
+				}
+			}
+
 			ModelAssetHandle playerModelHandle;
 			modelDesc.pso = cullDefaultPSOHandle;
 			modelDesc.path = "assets/model/BlackGhost.glb";
@@ -504,8 +516,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				[&](Math::Vec3f scale)
 				{
 					Physics::ShapeCreateDesc shapeDesc;
-					shapeDesc.shape = Physics::CapsuleDesc{ 8.0f,0.5f };
-					shapeDesc.localOffset.y = 8.0f;
+					shapeDesc.shape = Physics::CapsuleDesc{ 12.0f,0.5f };
+					shapeDesc.localOffset.y = 12.0f;
 					return ps->MakeShape(shapeDesc);
 				},
 				nullptr,
@@ -589,7 +601,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						// 0..1 に正規化した exp カーブ
 						float w = (std::exp(k * t) - 1.0f) / (std::exp(k) - 1.0f); // w: 0..1
 
-						location.y -= w * 2.0f;   // 最大で 4 下げる（0..4）
+						location.y -= w * 2.0f;   // 最大で 2 下げる（0..2）
+						//scaleY *= (1.0f - w * 0.8f); // 最大で80%縮小
 
 						auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
 						auto modelComp = CModel{ grassModelHandle };
@@ -692,6 +705,10 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 						modelComp.flags |= enableOutline[modelIdx] ? (uint16_t)EModelFlag::Outline : (uint16_t)EModelFlag::None;
 
+						SFW::SpatialChunk::Bounds3f boundsWS = modelBounds[modelIdx];
+						boundsWS *= scale; // スケール適用
+						boundsWS += location; // ワールド位置に移動
+
 						if (makeShapeHandleFunc[modelIdx] != nullptr)
 						{
 							auto chunk = pLevel->GetChunk(location);
@@ -706,7 +723,9 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 #ifdef _ENABLE_IMGUI
 							auto shapeDims = ps->GetShapeDims(shapeHandle);
 #endif
-							auto id = levelSession.AddEntity(
+							// 静的境界エンティティとして登録
+							auto id = levelSession.AddStaticBoundsEntity(
+								boundsWS,
 								CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
 								modelComp,
 								staticBody,
@@ -725,7 +744,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						}
 						else
 						{
-							levelSession.AddEntity(
+							levelSession.AddStaticBoundsEntity(
+								boundsWS,
 								CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
 								modelComp
 							);
@@ -932,7 +952,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			//scheduler.AddSystem<PhysicsSystem>(*serviceLocator);
 			scheduler.AddSystem<BuildBodiesFromIntentsSystem>(*serviceLocator);
 			scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(*serviceLocator);
-			//scheduler.AddSystem<PlayerSystem>(*serviceLocator);
+			scheduler.AddSystem<PlayerSystem>(*serviceLocator);
 			scheduler.AddSystem<PointLightSystem>(*serviceLocator);
 			scheduler.AddSystem<FireflySystem>(*serviceLocator);
 			scheduler.AddSystem<LeafSystem>(*serviceLocator);

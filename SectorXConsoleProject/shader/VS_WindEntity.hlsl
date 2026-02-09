@@ -24,7 +24,7 @@ cbuffer WindCB : register(b11)
 {
     float gTime; // 経過時間
     float gNoiseFreq; // ノイズ空間スケール（WorldPos に掛ける）
-    float gBigWaveWeight; // 1本あたりの高さ（ローカルY の最大値）
+    float gBigWaveWeight; // 大きな揺れの重み (0..1)
     float gWindSpeed; // 風アニメ速度
     float gWindAmplitude; // 揺れの強さ
     float3 gWindDir; // XZ 平面の風向き (正規化済み)

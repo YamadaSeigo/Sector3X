@@ -485,4 +485,46 @@ namespace SFW::Math {
 			return out;
 		}
 	};
+
+	//==========================================================================
+	// Helper: compute world-space AABB that encloses the frustum (via 8 corners).
+	// This is used only to narrow down candidate grid cells before precise tests.
+	//==========================================================================
+	static inline AABB3f ComputeFrustumAABB_WS(const Math::Frustumf& fr) noexcept
+	{
+		AABB3f aabb;
+		aabb.invalidate();
+
+		using FP = Math::FrustumPlane;
+		const auto& plL = fr.p[(int)FP::Left];
+		const auto& plR = fr.p[(int)FP::Right];
+		const auto& plB = fr.p[(int)FP::Bottom];
+		const auto& plT = fr.p[(int)FP::Top];
+		const auto& plN = fr.p[(int)FP::Near];
+		const auto& plF = fr.p[(int)FP::Far];
+
+		auto add = [&](const Vec3f& p) noexcept {
+			ExpandAABB(aabb, p);
+			};
+
+		Vec3f c;
+		// Near plane corners
+		if (Planef::Intersect3Planes(plL, plB, plN, c)) add(c);
+		if (Planef::Intersect3Planes(plL, plT, plN, c)) add(c);
+		if (Planef::Intersect3Planes(plR, plB, plN, c)) add(c);
+		if (Planef::Intersect3Planes(plR, plT, plN, c)) add(c);
+		// Far plane corners
+		if (Planef::Intersect3Planes(plL, plB, plF, c)) add(c);
+		if (Planef::Intersect3Planes(plL, plT, plF, c)) add(c);
+		if (Planef::Intersect3Planes(plR, plB, plF, c)) add(c);
+		if (Planef::Intersect3Planes(plR, plT, plF, c)) add(c);
+
+		// Fallback: if we couldn't compute any corner (degenerate), return a huge box.
+		if (!(aabb.lb.x <= aabb.ub.x && aabb.lb.y <= aabb.ub.y && aabb.lb.z <= aabb.ub.z)) {
+			aabb.lb = { -1.0e30f, -1.0e30f, -1.0e30f };
+			aabb.ub = { 1.0e30f,  1.0e30f,  1.0e30f };
+		}
+		return aabb;
+	}
+
 } // namespace SectorFW::Math

@@ -115,7 +115,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)../SectorFW/inc;$(SolutionDir)../SectorFW/third_party;$(ProjectDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../SectorFW/inc;$(SolutionDir)../SectorFW/third_party;$(ProjectDir);$(ProjectDir)src;$(ProjectDir)src/app;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
@@ -142,7 +142,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)../SectorFW/inc;$(SolutionDir)../SectorFW/third_party;$(ProjectDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../SectorFW/inc;$(SolutionDir)../SectorFW/third_party;$(ProjectDir);$(ProjectDir)src;$(ProjectDir)src/app;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>

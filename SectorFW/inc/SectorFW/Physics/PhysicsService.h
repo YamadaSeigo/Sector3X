@@ -26,6 +26,9 @@ namespace SFW
 				float fixed_dt = 1.0f / 60.0f;
 				int   substeps = 1;
 				bool  collect_debug = false; // 後でデバッグライン等を拾う用
+
+				// 1 fixed step あたりに Jolt に流すコマンド上限
+				int   command_budget_per_step = 4096;
 			};
 
 			/**
@@ -159,9 +162,9 @@ namespace SFW
 			 * @brief 物理ボディを作成するコマンドをキューに追加する
 			 * @param c 作成コマンド
 			 */
-			bool CreateBody(const CreateBodyCmd& c) { return Enqueue(c); }
+			bool CreateBody(const CreateBodyCmd& c) { return TryEnqueue(c); }
 			/**
-			 * @brief 物理ボディを破棄するコマンドをキューに追加する
+			 * @brief 物理ボディを破棄するコマンドをキューに必ず追加する
 			 * @param e 破棄するエンティティ
 			 */
 			bool DestroyBody(Entity e) { return Enqueue(DestroyBodyCmd{ e }); }
@@ -171,19 +174,19 @@ namespace SFW
 			 * @param tm テレポート先の変換行列
 			 * @param wake テレポート後に起こすかどうか（デフォルトは true）
 			 */
-			bool Teleport(Entity e, const Mat34f& tm, bool wake = true) { return Enqueue(TeleportCmd{ e, wake, tm }); }
+			bool Teleport(Entity e, const Mat34f& tm, bool wake = true) { return TryEnqueue(TeleportCmd{ e, wake, tm }); }
 			/**
 			 * @brief 物理ボディの線形速度を設定するコマンドをキューに追加する
 			 * @param e 設定するエンティティ
 			 * @param v 設定する線形速度（Vec3f）
 			 */
-			bool SetLinearVelocity(Entity e, Vec3f v) { return Enqueue(SetLinearVelocityCmd{ e, v }); }
+			bool SetLinearVelocity(Entity e, Vec3f v) { return TryEnqueue(SetLinearVelocityCmd{ e, v }); }
 			/**
 			 * @brief 物理ボディの角速度を設定するコマンドをキューに追加する
 			 * @param e 設定するエンティティ
 			 * @param w 設定する角速度（Vec3f）
 			 */
-			bool SetAngularVelocity(Entity e, Vec3f w) { return Enqueue(SetAngularVelocityCmd{ e, w }); }
+			bool SetAngularVelocity(Entity e, Vec3f w) { return TryEnqueue(SetAngularVelocityCmd{ e, w }); }
 			/**
 			 * @brief 物理ボディにインパルスを加えるコマンドをキューに追加する
 			 * @param e インパルスを加えるエンティティ
@@ -193,27 +196,27 @@ namespace SFW
 			bool AddImpulse(Entity e, Vec3f p, std::optional<Vec3f> at = std::nullopt) {
 				AddImpulseCmd cmd{ e, p, {}, false };
 				if (at) { cmd.atWorldPos = *at; cmd.useAtPos = true; }
-				return Enqueue(cmd);
+				return TryEnqueue(cmd);
 			}
 			/**
 			 * @brief 物理ボディにトルクを加えるコマンドをキューに追加する
 			 * @param e トルクを加えるエンティティ
 			 * @param tm 加えるトルク（Vec3f）
 			 */
-			bool SetKinematicTarget(Entity e, const Mat34f& tm) { return Enqueue(SetKinematicTargetCmd{ e, tm }); }
+			bool SetKinematicTarget(Entity e, const Mat34f& tm) { return TryEnqueue(SetKinematicTargetCmd{ e, tm }); }
 			/**
 			 * @brief 物理ボディの衝突マスクを設定するコマンドをキューに追加する
 			 * @param e 設定するエンティティ
 			 * @param mask 設定する衝突マスク
 			 */
-			bool SetCollisionMask(Entity e, uint32_t mask) { return Enqueue(SetCollisionMaskCmd{ e, mask }); }
+			bool SetCollisionMask(Entity e, uint32_t mask) { return TryEnqueue(SetCollisionMaskCmd{ e, mask }); }
 			/**
 			 * @brief 物理ボディのレイヤーを設定するコマンドをキューに追加する
 			 * @param e 設定するエンティティ
 			 * @param layer レイヤー
 			 * @param broad ブロードフェーズレイヤー
 			 */
-			bool SetObjectLayer(Entity e, uint16_t layer, uint16_t broad) { return Enqueue(SetObjectLayerCmd{ e, layer, broad }); }
+			bool SetObjectLayer(Entity e, uint16_t layer, uint16_t broad) { return TryEnqueue(SetObjectLayerCmd{ e, layer, broad }); }
 			/**
 			 * @brief レイキャストを実行するコマンドをキューに追加する
 			 * @param reqId リクエストID（応答時に返される）
@@ -221,36 +224,59 @@ namespace SFW
 			 * @param dir 方向ベクトル（正規化されていること、Vec3f）
 			 * @param maxDist 最大距離
 			 */
-			bool RayCast(uint32_t reqId, Vec3f o, Vec3f dir, float maxDist) { return Enqueue(RayCastCmd{ reqId, o, dir, maxDist }); }
+			bool RayCast(uint32_t reqId, Vec3f o, Vec3f dir, float maxDist) { return TryEnqueue(RayCastCmd{ reqId, o, dir, maxDist }); }
 
 			/**
 			 * @brief レイキャストを実行するコマンドをキューに追加する
 			 * @param c レイキャストコマンド
 			 */
 			bool RayCast(const RayCastCmd& c) {
-				return Enqueue(c);
+				return TryEnqueue(c);
 			}
 
+			/**
+			 * @brief キャラクターを生成するコマンドをキューに追加する
+			 * @param c キャラクター生成コマンド
+			 */
 			bool CreateCharacter(const CreateCharacterCmd& c) {
-				return Enqueue(c);
+				return TryEnqueue(c);
 			}
-
+			/**
+			 * @brief キャラクターの速度を設定するコマンドをキューに追加する
+			 * @param e 対象のエンティティ
+			 * @param v 設定する速度（Vec3f）
+			 */
 			bool SetCharacterVelocity(Entity e, Vec3f v) {
-				return Enqueue(SetCharacterVelocityCmd{ e, v });
+				return TryEnqueue(SetCharacterVelocityCmd{ e, v });
 			}
-
+			/**
+			 * @brief キャラクターの回転を設定するコマンドをキューに追加する
+			 * @param e 対象のエンティティ
+			 * @param q 設定する回転（Quatf）
+			 */
 			bool SetCharacterRotation(Entity e, const Quatf& q) {
-				return Enqueue(SetCharacterRotationCmd{ e, q });
+				return TryEnqueue(SetCharacterRotationCmd{ e, q });
 			}
-
+			/**
+			 * @brief キャラクターをテレポートするコマンドをキューに追加する
+			 * @param e 対象のエンティティ
+			 * @param tm テレポート先の変換行列
+			 */
 			bool TeleportCharacter(Entity e, const Mat34f& tm) {
-				return Enqueue(TeleportCharacterCmd{ e, tm });
+				return TryEnqueue(TeleportCharacterCmd{ e, tm });
 			}
-
+			/**
+			 * @brief キャラクターを破棄するコマンドをキューに必ず追加する
+			 * @param e 対象のエンティティ
+			 */
 			bool DestroyCharacter(Entity e) {
 				return Enqueue(DestroyCharacterCmd{ e });
 			}
-
+			/**
+			 * @brief キャラクターのポーズを取得する
+			 * @param e 対象のエンティティ
+			 * @return std::optional<CharacterPose> キャラクターポーズ（存在しない場合は std::nullopt）
+			 */
 			std::optional<CharacterPose> ReadCharacterPose(Entity e) {
 				return m_device.GetCharacterPose(e);
 			}
@@ -263,7 +289,7 @@ namespace SFW
 				m_accum += static_cast<float>(dt);
 
 				while (m_accum + 1e-6f >= plan.fixed_dt) { // 浮動誤差対策の微小マージン
-					DrainAllToDevice();                   // ここで一括適用
+					DrainBudgetToDevice(plan.command_budget_per_step); // ここで一括適用
 					m_device.Step(plan.fixed_dt, plan.substeps);
 
 					// スナップショットを組み立てる
@@ -309,15 +335,26 @@ namespace SFW
 			 */
 			void EnqueueCreateIntent(Entity e, ShapeHandle h, const SpatialChunkKey& owner) {
 				std::scoped_lock lk(m_intentMutex);
-				m_createIntents.push_back({ e, h, owner });
+				m_createIntents[owner.level].push_back({e, h, owner});
 			}
 			/**
 			 * @brief 生成インテントを取り出す（Body 作成要求用
 			 * @param out 取り出し先のベクター
 			 */
-			void SwapCreateIntents(std::vector<CreateIntent>& out) {
+			void SwapCreateIntents(LevelID id, std::vector<CreateIntent>& out) {
 				std::scoped_lock lk(m_intentMutex);
-				out.swap(m_createIntents); // O(1)
+
+				auto it = m_createIntents.find(id);
+				if (it == m_createIntents.end()) {
+					it = m_createIntents.emplace(id, std::vector<CreateIntent>{}).first;
+				}
+
+				out.swap(it->second); // O(1)
+
+				// 空になったらマップから消す
+				if(it->second.empty()) {
+					m_createIntents.erase(it);
+				}
 			}
 			/**
 			 * @brief Body 作成完了イベントの取り出し（WriteBack用）
@@ -327,9 +364,9 @@ namespace SFW
 			 * @brief 生成済み Body イベントを取り出す
 			 * @param out 取り出し先のベクター
 			 */
-			void ConsumeCreatedBodies(std::vector<CreatedBody>& out) {
+			void ConsumeCreatedBodies(LevelID id, std::vector<CreatedBody>& out) {
 				std::vector<PhysicsDevice::CreatedBody> tmp;
-				m_device.ConsumeCreatedBodies(tmp);
+				m_device.ConsumeCreatedBodies(id, tmp);
 				out.clear(); out.reserve(tmp.size());
 				for (auto& x : tmp) out.push_back(CreatedBody{ x.e, x.owner, x.id });
 			}
@@ -360,10 +397,22 @@ namespace SFW
 #endif
 		private:
 			template<class T>
-			bool Enqueue(const T& c) {
+			bool TryEnqueue(const T& c) {
 				const PhysicsCommand& cmd = c;
 				// 失敗（満杯）の場合はリトライ or 一時的にブロッキングに切替など、運用ポリシー次第
 				return m_queue.push(cmd);
+			}
+
+			template<class T>
+			bool Enqueue(const T& c) {
+				const PhysicsCommand& cmd = c;
+
+				// まず ring に入るなら入れる
+				if (m_queue.push(cmd)) return true;
+
+				// 溢れたら pending に積んで “受理” は返す
+				m_pendingCmds.push_back(cmd);
+				return true;
 			}
 
 			void DrainAllToDevice() {
@@ -372,14 +421,44 @@ namespace SFW
 				}
 			}
 
+			void DrainBudgetToDevice(int budget) {
+				int used = 0;
+
+				// 1) ring を先に流す（順序が自然）
+				while (used < budget) {
+					auto cmd = m_queue.pop();
+					if (!cmd) break;
+					m_device.ApplyCommand(*cmd);
+					++used;
+				}
+
+				// 2) pending を残り枠で流す
+				while (used < budget && m_pendingHead < m_pendingCmds.size()) {
+					m_device.ApplyCommand(m_pendingCmds[m_pendingHead]);
+					++m_pendingHead;
+					++used;
+				}
+
+				// pending の先頭を消費し続けているので、適当に詰め直し
+				if (m_pendingHead > 1024 && m_pendingHead * 2 > m_pendingCmds.size()) {
+					m_pendingCmds.erase(m_pendingCmds.begin(), m_pendingCmds.begin() + m_pendingHead);
+					m_pendingHead = 0;
+				}
+			}
+
+
 		private:
 			PhysicsDevice& m_device;
 			PhysicsShapeManager* m_mgr{ nullptr }; // 所有しない
 			SpscRing<PhysicsCommand> m_queue;
 
+			// SpscRing が溢れた分を次フレームへ持ち越す
+			std::vector<PhysicsCommand> m_pendingCmds;
+			size_t m_pendingHead = 0;
+
 			// 生成インテント
 			mutable std::mutex         m_intentMutex;
-			std::vector<CreateIntent>  m_createIntents;
+			std::unordered_map<LevelID, std::vector<CreateIntent>>  m_createIntents;
 
 			Plan plan;
 

@@ -79,7 +79,7 @@ public:
         uint32_t gActiveVolumeCount = 0;
         uint32_t gMaxSpawnPerVolumePerFrame = LeafParticlePool::MaxSpawnPerVol;
 		uint32_t gClumpsPerVolume = ClumpsPerVolume; // 1クラスタあたりの群れの塊数
-        float    gAddSizeScale = 0.03f; // 葉っぱのサイズばらつき]
+        float    gAddSizeScale = 0.05f; // 葉っぱのサイズばらつき]
 
         float gLaneMin = 0.6f;
         float gLaneMax = 1.2f;

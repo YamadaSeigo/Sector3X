@@ -42,15 +42,13 @@ namespace SFW
 		{
 			archetypeManager = {};
 
+			std::vector<EntityID> allIDs = GetAllEntityIDs();
 			{
 				std::unique_lock lock(locationsMutex);
-
-				for(auto& [id, loc] : locations) {
-					entityAllocator.Destroy(id);
-				}
-
 				locations.clear();
 			}
+			entityAllocator.DestroyBulk(allIDs.data(), allIDs.size());
+
 			sparseStores.clear();
 		}
 

@@ -183,8 +183,13 @@ void LeafParticlePool::Create(ID3D11Device* dev)
     // Firefly Ç∆ìØÇ∂ÇÊÇ§Ç… GUI Ç©ÇÁÉpÉâÉÅÅ[É^ÇÇ¢Ç∂ÇÈèÍçá
     BIND_DEBUG_LEAF_PARAM_FLOAT(gKillRadiusScale, 1.0f, 10.0f, 0.01f);
 	BIND_DEBUG_LEAF_PARAM_FLOAT(gDamping, 0.8f, 0.999f, 0.001f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gFollowK, 0.0f, 50.0f, 0.1f);
-    BIND_DEBUG_LEAF_PARAM_FLOAT(gMaxSpeed, 0.1f, 20.0f, 0.1f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gMaxSpeed, 0.1f, 40.0f, 0.1f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gSteerKMin, 0.0f, 30.0f, 0.1f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gSteerKMax, 0.0f, 50.0f, 0.1f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gGravity, 0.0f, 30.0f, 0.1f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gWindDrag, 0.0f, 10.0f, 0.05f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gLift, 0.0f, 50.0f, 0.1f);
+    BIND_DEBUG_LEAF_PARAM_FLOAT(gWobbleAmp, 0.0f, 10.0f, 0.05f);
 
 	BIND_DEBUG_LEAF_PARAM_FLOAT(gGroundMinClear, 0.0f, 1.0f, 0.001f);
 #endif

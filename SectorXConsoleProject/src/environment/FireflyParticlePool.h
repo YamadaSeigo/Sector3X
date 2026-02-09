@@ -37,7 +37,7 @@ public:
     static constexpr uint32_t MaxParticles = 100000;
     static constexpr uint32_t MaxVolumeSlots = 256;
     static constexpr uint32_t MaxSpawnPerVol = 32;
-    static constexpr uint32_t MaxPointLight = 1024;
+    static constexpr uint32_t MaxPointLight = 1u << 11;
 
     void Create(ID3D11Device* dev);
     void InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* spawnCB, ID3D11ComputeShader* initCS);

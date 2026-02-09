@@ -144,7 +144,7 @@ HRESULT CreateLeafClumpBuffer(
 
 
 #ifdef _DEBUG
-float gDebugLeafAddSize = 0.03f;
+float gDebugLeafAddSize = 0.05f;
 float gDebugLeafBaseSize = 0.1f;
 float gDebugLeafLaneMax = 1.2f;
 float gDebugLeafRadialMax = 0.25f;
@@ -401,6 +401,9 @@ void LeafService::Commit(double deltaTime)
     updateDesc.size = sizeof(CameraCB);
     updateDesc.data = &camBuf;
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
+
+	// 使用していないスロットを解放
+    ReleaseUnusedSlots();
 }
 
 void LeafService::SpawnParticles(
@@ -459,18 +462,15 @@ uint32_t LeafService::AllocateSlot(uint32_t volumeUID)
 
 void LeafService::ReleaseUnusedSlots()
 {
-    std::unordered_set<uint32_t> activeUIDs;
-    for (const auto& v : m_activeVolumes)
-    {
-        activeUIDs.insert(v.volumeSlot);
-    }
+    std::unordered_set<uint32_t> activeSlots;
+    for (auto& v : m_activeVolumes) activeSlots.insert(v.volumeSlot);
+
     for (uint32_t i = 0; i < MaxVolumes; ++i)
     {
         if (m_slots[i].used)
         {
-            if (activeUIDs.find(m_slots[i].volumeUID) == activeUIDs.end())
+            if (activeSlots.find(i) == activeSlots.end()) // ← i は slot
             {
-                // 未使用
                 m_slots[i].used = false;
                 m_uidToSlot.erase(m_slots[i].volumeUID);
             }

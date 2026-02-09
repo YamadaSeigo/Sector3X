@@ -32,6 +32,8 @@ public:
 
 		// デバッグUI登録
         BIND_DEBUG_SLIDER_FLOAT("Wind", "BigWaveWeight", &m_grassWindCB.BigWaveWeight, 0.0f, 1.0f, 0.01f);
+		BIND_DEBUG_SLIDER_FLOAT("Wind", "NoiseFreq", &m_grassWindCB.NoiseFreq, 0.0f, 1.0f, 0.001f);
+		BIND_DEBUG_SLIDER_FLOAT("Wind", "Speed", &m_grassWindCB.WindSpeed, 0.0f, 20.0f, 0.1f);
         BIND_DEBUG_SLIDER_FLOAT("Wind", "Amplitude", &m_grassWindCB.WindAmplitude, 0.0f, 100.0f, 0.1f);
         BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionX", &m_grassWindCB.WindDir.x, -1.0f, 1.0f, 0.01f);
         BIND_DEBUG_SLIDER_FLOAT("Wind", "DirectionY", &m_grassWindCB.WindDir.y, -1.0f, 1.0f, 0.01f);
@@ -131,7 +133,7 @@ public:
             float r = (v - proj).length() / maxRadius; // 0..1 幹から遠いほど大きく
 
             // 高さと半径をミックス
-            float w = std::pow(t, 2.0f) * 0.2f + std::pow(r, 2.0f) * 0.8f;
+            float w = std::pow(t, 2.0f) * 0.1f + std::pow(r, 2.0f) * 0.9f;
             w = std::clamp(w, 0.0f, 1.0f);
             weights.push_back(w);
         }
@@ -150,7 +152,7 @@ public:
         std::vector<float> weights;
         weights.reserve(vertices.size());
         for (const auto v : vertices) {
-            float t = 1.0f - (v.y - minY) / height; // 1..0 高くなるほど小さく
+            float t = (v.y - minY) / height; // 1..0 高くなるほど小さく
             float w = std::pow(t, 2.0f); // 高さに応じて二次曲線的に増加.しなやかにカーブ
             weights.push_back(w);
         }

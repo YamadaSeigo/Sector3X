@@ -53,21 +53,21 @@ public:
         float gFireflyLightMaxDist = 100.0f;
 
         uint32_t gPointLightMax = FireflyParticlePool::MaxPointLight;
-        float gFireflyLightRange = 3.0f;
-        float gFireflyLightIntensity = 1.2f;
-        float _pad_up = {};
+        float gFireflyLightRange = 3.8f;
+        float gFireflyLightIntensity = 0.2f;
+        float gFireflyPickProb = 0.15f;
 	};
 
     struct CameraCB
     {
         Math::Matrix4x4f gViewProj = {};
         Math::Vec3f gCamRightWS = {};
-        float gSize = 0.1f; // billboard half-size —á: 0.05
+        float gSize = 0.08f; // billboard half-size —á: 0.05
         Math::Vec3f gCamUpWS = {0,1,0};
         float gTime = 0.0f;
     };
 
-    static constexpr uint32_t MaxVolumes = 256;
+    static constexpr uint32_t MaxVolumes = 32;
 
 	FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,
         Graphics::DX11::BufferManager* bufferMgr,

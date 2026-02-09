@@ -15,24 +15,33 @@ public:
 		using namespace SFW::Physics;
 
 		std::vector<PhysicsService::CreatedBody> evs;
-		ps->ConsumeCreatedBodies(evs);
+		ps->ConsumeCreatedBodies(levelCtx.GetID(), evs);
 		if (evs.empty()) return;
 
 		for (const auto& ev : evs) {
 
-			// 無効なオーナーはスキップ
+			ECS::EntityManager* entityMgr = nullptr;
+
+			// 無効なオーナーはグローバルから検索
 			if(ev.owner.code == SpatialChunkKey::kInvalidCode) {
+				entityMgr = &partition.GetGlobalEntityManager();
+			}
+			else {
+				auto owner = reg->ResolveOwner(ev.owner);
+				if (!owner) {
+					LOG_WARNING("Not find SpatialChunk");
+					continue;
+				}
+
+				entityMgr = &owner->GetEntityManager();
+			}
+
+			if(!entityMgr) {
+				LOG_WARNING("Not Get EntityManager");
 				continue;
 			}
 
-			auto owner = reg->ResolveOwner(ev.owner);
-			if (!owner) {
-				LOG_WARNING("Not find SpatialChunk");
-				continue;
-			}
-			auto& entityMgr = owner->GetEntityManager();
-
-			auto loc = entityMgr.TryGetLocation(ev.e);
+			auto loc = entityMgr->TryGetLocation(ev.e);
 			if (!loc) {
 				LOG_WARNING("Not Get ChunkLocation");
 				continue; // 既に消滅 or 移籍
@@ -50,7 +59,7 @@ public:
 			auto& bodyValue = bodyCol.value().body()[row];
 			// Pending センチネル（0xFFFFFFFF）に限って上書き（多重作成防止）
 			if (bodyValue.GetIndexAndSequenceNumber() == (std::numeric_limits<uint32_t>::max)()) {
-				bodyValue = ev.id; // 差し込み完了 → Alive
+				bodyValue = ev.id; // 差し込み完了 -> Alive
 			}
 		}
 	}
@@ -69,6 +78,7 @@ public:
 	ECS::AccessInfo GetAccessInfo() const noexcept override {
 		return ECS::ComponentAccess<ECS::Write<Physics::CPhyBody>>::GetAccessInfo();
 	}
+
 private:
 	Physics::PhysicsService* ps = nullptr;
 	SpatialChunkRegistry* reg = nullptr;

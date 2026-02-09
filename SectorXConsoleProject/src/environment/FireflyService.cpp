@@ -32,7 +32,11 @@ void CreateFireflyVolumeBuffer(
 
 #ifdef _DEBUG
 float gDebugFireflyAddSize = 0.02f;
-float gDebugFireflyBaseSize = 0.1f;
+float gDebugFireflyBaseSize = 0.08f;
+
+float gDebugFireflyLightRange = 3.8f;
+float gDebugFireflyLightIntensity = 0.2f;
+float gDebugFireflyPickProb = 0.15f;
 #endif
 
 FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,
@@ -162,6 +166,9 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 #ifdef _DEBUG
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "addSize", &gDebugFireflyAddSize, 0.0f, 1.0f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "baseSize", &gDebugFireflyBaseSize, 0.01f, 1.0f, 0.001f);
+    BIND_DEBUG_SLIDER_FLOAT("Firefly", "lightRange", &gDebugFireflyLightRange, 0.1f, 20.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Firefly", "lightIntensity", &gDebugFireflyLightIntensity, 0.1f, 10.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Firefly", "pickProb", &gDebugFireflyPickProb, 0.0f, 1.0f, 0.001f);
 #endif
 }
 
@@ -187,23 +194,20 @@ uint32_t FireflyService::AllocateSlot(uint32_t volumeUID)
 
 void FireflyService::ReleaseUnusedSlots()
 {
-    std::unordered_set<uint32_t> activeUIDs;
-    for (const auto& v : m_activeVolumes)
-    {
-        activeUIDs.insert(v.volumeSlot);
-    }
+    std::unordered_set<uint32_t> activeSlots;
+    for (auto& v : m_activeVolumes) activeSlots.insert(v.volumeSlot);
+
     for (uint32_t i = 0; i < MaxVolumes; ++i)
     {
         if (m_slots[i].used)
         {
-            if (activeUIDs.find(m_slots[i].volumeUID) == activeUIDs.end())
+            if (activeSlots.find(i) == activeSlots.end()) // ← i は slot
             {
-                // 未使用
                 m_slots[i].used = false;
                 m_uidToSlot.erase(m_slots[i].volumeUID);
             }
         }
-	}
+    }
 }
 
 void FireflyService::PushActiveVolume(uint32_t volumeUID,
@@ -256,6 +260,10 @@ void FireflyService::Commit(double deltaTime)
 #ifdef _DEBUG
 		spawnBuf.gAddSizeScale = gDebugFireflyAddSize;
 		camBuf.gSize = gDebugFireflyBaseSize;
+
+		updateBuf.gFireflyLightRange = gDebugFireflyLightRange;
+		updateBuf.gFireflyLightIntensity = gDebugFireflyLightIntensity;
+		updateBuf.gFireflyPickProb = gDebugFireflyPickProb;
 #endif
     }
 
@@ -275,6 +283,9 @@ void FireflyService::Commit(double deltaTime)
 	updateDesc.size = sizeof(CameraCB);
 	updateDesc.data = &camBuf;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
+
+    // 未使用スロット解放
+	ReleaseUnusedSlots();
 }
 
 void FireflyService::SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& heightMap, ComPtr<ID3D11Buffer>& terrainCB, uint32_t slot)

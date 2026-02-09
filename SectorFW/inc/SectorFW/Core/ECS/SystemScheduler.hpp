@@ -41,52 +41,47 @@ namespace SFW
 				auto typeSys = new SystemType<Partition>();
 				typeSys->SetContext(serviceLocator);
 
-				typeSys->Start(serviceLocator); // 空のパーティションでStartを呼ぶ
-
 				std::scoped_lock lock(pendingMutex);
 				pendingSystems.emplace_back(typeSys);
 			}
+
+			/**
+			 * @brief システムを削除する関数
+			 */
+			template<template<typename> class SystemType>
+			void RemoveSystem()
+			{
+				std::scoped_lock lock(pendingMutex);
+				pendingRemoveTypes.emplace_back(typeid(SystemType<Partition>));
+			}
+
+			template<template<typename> class SystemType>
+			void PauseSystem()
+			{
+				std::scoped_lock lock(pendingMutex);
+				pendingPauseTypes.emplace_back(typeid(SystemType<Partition>));
+			}
+
+			template<template<typename> class SystemType>
+			void ResumeSystem()
+			{
+				std::scoped_lock lock(pendingMutex);
+				pendingResumeTypes.emplace_back(typeid(SystemType<Partition>));
+			}
+
+
 			/**
 			 * @brief すべてのシステムを更新する関数
 			 * @param partition 対象のパーティション
 			 */
 			void UpdateAll(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
-				// --- pending の取り込み（ロック最小化） ---
-				std::vector<std::unique_ptr<ISystem<Partition>>> newly; // ローカル退避
-				//newly.reserve(16);
-
-				if (!pendingSystems.empty()) {
-					std::scoped_lock lk(pendingMutex);
-					// 一旦 swap で持ち出し → ロック解放後に反映
-					newly.swap(pendingSystems);
-				}
 
 				//新しいシステムの取り込み
-				if (!newly.empty()) {
-					// まとめて systems と accessList に移動/push（reserve で再配置削減）
-					updateSystems.reserve(updateSystems.size() + newly.size());
-					accessList.reserve(accessList.size() + newly.size());
-
-					for (auto& uptr : newly) {
-						// ここで必要ならコンテキスト注入（AddSystem時に済なら不要）
-						// uptr->SetContext(serviceLocator);
-
-						// UpdateImpl を持たないシステムは登録しない
-						if constexpr (std::remove_reference_t<decltype(*uptr)>::IsUpdateable())
-						{
-							scheduleDirty = true; // 追加があれば再構築フラグ
-
-							updateSystems.emplace_back(std::move(uptr));
-
-							// AccessInfo を取得してキャッシュ
-							accessList.emplace_back(updateSystems.back()->GetAccessInfo());
-						}
-						else
-						{
-							systems.emplace_back(std::move(uptr)); // Update不要なシステムは別途保存
-						}
-					}
-				}
+				ApplyPendingAdditions(serviceLocator);
+				//削除するシステムの適用
+				ApplyPendingRemovals<true>(&partition, &levelCtx, &serviceLocator);
+				// 一時停止・再開の適用
+				ApplyPendingPauseResume();
 
 				// --- 並列実行プランの再構築（必要時のみ） ---
 				if (scheduleDirty) {
@@ -110,24 +105,30 @@ namespace SFW
 				// --- バッチごとに並列実行 ---
 				// 例外は各システム内で握り潰さず、ここで個別捕捉するのも可
 				for (const auto& group : batches) {
-					ThreadCountDownLatchExternalSync latch(batchMutex, batchCv, (int)group.parallel.size());
-
-					std::vector<uint32_t> serialIndices;
-
-					// 並列実行部分
+					// 有効な parallel 数だけカウント
+					int parallelEnabledCount = 0;
 					for (auto idx : group.parallel)
 					{
-						//idxはコピーキャプチャじゃないと破棄される
+						if (idx < updateEnabled.size() && updateEnabled[idx]) ++parallelEnabledCount;
+					}
+
+					ThreadCountDownLatchExternalSync latch(batchMutex, batchCv, parallelEnabledCount);
+
+					// parallel
+					for (auto idx : group.parallel)
+					{
+						if (idx >= updateEnabled.size() || !updateEnabled[idx]) continue;
+
 						executor->Submit([&, idx]() noexcept {
-							// 可能なら no-throw Update を用意、あるいはここでtry/catch
 							updateSystems[idx]->Update(partition, levelCtx, serviceLocator, executor);
 							latch.CountDown();
 							});
 					}
 
-					// 直列実行部分
+					// serial
 					for (auto idx : group.serial)
 					{
+						if (idx >= updateEnabled.size() || !updateEnabled[idx]) continue;
 						updateSystems[idx]->Update(partition, levelCtx, serviceLocator, executor);
 					}
 
@@ -141,42 +142,13 @@ namespace SFW
 			 * @param executor スレッド実行クラス
 			 */
 			void UpdateGlobal(const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
-				// --- pending の取り込み（ロック最小化） ---
-				std::vector<std::unique_ptr<ISystem<Partition>>> newly; // ローカル退避
-				//newly.reserve(16);
-
-				if (!pendingSystems.empty()) {
-					std::scoped_lock lk(pendingMutex);
-					// 一旦 swap で持ち出し → ロック解放後に反映
-					newly.swap(pendingSystems);
-				}
 
 				//新しいシステムの取り込み
-				if (!newly.empty()) {
-					// まとめて systems と accessList に移動/push（reserve で再配置削減）
-					updateSystems.reserve(updateSystems.size() + newly.size());
-					accessList.reserve(accessList.size() + newly.size());
-
-					for (auto& uptr : newly) {
-						// ここで必要ならコンテキスト注入（AddSystem時に済なら不要）
-						// uptr->SetContext(serviceLocator);
-
-						// UpdateImpl を持たないシステムは登録しない
-						if constexpr (std::remove_reference_t<decltype(*uptr)>::IsUpdateable())
-						{
-							scheduleDirty = true; // 追加があれば再構築フラグ
-
-							updateSystems.emplace_back(std::move(uptr));
-
-							// AccessInfo を取得してキャッシュ
-							accessList.emplace_back(updateSystems.back()->GetAccessInfo());
-						}
-						else
-						{
-							systems.emplace_back(std::move(uptr)); // Update不要なシステムは別途保存
-						}
-					}
-				}
+				ApplyPendingAdditions(serviceLocator);
+				//削除するシステムの適用
+				ApplyPendingRemovals<false>(nullptr, nullptr, nullptr);
+				// 一時停止・再開の適用
+				ApplyPendingPauseResume();
 
 				// --- 並列実行プランの再構築（必要時のみ） ---
 				if (scheduleDirty) {
@@ -186,24 +158,30 @@ namespace SFW
 				// --- バッチごとに並列実行 ---
 				// 例外は各システム内で握り潰さず、ここで個別捕捉するのも可
 				for (const auto& group : batches) {
-					ThreadCountDownLatchExternalSync latch(batchMutex, batchCv, (int)group.parallel.size());
-
-					std::vector<uint32_t> serialIndices;
-
-					// 並列実行部分
+					// 有効な parallel 数だけカウント
+					int parallelEnabledCount = 0;
 					for (auto idx : group.parallel)
 					{
-						//idxはコピーキャプチャじゃないと破棄される
+						if (idx < updateEnabled.size() && updateEnabled[idx]) ++parallelEnabledCount;
+					}
+
+					ThreadCountDownLatchExternalSync latch(batchMutex, batchCv, parallelEnabledCount);
+
+					// parallel
+					for (auto idx : group.parallel)
+					{
+						if (idx >= updateEnabled.size() || !updateEnabled[idx]) continue;
+
 						executor->Submit([&, idx]() noexcept {
-							// 可能なら no-throw Update を用意、あるいはここでtry/catch
 							updateSystems[idx]->Update(serviceLocator, executor);
 							latch.CountDown();
 							});
 					}
 
-					// 直列実行部分
+					// serial
 					for (auto idx : group.serial)
 					{
+						if (idx >= updateEnabled.size() || !updateEnabled[idx]) continue;
 						updateSystems[idx]->Update(serviceLocator, executor);
 					}
 
@@ -233,6 +211,10 @@ namespace SFW
 					updateSystems.clear();
 					accessList.clear();
 					pendingSystems.clear();
+					pendingRemoveTypes.clear();
+					pendingPauseTypes.clear();
+					pendingResumeTypes.clear();
+					updateEnabled.clear();
 				}
 				{
 					std::unique_lock lockBatck(batchMutex);
@@ -264,8 +246,19 @@ namespace SFW
 			std::vector<AccessInfo> accessList;
 			//保留中のシステムのリスト
 			std::vector<std::unique_ptr<ISystem<Partition>>> pendingSystems;
+			//保留中の削除タイプのリスト
+			std::vector<std::type_index> pendingRemoveTypes;
 			//保留中のシステムを管理するためのミューテックス
 			std::mutex pendingMutex;
+
+			// --- Pause/Resume 状態 ---
+			// updateSystems と同じインデックスで管理する（batches が index を持つため）
+			std::vector<uint8_t> updateEnabled; // 1=enabled, 0=paused
+
+			// pending（Add/Remove と同じ思想）
+			std::vector<std::type_index> pendingPauseTypes;
+			std::vector<std::type_index> pendingResumeTypes;
+
 
 			struct Group {
 				std::vector<uint32_t> serial;
@@ -329,7 +322,7 @@ namespace SFW
 							if (isParallel)
 								group.parallel.push_back(i);
 							else
-								group.serial.push_back(i);;
+								group.serial.push_back(i);
 							placed = true;
 							break;
 						}
@@ -344,7 +337,139 @@ namespace SFW
 					}
 				}
 				scheduleDirty = false;
+
+				// debug: updateSystems と updateEnabled のサイズが一致しているべき
+				assert(updateEnabled.size() == updateSystems.size());
 			}
+
+			void ApplyPendingAdditions(const ServiceLocator& serviceLocator)
+			{
+				std::vector<std::unique_ptr<ISystem<Partition>>> newly;
+				{
+					std::scoped_lock lk(pendingMutex);
+					if (!pendingSystems.empty())
+						newly.swap(pendingSystems);
+				}
+				if (newly.empty()) return;
+				// まとめて systems と accessList に移動/push（reserve で再配置削減）
+				updateSystems.reserve(updateSystems.size() + newly.size());
+				accessList.reserve(accessList.size() + newly.size());
+				for (auto& uptr : newly) {
+
+					// 空のパーティションでStartを呼ぶ
+					uptr->Start(serviceLocator);
+
+					// UpdateImpl を持たないシステムは登録しない
+					if constexpr (std::remove_reference_t<decltype(*uptr)>::IsUpdateable())
+					{
+						scheduleDirty = true; // 追加があれば再構築フラグ
+						updateSystems.emplace_back(std::move(uptr));
+						// AccessInfo を取得してキャッシュ
+						accessList.emplace_back(updateSystems.back()->GetAccessInfo());
+						// 追加された UpdateSystem はデフォルト
+						updateEnabled.emplace_back(1);
+					}
+					else
+					{
+						systems.emplace_back(std::move(uptr)); // Update不要なシステムは別途保存
+					}
+				}
+			}
+
+			// systemを総検索するので処理は遅め。Removeを頻繁に行う設計の場合は注意。
+			template<bool CallEnd = true>
+			void ApplyPendingRemovals(Partition* partition, LevelContext<Partition>* levelCtx, const ServiceLocator* serviceLocator)
+			{
+				std::vector<std::type_index> toRemove;
+				{
+					std::scoped_lock lk(pendingMutex);
+					if (!pendingRemoveTypes.empty())
+						toRemove.swap(pendingRemoveTypes);
+				}
+				if (toRemove.empty()) return;
+
+				auto match = [&](const std::unique_ptr<ISystem<Partition>>& p, const std::type_index& ti)
+					{
+						return std::type_index(typeid(*p)) == ti;
+					};
+
+				// 非Update系 systems
+				for (const auto& ti : toRemove)
+				{
+					for (size_t i = 0; i < systems.size(); )
+					{
+						if (match(systems[i], ti))
+						{
+							if constexpr (CallEnd && std::remove_reference_t<decltype(*systems[i])>::IsEndSystem())
+								systems[i]->End(*partition, *levelCtx, *serviceLocator);
+
+							systems.erase(systems.begin() + i);
+						}
+						else ++i;
+					}
+				}
+
+				// Update系 updateSystems + accessList
+				for (const auto& ti : toRemove)
+				{
+					for (size_t i = 0; i < updateSystems.size(); )
+					{
+						if (match(updateSystems[i], ti))
+						{
+							if constexpr (CallEnd && std::remove_reference_t<decltype(*updateSystems[i])>::IsEndSystem())
+								updateSystems[i]->End(*partition, *levelCtx, *serviceLocator);
+
+							updateSystems.erase(updateSystems.begin() + i);
+							accessList.erase(accessList.begin() + i);
+							updateEnabled.erase(updateEnabled.begin() + i);
+							scheduleDirty = true;
+						}
+						else ++i;
+					}
+				}
+			}
+
+			void ApplyPendingPauseResume() noexcept
+			{
+				std::vector<std::type_index> toPause;
+				std::vector<std::type_index> toResume;
+
+				{
+					std::scoped_lock lk(pendingMutex);
+					if (!pendingPauseTypes.empty())  toPause.swap(pendingPauseTypes);
+					if (!pendingResumeTypes.empty()) toResume.swap(pendingResumeTypes);
+				}
+
+				if (!toPause.empty())
+				{
+					for (const auto& ti : toPause)
+					{
+						for (size_t i = 0; i < updateSystems.size(); ++i)
+						{
+							if (std::type_index(typeid(*updateSystems[i])) == ti)
+							{
+								if (i < updateEnabled.size()) updateEnabled[i] = 0;
+							}
+						}
+					}
+				}
+
+				if (!toResume.empty())
+				{
+					for (const auto& ti : toResume)
+					{
+						for (size_t i = 0; i < updateSystems.size(); ++i)
+						{
+							if (std::type_index(typeid(*updateSystems[i])) == ti)
+							{
+								if (i < updateEnabled.size()) updateEnabled[i] = 1;
+							}
+						}
+					}
+				}
+			}
+
+
 		};
 	}// namespace ECS
 }// namespace SectorFW

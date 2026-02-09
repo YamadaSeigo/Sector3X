@@ -31,14 +31,17 @@ struct LeafParticleGPU
 // Update 用のパラメータ（FireflyUpdatePram をそのまま流用しても良い）
 struct LeafUpdateParam
 {
-    float gKillRadiusScale = 1.5f; // 例: 1.5
-    float gDamping = 0.96f; // 例: 0.96（multiply）
-    float gFollowK = 12; // 例: 6..14
-    float gMaxSpeed = 8.0f; // 例: 6
-
-    // ground params（Update側でも使うなら）
-    float gGroundMinClear = 0.05f; // 例: 0.05（地面押し上げ最小クリア）
-    float _padA = {}, _padB = {}, _padC = {};
+    float gKillRadiusScale = 1.5f;
+    float gDamping = 0.96f;
+    float gSteerKMin = 0.3f;
+    float gSteerKMax = 12.0f;
+    float gMaxSpeed = 20.0f;
+    float gGravity = 9.8f;
+    float gWindDrag = 2.0f;     // (flow - vel) に掛ける係数
+    float gLift = 18.0f;         // 風が強いときの上向き加速度
+    float gWobbleAmp = 3.0f;    // 横揺れ最大
+    float gGroundMinClear = 0.05f;
+    float _padA = 0, _padB = 0;
 };
 
 class LeafParticlePool

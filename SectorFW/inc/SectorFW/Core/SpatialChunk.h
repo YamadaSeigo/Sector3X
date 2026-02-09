@@ -22,7 +22,10 @@ namespace SFW
 		 * @brief 空間チャンクのサイズを定義する型
 		 * @details 32ビット符号なし整数を使用
 		 */
-		typedef uint32_t SizeType;
+		using SizeType = uint32_t;
+
+		using Bounds3f = Math::AABB3f;
+
 		/**
 		 * @brief コンストラクタ
 		 * @details EntityManagerの初期化も行っている
@@ -39,11 +42,39 @@ namespace SFW
 		const SpatialChunkKey& GetNodeKey() const noexcept { return nodeKey; }
 		void SetNodeKey(const SpatialChunkKey& k) noexcept { nodeKey = k; }
 		void BumpGeneration() noexcept { ++nodeKey.generation; }
+
+		bool HasStaticBounds() const noexcept { return hasStaticBounds; }
+		const Bounds3f& GetStaticBoundsWS() const noexcept { return staticBoundsWS; }
+
+		// 静的EntityのAABBでのみ拡張（縮めない）
+		void ExpandStaticBoundsWS(const Bounds3f& aabbWS) noexcept
+		{
+			if (!hasStaticBounds)
+			{
+				staticBoundsWS = aabbWS;
+				hasStaticBounds = true;
+			}
+			else
+			{
+				staticBoundsWS.expandToInclude(aabbWS);
+			}
+		}
+
+		// 初期化したいとき用（任意）
+		void ResetStaticBounds() noexcept
+		{
+			hasStaticBounds = false;
+			staticBoundsWS.invalidate();
+		}
+
 	private:
 		//エンティティマネージャー.空間チャンク内のエンティティを管理する
 		std::unique_ptr<ECS::EntityManager> entityManager;
 		//このチャンクを特定するキー。現在世代を含む
 		SpatialChunkKey nodeKey{};
+
+		Bounds3f staticBoundsWS{};
+		bool hasStaticBounds = false;
 	};
 	/**
 	 * @brief 空間チャンクのサイズ型を定義する

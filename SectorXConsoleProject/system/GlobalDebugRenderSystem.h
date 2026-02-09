@@ -178,7 +178,7 @@ public:
 			cmd.pso = deferredPsoHandle.index;
 			cmd.material = deferredMaterialHandle[i].index;
 			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
+			cmd.sortKey = 1000;
 			uiSession.Push(std::move(cmd));
 
 			showDeferred = true;
@@ -194,7 +194,7 @@ public:
 			cmd.pso = deferredPsoHandle.index;
 			cmd.material = tileLightMaterialHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
+			cmd.sortKey = 1000;
 			uiSession.Push(std::move(cmd));
 
 			showDeferred = true;
@@ -210,7 +210,7 @@ public:
 			cmd.pso = deferredPsoHandle.index;
 			cmd.material = dummyMatHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 0;
+			cmd.sortKey = 1000;
 			uiSession.Push(std::move(cmd));
 		}
 
@@ -231,7 +231,7 @@ public:
 			cmd.pso = psoMOCHandle.index;
 			cmd.material = mocMaterialHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 90;
+			cmd.sortKey = 900;
 
 			uiSession.Push(std::move(cmd));
 		}
@@ -246,7 +246,7 @@ public:
 			cmd.pso = spritePsoHandle.index;
 			cmd.material = bloomMaterialHandle.index;
 			cmd.viewMask = PASS_UI_MAIN;
-			cmd.sortKey = 90;
+			cmd.sortKey = 1000;
 			uiSession.Push(std::move(cmd));
 		}
 	}

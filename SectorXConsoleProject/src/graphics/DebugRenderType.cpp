@@ -49,7 +49,7 @@ DebugRenderType::DebugRenderType()
 		BIND_DEBUG_CHECKBOX("Screen", ShowDeferredBufferName[i], &drawDeferredTextureFlags[i]);
 	}
 
-	BIND_DEBUG_CHECKBOX("Screen", "tileLight", &drawTileLight);
+	BIND_DEBUG_CHECKBOX("Screen", "light", &drawTileLight);
 
 	BIND_DEBUG_CHECKBOX("Screen", "moc", &drawMOCDepth);
 	BIND_DEBUG_CHECKBOX("Screen", "bloom", &drawBloom);

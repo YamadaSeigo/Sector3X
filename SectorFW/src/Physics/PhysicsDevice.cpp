@@ -145,14 +145,17 @@ namespace SFW::Physics {
 		// 作成完了イベントを貯める（後段で BodyComponent に差し込み）
 		{
 			std::scoped_lock lk(m_createdMutex);
-			m_created.push_back(CreatedBody{ c.e, c.owner, id });
+			m_created[c.owner.level].push_back(CreatedBody{c.e, c.owner, id});
 		}
 	}
 
 	// ---- Destroy ----
 	void PhysicsDevice::ApplyDestroy(const DestroyBodyCmd& c) {
 		auto it = m_e2b.find(c.e);
-		if (it == m_e2b.end()) return;
+		if (it == m_e2b.end()) {
+			LOG_ERROR("PhysicsDevice::ApplyDestroy: Entity has no associated BodyID");
+			return;
+		}
 		JPH::BodyID id = it->second;
 
 		m_bi->RemoveBody(id);
