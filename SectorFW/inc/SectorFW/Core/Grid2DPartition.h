@@ -201,7 +201,7 @@ namespace SFW
 
 			// 1) Coarse: frustum AABB -> candidate cell range (XZ)
 			const Math::AABB3f frAabb = ComputeFrustumAABB_WS(fr);
-			using Signed = ChunkSizeType;
+			using Signed = long long;
 			auto floor_div_x = [&](float worldX) noexcept -> Signed {
 				return static_cast<Signed>(std::floor(double(worldX - levelOriginWS.x) / double(cell)));
 				};
@@ -271,7 +271,7 @@ namespace SFW
 			const float r = (radius < 0.0f) ? 0.0f : radius;
 			const float r2 = r * r;
 
-			using Signed = ChunkSizeType;
+			using Signed = long long;
 			const float cell = float(chunkSize);
 			const float e = 0.5f * cell;
 
@@ -345,7 +345,7 @@ namespace SFW
 
 			// 1) Coarse: frustum AABB -> candidate cell range (XZ)
 			const Math::AABB3f frAabb = ComputeFrustumAABB_WS(fr);
-			using Signed = ChunkSizeType;
+			using Signed = long long;
 			auto floor_div_x = [&](float worldX) noexcept -> Signed {
 				return static_cast<Signed>(std::floor(double(worldX - levelOriginWS.x) / double(cell)));
 				};
@@ -381,10 +381,9 @@ namespace SFW
 
 					// 最終判定：チャンクの実AABBがあるならそれを使う
 					if (chunk.HasStaticBounds()) {
-						auto bounds = chunk.GetStaticBoundsWS();
+						const auto& bounds = chunk.GetStaticBoundsWS();
 						if (fr.IntersectsAABB(bounds)) {
 							const float d2 = Dist2PointAABB3D(camPos, bounds.center() + levelOriginWS, bounds.extent());
-							auto& chunk = grid(x, z);
 							if (chunk.GetEntityManager().GetEntityCount() > 0)
 								items.push_back({ const_cast<SpatialChunk*>(&chunk), d2 });
 						}
@@ -404,20 +403,24 @@ namespace SFW
 					const Math::Vec3f extent{ exz, eyEff, exz };
 					if (fr.IntersectsAABB(center, extent)) {
 						const float d2 = Dist2PointAABB3D(camPos, center, extent);
-						auto& chunk = grid(x, z);
-						if (chunk.GetEntityManager().GetEntityCount() > 0)
-							items.push_back({ const_cast<SpatialChunk*>(&chunk), d2 });
+						items.push_back({ const_cast<SpatialChunk*>(&chunk), d2 });
 					}
 				}
 			}
 
 			if (items.empty()) return {};
 			const size_t K = (std::min)(maxCount, items.size());
-			std::nth_element(items.begin(), items.begin() + K, items.end(),
-				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
-			items.resize(K);
-			std::sort(items.begin(), items.end(),
-				[](const Item& a, const Item& b) { return a.d2 < b.d2; });
+
+			auto cmp = [](const Item& a, const Item& b) {
+				return a.d2 < b.d2;
+				};
+
+			if (items.size() > maxCount) {
+				const size_t K = maxCount;
+				std::nth_element(items.begin(), items.begin() + K, items.end(), cmp);
+				items.resize(K);
+			}
+			std::sort(items.begin(), items.end(), cmp);
 
 			out.reserve(K);
 			for (auto& it : items) out.push_back(it.sc);
@@ -486,7 +489,6 @@ namespace SFW
 						if (chunk.HasStaticBounds())
 						{
 							Math::AABB3f aabb = chunk.GetStaticBoundsWS();
-							aabb += levelOriginWS;
 
 							const uint32_t baseColor = (x == centerX && z == centerZ) ?
 								0xFF0000FF : 0x00FF00FF;

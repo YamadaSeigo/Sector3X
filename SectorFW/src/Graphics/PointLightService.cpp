@@ -136,7 +136,7 @@ namespace SFW::Graphics
 		auto countSlot = m_frameIndex % 2;
 		auto& showIndex = m_showIndex[countSlot];
 
-		auto n = m_showCount[countSlot].load(std::memory_order_acquire);
+		auto n = std::min(m_showCount[countSlot].load(std::memory_order_acquire), MAX_FRAME_POINTLIGHT);
 
 		uint32_t slot = m_frameIndex % RENDER_BUFFER_COUNT;
 		auto& buffer = m_gpuLights[slot];

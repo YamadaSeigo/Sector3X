@@ -45,17 +45,20 @@ public:
     {
         float gDt = 0.0f;
         float gTime = 0.0f;
-        float pad00[2] = {};
+
+        uint32_t gPointLightMax = FireflyParticlePool::MaxPointLight;
+        float gFireflyLightRange = 3.8f;
+        float gFireflyLightIntensity = 0.2f;
+
+        float gNearPickLightProb = 0.5f; // 0..1
+        float gFarPickLightProb = 0.1f; // 0..1
+        float gPickLightDist = 30.0f; // ‹——£‚ÅŠm—¦•âŠÔ
+
         Math::Vec3f gPlayerPosWS = {};
         float gPlayerRepelRadius = 10.0f;
 
         Math::Vec3f gCamPosWS = {};
         float gFireflyLightMaxDist = 100.0f;
-
-        uint32_t gPointLightMax = FireflyParticlePool::MaxPointLight;
-        float gFireflyLightRange = 3.8f;
-        float gFireflyLightIntensity = 0.2f;
-        float gFireflyPickProb = 0.15f;
 	};
 
     struct CameraCB

@@ -27,7 +27,7 @@ cbuffer CBSpawn : register(b0)
 // 地形グリッド情報
 cbuffer TerrainGridCB : register(b1)
 {
-    float2 gOriginXZ; // ワールド座標の基準 (x,z) 
+    float2 gOriginXZ; // ワールド座標の基準 (x,z)
     float2 gClusterXZ; // 1クラスタのワールドサイズ (x,z) ※同上
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
@@ -39,7 +39,7 @@ cbuffer TerrainGridCB : register(b1)
     uint gVertsZ; // (= vertsZ)
 
     float2 gSplatInvSize; // 1/width, 1/height (splat texture用)
-    
+
     float2 gCellSize; // Heightfield のセルサイズ (x,z)
     float2 gHeightMapInvSize; // 1/width, 1/height
 };
@@ -139,7 +139,7 @@ void main(uint3 tid : SV_DispatchThreadID)
     p.phase = Hash01(seed + 100u) * 6.2831853f;
     p.band01 = Hash01(seed + 200u); // 0..1
     p.addSize = Hash01(seed + 300u) * gAddSize; // 0..1
-    p.pad2 = 0.0f;
+    p.light = 0;
 
     gParticles[id] = p;
 

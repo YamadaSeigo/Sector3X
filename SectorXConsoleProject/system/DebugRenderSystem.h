@@ -7,8 +7,10 @@
 
 #include <SectorFW/Graphics/OccluderToolkit.h>
 #include <SectorFW/Graphics/LightShadowService.h>
+#include <SectorFW/Graphics/PointLightService.h>
 
 #include "ModelRenderSystem.h"
+#include "PointLightSystem.h"
 #include "FireflySystem.h"
 #include "LeafSystem.h"
 
@@ -92,6 +94,7 @@ class DebugRenderSystem : public ITypeSystem<
 		Read<Physics::PhysicsInterpolation>,
 		Read<CTransform>,
 		Read<CModel>,
+		Read<CPointLight>,
 		Read<CFireflyVolume>,
 		Read<CLeafVolume>
 	>,
@@ -101,11 +104,13 @@ class DebugRenderSystem : public ITypeSystem<
 		Graphics::I3DPerCameraService,
 		Graphics::I2DCameraService,
 		Graphics::LightShadowService,
+		Graphics::PointLightService,
 		Physics::PhysicsService
 	>>
 {
 	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<CTransform>>;
 	using ModelAccessor = ComponentAccessor<Read<TransformSoA>, Read<CModel>>;
+	using PointLightAccessor = ComponentAccessor<Read<CPointLight>>;
 	using FireflyAccessor = ComponentAccessor<Read<CFireflyVolume>>;
 	using LeafAccessor = ComponentAccessor<Read<CLeafVolume>>;
 
@@ -123,6 +128,7 @@ public:
 		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
 		NoDeletePtr<Graphics::I2DCameraService>,
 		NoDeletePtr<Graphics::LightShadowService>,
+		NoDeletePtr<Graphics::PointLightService>,
 		NoDeletePtr<Physics::PhysicsService>)
 	{
 		using namespace Graphics;
@@ -245,6 +251,7 @@ public:
 		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
 		NoDeletePtr<Graphics::I2DCameraService> camera2DService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
+		NoDeletePtr<Graphics::PointLightService> pointLightService,
 		NoDeletePtr <Physics::PhysicsService> physicsService)
 	{
 		if (!DebugRenderType::isHit) return;
@@ -587,6 +594,41 @@ public:
 				}, partition, clampedFrustum, meshManager, &uiSession, psoLineHandle.index, boxHandle.index, sphereWhiteHandle.index, capsuleLineHandle.index);
 		}
 
+		if (DebugRenderType::drawPointLights)
+		{
+			this->ForEachSphereChunkWithAccessor<PointLightAccessor>([&](PointLightAccessor accessor, size_t entityCount)
+				{
+					auto pointLight = accessor.Get<Read<CPointLight>>();
+					if (!pointLight.has_value()) [[unlikely]] {
+						return;
+					}
+
+					auto readLock = pointLightService->AcquireReadLock();
+
+					for (auto i = 0; i < entityCount; ++i) {
+						auto light = pointLight.value()[i];
+
+						auto lightData = pointLightService->GetNoLock(light.handle);
+
+						auto transMtx = Math::MakeTranslationMatrix(lightData.positionWS);
+						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ lightData.range * 2.0f }); // 球は均一スケーリング
+						Graphics::DrawCommand cmd;
+						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
+						cmd.mesh = sphereGreenHandle.index;
+						cmd.material = 0;
+						cmd.pso = psoLineHandle.index;
+						cmd.sortKey = 0; // 適当なソートキーを設定
+						cmd.viewMask = PASS_UI_3DLINE;
+						uiSession.Push(cmd);
+
+						// 中心を示す小さい球
+						cmd.instanceIndex = uiSession.AllocInstance({ transMtx });
+						cmd.mesh = sphereWhiteHandle.index;
+						uiSession.Push(std::move(cmd));
+					}
+				}, partition, cameraPos, 100.0f);
+		}
+
 		if (DebugRenderType::drawFireflyVolumes)
 		{
 			this->ForEachSphereChunkWithAccessor<FireflyAccessor>([&](FireflyAccessor accessor, size_t entityCount)
@@ -607,7 +649,7 @@ public:
 						cmd.mesh = sphereGreenHandle.index;
 						cmd.material = 0;
 						cmd.pso = psoLineHandle.index;
-						cmd.sortKey = 0; // 適切なソートキーを設定
+						cmd.sortKey = 0; // 適当なソートキーを設定
 						cmd.viewMask = PASS_UI_3DLINE;
 						uiSession.Push(cmd);
 
@@ -637,7 +679,7 @@ public:
 						cmd.mesh = sphereGreenHandle.index;
 						cmd.material = 0;
 						cmd.pso = psoLineHandle.index;
-						cmd.sortKey = 0; // 適切なソートキーを設定
+						cmd.sortKey = 0; // 適当なソートキーを設定
 						cmd.viewMask = PASS_UI_3DLINE;
 						uiSession.Push(cmd);
 					}

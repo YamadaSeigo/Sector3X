@@ -505,6 +505,16 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.buildOccluders = true;
 			modelAssetMgr->Add(modelDesc, ruinStoneModelHandle);
 
+			ModelAssetHandle blueLightFlowerModelHandle;
+			modelDesc.path = "assets/model/Stylized/BlueLightFlower.gltf";
+			modelDesc.instancesPeak = 100;
+			modelDesc.viewMax = 50.0f;
+			modelDesc.pso = cullNoneWindEntityPSOHandle;
+			modelDesc.minAreaFrec = 0.0004f;
+			modelDesc.pCustomNrmWFunc = WindService::ComputeGrassWeight;
+			modelDesc.buildOccluders = false;
+			modelAssetMgr->Add(modelDesc, blueLightFlowerModelHandle);
+
 			auto ps = serviceLocator->Get<Physics::PhysicsService>();
 
 			std::function<Physics::ShapeHandle(Math::Vec3f)> makeShapeHandleFunc[5] =
@@ -516,8 +526,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				[&](Math::Vec3f scale)
 				{
 					Physics::ShapeCreateDesc shapeDesc;
-					shapeDesc.shape = Physics::CapsuleDesc{ 12.0f,0.5f };
-					shapeDesc.localOffset.y = 12.0f;
+					shapeDesc.shape = Physics::CapsuleDesc{ 10.0f,0.5f };
+					shapeDesc.localOffset.y = 10.0f;
 					return ps->MakeShape(shapeDesc);
 				},
 				nullptr,
@@ -538,7 +548,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			std::array<int, 5> weights{ 2, 8, 5, 5, 5 };
 			std::discrete_distribution<int> dist(weights.begin(), weights.end());
 
-			float modelScaleBase[5] = { 2.5f,4.0f,1.5f, 1.5f,1.5f };
+			float modelScaleBase[5] = { 2.5f,3.5f,1.5f, 1.5f,1.5f };
 			int modelScaleRange[5] = { 150,25,25, 25,25 };
 			int modelRotRange[5] = { 360,360,360, 360,360 };
 			bool enableOutline[5] = { true,true,false,false,false };
@@ -614,34 +624,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					}
 				}
 			}
-
-			// ì_åıåπê∂ê¨
-			/*for (int j = 0; j < 10; ++j) {
-				for (int k = 0; k < 10; ++k) {
-					for (int n = 0; n < 1; ++n) {
-						float scaleXZ = 15.0f;
-						float scaleY = 15.0f;
-						Math::Vec2f offsetXZ = { 12.0f,12.0f };
-						Math::Vec3f location = { float(j) * scaleXZ + offsetXZ.x , 0, float(k) * scaleXZ + offsetXZ.y };
-
-						float height = 0.0f;
-						terrain.SampleHeightNormalBilinear(location.x, location.z, height);
-						location.y = height + 5.0f;
-
-						Graphics::PointLightDesc plDesc;
-						plDesc.positionWS = location;
-						plDesc.color = { 1.0f,0.8f,0.6f };
-						plDesc.intensity = 0.5f;
-						plDesc.range = 10.0f;
-						plDesc.castsShadow = false;
-						auto plHandle = pointLightService.Create(plDesc);
-
-						levelSession.AddEntity(
-							CPointLight{ plHandle }
-						);
-					}
-				}
-			}*/
 
 			auto playerService = serviceLocator->Get<PlayerService>();
 			Math::Vec3f playerStartPos = playerService->GetPlayerPosition();
@@ -750,6 +732,33 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 								modelComp
 							);
 						}
+					}
+				}
+			}
+
+			auto pointLightService = serviceLocator->Get<Graphics::PointLightService>();
+
+			// ì_åıåπÇÃâ‘Çê∂ê¨
+			for (int j = 0; j < 50; ++j) {
+				for (int k = 0; k < 50; ++k) {
+					for (int n = 0; n < 1; ++n) {
+						float u = distX(rng) / float((std::numeric_limits< uint32_t>::max)());
+						float v = distZ(rng) / float((std::numeric_limits< uint32_t>::max)());
+						Math::Vec3f location = getTerrainLocation(u, v);
+
+						Graphics::PointLightDesc plDesc;
+						plDesc.positionWS = location + Math::Vec3f(0.0f, 3.0f, 0.0f); // è≠Çµè„Ç…Ç∏ÇÁÇ∑
+						plDesc.color = { 0.2f,0.2f,1.0f }; // ê¬êF
+						plDesc.intensity = 1.0f;
+						plDesc.range = 10.0f;
+						plDesc.castsShadow = false;
+						auto plHandle = pointLightService->Create(plDesc);
+
+						levelSession.AddEntity(
+							CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
+							CModel{ blueLightFlowerModelHandle },
+							CPointLight{ plHandle }
+						);
 					}
 				}
 			}

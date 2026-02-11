@@ -15,18 +15,13 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"default22_Material_0",
-			"scale":[
-				0.009999999776482582,
-				0.010000001639127731,
-				0.010000001639127731
-			]
+			"name":"default22_Material_0"
 		}
 	],
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"Material.003",
+			"name":"Material.005",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
@@ -37,7 +32,7 @@
 	],
 	"meshes":[
 		{
-			"name":"default22_Material_0",
+			"name":"default22_Material_0.003",
 			"primitives":[
 				{
 					"attributes":{

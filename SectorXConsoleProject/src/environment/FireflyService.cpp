@@ -32,11 +32,13 @@ void CreateFireflyVolumeBuffer(
 
 #ifdef _DEBUG
 float gDebugFireflyAddSize = 0.02f;
-float gDebugFireflyBaseSize = 0.08f;
 
 float gDebugFireflyLightRange = 3.8f;
 float gDebugFireflyLightIntensity = 0.2f;
-float gDebugFireflyPickProb = 0.15f;
+float gDebugNearPickLightProb = 0.5f;
+float gDebugFarPickLightProb = 0.1f;
+
+float gDebugFireflyBaseSize = 0.08f;
 #endif
 
 FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,
@@ -165,10 +167,11 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 
 #ifdef _DEBUG
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "addSize", &gDebugFireflyAddSize, 0.0f, 1.0f, 0.001f);
-	BIND_DEBUG_SLIDER_FLOAT("Firefly", "baseSize", &gDebugFireflyBaseSize, 0.01f, 1.0f, 0.001f);
     BIND_DEBUG_SLIDER_FLOAT("Firefly", "lightRange", &gDebugFireflyLightRange, 0.1f, 20.0f, 0.1f);
-	BIND_DEBUG_SLIDER_FLOAT("Firefly", "lightIntensity", &gDebugFireflyLightIntensity, 0.1f, 10.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Firefly", "pickProb", &gDebugFireflyPickProb, 0.0f, 1.0f, 0.001f);
+    BIND_DEBUG_SLIDER_FLOAT("Firefly", "lightIntensity", &gDebugFireflyLightIntensity, 0.1f, 10.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Firefly", "nearPickProb", &gDebugNearPickLightProb, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Firefly", "farPickProb", &gDebugFarPickLightProb, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Firefly", "baseSize", &gDebugFireflyBaseSize, 0.01f, 1.0f, 0.001f);
 #endif
 }
 
@@ -259,11 +262,13 @@ void FireflyService::Commit(double deltaTime)
 
 #ifdef _DEBUG
 		spawnBuf.gAddSizeScale = gDebugFireflyAddSize;
-		camBuf.gSize = gDebugFireflyBaseSize;
 
 		updateBuf.gFireflyLightRange = gDebugFireflyLightRange;
 		updateBuf.gFireflyLightIntensity = gDebugFireflyLightIntensity;
-		updateBuf.gFireflyPickProb = gDebugFireflyPickProb;
+		updateBuf.gNearPickLightProb = gDebugNearPickLightProb;
+		updateBuf.gFarPickLightProb = gDebugFarPickLightProb;
+
+        camBuf.gSize = gDebugFireflyBaseSize;
 #endif
     }
 

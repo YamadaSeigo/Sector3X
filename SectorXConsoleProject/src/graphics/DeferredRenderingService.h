@@ -9,6 +9,12 @@ struct DeferredCameraBuffer {
 	float padding = {};
 	Math::Vec3f camPos = {};
 	float padding2 = {};
+#ifdef _DEBUG
+	Math::Vec3f debugCamForward = {};
+	float padding3 = {};
+	Math::Vec3f debugCamPos = {};
+	float padding4 = {};
+#endif
 };
 
 struct TileCameraBuffer {
@@ -16,7 +22,7 @@ struct TileCameraBuffer {
 	Math::Matrix4x4f invProj = {};
 	Math::Matrix4x4f invViewProj = {};
 	Math::Vec3f camPos = {};
-	uint32_t pad;
+	uint32_t pad = {};
 };
 
 class DeferredRenderingService : public ECS::IUpdateService

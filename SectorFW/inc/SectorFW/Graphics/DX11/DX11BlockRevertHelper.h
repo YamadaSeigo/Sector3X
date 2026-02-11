@@ -917,7 +917,7 @@ namespace SFW::Graphics::DX11 {
         std::vector<uint32_t> tmp;
 
         for (size_t cid = 0; cid < inRanges.size(); ++cid) {
-            const auto r = inRanges[cid];
+            const auto& r = inRanges[cid];
             const uint32_t triCount0 = r.indexCount / 3u;
             outLodBase[cid] = (uint32_t)outLodRanges.size();
 

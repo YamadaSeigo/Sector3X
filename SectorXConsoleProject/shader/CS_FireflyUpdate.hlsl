@@ -46,18 +46,20 @@ cbuffer CBUpdate : register(b0)
 {
     float gDt;
     float gTime;
-    float2 pad;
+
+    uint gPointLightMax;
+    float gFireflyLightRange;
+    float gFireflyLightIntensity;
+
+    float gNearPickLightProb; // 0..1
+    float gFarPickLightProb; // 0..1
+    float gPickLightDist; // 距離で確率補間
 
     float3 gPlayerPosWS;
     float gPlayerRepelRadius;
 
     float3 gCamPosWS;
     float gFireflyLightMaxDist;
-
-    uint gPointLightMax;
-    float gFireflyLightRange;
-    float gFireflyLightIntensity;
-    float gFireflyPickProb; // 0..1 の確率で光源化
 };
 
 // 地形グリッド情報
@@ -255,13 +257,23 @@ void main(uint3 tid : SV_DispatchThreadID)
     // 4) Near firefly -> PointLight append
     // -------------------------
     {
+        float ligthtDist = gFireflyLightMaxDist * (1.0f - 0.2f * (p.light * 2.0f - 1.0f));
 
-        uint h = Hash_u32(id * 1664525u + 1013904223u);
-        float r01 = (h & 0x00FFFFFFu) / 16777216.0f;
+       // ここで "現在" の距離に基づいてライト候補を決める
+        float distP = length(gPlayerPosWS - p.posWS);
+        float t = saturate(distP / ligthtDist);
+        float prob = lerp(gNearPickLightProb, gFarPickLightProb, t);
 
-        // 例：確率pで採用（pは0..1、CPUから調整してもOK）
-        if (r01 > gFireflyPickProb)
+        // 粒子ID由来の固定乱数（フレームで変わらない）
+        uint pickH = Hash_u32(id * 1664525u + 1013904223u);
+        float pickR01 = (pickH & 0x00FFFFFFu) / 16777216.0f;
+
+        if (pickR01 >= prob) {
+            p.light = 0; // ライトOFF
             return;
+        }
+
+        p.light = 1; // ライトONフラグ
 
         float3 toC = p.posWS - gCamPosWS;
         float d2 = dot(toC, toC);
@@ -279,7 +291,10 @@ void main(uint3 tid : SV_DispatchThreadID)
                 float blink = 0.5f + 0.5f * sin(gTime * 6.0f + p.phase);
                 pl.range = gFireflyLightRange * blink;
                 pl.color = v.color; // 好みで調整（蛍色）
-                pl.intensity = gFireflyLightIntensity;
+
+                float life01 = saturate(p.life); // 0..1
+
+                pl.intensity = gFireflyLightIntensity * life01;
 
                 float r = max(pl.range, 1e-3f);
                 pl.invRadius = 1.0f / r;

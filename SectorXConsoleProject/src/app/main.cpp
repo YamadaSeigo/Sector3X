@@ -14,7 +14,6 @@
 #include <SectorFW/Graphics/DX11/DX11BlockRevertHelper.h>
 #include <SectorFW/Graphics/DX11/DX11LightShadowResourceService.h>
 #include <SectorFW/Graphics/TerrainOccluderExtraction.h>
-#include <SectorFW/Graphics/ImageLoader.h>
 #include <SectorFW/Debug/UIBus.h>
 
 #include "app/AppConfig.h"

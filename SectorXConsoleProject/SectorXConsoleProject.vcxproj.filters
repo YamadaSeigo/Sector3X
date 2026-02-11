@@ -239,6 +239,9 @@
     <FxCompile Include="shader\CS_TileLightingAccum.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\PS_Fullscreen_Unlit_Shadow_Debug.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\_GlobalTypes.hlsli">

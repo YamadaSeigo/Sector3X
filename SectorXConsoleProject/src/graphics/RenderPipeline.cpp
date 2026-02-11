@@ -191,7 +191,11 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 
 	DX11::ShaderCreateDesc defferedShaderDesc;
 	defferedShaderDesc.vsPath = L"assets/shader/VS_Fullscreen.cso";
+#ifdef _DEBUG
+	defferedShaderDesc.psPath = L"assets/shader/PS_Fullscreen_Unlit_Shadow_Debug.cso";
+#else
 	defferedShaderDesc.psPath = L"assets/shader/PS_Fullscreen_Unlit_Shadow.cso";
+#endif
 	ShaderHandle defferedShaderHandle = {};
 	auto shaderData = shaderMgr->CreateResource(defferedShaderDesc, defferedShaderHandle);
 	static ComPtr<ID3D11VertexShader> defferedVS = shaderData.vs;

@@ -13,6 +13,7 @@ bool DebugRenderType::drawModelRect = false;
 bool DebugRenderType::drawOcclusionRect = false;
 bool DebugRenderType::drawCascadeAABB = false;
 bool DebugRenderType::drawShapeDims = false;
+bool DebugRenderType::drawPointLights = false;
 bool DebugRenderType::drawMOCDepth = false;
 bool DebugRenderType::drawFireflyVolumes = false;
 bool DebugRenderType::drawLeafVolumes = false;
@@ -39,6 +40,7 @@ DebugRenderType::DebugRenderType()
 	BIND_DEBUG_CHECKBOX("Show", "occlusionRect", &drawOcclusionRect);
 	BIND_DEBUG_CHECKBOX("Show", "cascadesAABB", &drawCascadeAABB);
 	BIND_DEBUG_CHECKBOX("Show", "shapeDims", &drawShapeDims);
+	BIND_DEBUG_CHECKBOX("Show", "pointLight", &drawPointLights);
 	BIND_DEBUG_CHECKBOX("Show", "fireflyVolumes", &drawFireflyVolumes);
 	BIND_DEBUG_CHECKBOX("Show", "leafVolumes", &drawLeafVolumes);
 

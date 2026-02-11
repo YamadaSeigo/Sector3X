@@ -64,7 +64,7 @@ namespace SFW::Graphics
 	class PointLightService : public ECS::IUpdateService
 	{
 	public:
-		static inline constexpr uint32_t MAX_FRAME_POINTLIGHT = 1u << 8;
+		static inline constexpr uint32_t MAX_FRAME_POINTLIGHT = 1u << 9;
 
 		PointLightService() = default;
 

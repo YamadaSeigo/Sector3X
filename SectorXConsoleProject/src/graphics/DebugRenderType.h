@@ -14,6 +14,7 @@ struct DebugRenderType
 	static bool drawOcclusionRect;
 	static bool drawCascadeAABB;
 	static bool drawShapeDims;
+	static bool drawPointLights;
 	static bool drawMOCDepth;
 	static bool drawFireflyVolumes;
 	static bool drawLeafVolumes;

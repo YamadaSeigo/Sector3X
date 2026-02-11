@@ -165,11 +165,16 @@ public:
 
 			Math::ToBasis<float, Math::LH_ZForward>(debugRot, r, u, f);
 
+			Math::Vec3f fixedF, fixedU, fixedR;
+			Math::ToBasis<float, Math::LH_ZForward>(perCameraService->GetRotation(), fixedR, fixedU, fixedF);
+
 			//ディファ―ド用のバッファ更新
 			DeferredCameraBuffer lightCameraBufferData{};
 			lightCameraBufferData.invViewProj = Math::Inverse(buffer.viewProj);
-			lightCameraBufferData.camForward = f.normalized();
-			lightCameraBufferData.camPos = debugEye;
+			lightCameraBufferData.camForward = fixedF.normalized();
+			lightCameraBufferData.camPos = perCameraService->GetEyePos();
+			lightCameraBufferData.debugCamForward = f.normalized();
+			lightCameraBufferData.debugCamPos = debugEye;
 
 			deferredService->UpdateCameraBufferData(lightCameraBufferData);
 
@@ -260,6 +265,10 @@ public:
 		lightCameraBufferData.invViewProj = Math::Inverse(viewProj);
 		lightCameraBufferData.camForward = f.normalized();
 		lightCameraBufferData.camPos = camPos;
+#ifdef _DEBUG
+		lightCameraBufferData.debugCamForward = f.normalized();
+		lightCameraBufferData.debugCamPos = camPos;
+#endif
 
 		deferredService->UpdateCameraBufferData(lightCameraBufferData);
 

@@ -174,7 +174,11 @@ public:
 		}
 
 		// Enterキーが押されたら、ゲームレベルをロードするリクエストを追加
+#ifdef _DEBUG
+		if (isLoadedMainLevel && inputService->IsKeyTrigger(Input::Key::Space) && !startGame)
+#else
 		if (isLoadedMainLevel && inputService->IsKeyTrigger(Input::Key::Enter) && !startGame)
+#endif
 		{
 			startGame = true;
 			fadeElapsedTime = 0.0f;

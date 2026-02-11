@@ -142,7 +142,7 @@ public:
 		BIND_DEBUG_CHECKBOX("TimeOfDay", "enable", &isUpdateTimeOfDay);
 		BIND_DEBUG_SLIDER_FLOAT("TimeOfDay", "dayLengthSec", &m_dayLengthSec, m_dayLengthSec, 1000.0f, 1.0f);
 
-		REGISTER_DEBUG_BOUND_SLIDER_FLOAT("TimeOfDay", "timeOfDay", m_timeOfDay, 0.0f, m_dayLengthSec, 0.1f, [&](float value) {
+		REGISTER_DEBUG_BOUND_SLIDER_FLOAT("TimeOfDay", "timeOfDay", m_timeOfDay, 0.0f, 1000.0f, 0.1f, [&](float value) {
 			m_timeOfDay = std::fmod(value, m_dayLengthSec);
 			CalcCurrentTimeOfDayKey();
 			// Update fog parameters
@@ -220,8 +220,7 @@ public:
 
 		if (isUpdateTimeOfDay)
 		{
-			m_elapsedTime += static_cast<float>(deltaTime);
-			m_timeOfDay = std::fmod(m_elapsedTime, m_dayLengthSec);
+			m_timeOfDay = std::fmod(m_timeOfDay + static_cast<float>(deltaTime), m_dayLengthSec);
 
 			CalcCurrentTimeOfDayKey();
 
@@ -316,7 +315,6 @@ private:
 	Graphics::BufferHandle fogCBHandle;
 	Graphics::BufferHandle godRayCBHandle;
 
-	float m_elapsedTime = 0.0f;
 	float m_dayLengthSec = 120.0f; // àÍé¸Ç…Ç©Ç©ÇÈéûä‘(ïb)
 	float m_timeOfDay = 0.0f; // åªç›ÇÃéûä‘(0.0~1.0)
 

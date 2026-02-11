@@ -10,7 +10,10 @@ struct FireflyParticleGPU
 {
     float posWS[3]; float life;
     float velWS[3]; uint32_t volumeSlot;
-    float phase; float pad0, pad1, pad2;
+    float phase; 
+    float band01; // 0..1（粒子固有の帯オフセット）
+    float addSize; // 加算サイズ
+    uint32_t light; // 0=off, 1=on
 };
 
 struct FireflyUpdatePram
@@ -37,7 +40,7 @@ public:
     static constexpr uint32_t MaxParticles = 100000;
     static constexpr uint32_t MaxVolumeSlots = 256;
     static constexpr uint32_t MaxSpawnPerVol = 32;
-    static constexpr uint32_t MaxPointLight = 1u << 11;
+    static constexpr uint32_t MaxPointLight = 1u << 12;
 
     void Create(ID3D11Device* dev);
     void InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* spawnCB, ID3D11ComputeShader* initCS);
