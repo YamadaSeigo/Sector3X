@@ -158,7 +158,7 @@ namespace SFW
 			return toWrite;
 		}
 
-		size_t  RenderQueue::ProducerSessionExternal::AllocInstancesFromWorldSoAAndColorSoA(const Math::Matrix3x4fSoA& wSoa, const Math::Vec4f* cSoa, InstanceIndex* outIdx)
+		size_t  RenderQueue::ProducerSessionExternal::AllocInstancesFromWorldColorSoA(const Math::Matrix3x4fSoA& wSoa, const Math::Vec4f* cSoa, InstanceIndex* outIdx)
 		{
 			const auto& W = wSoa;
 

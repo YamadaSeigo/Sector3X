@@ -200,7 +200,7 @@ namespace SFW
 					if (offPool.size() < need) offPool.resize(need);
 				}
 
-				// ======（新規）比較ソート用：間接ソート + 一括適用 ======
+				// ====== 比較ソート用：間接ソート + 一括適用 ======
 				template<class VecT>
 				void IndirectSortStd(VecT& cmds) {
 					const size_t N = cmds.size();
@@ -483,7 +483,7 @@ namespace SFW
 				/**
 				 * @brief WorldSoA と ColorSoA からまとめて Instance を確保・書き込み
 				 */
-				size_t AllocInstancesFromWorldSoAAndColorSoA(const Math::Matrix3x4fSoA& wSoa, const Math::Vec4f* cSoa, InstanceIndex* outIdx = nullptr);
+				size_t AllocInstancesFromWorldColorSoA(const Math::Matrix3x4fSoA& wSoa, const Math::Vec4f* cSoa, InstanceIndex* outIdx = nullptr);
 				/**
 				 * @brief 次に割り当てられるインスタンスインデックス
 				 * @details 実際にフレーム当たりのインスタンス数が増える

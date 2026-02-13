@@ -73,7 +73,7 @@ public:
 			Math::BuildWorldMatrixSoA_FromTransformSoA(mtf, worldMtxSoA, false);
 
 			std::vector<Graphics::InstanceIndex> instanceIndices(entityCount);
-			uiSession.AllocInstancesFromWorldSoAAndColorSoA(worldMtxSoA, &color.value()->color, instanceIndices.data());
+			uiSession.AllocInstancesFromWorldColorSoA(worldMtxSoA, &color.value()->color, instanceIndices.data());
 
 			Graphics::DrawCommand cmd;
 			cmd.mesh = meshManager->GetSpriteQuadHandle().index;

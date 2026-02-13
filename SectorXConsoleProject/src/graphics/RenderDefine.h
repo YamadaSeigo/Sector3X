@@ -43,3 +43,5 @@ struct CColor
 {
 	Math::Vec4f color = Math::Vec4f(1.0f, 1.0f, 1.0f, 1.0f);
 };
+
+static_assert(sizeof(CColor) == sizeof(Math::Vec4f));

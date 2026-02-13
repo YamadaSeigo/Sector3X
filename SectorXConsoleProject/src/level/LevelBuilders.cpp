@@ -619,7 +619,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						rot.KeepTwist(pose.up);
 						auto id = levelSession.AddEntity(
 							CTransform{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-							std::move(modelComp)
+							std::move(modelComp),
+							CColor{ {1.0f, 1.0f, 1.0f, 1.0f} }
 						);
 					}
 				}
@@ -710,6 +711,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 								boundsWS,
 								CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
 								modelComp,
+								CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
 								staticBody,
 								//Physics::PhysicsInterpolation(
 								//	location, // èâä˙à íu
@@ -729,7 +731,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 							levelSession.AddStaticBoundsEntity(
 								boundsWS,
 								CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
-								modelComp
+								modelComp,
+								CColor{ {1.0f, 1.0f, 1.0f, 1.0f} }
 							);
 						}
 					}
@@ -757,6 +760,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						levelSession.AddEntity(
 							CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
 							CModel{ blueLightFlowerModelHandle },
+							CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
 							CPointLight{ plHandle }
 						);
 					}
@@ -778,6 +782,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto id = levelSession.AddGlobalEntity(
 					CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
 					modelComp,
+					CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
 					PlayerComponent{}
 #ifdef _ENABLE_IMGUI
 					, playerDims.value()
@@ -840,6 +845,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto id = levelSession.AddGlobalEntity(
 					tf,
 					modelComp,
+					CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
 					staticBody
 #ifdef _ENABLE_IMGUI
 					, shapeDims.value()
@@ -873,6 +879,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto id = levelSession.AddGlobalEntity(
 					tf,
 					modelComp,
+					CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
 					staticBody
 #ifdef _ENABLE_IMGUI
 					, shapeDims.value()
@@ -903,6 +910,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto id = levelSession.AddGlobalEntity(
 					tf,
 					modelComp,
+					CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
 					staticBody
 #ifdef _ENABLE_IMGUI
 					, shapeDims.value()

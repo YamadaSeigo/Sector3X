@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <functional>
 #include <vector>
 
 #include "RenderQueue.h"

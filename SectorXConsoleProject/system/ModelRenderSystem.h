@@ -44,7 +44,8 @@ class ModelRenderSystem : public ITypeSystem<
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
 		Read<TransformSoA>,
-		Write<CModel>
+		Write<CModel>,
+		Read<CColor>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
@@ -56,7 +57,7 @@ class ModelRenderSystem : public ITypeSystem<
 	IsParallel{ true }
 	>
 {
-	using Accessor = ComponentAccessor<Read<TransformSoA>, Write<CModel>>;
+	using Accessor = ComponentAccessor<Read<TransformSoA>, Write<CModel>, Read<CColor>>;
 public:
 
 	static constexpr inline uint32_t MAX_OCCLUDER_AABB_NUM  = 64;
@@ -191,6 +192,7 @@ public:
 				//読み取り専用でTransformSoAのアクセサを取得
 				auto transform = accessor.Get<Read<TransformSoA>>();
 				auto model = accessor.Get<Write<CModel>>();
+				auto color = accessor.Get<Read<CColor>>();
 
 				SoAPositions soaTf = {
 					transform->px(), transform->py(), transform->pz(), (uint32_t)entityCount
@@ -207,6 +209,9 @@ public:
 					transform->sx(), transform->sy(), transform->sz()
 				};
 
+				const Math::Vec4f* colorSoA = reinterpret_cast<const Math::Vec4f*>(color.value());
+
+
 				// ワールド行列を一括生成
 				std::vector<float> worldMtxBuffer(12 * entityCount);
 				Math::Matrix3x4fSoA worldMtxSoA(worldMtxBuffer.data(), entityCount);
@@ -216,7 +221,7 @@ public:
 				Math::Mul4x4x3x4_Batch_To4x4_AVX2_RowCombine_SoA(kp->viewProj, worldMtxSoA, WVPs.data());
 
 				std::vector<Graphics::InstanceIndex> instanceIndices(entityCount);
-				producer.AllocInstancesFromWorldSoA(worldMtxSoA, instanceIndices.data());
+				producer.AllocInstancesFromWorldColorSoA(worldMtxSoA, colorSoA, instanceIndices.data());
 
 				//ループの外で読み取りロックを取得
 				auto readLock = kp->modelMgr->AcquireReadLock();
