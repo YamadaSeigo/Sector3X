@@ -143,6 +143,12 @@ namespace SFW
 			Signed iz0 = floor_div_z(frAabb.lb.z);
 			Signed iz1 = floor_div_z(frAabb.ub.z);
 
+			// マージン：フラスタムのAABBはセル境界に対して誤差がある可能性があるため、少し余裕を持たせる
+			const Signed margin = 1; // まずは1セル。問題が残るなら増やす
+
+			ix0 -= margin; ix1 += margin;
+			iz0 -= margin; iz1 += margin;
+
 			const Signed W = static_cast<Signed>(w);
 			const Signed D = static_cast<Signed>(d);
 			if (ix0 > ix1) std::swap(ix0, ix1);
@@ -214,6 +220,12 @@ namespace SFW
 			Signed iz0 = floor_div_z(frAabb.lb.z);
 			Signed iz1 = floor_div_z(frAabb.ub.z);
 
+			// マージン：フラスタムのAABBはセル境界に対して誤差がある可能性があるため、少し余裕を持たせる
+			const Signed margin = 1; // まずは1セル。問題が残るなら増やす
+
+			ix0 -= margin; ix1 += margin;
+			iz0 -= margin; iz1 += margin;
+
 			const Signed W = static_cast<Signed>(w);
 			const Signed D = static_cast<Signed>(d);
 			if (ix0 > ix1) std::swap(ix0, ix1);
@@ -283,6 +295,12 @@ namespace SFW
 			Signed iz0 = floor_div(center.z - r);
 			Signed ix1 = floor_div(center.x + r);
 			Signed iz1 = floor_div(center.z + r);
+
+			// マージン：フラスタムのAABBはセル境界に対して誤差がある可能性があるため、少し余裕を持たせる
+			const Signed margin = 1; // まずは1セル。問題が残るなら増やす
+
+			ix0 -= margin; ix1 += margin;
+			iz0 -= margin; iz1 += margin;
 
 			const Signed w = static_cast<Signed>(grid.width());
 			const Signed d = static_cast<Signed>(grid.height());
@@ -358,6 +376,12 @@ namespace SFW
 			Signed iz0 = floor_div_z(frAabb.lb.z);
 			Signed iz1 = floor_div_z(frAabb.ub.z);
 
+			// マージン：フラスタムのAABBはセル境界に対して誤差がある可能性があるため、少し余裕を持たせる
+			const Signed margin = 1; // まずは1セル。問題が残るなら増やす
+
+			ix0 -= margin; ix1 += margin;
+			iz0 -= margin; iz1 += margin;
+
 			const Signed W = static_cast<Signed>(w);
 			const Signed D = static_cast<Signed>(d);
 			if (ix0 > ix1) std::swap(ix0, ix1);
@@ -383,7 +407,7 @@ namespace SFW
 					if (chunk.HasStaticBounds()) {
 						const auto& bounds = chunk.GetStaticBoundsWS();
 						if (fr.IntersectsAABB(bounds)) {
-							const float d2 = Dist2PointAABB3D(camPos, bounds.center() + levelOriginWS, bounds.extent());
+							const float d2 = Dist2PointAABB3D(camPos, bounds.center(), bounds.extent());
 							if (chunk.GetEntityManager().GetEntityCount() > 0)
 								items.push_back({ const_cast<SpatialChunk*>(&chunk), d2 });
 						}

@@ -640,5 +640,58 @@ namespace SFW {
 			ctx->Unmap(staging.Get(), 0);
 			return true;
 		}
+
+		static bool CopyScratchImageToCpuImageRGBA8(const ScratchImage& si, CpuImage& out)
+		{
+			const Image* img = si.GetImage(0, 0, 0);
+			if (!img) return false;
+
+			out.width = (UINT)img->width;
+			out.height = (UINT)img->height;
+			out.stride = (UINT)img->rowPitch;
+			out.fmt = img->format;
+			out.bytes.resize(img->height * img->rowPitch);
+			std::memcpy(out.bytes.data(), img->pixels, out.bytes.size());
+			return true;
+		}
+
+		
+		bool ReadTexture2DToCPU_RGBA8(ID3D11Device* dev, ID3D11DeviceContext* ctx,
+			ID3D11Texture2D* src, CpuImage& out)
+		{
+			if (!dev || !ctx || !src) return false;
+
+			ScratchImage captured;
+			HRESULT hr = CaptureTexture(dev, ctx, src, captured); // MSAAも内部で処理してくれる実装が多い
+			if (FAILED(hr)) return false;
+
+			// まず「圧縮なら展開」
+			ScratchImage decompressed;
+			const Image* base = captured.GetImage(0, 0, 0);
+			if (!base) return false;
+
+			ScratchImage linear = std::move(captured);
+
+			if (IsCompressed(base->format))
+			{
+				hr = Decompress(*base, DXGI_FORMAT_R8G8B8A8_UNORM, decompressed);
+				if (FAILED(hr)) return false;
+				linear = std::move(decompressed);
+				base = linear.GetImage(0, 0, 0);
+				if (!base) return false;
+			}
+
+			// 次に「RGBA8へ変換」（float/UNORM/他チャンネル数など全部ここで吸収）
+			ScratchImage rgba8;
+			if (base->format != DXGI_FORMAT_R8G8B8A8_UNORM)
+			{
+				hr = Convert(*base, DXGI_FORMAT_R8G8B8A8_UNORM,
+					TEX_FILTER_DEFAULT, TEX_THRESHOLD_DEFAULT, rgba8);
+				if (FAILED(hr)) return false;
+				return CopyScratchImageToCpuImageRGBA8(rgba8, out);
+			}
+
+			return CopyScratchImageToCpuImageRGBA8(linear, out);
+		}
 	} // namespace Graphics
 } // namespace SectorFW

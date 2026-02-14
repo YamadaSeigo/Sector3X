@@ -4,6 +4,7 @@
 #include "app/texture_registry.h"
 
 #include <SectorFW/Graphics/DX11/DX11BlockRevertHelper.h> // TerrainClustered / DX11 helpers 一式
+#include <SectorFW/Graphics/ImageLoader.h>
 
 namespace TerrainBoot
 {
@@ -24,10 +25,29 @@ namespace TerrainBoot
         tp.clusterCellsX = 32;
         tp.clusterCellsZ = 32;
         tp.cellSize = 3.0f;
-        tp.heightScale = 80.0f;
+        tp.heightScale = 250.0f;
         tp.frequency = 1.0f / 90.0f;
         tp.seed = 20251212;
         tp.offset.y -= 40.0f;
+
+        auto designerMap = Graphics::LoadImageFromFile(
+            "assets/texture/terrain/DesignerHeightMap.png",
+            1
+        );
+
+		Graphics::DesignerHeightMap designer{};
+		designer.width = designerMap.width;
+		designer.height = designerMap.height;
+		designer.data.resize(designer.width * designer.height);
+        for(int i = 0; i < designerMap.width * designerMap.height; ++i)
+        {
+            // 16bit正規化
+            uint8_t h8 = designerMap.pixels.get()[i];
+            float h01 = (float)h8 / 255.0f;
+			designer.data[i] = h01;
+		}
+
+		tp.designer = &designer;
 
         // terrain build
         static std::vector<float> heightMap;
@@ -74,7 +94,13 @@ namespace TerrainBoot
         r.cp = &cp;
 
         static DX11::CpuImage cpuSplatImage;
+#ifdef _DEBUG_SPLAT_DEBUG_NO_DSS
+		// なんでもいいから CPU にも同じフォーマットで欲しい（DSS なしでデバッグするため）
+        DX11::ReadTexture2DToCPU_RGBA8(graphics.GetDevice(), graphics.GetDeviceContext(), sheetTex.Get(), cpuSplatImage);
+#else
+        // dds前提の読み込み
         DX11::ReadTexture2DToCPU(graphics.GetDevice(), graphics.GetDeviceContext(), sheetTex.Get(), cpuSplatImage);
+#endif
         r.cpuSplatImage = &cpuSplatImage;
 
         // block revert init + build

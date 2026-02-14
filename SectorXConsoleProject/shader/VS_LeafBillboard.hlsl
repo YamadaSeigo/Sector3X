@@ -24,6 +24,7 @@ struct VSOut
     float4 posH : SV_Position;
     float2 uv : TEXCOORD0;
     float3 col : COLOR0;
+    float3 nrmWS : TEXCOORD1;
 };
 
 static const float2 kCornerCCW[4] =
@@ -90,6 +91,14 @@ VSOut main(uint vid : SV_VertexID, uint iid : SV_InstanceID)
     baseCol *= p.tint;
 
     o.col = baseCol;
+    
+    float3 n = UnpackNormalOct(p.normalOct);
+
+    // もし両面っぽくしたいなら、カメラ方向へ向ける（暗転防止）
+    float3 viewDir = normalize(gCameraPosWS - p.posWS);
+    n = faceforward(n, -viewDir, n);
+
+    o.nrmWS = n;
 
 #ifdef DEBUG_HIT_DEPTH
     float hit = p.debugHit / 255.0;

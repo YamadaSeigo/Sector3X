@@ -34,6 +34,14 @@ using Microsoft::WRL::ComPtr;
 #include "../LightShadowService.h"
 
 
+#ifdef _DEBUG
+
+// デバッグビルドで、スプラットマップの生成に DirectStorage を使わないオプション
+//#define _DEBUG_SPLAT_DEBUG_NO_DSS
+
+#endif
+
+
 namespace SFW::Graphics::DX11 {
 
     // ------------------------------------------------------------
@@ -1512,6 +1520,9 @@ namespace SFW::Graphics::DX11 {
         std::string path{}; bool srgbFlag = forceSRGB;
         if (!resolve(sheetId, path, srgbFlag)) return {};
         TextureCreateDesc cd{}; cd.path = path; cd.forceSRGB = srgbFlag;
+#ifdef _DEBUG_SPLAT_DEBUG_NO_DSS
+        cd.convertDSS = false;
+#endif
 
         TextureHandle h = {};
         texMgr.Add(cd, h);

@@ -23,6 +23,8 @@ struct LeafParticleGPU
     float life0; // 初期寿命(sec)
     float tint[3]; // 葉っぱ固有色
 
+	uint32_t normalOcta; // 法線（曲線の接線に対して）をオクタでエンコードしたもの
+
 #ifdef DEBUG_DEPTH_HIT
     float depthHit; // デバッグ用: 深度ヒット回数カウント
 #endif

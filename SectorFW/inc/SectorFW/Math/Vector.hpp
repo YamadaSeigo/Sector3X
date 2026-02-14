@@ -38,45 +38,45 @@ namespace SFW
 				T data[2];
 			};
 
-			Vec2() noexcept : x(0), y(0) {}
-			Vec2(T x_, T y_) noexcept : x(x_), y(y_) {}
-			explicit Vec2(T val) noexcept : x(val), y(val) {}
+			constexpr Vec2() noexcept : x(0), y(0) {}
+			constexpr Vec2(T x_, T y_) noexcept : x(x_), y(y_) {}
+			explicit constexpr Vec2(T val) noexcept : x(val), y(val) {}
 
-			T& operator[](size_t i) noexcept { return data[i]; }
-			const T& operator[](size_t i) const noexcept { return data[i]; }
+			constexpr T& operator[](size_t i) noexcept { return data[i]; }
+			constexpr const T& operator[](size_t i) const noexcept { return data[i]; }
 
-			Vec2 operator+(const Vec2& rhs) const noexcept { return Vec2(x + rhs.x, y + rhs.y); }
-			Vec2 operator+(const T& s) const noexcept { return Vec2(x + s, y + s); }
-			Vec2& operator+=(const Vec2& rhs) noexcept { x += rhs.x; y += rhs.y; return *this; }
-			Vec2& operator+=(const T& s) noexcept { x += s; y += s; return *this; }
-			Vec2 operator-(const Vec2& rhs) const noexcept { return Vec2(x - rhs.x, y - rhs.y); }
-			Vec2 operator-(const T& s) const noexcept { return Vec2(x - s, y - s); }
-			Vec2& operator-=(const Vec2& rhs) noexcept { x -= rhs.x; y -= rhs.y; return *this; }
-			Vec2& operator-=(const T& s) noexcept { x -= s; y -= s; return *this; }
-			Vec2 operator*(const Vec2& rhs) const noexcept { return Vec2(x * rhs.x, y * rhs.y); }
-			Vec2 operator*(T s) const noexcept { return Vec2(x * s, y * s); }
-			Vec2& operator*=(const Vec2& rhs) noexcept { x *= rhs.x; y *= rhs.y; return *this; }
-			Vec2& operator*=(T s) noexcept { x *= s; y *= s; return *this; }
-			Vec2 operator/(const Vec2& rhs) const noexcept { return Vec2(x / rhs.x, y / rhs.y); }
-			Vec2 operator/(T s) const noexcept { return Vec2(x / s, y / s); }
-			Vec2& operator/=(const Vec2& rhs) noexcept { x /= rhs.x; y /= rhs.y; return *this; }
-			Vec2& operator/=(T s) noexcept { x /= s; y /= s; return *this; }
+			constexpr Vec2 operator+(const Vec2& rhs) const noexcept { return Vec2(x + rhs.x, y + rhs.y); }
+			constexpr Vec2 operator+(const T& s) const noexcept { return Vec2(x + s, y + s); }
+			constexpr Vec2& operator+=(const Vec2& rhs) noexcept { x += rhs.x; y += rhs.y; return *this; }
+			constexpr Vec2& operator+=(const T& s) noexcept { x += s; y += s; return *this; }
+			constexpr Vec2 operator-(const Vec2& rhs) const noexcept { return Vec2(x - rhs.x, y - rhs.y); }
+			constexpr Vec2 operator-(const T& s) const noexcept { return Vec2(x - s, y - s); }
+			constexpr Vec2& operator-=(const Vec2& rhs) noexcept { x -= rhs.x; y -= rhs.y; return *this; }
+			constexpr Vec2& operator-=(const T& s) noexcept { x -= s; y -= s; return *this; }
+			constexpr Vec2 operator*(const Vec2& rhs) const noexcept { return Vec2(x * rhs.x, y * rhs.y); }
+			constexpr Vec2 operator*(T s) const noexcept { return Vec2(x * s, y * s); }
+			constexpr Vec2& operator*=(const Vec2& rhs) noexcept { x *= rhs.x; y *= rhs.y; return *this; }
+			constexpr Vec2& operator*=(T s) noexcept { x *= s; y *= s; return *this; }
+			constexpr Vec2 operator/(const Vec2& rhs) const noexcept { return Vec2(x / rhs.x, y / rhs.y); }
+			constexpr Vec2 operator/(T s) const noexcept { return Vec2(x / s, y / s); }
+			constexpr Vec2& operator/=(const Vec2& rhs) noexcept { x /= rhs.x; y /= rhs.y; return *this; }
+			constexpr Vec2& operator/=(T s) noexcept { x /= s; y /= s; return *this; }
 
-			bool operator==(const Vec2& rhs) const noexcept { return x == rhs.x && y == rhs.y; }
-			bool operator!=(const Vec2& rhs) const noexcept { return !(*this == rhs); }
-			bool operator<(const Vec2& rhs) const noexcept {
+			constexpr bool operator==(const Vec2& rhs) const noexcept { return x == rhs.x && y == rhs.y; }
+			constexpr bool operator!=(const Vec2& rhs) const noexcept { return !(*this == rhs); }
+			constexpr bool operator<(const Vec2& rhs) const noexcept {
 				if (x != rhs.x) return x < rhs.x;
 				return y < rhs.y;
 			}
-			bool operator<=(const Vec2& rhs) const noexcept { return *this < rhs || *this == rhs; }
-			bool operator>(const Vec2& rhs) const noexcept { return !(*this <= rhs); }
-			bool operator>=(const Vec2& rhs) const noexcept { return !(*this < rhs); }
+			constexpr bool operator<=(const Vec2& rhs) const noexcept { return *this < rhs || *this == rhs; }
+			constexpr bool operator>(const Vec2& rhs) const noexcept { return !(*this <= rhs); }
+			constexpr bool operator>=(const Vec2& rhs) const noexcept { return !(*this < rhs); }
 
-			T dot(const Vec2& rhs) const noexcept { return x * rhs.x + y * rhs.y; }
+			constexpr T dot(const Vec2& rhs) const noexcept { return x * rhs.x + y * rhs.y; }
 
 			T length() const noexcept { return std::sqrt(dot(*this)); }
 
-			T lengthSquared() const noexcept { return dot(*this); }
+			constexpr T lengthSquared() const noexcept { return dot(*this); }
 
 			Vec2 normalized() const noexcept {
 				T len = length();
@@ -94,13 +94,13 @@ namespace SFW
 				T data[3];
 			};
 
-			Vec3() noexcept : x(0), y(0), z(0) {}
-			Vec3(T x_, T y_, T z_) noexcept : x(x_), y(y_), z(z_) {}
-			Vec3(const Vec2<T>& xy_, T z_) noexcept : x(xy_.x), y(xy_.y), z(z_) {}
-			explicit Vec3(T val) noexcept : x(val), y(val), z(val) {}
+			constexpr Vec3() noexcept : x(0), y(0), z(0) {}
+			constexpr Vec3(T x_, T y_, T z_) noexcept : x(x_), y(y_), z(z_) {}
+			constexpr Vec3(const Vec2<T>& xy_, T z_) noexcept : x(xy_.x), y(xy_.y), z(z_) {}
+			explicit constexpr Vec3(T val) noexcept : x(val), y(val), z(val) {}
 
-			T& operator[](size_t i) noexcept { return data[i]; }
-			const T& operator[](size_t i) const noexcept { return data[i]; }
+			constexpr T& operator[](size_t i) noexcept { return data[i]; }
+			constexpr const T& operator[](size_t i) const noexcept { return data[i]; }
 
 			Vec3& operator=(const Vec3& rhs) noexcept = default;
 
@@ -109,40 +109,40 @@ namespace SFW
 				return *this;
 			}
 
-			Vec3 operator+(const Vec3& rhs) const noexcept { return Vec3(x + rhs.x, y + rhs.y, z + rhs.z); }
-			Vec3 operator+(const T& s) const noexcept { return Vec3(x + s, y + s, z + s); }
-			Vec3& operator+=(const Vec3& rhs) noexcept { x += rhs.x; y += rhs.y; z += rhs.z; return *this; }
-			Vec3& operator+=(const T& s) noexcept { x += s; y += s; z += s; return *this; }
-			Vec3 operator-(const Vec3& rhs) const noexcept { return Vec3(x - rhs.x, y - rhs.y, z - rhs.z); }
-			Vec3 operator-(const T& s) const noexcept { return Vec3(x - s, y - s, z - s); }
-			Vec3& operator-=(const Vec3& rhs) noexcept { x -= rhs.x; y -= rhs.y; z -= rhs.z; return *this; }
-			Vec3& operator-=(const T& s) noexcept { x -= s; y -= s; z -= s; return *this; }
-			Vec3 operator*(const Vec3& rhs) const noexcept { return Vec3(x * rhs.x, y * rhs.y, z * rhs.z); }
-			Vec3 operator*(T s) const noexcept { return Vec3(x * s, y * s, z * s); }
-			Vec3& operator*=(const Vec3& rhs) noexcept { x *= rhs.x; y *= rhs.y; z *= rhs.z; return *this; }
-			Vec3& operator*=(T s) noexcept { x *= s; y *= s; z *= s; return *this; }
-			Vec3 operator/(const Vec3& rhs) const noexcept { assert(rhs.x != 0 && rhs.y != 0 && rhs.z != 0); return Vec3(x / rhs.x, y / rhs.y, z / rhs.z); }
-			Vec3 operator/(T s) const noexcept { assert(s != 0); return Vec3(x / s, y / s, z / s); }
-			Vec3& operator/=(const Vec3& rhs) noexcept { assert(rhs.x != 0 && rhs.y != 0 && rhs.z != 0); x /= rhs.x; y /= rhs.y; z /= rhs.z; return *this; }
-			Vec3& operator/=(T s) noexcept { assert(s != 0); x /= s; y /= s; z /= s; return *this; }
+			constexpr Vec3 operator+(const Vec3& rhs) const noexcept { return Vec3(x + rhs.x, y + rhs.y, z + rhs.z); }
+			constexpr Vec3 operator+(const T& s) const noexcept { return Vec3(x + s, y + s, z + s); }
+			constexpr Vec3& operator+=(const Vec3& rhs) noexcept { x += rhs.x; y += rhs.y; z += rhs.z; return *this; }
+			constexpr Vec3& operator+=(const T& s) noexcept { x += s; y += s; z += s; return *this; }
+			constexpr Vec3 operator-(const Vec3& rhs) const noexcept { return Vec3(x - rhs.x, y - rhs.y, z - rhs.z); }
+			constexpr Vec3 operator-(const T& s) const noexcept { return Vec3(x - s, y - s, z - s); }
+			constexpr Vec3& operator-=(const Vec3& rhs) noexcept { x -= rhs.x; y -= rhs.y; z -= rhs.z; return *this; }
+			constexpr Vec3& operator-=(const T& s) noexcept { x -= s; y -= s; z -= s; return *this; }
+			constexpr Vec3 operator*(const Vec3& rhs) const noexcept { return Vec3(x * rhs.x, y * rhs.y, z * rhs.z); }
+			constexpr Vec3 operator*(T s) const noexcept { return Vec3(x * s, y * s, z * s); }
+			constexpr Vec3& operator*=(const Vec3& rhs) noexcept { x *= rhs.x; y *= rhs.y; z *= rhs.z; return *this; }
+			constexpr Vec3& operator*=(T s) noexcept { x *= s; y *= s; z *= s; return *this; }
+			constexpr Vec3 operator/(const Vec3& rhs) const noexcept { assert(rhs.x != 0 && rhs.y != 0 && rhs.z != 0); return Vec3(x / rhs.x, y / rhs.y, z / rhs.z); }
+			constexpr Vec3 operator/(T s) const noexcept { assert(s != 0); return Vec3(x / s, y / s, z / s); }
+			constexpr Vec3& operator/=(const Vec3& rhs) noexcept { assert(rhs.x != 0 && rhs.y != 0 && rhs.z != 0); x /= rhs.x; y /= rhs.y; z /= rhs.z; return *this; }
+			constexpr Vec3& operator/=(T s) noexcept { assert(s != 0); x /= s; y /= s; z /= s; return *this; }
 
-			bool operator==(const Vec3& rhs) const noexcept { return x == rhs.x && y == rhs.y && z == rhs.z; }
+			constexpr bool operator==(const Vec3& rhs) const noexcept { return x == rhs.x && y == rhs.y && z == rhs.z; }
 
-			bool operator!=(const Vec3& rhs) const noexcept { return !(*this == rhs); }
-			bool operator<(const Vec3& rhs) const noexcept {
+			constexpr bool operator!=(const Vec3& rhs) const noexcept { return !(*this == rhs); }
+			constexpr bool operator<(const Vec3& rhs) const noexcept {
 				if (x != rhs.x) return x < rhs.x;
 				if (y != rhs.y) return y < rhs.y;
 				return z < rhs.z;
 			}
-			bool operator<=(const Vec3& rhs) const noexcept { return *this < rhs || *this == rhs; }
-			bool operator>(const Vec3& rhs) const noexcept { return !(*this <= rhs); }
-			bool operator>=(const Vec3& rhs) const noexcept { return !(*this < rhs); }
+			constexpr bool operator<=(const Vec3& rhs) const noexcept { return *this < rhs || *this == rhs; }
+			constexpr bool operator>(const Vec3& rhs) const noexcept { return !(*this <= rhs); }
+			constexpr bool operator>=(const Vec3& rhs) const noexcept { return !(*this < rhs); }
 
-			T dot(const Vec3& rhs) const noexcept { return x * rhs.x + y * rhs.y + z * rhs.z; }
+			constexpr T dot(const Vec3& rhs) const noexcept { return x * rhs.x + y * rhs.y + z * rhs.z; }
 
 			T length() const noexcept { return std::sqrt(dot(*this)); }
 
-			T lengthSquared() const noexcept { return dot(*this); }
+			constexpr T lengthSquared() const noexcept { return dot(*this); }
 
 			Vec3 normalized() const noexcept {
 				T len = length();
@@ -154,7 +154,7 @@ namespace SFW
 				return *this * (T(1) / len);
 			}
 
-			Vec3 cross(const Vec3& rhs) const noexcept {
+			constexpr Vec3 cross(const Vec3& rhs) const noexcept {
 				return Vec3(
 					y * rhs.z - z * rhs.y,
 					z * rhs.x - x * rhs.z,
@@ -285,17 +285,17 @@ namespace SFW
 				T data[4];
 			};
 
-			Vec4() noexcept : x(0), y(0), z(0), w(0) {}
-			Vec4(T x_, T y_, T z_, T w_) noexcept : x(x_), y(y_), z(z_), w(w_) {}
-			Vec4(const Vec2<T>& v2, T z_, T w_) noexcept : x(v2.x), y(v2.y), z(z_), w(w_) {}
-			Vec4(const Vec2<T>& v2a, const Vec2<T>& v2b) noexcept : x(v2a.x), y(v2a.y), z(v2b.x), w(v2b.y) {}
-			Vec4(const Vec3<T>& v3, T w_) noexcept : x(v3.x), y(v3.y), z(v3.z), w(w_) {}
-			Vec4(const Vec4& v4) noexcept = default;
+			constexpr Vec4() noexcept : x(0), y(0), z(0), w(0) {}
+			constexpr Vec4(T x_, T y_, T z_, T w_) noexcept : x(x_), y(y_), z(z_), w(w_) {}
+			constexpr Vec4(const Vec2<T>& v2, T z_, T w_) noexcept : x(v2.x), y(v2.y), z(z_), w(w_) {}
+			constexpr Vec4(const Vec2<T>& v2a, const Vec2<T>& v2b) noexcept : x(v2a.x), y(v2a.y), z(v2b.x), w(v2b.y) {}
+			constexpr Vec4(const Vec3<T>& v3, T w_) noexcept : x(v3.x), y(v3.y), z(v3.z), w(w_) {}
+			constexpr Vec4(const Vec4& v4) noexcept = default;
 
-			explicit Vec4(T val) noexcept : x(val), y(val), z(val), w(val) {}
+			explicit constexpr Vec4(T val) noexcept : x(val), y(val), z(val), w(val) {}
 
-			T& operator[](size_t i) noexcept { return data[i]; }
-			const T& operator[](size_t i) const noexcept { return data[i]; }
+			constexpr T& operator[](size_t i) noexcept { return data[i]; }
+			constexpr const T& operator[](size_t i) const noexcept { return data[i]; }
 
 			Vec4 operator+(const Vec4& rhs) const noexcept { return Vec4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w); }
 			Vec4 operator+(T s) const noexcept { return Vec4(x + s, y + s, z + s, w + s); }

@@ -203,7 +203,7 @@ namespace SFW {
 			// 1) 高さ場
 			std::vector<float> H;
 
-			GenerateHeightsOnlyPerlin(H, t.vertsX, t.vertsZ, p);
+			GenerateHeights(H, t.vertsX, t.vertsZ, p);
 
 			// 2) 頂点（位置・法線・UV）
 			BuildVertices(t.vertices, H, t.vertsX, t.vertsZ, p.cellSize, p.heightScale, p.offset);
@@ -725,9 +725,9 @@ namespace SFW {
 
 			// fBm ノイズ設定（ディテール用）
 			const float detailFreq = p.frequency * 1.0f;
-			const int   detailOctaves = 4;
-			const float detailLacunarity = 2.0f;
-			const float detailGain = 0.5f;
+			const int   detailOctaves = p.octaves;
+			const float detailLacunarity = p.lacunarity;
+			const float detailGain = p.gain;
 
 			const int   terraceSteps = 3;    // 平地/崖の段数
 			const float terraceBlend = 0.9f; // 0=ガチ段差, 1=なだらか
@@ -744,21 +744,15 @@ namespace SFW {
 						hMacro = p.designer->Sample(u, v);
 					}
 
-					outH[VIdx(x, z, vx)] = hMacro; // 0..1（後で heightScale 掛け）
-
-					continue;
-
 					// 2) マクロ高さをテラス化して「平地→崖→平地」の段構造を作る
 					float hTerraced = Terrace(hMacro, terraceSteps, terraceBlend);
 
 					// 3) ディテールノイズ（Perlin fBm）
 					//    ここは「山ほどノイズ強く・低地は弱く」でメリハリを付ける
-					float wx = p.offset.x + (float)x * p.cellSize;
-					float wz = p.offset.z + (float)z * p.cellSize;
 
 					float n = perlin.fbm(
-						wx * detailFreq,
-						wz * detailFreq,
+						(float)x * detailFreq,
+						(float)z * detailFreq,
 						detailOctaves, detailLacunarity, detailGain); // -1..1
 					float n01 = n * 0.5f + 0.5f; // 0..1
 
@@ -766,7 +760,7 @@ namespace SFW {
 					float mountainMask = Saturate((hTerraced - 0.3f) / 0.5f); // 0.3〜0.8 で 0→1
 					float plainMask = 1.0f - mountainMask;
 
-					float detailAmp = 0.08f * plainMask + 0.20f * mountainMask; // 山だけ大きめ
+					float detailAmp = 0.15f * plainMask + 0.50f * mountainMask; // 山だけ大きめ
 
 					// 0.5 中心のオフセットとして加算
 					float h01 = hTerraced + (n01 - 0.5f) * detailAmp;

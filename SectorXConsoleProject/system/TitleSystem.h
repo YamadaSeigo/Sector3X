@@ -155,8 +155,12 @@ public:
 
 			perCameraService->SetTarget(target);
 
+			Math::Quatf camRot = perCameraService->GetRotation();
+			Math::Vec3f r, u, f;
+			Math::ToBasis<float, Math::LH_ZForward>(camRot, r, u, f);
+
 			float rotDeg = dt / START_GAME_TIME * 100.0f;
-			Math::Quatf rot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(rotDeg));
+			Math::Quatf rot = Math::Quatf::FromAxisAngle(r, Math::Deg2Rad(rotDeg));
 			perCameraService->Rotate(rot);
 
 			if (t >= 1.0f)

@@ -19,35 +19,39 @@ namespace SFW
 			VecT lb;  // 最小点
 			VecT ub;  // 最大点
 
-			AABB() : lb(T(0)), ub(T(0)) {}
-			AABB(const VecT& lower_bound_, const VecT& upper_bound_) : lb(lower_bound_), ub(upper_bound_) {}
+			constexpr AABB() : lb(T(0)), ub(T(0)) {}
+			constexpr AABB(const VecT& lower_bound_, const VecT& upper_bound_) : lb(lower_bound_), ub(upper_bound_) {}
 
-			AABB operator+(const VecT& v) const noexcept { return AABB(lb + v, ub + v); }
-			AABB& operator+=(const VecT& v) noexcept { lb += v; ub += v; return *this; }
-			AABB operator-(const VecT& v) const noexcept { return AABB(lb - v, ub - v); }
-			AABB& operator-=(const VecT& v) noexcept { lb -= v; ub -= v; return *this; }
-			AABB operator*(const T& s) const noexcept { return AABB(lb * s, ub * s); }
-			AABB& operator*=(const T& s) noexcept { lb *= s; ub *= s; return *this; }
-			AABB operator/(const T& s) const noexcept { return AABB(lb / s, ub / s); }
-			AABB& operator/=(const T& s) noexcept { lb /= s; ub /= s; return *this; }
+			constexpr AABB operator+(const VecT& v) const noexcept { return AABB(lb + v, ub + v); }
+			constexpr AABB& operator+=(const VecT& v) noexcept { lb += v; ub += v; return *this; }
+			constexpr AABB operator-(const VecT& v) const noexcept { return AABB(lb - v, ub - v); }
+			constexpr AABB& operator-=(const VecT& v) noexcept { lb -= v; ub -= v; return *this; }
+			constexpr AABB operator*(const T& s) const noexcept { return AABB(lb * s, ub * s); }
+			constexpr AABB operator*(const VecT& v) const noexcept { VecT newLb, newUb; for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) { newLb[i] = lb[i] * v[i]; newUb[i] = ub[i] * v[i]; } return AABB(newLb, newUb); }
+			constexpr AABB& operator*=(const T& s) noexcept { lb *= s; ub *= s; return *this; }
+			constexpr AABB& operator*=(const VecT& v) noexcept { for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) { lb[i] *= v[i]; ub[i] *= v[i]; } return *this; }
+			constexpr AABB operator/(const T& s) const noexcept { return AABB(lb / s, ub / s); }
+			constexpr AABB operator/(const VecT& v) const noexcept { VecT newLb, newUb; for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) { newLb[i] = lb[i] / v[i]; newUb[i] = ub[i] / v[i]; } return AABB(newLb, newUb); }
+			constexpr AABB& operator/=(const T& s) noexcept { lb /= s; ub /= s; return *this; }
+			constexpr AABB& operator/=(const VecT& v) noexcept { for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) { lb[i] /= v[i]; ub[i] /= v[i]; } return *this; }
 
 			// 幅・高さ・奥行き（フルサイズ）
-			VecT size() const noexcept {
+			constexpr VecT size() const noexcept {
 				return ub - lb;
 			}
 
 			// 中心
-			VecT center() const noexcept {
+			constexpr VecT center() const noexcept {
 				return (lb + ub) * T(0.5);
 			}
 
 			// 半サイズ（half-extent）
-			VecT extent() const noexcept {
+			constexpr VecT extent() const noexcept {
 				return (ub - lb) * T(0.5);
 			}
 
 			// 点を内包？
-			bool contains(const VecT& point) const noexcept {
+			constexpr bool contains(const VecT& point) const noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (point[i] < lb[i] || point[i] > ub[i]) return false;
 				}
@@ -55,7 +59,7 @@ namespace SFW
 			}
 
 			// 交差？
-			bool intersects(const AABB& other) const noexcept {
+			constexpr bool intersects(const AABB& other) const noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (ub[i] < other.lb[i] || lb[i] > other.ub[i]) return false;
 				}
@@ -63,7 +67,7 @@ namespace SFW
 			}
 
 			// 点で拡張
-			void expandToInclude(const VecT& point) noexcept {
+			constexpr void expandToInclude(const VecT& point) noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (point[i] < lb[i]) lb[i] = point[i];
 					if (point[i] > ub[i]) ub[i] = point[i];
@@ -71,7 +75,7 @@ namespace SFW
 			}
 
 			// AABBで拡張
-			void expandToInclude(const AABB& other) noexcept {
+			constexpr void expandToInclude(const AABB& other) noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (other.lb[i] < lb[i]) lb[i] = other.lb[i];
 					if (other.ub[i] > ub[i]) ub[i] = other.ub[i];
@@ -79,7 +83,7 @@ namespace SFW
 			}
 
 			//extentをlimit以下に縮小
-			void shrinkExtent(const T limit) noexcept {
+			constexpr void shrinkExtent(const T limit) noexcept {
 				const VecT ext = extent();
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (ext[i] > limit) {
@@ -92,7 +96,7 @@ namespace SFW
 
 			// 2つのAABBの和（外接最小AABB）を返すユーティリティ
 			template<typename T, typename VecT>
-			static AABB<T, VecT> Union(const AABB<T, VecT>& a, const AABB<T, VecT>& b) noexcept {
+			constexpr static AABB<T, VecT> Union(const AABB<T, VecT>& a, const AABB<T, VecT>& b) noexcept {
 				AABB<T, VecT> out;
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					out.lb[i] = (std::min)(a.lb[i], b.lb[i]);
@@ -102,7 +106,7 @@ namespace SFW
 			}
 
 			// AABBを無効化
-			void invalidate() noexcept {
+			constexpr void invalidate() noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					lb[i] = (std::numeric_limits<T>::max)();
 					ub[i] = std::numeric_limits<T>::lowest();

@@ -228,6 +228,14 @@ public:
 				physicsService->SetCharacterRotation(entityID, newYawQuat);//âÒì]ÇÉäÉZÉbÉg
 			}
 
+			if(inputService->IsKeyTrigger(Input::Key::T))
+			{
+				Physics::Mat34f tm;
+				tm.pos = cameraService->GetEyePos();
+
+				physicsService->TeleportCharacter(entityID, tm);
+			}
+
 			//Poseì«Ç›çûÇ› & îΩâf
 			{
 				using namespace Physics;

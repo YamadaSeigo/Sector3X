@@ -137,7 +137,7 @@ def run_vhacd(points: np.ndarray, faces_flat: np.ndarray):
     if CONFIG == "debug":
         # 高精度 (解像度高め / ハル多め)
         vhacd_params = dict(
-            maxConvexHulls=8,
+            maxConvexHulls=12,
             resolution=200_000,
             minimumVolumePercentErrorAllowed=0.5,
             **common_params,
@@ -146,7 +146,7 @@ def run_vhacd(points: np.ndarray, faces_flat: np.ndarray):
     else:
         # Release 用：やや粗いけど高速
         vhacd_params = dict(
-            maxConvexHulls=4,
+            maxConvexHulls=8,
             resolution=100_000,
             minimumVolumePercentErrorAllowed=2.0,
             **common_params,

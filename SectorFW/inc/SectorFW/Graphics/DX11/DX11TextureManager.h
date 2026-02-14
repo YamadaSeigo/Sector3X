@@ -231,5 +231,9 @@ namespace SFW
 		// GPU 2D テクスチャ -> staging -> map で CPU に吸い出す（ミップ0のみ）
 		bool ReadTexture2DToCPU(ID3D11Device* dev, ID3D11DeviceContext* ctx,
 			ID3D11Texture2D* src, CpuImage& out);
+
+		// どんなTextureでも「CPU側にRGBA8で欲しい」版
+		bool ReadTexture2DToCPU_RGBA8(ID3D11Device* dev, ID3D11DeviceContext* ctx,
+			ID3D11Texture2D* src, CpuImage& out);
 	}
 }

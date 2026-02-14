@@ -11,7 +11,7 @@ namespace SFW::Graphics
 			stbi_image_free(ptr);
 	}
 
-	ImageData LoadImageFromFileRGBA8(const std::string& path, bool flipVertically)
+	[[nodiscard]] ImageData LoadImageFromFileRGBA8(const std::string& path, bool flipVertically)
 	{
 		// ì«Ç›çûÇ›éûÇ…è„â∫îΩì]Ç∑ÇÈÇ©
 		stbi_set_flip_vertically_on_load(flipVertically ? 1 : 0);
@@ -41,7 +41,7 @@ namespace SFW::Graphics
 		return img;
 	}
 
-	ImageData LoadImageFromFile(const std::string& path, int desiredChannels, bool flipVertically)
+	[[nodiscard]] ImageData LoadImageFromFile(const std::string& path, int desiredChannels, bool flipVertically)
 	{
 		stbi_set_flip_vertically_on_load(flipVertically ? 1 : 0);
 

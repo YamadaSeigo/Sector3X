@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SectorFW/Debug/UIBus.h>
+#include "graphics/RenderDefine.h"
 
 struct alignas(16) FogCB
 {
@@ -110,15 +111,17 @@ public:
 
 		using namespace Graphics;
 
+		constexpr float FAR_CLIP = 1000.0f;
+
 		// Initialize time of day keys
 		{
 			TimeOfDayKey keys[] = {
-				/*			  t,		ambientColor,		ambientIntensity,	fogColor,				fogStart,	fogEnd,		heightFogDensity,	sunColor,		sunIntensity,	godRayTint,		godRayIntensity, emissiveBoost*/
-				/*–é–¾‚¯	*/	{0.0f,   {	0.03f, 0.05f, 0.07f	},		0.3f,	{	0.05f, 0.07f, 0.12f	},	500.0f,		2500.0f,	0.005f,			{	1.0f,0.95f,0.8f	},	1.0f,   {	1.0f,1.0f,1.0f	},	0.0f,			4.0f		},
-				/*’©		*/	{0.2f,	 {	0.9f, 0.95f, 1.0f	},		1.0f,	{	1.0f, 0.8f, 0.6f	},	300.0f,		1500.0f,	0.02f,			{	1.0f,0.9f,0.7f	},	2.0f,   {	1.0f,1.0f,0.9f	},	1.0f,			2.0f		},
-				/*’‹		*/	{0.4f,   {	0.9f, 0.95f, 1.0f	},		1.2f,	{	0.7f, 0.85f, 1.0f	},	100.0f,		2000.0f,	0.002f,			{	1.0f,1.0f,1.0f	},	5.0f,   {	1.0f,1.0f,1.0f	},	0.5f,			1.0f		},
-				/*—[•û	*/	{0.6f,	 {	1.0f, 0.7f, 0.5f	},		0.7f,	{	0.6f, 0.5f, 0.5f	},	400.0f,		1800.0f,	0.005f,			{	1.0f,0.8f,0.6f	},	2.5f,   {	1.0f,0.9f,0.8f	},	0.8f,			2.5f		},
-				/*–é		*/	{0.8f,   {	0.02f, 0.03f, 0.05f	},		0.15f,	{	0.03f, 0.04f, 0.06f	},	600.0f,		2200.0f,	0.0f,			{	1.0f,0.9f,0.7f	},	0.5f,   {	0.8f,0.8f,1.0f	},	0.0f,			4.0f		},
+				/*			  t,		ambientColor,		ambientIntensity,	fogColor,				fogStart,	fogEnd,			heightFogDensity,	sunColor,		sunIntensity,	godRayTint,		godRayIntensity, emissiveBoost*/
+				/*–é–¾‚¯	*/	{0.0f,   {	0.03f, 0.05f, 0.07f	},		0.3f,	{	0.05f, 0.07f, 0.12f	},	500.0f,		FAR_CLIP * 2.5f,	0.005f,			{	1.0f,0.95f,0.8f	},	1.0f,   {	1.0f,1.0f,1.0f	},	0.0f,			4.0f		},
+				/*’©		*/	{0.2f,	 {	0.9f, 0.95f, 1.0f	},		1.0f,	{	1.0f, 0.8f, 0.6f	},	300.0f,		FAR_CLIP * 1.0f,	0.02f,			{	1.0f,0.9f,0.7f	},	2.0f,   {	1.0f,1.0f,0.9f	},	1.0f,			2.0f		},
+				/*’‹		*/	{0.4f,   {	0.9f, 0.95f, 1.0f	},		1.2f,	{	0.7f, 0.85f, 1.0f	},	100.0f,		FAR_CLIP * 1.5f,	0.002f,			{	1.0f,1.0f,1.0f	},	5.0f,   {	1.0f,1.0f,1.0f	},	0.5f,			1.0f		},
+				/*—[•û	*/	{0.6f,	 {	1.0f, 0.7f, 0.5f	},		0.7f,	{	0.6f, 0.5f, 0.5f	},	400.0f,		FAR_CLIP * 1.3f,	0.005f,			{	1.0f,0.8f,0.6f	},	2.5f,   {	1.0f,0.9f,0.8f	},	0.8f,			2.5f		},
+				/*–é		*/	{0.8f,   {	0.02f, 0.03f, 0.05f	},		0.15f,	{	0.03f, 0.04f, 0.06f	},	600.0f,		FAR_CLIP * 1.7f,	0.0f,			{	1.0f,0.9f,0.7f	},	0.5f,   {	0.8f,0.8f,1.0f	},	0.0f,			4.0f		},
 			};
 
 			timeOfDayKeys.assign(std::begin(keys), std::end(keys));

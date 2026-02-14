@@ -1,6 +1,9 @@
 #include "LevelBuilders.h"
 #include "app/AppContext.h"
 #include "app/appconfig.h"
+#include "environment/BiomeScatterGenerator.h"
+
+#include <SectorFW/Graphics/ImageLoader.h>
 
 //System
 #include "system/CameraSystem.h"
@@ -23,6 +26,7 @@
 #include "system/TitleSystem.h"
 
 #include "graphics/SpriteAnimationService.h"
+
 
 constexpr float START_CAMERA_PLAYER_DISTANCE = 20.0f;
 
@@ -175,9 +179,21 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 			Math::Vec3f r, u, f;
 			Math::ToBasis<float, Math::LH_ZForward>(camRot, r, u, f);
 
-			perCameraService->SetTarget(pp - f * START_CAMERA_PLAYER_DISTANCE + Math::Vec3f{ 0.0f, 4.0f, 0.0f });
-			Math::Quatf rot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(-20.0f));
+			Math::Quatf rot = Math::Quatf::FromAxisAngle(u, Math::Deg2Rad(55.0f));
 			perCameraService->Rotate(rot);
+
+			camRot = perCameraService->GetRotation();
+			Math::ToBasis<float, Math::LH_ZForward>(camRot, r, u, f);
+
+			rot = Math::Quatf::FromAxisAngle(r, Math::Deg2Rad(-20.0f));
+			perCameraService->Rotate(rot);
+
+			camRot = perCameraService->GetRotation();
+			Math::ToBasis<float, Math::LH_ZForward>(camRot, r, u, f);
+
+			Math::Vec3f backward = Math::Cross({ 0.0f, 1.0f, 0.0f }, r);
+			perCameraService->SetTarget(pp + backward * START_CAMERA_PLAYER_DISTANCE + Math::Vec3f{ 0.0f, 8.0f, 0.0f });
+
 
 			auto& scheduler = pLevel->GetScheduler();
 			scheduler.AddSystem<TitleSystem>(*serviceLocator);
@@ -353,7 +369,19 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			psoDesc.shader = shaderHandle;
 			psoMgr->Add(psoDesc, normalMapPSOHandle);
 
-			ModelAssetHandle modelAssetHandle[5];
+			enum BiomeObjectType {
+				RockA,
+				RockB,
+				RockC,
+				TreeA,
+				YellowFlower,
+				WhiteCosmos,
+				YellowCosmos,
+				LightFlower,
+				BiomeObjectCount
+			};
+
+			ModelAssetHandle modelAssetHandle[BiomeObjectCount];
 
 			auto windCBHandle = ctx.wind->GetBufferHandle();
 			auto footCBHandle = ctx.player->GetFootBufferHandle();
@@ -364,11 +392,15 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_1.gltf";
 			modelDesc.pso = cullDefaultPSOHandle;
 			modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを設定
-			modelDesc.instancesPeak = 1000;
-			modelDesc.viewMax = 100.0f;
+			modelDesc.instancesPeak = 200;
+			modelDesc.viewMax = 50.0f;
 			modelDesc.buildOccluders = false;
 
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[0]);
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[RockA]);
+			modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_2.gltf";
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[RockB]);
+			modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_3.gltf";
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[RockC]);
 
 			modelDesc.BindVS_CBV("WindCB", windCBHandle); // 草揺れ用CBVをバインド
 			modelDesc.BindVS_CBV("GrassFootCB", footCBHandle); // 草揺れ用CBVをバインド
@@ -379,7 +411,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.pso = cullNoneWindEntityPSOHandle;
 			modelDesc.minAreaFrec = 0.001f;
 			modelDesc.pCustomNrmWFunc = WindService::ComputeTreeWeight;
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[1]);
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[TreeA]);
 
 			modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
 			modelDesc.buildOccluders = false;
@@ -388,7 +420,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.pCustomNrmWFunc = WindService::ComputeGrassWeight;
 			modelDesc.pso = cullNoneWindEntityPSOHandle;
 
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[2]);
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[YellowFlower]);
 
 			modelDesc.instancesPeak = 100;
 			modelDesc.viewMax = 50.0f;
@@ -396,13 +428,20 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.pCustomNrmWFunc = WindService::ComputeGrassWeight;
 			modelDesc.minAreaFrec = 0.0004f;
 			modelDesc.path = "assets/model/Stylized/WhiteCosmos.gltf";
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[3]);
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[WhiteCosmos]);
 
 			modelDesc.instancesPeak = 100;
 			modelDesc.viewMax = 50.0f;
 			modelDesc.pso = cullNoneWindEntityPSOHandle;
 			modelDesc.path = "assets/model/Stylized/YellowCosmos.gltf";
-			modelAssetMgr->Add(modelDesc, modelAssetHandle[4]);
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[YellowCosmos]);
+
+			modelDesc.path = "assets/model/Stylized/BlueLightFlower.gltf";
+			modelDesc.instancesPeak = 100;
+			modelDesc.viewMax = 50.0f;
+			modelDesc.pso = cullNoneWindEntityPSOHandle;
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[LightFlower]);
+
 			modelDesc.ClearAdditionalBindings();
 
 			Math::AABB3f modelBounds[_countof(modelAssetHandle)];
@@ -411,7 +450,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				for (int i = 0; i < _countof(modelAssetHandle); ++i)
 				{
 					const auto& modelData = modelAssetMgr->GetNoLock(modelAssetHandle[i]);
-					for(const auto& mesh : modelData.subMeshes)
+					for (const auto& mesh : modelData.subMeshes)
 					{
 						modelBounds[i].expandToInclude(mesh.aabb);
 					}
@@ -473,7 +512,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.viewMax = 1000.0f;
 			modelDesc.pso = normalMapPSOHandle;
 			modelDesc.minAreaFrec = 0.0f;
-			modelDesc.path = "assets/model/Ruins/RuinTower.gltf";
+			modelDesc.path = "assets/model/Ruins/Tower/RuinTower.gltf";
 			modelDesc.buildOccluders = true;
 			existingModel = modelAssetMgr->Add(modelDesc, ruinTowerModelHandle);
 
@@ -490,7 +529,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 
 			ModelAssetHandle ruinBreakTowerModelHandle;
-			modelDesc.path = "assets/model/Ruins/RuinBreakTowerA.gltf";
+			modelDesc.path = "assets/model/Ruins/BreakTower/RuinBreakTowerA.gltf";
 			//中に入るタイプのモデルのオクル―ダーメッシュはまだできていないのでとりあえずfalse
 			modelDesc.buildOccluders = false;
 			existingModel = modelAssetMgr->Add(modelDesc, ruinBreakTowerModelHandle);
@@ -500,69 +539,123 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.instancesPeak = 10;
 			modelDesc.viewMax = 200.0f;
 			modelDesc.pso = normalMapPSOHandle;
-			modelDesc.path = "assets/model/Ruins/RuinStoneA.gltf";
+			modelDesc.path = "assets/model/Ruins/StoneA/RuinStoneA.gltf";
 			modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを
 			modelDesc.buildOccluders = true;
 			modelAssetMgr->Add(modelDesc, ruinStoneModelHandle);
 
-			ModelAssetHandle blueLightFlowerModelHandle;
-			modelDesc.path = "assets/model/Stylized/BlueLightFlower.gltf";
-			modelDesc.instancesPeak = 100;
-			modelDesc.viewMax = 50.0f;
-			modelDesc.pso = cullNoneWindEntityPSOHandle;
-			modelDesc.minAreaFrec = 0.0004f;
-			modelDesc.pCustomNrmWFunc = WindService::ComputeGrassWeight;
+			std::string clusterRockPath[3] = {
+				"assets/model/Static/ClusterRock/ClusterRockA.gltf",
+				"assets/model/Static/ClusterRock/ClusterRockB.gltf",
+				"assets/model/Static/ClusterRock/ClusterRockC.gltf",
+			};
+
+			ModelAssetHandle clusterRockModelHandle[3];
+
+			modelDesc.instancesPeak = 5;
+			modelDesc.buildOccluders = true;
+			for (int i = 0; i < 3; ++i)
+			{
+				modelDesc.path = clusterRockPath[i];
+				modelAssetMgr->Add(modelDesc, clusterRockModelHandle[i]);
+			}
+
+			std::string landmarkCrystalPath[3] = {
+				"assets/model/landmark/crystals/hugeCrystal.gltf",
+				"assets/model/landmark/crystals/largeCrystal.gltf",
+				"assets/model/landmark/crystals/bigCrystal.gltf",
+			};
+
+			ModelAssetHandle landmarkCrystalModelHandle[3];
+			modelDesc.instancesPeak = 10;
+			modelDesc.viewMax = 200.0f;
+			modelDesc.pso = normalMapPSOHandle;
+			modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを
 			modelDesc.buildOccluders = false;
-			modelAssetMgr->Add(modelDesc, blueLightFlowerModelHandle);
+			for (int i = 0; i < 3; ++i)
+			{
+				modelDesc.path = landmarkCrystalPath[i];
+				modelAssetMgr->Add(modelDesc, landmarkCrystalModelHandle[i]);
+			}
 
 			auto ps = serviceLocator->Get<Physics::PhysicsService>();
+			auto pointLightService = serviceLocator->Get<Graphics::PointLightService>();
 
-			std::function<Physics::ShapeHandle(Math::Vec3f)> makeShapeHandleFunc[5] =
-			{
-				[&](Math::Vec3f scale)
+			std::function<Physics::ShapeHandle(Math::Vec3f)> makeShapeHandleFunc[BiomeObjectCount] = { nullptr };
+
+			makeShapeHandleFunc[RockA] = [&](Math::Vec3f scale)
 				{
+					// scaleを10分の1単位で丸め込む
+					// 既存のコリジョンデータを流用するため
+					scale *= 10.0f;
+					scale.x = std::floor(scale.x) / 10.0f;
+					scale.y = std::floor(scale.y) / 10.0f;
+					scale.z = std::floor(scale.z) / 10.0f;
+
 					return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_1.chullbin", true, scale);
-				},
-				[&](Math::Vec3f scale)
+				};
+			makeShapeHandleFunc[RockB] = [&](Math::Vec3f scale)
+				{
+					scale *= 10.0f;
+					scale.x = std::floor(scale.x) / 10.0f;
+					scale.y = std::floor(scale.y) / 10.0f;
+					scale.z = std::floor(scale.z) / 10.0f;
+					return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_2.chullbin", true, scale);
+				};
+			makeShapeHandleFunc[RockC] = [&](Math::Vec3f scale)
+				{
+					scale *= 10.0f;
+					scale.x = std::floor(scale.x) / 10.0f;
+					scale.y = std::floor(scale.y) / 10.0f;
+					scale.z = std::floor(scale.z) / 10.0f;
+					return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_3.chullbin", true, scale);
+				};
+
+			makeShapeHandleFunc[TreeA] = [&](Math::Vec3f scale)
 				{
 					Physics::ShapeCreateDesc shapeDesc;
 					shapeDesc.shape = Physics::CapsuleDesc{ 10.0f,0.5f };
 					shapeDesc.localOffset.y = 10.0f;
 					return ps->MakeShape(shapeDesc);
-				},
-				nullptr,
-				nullptr,
-				nullptr
-			};
+				};
 
+			Graphics::PointLightDesc(*pMakePointLightDescFunc[BiomeObjectCount])(Math::Vec3f) = { nullptr };
+			pMakePointLightDescFunc[LightFlower] = [](Math::Vec3f location) {
+				Graphics::PointLightDesc plDesc;
+				plDesc.positionWS = location + Math::Vec3f(0.0f, 3.0f, 0.0f); // 少し上にずらす
+				plDesc.color = { 0.2f,0.2f,1.0f }; // 青色
+				plDesc.intensity = 1.0f;
+				plDesc.range = 10.0f;
+				plDesc.castsShadow = false;
+				return plDesc;
+				};
+
+			bool enableOutline[BiomeObjectCount] = { false };
+			enableOutline[RockA] = true;
+			enableOutline[RockB] = true;
+			enableOutline[RockC] = true;
+			enableOutline[TreeA] = true;
 
 			clock_t end = clock();
 
 			const double time = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
 			printf("create entity time %lf[ms]\n", time);
 
-			std::random_device rd;
-			std::mt19937_64 rng(rd());
 
-			// 例: A=50%, B=30%, C=20% のつもりで重みを設定（整数でも実数でもOK）
-			std::array<int, 5> weights{ 2, 8, 5, 5, 5 };
-			std::discrete_distribution<int> dist(weights.begin(), weights.end());
-
-			float modelScaleBase[5] = { 2.5f,3.5f,1.5f, 1.5f,1.5f };
-			int modelScaleRange[5] = { 150,25,25, 25,25 };
-			int modelRotRange[5] = { 360,360,360, 360,360 };
-			bool enableOutline[5] = { true,true,false,false,false };
-
+			Math::AABB3f grassBounds;
 			std::vector<Math::Vec2f> grassAnchor;
 			{
 				auto data = modelAssetMgr->Get(grassModelHandle);
-				auto aabb = data.ref().subMeshes[0].aabb;
+				for(auto& mesh : data.ref().subMeshes)
+				{
+					grassBounds.expandToInclude(mesh.aabb);
+				}
 				grassAnchor.reserve(4);
 				float bias = 0.8f;
-				grassAnchor.push_back({ aabb.lb.x * bias, aabb.lb.z * bias });
-				grassAnchor.push_back({ aabb.lb.x * bias, aabb.ub.z * bias });
-				grassAnchor.push_back({ aabb.ub.x * bias, aabb.lb.z * bias });
-				grassAnchor.push_back({ aabb.ub.x * bias, aabb.ub.z * bias });
+				grassAnchor.push_back({ grassBounds.lb.x * bias, grassBounds.lb.z * bias });
+				grassAnchor.push_back({ grassBounds.lb.x * bias, grassBounds.ub.z * bias });
+				grassAnchor.push_back({ grassBounds.ub.x * bias, grassBounds.lb.z * bias });
+				grassAnchor.push_back({ grassBounds.ub.x * bias, grassBounds.ub.z * bias });
 			}
 
 			const auto& tp = params.terrainParams;
@@ -614,30 +707,263 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						location.y -= w * 2.0f;   // 最大で 2 下げる（0..2）
 						//scaleY *= (1.0f - w * 0.8f); // 最大で80%縮小
 
+						Math::AABB3f boundsWS = grassBounds;
+						boundsWS *= Math::Vec3f(scaleXZ, scaleY, scaleXZ);
+						boundsWS += location;
+
 						auto rot = Math::QuatFromBasis(pose.right, pose.up, pose.forward);
-						auto modelComp = CModel{ grassModelHandle };
 						rot.KeepTwist(pose.up);
-						auto id = levelSession.AddEntity(
+						auto id = levelSession.AddStaticBoundsEntity(
+							boundsWS,
 							CTransform{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
-							std::move(modelComp),
-							CColor{ {1.0f, 1.0f, 1.0f, 1.0f} }
+							CModel{ grassModelHandle },
+							CColor{ {1.0f,1.0f,1.0f,1.0f} }
 						);
 					}
 				}
 			}
 
+
+			// バイオーム散布用データ準備
+			//=====================================================================================
+
+			enum EBiomeType : uint16_t {
+				Biome_Forest = 0,
+				Biome_Grassland = 1,
+			};
+
+			BiomeScatterGenerator biomeGen;
+
+			ScatterInputs scatterInputs;
+			scatterInputs.worldSize = {
+				tp.cellsX * tp.cellSize,
+				tp.cellsZ * tp.cellSize
+			};
+
+			// 地表のテクスチャ（スプラットマップ）
+			auto& groundRgba = scatterInputs.groundRgba;
+			groundRgba.data = (Rgba8*)cpuSplatImage.bytes.data();
+			groundRgba.w = cpuSplatImage.width;
+			groundRgba.h = cpuSplatImage.height;
+			groundRgba.stride = cpuSplatImage.stride / sizeof(Rgba8);
+
+			// 湿り気マップ
+			auto wetnessImg = Graphics::LoadImageFromFile("assets/texture/biome/wetness.png", 1, false);
+			auto& wetnessRgba = scatterInputs.wetness;
+			wetnessRgba.data = (uint8_t*)wetnessImg.pixels.get();
+			wetnessRgba.w = wetnessImg.width;
+			wetnessRgba.h = wetnessImg.height;
+			wetnessRgba.stride = wetnessImg.width * wetnessImg.desiredChannels;
+
+			// 草の生えにくい場所マップ
+			auto noVegetationImg = Graphics::LoadImageFromFile("assets/texture/biome/noVegetation.png", 1, false);
+			auto& noVegetationRgba = scatterInputs.noVegetation;
+			noVegetationRgba.data = (uint8_t*)noVegetationImg.pixels.get();
+			noVegetationRgba.w = noVegetationImg.width;
+			noVegetationRgba.h = noVegetationImg.height;
+			noVegetationRgba.stride = noVegetationImg.width * noVegetationImg.desiredChannels;
+
+			// バイオーム定義(BiomeType参照)
+			uint16_t biomeData[4][4] = {
+				{0, 0, 0, 0},
+				{0, 1, 0, 0},
+				{0, 1, 1, 0},
+				{0, 0, 1, 0}
+			};
+
+			scatterInputs.biomeId.data = &biomeData[0][0];
+			scatterInputs.biomeId.w = 4;
+			scatterInputs.biomeId.h = 4;
+			scatterInputs.biomeId.stride = scatterInputs.biomeId.w;
+
+			// 地形サンプリング関数
+			auto pSamplerHeight = [](float x, float z, void* user) -> float {
+				auto terrain = static_cast<const Graphics::TerrainClustered*>(user);
+				float height = 0.0f;
+				terrain->SampleHeightNormalBilinear(x, z, height);
+				return height;
+				};
+			scatterInputs.sampleHeight = pSamplerHeight;
+
+			// 傾斜角サンプリング関数
+			auto pSamplerSlopeDeg = [](float x, float z, void* user) -> float {
+				auto terrain = static_cast<const Graphics::TerrainClustered*>(user);
+				float height = 0.0f;
+				Math::Vec3f nrm;
+				terrain->SampleHeightNormalBilinear(x, z, height, &nrm);
+				constexpr Math::Vec3f up = { 0.0f,1.0f,0.0f };
+				return Math::Rad2Deg(std::acos(Math::Dot(nrm, up)));
+				};
+			scatterInputs.sampleSlopeDeg = pSamplerSlopeDeg;
+
+			scatterInputs.heightUser = (void*)&terrain;
+
+			scatterInputs.globalSeed = 12345;
+
+			biomeGen.SetInputs(scatterInputs);
+
+			ScatterConfig scatterConfig;
+			scatterConfig.candidateCellSize = 4.0f;
+			scatterConfig.noVegRejectThreshold = 0.5f;
+			scatterConfig.maxInstances = ECS::MAX_ENTITY_NUM;
+			biomeGen.SetConfig(scatterConfig);
+
+
+			// Forest Biome
+			BiomeParams forest;
+			forest.biomeId = Biome_Forest;
+			forest.baseDensityPerSquareMeter = 0.04f;
+			{
+				BranchGroup trees;
+				trees.spawnProbability = 0.25f;
+				trees.maxSlopeDeg = 25.0f;
+				trees.scaleMin = 3.3f; trees.scaleMax = 4.0f;
+				trees.wGrass = 1.2f; trees.wSnow = 0.6f;
+				trees.models = { {TreeA, 1.0f} }; //モデルのバリエーションを増やす場合はここに書く
+
+				BranchGroup rocks;
+				rocks.spawnProbability = 0.05f;
+				rocks.maxSlopeDeg = 60.0f;
+				rocks.scaleMin = 2.0f; rocks.scaleMax = 3.5f;
+				rocks.wRock = 1.5f; rocks.wGrass = 0.2f;
+				rocks.models = { {RockA, 1.0f},{RockB, 1.0f},{RockC, 1.0f} };
+
+				forest.branches = { trees, rocks };
+			}
+
+			// Grassland Biome
+			BiomeParams grassLand;
+			grassLand.biomeId = Biome_Grassland;
+			grassLand.baseDensityPerSquareMeter = 0.04f;
+			{
+
+				BranchGroup trees;
+				trees.spawnProbability = 0.02f;
+				trees.maxSlopeDeg = 25.0f;
+				trees.scaleMin = 3.3f; trees.scaleMax = 4.0f;
+				trees.wGrass = 1.2f; trees.wSnow = 0.6f;
+				trees.models = { {TreeA, 1.0f} }; //モデルのバリエーションを増やす場合はここに書く
+
+				BranchGroup rocks;
+				rocks.spawnProbability = 0.05f;
+				rocks.maxSlopeDeg = 60.0f;
+				rocks.scaleMin = 2.0f; rocks.scaleMax = 3.5f;
+				rocks.wRock = 1.5f; rocks.wGrass = 0.2f;
+				rocks.models = { {RockA, 1.0f},{RockB, 1.0f},{RockC, 1.0f} };
+
+				BranchGroup flowers;
+				flowers.spawnProbability = 0.3f;
+				flowers.maxSlopeDeg = 30.0f;
+				flowers.scaleMin = 1.0f; flowers.scaleMax = 1.5f;
+				flowers.wGrass = 1.0f; flowers.wSnow = 0.6f;
+				flowers.models = { {YellowFlower, 0.5f}, {WhiteCosmos, 0.3f}, {YellowCosmos, 0.2f} };
+
+				grassLand.branches = { trees, rocks, flowers };
+			}
+
+			std::vector<BiomeParams> biomes = { forest, grassLand };
+			biomeGen.SetBiomes(biomes);
+
+			auto scatterInstance = biomeGen.GenerateAll();
+
+
+			// バイオーム散布Entity生成
+			for (auto& inst : scatterInstance)
+			{
+				uint32_t modelIdx = inst.model;
+				CModel modelComp = CModel{ modelAssetHandle[modelIdx] };
+
+				modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				modelComp.flags |= enableOutline[modelIdx] ? (uint16_t)EModelFlag::Outline : (uint16_t)EModelFlag::None;
+
+				float scale = inst.uniformScale;
+				Math::Vec3f location = inst.positionWS;
+				Math::Quatf rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, inst.yaw);
+
+				SFW::SpatialChunk::Bounds3f boundsWS = modelBounds[modelIdx];
+				boundsWS *= scale; // スケール適用
+				boundsWS += location; // ワールド位置に移動
+
+				if (makeShapeHandleFunc[modelIdx] != nullptr)
+				{
+					auto chunk = pLevel->GetChunk(location);
+					auto key = chunk.value()->GetNodeKey();
+
+					Physics::CPhyBody staticBody{};
+					staticBody.type = Physics::BodyType::Static; // staticにする
+					staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
+
+
+					auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
+#ifdef _ENABLE_IMGUI
+					auto shapeDims = ps->GetShapeDims(shapeHandle);
+#endif
+
+					std::optional<ECS::EntityID> id;
+					if(pMakePointLightDescFunc[modelIdx] != nullptr)
+					{
+						auto plDesc = pMakePointLightDescFunc[modelIdx](location);
+						auto plHandle = pointLightService->Create(plDesc);
+
+						// 静的境界エンティティとして登録
+						id = levelSession.AddStaticBoundsEntity(
+							boundsWS,
+							CTransform{ inst.positionWS, rot, Math::Vec3f(scale,scale,scale) },
+							modelComp,
+							CColor{ {inst.tint, 1.0f} },
+							staticBody,
+							CPointLight{ plHandle }
+#ifdef _ENABLE_IMGUI
+							,shapeDims.value()
+#endif
+						);
+					}
+					else {
+						// 静的境界エンティティとして登録
+						id = levelSession.AddStaticBoundsEntity(
+							boundsWS,
+							CTransform{ inst.positionWS, rot, Math::Vec3f(scale,scale,scale) },
+							modelComp,
+							CColor{ {inst.tint, 1.0f} },
+							staticBody
+#ifdef _ENABLE_IMGUI
+							,shapeDims.value()
+#endif
+						);
+					}
+					if (id) {
+						ps->EnqueueCreateIntent(id.value(), shapeHandle, key);
+					}
+				}
+				else
+				{
+					if (pMakePointLightDescFunc[modelIdx] != nullptr)
+					{
+						auto plDesc = pMakePointLightDescFunc[modelIdx](location);
+						auto plHandle = pointLightService->Create(plDesc);
+
+						levelSession.AddStaticBoundsEntity(
+							boundsWS,
+							CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
+							modelComp,
+							CColor{ {inst.tint, 1.0f} },
+							CPointLight{ plHandle }
+						);
+					}
+					else {
+						levelSession.AddStaticBoundsEntity(
+							boundsWS,
+							CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
+							modelComp,
+							CColor{ {inst.tint, 1.0f} }
+						);
+					}
+				}
+			}
+
+
 			auto playerService = serviceLocator->Get<PlayerService>();
 			Math::Vec3f playerStartPos = playerService->GetPlayerPosition();
-
-			auto perCameraService = serviceLocator->Get<Graphics::I3DPerCameraService>();
-			auto camRot = perCameraService->GetRotation();
-			Math::Vec3f camR, camU, camF;
-			Math::ToBasis<float, Math::LH_ZForward>(camRot, camR, camU, camF);
-			Math::Vec2f camDirXZ = Math::Vec2f{ camF.x, camF.z }.normalized();
-
-			auto camFocusDis = perCameraService->GetFocusDistance();
-			auto camFOVHalf = perCameraService->GetFOV() / 2.0f;
-
 			auto getTerrainLocation = [&](float u, float v) {
 
 				Math::Vec3f location = { tp.cellsX * tp.cellSize * u, 0.0f, tp.cellsZ * tp.cellSize * v };
@@ -645,127 +971,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				return location;
 				};
 
-			// Entity生成
-			std::uniform_int_distribution<uint32_t> distX(0, (std::numeric_limits< uint32_t>::max)());
-			std::uniform_int_distribution<uint32_t> distZ(0, (std::numeric_limits< uint32_t>::max)());
-
-
-			for (int j = 0; j < (100 * terrainRank); ++j) {
-				for (int k = 0; k < (100 * terrainRank); ++k) {
-					for (int n = 0; n < 1; ++n) {
-						float u = distX(rng) / float((std::numeric_limits< uint32_t>::max)());
-						float v = distZ(rng) / float((std::numeric_limits< uint32_t>::max)());
-						Math::Vec3f location = getTerrainLocation(u, v);
-						//Math::Vec3f location = { 30.0f + j * 10.0f,0.0f, 30.0f + k * 10.0f};
-
-						int modelIdx = dist(rng);
-
-						Math::Vec2f dirXZ = {
-							 playerStartPos.x - location.x,
-							 playerStartPos.z - location.z
-						};
-
-						// プレイヤー近くアウトライン有効モデルが選ばれたらやり直し
-						const auto d2 = std::powf(START_CAMERA_PLAYER_DISTANCE + camFocusDis, 2.0f);
-						if (dirXZ.lengthSquared() < d2) {
-
-							dirXZ = dirXZ.normalized();
-							float cosAngle = dirXZ.dot(camDirXZ);
-							float angle = std::acosf(cosAngle);
-							if (angle < camFOVHalf)
-							{
-								while (enableOutline[modelIdx])
-								{
-									modelIdx = dist(rng);
-								}
-							}
-						}
-
-						float scale = modelScaleBase[modelIdx] + float(rand() % modelScaleRange[modelIdx] - modelScaleRange[modelIdx] / 2) / 100.0f;
-						//float scale = 1.0f;
-						auto rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, Math::Deg2Rad(float(rand() % modelRotRange[modelIdx])));
-						auto modelComp = CModel{ modelAssetHandle[modelIdx] };
-						modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
-						modelComp.flags |= enableOutline[modelIdx] ? (uint16_t)EModelFlag::Outline : (uint16_t)EModelFlag::None;
-
-						SFW::SpatialChunk::Bounds3f boundsWS = modelBounds[modelIdx];
-						boundsWS *= scale; // スケール適用
-						boundsWS += location; // ワールド位置に移動
-
-						if (makeShapeHandleFunc[modelIdx] != nullptr)
-						{
-							auto chunk = pLevel->GetChunk(location);
-							auto key = chunk.value()->GetNodeKey();
-							CSpatialMotionTag tag{};
-							tag.handle = { key, chunk.value() };
-
-							Physics::CPhyBody staticBody{};
-							staticBody.type = Physics::BodyType::Static; // staticにする
-							staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
-							auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
-#ifdef _ENABLE_IMGUI
-							auto shapeDims = ps->GetShapeDims(shapeHandle);
-#endif
-							// 静的境界エンティティとして登録
-							auto id = levelSession.AddStaticBoundsEntity(
-								boundsWS,
-								CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
-								modelComp,
-								CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
-								staticBody,
-								//Physics::PhysicsInterpolation(
-								//	location, // 初期位置
-								//	rot // 初期回転
-								//),
-#ifdef _ENABLE_IMGUI
-								shapeDims.value(),
-#endif
-								tag
-							);
-							if (id) {
-								ps->EnqueueCreateIntent(id.value(), shapeHandle, key);
-							}
-						}
-						else
-						{
-							levelSession.AddStaticBoundsEntity(
-								boundsWS,
-								CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
-								modelComp,
-								CColor{ {1.0f, 1.0f, 1.0f, 1.0f} }
-							);
-						}
-					}
-				}
-			}
-
-			auto pointLightService = serviceLocator->Get<Graphics::PointLightService>();
-
-			// 点光源の花を生成
-			for (int j = 0; j < 50; ++j) {
-				for (int k = 0; k < 50; ++k) {
-					for (int n = 0; n < 1; ++n) {
-						float u = distX(rng) / float((std::numeric_limits< uint32_t>::max)());
-						float v = distZ(rng) / float((std::numeric_limits< uint32_t>::max)());
-						Math::Vec3f location = getTerrainLocation(u, v);
-
-						Graphics::PointLightDesc plDesc;
-						plDesc.positionWS = location + Math::Vec3f(0.0f, 3.0f, 0.0f); // 少し上にずらす
-						plDesc.color = { 0.2f,0.2f,1.0f }; // 青色
-						plDesc.intensity = 1.0f;
-						plDesc.range = 10.0f;
-						plDesc.castsShadow = false;
-						auto plHandle = pointLightService->Create(plDesc);
-
-						levelSession.AddEntity(
-							CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
-							CModel{ blueLightFlowerModelHandle },
-							CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
-							CPointLight{ plHandle }
-						);
-					}
-				}
-			}
 
 			//プレイヤー生成
 			{
@@ -782,7 +987,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto id = levelSession.AddGlobalEntity(
 					CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
 					modelComp,
-					CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
+					CColor{ {1.0f,1.0f,1.0f,1.0f} },
 					PlayerComponent{}
 #ifdef _ENABLE_IMGUI
 					, playerDims.value()
@@ -824,103 +1029,82 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				}
 			}
 
+			auto addGlobalEntityWithBody = [&](const Math::Vec2f posUV, float offsetY, Graphics::ModelAssetHandle modelHandle, Physics::ShapeHandle shapeHandle, Math::Quatf rot = { 0.0f,0.0f,0.0f,1.0f }, Math::Vec3f scale = { 1.0f,1.0f,1.0f })
+				{
+					auto location = getTerrainLocation(posUV.x, posUV.y);
+					location.y += offsetY;
+
+#ifdef _ENABLE_IMGUI
+					auto shapeDims = ps->GetShapeDims(shapeHandle);
+#endif
+					CModel modelComp{ modelHandle };
+					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+
+					Physics::CPhyBody staticBody{};
+					staticBody.type = Physics::BodyType::Static; // staticにする
+					staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
+
+					auto tf = CTransform{ location , rot , scale };
+
+					auto id = levelSession.AddGlobalEntity(
+						tf,
+						modelComp,
+						CColor{ {1.0f,1.0f,1.0f,1.0f} },
+						staticBody
+#ifdef _ENABLE_IMGUI
+						, shapeDims.value()
+#endif
+					);
+					if (id) {
+						// チャンクに属さないので直接ボディ作成コマンドを発行
+						auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shapeHandle);
+						ps->CreateBody(bodyCmd);
+					}
+
+					return id;
+				};
+
 			// 塔生成
 			{
-				Math::Vec3f location = getTerrainLocation(0.7f, 0.7f);
-				location.y -= 10.0f; // 少し埋める
-
-				auto shape = ps->MakeMesh("generated/meshshape/Ruins/RuinTower.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-#ifdef _ENABLE_IMGUI
-				auto shapeDims = ps->GetShapeDims(shape);
-#endif
-				CModel modelComp{ ruinTowerModelHandle };
-				modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
-
-				Physics::CPhyBody staticBody{};
-				staticBody.type = Physics::BodyType::Static; // staticにする
-				staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
-
-				auto tf = CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } };
-
-				auto id = levelSession.AddGlobalEntity(
-					tf,
-					modelComp,
-					CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
-					staticBody
-#ifdef _ENABLE_IMGUI
-					, shapeDims.value()
-#endif
-				);
-				if (id) {
-					// チャンクに属さないので直接ボディ作成コマンドを発行
-					auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shape);
-					ps->CreateBody(bodyCmd);
-				}
+				auto shape = ps->MakeMesh("generated/meshshape/Ruins/Tower/RuinTower.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				addGlobalEntityWithBody({ 0.7f, 0.7f }, -10.0f, ruinTowerModelHandle, shape);
 			}
 
 			// 壊れた塔生成
 			{
-				Math::Vec3f location = getTerrainLocation(0.4f, 0.62f);
-				location.y -= 4.0f; // 少し埋める
-
-				auto shape = ps->MakeMesh("generated/meshshape/Ruins/RuinBreakTowerA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-#ifdef _ENABLE_IMGUI
-				auto shapeDims = ps->GetShapeDims(shape);
-#endif
-				CModel modelComp{ ruinBreakTowerModelHandle };
-				modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
-
-				Physics::CPhyBody staticBody{};
-				staticBody.type = Physics::BodyType::Static; // staticにする
-				staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
-
-				auto tf = CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } };
-
-				auto id = levelSession.AddGlobalEntity(
-					tf,
-					modelComp,
-					CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
-					staticBody
-#ifdef _ENABLE_IMGUI
-					, shapeDims.value()
-#endif
-				);
-				if (id) {
-					// チャンクに属さないので直接ボディ作成コマンドを発行
-					auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shape);
-					ps->CreateBody(bodyCmd);
-				}
+				auto shape = ps->MakeMesh("generated/meshshape/Ruins/BreakTower/RuinBreakTowerA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				addGlobalEntityWithBody({ 0.4f, 0.62f }, -4.0f, ruinBreakTowerModelHandle, shape);
 			}
 
 			//石碑生成
 			{
-				Math::Vec3f location = getTerrainLocation(0.3f, 0.3f);
-				location.y -= 4.0f; // 少し埋める
+				auto shape = ps->MakeConvexCompound("generated/convex/Ruins/StoneA/RuinStoneA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				addGlobalEntityWithBody({ 0.35f, 0.26f }, -4.0f, ruinStoneModelHandle, shape);
+			}
 
-				auto shape = ps->MakeConvexCompound("generated/convex/Ruins/RuinStoneA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-#ifdef _ENABLE_IMGUI
-				auto shapeDims = ps->GetShapeDims(shape);
-#endif
-				CModel modelComp{ ruinStoneModelHandle };
-				modelComp.flags = (uint16_t)EModelFlag::CastShadow;
-				Physics::CPhyBody staticBody{};
-				staticBody.type = Physics::BodyType::Static; // staticにする
-				staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
-				auto tf = CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } };
-				auto id = levelSession.AddGlobalEntity(
-					tf,
-					modelComp,
-					CColor{ {1.0f, 1.0f, 1.0f, 1.0f} },
-					staticBody
-#ifdef _ENABLE_IMGUI
-					, shapeDims.value()
-#endif
+			//岩クラスター生成
+			{
+				auto shape = ps->MakeConvexCompound("generated/convex/Static/ClusterRock/ClusterRockA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				addGlobalEntityWithBody({ 0.28f, 0.24f }, 5.0f, clusterRockModelHandle[0], shape, Math::Quatf::FromEuler(0.0f, Math::Deg2Rad(90.0f), 0.0f));
+
+				shape = ps->MakeConvexCompound("generated/convex/Static/ClusterRock/ClusterRockB.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				addGlobalEntityWithBody({ 0.5f, 0.2f }, 5.0f, clusterRockModelHandle[1], shape, Math::Quatf::FromEuler(0.0f, Math::Deg2Rad(40.0f), 0.0f));
+			}
+
+			//ランドマーククリスタル生成
+			{
+				auto shape = ps->MakeConvexCompound("generated/convex/landmark/crystals/hugeCrystal.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				addGlobalEntityWithBody({ 0.8f, 0.8f }, -10.0f, landmarkCrystalModelHandle[0], shape);
+
+				Graphics::PointLightDesc plDesc;
+				plDesc.positionWS = getTerrainLocation(0.8f, 0.8f) + Math::Vec3f{ 0.0f,100.0f,0.0 };
+				plDesc.intensity = 10.0f;
+				plDesc.range = 300.0f;
+				plDesc.color = { 1.0f, 0.2f, 1.0f };
+				auto plHandle = pointLightService->Create(plDesc);
+				levelSession.AddGlobalEntity(
+					CPointLight{ plHandle }
 				);
-				if (id) {
-					// チャンクに属さないので直接ボディ作成コマンドを発行
-					auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shape);
-					ps->CreateBody(bodyCmd);
-				}
 			}
 
 			//蛍の領域生成
@@ -939,7 +1123,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			//葉っぱの領域生成
 			{
-				Math::Vec3f location = getTerrainLocation(0.42f, 0.54f);
+				Math::Vec3f location = getTerrainLocation(0.26f, 0.2f);
 				//location.y += 5.0f; // 少し浮かせる
 
 				CLeafVolume leafVolume;

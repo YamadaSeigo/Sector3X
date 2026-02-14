@@ -84,6 +84,8 @@ int main(void)
 	Graphics::DX11::PerCamera3DService dx11PerCameraService(bufferMgr, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
 	static Graphics::I3DPerCameraService* perCameraService = &dx11PerCameraService;
 
+	perCameraService->SetFarClip(1500.0f); // 遠くのオブジェクトも描画するためにファークリップを広げる
+
 	Graphics::DX11::OrtCamera3DService dx11OrtCameraService(bufferMgr, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
 	Graphics::I3DOrtCameraService* ortCameraService = &dx11OrtCameraService;
 
@@ -108,7 +110,7 @@ int main(void)
 	PlayerService playerService(bufferMgr);
 	{
 		const auto& tp = terrainRes.params;
-		Math::Vec3f playerLocation = { tp.cellsX * tp.cellSize * 0.45f, 0.0f, tp.cellsZ * tp.cellSize * 0.55f };
+		Math::Vec3f playerLocation = { tp.cellsX * tp.cellSize * 0.26f, 0.0f, tp.cellsZ * tp.cellSize * 0.19f };
 		terrainRes.terrain->SampleHeightNormalBilinear(playerLocation.x, playerLocation.z, playerLocation.y);
 
 		playerLocation.y += 2.0f; //少し浮かせる

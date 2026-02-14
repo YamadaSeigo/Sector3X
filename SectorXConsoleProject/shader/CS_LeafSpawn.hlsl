@@ -103,6 +103,19 @@ float3 LocalToWorld(float3 local, float3 right, float3 up, float3 fwd)
     return right * local.x + up * local.y + fwd * local.z;
 }
 
+float3 RandomUnitVector(uint s)
+{
+    // 0..1
+    float u = Hash01(s + 500u);
+    float v = Hash01(s + 501u);
+
+    float z = 1.0 - 2.0 * u; // -1..1
+    float a = 6.2831853 * v; // 0..2pi
+    float r = sqrt(saturate(1.0 - z * z));
+    return float3(r * cos(a), z, r * sin(a));
+}
+
+
 [numthreads(64, 1, 1)]
 void main(uint3 tid : SV_DispatchThreadID)
 {
@@ -204,6 +217,11 @@ void main(uint3 tid : SV_DispatchThreadID)
 
     p.tint = tint;
     p.life0 = p.life; // 生成直後の寿命を保存
+    
+    // 擬似法線：少し上向きに寄せたいならブレンド
+    float3 n = RandomUnitVector(seed + 900u);
+    n = normalize(lerp(n, float3(0, 1, 0), 0.35)); // 0.0で完全ランダム, 1.0で上向き
+    p.normalOct = PackNormalOct(n);
 
 #ifdef DEBUG_HIT_DEPTH
     p.debugHit = 0;

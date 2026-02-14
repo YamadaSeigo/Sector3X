@@ -72,6 +72,9 @@
     <ClCompile Include="src\graphics\TiledDeferredRender.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\environment\BiomeScatterGenerator.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\VS_ClipUV.hlsl">
@@ -386,6 +389,9 @@
     </ClInclude>
     <ClInclude Include="src\graphics\TiledDeferredRender.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\environment\BiomeScatterGenerator.h">
+      <Filter>Environment</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
