@@ -23,9 +23,11 @@
 #endif //_DEBUG
 
  // ログにファイル名、行番号、関数名を表示する場合は以下のいずれかを有効化
+//#define LOG_SHOW_TIME
+//#define LOG_SHOW_PEFIX
 //#define LOG_SHOW_FILE
 //#define LOG_SHOW_LINE
-#define LOG_SHOW_FUNC
+//#define LOG_SHOW_FUNC
 
 // ログに詳細なタイムスタンプ（ミリ秒まで）を表示する場合は以下を有効化
 //#define LOG_SHOW_DETAIL_TIME
@@ -127,8 +129,12 @@ namespace SFW {
 			SetConsoleColor(level);
 
 			std::cout
+#ifdef LOG_SHOW_TIME
 				<< "[" << GetCurrentTimestamp() << "] "
+#endif
+#ifdef LOG_SHOW_PEFIX
 				<< "[" << prefix << "] "
+#endif
 #if defined(LOG_SHOW_FILE) || defined(LOG_SHOW_LINE) || defined(LOG_SHOW_FUNC)
 				<< "["
 #ifdef LOG_SHOW_FILE

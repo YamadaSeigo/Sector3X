@@ -1183,7 +1183,7 @@ void ConvexHullShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AA
 	new (&ioContext) CHSGetTrianglesContext(Mat44::sRotationTranslation(inRotation, inPositionCOM) * Mat44::sScale(inScale), ScaleHelpers::IsInsideOut(inScale));
 }
 
-int ConvexHullShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int ConvexHullShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	static_assert(cGetTrianglesMinTrianglesRequested >= 12, "cGetTrianglesMinTrianglesRequested is too small");
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
@@ -1243,8 +1243,8 @@ int ConvexHullShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxT
 	// Store materials
 	if (outMaterials != nullptr)
 	{
-		const PhysicsMaterial* material = GetMaterial();
-		for (const PhysicsMaterial** m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
+		const Material* material = GetMaterial();
+		for (const Material** m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
 			*m = material;
 	}
 

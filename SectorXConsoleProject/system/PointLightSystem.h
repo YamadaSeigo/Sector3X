@@ -14,14 +14,15 @@ class PointLightSystem : public ITypeSystem<
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Read<CPointLight>
+		Read<CPointLight>,
+	    Read<CTransform>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
 		Graphics::PointLightService,
 		Graphics::I3DPerCameraService
 	>>{
-	using Accessor = ComponentAccessor<Read<CPointLight>>;
+	using Accessor = ComponentAccessor<Read<CPointLight>, Read<CTransform>>;
 public:
 
 	//指定したサービスを関数の引数として受け取る
@@ -36,18 +37,21 @@ public:
 		this->ForEachFrustumNearChunkWithAccessor<IsParallel{ false }>([&](Accessor& accessor, size_t entityCount)
 			{
 				auto pointLights = accessor.Get<Read<CPointLight>>();
+				auto transforms = accessor.Get<Read<CTransform>>();
 
 				auto readLock = pointLightService->AcquireReadLock();
 
 				for(auto i = 0; i < entityCount; ++i)
 				{
 					auto& light = pointLights.value()[i];
+					Math::Vec3f pos = { transforms.value().px()[i], transforms.value().py()[i],transforms.value().pz()[i] };
+
 					auto desc = pointLightService->GetNoLock(light.handle);
 
 					//フラスタムに当たっていなければスキップ
-					if (!fru.IntersectsSphere(desc.positionWS, desc.range)) continue;
+					if (!fru.IntersectsSphere(pos + desc.offsetWS, desc.range)) continue;
 
-					pointLightService->PushShowHandle(light.handle);
+					pointLightService->PushShowHandle(light.handle, pos);
 				}
 
 			}, partition, fru, camPos);

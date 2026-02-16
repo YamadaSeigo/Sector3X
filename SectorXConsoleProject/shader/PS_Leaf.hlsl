@@ -23,8 +23,8 @@ PS_PRBOutput main(VSOut i)
 
     float3 leafCol = i.col * texCol.rgb;
 
-    output.AlbedoAO = float4(leafCol, 1);
-    output.EmissionMetallic = float4(0, 0, 0, 1);
+    output.AlbedoAO = float4(leafCol, 1.0f);
+    output.EmissionMetallic = float4(0, 0, 0, 0);
 
     float3 n = normalize(i.nrmWS);
     output.NormalRoughness = float4(n * 0.5 + 0.5, 1.0); // roughness=1.0 —á

@@ -19,7 +19,7 @@ public:
 							TaperedCylinderShapeSettings() = default;
 
 	/// Create a tapered cylinder centered around the origin with bottom at (0, -inHalfHeightOfTaperedCylinder, 0) with radius inBottomRadius and top at (0, inHalfHeightOfTaperedCylinder, 0) with radius inTopRadius
-							TaperedCylinderShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, float inConvexRadius = cDefaultConvexRadius, const PhysicsMaterial *inMaterial = nullptr);
+							TaperedCylinderShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, float inConvexRadius = cDefaultConvexRadius, const Material *inMaterial = nullptr);
 
 	// See: ShapeSettings
 	virtual ShapeResult		Create() const override;
@@ -83,7 +83,7 @@ public:
 	virtual void			GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const override;
 
 	// See Shape::GetTrianglesNext
-	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const override;
+	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const override;
 
 #ifdef JPH_DEBUG_RENDERER
 	// See Shape::Draw

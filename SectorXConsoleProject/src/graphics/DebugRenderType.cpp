@@ -24,6 +24,8 @@ Graphics::TextureHandle DebugRenderType::debugBloomTexHandle = {};
 bool DebugRenderType::drawDeferredTextureFlags[sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0])] = { false };
 bool DebugRenderType::drawTileLight = false;
 
+bool DebugRenderType::drawWind = false;
+
 const DebugRenderType debugRenderType = {};
 
 DebugRenderType::DebugRenderType()
@@ -43,6 +45,7 @@ DebugRenderType::DebugRenderType()
 	BIND_DEBUG_CHECKBOX("Show", "pointLight", &drawPointLights);
 	BIND_DEBUG_CHECKBOX("Show", "fireflyVolumes", &drawFireflyVolumes);
 	BIND_DEBUG_CHECKBOX("Show", "leafVolumes", &drawLeafVolumes);
+	BIND_DEBUG_CHECKBOX("Show", "wind", &drawWind);
 
 	constexpr auto drawDeferredBufferCount = sizeof(ShowDeferredBufferName) / sizeof(ShowDeferredBufferName[0]);
 	assert(drawDeferredBufferCount == DeferredTextureCount * 2);

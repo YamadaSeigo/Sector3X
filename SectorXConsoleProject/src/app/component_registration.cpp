@@ -7,6 +7,7 @@
 #include "system/FireflySystem.h"
 #include "system/LeafSystem.h"
 #include "system/TitleSystem.h"
+#include "system/ChasePlayerSystem.h"
 
 
 namespace App
@@ -26,5 +27,6 @@ namespace App
         ComponentTypeRegistry::Register<CFireflyVolume>();
         ComponentTypeRegistry::Register<CLeafVolume>();
         ComponentTypeRegistry::Register<CTitleSprite>();
+		ComponentTypeRegistry::Register<CChasePlayer>();
     }
 }

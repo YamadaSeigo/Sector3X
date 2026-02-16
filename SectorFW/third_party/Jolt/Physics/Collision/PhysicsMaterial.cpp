@@ -10,26 +10,26 @@
 
 JPH_NAMESPACE_BEGIN
 
-RefConst<PhysicsMaterial> PhysicsMaterial::sDefault;
+RefConst<Material> Material::sDefault;
 
-JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(PhysicsMaterial)
+JPH_IMPLEMENT_SERIALIZABLE_VIRTUAL(Material)
 {
-	JPH_ADD_BASE_CLASS(PhysicsMaterial, SerializableObject)
+	JPH_ADD_BASE_CLASS(Material, SerializableObject)
 }
 
-void PhysicsMaterial::SaveBinaryState(StreamOut& inStream) const
+void Material::SaveBinaryState(StreamOut& inStream) const
 {
 	inStream.Write(GetRTTI()->GetHash());
 }
 
-void PhysicsMaterial::RestoreBinaryState(StreamIn& inStream)
+void Material::RestoreBinaryState(StreamIn& inStream)
 {
 	// RTTI hash is read in sRestoreFromBinaryState
 }
 
-PhysicsMaterial::PhysicsMaterialResult PhysicsMaterial::sRestoreFromBinaryState(StreamIn& inStream)
+Material::PhysicsMaterialResult Material::sRestoreFromBinaryState(StreamIn& inStream)
 {
-	return StreamUtils::RestoreObject<PhysicsMaterial>(inStream, &PhysicsMaterial::RestoreBinaryState);
+	return StreamUtils::RestoreObject<Material>(inStream, &Material::RestoreBinaryState);
 }
 
 JPH_NAMESPACE_END

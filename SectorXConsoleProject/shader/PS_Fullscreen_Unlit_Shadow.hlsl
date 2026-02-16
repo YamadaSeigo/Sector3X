@@ -2,14 +2,6 @@
 #include "_GlobalTypes.hlsli"
 
 
-//Timeだけ使用
-cbuffer SkyCB : register(b6)
-{
-    float gTime;
-    float gRotateSpeed; // rad/sec 例: 0.01
-    float2 _pad;
-};
-
 cbuffer CameraBuffer : register(b7)
 {
     row_major float4x4 invViewProj;
@@ -47,7 +39,7 @@ cbuffer FogCB : register(b9)
     uint gEnableHeightFog; // 0/1
 
     // Height fog wind/noise
-    float2 gFogWindDirXZ; // 正規化推奨 (x,z)
+    float2 gFogDisplacementXZ; // 正規化推奨 (x,z)
     float gFogWindSpeed; // 例: 0.2
     float gFogNoiseScale; // 例: 0.08 (ワールド->ノイズ空間)
     float gFogNoiseAmount; // 例: 0.35 (濃淡の強さ 0..1)
@@ -211,7 +203,7 @@ float GroundBandMask(float yRel)
 }
 
 
-float ComputeFogNoiseMod(float3 worldPosWS, float timeSec)
+float ComputeFogNoiseMod(float3 worldPosWS)
 {
     float yRel = worldPosWS.y - gHeightFogBaseHeight;
 
@@ -226,8 +218,7 @@ float ComputeFogNoiseMod(float3 worldPosWS, float timeSec)
     if (gFogNoiseAmount <= 0.001f || gFogNoiseScale <= 0.0f)
         return 1.0f;
 
-    float2 wind = gFogWindDirXZ * (gFogWindSpeed * timeSec);
-    float2 p = (worldPosWS.xz * gFogNoiseScale) + wind;
+    float2 p = (worldPosWS.xz - gFogDisplacementXZ) * gFogNoiseScale;
 
     float n = FBM2D(p); // 0..1
     float nSigned = (n * 2.0f - 1.0f);
@@ -267,7 +258,7 @@ float ComputeHeightFogFactor(float3 camPosWS, float3 worldPosWS, float viewDepth
     }
 
     // ここで密度をノイズ変調（地面付近だけ動く）
-    float densityMod = ComputeFogNoiseMod(worldPosWS, gTime);
+    float densityMod = ComputeFogNoiseMod(worldPosWS);
     float density = gHeightFogDensity * densityMod;
 
     float opticalDepth = density * viewDepth * avgExp;

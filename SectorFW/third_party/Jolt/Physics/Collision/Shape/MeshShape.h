@@ -106,7 +106,7 @@ public:
 	virtual MassProperties			GetMassProperties() const override;
 
 	// See Shape::GetMaterial
-	virtual const PhysicsMaterial *	GetMaterial(const SubShapeID &inSubShapeID) const override;
+	virtual const Material *	GetMaterial(const SubShapeID &inSubShapeID) const override;
 
 	/// Get the list of all materials
 	const PhysicsMaterialList &		GetMaterialList() const										{ return mMaterials; }
@@ -142,7 +142,7 @@ public:
 	virtual void					GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const override;
 
 	// See Shape::GetTrianglesNext
-	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const override;
+	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const override;
 
 	// See Shape::GetSubmergedVolume
 	virtual void					GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const Plane &inSurface, float &outTotalVolume, float &outSubmergedVolume, Vec3 &outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, RVec3Arg inBaseOffset)) const override { JPH_ASSERT(false, "Not supported"); }

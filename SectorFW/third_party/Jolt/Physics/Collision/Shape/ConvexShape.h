@@ -21,13 +21,13 @@ class JPH_EXPORT ConvexShapeSettings : public ShapeSettings
 public:
 	/// Constructor
 									ConvexShapeSettings() = default;
-	explicit						ConvexShapeSettings(const PhysicsMaterial *inMaterial)		: mMaterial(inMaterial) { }
+	explicit						ConvexShapeSettings(const Material *inMaterial)		: mMaterial(inMaterial) { }
 
 	/// Set the density of the object in kg / m^3
 	void							SetDensity(float inDensity)									{ mDensity = inDensity; }
 
 	// Properties
-	RefConst<PhysicsMaterial>		mMaterial;													///< Material assigned to this shape
+	RefConst<Material>		mMaterial;													///< Material assigned to this shape
 	float							mDensity = 1000.0f;											///< Uniform density of the interior of the convex object (kg / m^3)
 };
 
@@ -40,13 +40,13 @@ public:
 	/// Constructor
 	explicit						ConvexShape(EShapeSubType inSubType) : Shape(EShapeType::Convex, inSubType) { }
 									ConvexShape(EShapeSubType inSubType, const ConvexShapeSettings &inSettings, ShapeResult &outResult) : Shape(EShapeType::Convex, inSubType, inSettings, outResult), mMaterial(inSettings.mMaterial), mDensity(inSettings.mDensity) { }
-									ConvexShape(EShapeSubType inSubType, const PhysicsMaterial *inMaterial) : Shape(EShapeType::Convex, inSubType), mMaterial(inMaterial) { }
+									ConvexShape(EShapeSubType inSubType, const Material *inMaterial) : Shape(EShapeType::Convex, inSubType), mMaterial(inMaterial) { }
 
 	// See Shape::GetSubShapeIDBitsRecursive
 	virtual uint					GetSubShapeIDBitsRecursive() const override					{ return 0; } // Convex shapes don't have sub shapes
 
 	// See Shape::GetMaterial
-	virtual const PhysicsMaterial *	GetMaterial([[maybe_unused]] const SubShapeID &inSubShapeID) const override	{ JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID"); return GetMaterial(); }
+	virtual const Material *	GetMaterial([[maybe_unused]] const SubShapeID &inSubShapeID) const override	{ JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID"); return GetMaterial(); }
 
 	// See Shape::CastRay
 	virtual bool					CastRay(const RayCast &inRay, const SubShapeIDCreator &inSubShapeIDCreator, RayCastResult &ioHit) const override;
@@ -59,7 +59,7 @@ public:
 	virtual void					GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const override;
 
 	// See Shape::GetTrianglesNext
-	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const override;
+	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const override;
 
 	// See Shape::GetSubmergedVolume
 	virtual void					GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const Plane &inSurface, float &outTotalVolume, float &outSubmergedVolume, Vec3 &outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, RVec3Arg inBaseOffset)) const override;
@@ -102,8 +102,8 @@ public:
 	virtual const Support *			GetSupportFunction(ESupportMode inMode, SupportBuffer &inBuffer, Vec3Arg inScale) const = 0;
 
 	/// Material of the shape
-	void							SetMaterial(const PhysicsMaterial *inMaterial)				{ mMaterial = inMaterial; }
-	const PhysicsMaterial *			GetMaterial() const											{ return mMaterial != nullptr? mMaterial : PhysicsMaterial::sDefault; }
+	void							SetMaterial(const Material *inMaterial)				{ mMaterial = inMaterial; }
+	const Material *			GetMaterial() const											{ return mMaterial != nullptr? mMaterial : Material::sDefault; }
 
 	/// Set density of the shape (kg / m^3)
 	void							SetDensity(float inDensity)									{ mDensity = inDensity; }
@@ -143,7 +143,7 @@ private:
 	static void						sCastConvexVsConvex(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, const Shape *inShape, Vec3Arg inScale, const ShapeFilter &inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, CastShapeCollector &ioCollector);
 
 	// Properties
-	RefConst<PhysicsMaterial>		mMaterial;													///< Material assigned to this shape
+	RefConst<Material>		mMaterial;													///< Material assigned to this shape
 	float							mDensity = 1000.0f;											///< Uniform density of the interior of the convex object (kg / m^3)
 };
 

@@ -235,6 +235,7 @@ namespace SFW
 			void ApplyTeleport(const TeleportCmd& c);
 			void ApplySetLinVel(const SetLinearVelocityCmd& c);
 			void ApplySetAngVel(const SetAngularVelocityCmd& c);
+			void ApplyAddForce(const AddForceCmd& c);
 			void ApplyAddImpulse(const AddImpulseCmd& c);
 			void ApplySetKinematicTarget(const SetKinematicTargetCmd& c);
 			void ApplySetCollisionMask(const SetCollisionMaskCmd& c);

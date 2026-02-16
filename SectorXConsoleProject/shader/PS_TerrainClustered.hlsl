@@ -15,6 +15,8 @@ Texture2D gLayer3 : register(t23);
 Texture2DArray gSplat : register(t24); // クラスタごとの重み (RGBA) を slice で参照
 StructuredBuffer<ClusterParam> gClusters : register(t25); // 全クラスタのパラメータ表
 
+Texture2DArray gBiome : register(t26); // RGBA = (Desert, Swamp, Forest, Tundra) など
+
 SamplerState gPointClamp : register(s3);
 
 // 地形グリッド情報
@@ -143,6 +145,26 @@ PS_PRBOutput main(VSOut i)
     float4 c3 = gLayer3.Sample(gSampler, suv * p.layerTiling[3]);
 
     float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
+
+    // バイオームごとに色味を変える例
+    float4 b = gBiome.SampleLevel(gPointClamp, float3(suv, p.splatSlice), 0);
+
+    float4 biomeW = b; // 例: (desert, swamp, forest, tundra)
+    biomeW /= max(1e-5, dot(biomeW, 1)); // 正規化（必要なら）
+
+    float3 tintDesert = float3(2.10, 0.8f, 0.8);
+    float3 tintSwamp = float3(0.85, 0.5f, 2.0f);
+    float3 tintForest = float3(0.95, 1.05, 0.95);
+    float3 tintTundra = float3(0.95, 0.98, 1.05);
+
+    float3 tint =
+    tintDesert * biomeW.r +
+    tintSwamp * biomeW.g +
+    tintForest * biomeW.b +
+    tintTundra * biomeW.a;
+
+    final.rgb *= tint;
+
 
     PS_PRBOutput output;
     output.AlbedoAO = float4(final.rgb, 1.0f);

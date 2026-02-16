@@ -80,10 +80,35 @@ public:
 		currentPlayerPos = pos;
 	}
 
+	void SetPlayerID(const EntityID& id)
+	{
+		std::unique_lock<std::shared_mutex> lock(idMutex);
+		currentPlayerID = id;
+	}
+
+	void SetPlayerVelocity(const Math::Vec3f& vel)
+	{
+		std::unique_lock<std::shared_mutex> lock(velMutex);
+		currentPlayerVel = vel;
+	}
+
 	Math::Vec3f GetPlayerPosition()
 	{
 		std::shared_lock<std::shared_mutex> lock(posMutex);
 		return currentPlayerPos;
+	}
+
+	// Systemからセットしているので確実にプレイヤーIDとは限らないことに注意
+	EntityID GetPlayerID()
+	{
+		std::shared_lock<std::shared_mutex> lock(idMutex);
+		return currentPlayerID;
+	}
+
+	Math::Vec3f GetPlayerVelocity()
+	{
+		std::shared_lock<std::shared_mutex> lock(velMutex);
+		return currentPlayerVel;
 	}
 
 private:
@@ -91,6 +116,13 @@ private:
 
 	std::shared_mutex posMutex;
 	Math::Vec3f currentPlayerPos = Math::Vec3f(0.0f, 0.0f, 0.0f);
+
+	std::shared_mutex idMutex;
+	EntityID currentPlayerID = {};
+
+	std::shared_mutex velMutex;
+	Math::Vec3f currentPlayerVel = Math::Vec3f(0.0f, 0.0f, 0.0f);
+
 
 	GrassFootCB grassFoot_buf{};
 	Graphics::BufferHandle hGrassFootCB;

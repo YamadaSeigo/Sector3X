@@ -31,6 +31,13 @@ namespace SFW
 				int   command_budget_per_step = 4096;
 			};
 
+			struct Material {
+				float friction{ 0.6f };
+				float restitution{ 0.0f };
+				float gravityFactor{ 1.0f };
+				float density{ 1000.0f };
+			};
+
 			/**
 			 * @brief 生成インテント：発生源で「この Entity を作って」と積んでおく
 			 */
@@ -38,6 +45,9 @@ namespace SFW
 				Entity     e;
 				ShapeHandle h;
 				SpatialChunkKey owner;
+
+				// 物理マテリアル（後でマテリアルIDとかにしてもいい）
+				Material mat;
 			};
 			/**
 			 * @brief コンストラクタ
@@ -147,6 +157,14 @@ namespace SFW
 			 * @return ShapeHandle 生成された StaticCompoundShape 形状のハンドル
 			 */
 			[[nodiscard]] ShapeHandle MakeConvexCompound(const std::string& path, bool rhFlip = false, ShapeScale s = { {1,1,1} }, float r = 0.05f, float tol = 0.005f) {
+
+				// ヒット率向上のため、スケールを10倍して小数点以下を切り捨てる（整数化）。これにより、わずかなスケール違いで別形状扱いになるのを防ぐ。
+				auto& scale = s.s;
+				scale *= 10.0f;
+				scale.x = std::floor(scale.x) / 10.0f;
+				scale.y = std::floor(scale.y) / 10.0f;
+				scale.z = std::floor(scale.z) / 10.0f;
+
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ ConvexCompoundFileDesc{path, r, tol, rhFlip}, s }, h); return h;
 			}
 
@@ -187,6 +205,17 @@ namespace SFW
 			 * @param w 設定する角速度（Vec3f）
 			 */
 			bool SetAngularVelocity(Entity e, Vec3f w) { return TryEnqueue(SetAngularVelocityCmd{ e, w }); }
+			/**
+			 * @brief 物理ボディに力を加えるコマンドをキューに追加する
+			 * @param e 力を加えるエンティティ
+			 * @param f 加える力（Vec3f）
+			 * @param at 力を加える位置（ワールド座標、デフォルトはボディ中心）
+			 */
+			bool AddForce(Entity e, Vec3f f, std::optional<Vec3f> at = std::nullopt) {
+				AddForceCmd cmd{ e, f, {}, false };
+				if (at) { cmd.atWorldPos = *at; cmd.useAtPos = true; }
+				return TryEnqueue(cmd);
+			}
 			/**
 			 * @brief 物理ボディにインパルスを加えるコマンドをキューに追加する
 			 * @param e インパルスを加えるエンティティ
@@ -333,9 +362,9 @@ namespace SFW
 			 * @param h 形状ハンドル
 			 * @param owner 所有チャンクキー
 			 */
-			void EnqueueCreateIntent(Entity e, ShapeHandle h, const SpatialChunkKey& owner) {
+			void EnqueueCreateIntent(Entity e, ShapeHandle h, const SpatialChunkKey& owner, Material mat = {}) {
 				std::scoped_lock lk(m_intentMutex);
-				m_createIntents[owner.level].push_back({e, h, owner});
+				m_createIntents[owner.level].push_back({e, h, owner, mat});
 			}
 			/**
 			 * @brief 生成インテントを取り出す（Body 作成要求用

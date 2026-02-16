@@ -56,7 +56,7 @@ cbuffer TerrainGridCB : register(b1)
 
 cbuffer WindCB : register(b2)
 {
-    float gWindTime; // 経過時間
+    float gWindTime; // 経過時間 (既にwindspeedを反映済み)
     float gNoiseFreq; // ノイズ空間スケール（WorldPos に掛ける）
     float gBigWaveWeight; // 1本あたりの高さ（ローカルY の最大値）
     float gWindSpeed; // 風アニメ速度
@@ -217,7 +217,7 @@ void main(uint3 tid : SV_DispatchThreadID)
 
     p.tint = tint;
     p.life0 = p.life; // 生成直後の寿命を保存
-    
+
     // 擬似法線：少し上向きに寄せたいならブレンド
     float3 n = RandomUnitVector(seed + 900u);
     n = normalize(lerp(n, float3(0, 1, 0), 0.35)); // 0.0で完全ランダム, 1.0で上向き

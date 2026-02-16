@@ -1,5 +1,9 @@
 #pragma once
 
+#include <SectorFW/Debug/DebugType.h>
+#include "environment/WindService.h"
+
+
 template<typename Partition>
 class GlobalDebugRenderSystem : public ITypeSystem<
 	GlobalDebugRenderSystem,
@@ -10,21 +14,28 @@ class GlobalDebugRenderSystem : public ITypeSystem<
 		Graphics::RenderService,
 		Graphics::I3DPerCameraService,
 		Graphics::I2DCameraService,
-		DeferredRenderingService
+		DeferredRenderingService,
+		WindService
 	>>
 {
 
 public:
+
+	static constexpr inline uint32_t MAX_CAPACITY_3DLINE = 256;
+	static constexpr inline uint32_t MAX_CAPACITY_3DVERTEX = MAX_CAPACITY_3DLINE << 1;
+
 	void StartImpl(
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
 		NoDeletePtr<Graphics::I2DCameraService>,
-		NoDeletePtr<DeferredRenderingService> deferredRenderService){
+		NoDeletePtr<DeferredRenderingService> deferredRenderService,
+		NoDeletePtr<WindService> windService){
 
 		using namespace Graphics;
 
 		auto shaderMgr = renderService->GetResourceManager<Graphics::DX11::ShaderManager>();
 		auto psoMgr = renderService->GetResourceManager<Graphics::DX11::PSOManager>();
+		auto meshMgr = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
 
 		DX11::ShaderCreateDesc shaderDesc;
 		shaderDesc.vsPath = L"assets/shader/VS_ClipUV.cso";
@@ -150,13 +161,39 @@ public:
 		bloomMatDesc.shader = spriteShaderHandle;
 		bloomMatDesc.psSRV[2] = DebugRenderType::debugBloomTexHandle;
 		matMgr->Add(bloomMatDesc, bloomMaterialHandle);
+
+		shaderDesc.templateID = MaterialTemplateID::PBR;
+		shaderDesc.vsPath = L"assets/shader/VS_DrawLineList.cso";
+		shaderDesc.psPath = L"assets/shader/PS_DrawLineList.cso";
+		ShaderHandle shaderHandle;
+		shaderMgr->Add(shaderDesc, shaderHandle);
+
+		psoDesc = { shaderHandle, RasterizerStateID::WireCullNone };
+		psoMgr->Add(psoDesc, psoLineHandle);
+
+		// --- Index Buffer（固定：0,1,2,3,4,5,…）---
+		std::vector<uint32_t> indices(MAX_CAPACITY_3DLINE);
+		for (uint32_t i = 0; i < MAX_CAPACITY_3DLINE; ++i) indices[i] = i;
+
+		DX11::MeshCreateDesc lineDesc;
+		lineDesc.vertices = nullptr;
+		lineDesc.vSize = sizeof(Debug::LineVertex) * MAX_CAPACITY_3DVERTEX;
+		lineDesc.stride = sizeof(Debug::LineVertex);
+		lineDesc.vUsage = D3D11_USAGE_DYNAMIC;
+		lineDesc.indices = indices.data();
+		lineDesc.iSize = sizeof(uint32_t) * (uint32_t)indices.size();
+		lineDesc.sourcePath = L"__internal__/Line3DBufferGlobal";
+		meshMgr->Add(lineDesc, line3DHandle);
+
+		line3DVertices.reset(new Debug::LineVertex[MAX_CAPACITY_3DLINE]);
 	}
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
 		NoDeletePtr<Graphics::I2DCameraService> camera2DService,
-		NoDeletePtr<DeferredRenderingService> deferredRenderService) {
+		NoDeletePtr<DeferredRenderingService> deferredRenderService,
+		NoDeletePtr<WindService> windService) {
 
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
@@ -164,6 +201,9 @@ public:
 		Math::Vec2f resolution = camera2DService->GetVirtualResolution();
 
 		constexpr uint32_t showDeferredTextureCount = sizeof(DebugRenderType::ShowDeferredBufferName) / sizeof(DebugRenderType::ShowDeferredBufferName[0]);
+
+
+		uint32_t lineVertexCount = 0;
 
 		bool showDeferred = false;
 		for (uint32_t i = 0; i < showDeferredTextureCount; ++i)
@@ -249,6 +289,50 @@ public:
 			cmd.sortKey = 1000;
 			uiSession.Push(std::move(cmd));
 		}
+
+		if (DebugRenderType::drawWind)
+		{
+			if (lineVertexCount + 4 < MAX_CAPACITY_3DVERTEX)
+			{
+				Math::Vec3f windDir;
+				float windSpeed;
+				windService->GetWindDirAndSpeed(windDir, windSpeed);
+
+				Math::Vec3f camTarget = camera3DService->GetTarget();
+
+				float length = powf(windSpeed * 100.0f, 3.0f) / 50000.0f;
+
+				line3DVertices.get()[lineVertexCount++] = { camTarget, 0x0000FFFF };
+				line3DVertices.get()[lineVertexCount++] = { camTarget + windDir * length, 0x00FF00FF };
+				line3DVertices.get()[lineVertexCount++] = { camTarget + windDir * length, 0x00FF00FF };
+				line3DVertices.get()[lineVertexCount++] = { camTarget + windDir * length - (windDir - Math::Vec3f{0.0f,2.0f,0.0f}).normalized() * 1.0f, 0x00FF00FF};
+			}
+		}
+
+		if (lineVertexCount > 0)
+		{
+			Graphics::DX11::MeshManager* meshMgr = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
+			Graphics::DX11::BufferManager* bufferMgr = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
+
+			Graphics::DX11::BufferUpdateDesc updateDesc;
+			{
+				auto lineBufferData = meshMgr->Get(line3DHandle);
+				updateDesc.buffer = lineBufferData.ref().vbs[0];
+			}
+			updateDesc.data = line3DVertices.get();
+			updateDesc.size = sizeof(Debug::LineVertex) * lineVertexCount;
+			updateDesc.isDelete = false;
+
+			bufferMgr->UpdateBuffer(updateDesc, renderService->GetProduceSlot());
+			Graphics::DrawCommand cmd;
+			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
+			cmd.mesh = line3DHandle.index;
+			cmd.pso = psoLineHandle.index; // 適切なライン用PSOがあればそちらを使用
+			cmd.material = 0; // ライン用のマテリアルがあればそちらを使用
+			cmd.viewMask = PASS_UI_3DLINE;
+			cmd.sortKey = 0;
+			uiSession.Push(std::move(cmd));
+		}
 	}
 
 private:
@@ -268,4 +352,8 @@ private:
 	Graphics::PSOHandle spritePsoHandle = {};
 
 	Graphics::MaterialHandle bloomMaterialHandle = {};
+
+	Graphics::PSOHandle psoLineHandle = {};
+	Graphics::MeshHandle line3DHandle = {};
+	std::unique_ptr<Debug::LineVertex> line3DVertices;
 };

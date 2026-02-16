@@ -306,7 +306,7 @@ void SphereShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox&
 	new (&ioContext) GetTrianglesContextVertexList(inPositionCOM, inRotation, Vec3::sOne(), Mat44::sScale(scaled_radius), sUnitSphereTriangles.data(), sUnitSphereTriangles.size(), GetMaterial());
 }
 
-int SphereShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int SphereShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	return ((GetTrianglesContextVertexList&)ioContext).GetTrianglesNext(inMaxTrianglesRequested, outTriangleVertices, outMaterials);
 }

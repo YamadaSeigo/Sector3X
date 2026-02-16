@@ -509,7 +509,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		ctx->PSSetShaderResources(11, (UINT)deferreredSRVs.size(), deferreredSRVs.data());
 		ctx->PSSetShaderResources(15, 1, ligthTexBuffer.srv.GetAddressOf());
 
-		renderBackend->BindPSCBVs({ SkyCBBuffer.Get(), invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get() }, 6);
+		renderBackend->BindPSCBVs({ invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get() }, 7);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 		ctx->PSSetSamplers(1, 1, lightShadowResService->GetShadowSampler().GetAddressOf());

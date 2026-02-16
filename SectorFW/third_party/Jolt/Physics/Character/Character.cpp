@@ -208,7 +208,7 @@ void Character::PostSimulation(float inMaxSeparationDistance, bool inLockBodies)
 	else
 	{
 		mGroundState = EGroundState::InAir;
-		mGroundMaterial = PhysicsMaterial::sDefault;
+		mGroundMaterial = Material::sDefault;
 		mGroundVelocity = Vec3::sZero();
 		mGroundUserData = 0;
 	}

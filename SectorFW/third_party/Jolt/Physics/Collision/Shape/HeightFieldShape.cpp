@@ -1297,7 +1297,7 @@ bool HeightFieldShape::SetMaterials(uint inX, uint inY, uint inSizeX, uint inSiz
 
 		// Create a remap table
 		uint8* remap_entry = material_remap_table;
-		for (const PhysicsMaterial* material : *inMaterialList)
+		for (const Material* material : *inMaterialList)
 		{
 			// Try to find it in the existing list
 			PhysicsMaterialList::const_iterator it = std::find(mMaterials.begin(), mMaterials.end(), material);
@@ -1418,10 +1418,10 @@ MassProperties HeightFieldShape::GetMassProperties() const
 	return MassProperties();
 }
 
-const PhysicsMaterial* HeightFieldShape::GetMaterial(uint inX, uint inY) const
+const Material* HeightFieldShape::GetMaterial(uint inX, uint inY) const
 {
 	if (mMaterials.empty())
-		return PhysicsMaterial::sDefault;
+		return Material::sDefault;
 	if (mMaterials.size() == 1)
 		return mMaterials[0];
 
@@ -1477,7 +1477,7 @@ void HeightFieldShape::GetSubShapeCoordinates(const SubShapeID& inSubShapeID, ui
 	DecodeSubShapeID(inSubShapeID, outX, outY, outTriangleIndex);
 }
 
-const PhysicsMaterial* HeightFieldShape::GetMaterial(const SubShapeID& inSubShapeID) const
+const Material* HeightFieldShape::GetMaterial(const SubShapeID& inSubShapeID) const
 {
 	// Decode ID
 	uint x, y, triangle;
@@ -2494,7 +2494,7 @@ struct HeightFieldShape::HSGetTrianglesContext
 	int							mMaxTrianglesRequested;
 	Float3* mTriangleVertices;
 	int							mNumTrianglesFound;
-	const PhysicsMaterial** mMaterials;
+	const Material** mMaterials;
 	bool						mShouldAbort;
 	bool						mIsInsideOut;
 };
@@ -2507,7 +2507,7 @@ void HeightFieldShape::GetTrianglesStart(GetTrianglesContext& ioContext, const A
 	new (&ioContext) HSGetTrianglesContext(this, inBox, inPositionCOM, inRotation, inScale);
 }
 
-int HeightFieldShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int HeightFieldShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	static_assert(cGetTrianglesMinTrianglesRequested >= 1, "cGetTrianglesMinTrianglesRequested is too small");
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
@@ -2717,7 +2717,7 @@ Shape::Stats HeightFieldShape::GetStats() const
 {
 	return Stats(
 		sizeof(*this)
-		+ mMaterials.size() * sizeof(Ref<PhysicsMaterial>)
+		+ mMaterials.size() * sizeof(Ref<Material>)
 		+ mRangeBlocksSize * sizeof(RangeBlock)
 		+ mHeightSamplesSize * sizeof(uint8)
 		+ mActiveEdgesSize * sizeof(uint8)

@@ -67,7 +67,7 @@ cbuffer TerrainGridCB : register(b1)
 
 cbuffer WindCB : register(b2)
 {
-    float gWindTime;
+    float gWindTime; //(Šù‚Éwindspeed‚ğ”½‰fÏ‚İ)
     float gNoiseFreq;
     float gBigWaveWeight;
     float gWindSpeed;

@@ -8,14 +8,14 @@
 
 JPH_NAMESPACE_BEGIN
 
-class PhysicsMaterial;
+class Material;
 
 /// Implementation of GetTrianglesStart/Next that uses a fixed list of vertices for the triangles. These are transformed into world space when getting the triangles.
 class GetTrianglesContextVertexList
 {
 public:
 	/// Constructor, to be called in GetTrianglesStart
-					GetTrianglesContextVertexList(Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, Mat44Arg inLocalTransform, const Vec3 *inTriangleVertices, size_t inNumTriangleVertices, const PhysicsMaterial *inMaterial) :
+					GetTrianglesContextVertexList(Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale, Mat44Arg inLocalTransform, const Vec3 *inTriangleVertices, size_t inNumTriangleVertices, const Material *inMaterial) :
 		mLocalToWorld(Mat44::sRotationTranslation(inRotation, inPositionCOM) * Mat44::sScale(inScale) * inLocalTransform),
 		mTriangleVertices(inTriangleVertices),
 		mNumTriangleVertices(inNumTriangleVertices),
@@ -28,7 +28,7 @@ public:
 	}
 
 	/// @see Shape::GetTrianglesNext
-	int				GetTrianglesNext(int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials)
+	int				GetTrianglesNext(int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials)
 	{
 		JPH_ASSERT(inMaxTrianglesRequested >= Shape::cGetTrianglesMinTrianglesRequested);
 
@@ -61,7 +61,7 @@ public:
 
 		// Store materials
 		if (outMaterials != nullptr)
-			for (const PhysicsMaterial **m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
+			for (const Material **m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
 				*m = mMaterial;
 
 		return total_num_triangles;
@@ -142,7 +142,7 @@ private:
 	const Vec3 *			mTriangleVertices;
 	size_t					mNumTriangleVertices;
 	size_t					mCurrentVertex = 0;
-	const PhysicsMaterial *	mMaterial;
+	const Material *	mMaterial;
 	bool					mIsInsideOut;
 };
 
@@ -151,7 +151,7 @@ class GetTrianglesContextMultiVertexList
 {
 public:
 	/// Constructor, to be called in GetTrianglesStart
-					GetTrianglesContextMultiVertexList(bool inIsInsideOut, const PhysicsMaterial *inMaterial) :
+					GetTrianglesContextMultiVertexList(bool inIsInsideOut, const Material *inMaterial) :
 		mMaterial(inMaterial),
 		mIsInsideOut(inIsInsideOut)
 	{
@@ -168,7 +168,7 @@ public:
 	}
 
 	/// @see Shape::GetTrianglesNext
-	int				GetTrianglesNext(int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials)
+	int				GetTrianglesNext(int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials)
 	{
 		JPH_ASSERT(inMaxTrianglesRequested >= Shape::cGetTrianglesMinTrianglesRequested);
 
@@ -224,7 +224,7 @@ public:
 
 		// Store materials
 		if (outMaterials != nullptr)
-			for (const PhysicsMaterial **m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
+			for (const Material **m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
 				*m = mMaterial;
 
 		return total_num_triangles;
@@ -241,7 +241,7 @@ private:
 	StaticArray<Part, 3>	mParts;
 	uint					mCurrentPart = 0;
 	size_t					mCurrentVertex = 0;
-	const PhysicsMaterial *	mMaterial;
+	const Material *	mMaterial;
 	bool					mIsInsideOut;
 };
 

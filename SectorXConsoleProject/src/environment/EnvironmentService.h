@@ -13,17 +13,17 @@ struct alignas(16) FogCB
 	uint32_t gEnableDistanceFog = 1; // 0/1
 
 	// Height fog
-	float gHeightFogBaseHeight = 1.0f; // 霧の基準高さ(この高さ付近が最も濃い想定) 例: 1.0 (地面付近)
+	float gHeightFogBaseHeight = 50.0f; // 霧の基準高さ(この高さ付近が最も濃い想定) 例: 1.0 (地面付近)
 	float gHeightFogDensity = 0.01f; // 高さフォグ密度(全体強さ) 例: 0.01
 	float gHeightFogFalloff = 0.07f; // 高さ減衰(大きいほど上に行くと急に薄くなる) 例: 0.05
 	uint32_t gEnableHeightFog = 1; // 0/1
 
 	// Height fog wind/noise
-	Math::Vec2f gFogWindDirXZ = {1.0f,0.0f};     // 正規化推奨 (x,z)
+	Math::Vec2f gFogDisplacementXZ = { 0.0f,0.0f }; // offset (時間経過で変化させる) 例: (0.0, 0.0)
 	float  gFogWindSpeed = 0.3f;     // 例: 0.2
-	float  gFogNoiseScale = 0.01f;    // 例: 0.08 (ワールド->ノイズ空間)
+	float  gFogNoiseScale = 0.03f;    // 例: 0.08 (ワールド->ノイズ空間)
 	float  gFogNoiseAmount = 0.8f;   // 例: 0.35 (濃淡の強さ 0..1)
-	float  gFogGroundBand = 8.0f;    // 例: 6.0  (地面付近の厚み)
+	float  gFogGroundBand = 20.0f;    // 例: 6.0  (地面付近の厚み)
 	float  gFogNoiseMinHeight = -1.0f;// 例: -1.0 (基準高さから下は強め等)
 	float  gFogNoiseMaxHeight = 8.0f;// 例: 8.0  (基準高さから上は減衰)
 };
@@ -170,14 +170,17 @@ public:
 
 		REGISTER_DEBUG_CHECKBOX("Fog", "gEnableHeightFog", cpuFogBuf.gEnableHeightFog, [&](bool value) { isUpdateFogBuffer = true; cpuFogBuf.gEnableHeightFog = value; });
 
-		BIND_DEBUG_FOG_FLOAT_DATA(gHeightFogBaseHeight, 0.0f, 10.0f, 0.005f);
+		BIND_DEBUG_FOG_FLOAT_DATA(gHeightFogBaseHeight, 0.0f, 200.0f, 0.005f);
 		BIND_DEBUG_FOG_FLOAT_DATA(gHeightFogDensity, 0.0f, 1.0f, 0.001f);
 		BIND_DEBUG_FOG_FLOAT_DATA(gHeightFogFalloff, 0.0f, 1.0f, 0.001f);
 
-		BIND_DEBUG_FOG_FLOAT_DATA(gFogWindSpeed, 0.0f, 10.0f, 0.005f);
 		BIND_DEBUG_FOG_FLOAT_DATA(gFogNoiseScale, 0.0f, 1.0f, 0.001f);
 		BIND_DEBUG_FOG_FLOAT_DATA(gFogNoiseAmount, 0.0f, 1.0f, 0.001f);
-		BIND_DEBUG_FOG_FLOAT_DATA(gFogGroundBand, 0.0f, 20.0f, 0.02f);
+		BIND_DEBUG_FOG_FLOAT_DATA(gFogGroundBand, 0.0f, 200.0f, 0.02f);
+		BIND_DEBUG_FOG_FLOAT_DATA(gFogNoiseMinHeight, -10.0f, 20.0f, 0.01f);
+		BIND_DEBUG_FOG_FLOAT_DATA(gFogNoiseMaxHeight, -10.0f, 20.0f, 0.01f);
+
+		BIND_DEBUG_SLIDER_FLOAT("Fog", "windBaseSpeed", &m_fogWindBaseSpeed, 0.0f, 10.0f, 0.01f);
 
 
 		REGISTER_DEBUG_CHECKBOX("GodRay", "gEnableGodRay", cpuGodRayBuf.gEnableGodRay, [&](bool value) { isUpdateGodRayBuffer = true; cpuGodRayBuf.gEnableGodRay = value; });
@@ -287,6 +290,13 @@ public:
 		return m_sunDirection;
 	}
 
+	void SetWindDirSpeed(const Math::Vec2f& dir, float speed, float dt) noexcept {
+		std::lock_guard lock(updateFogMutex);
+		cpuFogBuf.gFogWindSpeed = m_fogWindBaseSpeed * speed;
+		cpuFogBuf.gFogDisplacementXZ += dir * cpuFogBuf.gFogWindSpeed * dt;
+		isUpdateFogBuffer = true;
+	}
+
 	void SetSunScreenUVAndDir(const Math::Vec2f& uv, const Math::Vec2f& dir) noexcept {
 		std::lock_guard lock(updateGodRayMutex);
 		cpuGodRayBuf.gSunScreenUV = uv;
@@ -320,6 +330,8 @@ private:
 
 	float m_dayLengthSec = 120.0f; // 一周にかかる時間(秒)
 	float m_timeOfDay = 0.0f; // 現在の時間(0.0~1.0)
+
+	float m_fogWindBaseSpeed = 10.0f;
 
 	std::vector<TimeOfDayKey> timeOfDayKeys;
 	TimeOfDayKey currentTimeOfDayKey;

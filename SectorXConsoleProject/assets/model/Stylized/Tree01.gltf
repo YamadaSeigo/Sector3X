@@ -18,12 +18,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"default2_Material_0",
-			"scale":[
-				0.009999999776482582,
-				0.010000001639127731,
-				0.010000001639127731
-			]
+			"name":"default2_Material_0.001"
 		}
 	],
 	"materials":[
@@ -31,26 +26,29 @@
 			"doubleSided":true,
 			"extensions":{
 				"KHR_materials_specular":{
+					"specularColorTexture":{
+						"index":0
+					},
 					"specularColorFactor":[
-						0,
-						0,
-						0
+						2.2286262512207027,
+						1.3594839572906492,
+						2.5894377231597896
 					]
 				}
 			},
-			"name":"Material.001",
+			"name":"Material.003",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":0
+					"index":1
 				},
 				"metallicFactor":0,
-				"roughnessFactor":0.8057142496109009
+				"roughnessFactor":0.800000011920929
 			}
 		}
 	],
 	"meshes":[
 		{
-			"name":"default2_Material_0",
+			"name":"default2_Material_0.001",
 			"primitives":[
 				{
 					"attributes":{
@@ -75,9 +73,18 @@
 		{
 			"sampler":0,
 			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
 		}
 	],
 	"images":[
+		{
+			"mimeType":"image/png",
+			"name":"Image",
+			"uri":"Image.png"
+		},
 		{
 			"mimeType":"image/jpeg",
 			"name":"Material_baseColor",

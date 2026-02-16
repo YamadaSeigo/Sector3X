@@ -18,7 +18,7 @@ public:
 							SphereShapeSettings() = default;
 
 	/// Create a sphere with radius inRadius
-							SphereShapeSettings(float inRadius, const PhysicsMaterial *inMaterial = nullptr)	: ConvexShapeSettings(inMaterial), mRadius(inRadius) { }
+							SphereShapeSettings(float inRadius, const Material *inMaterial = nullptr)	: ConvexShapeSettings(inMaterial), mRadius(inRadius) { }
 
 	// See: ShapeSettings
 	virtual ShapeResult		Create() const override;
@@ -38,7 +38,7 @@ public:
 							SphereShape(const SphereShapeSettings &inSettings, ShapeResult &outResult);
 
 	/// Create a sphere with radius inRadius
-							SphereShape(float inRadius, const PhysicsMaterial *inMaterial = nullptr)			: ConvexShape(EShapeSubType::Sphere, inMaterial), mRadius(inRadius) { JPH_ASSERT(inRadius > 0.0f); }
+							SphereShape(float inRadius, const Material *inMaterial = nullptr)			: ConvexShape(EShapeSubType::Sphere, inMaterial), mRadius(inRadius) { JPH_ASSERT(inRadius > 0.0f); }
 
 	/// Radius of the sphere
 	float					GetRadius() const																	{ return mRadius; }
@@ -87,7 +87,7 @@ public:
 	virtual void			GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const override;
 
 	// See Shape::GetTrianglesNext
-	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const override;
+	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const override;
 
 	// See Shape
 	virtual void			SaveBinaryState(StreamOut &inStream) const override;

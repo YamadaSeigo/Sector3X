@@ -22,7 +22,7 @@ cbuffer TerrainGridCB : register(b10)
 
 cbuffer WindCB : register(b11)
 {
-    float gTime; // 経過時間
+    float gWindTime; // 経過時間 (既にwindspeedを反映済み)
     float gNoiseFreq; // ノイズ空間スケール（WorldPos に掛ける）
     float gBigWaveWeight; // 1本あたりの高さ（ローカルY の最大値）
     float gWindSpeed; // 風アニメ速度
@@ -100,7 +100,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     float bigSpatial = dot(baseWorldPos, gWindDir * 0.03f);
 
    // GrassMovementService 側でグルーブさせた Time を使う前提
-    float bigPhase = bigSpatial + gTime * gWindSpeed;
+    float bigPhase = bigSpatial + gWindTime;
     float bigWave = sin(bigPhase); // -1..1
 
    // ---- 2) 個々の“ゆらぎ”用の小さいノイズ ----
@@ -109,7 +109,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     float noiseN11 = noise01 * 2.0f - 1.0f;
 
    // 小さい振幅で “バラつき” だけを付ける
-    float smallPhase = noiseN11 + gTime * gWindSpeed;
+    float smallPhase = noiseN11 + gWindTime;
     float smallWave = sin(smallPhase);
 
    // ---- 3) 合成 ----

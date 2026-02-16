@@ -54,7 +54,7 @@ JPH_DECLARE_RTTI_WITH_NAMESPACE_FOR_FACTORY(JPH_EXPORT, JPH, GearConstraintSetti
 JPH_DECLARE_RTTI_WITH_NAMESPACE_FOR_FACTORY(JPH_EXPORT, JPH, PulleyConstraintSettings)
 JPH_DECLARE_RTTI_WITH_NAMESPACE_FOR_FACTORY(JPH_EXPORT, JPH, MotorSettings)
 JPH_DECLARE_RTTI_WITH_NAMESPACE_FOR_FACTORY(JPH_EXPORT, JPH, PhysicsScene)
-JPH_DECLARE_RTTI_WITH_NAMESPACE_FOR_FACTORY(JPH_EXPORT, JPH, PhysicsMaterial)
+JPH_DECLARE_RTTI_WITH_NAMESPACE_FOR_FACTORY(JPH_EXPORT, JPH, Material)
 JPH_DECLARE_RTTI_WITH_NAMESPACE_FOR_FACTORY(JPH_EXPORT, JPH, GroupFilter)
 JPH_DECLARE_RTTI_WITH_NAMESPACE_FOR_FACTORY(JPH_EXPORT, JPH, GroupFilterTable)
 JPH_DECLARE_RTTI_WITH_NAMESPACE_FOR_FACTORY(JPH_EXPORT, JPH, BodyCreationSettings)
@@ -171,7 +171,7 @@ void RegisterTypesInternal(uint64 inVersionID)
 		JPH_RTTI(PulleyConstraintSettings),
 		JPH_RTTI(MotorSettings),
 		JPH_RTTI(PhysicsScene),
-		JPH_RTTI(PhysicsMaterial),
+		JPH_RTTI(Material),
 		JPH_RTTI(PhysicsMaterialSimple),
 		JPH_RTTI(GroupFilter),
 		JPH_RTTI(GroupFilterTable),
@@ -183,8 +183,8 @@ void RegisterTypesInternal(uint64 inVersionID)
 	Factory::sInstance->Register(types, (uint)std::size(types));
 
 	// Initialize default physics material
-	if (PhysicsMaterial::sDefault == nullptr)
-		PhysicsMaterial::sDefault = new PhysicsMaterialSimple("Default", Color::sGrey);
+	if (Material::sDefault == nullptr)
+		Material::sDefault = new PhysicsMaterialSimple("Default", Color::sGrey);
 }
 
 void UnregisterTypes()
@@ -194,7 +194,7 @@ void UnregisterTypes()
 		Factory::sInstance->Clear();
 
 	// Delete default physics material
-	PhysicsMaterial::sDefault = nullptr;
+	Material::sDefault = nullptr;
 }
 
 JPH_NAMESPACE_END

@@ -21,7 +21,7 @@ public:
 							TaperedCapsuleShapeSettings() = default;
 
 	/// Create a tapered capsule centered around the origin with one sphere cap at (0, -inHalfHeightOfTaperedCylinder, 0) with radius inBottomRadius and the other at (0, inHalfHeightOfTaperedCylinder, 0) with radius inTopRadius
-							TaperedCapsuleShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, const PhysicsMaterial *inMaterial = nullptr);
+							TaperedCapsuleShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, const Material *inMaterial = nullptr);
 
 	/// Check if the settings are valid
 	bool					IsValid() const															{ return mTopRadius > 0.0f && mBottomRadius > 0.0f && mHalfHeightOfTaperedCylinder >= 0.0f; }

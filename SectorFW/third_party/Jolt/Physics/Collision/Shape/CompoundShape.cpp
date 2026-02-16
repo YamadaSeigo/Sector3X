@@ -123,7 +123,7 @@ uint CompoundShape::GetSubShapeIDBitsRecursive() const
 	return child_bits + GetSubShapeIDBits();
 }
 
-const PhysicsMaterial* CompoundShape::GetMaterial(const SubShapeID& inSubShapeID) const
+const Material* CompoundShape::GetMaterial(const SubShapeID& inSubShapeID) const
 {
 	// Decode sub shape index
 	SubShapeID remainder;

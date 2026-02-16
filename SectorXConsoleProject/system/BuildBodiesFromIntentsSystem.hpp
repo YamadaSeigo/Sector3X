@@ -131,6 +131,10 @@ public:
 			cmd.layer = layer;
 			cmd.broadphase = 0;
 			cmd.kinematic = kinematic;
+			cmd.density = in.mat.density;
+			cmd.friction = in.mat.friction;
+			cmd.restitution = in.mat.restitution;
+			cmd.gravityFactor = in.mat.gravityFactor;
 
 			bool ok = ps->CreateBody(cmd); // コマンドキューへ（固定Δtで一括適用）
 			if (!ok) {

@@ -12,7 +12,7 @@ struct CLeafVolume
 
     float orbitR = 2.0f;     // 回転半径
     float orbitW = 0.9f;     // 回転速度(rad/sでもOK)
-	float k = 5.0f; // 追従の強さ
+	float k = 8.0f; // 追従の強さ
 
 
     // 見た目（emissive / bloom 基準）
@@ -20,7 +20,7 @@ struct CLeafVolume
     float       intensity = 1.0f;
 
     // 群れ密度（GPU targetCount の元）
-    uint32_t    maxCountNear = 1000;    // 近距離での最大個体数
+    uint32_t    maxCountNear = 2000;    // 近距離での最大個体数
 
     // 動き（UpdateCSで使う）
     float       speed = 1.0f;

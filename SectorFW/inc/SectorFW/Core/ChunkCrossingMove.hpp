@@ -150,6 +150,11 @@ namespace SFW
 	 * @brief 動的エンティティ用タグ（チャンク跨ぎ検出とEM間移送の状態管理）
 	 */
 	struct CSpatialMotionTag {
+
+		CSpatialMotionTag() = default;
+		//ハンドルだけセットすればあとは勝手にやってくれるスタイル
+		CSpatialMotionTag(const ChunkHandle& h) : handle(h) {}
+
 		ChunkHandle handle;
 		SpatialChunkKey pendingKey{};
 		uint16_t stableFrames = 0;

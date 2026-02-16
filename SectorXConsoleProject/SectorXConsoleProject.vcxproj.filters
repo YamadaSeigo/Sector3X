@@ -393,5 +393,11 @@
     <ClInclude Include="src\environment\BiomeScatterGenerator.h">
       <Filter>Environment</Filter>
     </ClInclude>
+    <ClInclude Include="src\environment\FenceLine.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="system\ChasePlayerSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

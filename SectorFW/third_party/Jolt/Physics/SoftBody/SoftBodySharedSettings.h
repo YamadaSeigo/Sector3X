@@ -106,8 +106,8 @@ public:
 
 	using SharedSettingsToIDMap = StreamUtils::ObjectToIDMap<SoftBodySharedSettings>;
 	using IDToSharedSettingsMap = StreamUtils::IDToObjectMap<SoftBodySharedSettings>;
-	using MaterialToIDMap = StreamUtils::ObjectToIDMap<PhysicsMaterial>;
-	using IDToMaterialMap = StreamUtils::IDToObjectMap<PhysicsMaterial>;
+	using MaterialToIDMap = StreamUtils::ObjectToIDMap<Material>;
+	using IDToMaterialMap = StreamUtils::IDToObjectMap<Material>;
 
 	/// Save this shared settings and its materials. Pass in an empty map ioSettingsMap / ioMaterialMap or reuse the same map while saving multiple settings objects to the same stream in order to avoid writing duplicates.
 	void				SaveWithMaterials(StreamOut &inStream, SharedSettingsToIDMap &ioSettingsMap, MaterialToIDMap &ioMaterialMap) const;
@@ -354,7 +354,7 @@ public:
 	Array<LRA>			mLRAConstraints;							///< The list of long range attachment constraints
 	Array<RodStretchShear>	mRodStretchShearConstraints;			///< The list of Cosserat rod constraints that connect two vertices and that limit stretch and shear
 	Array<RodBendTwist>	mRodBendTwistConstraints;					///< The list of Cosserat rod constraints that connect two rods and limit the bend and twist
-	PhysicsMaterialList mMaterials { PhysicsMaterial::sDefault };	///< The materials of the faces of the body, referenced by Face::mMaterialIndex
+	PhysicsMaterialList mMaterials { Material::sDefault };	///< The materials of the faces of the body, referenced by Face::mMaterialIndex
 
 private:
 	friend class SoftBodyMotionProperties;

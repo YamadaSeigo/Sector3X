@@ -86,6 +86,13 @@ namespace SFW
 
 				isUpdateBuffer = true;
 			}
+
+			void SetRotation(const Math::Quatf& q) noexcept {
+				std::unique_lock lock(sharedMutex);
+				rot = q;
+				rot.Normalize();
+			}
+
 			/**
 			 * @brief カメラの位置を設定
 			 * @param position 新しい位置ベクトル

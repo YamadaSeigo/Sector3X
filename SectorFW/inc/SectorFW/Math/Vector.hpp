@@ -209,7 +209,7 @@ namespace SFW
 
 		template<typename T>
 		static Vec3<T> Normalize(const Vec3<T>& v) noexcept {
-			T len = Length(v);
+			T len = Length(v, v);
 			assert(len != 0);
 			return v / len;
 		}

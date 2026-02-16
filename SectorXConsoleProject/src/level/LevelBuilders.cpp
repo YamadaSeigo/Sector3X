@@ -2,6 +2,7 @@
 #include "app/AppContext.h"
 #include "app/appconfig.h"
 #include "environment/BiomeScatterGenerator.h"
+#include "environment/FenceLine.h"
 
 #include <SectorFW/Graphics/ImageLoader.h>
 
@@ -17,6 +18,7 @@
 #include "system/SimpleModelRenderSystem.h"
 #include "system/SpriteRenderSystem.h"
 #include "system/PlayerSystem.h"
+#include "system/ChasePlayerSystem.h"
 #include "system/EnvironmentSystem.h"
 #include "system/LightShadowSystem.h"
 #include "system/PointLightSystem.h"
@@ -175,24 +177,17 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 
 			auto pp = playerService->GetPlayerPosition();
 
-			auto camRot = perCameraService->GetRotation();
+			Math::Quatf yawRot = Math::Quatf::FromAxisAngle({0.0f,1.0f,0.0f}, Math::Deg2Rad(55.0f));
+
+			auto pitchRot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(-20.0f));
+			auto camRot = yawRot * pitchRot;
+
+			perCameraService->SetRotation(camRot);
+
 			Math::Vec3f r, u, f;
-			Math::ToBasis<float, Math::LH_ZForward>(camRot, r, u, f);
+			Math::ToBasis<float, Math::LH_ZForward>(yawRot, r, u, f);
 
-			Math::Quatf rot = Math::Quatf::FromAxisAngle(u, Math::Deg2Rad(55.0f));
-			perCameraService->Rotate(rot);
-
-			camRot = perCameraService->GetRotation();
-			Math::ToBasis<float, Math::LH_ZForward>(camRot, r, u, f);
-
-			rot = Math::Quatf::FromAxisAngle(r, Math::Deg2Rad(-20.0f));
-			perCameraService->Rotate(rot);
-
-			camRot = perCameraService->GetRotation();
-			Math::ToBasis<float, Math::LH_ZForward>(camRot, r, u, f);
-
-			Math::Vec3f backward = Math::Cross({ 0.0f, 1.0f, 0.0f }, r);
-			perCameraService->SetTarget(pp + backward * START_CAMERA_PLAYER_DISTANCE + Math::Vec3f{ 0.0f, 8.0f, 0.0f });
+			perCameraService->SetTarget(pp -f * START_CAMERA_PLAYER_DISTANCE + Math::Vec3f{ 0.0f, 8.0f, 0.0f });
 
 
 			auto& scheduler = pLevel->GetScheduler();
@@ -374,10 +369,13 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				RockB,
 				RockC,
 				TreeA,
+				TreeB,
+				TreeC,
 				YellowFlower,
 				WhiteCosmos,
 				YellowCosmos,
 				LightFlower,
+				WoodFence,
 				BiomeObjectCount
 			};
 
@@ -413,6 +411,12 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.pCustomNrmWFunc = WindService::ComputeTreeWeight;
 			modelAssetMgr->Add(modelDesc, modelAssetHandle[TreeA]);
 
+			modelDesc.path = "assets/model/Stylized/Tree02.gltf";
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[TreeB]);
+
+			modelDesc.path = "assets/model/Stylized/Tree03.gltf";
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[TreeC]);
+
 			modelDesc.path = "assets/model/Stylized/YellowFlower.gltf";
 			modelDesc.buildOccluders = false;
 			modelDesc.viewMax = 50.0f;
@@ -442,6 +446,12 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.pso = cullNoneWindEntityPSOHandle;
 			modelAssetMgr->Add(modelDesc, modelAssetHandle[LightFlower]);
 
+			modelDesc.path = "assets/model/Static/fence/fence01.gltf";
+			modelDesc.instancesPeak = 20;
+			modelDesc.viewMax = 80.0f;
+			modelDesc.pso = cullDefaultPSOHandle;
+			modelAssetMgr->Add(modelDesc, modelAssetHandle[WoodFence]);
+
 			modelDesc.ClearAdditionalBindings();
 
 			Math::AABB3f modelBounds[_countof(modelAssetHandle)];
@@ -463,6 +473,11 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.pCustomNrmWFunc = nullptr;
 			modelDesc.minAreaFrec = 0.001f;
 			modelAssetMgr->Add(modelDesc, playerModelHandle);
+
+			ModelAssetHandle playerLanternModelHandle;
+			modelDesc.path = "assets/model/Light/fantasy_lantern.gltf";
+			modelDesc.minAreaFrec = 0.0f;
+			modelAssetMgr->Add(modelDesc, playerLanternModelHandle);
 
 			ModelAssetHandle grassModelHandle;
 
@@ -527,12 +542,16 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				occAABB.ub.z *= 0.4f;
 			}
 
+			ModelAssetHandle bridgeModelHandle;
+			modelDesc.path = "assets/model/Static/Bridge/medieval_bridge.gltf";
+			modelDesc.buildOccluders = true;
+			modelAssetMgr->Add(modelDesc, bridgeModelHandle);
 
 			ModelAssetHandle ruinBreakTowerModelHandle;
 			modelDesc.path = "assets/model/Ruins/BreakTower/RuinBreakTowerA.gltf";
 			//中に入るタイプのモデルのオクル―ダーメッシュはまだできていないのでとりあえずfalse
 			modelDesc.buildOccluders = false;
-			existingModel = modelAssetMgr->Add(modelDesc, ruinBreakTowerModelHandle);
+			modelAssetMgr->Add(modelDesc, ruinBreakTowerModelHandle);
 
 
 			ModelAssetHandle ruinStoneModelHandle;
@@ -585,33 +604,18 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			makeShapeHandleFunc[RockA] = [&](Math::Vec3f scale)
 				{
-					// scaleを10分の1単位で丸め込む
-					// 既存のコリジョンデータを流用するため
-					scale *= 10.0f;
-					scale.x = std::floor(scale.x) / 10.0f;
-					scale.y = std::floor(scale.y) / 10.0f;
-					scale.z = std::floor(scale.z) / 10.0f;
-
 					return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_1.chullbin", true, scale);
 				};
 			makeShapeHandleFunc[RockB] = [&](Math::Vec3f scale)
 				{
-					scale *= 10.0f;
-					scale.x = std::floor(scale.x) / 10.0f;
-					scale.y = std::floor(scale.y) / 10.0f;
-					scale.z = std::floor(scale.z) / 10.0f;
 					return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_2.chullbin", true, scale);
 				};
 			makeShapeHandleFunc[RockC] = [&](Math::Vec3f scale)
 				{
-					scale *= 10.0f;
-					scale.x = std::floor(scale.x) / 10.0f;
-					scale.y = std::floor(scale.y) / 10.0f;
-					scale.z = std::floor(scale.z) / 10.0f;
 					return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_3.chullbin", true, scale);
 				};
 
-			makeShapeHandleFunc[TreeA] = [&](Math::Vec3f scale)
+			makeShapeHandleFunc[TreeA] = makeShapeHandleFunc[TreeB]  = makeShapeHandleFunc[TreeC] = [&](Math::Vec3f scale)
 				{
 					Physics::ShapeCreateDesc shapeDesc;
 					shapeDesc.shape = Physics::CapsuleDesc{ 10.0f,0.5f };
@@ -619,10 +623,15 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					return ps->MakeShape(shapeDesc);
 				};
 
+			makeShapeHandleFunc[WoodFence] = [&](Math::Vec3f scale)
+				{
+					return ps->MakeConvexCompound("generated/convex/Static/fence/fence01.chullbin", true, scale);
+				};
+
 			Graphics::PointLightDesc(*pMakePointLightDescFunc[BiomeObjectCount])(Math::Vec3f) = { nullptr };
 			pMakePointLightDescFunc[LightFlower] = [](Math::Vec3f location) {
 				Graphics::PointLightDesc plDesc;
-				plDesc.positionWS = location + Math::Vec3f(0.0f, 3.0f, 0.0f); // 少し上にずらす
+				plDesc.offsetWS = Math::Vec3f(0.0f, 3.0f, 0.0f); // 少し上にずらす
 				plDesc.color = { 0.2f,0.2f,1.0f }; // 青色
 				plDesc.intensity = 1.0f;
 				plDesc.range = 10.0f;
@@ -631,10 +640,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				};
 
 			bool enableOutline[BiomeObjectCount] = { false };
-			enableOutline[RockA] = true;
-			enableOutline[RockB] = true;
-			enableOutline[RockC] = true;
-			enableOutline[TreeA] = true;
+			enableOutline[RockA] = enableOutline[RockB] = enableOutline[RockC] = true;
+			enableOutline[TreeA] = enableOutline[TreeB] = enableOutline[TreeC] = true;
 
 			clock_t end = clock();
 
@@ -764,16 +771,24 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			noVegetationRgba.stride = noVegetationImg.width * noVegetationImg.desiredChannels;
 
 			// バイオーム定義(BiomeType参照)
-			uint16_t biomeData[4][4] = {
-				{0, 0, 0, 0},
-				{0, 1, 0, 0},
-				{0, 1, 1, 0},
-				{0, 0, 1, 0}
+			uint16_t biomeData[12][12] = {
+				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+				{0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
+				{0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
+				{0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+				{0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 			};
 
 			scatterInputs.biomeId.data = &biomeData[0][0];
-			scatterInputs.biomeId.w = 4;
-			scatterInputs.biomeId.h = 4;
+			scatterInputs.biomeId.w = 12;
+			scatterInputs.biomeId.h = 12;
 			scatterInputs.biomeId.stride = scatterInputs.biomeId.w;
 
 			// 地形サンプリング関数
@@ -798,7 +813,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			scatterInputs.heightUser = (void*)&terrain;
 
-			scatterInputs.globalSeed = 12345;
+			scatterInputs.globalSeed = 20050105;
 
 			biomeGen.SetInputs(scatterInputs);
 
@@ -842,7 +857,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				trees.maxSlopeDeg = 25.0f;
 				trees.scaleMin = 3.3f; trees.scaleMax = 4.0f;
 				trees.wGrass = 1.2f; trees.wSnow = 0.6f;
-				trees.models = { {TreeA, 1.0f} }; //モデルのバリエーションを増やす場合はここに書く
+				trees.models = { {TreeA, 1.0f}, {TreeB, 1.0f},{TreeC, 1.0f} }; //モデルのバリエーションを増やす場合はここに書く
 
 				BranchGroup rocks;
 				rocks.spawnProbability = 0.05f;
@@ -877,7 +892,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				modelComp.flags |= enableOutline[modelIdx] ? (uint16_t)EModelFlag::Outline : (uint16_t)EModelFlag::None;
 
 				float scale = inst.uniformScale;
-				Math::Vec3f location = inst.positionWS;
+				Math::Vec3f location = inst.offsetWS;
 				Math::Quatf rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, inst.yaw);
 
 				SFW::SpatialChunk::Bounds3f boundsWS = modelBounds[modelIdx];
@@ -908,7 +923,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						// 静的境界エンティティとして登録
 						id = levelSession.AddStaticBoundsEntity(
 							boundsWS,
-							CTransform{ inst.positionWS, rot, Math::Vec3f(scale,scale,scale) },
+							CTransform{ inst.offsetWS, rot, Math::Vec3f(scale,scale,scale) },
 							modelComp,
 							CColor{ {inst.tint, 1.0f} },
 							staticBody,
@@ -922,7 +937,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						// 静的境界エンティティとして登録
 						id = levelSession.AddStaticBoundsEntity(
 							boundsWS,
-							CTransform{ inst.positionWS, rot, Math::Vec3f(scale,scale,scale) },
+							CTransform{ inst.offsetWS, rot, Math::Vec3f(scale,scale,scale) },
 							modelComp,
 							CColor{ {inst.tint, 1.0f} },
 							staticBody
@@ -1004,6 +1019,56 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				}
 			}
 
+			//プレイヤーに追従するライト生成
+			for (int i = 0; i < 5; ++i)
+			{
+				Physics::ShapeCreateDesc shapeDesc;
+				shapeDesc.shape = Physics::SphereDesc{ 0.5f };
+				auto lanternShape = ps->MakeShape(shapeDesc);
+#ifdef _ENABLE_IMGUI
+				auto lanternDims = ps->GetShapeDims(lanternShape);
+#endif
+
+				Graphics::PointLightDesc plDesc;
+				plDesc.range = 15.0f;
+				plDesc.intensity = 1.2f;
+				auto plHandle = pointLightService->Create(plDesc);
+
+				Physics::CPhyBody phyBody{};
+				phyBody.type = Physics::BodyType::Dynamic;
+				phyBody.layer = Physics::Layers::MOVING;
+
+				Math::Vec3f location = playerStartPos + Math::Vec3f{ 0.0f, 5.0f, 0.0f };
+
+				auto chunk = pLevel->GetChunk(location);
+				auto key = chunk.value()->GetNodeKey();
+
+				//動く前提でチャンク移動用のタグを付与
+				CSpatialMotionTag motionTag{};
+				motionTag.handle = { key, chunk.value() };
+
+				CModel modelComp{ playerLanternModelHandle };
+				modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				auto id = levelSession.AddEntity(
+					CTransform{ location ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
+					modelComp,
+					phyBody,
+					Physics::PhysicsInterpolation{ location, {0.0f,0.0f,0.0f,1.0f} },
+					motionTag,
+					CColor{ {1.0f,1.0f,1.0f,1.0f} },
+					CPointLight{ plHandle },
+#ifdef _ENABLE_IMGUI
+					lanternDims.value(),
+#endif
+					CChasePlayer{}
+				);
+				if (id) {
+					Physics::PhysicsService::Material phyMat;
+					phyMat.gravityFactor = 0.0f; // 重力の影響を受けないようにする
+					ps->EnqueueCreateIntent(id.value(), lanternShape, key, phyMat);
+				}
+			}
+
 			//地形コリジョン生成
 			{
 				Physics::ShapeCreateDesc terrainShapeDesc;
@@ -1026,6 +1091,90 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				if (id) {
 					auto chunk = pLevel->GetChunk({ 0.0f, -40.0f, 0.0f }, EOutOfBoundsPolicy::ClampToEdge);
 					ps->EnqueueCreateIntent(id.value(), terrainShape, chunk.value()->GetNodeKey());
+				}
+			}
+
+			// フェンス生成
+			{
+				std::vector<Math::Vec3f> road = {
+					Math::Vec3f{607.215637f, 77.519569f, 599.671753f},
+					Math::Vec3f{668.081726f, 68.777458f, 592.452515f},
+					Math::Vec3f{731.580627f, 56.214619f, 591.262268f},
+					Math::Vec3f{799.360229f, 48.126629f, 594.139160f},
+					Math::Vec3f{861.856628f, 42.902073f, 597.171021f},
+					Math::Vec3f{940.440857f, 36.755699f, 597.259888f},
+					Math::Vec3f{1003.742432f, 39.001648f, 601.490173f},
+					Math::Vec3f{1044.597412f, 47.029774f, 600.783386f},
+					Math::Vec3f{1106.469727f, 50.481812f, 604.738098f},
+					Math::Vec3f{1160.296509f, 49.414864f, 608.373108f},
+					Math::Vec3f{1221.848877f, 42.603046f, 619.834839f},
+					Math::Vec3f{1283.123779f, 48.596622f, 630.732971f},
+					Math::Vec3f{1343.074341f, 49.404034f, 634.030273f},
+					Math::Vec3f{1412.888062f, 52.946095f, 643.868225f},
+					Math::Vec3f{1479.115356f, 49.775639f, 655.092285f},
+					Math::Vec3f{1549.663330f, 34.118298f, 668.385803f},
+					Math::Vec3f{1646.870850f, 33.255447f, 677.984009f},
+					Math::Vec3f{1764.958496f, 47.995502f, 713.339539f},
+					Math::Vec3f{1871.717651f, 43.683792f, 761.720520f},
+					Math::Vec3f{1971.495361f, 32.922108f, 816.616272f},
+					Math::Vec3f{2030.542236f, 32.146194f, 872.076111f},
+					Math::Vec3f{2068.801514f, 30.124413f, 924.875671f},
+					Math::Vec3f{2100.061768f, 36.532452f, 1004.549194f},
+					Math::Vec3f{2129.464355f, 40.790668f, 1075.113281f},
+				};
+
+				FenceParams fp;
+				fp.spacing = 200.0f;
+				fp.spacingJitter = 100.0f;
+				fp.baseWidth = 12.0f;
+				fp.widthRand = 1.0f;
+				fp.baseHeight = 0.0f;
+				fp.heightRand = 0.15f;
+				fp.yawJitterDeg = 3.0f;
+				fp.bothSides = true;
+				fp.randomSide = true; // 常に右側に置く
+
+				auto fences = GenerateFenceAlongPolyline(road, fp, /*seed=*/12345);
+
+				for (auto& fence : fences)
+				{
+					auto shape = ps->MakeConvexCompound("generated/convex/Static/fence/fence01.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+
+#ifdef _ENABLE_IMGUI
+					auto shapeDims = ps->GetShapeDims(shape);
+#endif
+
+					Physics::CPhyBody staticBody{};
+					staticBody.type = Physics::BodyType::Static; // staticにする
+					staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
+
+					// フェンスの位置は地面に合わせる
+					Math::Vec3f outNrm = { 0.0f,1.0f,0.0f };
+					bool sampleOK = terrain.SampleHeightNormalBilinear(fence.position.x, fence.position.z, fence.position.y, &outNrm);
+					if (!sampleOK) continue;
+
+					Math::Vec3f planeTangent = fence.tangent - outNrm * Math::Dot(fence.tangent, outNrm); // 接線ベクトルを地面に平行になるように修正
+					Math::Vec3f right = Math::Normalize(Math::Cross(outNrm, planeTangent));
+					Math::Quatf rot = Math::QuatFromBasis(right, outNrm, planeTangent);
+
+					CModel modelComp{ modelAssetHandle[WoodFence] };
+					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+
+					auto id = levelSession.AddStaticBoundsEntity(
+						modelBounds[WoodFence],
+						CTransform{ fence.position, rot, Math::Vec3f(1.0f, 1.0f,1.0f) },
+						modelComp,
+						CColor{ {1.0f,1.0f,1.0f,1.0f} },
+						staticBody
+#ifdef _ENABLE_IMGUI
+						, shapeDims.value()
+#endif
+						);
+					if (id) {
+						auto chunk = pLevel->GetChunk(fence.position);
+						ps->EnqueueCreateIntent(id.value(), shape, chunk.value()->GetNodeKey());
+					}
+
 				}
 			}
 
@@ -1064,6 +1213,13 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					return id;
 				};
 
+			//橋生成
+			{
+				auto shape = ps->MakeMesh("generated/meshshape/Static/Bridge/medieval_bridge.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				addGlobalEntityWithBody({ 0.647f, 0.27f }, 35.0f, bridgeModelHandle, shape,
+					Math::Quatf::FromAxisAngle({0.0f, 1.0f, 0.0f}, Math::Deg2Rad(140.0f)));
+			}
+
 			// 塔生成
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Ruins/Tower/RuinTower.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
@@ -1096,13 +1252,16 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto shape = ps->MakeConvexCompound("generated/convex/landmark/crystals/hugeCrystal.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				addGlobalEntityWithBody({ 0.8f, 0.8f }, -10.0f, landmarkCrystalModelHandle[0], shape);
 
+				auto pos = getTerrainLocation(0.8f, 0.8f);
+
 				Graphics::PointLightDesc plDesc;
-				plDesc.positionWS = getTerrainLocation(0.8f, 0.8f) + Math::Vec3f{ 0.0f,100.0f,0.0 };
+				plDesc.offsetWS = Math::Vec3f{ 0.0f,100.0f,0.0 };
 				plDesc.intensity = 10.0f;
 				plDesc.range = 300.0f;
 				plDesc.color = { 1.0f, 0.2f, 1.0f };
 				auto plHandle = pointLightService->Create(plDesc);
 				levelSession.AddGlobalEntity(
+					CTransform{ pos , {0.0f,0.0f,0.0f,1.0f}, Math::Vec3f(1.0f,1.0f,1.0f) },
 					CPointLight{ plHandle }
 				);
 			}
@@ -1128,9 +1287,9 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 				CLeafVolume leafVolume;
 				leafVolume.centerWS = location;
-				leafVolume.radius = 40.0f;
-				leafVolume.farDistance = 60.0f;
-				leafVolume.k = 20.0f;
+				leafVolume.radius = 80.0f;
+				leafVolume.farDistance = 100.0f;
+				leafVolume.k = 30.0f;
 
 				auto chunk = pLevel->GetChunk(location);
 				auto key = chunk.value()->GetNodeKey();
@@ -1150,13 +1309,14 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			scheduler.AddSystem<ModelRenderSystem>(*serviceLocator);
 
 			//scheduler.AddSystem<SimpleModelRenderSystem>(*serviceLocator);
-			//scheduler.AddSystem<PhysicsSystem>(*serviceLocator);
+			scheduler.AddSystem<PhysicsSystem>(*serviceLocator);
 			scheduler.AddSystem<BuildBodiesFromIntentsSystem>(*serviceLocator);
 			scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(*serviceLocator);
 			scheduler.AddSystem<PlayerSystem>(*serviceLocator);
 			scheduler.AddSystem<PointLightSystem>(*serviceLocator);
 			scheduler.AddSystem<FireflySystem>(*serviceLocator);
 			scheduler.AddSystem<LeafSystem>(*serviceLocator);
+			scheduler.AddSystem<ChasePlayerSystem>(*serviceLocator);
 			//scheduler.AddSystem<CleanModelSystem>(*serviceLocator);
 
 #ifdef _ENABLE_IMGUI

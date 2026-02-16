@@ -70,7 +70,7 @@ namespace TerrainBoot
             sheetTex,
             terrain.clustersX, terrain.clustersZ,
             sheetTexId, &Assets::ResolveTexturePath,
-            false
+			false
         );
 
         DX11::AssignClusterSplatsFromHandles(terrain, terrain.clustersX, terrain.clustersZ, handles,
@@ -80,8 +80,28 @@ namespace TerrainBoot
 
         static DX11::SplatArrayResources splatRes;
         DX11::InitSplatArrayResources(graphics.GetDevice(), splatRes, terrain.clusters.size());
-        BuildSplatArrayFromHandles(graphics.GetDevice(), graphics.GetDeviceContext(), *textureMgr, handles, splatRes);
+        BuildSplatArrayFromHandles(graphics.GetDevice(), graphics.GetDeviceContext(), *textureMgr, handles, splatRes.splatArraySRV);
+
+        uint32_t biomeSheetTexId = Assets::Tex_Biome_Control_0;
+        ComPtr<ID3D11Texture2D> biomeSheetTex;
+        auto biomeHandles = DX11::BuildClusterSplatTexturesFromSingleSheet(
+            graphics.GetDevice(), graphics.GetDeviceContext(), *textureMgr,
+            biomeSheetTex,
+            terrain.clustersX, terrain.clustersZ,
+            biomeSheetTexId, &Assets::ResolveTexturePath,
+            false
+        );
+        BuildSplatArrayFromHandles(graphics.GetDevice(), graphics.GetDeviceContext(), *textureMgr, biomeHandles, splatRes.biomeArraySRV);
+
         r.splatRes = &splatRes;
+
+        for(size_t i = 0; i < handles.size(); ++i) {
+            textureMgr->Release(handles[i]);
+		}
+
+        for (size_t i = 0; i < biomeHandles.size(); ++i) {
+            textureMgr->Release(biomeHandles[i]);
+        }
 
         std::vector<uint32_t> uniqueIds; DX11::CollectUniqueSplatIds(terrain, uniqueIds);
         auto id2slice = DX11::BuildSliceTable(uniqueIds);
@@ -94,13 +114,9 @@ namespace TerrainBoot
         r.cp = &cp;
 
         static DX11::CpuImage cpuSplatImage;
-#ifdef _DEBUG_SPLAT_DEBUG_NO_DSS
-		// なんでもいいから CPU にも同じフォーマットで欲しい（DSS なしでデバッグするため）
-        DX11::ReadTexture2DToCPU_RGBA8(graphics.GetDevice(), graphics.GetDeviceContext(), sheetTex.Get(), cpuSplatImage);
-#else
-        // dds前提の読み込み
+		// 重みテクスチャ情報をCPU側にコピーして保持しておく（Entity配置に利用する想定）
         DX11::ReadTexture2DToCPU(graphics.GetDevice(), graphics.GetDeviceContext(), sheetTex.Get(), cpuSplatImage);
-#endif
+
         r.cpuSplatImage = &cpuSplatImage;
 
         // block revert init + build

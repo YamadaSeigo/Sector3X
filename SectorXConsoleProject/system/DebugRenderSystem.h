@@ -115,10 +115,10 @@ class DebugRenderSystem : public ITypeSystem<
 	using LeafAccessor = ComponentAccessor<Read<CLeafVolume>>;
 
 	static constexpr inline uint32_t MAX_CAPACITY_3DLINE = 65536 * 2;
-	static constexpr inline uint32_t MAX_CAPACITY_3DVERTEX = MAX_CAPACITY_3DLINE * 2;
+	static constexpr inline uint32_t MAX_CAPACITY_3DVERTEX = MAX_CAPACITY_3DLINE << 1;
 
 	static constexpr inline uint32_t MAX_CAPACITY_2DLINE = 65536 / 4;
-	static constexpr inline uint32_t MAX_CAPACITY_2DVERTEX = MAX_CAPACITY_2DLINE * 2;
+	static constexpr inline uint32_t MAX_CAPACITY_2DVERTEX = MAX_CAPACITY_2DLINE << 1;
 
 	static constexpr inline uint32_t DRAW_LINE_CHUNK_COUNT = 12;
 public:
@@ -610,7 +610,7 @@ public:
 
 						auto lightData = pointLightService->GetNoLock(light.handle);
 
-						auto transMtx = Math::MakeTranslationMatrix(lightData.positionWS);
+						auto transMtx = Math::MakeTranslationMatrix(lightData.offsetWS);
 						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ lightData.range * 2.0f }); // 球は均一スケーリング
 						Graphics::DrawCommand cmd;
 						cmd.instanceIndex = uiSession.AllocInstance({ mtx });

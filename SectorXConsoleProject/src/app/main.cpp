@@ -376,6 +376,8 @@ int main(void)
 
 			ID3D11ShaderResourceView* splatSrv = terrainRes.splatRes->splatArraySRV.Get();
 			deviceContext->PSSetShaderResources(24, 1, &splatSrv);       // t24
+			ID3D11ShaderResourceView* biomeSrv = terrainRes.splatRes->biomeArraySRV.Get();
+			deviceContext->PSSetShaderResources(26, 1, &biomeSrv);      // t26
 
 			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 

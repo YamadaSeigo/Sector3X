@@ -81,7 +81,6 @@ namespace SFW
 			Math::Vec3f gAmbientColor;
 
 			float emissiveBoost = 3.0f;
-			float _padding[3]; // パディング// 16B
 		};
 
 		class LightShadowService

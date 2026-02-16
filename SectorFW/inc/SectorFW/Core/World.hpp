@@ -32,8 +32,8 @@ namespace SFW
 
 		struct Session;
 
-		// ロード完了時に呼び出すカスタム関数の型
-		using LoadedCustomFunc = std::function<void(Session*)>; //void(*)(Session*);
+		// 完了時に呼び出すカスタム関数の型
+		using ExecutedCustomFunc = std::function<void(Session*)>; //void(*)(Session*);
 
 		template<typename T>
 		struct LevelHolder
@@ -91,7 +91,7 @@ namespace SFW
 			 * @param executor 渡した場合,非同期でロードする
 			 * @details 全レベルの名前と比較して一致するものを探す
 			 */
-			void LoadLevel(const std::string levelName, IThreadExecutor* executor = nullptr, bool active = true, LoadedCustomFunc loadedCustom = nullptr)
+			void LoadLevel(const std::string levelName, IThreadExecutor* executor = nullptr, bool active = true, ExecutedCustomFunc loadedCustom = nullptr)
 			{
 				LevelCustumFunc(levelName, [&](auto& holder) {
 					auto& level = holder.level;
@@ -99,6 +99,9 @@ namespace SFW
 					// 1) メイン側で多重ロード防止（必須）
 					if (!level->TryBeginLoading()) {
 						LOG_WARNING("Level {%s} is already loaded or loading.", levelName.c_str());
+
+						if (loadedCustom) loadedCustom(this);
+
 						return;
 					}
 
@@ -201,15 +204,17 @@ namespace SFW
 			}
 
 			template<template<typename> class SystemType>
-			void RemoveSystemFromLevel(const std::string levelName) {
+			void RemoveSystemFromLevel(const std::string levelName, ExecutedCustomFunc customFunc = nullptr) {
 				LevelCustumFunc(levelName, [&](auto& holder) {
 					auto& sc = holder.level->GetScheduler();
 					sc.RemoveSystem<SystemType>();
 					});
+
+				if (customFunc) customFunc(this);
 			}
 
 			template<template<typename> class SystemType>
-			void PauseResumeSystemInLevel(const std::string levelName, bool pause) {
+			void PauseResumeSystemInLevel(const std::string levelName, bool pause, ExecutedCustomFunc customFunc = nullptr) {
 				LevelCustumFunc(levelName, [&](auto& holder) {
 					auto& sc = holder.level->GetScheduler();
 					if (pause) {
@@ -219,6 +224,8 @@ namespace SFW
 						sc.ResumeSystem<SystemType>();
 					}
 					});
+
+				if (customFunc) customFunc(this);
 			}
 		private:
 			template<typename Func>
@@ -304,7 +311,7 @@ namespace SFW
 		class LoadLevelCommand : public IRequestCommand
 		{
 		public:
-			LoadLevelCommand(const std::string& name, LoadedCustomFunc customFunc, bool async, bool active)
+			LoadLevelCommand(const std::string& name, ExecutedCustomFunc customFunc, bool async, bool active)
 				: levelName(name), loadedCustomFunc(customFunc), isAsync(async), active(active) {
 			}
 
@@ -313,7 +320,7 @@ namespace SFW
 			}
 		private:
 			std::string levelName;
-			LoadedCustomFunc loadedCustomFunc = nullptr;
+			ExecutedCustomFunc loadedCustomFunc = nullptr;
 			bool isAsync;
 			bool active;
 		};
@@ -323,12 +330,27 @@ namespace SFW
 		class CleanLevelCommand : public IRequestCommand
 		{
 		public:
-			CleanLevelCommand(const std::string& name) : levelName(name) {}
+			CleanLevelCommand(const std::string& name, ExecutedCustomFunc customFunc) : levelName(name), cleanedFunc(customFunc) {}
 			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
 				pWorldSession->CleanLevel(levelName);
 			}
 		private:
 			std::string levelName;
+			ExecutedCustomFunc cleanedFunc = nullptr;
+		};
+
+		class PauseResumeLevelCommand : public IRequestCommand
+		{
+		public:
+			PauseResumeLevelCommand(const std::string& name, bool pause, ExecutedCustomFunc func) : levelName(name), pause(pause), customFunc(func) {}
+			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
+
+				pWorldSession->PauseResumeSystemInLevel(levelName, pause);
+			}
+		private:
+			std::string levelName;
+			ExecutedCustomFunc customFunc = nullptr;
+			bool pause;
 		};
 
 		template<template<typename> class SystemType>
@@ -425,12 +447,16 @@ namespace SFW
 				return std::make_unique<AddLevelCommand<T>>(std::move(level), std::forward<Func>(customFunc)...);
 			}
 
-			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLoadLevelCommand(const std::string& name, bool isAsync = false, bool active = true, LoadedCustomFunc customFunc = nullptr) const noexcept {
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLoadLevelCommand(const std::string& name, bool isAsync = false, bool active = true, ExecutedCustomFunc customFunc = nullptr) const noexcept {
 				return std::make_unique<LoadLevelCommand>(name, customFunc, isAsync, active);
 			}
 
-			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateCleanLevelCommand(const std::string& name) const noexcept {
-				return std::make_unique<CleanLevelCommand>(name);
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateCleanLevelCommand(const std::string& name, ExecutedCustomFunc customFunc = nullptr) const noexcept {
+				return std::make_unique<CleanLevelCommand>(name, customFunc);
+			}
+
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreatePauseResumeLevelCommand(const std::string& name, bool pause, ExecutedCustomFunc customFunc = nullptr) const noexcept {
+				return std::make_unique<PauseResumeLevelCommand>(name, pause, customFunc);
 			}
 
 			template<template<typename> class System>
@@ -654,7 +680,7 @@ namespace SFW
 			return requestService;
 		}
 
-		void LoadLevel(const std::string levelName, bool async = false, bool active = true, LoadedCustomFunc customFunc = nullptr)
+		void LoadLevel(const std::string levelName, bool async = false, bool active = true, ExecutedCustomFunc customFunc = nullptr)
 		{
 			auto requestCmd = requestService.CreateLoadLevelCommand(levelName, async, active, customFunc);
 			requestService.PushCommand(std::move(requestCmd));

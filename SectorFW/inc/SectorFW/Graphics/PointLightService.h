@@ -27,7 +27,7 @@ namespace SFW::Graphics
 	// ゲーム側のライトパラメータ
 	struct PointLightDesc
 	{
-		Math::Vec3f positionWS = { 0,0,0 };
+		Math::Vec3f offsetWS = { 0,0,0 };
 		Math::Vec3f color = { 1,1,1 };
 		float  intensity = 1.0f;   // 明るさ
 		float  range = 10.0f;  // 影響距離
@@ -45,7 +45,7 @@ namespace SFW::Graphics
 			const Math::Vec3f& color_,
 			float intensity_,
 			uint32_t flags_)
-			: positionWS(posWS)
+			: offsetWS(posWS)
 			, range(range_)
 			, color(color_)
 			, intensity(intensity_)
@@ -54,7 +54,7 @@ namespace SFW::Graphics
 		{
 		}
 
-		Math::Vec3f positionWS = {}; float range = {};
+		Math::Vec3f offsetWS = {}; float range = {};
 		Math::Vec3f color = {};      float intensity = {};
 		float invRange = {};
 		uint32_t flags = {};
@@ -110,7 +110,7 @@ namespace SFW::Graphics
 		 * @param h　追加する点光源ハンドル
 		 * @return　追加に成功したら true、失敗なら false
 		 */
-		bool PushShowHandle(PointLightHandle h);
+		bool PushShowHandle(PointLightHandle h, Math::Vec3f pos);
 
 		const GpuPointLight* BuildGpuLights(uint32_t& outCount) noexcept;
 
@@ -145,6 +145,8 @@ namespace SFW::Graphics
 
 		size_t m_frameIndex = 0;
 		uint32_t m_showIndex[2][MAX_FRAME_POINTLIGHT] = {};
+		Math::Vec3f m_showPos[2][MAX_FRAME_POINTLIGHT] = {};
+
 		std::atomic<uint32_t > m_showCount[2] = { 0,0 };
 
 		GpuPointLight m_gpuLights[RENDER_BUFFER_COUNT][MAX_FRAME_POINTLIGHT] = {};

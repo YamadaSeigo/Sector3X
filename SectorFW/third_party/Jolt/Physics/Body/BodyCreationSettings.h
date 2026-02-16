@@ -64,8 +64,8 @@ public:
 	using IDToGroupFilterMap = StreamUtils::IDToObjectMap<GroupFilter>;
 	using ShapeToIDMap = Shape::ShapeToIDMap;
 	using IDToShapeMap = Shape::IDToShapeMap;
-	using MaterialToIDMap = StreamUtils::ObjectToIDMap<PhysicsMaterial>;
-	using IDToMaterialMap = StreamUtils::IDToObjectMap<PhysicsMaterial>;
+	using MaterialToIDMap = StreamUtils::ObjectToIDMap<Material>;
+	using IDToMaterialMap = StreamUtils::IDToObjectMap<Material>;
 
 	/// Save body creation settings, its shape, materials and group filter. Pass in an empty map in ioShapeMap / ioMaterialMap / ioGroupFilterMap or reuse the same map while saving multiple shapes to the same stream in order to avoid writing duplicates.
 	/// Pass nullptr to ioShapeMap and ioMaterial map to skip saving shapes

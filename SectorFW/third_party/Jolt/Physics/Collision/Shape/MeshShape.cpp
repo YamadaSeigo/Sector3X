@@ -415,11 +415,11 @@ uint MeshShape::GetMaterialIndex(const SubShapeID& inSubShapeID) const
 	return flags & FLAGS_MATERIAL_MASK;
 }
 
-const PhysicsMaterial* MeshShape::GetMaterial(const SubShapeID& inSubShapeID) const
+const Material* MeshShape::GetMaterial(const SubShapeID& inSubShapeID) const
 {
 	// Return the default material if there are no materials on this shape
 	if (mMaterials.empty())
-		return PhysicsMaterial::sDefault;
+		return Material::sDefault;
 
 	return mMaterials[GetMaterialIndex(inSubShapeID)];
 }
@@ -1050,7 +1050,7 @@ struct MeshShape::MSGetTrianglesContext
 			if (mShape->mMaterials.empty())
 			{
 				// No materials, output default
-				const PhysicsMaterial* default_material = PhysicsMaterial::sDefault;
+				const Material* default_material = Material::sDefault;
 				for (int m = 0; m < inNumTriangles; ++m)
 					*mMaterials++ = default_material;
 			}
@@ -1078,7 +1078,7 @@ struct MeshShape::MSGetTrianglesContext
 	int							mMaxTrianglesRequested;
 	Float3* mTriangleVertices;
 	int							mNumTrianglesFound;
-	const PhysicsMaterial** mMaterials;
+	const Material** mMaterials;
 	bool						mShouldAbort;
 	bool						mIsInsideOut;
 };
@@ -1091,7 +1091,7 @@ void MeshShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox& i
 	new (&ioContext) MSGetTrianglesContext(this, inBox, inPositionCOM, inRotation, inScale);
 }
 
-int MeshShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int MeshShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	static_assert(cGetTrianglesMinTrianglesRequested >= MaxTrianglesPerLeaf, "cGetTrianglesMinTrianglesRequested is too small");
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
@@ -1262,7 +1262,7 @@ Shape::Stats MeshShape::GetStats() const
 	Visitor visitor;
 	WalkTree(visitor);
 
-	return Stats(sizeof(*this) + mMaterials.size() * sizeof(Ref<PhysicsMaterial>) + mTree.size() * sizeof(uint8), visitor.mNumTriangles);
+	return Stats(sizeof(*this) + mMaterials.size() * sizeof(Ref<Material>) + mTree.size() * sizeof(uint8), visitor.mNumTriangles);
 }
 
 uint32 MeshShape::GetTriangleUserData(const SubShapeID& inSubShapeID) const

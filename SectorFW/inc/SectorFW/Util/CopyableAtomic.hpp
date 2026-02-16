@@ -33,9 +33,9 @@ namespace SFW
 		 * @param other コピー元
 		 * @return CopyableAtomic& 自身の参照
 		 */
-		CopyableAtomic(const CopyableAtomic&) noexcept : value(0) {}
-		CopyableAtomic& operator=(const CopyableAtomic&) noexcept {
-			value.store(0);
+		CopyableAtomic(const CopyableAtomic& other) noexcept : value(other.load(std::memory_order_acquire)) {}
+		CopyableAtomic& operator=(const CopyableAtomic& other) noexcept {
+			value.store(other.load(std::memory_order_acquire), std::memory_order_release);
 			return *this;
 		}
 

@@ -1048,13 +1048,13 @@ void BodyInterface::SetUserData(const BodyID& inBodyID, uint64 inUserData) const
 		lock.GetBody().SetUserData(inUserData);
 }
 
-const PhysicsMaterial* BodyInterface::GetMaterial(const BodyID& inBodyID, const SubShapeID& inSubShapeID) const
+const Material* BodyInterface::GetMaterial(const BodyID& inBodyID, const SubShapeID& inSubShapeID) const
 {
 	BodyLockRead lock(*mBodyLockInterface, inBodyID);
 	if (lock.Succeeded())
 		return lock.GetBody().GetShape()->GetMaterial(inSubShapeID);
 	else
-		return PhysicsMaterial::sDefault;
+		return Material::sDefault;
 }
 
 void BodyInterface::InvalidateContactCache(const BodyID& inBodyID)

@@ -22,14 +22,14 @@ public:
 									PlaneShapeSettings() = default;
 
 	/// Create a plane shape.
-									PlaneShapeSettings(const Plane &inPlane, const PhysicsMaterial *inMaterial = nullptr, float inHalfExtent = cDefaultHalfExtent) : mPlane(inPlane), mMaterial(inMaterial), mHalfExtent(inHalfExtent) { }
+									PlaneShapeSettings(const Plane &inPlane, const Material *inMaterial = nullptr, float inHalfExtent = cDefaultHalfExtent) : mPlane(inPlane), mMaterial(inMaterial), mHalfExtent(inHalfExtent) { }
 
 	// See: ShapeSettings
 	virtual ShapeResult				Create() const override;
 
 	Plane							mPlane;														///< Plane that describes the shape. The negative half space is considered solid.
 
-	RefConst<PhysicsMaterial>		mMaterial;													///< Surface material of the plane
+	RefConst<Material>		mMaterial;													///< Surface material of the plane
 
 	static constexpr float			cDefaultHalfExtent = 1000.0f;								///< Default half-extent of the plane (total size along 1 axis will be 2 * half-extent)
 
@@ -46,7 +46,7 @@ public:
 
 	/// Constructor
 									PlaneShape() : Shape(EShapeType::Plane, EShapeSubType::Plane) { }
-									PlaneShape(const Plane &inPlane, const PhysicsMaterial *inMaterial = nullptr, float inHalfExtent = PlaneShapeSettings::cDefaultHalfExtent) : Shape(EShapeType::Plane, EShapeSubType::Plane), mPlane(inPlane), mMaterial(inMaterial), mHalfExtent(inHalfExtent) { CalculateLocalBounds(); }
+									PlaneShape(const Plane &inPlane, const Material *inMaterial = nullptr, float inHalfExtent = PlaneShapeSettings::cDefaultHalfExtent) : Shape(EShapeType::Plane, EShapeSubType::Plane), mPlane(inPlane), mMaterial(inMaterial), mHalfExtent(inHalfExtent) { CalculateLocalBounds(); }
 									PlaneShape(const PlaneShapeSettings &inSettings, ShapeResult &outResult);
 
 	/// Get the plane
@@ -71,7 +71,7 @@ public:
 	virtual MassProperties			GetMassProperties() const override;
 
 	// See Shape::GetMaterial
-	virtual const PhysicsMaterial *	GetMaterial(const SubShapeID &inSubShapeID) const override	{ JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID"); return GetMaterial(); }
+	virtual const Material *	GetMaterial(const SubShapeID &inSubShapeID) const override	{ JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID"); return GetMaterial(); }
 
 	// See Shape::GetSurfaceNormal
 	virtual Vec3					GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLocalSurfacePosition) const override { JPH_ASSERT(inSubShapeID.IsEmpty(), "Invalid subshape ID"); return mPlane.GetNormal(); }
@@ -98,7 +98,7 @@ public:
 	virtual void					GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const override;
 
 	// See Shape::GetTrianglesNext
-	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const override;
+	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const override;
 
 	// See Shape::GetSubmergedVolume
 	virtual void					GetSubmergedVolume(Mat44Arg inCenterOfMassTransform, Vec3Arg inScale, const Plane &inSurface, float &outTotalVolume, float &outSubmergedVolume, Vec3 &outCenterOfBuoyancy JPH_IF_DEBUG_RENDERER(, RVec3Arg inBaseOffset)) const override { JPH_ASSERT(false, "Not supported"); }
@@ -115,8 +115,8 @@ public:
 	virtual float					GetVolume() const override									{ return 0; }
 
 	/// Material of the shape
-	void							SetMaterial(const PhysicsMaterial *inMaterial)				{ mMaterial = inMaterial; }
-	const PhysicsMaterial *			GetMaterial() const											{ return mMaterial != nullptr? mMaterial : PhysicsMaterial::sDefault; }
+	void							SetMaterial(const Material *inMaterial)				{ mMaterial = inMaterial; }
+	const Material *			GetMaterial() const											{ return mMaterial != nullptr? mMaterial : Material::sDefault; }
 
 	// Register shape functions with the registry
 	static void						sRegister();
@@ -139,7 +139,7 @@ private:
 	static void						sCastConvexVsPlane(const ShapeCast &inShapeCast, const ShapeCastSettings &inShapeCastSettings, const Shape *inShape, Vec3Arg inScale, const ShapeFilter &inShapeFilter, Mat44Arg inCenterOfMassTransform2, const SubShapeIDCreator &inSubShapeIDCreator1, const SubShapeIDCreator &inSubShapeIDCreator2, CastShapeCollector &ioCollector);
 
 	Plane							mPlane;
-	RefConst<PhysicsMaterial>		mMaterial;
+	RefConst<Material>		mMaterial;
 	float							mHalfExtent;
 	AABox							mLocalBounds;
 };

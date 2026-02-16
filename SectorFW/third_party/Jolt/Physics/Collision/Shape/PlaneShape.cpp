@@ -410,7 +410,7 @@ void PlaneShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox& 
 		(com * vertices[i]).StoreFloat3(&context->mVertices[i]);
 }
 
-int PlaneShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int PlaneShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	static_assert(cGetTrianglesMinTrianglesRequested >= 2, "cGetTrianglesMinTrianglesRequested is too small");
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
@@ -434,7 +434,7 @@ int PlaneShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTriang
 	if (outMaterials != nullptr)
 	{
 		// Get material
-		const PhysicsMaterial* material = GetMaterial(SubShapeID());
+		const Material* material = GetMaterial(SubShapeID());
 		outMaterials[0] = material;
 		outMaterials[1] = material;
 	}

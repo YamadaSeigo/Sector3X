@@ -30,7 +30,7 @@ class CollidePointResult;
 class CollideShapeResult;
 class SubShapeIDCreator;
 class SubShapeID;
-class PhysicsMaterial;
+class Material;
 class TransformedShape;
 class Plane;
 class CollideSoftBodyVertexIterator;
@@ -49,7 +49,7 @@ using TransformedShapeCollector = CollisionCollector<TransformedShape, Collision
 
 using ShapeRefC = RefConst<Shape>;
 using ShapeList = Array<ShapeRefC>;
-using PhysicsMaterialRefC = RefConst<PhysicsMaterial>;
+using PhysicsMaterialRefC = RefConst<Material>;
 using PhysicsMaterialList = Array<PhysicsMaterialRefC>;
 
 /// Shapes are categorized in groups, each shape can return which group it belongs to through its Shape::GetType function.
@@ -247,7 +247,7 @@ public:
 	virtual const Shape *			GetLeafShape([[maybe_unused]] const SubShapeID &inSubShapeID, SubShapeID &outRemainder) const;
 
 	/// Get the material assigned to a particular sub shape ID
-	virtual const PhysicsMaterial *	GetMaterial(const SubShapeID &inSubShapeID) const = 0;
+	virtual const Material *	GetMaterial(const SubShapeID &inSubShapeID) const = 0;
 
 	/// Get the surface normal of a particular sub shape ID and point on surface (all vectors are relative to center of mass for this shape).
 	/// Note: When you have a CollideShapeResult or ShapeCastResult you should use -mPenetrationAxis.Normalized() as contact normal as GetSurfaceNormal will only return face normals (and not vertex or edge normals).
@@ -363,7 +363,7 @@ public:
 	/// The function returns the amount of triangles that it found (which will be <= inMaxTrianglesRequested), or 0 if there are no more triangles.
 	/// Note that the function can return a value < inMaxTrianglesRequested and still have more triangles to process (triangles can be returned in blocks).
 	/// Note that the function may return triangles outside of the requested box, only coarse culling is performed on the returned triangles.
-	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const = 0;
+	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const = 0;
 
 	///@name Binary serialization of the shape. Note that this saves the 'cooked' shape in a format which will not be backwards compatible for newer library versions.
 	/// In this case you need to recreate the shape from the ShapeSettings object and save it again. The user is expected to call SaveBinaryState followed by SaveMaterialState and SaveSubShapeState.
@@ -392,8 +392,8 @@ public:
 
 	using ShapeToIDMap = StreamUtils::ObjectToIDMap<Shape>;
 	using IDToShapeMap = StreamUtils::IDToObjectMap<Shape>;
-	using MaterialToIDMap = StreamUtils::ObjectToIDMap<PhysicsMaterial>;
-	using IDToMaterialMap = StreamUtils::IDToObjectMap<PhysicsMaterial>;
+	using MaterialToIDMap = StreamUtils::ObjectToIDMap<Material>;
+	using IDToMaterialMap = StreamUtils::IDToObjectMap<Material>;
 
 	/// Save this shape, all its children and its materials. Pass in an empty map in ioShapeMap / ioMaterialMap or reuse the same map while saving multiple shapes to the same stream in order to avoid writing duplicates.
 	void							SaveWithChildren(StreamOut &inStream, ShapeToIDMap &ioShapeMap, MaterialToIDMap &ioMaterialMap) const;

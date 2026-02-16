@@ -147,10 +147,10 @@ public:
 	virtual MassProperties			GetMassProperties() const override;
 
 	// See Shape::GetMaterial
-	virtual const PhysicsMaterial *	GetMaterial(const SubShapeID &inSubShapeID) const override;
+	virtual const Material *	GetMaterial(const SubShapeID &inSubShapeID) const override;
 
 	/// Overload to get the material at a particular location
-	const PhysicsMaterial *			GetMaterial(uint inX, uint inY) const;
+	const Material *			GetMaterial(uint inX, uint inY) const;
 
 	// See Shape::GetSurfaceNormal
 	virtual Vec3					GetSurfaceNormal(const SubShapeID &inSubShapeID, Vec3Arg inLocalSurfacePosition) const override;
@@ -180,7 +180,7 @@ public:
 	virtual void					GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const override;
 
 	// See Shape::GetTrianglesNext
-	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const override;
+	virtual int						GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const override;
 
 	/// Get height field position at sampled location (inX, inY).
 	/// where inX and inY are integers in the range inX e [0, mSampleCount - 1] and inY e [0, mSampleCount - 1].

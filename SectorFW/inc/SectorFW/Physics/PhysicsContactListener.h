@@ -98,7 +98,7 @@ namespace SFW
 				JPH::RVec3Arg                inContactPosition,
 				JPH::Vec3Arg                 inContactNormal,
 				JPH::Vec3Arg                 inContactVelocity,
-				const JPH::PhysicsMaterial* inContactMaterial,
+				const JPH::Material* inContactMaterial,
 				JPH::Vec3Arg                 inCharacterVelocity,
 				JPH::Vec3& ioNewCharacterVelocity) override
 			{
@@ -111,7 +111,7 @@ namespace SFW
 				JPH::RVec3Arg                inContactPosition,
 				JPH::Vec3Arg                 inContactNormal,
 				JPH::Vec3Arg                 inContactVelocity,
-				const JPH::PhysicsMaterial* inContactMaterial,
+				const JPH::Material* inContactMaterial,
 				JPH::Vec3Arg                 inCharacterVelocity,
 				JPH::Vec3& ioNewCharacterVelocity) override
 			{

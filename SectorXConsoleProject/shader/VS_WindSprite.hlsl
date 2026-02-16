@@ -2,7 +2,7 @@
 
 cbuffer WindCB : register(b11)
 {
-    float gTime; // 経過時間
+    float gTime; // 経過時間 (既にwindspeedを反映済み)
     float gNoiseFreq; // ノイズ空間スケール（WorldPos に掛ける）
     float gBigWaveWeight; // 1本あたりの高さ（ローカルY の最大値）
     float gWindSpeed; // 風アニメ速度
@@ -44,14 +44,14 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     // ---- 風の位相：ワールド位置＋時間 ----
     float3 dir = normalize(gWindDir);
     float phaseBase = dot(t, dir) * gNoiseFreq;
-    float phase = phaseBase + gTime * gWindSpeed;
+    float phase = phaseBase + gTime * 0.5f;
 
     // ---- 揺れ量（基本波＋少し不規則）----
     float s1 = sin(phase);
     float s2 = sin(phase * 2.13 + 1.7); // 2本目でゆらぎ
     float gust = sin(phase * 0.37 + 5.0) * gWindAmplitude;
 
-    float sway = (s1 * 0.7 + s2 * 0.3 + gust) * gWindAmplitude * 10.0f;
+    float sway = (s1 * 0.7 + s2 * 0.3 + gust) * gWindAmplitude * 20.0f;
 
     // ---- オフセット方向（XZ）----
     float3 offsetW = float3(dir.x, 0.0, dir.y) * (sway * w);

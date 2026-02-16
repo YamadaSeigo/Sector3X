@@ -53,7 +53,7 @@ void CharacterBase::RestoreState(StateRecorder& inStream)
 	inStream.Read(mGroundNormal);
 	inStream.Read(mGroundVelocity);
 	mGroundUserData = 0; // Cannot restore user data
-	mGroundMaterial = PhysicsMaterial::sDefault; // Cannot restore material
+	mGroundMaterial = Material::sDefault; // Cannot restore material
 }
 
 JPH_NAMESPACE_END

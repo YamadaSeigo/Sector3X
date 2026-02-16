@@ -44,7 +44,7 @@ DecoratedShape::DecoratedShape(EShapeSubType inSubType, const DecoratedShapeSett
 	}
 }
 
-const PhysicsMaterial* DecoratedShape::GetMaterial(const SubShapeID& inSubShapeID) const
+const Material* DecoratedShape::GetMaterial(const SubShapeID& inSubShapeID) const
 {
 	return mInnerShape->GetMaterial(inSubShapeID);
 }

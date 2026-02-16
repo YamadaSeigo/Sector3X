@@ -45,7 +45,7 @@ using ModelHandle = uint32_t;
 struct ScatterInstance
 {
     ModelHandle     model = 0;
-    Math::Vec3f     positionWS{}; // world-space
+    Math::Vec3f     offsetWS{}; // world-space
     float           yaw = 0.0f;    // radians
     float           uniformScale = 1.0f;
     Math::Vec3f     tint = { 1,1,1 };

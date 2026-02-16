@@ -3,7 +3,7 @@
 // 地形グリッド情報
 cbuffer TerrainGridCB : register(b10)
 {
-    float2 gOriginXZ; // ワールド座標の基準 (x,z) 
+    float2 gOriginXZ; // ワールド座標の基準 (x,z)
     float2 gClusterXZ; // 1クラスタのワールドサイズ (x,z) ※同上
     uint gDimX; // クラスタ数X
     uint gDimZ; // クラスタ数Z
@@ -15,14 +15,14 @@ cbuffer TerrainGridCB : register(b10)
     uint gVertsZ; // (= vertsZ)
 
     uint2 padding; // 未使用
-    
+
     float2 gCellSize; // Heightfield のセルサイズ (x,z)
     float2 gHeightMapInvSize; // 1/width, 1/height
 };
 
 cbuffer WindCB : register(b11)
 {
-    float gTime; // 経過時間
+    float gWindTime; // 経過時間 (既にwindspeedを反映済み)
     float gNoiseFreq; // ノイズ空間スケール（WorldPos に掛ける）
     float gBigWaveWeight; // 大きな揺れの重み (0..1)
     float gWindSpeed; // 風アニメ速度
@@ -91,13 +91,13 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     VSOutput output;
     float3 wp = mul(R, input.position) + baseWorldPos;
-    
+
    // ---- 1) 全体をまとめる“大きな揺れ” ----
    // 空間周波数をかなり低くして「大きなうねり」
     float bigSpatial = dot(baseWorldPos, gWindDir * 0.03f);
 
    // GrassMovementService 側でグルーブさせた Time を使う前提
-    float bigPhase = bigSpatial + gTime * gWindSpeed;
+    float bigPhase = bigSpatial + gWindTime;
     float bigWave = sin(bigPhase); // -1..1
 
    // ---- 2) 個々の“ゆらぎ”用の小さいノイズ ----
@@ -106,7 +106,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     float noiseN11 = noise01 * 2.0f - 1.0f;
 
    // 小さい振幅で “バラつき” だけを付ける
-    float smallPhase = noiseN11 + gTime * gWindSpeed;
+    float smallPhase = noiseN11 + gWindTime;
     float smallWave = sin(smallPhase);
 
    // ---- 3) 合成 ----

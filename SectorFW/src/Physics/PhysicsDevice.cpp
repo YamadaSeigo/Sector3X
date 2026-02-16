@@ -90,16 +90,17 @@ namespace SFW::Physics {
 	void PhysicsDevice::ApplyCommand(const PhysicsCommand& cmd) {
 		std::visit([this](auto&& c) {
 			using C = std::decay_t<decltype(c)>;
-			if constexpr (std::is_same_v<C, CreateBodyCmd>)          ApplyCreate(c);
-			else if constexpr (std::is_same_v<C, DestroyBodyCmd>)    ApplyDestroy(c);
-			else if constexpr (std::is_same_v<C, TeleportCmd>)       ApplyTeleport(c);
-			else if constexpr (std::is_same_v<C, SetLinearVelocityCmd>)  ApplySetLinVel(c);
-			else if constexpr (std::is_same_v<C, SetAngularVelocityCmd>) ApplySetAngVel(c);
-			else if constexpr (std::is_same_v<C, AddImpulseCmd>)     ApplyAddImpulse(c);
-			else if constexpr (std::is_same_v<C, SetKinematicTargetCmd>) ApplySetKinematicTarget(c);
-			else if constexpr (std::is_same_v<C, SetCollisionMaskCmd>)   ApplySetCollisionMask(c);
-			else if constexpr (std::is_same_v<C, SetObjectLayerCmd>)     ApplySetObjectLayer(c);
-			else if constexpr (std::is_same_v<C, RayCastCmd>)            ApplyRayCast(c);
+			if constexpr (std::is_same_v<C, CreateBodyCmd>)					ApplyCreate(c);
+			else if constexpr (std::is_same_v<C, DestroyBodyCmd>)			ApplyDestroy(c);
+			else if constexpr (std::is_same_v<C, TeleportCmd>)				ApplyTeleport(c);
+			else if constexpr (std::is_same_v<C, SetLinearVelocityCmd>)		ApplySetLinVel(c);
+			else if constexpr (std::is_same_v<C, SetAngularVelocityCmd>)	ApplySetAngVel(c);
+			else if constexpr (std::is_same_v<C, AddForceCmd>)				ApplyAddForce(c);
+			else if constexpr (std::is_same_v<C, AddImpulseCmd>)			ApplyAddImpulse(c);
+			else if constexpr (std::is_same_v<C, SetKinematicTargetCmd>)	ApplySetKinematicTarget(c);
+			else if constexpr (std::is_same_v<C, SetCollisionMaskCmd>)		ApplySetCollisionMask(c);
+			else if constexpr (std::is_same_v<C, SetObjectLayerCmd>)		ApplySetObjectLayer(c);
+			else if constexpr (std::is_same_v<C, RayCastCmd>)				ApplyRayCast(c);
 			else if constexpr (std::is_same_v<C, CreateCharacterCmd>)       ApplyCreateCharacter(c);
 			else if constexpr (std::is_same_v<C, SetCharacterVelocityCmd>)  ApplySetCharacterVelocity(c);
 			else if constexpr (std::is_same_v<C, SetCharacterRotationCmd>)  ApplySetCharacterRotation(c);
@@ -122,6 +123,7 @@ namespace SFW::Physics {
 		JPH::BodyCreationSettings bc(shape, ToJVec3(c.worldTM.pos), ToJQuat(c.worldTM.rot), motion, c.layer);
 		bc.mFriction = c.friction;
 		bc.mRestitution = c.restitution;
+		bc.mGravityFactor = c.gravityFactor;
 		if (motion == JPH::EMotionType::Dynamic) {
 			bc.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia; // 密度指定も可
 			bc.mMassPropertiesOverride.mMass = c.density * 0.001f; // 便宜上（実際は体積から計算を推奨）
@@ -182,6 +184,16 @@ namespace SFW::Physics {
 		auto it = m_e2b.find(c.e);
 		if (it == m_e2b.end()) return;
 		m_bi->SetAngularVelocity(it->second, ToJVec3(c.w));
+	}
+
+	void PhysicsDevice::ApplyAddForce(const AddForceCmd& c)
+	{
+		auto it = m_e2b.find(c.e);
+		if (it == m_e2b.end()) return;
+		if (c.useAtPos)
+			m_bi->AddForce(it->second, ToJVec3(c.force), ToJVec3(c.atWorldPos));
+		else
+			m_bi->AddForce(it->second, ToJVec3(c.force));
 	}
 
 	// ---- Impulse ----

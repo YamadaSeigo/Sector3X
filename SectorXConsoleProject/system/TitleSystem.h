@@ -38,6 +38,9 @@ public:
 	//Enter‚ğ‰Ÿ‚µ‚Ä‚©‚çƒQ[ƒ€‚ªn‚Ü‚éŠÔ
 	static inline constexpr float START_GAME_TIME = 5.0f;
 
+	static inline constexpr float START_CAMERA_PLAYER_DISTANCE = 20.0f;
+
+
 	void StartImpl(
 		NoDeletePtr<WorldType::RequestService> worldRequestService,
 		NoDeletePtr<InputService> inputService,

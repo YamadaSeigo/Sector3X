@@ -169,7 +169,7 @@ void TransformedShape::GetTrianglesStart(GetTrianglesContext& ioContext, const A
 	}
 }
 
-int TransformedShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int TransformedShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	if (mShape != nullptr)
 		return mShape->GetTrianglesNext(ioContext, inMaxTrianglesRequested, outTriangleVertices, outMaterials);

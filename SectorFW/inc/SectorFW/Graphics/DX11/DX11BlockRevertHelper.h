@@ -34,14 +34,6 @@ using Microsoft::WRL::ComPtr;
 #include "../LightShadowService.h"
 
 
-#ifdef _DEBUG
-
-// デバッグビルドで、スプラットマップの生成に DirectStorage を使わないオプション
-//#define _DEBUG_SPLAT_DEBUG_NO_DSS
-
-#endif
-
-
 namespace SFW::Graphics::DX11 {
 
     // ------------------------------------------------------------
@@ -59,8 +51,10 @@ namespace SFW::Graphics::DX11 {
 
     // クラスタ別スプラットの slice を保持・PS 定数で通知
     struct SplatArrayResources {
-        // 共通のスプラット Array（t14 に張る想定）
+        // 共通のスプラット Array（t24 に張る想定）
         ComPtr<ID3D11ShaderResourceView> splatArraySRV;
+        // バイオームごとの調整を行うための Array
+        ComPtr<ID3D11ShaderResourceView> biomeArraySRV;
         // PS用
         ComPtr<ID3D11SamplerState>       sampLinearWrap; // s0
         ComPtr<ID3D11Buffer>             cbSplat;        // b1
@@ -128,7 +122,7 @@ namespace SFW::Graphics::DX11 {
     struct ClusterParamsGPU {
         // SRV で読む StructuredBuffer
         ComPtr<ID3D11Buffer>             sb;     // D3D11_BIND_SHADER_RESOURCE | D3D11_RESOURCE_MISC_BUFFER_STRUCTURED
-        ComPtr<ID3D11ShaderResourceView> srv;    // t15 にバインド
+        ComPtr<ID3D11ShaderResourceView> srv;    // t25 にバインド
         // グリッド用CB（b2）
         ComPtr<ID3D11Buffer>             cbGrid;
         // バッファハンドル
@@ -1151,7 +1145,7 @@ namespace SFW::Graphics::DX11 {
         R.layerSRV[0].Get(), R.layerSRV[1].Get(),
         R.layerSRV[2].Get(), R.layerSRV[3].Get()
         };
-        ctx->PSSetShaderResources(20, 4, mats);                 // t10..t13
+        ctx->PSSetShaderResources(20, 4, mats);                 // t20..t23
         ID3D11SamplerState* samp = R.sampLinearWrap.Get();
         ctx->PSSetSamplers(0, 1, &samp);                        // s0（スプラットと共有）
     }
@@ -1520,9 +1514,6 @@ namespace SFW::Graphics::DX11 {
         std::string path{}; bool srgbFlag = forceSRGB;
         if (!resolve(sheetId, path, srgbFlag)) return {};
         TextureCreateDesc cd{}; cd.path = path; cd.forceSRGB = srgbFlag;
-#ifdef _DEBUG_SPLAT_DEBUG_NO_DSS
-        cd.convertDSS = false;
-#endif
 
         TextureHandle h = {};
         texMgr.Add(cd, h);
@@ -1693,7 +1684,7 @@ namespace SFW::Graphics::DX11 {
         ID3D11DeviceContext* ctx,
         TextureManager& texMgr,
         const std::vector<TextureHandle>& handles,
-        SplatArrayResources& out /*writes splatArraySRV*/)
+        ComPtr<ID3D11ShaderResourceView>& outArraySRV /*writes splatArraySRV*/)
     {
         if (handles.empty()) return false;
 
@@ -1757,7 +1748,7 @@ namespace SFW::Graphics::DX11 {
         sd.Texture2DArray.ArraySize = ad.ArraySize;
         ComPtr<ID3D11ShaderResourceView> srv;
         if (FAILED(dev->CreateShaderResourceView(arrayTex.Get(), &sd, &srv))) return false;
-        out.splatArraySRV = std::move(srv);
+        outArraySRV = std::move(srv);
         return true;
     }
 

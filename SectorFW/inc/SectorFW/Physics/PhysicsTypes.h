@@ -52,6 +52,7 @@ namespace SFW
 			bool       kinematic{ false };
 			float      friction{ 0.6f };
 			float      restitution{ 0.0f };
+			float      gravityFactor{ 1.0f };
 		};
 
 		/**
@@ -77,6 +78,10 @@ namespace SFW
 		 * @brief 角速度設定
 		 */
 		struct SetAngularVelocityCmd { Entity e; Vec3f w; };
+		/**
+		 * @brief 力付与 (atWorldPos 指定はオプション)
+		 */
+		struct AddForceCmd { Entity e; Vec3f force; Vec3f atWorldPos; bool useAtPos{ false }; };
 		/**
 		 * @brief インパルス付与 (atWorldPos 指定はオプション)
 		 */
@@ -152,6 +157,7 @@ namespace SFW
 			TeleportCmd,
 			SetLinearVelocityCmd,
 			SetAngularVelocityCmd,
+			AddForceCmd,
 			AddImpulseCmd,
 			SetKinematicTargetCmd,
 			SetCollisionMaskCmd,

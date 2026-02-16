@@ -20,7 +20,7 @@ public:
 
 	/// Create a box with half edge length inHalfExtent and convex radius inConvexRadius.
 	/// (internally the convex radius will be subtracted from the half extent so the total box will not grow with the convex radius).
-							BoxShapeSettings(Vec3Arg inHalfExtent, float inConvexRadius = cDefaultConvexRadius, const PhysicsMaterial *inMaterial = nullptr) : ConvexShapeSettings(inMaterial), mHalfExtent(inHalfExtent), mConvexRadius(inConvexRadius) { }
+							BoxShapeSettings(Vec3Arg inHalfExtent, float inConvexRadius = cDefaultConvexRadius, const Material *inMaterial = nullptr) : ConvexShapeSettings(inMaterial), mHalfExtent(inHalfExtent), mConvexRadius(inConvexRadius) { }
 
 	// See: ShapeSettings
 	virtual ShapeResult		Create() const override;
@@ -41,7 +41,7 @@ public:
 
 	/// Create a box with half edge length inHalfExtent and convex radius inConvexRadius.
 	/// (internally the convex radius will be subtracted from the half extent so the total box will not grow with the convex radius).
-							BoxShape(Vec3Arg inHalfExtent, float inConvexRadius = cDefaultConvexRadius, const PhysicsMaterial *inMaterial = nullptr) : ConvexShape(EShapeSubType::Box, inMaterial), mHalfExtent(inHalfExtent), mConvexRadius(inConvexRadius) { JPH_ASSERT(inConvexRadius >= 0.0f); JPH_ASSERT(inHalfExtent.ReduceMin() >= inConvexRadius); }
+							BoxShape(Vec3Arg inHalfExtent, float inConvexRadius = cDefaultConvexRadius, const Material *inMaterial = nullptr) : ConvexShape(EShapeSubType::Box, inMaterial), mHalfExtent(inHalfExtent), mConvexRadius(inConvexRadius) { JPH_ASSERT(inConvexRadius >= 0.0f); JPH_ASSERT(inHalfExtent.ReduceMin() >= inConvexRadius); }
 
 	/// Get half extent of box
 	Vec3					GetHalfExtent() const										{ return mHalfExtent; }
@@ -83,7 +83,7 @@ public:
 	virtual void			GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const override;
 
 	// See Shape::GetTrianglesNext
-	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const override;
+	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const override;
 
 	// See Shape
 	virtual void			SaveBinaryState(StreamOut &inStream) const override;

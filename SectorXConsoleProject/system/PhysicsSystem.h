@@ -14,7 +14,7 @@ class PhysicsSystem : public ITypeSystem<
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Write<TransformSoA>,
+		Write<CTransform>,
 		Write<Physics::PhysicsInterpolation>,
 		Read<Physics::CPhyBody>,
 		Write<CSpatialMotionTag>
@@ -25,7 +25,7 @@ class PhysicsSystem : public ITypeSystem<
 		SpatialChunkRegistry>
 	>
 {
-	using Accessor = ComponentAccessor<Write<TransformSoA>, Write<Physics::PhysicsInterpolation>, Read<Physics::CPhyBody>, Write<CSpatialMotionTag>>;
+	using Accessor = ComponentAccessor<Write<CTransform>, Write<Physics::PhysicsInterpolation>, Read<Physics::CPhyBody>, Write<CSpatialMotionTag>>;
 public:
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition, LevelContext<Partition>& levelCtx, NoDeletePtr<Physics::PhysicsService> physicsService,
@@ -35,11 +35,11 @@ public:
 
 		this->ForEachChunkWithAccessorAndEntityIDs([](Accessor& accessor, size_t entityCount,
 			const std::vector<ECS::EntityID>& entityIDs, Physics::PhysicsService* physics,
-			SpatialChunkRegistry* registry, Partition* partition, LevelContext* levelCtx, auto* moveBatch
+			SpatialChunkRegistry* registry, Partition* partition, LevelContext<Partition>* levelCtx, auto* moveBatch
 			)
 			{
-				auto transform = accessor.Get<Write<TransformSoA>>();
-				if (!transform) [[unlikely]] { LOG_ERROR("TransformSoA component not found in PhysicsSystem"); return; }
+				auto transform = accessor.Get<Write<CTransform>>();
+				if (!transform) [[unlikely]] { LOG_ERROR("CTransform component not found in PhysicsSystem"); return; }
 
 				auto interpolation = accessor.Get<Write<Physics::PhysicsInterpolation>>();
 				if (!interpolation) [[unlikely]] { LOG_ERROR("PhysicsInterpolation component not found in PhysicsSystem"); return; }

@@ -213,7 +213,7 @@ void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) co
 
             ScatterInstance inst;
             inst.model = br.models[(size_t)pick].handle;
-            inst.positionWS = { x, y, z };
+            inst.offsetWS = { x, y, z };
             inst.yaw = URange(rng, 0.0f, 6.28318530718f);
             inst.uniformScale = URange(rng, br.scaleMin, br.scaleMax);
 

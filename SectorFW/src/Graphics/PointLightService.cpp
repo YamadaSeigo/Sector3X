@@ -89,7 +89,7 @@ namespace SFW::Graphics
 		if (!isValidNoLock(h)) return;
 
 		Slot& s = m_slots[h.index];
-		s.desc.positionWS = posWS;
+		s.desc.offsetWS = posWS;
 	}
 
 	void PointLightService::SetParams(PointLightHandle h, const Math::Vec3f& color, float intensity, float range, bool castsShadow)
@@ -117,7 +117,7 @@ namespace SFW::Graphics
 		return m_slots[h.index].desc;
 	}
 
-	bool PointLightService::PushShowHandle(PointLightHandle h)
+	bool PointLightService::PushShowHandle(PointLightHandle h, Math::Vec3f pos)
 	{
 		if (!IsValid(h)) return false;
 
@@ -127,6 +127,7 @@ namespace SFW::Graphics
 		if (n >= MAX_FRAME_POINTLIGHT) return false;
 
 		m_showIndex[countSlot][n] = h.index;
+		m_showPos[countSlot][n] = pos;
 
 		return true;
 	}
@@ -146,7 +147,7 @@ namespace SFW::Graphics
 			auto idx = showIndex[i];
 			const Slot& s = m_slots[idx];
 			GpuPointLight& g = buffer[i];
-			g.positionWS = s.desc.positionWS;
+			g.offsetWS = m_showPos[countSlot][i] + s.desc.offsetWS;
 			g.range = s.desc.range;
 			g.color = s.desc.color;
 			g.intensity = s.desc.intensity;

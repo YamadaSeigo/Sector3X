@@ -66,7 +66,7 @@ ShapeSettings::ShapeResult TaperedCylinderShapeSettings::Create() const
 	return mCachedResult;
 }
 
-TaperedCylinderShapeSettings::TaperedCylinderShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, float inConvexRadius, const PhysicsMaterial* inMaterial) :
+TaperedCylinderShapeSettings::TaperedCylinderShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, float inConvexRadius, const Material* inMaterial) :
 	ConvexShapeSettings(inMaterial),
 	mHalfHeight(inHalfHeightOfTaperedCylinder),
 	mTopRadius(inTopRadius),
@@ -547,7 +547,7 @@ void TaperedCylinderShape::GetTrianglesStart(GetTrianglesContext& ioContext, con
 		context->mProcessed |= 0b010;
 }
 
-int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	constexpr int cNumVertices = int(std::size(cTaperedCylinderFace));
 
@@ -633,8 +633,8 @@ int TaperedCylinderShape::GetTrianglesNext(GetTrianglesContext& ioContext, int i
 	// Store materials
 	if (outMaterials != nullptr)
 	{
-		const PhysicsMaterial* material = GetMaterial();
-		for (const PhysicsMaterial** m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
+		const Material* material = GetMaterial();
+		for (const Material** m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
 			*m = material;
 	}
 

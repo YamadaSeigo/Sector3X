@@ -83,7 +83,7 @@ public:
 	/// The function returns the amount of triangles that it found (which will be <= inMaxTrianglesRequested), or 0 if there are no more triangles.
 	/// Note that the function can return a value < inMaxTrianglesRequested and still have more triangles to process (triangles can be returned in blocks)
 	/// Note that the function may return triangles outside of the requested box, only coarse culling is performed on the returned triangles
-	int							GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const;
+	int							GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const;
 
 	/// Get/set the scale of the shape as a Vec3
 	inline Vec3					GetShapeScale() const						{ return Vec3::sLoadFloat3Unsafe(mShapeScale); }
@@ -155,7 +155,7 @@ public:
 	}
 
 	/// Get material of a particular sub shape
-	inline const PhysicsMaterial *GetMaterial(const SubShapeID &inSubShapeID) const
+	inline const Material *GetMaterial(const SubShapeID &inSubShapeID) const
 	{
 		return mShape->GetMaterial(MakeSubShapeIDRelativeToShape(inSubShapeID));
 	}

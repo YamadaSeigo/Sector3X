@@ -19,17 +19,17 @@ class StreamOut;
 /// to decide which sound or particle effects to play.
 ///
 /// If you inherit from this material, don't forget to create a suitable default material in sDefault
-class JPH_EXPORT PhysicsMaterial : public SerializableObject, public RefTarget<PhysicsMaterial>
+class JPH_EXPORT Material : public SerializableObject, public RefTarget<Material>
 {
-	JPH_DECLARE_SERIALIZABLE_VIRTUAL(JPH_EXPORT, PhysicsMaterial)
+	JPH_DECLARE_SERIALIZABLE_VIRTUAL(JPH_EXPORT, Material)
 
 public:
 	/// Constructor
-											PhysicsMaterial() = default;
-	virtual									~PhysicsMaterial() override = default;
+											Material() = default;
+	virtual									~Material() override = default;
 
 	/// Default material that is used when a shape has no materials defined
-	static RefConst<PhysicsMaterial>		sDefault;
+	static RefConst<Material>		sDefault;
 
 	// Properties
 	virtual const char *					GetDebugName() const			{ return "Unknown"; }
@@ -38,20 +38,20 @@ public:
 	/// Saves the contents of the material in binary form to inStream.
 	virtual void							SaveBinaryState(StreamOut &inStream) const;
 
-	using PhysicsMaterialResult = Result<Ref<PhysicsMaterial>>;
+	using PhysicsMaterialResult = Result<Ref<Material>>;
 
 	/// Creates a PhysicsMaterial of the correct type and restores its contents from the binary stream inStream.
 	static PhysicsMaterialResult			sRestoreFromBinaryState(StreamIn &inStream);
 
 protected:
 	/// Don't allow copy constructing this base class, but allow derived classes to copy themselves
-											PhysicsMaterial(const PhysicsMaterial &) = default;
-	PhysicsMaterial &						operator = (const PhysicsMaterial &) = default;
+											Material(const Material &) = default;
+	Material &						operator = (const Material &) = default;
 
 	/// This function should not be called directly, it is used by sRestoreFromBinaryState.
 	virtual void							RestoreBinaryState(StreamIn &inStream);
 };
 
-using PhysicsMaterialList = Array<RefConst<PhysicsMaterial>>;
+using PhysicsMaterialList = Array<RefConst<Material>>;
 
 JPH_NAMESPACE_END

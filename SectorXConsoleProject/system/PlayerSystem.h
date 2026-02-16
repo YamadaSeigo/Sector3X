@@ -207,6 +207,8 @@ public:
 
 				comp.currentVelocity = v;
 
+				playerService->SetPlayerVelocity(v);
+
 				v.y += wish.y;
 
 				float diff = ShortestAngleDiff(currentYaw, targetYaw); // [-ƒÎ, ƒÎ]
@@ -228,13 +230,14 @@ public:
 				physicsService->SetCharacterRotation(entityID, newYawQuat);//‰ñ“]‚ðƒŠƒZƒbƒg
 			}
 
-			if(inputService->IsKeyTrigger(Input::Key::T))
+			if(inputService->IsKeyTrigger(Input::Key::F3))
 			{
 				Physics::Mat34f tm;
 				tm.pos = cameraService->GetEyePos();
 
 				physicsService->TeleportCharacter(entityID, tm);
 			}
+
 
 			//Pose“Ç‚Ýž‚Ý & ”½‰f
 			{
@@ -245,6 +248,13 @@ public:
 
 				auto playerPos = pose.value().GetPosition();
 				auto playerRot = pose.value().GetRotation();
+
+#ifdef _DEBUG
+				if (inputService->IsKeyTrigger(Input::Key::F4))
+				{
+					LOG_INFO("Math::Vec3f{%.2ff, %.2ff, %.2ff},", playerPos.x, playerPos.y, playerPos.z);
+				}
+#endif
 
 				auto modelComp = globalEntityManager.ReadComponent<CModel>(entityID);
 

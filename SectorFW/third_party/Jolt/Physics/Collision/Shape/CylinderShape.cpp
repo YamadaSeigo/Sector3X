@@ -114,7 +114,7 @@ CylinderShape::CylinderShape(const CylinderShapeSettings& inSettings, ShapeResul
 	outResult.Set(this);
 }
 
-CylinderShape::CylinderShape(float inHalfHeight, float inRadius, float inConvexRadius, const PhysicsMaterial* inMaterial) :
+CylinderShape::CylinderShape(float inHalfHeight, float inRadius, float inConvexRadius, const Material* inMaterial) :
 	ConvexShape(EShapeSubType::Cylinder, inMaterial),
 	mHalfHeight(inHalfHeight),
 	mRadius(inRadius),
@@ -373,7 +373,7 @@ void CylinderShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABo
 	new (&ioContext) GetTrianglesContextVertexList(inPositionCOM, inRotation, inScale, unit_cylinder_transform, sUnitCylinderTriangles.data(), sUnitCylinderTriangles.size(), GetMaterial());
 }
 
-int CylinderShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int CylinderShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	return ((GetTrianglesContextVertexList&)ioContext).GetTrianglesNext(inMaxTrianglesRequested, outTriangleVertices, outMaterials);
 }

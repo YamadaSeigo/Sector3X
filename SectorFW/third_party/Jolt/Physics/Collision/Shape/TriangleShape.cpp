@@ -344,7 +344,7 @@ void TriangleShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABo
 	new (&ioContext) TSGetTrianglesContext(m * mV1, m * mV2, m * mV3);
 }
 
-int TriangleShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int TriangleShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	static_assert(cGetTrianglesMinTrianglesRequested >= 3, "cGetTrianglesMinTrianglesRequested is too small");
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);

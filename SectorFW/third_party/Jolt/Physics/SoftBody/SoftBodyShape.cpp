@@ -120,7 +120,7 @@ void SoftBodyShape::CollideSoftBodyVertices(Mat44Arg inCenterOfMassTransform, Ve
 	/* Not implemented */
 }
 
-const PhysicsMaterial* SoftBodyShape::GetMaterial(const SubShapeID& inSubShapeID) const
+const Material* SoftBodyShape::GetMaterial(const SubShapeID& inSubShapeID) const
 {
 	SubShapeID remainder;
 	uint triangle_idx = inSubShapeID.PopID(GetSubShapeIDBits(), remainder);
@@ -196,7 +196,7 @@ void SoftBodyShape::GetTrianglesStart(GetTrianglesContext& ioContext, [[maybe_un
 	context.mTriangleIndex = 0;
 }
 
-int SoftBodyShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int SoftBodyShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	SBSGetTrianglesContext& context = reinterpret_cast<SBSGetTrianglesContext&>(ioContext);
 

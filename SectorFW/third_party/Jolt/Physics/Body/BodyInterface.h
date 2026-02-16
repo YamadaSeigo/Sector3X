@@ -21,7 +21,7 @@ class BodyLockInterface;
 class BroadPhase;
 class BodyManager;
 class TransformedShape;
-class PhysicsMaterial;
+class Material;
 class SubShapeID;
 class Shape;
 class TwoBodyConstraintSettings;
@@ -295,7 +295,7 @@ public:
 	void						SetUserData(const BodyID &inBodyID, uint64 inUserData) const;
 
 	/// Get the material for a particular sub shape
-	const PhysicsMaterial *		GetMaterial(const BodyID &inBodyID, const SubShapeID &inSubShapeID) const;
+	const Material *		GetMaterial(const BodyID &inBodyID, const SubShapeID &inSubShapeID) const;
 
 	/// Set the Body::EFlags::InvalidateContactCache flag for the specified body. This means that the collision cache is invalid for any body pair involving that body until the next physics step.
 	void						InvalidateContactCache(const BodyID &inBodyID);

@@ -75,7 +75,7 @@ ShapeSettings::ShapeResult TaperedCapsuleShapeSettings::Create() const
 	return mCachedResult;
 }
 
-TaperedCapsuleShapeSettings::TaperedCapsuleShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, const PhysicsMaterial* inMaterial) :
+TaperedCapsuleShapeSettings::TaperedCapsuleShapeSettings(float inHalfHeightOfTaperedCylinder, float inTopRadius, float inBottomRadius, const Material* inMaterial) :
 	ConvexShapeSettings(inMaterial),
 	mHalfHeightOfTaperedCylinder(inHalfHeightOfTaperedCylinder),
 	mTopRadius(inTopRadius),

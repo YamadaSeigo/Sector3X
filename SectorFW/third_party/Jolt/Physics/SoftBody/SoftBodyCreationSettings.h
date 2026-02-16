@@ -33,8 +33,8 @@ public:
 	using IDToGroupFilterMap = StreamUtils::IDToObjectMap<GroupFilter>;
 	using SharedSettingsToIDMap = SoftBodySharedSettings::SharedSettingsToIDMap;
 	using IDToSharedSettingsMap = SoftBodySharedSettings::IDToSharedSettingsMap;
-	using MaterialToIDMap = StreamUtils::ObjectToIDMap<PhysicsMaterial>;
-	using IDToMaterialMap = StreamUtils::IDToObjectMap<PhysicsMaterial>;
+	using MaterialToIDMap = StreamUtils::ObjectToIDMap<Material>;
+	using IDToMaterialMap = StreamUtils::IDToObjectMap<Material>;
 
 	/// Save this body creation settings, its shared settings and group filter. Pass in an empty map in ioSharedSettingsMap / ioMaterialMap / ioGroupFilterMap or reuse the same map while saving multiple shapes to the same stream in order to avoid writing duplicates.
 	/// Pass nullptr to ioSharedSettingsMap and ioMaterial map to skip saving shared settings and materials

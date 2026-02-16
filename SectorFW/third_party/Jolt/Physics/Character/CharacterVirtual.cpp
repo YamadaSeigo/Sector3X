@@ -241,7 +241,7 @@ void CharacterVirtual::sFillCharacterContactProperties(Contact& outContact, cons
 	outContact.mMotionTypeB = EMotionType::Kinematic; // Other character is kinematic, we can't directly move it
 	outContact.mIsSensorB = false;
 	outContact.mUserData = inOtherCharacter->GetUserData();
-	outContact.mMaterial = PhysicsMaterial::sDefault;
+	outContact.mMaterial = Material::sDefault;
 }
 
 void CharacterVirtual::ContactCollector::AddHit(const CollideShapeResult& inResult)
@@ -1140,7 +1140,7 @@ void CharacterVirtual::UpdateSupportingContact(bool inSkipContactVelocityCheck, 
 		mGroundBodyID = BodyID();
 		mGroundBodySubShapeID = SubShapeID();
 		mGroundPosition = RVec3::sZero();
-		mGroundMaterial = PhysicsMaterial::sDefault;
+		mGroundMaterial = Material::sDefault;
 		mGroundUserData = 0;
 	}
 
@@ -1841,7 +1841,7 @@ void CharacterVirtual::Contact::RestoreState(StateRecorder& inStream)
 	inStream.Read(mCanPushCharacter);
 	mCharacterB = nullptr; // Cannot restore character B
 	mUserData = 0; // Cannot restore user data
-	mMaterial = PhysicsMaterial::sDefault; // Cannot restore material
+	mMaterial = Material::sDefault; // Cannot restore material
 }
 
 void CharacterVirtual::SaveState(StateRecorder& inStream) const

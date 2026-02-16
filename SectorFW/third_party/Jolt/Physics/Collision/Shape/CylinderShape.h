@@ -20,7 +20,7 @@ public:
 
 	/// Create a shape centered around the origin with one top at (0, -inHalfHeight, 0) and the other at (0, inHalfHeight, 0) and radius inRadius.
 	/// (internally the convex radius will be subtracted from the cylinder the total cylinder will not grow with the convex radius, but the edges of the cylinder will be rounded a bit).
-							CylinderShapeSettings(float inHalfHeight, float inRadius, float inConvexRadius = cDefaultConvexRadius, const PhysicsMaterial *inMaterial = nullptr) : ConvexShapeSettings(inMaterial), mHalfHeight(inHalfHeight), mRadius(inRadius), mConvexRadius(inConvexRadius) { }
+							CylinderShapeSettings(float inHalfHeight, float inRadius, float inConvexRadius = cDefaultConvexRadius, const Material *inMaterial = nullptr) : ConvexShapeSettings(inMaterial), mHalfHeight(inHalfHeight), mRadius(inRadius), mConvexRadius(inConvexRadius) { }
 
 	// See: ShapeSettings
 	virtual ShapeResult		Create() const override;
@@ -42,7 +42,7 @@ public:
 
 	/// Create a shape centered around the origin with one top at (0, -inHalfHeight, 0) and the other at (0, inHalfHeight, 0) and radius inRadius.
 	/// (internally the convex radius will be subtracted from the cylinder the total cylinder will not grow with the convex radius, but the edges of the cylinder will be rounded a bit).
-							CylinderShape(float inHalfHeight, float inRadius, float inConvexRadius = cDefaultConvexRadius, const PhysicsMaterial *inMaterial = nullptr);
+							CylinderShape(float inHalfHeight, float inRadius, float inConvexRadius = cDefaultConvexRadius, const Material *inMaterial = nullptr);
 
 	/// Get half height of cylinder
 	float					GetHalfHeight() const														{ return mHalfHeight; }
@@ -87,7 +87,7 @@ public:
 	virtual void			GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const override;
 
 	// See Shape::GetTrianglesNext
-	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const override;
+	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const override;
 
 	// See Shape
 	virtual void			SaveBinaryState(StreamOut &inStream) const override;

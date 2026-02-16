@@ -15,7 +15,8 @@ class EnvironmentSystem : public ITypeSystem<
 		Graphics::RenderService,
 		Graphics::LightShadowService,
 		Audio::AudioService,
-		Graphics::I3DPerCameraService
+		Graphics::I3DPerCameraService,
+		TimerService
 	>>
 {
 	using Accessor = ComponentAccessor<>;
@@ -29,36 +30,46 @@ class EnvironmentSystem : public ITypeSystem<
 public:
 	void StartImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
-		NoDeletePtr<WindService> grassService,
+		NoDeletePtr<WindService> windService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,
-		NoDeletePtr<Graphics::I3DPerCameraService> cameraService)
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
+		NoDeletePtr<TimerService> timerService)
 	{
+		constexpr float audioVolumeRatio = 1.0f;
+
 		//Audio読み込み
 		mainBGM.handle = audioService->EnqueueLoadWav("assets/audio/BGM/fjordnosundakaze.ogg");
 		Audio::AudioPlayParams bgmPlayParams;
 		bgmPlayParams.loop = true;
-		bgmPlayParams.volume = 0.8f;
+		bgmPlayParams.volume = audioVolumeRatio * 0.8f;
 		mainBGM.ticketID = audioService->EnqueuePlay(mainBGM.handle, bgmPlayParams);
 
 		wind.handle = audioService->EnqueueLoadWav("assets/audio/SE/wind_04.wav");
 		Audio::AudioPlayParams windPlayParams;
 		windPlayParams.loop = true;
-		windPlayParams.volume = 1.5f;
+		windPlayParams.volume = audioVolumeRatio * 1.5f;
 		wind.ticketID = audioService->EnqueuePlay(wind.handle, windPlayParams);
 	}
 
 	void UpdateImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
-		NoDeletePtr<WindService> grassService,
+		NoDeletePtr<WindService> windService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,
-		NoDeletePtr<Graphics::I3DPerCameraService> cameraService)
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
+		NoDeletePtr<TimerService> timerService)
 	{
 		//草のバッファの更新
-		grassService->UpdateBufferToGPU(renderService->GetProduceSlot());
+		windService->UpdateBufferToGPU(renderService->GetProduceSlot());
+
+		Math::Vec3f windDir;
+		float windSpeed;
+		windService->GetWindDirAndSpeed(windDir, windSpeed);
+
+		environmentService->SetWindDirSpeed(Math::Vec2f{ windDir.x, windDir.z }.normalized(), windSpeed, timerService->GetDeltaTime());
 
 		const auto& timeOfDayKey = environmentService->GetCurrentTimeOfDayKey();
 		Math::Vec3f sunDirWS = environmentService->GetSunDirection();
@@ -101,11 +112,12 @@ public:
 
 	void EndImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
-		NoDeletePtr<WindService> grassService,
+		NoDeletePtr<WindService> windService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,
-		NoDeletePtr<Graphics::I3DPerCameraService> cameraService)
+		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
+		NoDeletePtr<TimerService> timerService)
 	{
 		//BGM停止
 		if (mainBGM.ticketID.IsValid()) {

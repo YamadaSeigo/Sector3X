@@ -109,7 +109,7 @@ public:
 	Vec3								GetGroundVelocity() const								{ return mGroundVelocity; }
 
 	/// Material that the character is standing on
-	const PhysicsMaterial *				GetGroundMaterial() const								{ return mGroundMaterial; }
+	const Material *				GetGroundMaterial() const								{ return mGroundMaterial; }
 
 	/// BodyID of the object the character is standing on. Note may have been removed!
 	BodyID								GetGroundBodyID() const									{ return mGroundBodyID; }
@@ -150,7 +150,7 @@ protected:
 	RVec3								mGroundPosition = RVec3::sZero();
 	Vec3								mGroundNormal = Vec3::sZero();
 	Vec3								mGroundVelocity = Vec3::sZero();
-	RefConst<PhysicsMaterial>			mGroundMaterial = PhysicsMaterial::sDefault;
+	RefConst<Material>			mGroundMaterial = Material::sDefault;
 	uint64								mGroundUserData = 0;
 };
 

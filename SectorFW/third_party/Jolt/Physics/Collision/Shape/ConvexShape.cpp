@@ -337,7 +337,7 @@ void ConvexShape::GetTrianglesStart(GetTrianglesContext& ioContext, const AABox&
 	new (&ioContext) CSGetTrianglesContext(this, inPositionCOM, inRotation, inScale);
 }
 
-int ConvexShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const PhysicsMaterial** outMaterials) const
+int ConvexShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrianglesRequested, Float3* outTriangleVertices, const Material** outMaterials) const
 {
 	JPH_ASSERT(inMaxTrianglesRequested >= cGetTrianglesMinTrianglesRequested);
 
@@ -372,8 +372,8 @@ int ConvexShape::GetTrianglesNext(GetTrianglesContext& ioContext, int inMaxTrian
 	// Store materials
 	if (outMaterials != nullptr)
 	{
-		const PhysicsMaterial* material = GetMaterial();
-		for (const PhysicsMaterial** m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
+		const Material* material = GetMaterial();
+		for (const Material** m = outMaterials, **m_end = outMaterials + total_num_triangles; m < m_end; ++m)
 			*m = material;
 	}
 

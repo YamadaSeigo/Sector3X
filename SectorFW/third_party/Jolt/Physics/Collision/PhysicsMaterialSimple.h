@@ -9,7 +9,7 @@
 JPH_NAMESPACE_BEGIN
 
 /// Sample implementation of PhysicsMaterial that just holds the needed properties directly
-class JPH_EXPORT PhysicsMaterialSimple : public PhysicsMaterial
+class JPH_EXPORT PhysicsMaterialSimple : public Material
 {
 	JPH_DECLARE_SERIALIZABLE_VIRTUAL(JPH_EXPORT, PhysicsMaterialSimple)
 

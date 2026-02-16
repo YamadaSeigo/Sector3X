@@ -18,7 +18,7 @@ public:
 							CapsuleShapeSettings() = default;
 
 	/// Create a capsule centered around the origin with one sphere cap at (0, -inHalfHeightOfCylinder, 0) and the other at (0, inHalfHeightOfCylinder, 0)
-							CapsuleShapeSettings(float inHalfHeightOfCylinder, float inRadius, const PhysicsMaterial *inMaterial = nullptr) : ConvexShapeSettings(inMaterial), mRadius(inRadius), mHalfHeightOfCylinder(inHalfHeightOfCylinder) { }
+							CapsuleShapeSettings(float inHalfHeightOfCylinder, float inRadius, const Material *inMaterial = nullptr) : ConvexShapeSettings(inMaterial), mRadius(inRadius), mHalfHeightOfCylinder(inHalfHeightOfCylinder) { }
 
 	/// Check if this is a valid capsule shape
 	bool					IsValid() const															{ return mRadius > 0.0f && mHalfHeightOfCylinder >= 0.0f; }
@@ -44,7 +44,7 @@ public:
 							CapsuleShape(const CapsuleShapeSettings &inSettings, ShapeResult &outResult);
 
 	/// Create a capsule centered around the origin with one sphere cap at (0, -inHalfHeightOfCylinder, 0) and the other at (0, inHalfHeightOfCylinder, 0)
-							CapsuleShape(float inHalfHeightOfCylinder, float inRadius, const PhysicsMaterial *inMaterial = nullptr) : ConvexShape(EShapeSubType::Capsule, inMaterial), mRadius(inRadius), mHalfHeightOfCylinder(inHalfHeightOfCylinder) { JPH_ASSERT(inHalfHeightOfCylinder > 0.0f); JPH_ASSERT(inRadius > 0.0f); }
+							CapsuleShape(float inHalfHeightOfCylinder, float inRadius, const Material *inMaterial = nullptr) : ConvexShape(EShapeSubType::Capsule, inMaterial), mRadius(inRadius), mHalfHeightOfCylinder(inHalfHeightOfCylinder) { JPH_ASSERT(inHalfHeightOfCylinder > 0.0f); JPH_ASSERT(inRadius > 0.0f); }
 
 	/// Radius of the cylinder
 	float					GetRadius() const														{ return mRadius; }
@@ -93,7 +93,7 @@ public:
 	virtual void			GetTrianglesStart(GetTrianglesContext &ioContext, const AABox &inBox, Vec3Arg inPositionCOM, QuatArg inRotation, Vec3Arg inScale) const override;
 
 	// See Shape::GetTrianglesNext
-	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const PhysicsMaterial **outMaterials = nullptr) const override;
+	virtual int				GetTrianglesNext(GetTrianglesContext &ioContext, int inMaxTrianglesRequested, Float3 *outTriangleVertices, const Material **outMaterials = nullptr) const override;
 
 	// See Shape
 	virtual void			SaveBinaryState(StreamOut &inStream) const override;
