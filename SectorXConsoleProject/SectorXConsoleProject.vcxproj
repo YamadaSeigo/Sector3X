@@ -173,6 +173,7 @@
     <ClCompile Include="src\Environment\FireflyService.cpp" />
     <ClCompile Include="src\Environment\LeafParticlePool.cpp" />
     <ClCompile Include="src\Environment\LeafService.cpp" />
+    <ClCompile Include="src\environment\RainParticlePool.cpp" />
     <ClCompile Include="src\Graphics\DebugRenderType.cpp" />
     <ClCompile Include="src\graphics\RenderPipeline.cpp" />
     <ClCompile Include="src\graphics\TiledDeferredRender.cpp" />
@@ -592,6 +593,7 @@
     <ClInclude Include="src\Environment\FireflyService.h" />
     <ClInclude Include="src\Environment\LeafParticlePool.h" />
     <ClInclude Include="src\Environment\LeafService.h" />
+    <ClInclude Include="src\environment\RainParticlePool.h" />
     <ClInclude Include="src\Environment\WindService.h" />
     <ClInclude Include="src\Graphics\D3D11Helpers.h" />
     <ClInclude Include="src\Graphics\DebugRenderType.h" />

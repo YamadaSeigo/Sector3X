@@ -1,16 +1,14 @@
 // FireflyParticlePool.hpp
 #pragma once
-#include <wrl.h>
 #include <d3d11.h>
 #include <cstdint>
 #include "graphics/D3D11Helpers.h"
-#include <SectorFW/Graphics/LightShadowService.h>
 
 struct FireflyParticleGPU
 {
     float posWS[3]; float life;
     float velWS[3]; uint32_t volumeSlot;
-    float phase; 
+    float phase;
     float band01; // 0..1（粒子固有の帯オフセット）
     float addSize; // 加算サイズ
     uint32_t light; // 0=off, 1=on

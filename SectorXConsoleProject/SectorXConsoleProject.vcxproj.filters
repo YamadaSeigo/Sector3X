@@ -75,6 +75,9 @@
     <ClCompile Include="src\environment\BiomeScatterGenerator.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="src\environment\RainParticlePool.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\VS_ClipUV.hlsl">
@@ -401,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="system\ChasePlayerSystem.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\environment\RainParticlePool.h">
+      <Filter>Environment</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
