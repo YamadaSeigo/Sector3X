@@ -78,12 +78,12 @@ static inline FollowParams gFollowParams{};
 #ifdef _ENABLE_IMGUI
 struct BindFollowParamsToImGui {
     BindFollowParamsToImGui() {
-		BIND_DEBUG_SLIDER_FLOAT("ChasePlayerSystem", "TargetRadius", &gFollowParams.targetRadius, 0.1f, 10.0f, 0.1f);
-		BIND_DEBUG_SLIDER_FLOAT("ChasePlayerSystem", "SpringK", &gFollowParams.springK, 0.1f, 100.0f, 0.1f);
-		BIND_DEBUG_SLIDER_FLOAT("ChasePlayerSystem", "DampingC", &gFollowParams.dampingC, 0.1f, 100.0f, 0.1f);
-		BIND_DEBUG_SLIDER_FLOAT("ChasePlayerSystem", "Omega", &gFollowParams.omega, 0.1f, 10.0f, 0.1f);
-		BIND_DEBUG_SLIDER_FLOAT("ChasePlayerSystem", "TanGain", &gFollowParams.tanGain, 0.1f, 20.0f, 0.1f);
-		BIND_DEBUG_SLIDER_FLOAT("ChasePlayerSystem", "MaxAccel", &gFollowParams.maxAccel, 0.1f, 200.0f, 0.1f);
+		BIND_DEBUG_SLIDER_FLOAT("ChasePlayer", "TargetRadius", &gFollowParams.targetRadius, 0.1f, 10.0f, 0.1f);
+		BIND_DEBUG_SLIDER_FLOAT("ChasePlayer", "SpringK", &gFollowParams.springK, 0.1f, 100.0f, 0.1f);
+		BIND_DEBUG_SLIDER_FLOAT("ChasePlayer", "DampingC", &gFollowParams.dampingC, 0.1f, 100.0f, 0.1f);
+		BIND_DEBUG_SLIDER_FLOAT("ChasePlayer", "Omega", &gFollowParams.omega, 0.1f, 10.0f, 0.1f);
+		BIND_DEBUG_SLIDER_FLOAT("ChasePlayer", "TanGain", &gFollowParams.tanGain, 0.1f, 20.0f, 0.1f);
+		BIND_DEBUG_SLIDER_FLOAT("ChasePlayer", "MaxAccel", &gFollowParams.maxAccel, 0.1f, 200.0f, 0.1f);
     }
 };
 static inline BindFollowParamsToImGui s_bindFollowParamsToImGui;

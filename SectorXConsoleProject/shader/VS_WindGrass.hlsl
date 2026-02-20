@@ -67,6 +67,7 @@ struct VSOutput
     float4 posH : SV_Position;
     float2 uv : TEXCOORD0;
     float3 normalWS : TEXCOORD1;
+    float4 color : TEXCOORD2;
 };
 
 float PseudoNoise2D(float2 p)
@@ -244,6 +245,7 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     output.normalWS = mul(R, input.normal.xyz); // 非一様スケール無し前提
 
     output.uv = input.uv;
-
+    output.color = gInstanceMats[pooledIndex].color;
+    
     return output;
 }

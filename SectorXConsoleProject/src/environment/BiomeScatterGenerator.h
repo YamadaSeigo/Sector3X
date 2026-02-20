@@ -156,12 +156,14 @@ private:
     float SampleWetness01(float x, float z) const;
     float SampleNoVeg01(float x, float z) const;
 
+public:
     // RNG
     static uint32_t HashU32(uint32_t a);
     static uint32_t Hash2D(uint32_t x, uint32_t y, uint32_t seed);
     static float    U01(uint32_t& state);
     static float    URange(uint32_t& state, float a, float b);
 
+private:
     // ’Š‘I
     static int WeightedPickIndex(std::span<const BranchGroup::ModelChoice> items, uint32_t& rng);
 

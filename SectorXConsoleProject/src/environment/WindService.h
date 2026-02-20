@@ -49,7 +49,7 @@ public:
 	void PreUpdate(double deltaTime) noexcept override
 	{
 		// windSpeedを反映させて風の時間変化を進める
-		float mul = powf(m_grassWindCB.WindSpeed * 0.8f, 2.0f) * m_windTimeSpeed;
+		float mul = powf(m_grassWindCB.WindSpeed * 0.25f, 2.0f) * m_windTimeSpeed;
 
         m_grassWindCB.Time += static_cast<float>(deltaTime) * mul;
 
@@ -294,7 +294,7 @@ private:
     double m_windTimeSec = 0.0;
 
 	float m_baseWindSpeed = 1.0f;      // ベースの風速（UIで直接いじる用）
-	float m_windTimeSpeed = 1.0f;      // 風の時間変化の速さ（全体の時間スケール）
+	float m_windTimeSpeed = 2.0f;      // 風の時間変化の速さ（全体の時間スケール）
 
     float m_autoWindEnable = 1.0f;     // 0..1（1で自動風フル）
     float m_dirDriftSpeed = 0.35f;     // 方向の追従（大きいほどスムーズに追う）

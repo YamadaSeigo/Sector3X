@@ -333,7 +333,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			//草の揺れ用PSO生成
 			shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
-			shaderDesc.psPath = L"assets/shader/PS_Opaque.cso";
+			shaderDesc.psPath = L"assets/shader/PS_OpaqueColor.cso";
 			shaderMgr->Add(shaderDesc, shaderHandle);
 			PSOHandle windGrassPSOHandle;
 			psoDesc.shader = shaderHandle;
@@ -342,7 +342,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			psoDesc.rasterizerState = Graphics::RasterizerStateID::SolidCullBack;
 
 			shaderDesc.vsPath = L"assets/shader/VS_WindEntity.cso";
-			shaderDesc.psPath = L"assets/shader/PS_Opaque.cso";
+			shaderDesc.psPath = L"assets/shader/PS_OpaqueColor.cso";
 			shaderMgr->Add(shaderDesc, shaderHandle);
 			PSOHandle cullNoneWindEntityPSOHandle;
 			psoDesc.shader = shaderHandle;
@@ -544,7 +544,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			ModelAssetHandle bridgeModelHandle;
 			modelDesc.path = "assets/model/Static/Bridge/medieval_bridge.gltf";
-			modelDesc.buildOccluders = true;
+			modelDesc.buildOccluders = false;
 			modelAssetMgr->Add(modelDesc, bridgeModelHandle);
 
 			ModelAssetHandle ruinBreakTowerModelHandle;
@@ -670,11 +670,36 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			const auto& cpuSplatImage = params.cpuSplatImage;
 			int terrainRank = params.terrainRank;
 
+			auto biomeImg = Graphics::LoadImageFromFileRGBA8(
+				"assets/texture/terrain/biomeDSFT.png"
+			);
+
+			struct ImageRGBA {
+				uint8_t r, g, b, a;
+			};
+
+			int stride = biomeImg.width * biomeImg.channels;
+
+			auto sampBiome = [&](float u, float v) -> ImageRGBA {
+				int x = (int)std::floor(biomeImg.width * u);
+				int y = (int)std::floor(biomeImg.height * v);
+
+				ImageRGBA out;
+				memcpy(&out, &biomeImg.pixels.get()[x * biomeImg.channels + y * stride], biomeImg.channels);
+
+				return out;
+				};
+
 			//草Entity生成
 			Math::Vec2f terrainScale = {
 				tp.cellsX * tp.cellSize,
 				tp.cellsZ * tp.cellSize
 			};
+
+			constexpr Math::Vec3f tintDesert = Math::Vec3f(2.10f, 0.8f, 0.8f);
+			constexpr Math::Vec3f tintSwamp = Math::Vec3f(0.85f, 0.5f, 2.0f);
+			constexpr Math::Vec3f tintForest = Math::Vec3f(0.95f, 1.05f, 0.95f);
+			constexpr Math::Vec3f tintTundra = Math::Vec3f(0.95f, 0.98f, 1.05f);
 
 			auto levelSession = pLevel->GetSession();
 
@@ -691,8 +716,11 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						terrain.SampleHeightNormalBilinear(location.x, location.z, height);
 						location.y = height;
 
-						int col = (int)(std::clamp((location.x / terrainScale.x), 0.0f, 1.0f) * cpuSplatImage.width);
-						int row = (int)(std::clamp((location.z / terrainScale.y), 0.0f, 1.0f) * cpuSplatImage.height);
+						float u = std::clamp((location.x / terrainScale.x), 0.0f, 1.0f);
+						float v = std::clamp((location.z / terrainScale.y), 0.0f, 1.0f);
+
+						int col = (int)(u * cpuSplatImage.width);
+						int row = (int)(v * cpuSplatImage.height);
 
 						int byteIndex = col * 4 + row * cpuSplatImage.stride;
 						if (byteIndex < 0 || byteIndex >= (int)cpuSplatImage.bytes.size()) {
@@ -703,6 +731,22 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						if (splatR < 15) {
 							continue; // 草が薄い場所はスキップ
 						}
+
+						auto biome = sampBiome(u, v);
+
+						Math::Vec3f tint = {
+							tintDesert * (biome.r / 255.0f) +
+							tintSwamp * (biome.g / 255.0f) +
+							tintForest * (biome.b / 255.0f) +
+							tintTundra * (biome.a / 255.0f)
+						};
+
+						constexpr Math::Vec3f tinJitter = Math::Vec3f(0.1f, 0.1f, 0.1f);
+
+						uint32_t hash = BiomeScatterGenerator::Hash2D((uint32_t)j, (uint32_t)k, 1234);
+						tint.x += BiomeScatterGenerator::URange(hash, -tinJitter.x, tinJitter.x);
+						tint.y += BiomeScatterGenerator::URange(hash, -tinJitter.y, tinJitter.y);
+						tint.z += BiomeScatterGenerator::URange(hash, -tinJitter.z, tinJitter.z);
 
 						//　薄いほど高さを下げる
 						float t = 1.0f - splatR / 255.0f; // 0..1
@@ -724,7 +768,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 							boundsWS,
 							CTransform{ location, rot, Math::Vec3f(scaleXZ,scaleY,scaleXZ) },
 							CModel{ grassModelHandle },
-							CColor{ {1.0f,1.0f,1.0f,1.0f} }
+							CColor{ {tint,1.0f} }
 						);
 					}
 				}
@@ -843,7 +887,14 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				rocks.wRock = 1.5f; rocks.wGrass = 0.2f;
 				rocks.models = { {RockA, 1.0f},{RockB, 1.0f},{RockC, 1.0f} };
 
-				forest.branches = { trees, rocks };
+				BranchGroup flowers;
+				flowers.spawnProbability = 0.1f;
+				flowers.maxSlopeDeg = 30.0f;
+				flowers.scaleMin = 1.0f; flowers.scaleMax = 1.5f;
+				flowers.wGrass = 1.0f; flowers.wSnow = 0.6f;
+				flowers.models = { {YellowFlower, 0.5f}, {WhiteCosmos, 0.3f}, {YellowCosmos, 0.2f} };
+
+				forest.branches = { trees, rocks, flowers };
 			}
 
 			// Grassland Biome
@@ -895,6 +946,20 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				Math::Vec3f location = inst.offsetWS;
 				Math::Quatf rot = Math::Quatf::FromAxisAngle({ 0,1,0 }, inst.yaw);
 
+				float u = std::clamp((location.x / terrainScale.x), 0.0f, 1.0f);
+				float v = std::clamp((location.z / terrainScale.y), 0.0f, 1.0f);
+
+				auto biome = sampBiome(u, v);
+
+				Math::Vec3f biomeTint = {
+					tintDesert * (biome.r / 255.0f) +
+					tintSwamp * (biome.g / 255.0f) +
+					tintForest * (biome.b / 255.0f) +
+					tintTundra * (biome.a / 255.0f)
+				};
+
+				Math::Vec3f tint = inst.tint * biomeTint;
+
 				SFW::SpatialChunk::Bounds3f boundsWS = modelBounds[modelIdx];
 				boundsWS *= scale; // スケール適用
 				boundsWS += location; // ワールド位置に移動
@@ -925,7 +990,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 							boundsWS,
 							CTransform{ inst.offsetWS, rot, Math::Vec3f(scale,scale,scale) },
 							modelComp,
-							CColor{ {inst.tint, 1.0f} },
+							CColor{ {tint, 1.0f} },
 							staticBody,
 							CPointLight{ plHandle }
 #ifdef _ENABLE_IMGUI
@@ -939,7 +1004,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 							boundsWS,
 							CTransform{ inst.offsetWS, rot, Math::Vec3f(scale,scale,scale) },
 							modelComp,
-							CColor{ {inst.tint, 1.0f} },
+							CColor{ {tint, 1.0f} },
 							staticBody
 #ifdef _ENABLE_IMGUI
 							,shapeDims.value()
@@ -961,7 +1026,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 							boundsWS,
 							CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
 							modelComp,
-							CColor{ {inst.tint, 1.0f} },
+							CColor{ {tint, 1.0f} },
 							CPointLight{ plHandle }
 						);
 					}
@@ -970,7 +1035,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 							boundsWS,
 							CTransform{ location, rot, Math::Vec3f(scale,scale,scale) },
 							modelComp,
-							CColor{ {inst.tint, 1.0f} }
+							CColor{ {tint, 1.0f} }
 						);
 					}
 				}
@@ -1268,7 +1333,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			//蛍の領域生成
 			{
-				Math::Vec3f location = getTerrainLocation(0.42f, 0.58f);
+				Math::Vec3f location = getTerrainLocation(0.3f, 0.215f);
 				//location.y += 5.0f; // 少し浮かせる
 
 				CFireflyVolume fireflyVolume;
