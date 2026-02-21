@@ -5,6 +5,9 @@ StructuredBuffer<FireflyVolumeGPU> gVolumes : register(t0);
 
 Texture2D<float> gHeightMap : register(t1);
 
+// aliveCount は raw buffer
+ByteAddressBuffer gAliveCountRaw : register(t2);
+
 SamplerState gHeightSamp : register(s0);
 
 // 出力
@@ -71,6 +74,12 @@ void main(uint3 tid : SV_DispatchThreadID)
 {
     // 1D dispatch を「(volumeIndex * gMaxSpawnPerVolumePerFrame) + local」
     uint global = tid.x;
+
+    // FreeList枯渇対策（Spawn数の上限を設ける）
+    uint aliveCount = gAliveCountRaw.Load(0);
+    if(aliveCount + global >= gMaxParticles)
+        return;
+
     uint volIdx = global / gMaxSpawnPerVolumePerFrame;
     uint lane = global - volIdx * gMaxSpawnPerVolumePerFrame;
 
@@ -102,7 +111,7 @@ void main(uint3 tid : SV_DispatchThreadID)
     if (lane >= spawnThisFrame)
         return;
 
-    // FreeList から空きIDを取得（枯渇時は未定義になるので本番は対策推奨）
+    // FreeList から空きIDを取得（枯渇時は未定義になるので対策推奨）
     uint id = gFreeList.Consume();
 
     // 初期化

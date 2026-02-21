@@ -78,6 +78,9 @@
     <ClCompile Include="src\environment\RainParticlePool.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="src\environment\RainService.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\VS_ClipUV.hlsl">
@@ -251,6 +254,18 @@
     <FxCompile Include="shader\PS_OpaqueColor.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\CS_RainSpawn.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CS_RainUpdate.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_RainBillboard.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_Rain.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\_GlobalTypes.hlsli">
@@ -266,6 +281,9 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="shader\_TileDeferred.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="shader\_RainParticles.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -406,6 +424,9 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="src\environment\RainParticlePool.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\environment\RainService.h">
       <Filter>Environment</Filter>
     </ClInclude>
   </ItemGroup>

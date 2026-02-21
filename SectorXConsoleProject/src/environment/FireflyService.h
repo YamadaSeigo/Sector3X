@@ -61,11 +61,11 @@ public:
         float gFireflyLightMaxDist = 100.0f;
 	};
 
-    struct CameraCB
+    struct RenderCB
     {
         Math::Matrix4x4f gViewProj = {};
         Math::Vec3f gCamRightWS = {};
-        float gSize = 0.08f; // billboard half-size 例: 0.05
+        float gSize = 0.05f; // billboard half-size 例: 0.05
         Math::Vec3f gCamUpWS = {0,1,0};
         float gTime = 0.0f;
     };
@@ -101,14 +101,14 @@ public:
         m_cpuUpdateBuffer[currentSlot].gCamPosWS = pos;
     }
 
-    void SetCameraBuffer(const CameraCB& camCB) {
+    void SetCameraBuffer(const RenderCB& camCB) {
         std::lock_guard lock(bufMutex);
-        m_cpuCameraBuffer[currentSlot] = camCB;
+        m_cpuRenderBuffer[currentSlot] = camCB;
 	}
 
     void Commit(double deltaTime) override;
 
-	void SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& heightMap, ComPtr<ID3D11Buffer>& terrainCB, uint32_t slot);
+	void SpawnDrawParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& heightMap, ComPtr<ID3D11Buffer>& terrainCB, uint32_t slot);
 
     // GPUリソース取得（後段で使用）
     ID3D11ShaderResourceView* GetVolumeSRV() const {
@@ -146,7 +146,7 @@ private:
 
     ComPtr<ID3D11Buffer> m_spawnCB;
 	ComPtr<ID3D11Buffer> m_updateCB;
-	ComPtr<ID3D11Buffer> m_cameraCB;
+	ComPtr<ID3D11Buffer> m_renderCB;
 
     ComPtr<ID3D11Buffer> m_stagingCountBuf[Graphics::RENDER_BUFFER_COUNT];
 
@@ -167,7 +167,7 @@ private:
     std::mutex bufMutex;
     SpawnCB m_cpuSpawnBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 	UpdateCB m_cpuUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
-    CameraCB m_cpuCameraBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
+    RenderCB m_cpuRenderBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 
 	uint32_t currentSlot = 0;
 	float m_elapsedTime = 0.0f;

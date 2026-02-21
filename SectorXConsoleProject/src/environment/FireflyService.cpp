@@ -3,6 +3,7 @@
 #include <SectorFW/Debug/message.h>
 #include <SectorFW/Util/convert_string.h>
 #include "LeafService.h"
+#include "RainService.h"
 
 
 void CreateFireflyVolumeBuffer(
@@ -38,7 +39,7 @@ float gDebugFireflyLightIntensity = 0.2f;
 float gDebugNearPickLightProb = 0.5f;
 float gDebugFarPickLightProb = 0.1f;
 
-float gDebugFireflyBaseSize = 0.08f;
+float gDebugFireflyBaseSize = 0.05f;
 #endif
 
 FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,
@@ -72,8 +73,8 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 	desc.ByteWidth = sizeof(UpdateCB);
 	pDevice->CreateBuffer(&desc, nullptr, m_updateCB.GetAddressOf());
 
-	desc.ByteWidth = sizeof(CameraCB);
-	pDevice->CreateBuffer(&desc, nullptr, m_cameraCB.GetAddressOf());
+	desc.ByteWidth = sizeof(RenderCB);
+	pDevice->CreateBuffer(&desc, nullptr, m_renderCB.GetAddressOf());
 
     auto compileShader = [&](const wchar_t* path, ComPtr<ID3D11ComputeShader>& outCS)
         {
@@ -247,7 +248,7 @@ void FireflyService::Commit(double deltaTime)
 
     auto& spawnBuf = m_cpuSpawnBuffer[currentSlot];
     auto& updateBuf = m_cpuUpdateBuffer[currentSlot];
-    auto& camBuf = m_cpuCameraBuffer[currentSlot];
+    auto& renderBuf = m_cpuRenderBuffer[currentSlot];
 
     {
         std::lock_guard lock(bufMutex);
@@ -258,7 +259,7 @@ void FireflyService::Commit(double deltaTime)
 		updateBuf.gDt = static_cast<float>(deltaTime);
 		updateBuf.gTime = m_elapsedTime;
 
-		camBuf.gTime = m_elapsedTime;
+		renderBuf.gTime = m_elapsedTime;
 
 #ifdef _DEBUG
 		spawnBuf.gAddSizeScale = gDebugFireflyAddSize;
@@ -268,7 +269,7 @@ void FireflyService::Commit(double deltaTime)
 		updateBuf.gNearPickLightProb = gDebugNearPickLightProb;
 		updateBuf.gFarPickLightProb = gDebugFarPickLightProb;
 
-        camBuf.gSize = gDebugFireflyBaseSize;
+        renderBuf.gSize = gDebugFireflyBaseSize;
 #endif
     }
 
@@ -284,16 +285,16 @@ void FireflyService::Commit(double deltaTime)
 	updateDesc.data = &updateBuf;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-    updateDesc.buffer = m_cameraCB.Get();
-	updateDesc.size = sizeof(CameraCB);
-	updateDesc.data = &camBuf;
+    updateDesc.buffer = m_renderCB.Get();
+	updateDesc.size = sizeof(RenderCB);
+	updateDesc.data = &renderBuf;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
     // 未使用スロット解放
 	ReleaseUnusedSlots();
 }
 
-void FireflyService::SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& heightMap, ComPtr<ID3D11Buffer>& terrainCB, uint32_t slot)
+void FireflyService::SpawnDrawParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& heightMap, ComPtr<ID3D11Buffer>& terrainCB, uint32_t slot)
 {
 	m_particlePool.Spawn(
         ctx, m_spawnCS.Get(),
@@ -308,7 +309,7 @@ void FireflyService::SpawnParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11Shade
         m_stagingCountBuf[slot].Get(),
         m_fireflyVS.Get(),
 		m_fireflyPS.Get(),
-		m_cameraCB.Get(),
+		m_renderCB.Get(),
         m_activeVolumeCount[slot]
     );
 }

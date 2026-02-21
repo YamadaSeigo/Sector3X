@@ -5,9 +5,11 @@ StructuredBuffer<LeafVolumeGPU> gVolumes : register(t0);
 
 Texture2D<float> gHeightMap : register(t1);
 
-StructuredBuffer<LeafGuideCurve> gCurves : register(t2);
+ByteAddressBuffer gAliveCountRaw : register(t2);
 
-StructuredBuffer<LeafClump> gClumps : register(t3);
+StructuredBuffer<LeafGuideCurve> gCurves : register(t3);
+
+StructuredBuffer<LeafClump> gClumps : register(t4);
 
 
 SamplerState gHeightSamp : register(s0);
@@ -32,6 +34,9 @@ cbuffer CBSpawn : register(b0)
     float gLaneMax;
     float gRadMin;
     float gRadMax;
+
+    uint gMaxParticles; // FreeList枯渇対策（使わなくてもOK）
+    uint _padding012[3]; // 16B 境界揃え]
 };
 
 // 地形グリッド情報
@@ -121,6 +126,12 @@ void main(uint3 tid : SV_DispatchThreadID)
 {
      // 1D dispatch を「(volumeIndex * gMaxSpawnPerVolumePerFrame) + local」
     uint global = tid.x;
+
+    // FreeList枯渇対策（Spawn数の上限を設ける）
+    uint aliveCount = gAliveCountRaw.Load(0);
+    if(aliveCount + global >= gMaxParticles)
+        return;
+
     uint volIdx = global / gMaxSpawnPerVolumePerFrame;
     uint lane = global - volIdx * gMaxSpawnPerVolumePerFrame;
 

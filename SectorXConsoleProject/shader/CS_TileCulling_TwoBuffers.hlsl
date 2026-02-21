@@ -6,26 +6,6 @@
 
 #include "_TileDeferred.hlsli"
 
-
-// -----------------------------
-// Your PointLight struct
-// -----------------------------
-struct PointLight
-{
-    float3 positionWS;
-    float range; // 16B
-
-    float3 color;
-    float intensity; // 16B
-
-    float invRadius;
-    uint flag;
-
-    // NOTE: In StructuredBuffer, HLSL packs to 16-byte multiples.
-    // On CPU side, ensure stride matches (typically 48 bytes if you add padding to 16B).
-    // If you get stride mismatch warnings, pad the CPU struct to 48 bytes.
-};
-
 // -----------------------------
 // Tile frustum planes (view space)
 // -----------------------------
@@ -46,8 +26,11 @@ StructuredBuffer<TileFrustum> gTileFrustums : register(t2);
 Texture2D<float> gDepth : register(t3); // depth 0..1 SRV
 
 // Outputs
-RWStructuredBuffer<uint> gTileLightCount : register(u0); // tiles
-RWStructuredBuffer<uint> gTileLightIndices : register(u1); // tiles * MAX_LIGHTS_PER_TILE
+RWStructuredBuffer<uint> gTileLightCountZ : register(u0); // tiles
+RWStructuredBuffer<uint> gTileLightIndicesZ : register(u1); // tiles * MAX_LIGHTS_PER_TILE
+
+RWStructuredBuffer<uint> gTileLightCountNoZ : register(u2); // tiles
+RWStructuredBuffer<uint> gTileLightIndicesNoZ : register(u3); // tiles * MAX_LIGHTS_PER_TILE
 
 cbuffer TileCB : register(b0)
 {
@@ -125,8 +108,11 @@ bool SphereIntersectsTileFrustum(float3 cVS, float r, TileFrustum f)
 // -----------------------------
 groupshared float gsMinZ;
 groupshared float gsMaxZ;
-groupshared uint gsCount;
-groupshared uint gsEncoded[MAX_LIGHTS_PER_TILE];
+groupshared uint gsCountZ;
+groupshared uint gsCountNoZ;
+groupshared uint gsEncodedZ[MAX_LIGHTS_PER_TILE];
+groupshared uint gsEncodedNoZ[MAX_LIGHTS_PER_TILE];
+
 
 groupshared float gsReduseMin[256];
 groupshared float gsReduseMax[256];
@@ -158,12 +144,20 @@ void ReduceMinMaxZ(float z, uint tid)
     GroupMemoryBarrierWithGroupSync();
 }
 
-void TryAppend(uint encoded)
+void TryAppendZ(uint encoded)
 {
     uint slot;
-    InterlockedAdd(gsCount, 1, slot);
+    InterlockedAdd(gsCountZ, 1, slot);
     if (slot < MAX_LIGHTS_PER_TILE)
-        gsEncoded[slot] = encoded;
+        gsEncodedZ[slot] = encoded;
+}
+
+void TryAppendNoZ(uint encoded)
+{
+    uint slot;
+    InterlockedAdd(gsCountNoZ, 1, slot);
+    if (slot < MAX_LIGHTS_PER_TILE)
+        gsEncodedNoZ[slot] = encoded;
 }
 
 // Z range reject using tile min/max viewZ.
@@ -206,7 +200,11 @@ void main(uint3 gtid : SV_GroupThreadID, uint3 gid : SV_GroupID)
 
     // 2) cull lights in parallel, pack into group list
     if (tid == 0)
-        gsCount = 0;
+    {
+        gsCountZ = 0;
+        gsCountNoZ = 0;
+    }
+
     GroupMemoryBarrierWithGroupSync();
 
     const uint THREADS = TILE_SIZE * TILE_SIZE;
@@ -225,12 +223,13 @@ void main(uint3 gtid : SV_GroupThreadID, uint3 gid : SV_GroupID)
         if (cVS.z + r <= 0.0f)
             continue;
 
-        if (!PassZRange(cVS.z, r))
-            continue;
         if (!SphereIntersectsTileFrustum(cVS, r, fr))
             continue;
 
-        TryAppend(EncodeLightIndex(LIGHT_TYPE_NORMAL, li));
+        TryAppendNoZ(EncodeLightIndex(LIGHT_TYPE_NORMAL, li));
+
+        if (PassZRange(cVS.z, r))
+            TryAppendZ(EncodeLightIndex(LIGHT_TYPE_NORMAL, li));
     }
 
     // ---- Firefly lights ----
@@ -246,12 +245,13 @@ void main(uint3 gtid : SV_GroupThreadID, uint3 gid : SV_GroupID)
         if (cVS.z + r <= 0.0f)
             continue;
 
-        if (!PassZRange(cVS.z, r))
-            continue;
         if (!SphereIntersectsTileFrustum(cVS, r, fr))
             continue;
 
-        TryAppend(EncodeLightIndex(LIGHT_TYPE_FIREFLY, fi));
+        TryAppendNoZ(EncodeLightIndex(LIGHT_TYPE_FIREFLY, fi));
+
+        if (PassZRange(cVS.z, r))
+            TryAppendZ(EncodeLightIndex(LIGHT_TYPE_FIREFLY, fi));
     }
 
     GroupMemoryBarrierWithGroupSync();
@@ -259,12 +259,18 @@ void main(uint3 gtid : SV_GroupThreadID, uint3 gid : SV_GroupID)
     // 3) write out once per tile
     if (tid == 0)
     {
-        uint count = min(gsCount, (uint) MAX_LIGHTS_PER_TILE);
-        gTileLightCount[tileIndex] = count;
+        uint countZ = min(gsCountZ, (uint) MAX_LIGHTS_PER_TILE);
+        uint countNoZ = min(gsCountNoZ, (uint) MAX_LIGHTS_PER_TILE);
+        gTileLightCountZ[tileIndex] = countZ;
+        gTileLightCountNoZ[tileIndex] = countNoZ;
 
         uint base = tileIndex * MAX_LIGHTS_PER_TILE;
         [loop]
-        for (uint i = 0; i < count; ++i)
-            gTileLightIndices[base + i] = gsEncoded[i];
+        for (uint i = 0; i < countZ; ++i)
+            gTileLightIndicesZ[base + i] = gsEncodedZ[i];
+
+        [loop]
+        for (uint j = 0; j < countNoZ; ++j)
+            gTileLightIndicesNoZ[base + j] = gsEncodedNoZ[j];
     }
 }

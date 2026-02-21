@@ -46,7 +46,16 @@ bool CreateMRT(ID3D11Device* dev, SFW::Graphics::DX11::TextureManager* texMgr, c
 }
 
 
-void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph, App::Context& ctx, ComPtr<ID3D11RenderTargetView>& mainRTV, ComPtr<ID3D11DepthStencilView>& mainDSV, ComPtr<ID3D11DepthStencilView>& mainDSVReadOnly, ComPtr<ID3D11ShaderResourceView>& mainDepthSRV, SFW::Graphics::PassCustomFuncType drawTerrainColor, SFW::Graphics::PassCustomFuncType drawParticle)
+void RenderPipe::Initialize(
+	SFW::Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
+	App::Context& ctx,
+	ComPtr<ID3D11RenderTargetView>& mainRTV,
+	ComPtr<ID3D11DepthStencilView>& mainDSV,
+	ComPtr<ID3D11DepthStencilView>& mainDSVReadOnly,
+	ComPtr<ID3D11ShaderResourceView>& mainDepthSRV,
+	SFW::Graphics::PassCustomFuncType drawTerrainColor,
+	SFW::Graphics::PassCustomFuncType drawOpaqueParticle,
+	SFW::Graphics::PassCustomFuncType drawTransparentParticle)
 {
 	using namespace SFW::Graphics;
 
@@ -198,7 +207,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 #endif
 	ShaderHandle defferedShaderHandle = {};
 	auto shaderData = shaderMgr->CreateResource(defferedShaderDesc, defferedShaderHandle);
-	static ComPtr<ID3D11VertexShader> defferedVS = shaderData.vs;
+	static ComPtr<ID3D11VertexShader> fullscreenVS = shaderData.vs;
 	static ComPtr<ID3D11PixelShader> defferedPS = shaderData.ps;
 
 	enum DeferredGBufferType {
@@ -363,6 +372,10 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 	// 1.0以上でも潰れないフォーマット
 	createScreenTex(sceneColorSRV, sceneColorRTV, DXGI_FORMAT_R11G11B10_FLOAT, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
 
+	static ComPtr<ID3D11ShaderResourceView> transparentSRV;
+	static ComPtr<ID3D11RenderTargetView> transparentRTV;
+	createScreenTex(transparentSRV, transparentRTV, DXGI_FORMAT_R8G8B8A8_UNORM, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
+
 	static ComPtr<ID3D11ShaderResourceView> brightSRV;
 	static ComPtr<ID3D11RenderTargetView> brightRTV;
 	createScreenTex(brightSRV, brightRTV, DXGI_FORMAT_R8G8B8A8_UNORM, BLOOM_TEX_WIDTH, BLOOM_TEX_HEIGHT);
@@ -515,7 +528,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		ctx->PSSetSamplers(1, 1, lightShadowResService->GetShadowSampler().GetAddressOf());
 		ctx->PSSetSamplers(2, 1, pointSampler.GetAddressOf());
 
-		ctx->VSSetShader(defferedVS.Get(), nullptr, 0);
+		ctx->VSSetShader(fullscreenVS.Get(), nullptr, 0);
 		ctx->PSSetShader(defferedPS.Get(), nullptr, 0);
 
 		ctx->Draw(3, 0);
@@ -525,7 +538,22 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 
 		ctx->PSSetShaderResources(11, _countof(nullSRV), nullSRV);
 
-		//(2) ブライト抽出
+		};
+
+	auto drawComposite = [](uint64_t frame) {
+
+		auto ctx = gGraphics->GetDeviceContext();
+
+		gGraphics->SetBlendState(BlendStateID::Opaque);
+		gGraphics->SetRasterizerState(RasterizerStateID::SolidCullBack);
+		gGraphics->SetDepthStencilState(DepthStencilStateID::DepthReadOnly);
+
+		ctx->IASetInputLayout(nullptr);
+		ctx->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
+		ctx->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
+		ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		//(1) ブライト抽出
 		//=========================================================================
 
 		if (bloomDataChanged) {
@@ -558,18 +586,21 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		ctx->PSSetShaderResources(0, 1, sceneColorSRV.GetAddressOf());
 
 		//DepthをSRVとしてバインド
-		ctx->PSSetShaderResources(1, 1, &deferreredSRVs.back());
+		ctx->PSSetShaderResources(1, 1, &deferreredSRVs[DEPTH]);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 
+		ctx->VSSetShader(fullscreenVS.Get(), nullptr, 0);
 		ctx->PSSetShader(brightPS.Get(), nullptr, 0);
 
 		ctx->Draw(3, 0);
 
+		ID3D11ShaderResourceView* nullSRV[2] = { nullptr };
+
 		// SRVを解除
 		ctx->PSSetShaderResources(0, 1, nullSRV);
 
-		//(3) ボケ（横）
+		//(2) ボケ（横）
 		//=========================================================================
 
 		ctx->OMSetRenderTargets(1, bloomRTV.GetAddressOf(), nullptr);
@@ -586,7 +617,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 
 		ctx->PSSetShaderResources(0, 1, nullSRV);
 
-		//(4) 合成
+		//(3) 合成
 		//=========================================================================
 
 		gGraphics->SetMainRenderTargetNoDepth();
@@ -611,7 +642,6 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 		//=========================================================================
 
 		gGraphics->SetMainRenderTargetAndDepth();
-
 		};
 
 
@@ -626,7 +656,7 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OUTLINE);
 
-	passDesc.customExecute = { drawSky, drawParticle, drawFullScreen };
+	passDesc.customExecute = { drawSky, drawOpaqueParticle, drawFullScreen };
 	passDesc.stencilRef = 2;
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 
@@ -637,8 +667,8 @@ void RenderPipe::Initialize(SFW::Graphics::DX11::GraphicsDevice::RenderGraph* re
 	psoDesc.rasterizerState = RasterizerStateID::SolidCullBack;
 	psoMgr->Add(psoDesc, psoHandle);
 
-	passDesc.rtvs = mainRtv;
-	passDesc.customExecute = {};
+	passDesc.rtvs = { sceneColorRTV };
+	passDesc.customExecute = { drawTransparentParticle, drawComposite };
 	passDesc.psoOverride = psoHandle;
 	passDesc.blendState = BlendStateID::AlphaBlend;
 	passDesc.depthStencilState = DepthStencilStateID::DepthReadOnly;

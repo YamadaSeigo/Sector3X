@@ -18,6 +18,7 @@ namespace RenderPipe
         ComPtr<ID3D11DepthStencilView>& mainDSVReadOnly,
         ComPtr<ID3D11ShaderResourceView>& mainDepthSRV,
         SFW::Graphics::PassCustomFuncType drawTerrainColor,
-        SFW::Graphics::PassCustomFuncType drawParticle
+        SFW::Graphics::PassCustomFuncType drawOpaqueParticle,
+		SFW::Graphics::PassCustomFuncType drawTransparentParticle
     );
 }

@@ -49,7 +49,7 @@ struct LeafUpdateParam
 class LeafParticlePool
 {
 public:
-    static constexpr uint32_t MaxParticles = 100000;
+    static constexpr uint32_t MaxParticles = 10000;
     static constexpr uint32_t MaxVolumeSlots = 256;
     static constexpr uint32_t MaxSpawnPerVol = 32;
 
@@ -70,21 +70,26 @@ public:
         ID3D11ComputeShader* updateCS,
         ID3D11ComputeShader* argsCS,
         ID3D11ShaderResourceView* volumeSRV,
-		ID3D11ShaderResourceView* guideCurveSRV,
+        ID3D11ShaderResourceView* guideCurveSRV,
         ID3D11ShaderResourceView* clumpSRV,
         ID3D11ShaderResourceView* heightMapSRV,
-        ID3D11ShaderResourceView* leafTextureSRV,
         ID3D11ShaderResourceView* depthSRV,
-		ID3D11UnorderedAccessView* clumpUAV,
+        ID3D11UnorderedAccessView* clumpUAV,
         ID3D11Buffer* cbClumpUpdate,
         ID3D11Buffer* cbSpawnData,
         ID3D11Buffer* cbTerrain,
         ID3D11Buffer* cbWind,
         ID3D11Buffer* cbUpdateData,
         ID3D11Buffer* cbCameraData,
-        ID3D11VertexShader* vs,
-        ID3D11PixelShader* ps,
         uint32_t activeVolumeCount);
+
+    void Draw(
+        ID3D11DeviceContext* ctx,
+        ID3D11ShaderResourceView* volumeSRV,
+        ID3D11ShaderResourceView* leafTextureSRV,
+        ID3D11Buffer* cbRenderData,
+        ID3D11VertexShader* vs,
+        ID3D11PixelShader* ps);
 
     // UpdateParam の設定（デバッグGUIなどからいじる用）
     void SetUpdateParam(const LeafUpdateParam& p)

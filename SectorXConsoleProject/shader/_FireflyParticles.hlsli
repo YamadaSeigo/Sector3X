@@ -1,3 +1,7 @@
+
+#ifndef FIREFLY_PARTICLES_HLSLI
+#define FIREFLY_PARTICLES_HLSLI
+
 // FireflyParticles.hlsli
 struct FireflyParticle
 {
@@ -34,3 +38,5 @@ struct FireflyVolumeGPU
     
     float pad0_volume;
 };
+
+#endif // FIREFLY_PARTICLES_HLSLI

@@ -219,8 +219,8 @@ LeafService::LeafService(
     desc.ByteWidth = sizeof(UpdateCB);
     pDevice->CreateBuffer(&desc, nullptr, m_updateCB.GetAddressOf());
 
-    desc.ByteWidth = sizeof(CameraCB);
-    pDevice->CreateBuffer(&desc, nullptr, m_cameraCB.GetAddressOf());
+    desc.ByteWidth = sizeof(RenderCB);
+    pDevice->CreateBuffer(&desc, nullptr, m_renderCB.GetAddressOf());
 
     auto compileShader = [&](const wchar_t* path, ComPtr<ID3D11ComputeShader>& outCS)
         {
@@ -354,7 +354,7 @@ void LeafService::Commit(double deltaTime)
     auto& clumpUpdateBuf = m_cpuClumpUpdateBuffer[currentSlot];
     auto& spawnBuf = m_cpuSpawnBuffer[currentSlot];
     auto& updateBuf = m_cpuUpdateBuffer[currentSlot];
-    auto& camBuf = m_cpuCameraBuffer[currentSlot];
+    auto& renderBuf = m_cpuRenderBuffer[currentSlot];
 
     {
         std::lock_guard lock(bufMutex);
@@ -369,11 +369,11 @@ void LeafService::Commit(double deltaTime)
         updateBuf.gDt = dt;
         updateBuf.gTime = m_elapsedTime;
 
-        camBuf.gTime = m_elapsedTime;
+        renderBuf.gTime = m_elapsedTime;
 
 #ifdef _DEBUG
         spawnBuf.gAddSizeScale = gDebugLeafAddSize;
-        camBuf.gSize = gDebugLeafBaseSize;
+        renderBuf.gSize = gDebugLeafBaseSize;
 
         spawnBuf.gLaneMax = gDebugLeafLaneMax;
         spawnBuf.gRadialMax = gDebugLeafRadialMax;
@@ -397,19 +397,18 @@ void LeafService::Commit(double deltaTime)
     updateDesc.data = &updateBuf;
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-    updateDesc.buffer = m_cameraCB.Get();
-    updateDesc.size = sizeof(CameraCB);
-    updateDesc.data = &camBuf;
+    updateDesc.buffer = m_renderCB.Get();
+    updateDesc.size = sizeof(RenderCB);
+    updateDesc.data = &renderBuf;
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
 	// 使用していないスロットを解放
     ReleaseUnusedSlots();
 }
 
-void LeafService::SpawnParticles(
+void LeafService::SpawnDrawParticles(
     ID3D11DeviceContext* ctx,
     ComPtr<ID3D11ShaderResourceView>& heightMap,
-    ComPtr<ID3D11ShaderResourceView>& leafTex,
     ComPtr<ID3D11ShaderResourceView>& depthSRV,
     ComPtr<ID3D11Buffer>& terrainCB,
     ComPtr<ID3D11Buffer>& windCB,
@@ -425,7 +424,6 @@ void LeafService::SpawnParticles(
 		m_guideCurveSRV.Get(),
 		m_clumpSRV.Get(),
         heightMap.Get(),
-        leafTex.Get(),
         depthSRV.Get(),
 		m_clumpUAV.Get(),
 		m_clumpUpdateCB.Get(),
@@ -433,10 +431,20 @@ void LeafService::SpawnParticles(
         terrainCB.Get(),
         windCB.Get(),
         m_updateCB.Get(),
-        m_cameraCB.Get(),
-        m_leafVS.Get(),
-        m_leafPS.Get(),
+        m_renderCB.Get(),
         m_activeVolumeCount[slot]
+    );
+}
+
+void LeafService::DrawParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& leafTex)
+{
+	m_particlePool.Draw(
+        ctx,
+        m_volumeSRV.Get(),
+        leafTex.Get(),
+        m_renderCB.Get(),
+        m_leafVS.Get(),
+        m_leafPS.Get()
     );
 }
 

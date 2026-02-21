@@ -4,7 +4,7 @@ StructuredBuffer<FireflyParticle> gParticles : register(t0);
 StructuredBuffer<uint> gAlive : register(t1);
 StructuredBuffer<FireflyVolumeGPU> gVolumes : register(t2);
 
-cbuffer CBCamera : register(b0)
+cbuffer RenderCB : register(b0)
 {
     row_major float4x4 gViewProj;
     float3 gCamRightWS;

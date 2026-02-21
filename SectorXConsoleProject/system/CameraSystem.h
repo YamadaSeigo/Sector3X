@@ -3,6 +3,7 @@
 #include "graphics/DeferredRenderingService.h"
 #include "environment/FireflyService.h"
 #include "environment/LeafService.h"
+#include "environment/RainService.h"
 
 /**
  * @brief カメラのバッファの更新、フルスクリーン描画用のカメラバッファとFireflyServiceのカメラバッファも更新,
@@ -20,7 +21,8 @@ class CameraSystem : public ITypeSystem<
 		Graphics::I2DCameraService,
 		DeferredRenderingService,
 		FireflyService,
-		LeafService
+		LeafService,
+		RainService
 #ifdef _DEBUG
 		,Graphics::RenderService
 #endif
@@ -37,7 +39,8 @@ public:
 		NoDeletePtr<Graphics::I2DCameraService> camera2DService,
 		NoDeletePtr<DeferredRenderingService> deferredService,
 		NoDeletePtr<FireflyService> fireflyService,
-		NoDeletePtr<LeafService> leafService
+		NoDeletePtr<LeafService> leafService,
+		NoDeletePtr<RainService> rainService
 #ifdef _DEBUG
 		, NoDeletePtr<Graphics::RenderService> renderService
 #endif
@@ -168,11 +171,13 @@ public:
 			Math::Vec3f fixedF, fixedU, fixedR;
 			Math::ToBasis<float, Math::LH_ZForward>(perCameraService->GetRotation(), fixedR, fixedU, fixedF);
 
+			auto fixedEye = perCameraService->GetEyePos();
+
 			//ディファ―ド用のバッファ更新
 			DeferredCameraBuffer lightCameraBufferData{};
 			lightCameraBufferData.invViewProj = Math::Inverse(buffer.viewProj);
 			lightCameraBufferData.camForward = fixedF.normalized();
-			lightCameraBufferData.camPos = perCameraService->GetEyePos();
+			lightCameraBufferData.camPos = fixedEye;
 			lightCameraBufferData.debugCamForward = f.normalized();
 			lightCameraBufferData.debugCamPos = debugEye;
 
@@ -186,14 +191,14 @@ public:
 			deferredService->UpdateTileCameraBufferData(tileCamBufferData);
 
 
-			FireflyService::CameraCB fireflyCamBuffer{};
+			FireflyService::RenderCB fireflyCamBuffer{};
 			fireflyCamBuffer.gViewProj = buffer.viewProj;
 			fireflyCamBuffer.gCamRightWS = r.normalized();
 			fireflyCamBuffer.gCamUpWS = u.normalized();
 
 			fireflyService->SetCameraBuffer(fireflyCamBuffer);
 
-			LeafService::CameraCB leafCamBuffer{};
+			LeafService::RenderCB leafCamBuffer{};
 			leafCamBuffer.gViewProj = buffer.viewProj;
 			leafCamBuffer.gCamRightWS = r.normalized();
 			leafCamBuffer.gCamUpWS = u.normalized();
@@ -201,6 +206,13 @@ public:
 			leafCamBuffer.gNearFar = { perCameraService->GetNearClip(), perCameraService->GetFarClip() };
 
 			leafService->SetCameraBuffer(leafCamBuffer);
+
+			RainService::RenderCB rainCamBuffer{};
+			rainCamBuffer.gViewProj = buffer.viewProj;
+			rainCamBuffer.gCamPosWS = fixedEye;
+
+			rainService->SetCameraBuffer(rainCamBuffer);
+			rainService->SetCameraPos(fixedEye);
 
 			return;
 		}
@@ -282,7 +294,7 @@ public:
 		auto right = r.normalized();
 		auto up = u.normalized();
 
-		FireflyService::CameraCB fireflyCamBuffer{};
+		FireflyService::RenderCB fireflyCamBuffer{};
 		fireflyCamBuffer.gViewProj = viewProj;
 		fireflyCamBuffer.gCamRightWS = right;
 		fireflyCamBuffer.gCamUpWS = up;
@@ -290,7 +302,7 @@ public:
 		fireflyService->SetCameraBuffer(fireflyCamBuffer);
 		fireflyService->SetCameraPos(camPos);
 
-		LeafService::CameraCB leafCamBuffer{};
+		LeafService::RenderCB leafCamBuffer{};
 		leafCamBuffer.gViewProj = viewProj;
 		leafCamBuffer.gCamRightWS = right;
 		leafCamBuffer.gCamUpWS = up;
@@ -298,6 +310,13 @@ public:
 		leafCamBuffer.gNearFar = { perCameraService->GetNearClip(), perCameraService->GetFarClip() };
 
 		leafService->SetCameraBuffer(leafCamBuffer);
+
+		RainService::RenderCB rainCamBuffer{};
+		rainCamBuffer.gViewProj = viewProj;
+		rainCamBuffer.gCamPosWS = camPos;
+
+		rainService->SetCameraBuffer(rainCamBuffer);
+		rainService->SetCameraPos(camPos);
 	}
 private:
 	float moveSpeed = 1.0f;

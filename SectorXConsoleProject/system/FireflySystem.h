@@ -12,7 +12,7 @@ struct CFireflyVolume
 	float       radius = 30.0f;    // 発生範囲
 
     // 見た目（emissive / bloom 基準）
-    Math::Vec3f color = {0.4f, 1.5f, 0.0f};
+    Math::Vec3f color = {0.6f, 2.25f, 0.0f};
     float       intensity = 1.0f;
 
     // 群れ密度（GPU targetCount の元）

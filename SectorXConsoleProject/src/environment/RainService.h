@@ -1,0 +1,130 @@
+#pragma once
+
+#include "RainParticlePool.h"
+
+class RainService : public ECS::IUpdateService, public ECS::ICommitService
+{
+public:
+    struct SpawnCB
+    {
+        Math::Vec3f gCamPos = {};
+        float gTime = 0.0f;
+
+        uint32_t gMaxSpawnPerFrame = RainParticlePool::MaxSpawnPerFrame; // 例：32
+        uint32_t gMaxParticles = RainParticlePool::MaxParticles; // FreeList枯渇対策（使わなくてもOK）
+        float gHeightOffset = 50.0f; // カメラからの高さオフセット
+        float gAddSize = 0.02f;
+
+        float gSpawnRadius = 80.0f; // スポーン位置の半径
+		float gLife = 5.0f; // 例: 5秒
+        float _pad0, _pad1; // 16B 境界揃え
+    };
+
+    struct UpdateCB
+    {
+        float gDt = 0.0f;
+        float gTime = 0.0f;
+        float gGravity = 9.8f;
+
+        float pad0 = {};
+
+        Math::Vec3f gCamPosWS = {};
+        float gSpawnRadius = 80.0f;
+
+        Math::Vec3f gWindWS = {};
+        float pad1 = {};
+    };
+
+    struct RenderCB
+    {
+        Math::Matrix4x4f gViewProj = {};
+        Math::Vec3f gCamPosWS = {};
+        float _pad0 = {};
+
+        float gBaseWidth = 0.025f; // 例: 0.01～0.03 (m)
+        float gBaseLength = 0.01f; // 例: 0.10～0.40 (m)
+        float gSpeedToLength = 0.02f; // 例: 0.01～0.03 (length += |v| * k)
+        float gMinSpeedForDir = 0.1f; // 例: 0.1
+
+        float gAlpha = 0.5f; // 全体alpha
+        float gLifeFade = 0.18f; // 例: 1.0 (寿命で薄くする強さ)
+        float _pad3[2] = {};
+    };
+
+    static constexpr uint32_t MaxVolumes = 32;
+
+    RainService(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,
+        Graphics::DX11::BufferManager* bufferMgr,
+        const wchar_t* csInitFreeListPath,
+        const wchar_t* csSpawnPath,
+        const wchar_t* csUpdatePath,
+        const wchar_t* csArgsPath,
+        const wchar_t* vsPath,
+        const wchar_t* psPath);
+
+    void PreUpdate(double deltaTime) override {
+        currentSlot = (currentSlot + 1) % Graphics::RENDER_BUFFER_COUNT;
+        m_elapsedTime += static_cast<float>(deltaTime);
+    }
+
+    void SetCameraPos(const Math::Vec3f pos) {
+        std::lock_guard lock(bufMutex);
+        m_cpuSpawnBuffer[currentSlot].gCamPos = pos;
+        m_cpuUpdateBuffer[currentSlot].gCamPosWS = pos;
+		m_cpuRenderBuffer[currentSlot].gCamPosWS = pos;
+    }
+
+    void SetCameraBuffer(const RenderCB& camCB) {
+        std::lock_guard lock(bufMutex);
+        m_cpuRenderBuffer[currentSlot] = camCB;
+    }
+
+    void SetWind(const Math::Vec3f wind) {
+        std::lock_guard lock(bufMutex);
+        m_cpuUpdateBuffer[currentSlot].gWindWS = wind;
+	}
+
+    void Commit(double deltaTime) override;
+
+    void SpawnDrawParticles(ID3D11DeviceContext* ctx, RainParticlePool::TiledLightData* lightData);
+
+    float GetElapsedTime() const noexcept {
+        return m_elapsedTime;
+    }
+
+    void SetSpawnPerFrame(uint32_t count) {
+        std::lock_guard lock(bufMutex);
+        m_spawnPerFrame = (std::min)(count, RainParticlePool::MaxSpawnPerFrame);
+	}
+
+private:
+    // ---- GPUリソース ----
+    ComPtr<ID3D11Buffer> m_spawnCB;
+    ComPtr<ID3D11Buffer> m_updateCB;
+    ComPtr<ID3D11Buffer> m_renderCB;
+
+    ComPtr<ID3D11ComputeShader> m_initFreeListCS;
+    ComPtr<ID3D11ComputeShader> m_spawnCS;
+    ComPtr<ID3D11ComputeShader> m_updateCS;
+    ComPtr<ID3D11ComputeShader> m_argsCS;
+
+    ComPtr<ID3D11VertexShader> m_rainVS;
+    ComPtr<ID3D11PixelShader> m_rainPS;
+
+    Graphics::DX11::BufferManager* m_bufferMgr = nullptr;
+
+    RainParticlePool m_particlePool;
+
+    std::mutex bufMutex;
+    SpawnCB m_cpuSpawnBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
+    UpdateCB m_cpuUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
+    RenderCB m_cpuRenderBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
+
+    uint32_t currentSlot = 0;
+    float m_elapsedTime = 0.0f;
+
+    uint32_t m_spawnPerFrame = 32 << 2;
+
+public:
+    STATIC_SERVICE_TAG
+};

@@ -2,6 +2,7 @@
 
 #include "D3D11Helpers.h"
 
+
 class TiledDeferredRender
 {
 public:
@@ -60,6 +61,13 @@ public:
         ID3D11SamplerState* pointSampler,
         ID3D11Buffer* camCB);
 
+	const StructuredBufferSRVUAV& GetLightIndexBufferZ() const noexcept { return m_tileLightIndicesZ; }
+    const StructuredBufferSRVUAV& GetLightIndexCounterZ() const noexcept { return m_lightIndexCounterZ; }
+    const StructuredBufferSRVUAV& GetLightIndexBufferNoZ() const noexcept { return m_tileLightIndicesNoZ; }
+	const StructuredBufferSRVUAV& GetLightIndexCounterNoZ() const noexcept { return m_lightIndexCounterNoZ; }
+
+	const ComPtr<ID3D11Buffer> GetTileCB() const noexcept { return m_tileCB; }
+
 private:
 
 	uint32_t m_screenWidth = 0;
@@ -68,8 +76,10 @@ private:
 	uint32_t m_tilesY = 0;
 
 	StructuredBufferSRVUAV m_tileFrustums;
-	StructuredBufferSRVUAV m_tileLightIndices;
-	StructuredBufferSRVUAV m_lightIndexCounter;
+	StructuredBufferSRVUAV m_tileLightIndicesZ;
+	StructuredBufferSRVUAV m_lightIndexCounterZ;
+    StructuredBufferSRVUAV m_tileLightIndicesNoZ;
+    StructuredBufferSRVUAV m_lightIndexCounterNoZ;
 
 	ComPtr<ID3D11Buffer> m_tileCB;
 

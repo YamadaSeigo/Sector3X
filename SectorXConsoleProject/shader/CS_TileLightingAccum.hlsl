@@ -3,17 +3,6 @@
 
 #include "_TileDeferred.hlsli"
 
-struct PointLight
-{
-    float3 positionWS;
-    float range;
-
-    float3 color;
-    float intensity;
-
-    float invRadius;
-    uint flag;
-};
 
 // Light buffers (if you do two-buffers style)
 StructuredBuffer<PointLight> gNormalLights : register(t0);

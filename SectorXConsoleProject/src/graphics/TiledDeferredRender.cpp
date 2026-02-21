@@ -31,7 +31,7 @@ void TiledDeferredRender::Create(ID3D11Device* dev,
         D3D11_USAGE_DEFAULT,
         0);
 
-    m_tileLightIndices = CreateStructuredBufferSRVUAV(
+    m_tileLightIndicesZ = CreateStructuredBufferSRVUAV(
         dev,
         sizeof(uint32_t),
         m_tilesX * m_tilesY * MAX_LIGHTS_PER_TILE,
@@ -41,7 +41,26 @@ void TiledDeferredRender::Create(ID3D11Device* dev,
         0);
 
 
-    m_lightIndexCounter = CreateStructuredBufferSRVUAV(
+    m_lightIndexCounterZ = CreateStructuredBufferSRVUAV(
+        dev,
+        sizeof(uint32_t),
+        m_tilesX * m_tilesY,
+        true, true,
+        D3D11_BUFFER_UAV_FLAG_COUNTER,
+        D3D11_USAGE_DEFAULT,
+        0);
+
+    m_tileLightIndicesNoZ = CreateStructuredBufferSRVUAV(
+        dev,
+        sizeof(uint32_t),
+        m_tilesX * m_tilesY * MAX_LIGHTS_PER_TILE,
+        true, true,
+        0,
+        D3D11_USAGE_DEFAULT,
+        0);
+
+
+    m_lightIndexCounterNoZ = CreateStructuredBufferSRVUAV(
         dev,
         sizeof(uint32_t),
         m_tilesX * m_tilesY,
@@ -124,8 +143,10 @@ void TiledDeferredRender::TileCullingLight(ID3D11DeviceContext* ctx,
 
     ID3D11UnorderedAccessView* uavs[] =
     {
-        m_lightIndexCounter.uav.Get(),
-        m_tileLightIndices.uav.Get(),
+        m_lightIndexCounterZ.uav.Get(),
+        m_tileLightIndicesZ.uav.Get(),
+		m_lightIndexCounterNoZ.uav.Get(),
+		m_tileLightIndicesNoZ.uav.Get()
 	};
 
 	constexpr auto uavCount = _countof(uavs);
@@ -161,8 +182,8 @@ void TiledDeferredRender::DrawTileLight(ID3D11DeviceContext* ctx,
     {
         normalLightSRV,
         fireflyLightSRV,
-        m_lightIndexCounter.srv.Get(),
-        m_tileLightIndices.srv.Get(),
+        m_lightIndexCounterZ.srv.Get(),
+        m_tileLightIndicesZ.srv.Get(),
         albedoSRV,
         normalSRV,
         depthSRV,

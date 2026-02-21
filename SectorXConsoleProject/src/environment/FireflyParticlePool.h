@@ -35,10 +35,10 @@ struct FireflyUpdatePram
 class FireflyParticlePool
 {
 public:
-    static constexpr uint32_t MaxParticles = 100000;
-    static constexpr uint32_t MaxVolumeSlots = 256;
-    static constexpr uint32_t MaxSpawnPerVol = 32;
-    static constexpr uint32_t MaxPointLight = 1u << 12;
+	static constexpr uint32_t MaxParticles = 100000;    // 最大個数。これ以上はスポーンされない。
+	static constexpr uint32_t MaxVolumeSlots = 256;     // 最大ボリュームスロット数。
+	static constexpr uint32_t MaxSpawnPerVol = 32;      // 1フレームあたりのスポーン数。これ以上はスポーンされない。
+	static constexpr uint32_t MaxPointLight = 1u << 12; // 最大ポイントライト数（スポーン上限とは別）。
 
     void Create(ID3D11Device* dev);
     void InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* spawnCB, ID3D11ComputeShader* initCS);
@@ -58,7 +58,7 @@ public:
         ID3D11Buffer* stagingBuf,
         ID3D11VertexShader* vs,
         ID3D11PixelShader* ps,
-		ID3D11Buffer* cbCameraData,
+		ID3D11Buffer* cbRenderData,
         uint32_t activeVolumeCount);
 
     ID3D11ShaderResourceView* GetParticlesSRV() const { return m_particles.srv.Get(); }

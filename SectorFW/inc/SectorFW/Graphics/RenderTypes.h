@@ -169,13 +169,14 @@ namespace SFW
 		 * @brief ブレンドステートID列挙型
 		 */
 		enum class BlendStateID {
-			Opaque,       // No blending
-			AlphaBlend,   // SrcAlpha / InvSrcAlpha
-			Additive,     // SrcAlpha / One
-			Multiply,     // DestColor / Zero
-			Subtract,     // One / Subtract
+			Opaque,			// No blending
+			AlphaBlend,		// SrcAlpha / InvSrcAlpha
+			Additive,		// SrcAlpha / One
+			Multiply,		// DestColor / Zero
+			Premultiplied,	// One / InvSrcAlpha
+			Subtract,		// One / Subtract
 			// ...
-			MAX_COUNT,    // 有効なブレンドステートの数
+			MAX_COUNT,		// 有効なブレンドステートの数
 		};
 		/**
 		 * @brief 深度ステンシルステートID列挙型

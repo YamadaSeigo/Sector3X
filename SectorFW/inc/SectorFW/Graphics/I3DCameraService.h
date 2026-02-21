@@ -160,7 +160,7 @@ namespace SFW
 			void SetFocusDistance(float distance) noexcept {
 				std::unique_lock lock(sharedMutex);
 
-				focusDist = (std::max)(1e-6f, distance);
+				focusDist = (std::max)(1e-4f, distance);
 
 				isUpdateBuffer = true;
 			}

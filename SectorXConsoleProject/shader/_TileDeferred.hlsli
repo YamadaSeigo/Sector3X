@@ -6,6 +6,18 @@
 
 #define MAX_LIGHTS_PER_TILE 128
 
+struct PointLight
+{
+    float3 positionWS;
+    float range; // 16B
+
+    float3 color;
+    float intensity; // 16B
+
+    float invRadius;
+    uint flag;
+};
+
 // -----------------------------
 // Light type encoding
 // -----------------------------

@@ -26,9 +26,10 @@
 #include "graphics/DeferredRenderingService.h"
 #include "graphics/SpriteAnimationService.h"
 #include "environment/WindService.h"
-#include "environment/EnvironmentService.h"
 #include "environment/FireflyService.h"
 #include "environment/LeafService.h"
+#include "environment/RainService.h"
+#include "environment/EnvironmentService.h"
 
 #include "level/LevelBuilders.h"
 
@@ -122,7 +123,7 @@ int main(void)
 	ok = audioService.Initialize();
 	assert(ok && "Failed Audio Service Initialize");
 
-	DeferredRenderingService deferredRenderingService(
+	static DeferredRenderingService deferredRenderingService(
 		device,
 		bufferMgr,
 		textureManager,
@@ -163,11 +164,20 @@ int main(void)
 		L"assets/shader/VS_LeafBillboard.cso",
 		L"assets/shader/PS_Leaf.cso");
 
+	static RainService rainService(device, deviceContext, bufferMgr,
+		L"assets/shader/CS_ParticleInitFreeList.cso",
+		L"assets/shader/CS_RainSpawn.cso",
+		L"assets/shader/CS_RainUpdate.cso",
+		L"assets/shader/CS_ParticleArgs.cso",
+		L"assets/shader/VS_RainBillboard.cso",
+		L"assets/shader/PS_Rain.cso");
+
 	ECS::ServiceLocator serviceLocator(
 		renderService, &physicsService, inputService, perCameraService,
 		ortCameraService, camera2DService, &lightShadowService, &windService,
 		&playerService, &audioService, &deferredRenderingService, &lightShadowResourceService,
-		&pointLightService, &environmentService, &spriteAnimationService, &fireflyService, &leafService);
+		&pointLightService, &environmentService, &spriteAnimationService,
+		&fireflyService, &leafService, &rainService);
 
 	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry, TimerService>();
 
@@ -396,12 +406,73 @@ int main(void)
 		leafTextureSRV = texData.ref().srv;
 	}
 
-	auto drawParticle = [](uint64_t frame)
+	auto drawOpaqueParticle = [](uint64_t frame)
 		{
 			auto deviceContext = graphics.GetDeviceContext();
 
 			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
 			graphics.SetBlendState(Graphics::BlendStateID::Additive);
+
+			//とりあえず安全にRTVをキャプチャして維持したままDSVだけ差し替え
+			// ※本来はRTVをキャッシュしておいて差し替えた方が軽量
+
+			ID3D11RenderTargetView* rtvs[DeferredTextureCount] = {};
+			{
+				ID3D11DepthStencilView* curDsv = nullptr;
+
+				deviceContext->OMGetRenderTargets(DeferredTextureCount, rtvs, &curDsv);
+
+				// ここで curDsv は使わないなら Release する
+				if (curDsv) curDsv->Release();
+
+				// 読み取り専用DSV に差し替える
+				ID3D11DepthStencilView* newDsv = graphics.GetMainDepthStencilViewReadOnly().Get();
+
+				// RTV を維持したまま DSV だけ変更
+				deviceContext->OMSetRenderTargets(DeferredTextureCount, rtvs, newDsv);
+
+			}
+
+			uint32_t slot = frame % Graphics::RENDER_BUFFER_COUNT;
+
+			//ホタルのスポーンと描画処理
+			fireflyService.SpawnDrawParticles(deviceContext, terrainRes.heightMapSRV, terrainRes.cp->cbGrid, slot);
+
+			ComPtr<ID3D11Buffer> windCb;
+			{
+				auto windHandle = windService.GetBufferHandle();
+
+				auto windBufData = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::BufferManager>()->Get(windHandle);
+				windCb = windBufData->buffer;
+			}
+
+
+			// 葉っぱの衝突処理として更新CSに渡すための深度SRV
+			ComPtr<ID3D11ShaderResourceView> mainDepthSRV = graphics.GetMainDepthStencilSRV();
+
+			//葉っぱのスポーン
+			leafService.SpawnDrawParticles(deviceContext, terrainRes.heightMapSRV, mainDepthSRV, terrainRes.cp->cbGrid, windCb, slot);
+
+			// 葉っぱは不透明(ピクセルでアルファを抜く)
+			graphics.SetBlendState(Graphics::BlendStateID::Opaque);
+			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
+
+			// 書き込みをするためにDSVをセット
+			deviceContext->OMSetRenderTargets(DeferredTextureCount, rtvs, graphics.GetMainDepthStencilView().Get());
+
+			//描画処理
+			leafService.DrawParticles(deviceContext, leafTextureSRV);
+
+			// OMGetRenderTargets は AddRef して返すので Release 必須
+			for (auto& rtv : rtvs) if (rtv) rtv->Release();
+		};
+
+	auto drawTransparentParticle = [](uint64_t frame)
+		{
+			auto deviceContext = graphics.GetDeviceContext();
+
+			graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
+			graphics.SetBlendState(Graphics::BlendStateID::Premultiplied);
 
 			//とりあえず安全にRTVをキャプチャして維持したままDSVだけ差し替え
 			// ※本来はRTVをキャッシュしておいて差し替えた方が軽量
@@ -414,8 +485,8 @@ int main(void)
 				// ここで curDsv は使わないなら Release する
 				if (curDsv) curDsv->Release();
 
-				// 目的の DSV に差し替える
-				ID3D11DepthStencilView* newDsv = graphics.GetMainDepthStencilViewReadOnly().Get();
+				// 読み取り専用DSV に差し替える
+				ID3D11DepthStencilView* newDsv = graphics.GetMainDepthStencilView().Get();
 
 				// RTV を維持したまま DSV だけ変更
 				deviceContext->OMSetRenderTargets(DeferredTextureCount, rtvs, newDsv);
@@ -424,27 +495,19 @@ int main(void)
 				for (auto& rtv : rtvs) if (rtv) rtv->Release();
 			}
 
-			uint32_t slot = frame % Graphics::RENDER_BUFFER_COUNT;
+			RainParticlePool::TiledLightData tiledLightData;
+			tiledLightData.normalLightSRV = lightShadowResourceService.GetPointLightSRV().Get();
+			tiledLightData.fireflyLightSRV = fireflyService.GetPointLightSRV();
 
-			//ホタルのスポーンと描画処理
-			fireflyService.SpawnParticles(deviceContext, terrainRes.heightMapSRV, terrainRes.cp->cbGrid, slot);
+			// 深度が反映されていない透明なのでZカリングはfalseにする
+			auto tileLightList = deferredRenderingService.GetTileLightList(false);
+			tiledLightData.lightCountSRV = tileLightList.lightCountSRV;
+			tiledLightData.lightIndexSRV = tileLightList.lightIndexSRV;
+			tiledLightData.lightCB = lightShadowResourceService.GetLightDataCB().Get();
+			tiledLightData.tileCB = deferredRenderingService.GetTileCB().Get();
 
-			// 葉っぱは不透明(ピクセルでアルファを抜く)
-			graphics.SetBlendState(Graphics::BlendStateID::AlphaBlend);
-
-			ComPtr<ID3D11Buffer> windCb;
-			{
-				auto windHandle = windService.GetBufferHandle();
-
-				auto windBufData = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::BufferManager>()->Get(windHandle);
-				windCb = windBufData->buffer;
-			}
-
-
-			ComPtr<ID3D11ShaderResourceView> mainDepthSRV = graphics.GetMainDepthStencilSRV();
-
-			//葉っぱのスポーンと描画処理
-			leafService.SpawnParticles(deviceContext, terrainRes.heightMapSRV, leafTextureSRV, mainDepthSRV, terrainRes.cp->cbGrid, windCb, slot);
+			//雨のスポーンと描画処理
+			rainService.SpawnDrawParticles(deviceContext, &tiledLightData);
 		};
 
 	renderService->SetCustomUpdateFunction(terrainUpdateFunc);
@@ -458,7 +521,7 @@ int main(void)
 	graphics.ExecuteCustomFunc([&](auto* rg, auto& mainRTV, auto& mainDSV, auto& mainDSVRO, auto& mainDepthSRV)
 		{
 			ctx.mainDepthSRV = mainDepthSRV;
-			RenderPipe::Initialize(rg, ctx, mainRTV, mainDSV, mainDSVRO, mainDepthSRV, drawTerrainColor, drawParticle);
+			RenderPipe::Initialize(rg, ctx, mainRTV, mainDSV, mainDSVRO, mainDepthSRV, drawTerrainColor, drawOpaqueParticle, drawTransparentParticle);
 		});
 
 	// World 構築 + level enqueue

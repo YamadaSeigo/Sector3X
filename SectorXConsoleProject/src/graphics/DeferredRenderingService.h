@@ -25,6 +25,11 @@ struct TileCameraBuffer {
 	uint32_t pad = {};
 };
 
+struct TileLightList {
+	ID3D11ShaderResourceView* lightCountSRV = nullptr;
+	ID3D11ShaderResourceView* lightIndexSRV = nullptr;
+};
+
 class DeferredRenderingService : public ECS::IUpdateService
 {
 public:
@@ -187,6 +192,27 @@ public:
 			pointSampler,
 			tileCameraBuffer.Get()
 		);
+	}
+
+	TileLightList GetTileLightList(bool cullingZ) const
+	{
+		if(cullingZ) {
+			return TileLightList{
+				tiledDeferredRender.GetLightIndexCounterZ().srv.Get(),
+				tiledDeferredRender.GetLightIndexBufferZ().srv.Get()
+			};
+		}
+		else {
+			return TileLightList{
+				tiledDeferredRender.GetLightIndexCounterNoZ().srv.Get(),
+				tiledDeferredRender.GetLightIndexBufferNoZ().srv.Get()
+			};
+		}
+	}
+
+	ComPtr<ID3D11Buffer> GetTileCB() const noexcept
+	{
+		return tiledDeferredRender.GetTileCB();
 	}
 
 private:

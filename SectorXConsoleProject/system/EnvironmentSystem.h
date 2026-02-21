@@ -1,6 +1,8 @@
 #pragma once
 
 #include "environment/EnvironmentService.h"
+#include "environment/WindService.h"
+#include "environment/RainService.h"
 
 template<typename Partition>
 class EnvironmentSystem : public ITypeSystem<
@@ -12,6 +14,7 @@ class EnvironmentSystem : public ITypeSystem<
 	ServiceContext<
 		EnvironmentService,
 		WindService,
+		RainService,
 		Graphics::RenderService,
 		Graphics::LightShadowService,
 		Audio::AudioService,
@@ -31,6 +34,7 @@ public:
 	void StartImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
 		NoDeletePtr<WindService> windService,
+		NoDeletePtr<RainService> rainService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,
@@ -56,6 +60,7 @@ public:
 	void UpdateImpl(
 		NoDeletePtr<EnvironmentService> environmentService,
 		NoDeletePtr<WindService> windService,
+		NoDeletePtr<RainService> rainService,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Audio::AudioService> audioService,
@@ -70,6 +75,8 @@ public:
 		windService->GetWindDirAndSpeed(windDir, windSpeed);
 
 		environmentService->SetWindDirSpeed(Math::Vec2f{ windDir.x, windDir.z }.normalized(), windSpeed, timerService->GetDeltaTime());
+
+		rainService->SetWind(windDir * windSpeed);
 
 		const auto& timeOfDayKey = environmentService->GetCurrentTimeOfDayKey();
 		Math::Vec3f sunDirWS = environmentService->GetSunDirection();

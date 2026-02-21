@@ -446,37 +446,62 @@ namespace SFW
 			blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 			blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
+			BOOL blendEnable[(size_t)BlendStateID::MAX_COUNT] = {
+				// Opaque        : C = Src
+				FALSE,
+				// AlphaBlend    : C = SrcAlpha * Src + (1-SrcAlpha) * Dest
+				TRUE,
+				// Additive      : C = SrcAlpha + Dest
+				TRUE,
+				// Multiply      : C = Dest * (1 - Src)  (元コードの ZERO / INV_SRC_COLOR に合わせています)
+				TRUE,
+				// PremultiplyAlpha : C = Src + (1-SrcAlpha) * Dest  (アルファ前乗算版のアルファブレンド)
+				TRUE,
+				// Subtract      : C = Dest - Src  （減算ブレンド）
+				TRUE,
+			};
+
 			struct BlendPreset {
 				D3D11_BLEND     src;
 				D3D11_BLEND     dst;
 				D3D11_BLEND_OP  op;
+				D3D11_BLEND     srcAlpha;
+				D3D11_BLEND     dstAlpha;
+				D3D11_BLEND_OP  opAlpha;
 			};
 
 			// BlendStateID と 1:1 で対応させる
 			BlendPreset presets[(size_t)BlendStateID::MAX_COUNT] = {
 				// Opaque        : C = Src
-				{ D3D11_BLEND_ONE,        D3D11_BLEND_ZERO,          D3D11_BLEND_OP_ADD },
+				{ D3D11_BLEND_ONE,        D3D11_BLEND_ZERO,          D3D11_BLEND_OP_ADD,			D3D11_BLEND_ONE,		D3D11_BLEND_ZERO,			D3D11_BLEND_OP_ADD },
 
 				// AlphaBlend    : C = SrcAlpha * Src + (1-SrcAlpha) * Dest
-				{ D3D11_BLEND_SRC_ALPHA,  D3D11_BLEND_INV_SRC_ALPHA, D3D11_BLEND_OP_ADD },
+				{ D3D11_BLEND_SRC_ALPHA,  D3D11_BLEND_INV_SRC_ALPHA, D3D11_BLEND_OP_ADD,			D3D11_BLEND_SRC_ALPHA,  D3D11_BLEND_INV_SRC_ALPHA,	D3D11_BLEND_OP_ADD },
 
-				// Additive      : C = Src + Dest
-				{ D3D11_BLEND_ONE,        D3D11_BLEND_ONE,           D3D11_BLEND_OP_ADD },
+				// Additive      : C = SrcAlpha + Dest
+				{ D3D11_BLEND_SRC_ALPHA,  D3D11_BLEND_ONE,           D3D11_BLEND_OP_ADD,			D3D11_BLEND_ZERO,		D3D11_BLEND_ONE,			D3D11_BLEND_OP_ADD },
 
 				// Multiply      : C = Dest * (1 - Src)  (元コードの ZERO / INV_SRC_COLOR に合わせています)
-				{ D3D11_BLEND_ZERO,       D3D11_BLEND_INV_SRC_COLOR, D3D11_BLEND_OP_ADD },
+				{ D3D11_BLEND_ZERO,       D3D11_BLEND_INV_SRC_COLOR, D3D11_BLEND_OP_ADD,			D3D11_BLEND_ZERO,		D3D11_BLEND_ONE,			D3D11_BLEND_OP_ADD },
+
+				// PremultiplyAlpha : C = Src + (1-SrcAlpha) * Dest  (アルファ前乗算版のアルファブレンド)
+				{ D3D11_BLEND_ONE,        D3D11_BLEND_INV_SRC_ALPHA, D3D11_BLEND_OP_ADD,			D3D11_BLEND_ONE,		D3D11_BLEND_INV_SRC_ALPHA,	D3D11_BLEND_OP_ADD },
 
 				// Subtract      : C = Dest - Src  （減算ブレンド）
 				// ここで RevSubtract にしているので「既存色 - 新しい色」のイメージ
-				{ D3D11_BLEND_ONE,        D3D11_BLEND_ONE,           D3D11_BLEND_OP_REV_SUBTRACT },
+				{ D3D11_BLEND_ONE,        D3D11_BLEND_ONE,           D3D11_BLEND_OP_REV_SUBTRACT,	D3D11_BLEND_ZERO,		D3D11_BLEND_ONE,			D3D11_BLEND_OP_ADD },
 			};
 
 			HRESULT hr;
 			for (size_t i = 0; i < (size_t)BlendStateID::MAX_COUNT; ++i)
 			{
+				blendDesc.RenderTarget[0].BlendEnable = blendEnable[i];
 				blendDesc.RenderTarget[0].SrcBlend = presets[i].src;
 				blendDesc.RenderTarget[0].DestBlend = presets[i].dst;
 				blendDesc.RenderTarget[0].BlendOp = presets[i].op;
+				blendDesc.RenderTarget[0].SrcBlendAlpha = presets[i].srcAlpha;
+				blendDesc.RenderTarget[0].DestBlendAlpha = presets[i].dstAlpha;
+				blendDesc.RenderTarget[0].BlendOpAlpha = presets[i].opAlpha;
 
 				hr = device->CreateBlendState(&blendDesc, blendStates[i].GetAddressOf());
 				if (FAILED(hr)) { return hr; }

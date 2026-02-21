@@ -85,6 +85,9 @@ public:
         float gLaneMax = 1.2f;
         float gRadialMin = 0.05f;
         float gRadialMax = 0.25f;
+
+		uint32_t gMaxParticles = LeafParticlePool::MaxParticles; // 保険用（GPU側でのSpawn制限とは別）
+        uint32_t pad000[3] = {};
     };
 
 
@@ -103,7 +106,7 @@ public:
         float gClumpLength01 = 0.12f;       // 例: 0.12（塊の“長さ”= s方向の広がり）
     };
 
-    struct CameraCB
+    struct RenderCB
     {
         Math::Matrix4x4f gViewProj = {};
         Math::Vec3f      gCamRightWS = {};
@@ -187,23 +190,27 @@ public:
         m_cpuUpdateBuffer[currentSlot].gPlayerPosWS = pos;
     }
 
-    void SetCameraBuffer(const CameraCB& camCB)
+    void SetCameraBuffer(const RenderCB& camCB)
     {
         std::lock_guard lock(bufMutex);
-        m_cpuCameraBuffer[currentSlot] = camCB;
+        m_cpuRenderBuffer[currentSlot] = camCB;
     }
 
     void Commit(double deltaTime) override;
 
     // FireflyService::SpawnParticles と同じような形
-    void SpawnParticles(
+    void SpawnDrawParticles(
         ID3D11DeviceContext* ctx,
         ComPtr<ID3D11ShaderResourceView>& heightMap,
-        ComPtr<ID3D11ShaderResourceView>& leafTex,
         ComPtr<ID3D11ShaderResourceView>& depthSRV,
         ComPtr<ID3D11Buffer>& terrainCB,
         ComPtr<ID3D11Buffer>& windCB,
         uint32_t slot);
+
+    void DrawParticles(
+        ID3D11DeviceContext* ctx,
+        ComPtr<ID3D11ShaderResourceView>& leafTex
+    );
 
     ID3D11ShaderResourceView* GetVolumeSRV() const
     {
@@ -247,7 +254,7 @@ private:
 	ComPtr<ID3D11Buffer> m_clumpUpdateCB;
     ComPtr<ID3D11Buffer> m_spawnCB;
     ComPtr<ID3D11Buffer> m_updateCB;
-    ComPtr<ID3D11Buffer> m_cameraCB;
+    ComPtr<ID3D11Buffer> m_renderCB;
 
     ComPtr<ID3D11ComputeShader> m_initFreeListCS;
 	ComPtr<ID3D11ComputeShader> m_clumpUpdateCS;
@@ -265,7 +272,7 @@ private:
 	ClumpUpdateCB m_cpuClumpUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     SpawnCB  m_cpuSpawnBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     UpdateCB m_cpuUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
-    CameraCB m_cpuCameraBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
+    RenderCB m_cpuRenderBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 
 	GuideCurve m_cpuGuideCurves[TotalGuideCurves] = {};
     CurveParams m_curveParams[TotalGuideCurves] = {};

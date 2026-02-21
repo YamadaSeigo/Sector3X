@@ -1,4 +1,7 @@
 
+#ifndef _GLOBALTYPES_HLSLI
+#define _GLOBALTYPES_HLSLI
+
 #include "_ShadowTypes.hlsli"
 
 cbuffer ViewProjectionBuffer : register(b0)
@@ -102,3 +105,5 @@ struct PS_PRBOutput
     float4 NormalRoughness : SV_Target1; // RGB=Normal, A=Roughness
     float4 EmissionMetallic : SV_Target2; // RGB=Emission, A=Metallic
 };
+
+#endif

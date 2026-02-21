@@ -12,5 +12,5 @@ float4 main(PSInput input) : SV_TARGET
     if ((hasFlags & FLAG_HAS_BASECOLORTEX) != 0u)
         baseColor *= gBaseColorTex.Sample(gSampler, input.uv);
 
-    return baseColor * float4(1.0f, 1.0f, 1.0f, 0.4f);
+    return baseColor * 0.4f/*alpha*/;
 }

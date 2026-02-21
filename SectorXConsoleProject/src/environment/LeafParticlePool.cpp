@@ -232,7 +232,6 @@ void LeafParticlePool::Spawn(
     ID3D11ShaderResourceView* guideCurveSRV,
     ID3D11ShaderResourceView* clumpSRV,
     ID3D11ShaderResourceView* heightMapSRV,
-	ID3D11ShaderResourceView* leafTextureSRV,
     ID3D11ShaderResourceView* depthSRV,
     ID3D11UnorderedAccessView* clumpUAV,
     ID3D11Buffer* cbClumpUpdate,
@@ -241,8 +240,6 @@ void LeafParticlePool::Spawn(
     ID3D11Buffer* cbWind,
     ID3D11Buffer* cbUpdateData,
     ID3D11Buffer* cbCameraData,
-    ID3D11VertexShader* vs,
-    ID3D11PixelShader* ps,
     uint32_t activeVolumeCount)
 {
     // -----------------------------
@@ -293,13 +290,20 @@ void LeafParticlePool::Spawn(
     }
 
     // -----------------------------
-    // (1) Spawn: AlivePong に Append（新規生成）
+    // (1) “AlivePing（前フレーム生存）” の count を取る
+    // ※ Spawn では Ping を触らない（ここが重要）
+    // -----------------------------
+    ctx->CopyStructureCount(m_aliveCountRaw.buf.Get(), 0, m_alivePing.uav.Get());
+
+    // -----------------------------
+    // (2) Spawn: AlivePong に Append（新規生成）
     // -----------------------------
     {
         ID3D11ShaderResourceView* srvs[] =
         {
             volumeSRV,
             heightMapSRV,
+            m_aliveCountRaw.srv.Get(),
             guideCurveSRV,
             clumpSRV
         };
@@ -338,12 +342,6 @@ void LeafParticlePool::Spawn(
         if (groups > 0)
             ctx->Dispatch(groups, 1, 1);
     }
-
-    // -----------------------------
-    // (2) Update入力のために “AlivePing（前フレーム生存）” の count を取る
-    // ※ Spawn では Ping を触らない（ここが重要）
-    // -----------------------------
-    ctx->CopyStructureCount(m_aliveCountRaw.buf.Get(), 0, m_alivePing.uav.Get());
 
 #if DEBUG_READ_ALIVE_COUNT
     {
@@ -455,6 +453,17 @@ void LeafParticlePool::Spawn(
         ctx->CSSetShader(nullptr, nullptr, 0);
     }
 
+    
+}
+
+void LeafParticlePool::Draw(
+    ID3D11DeviceContext* ctx,
+    ID3D11ShaderResourceView* volumeSRV,
+    ID3D11ShaderResourceView* leafTextureSRV,
+    ID3D11Buffer* cbRenderData,
+    ID3D11VertexShader* vs,
+    ID3D11PixelShader* ps)
+{
     // 6) Draw: Billboard
     // IA: 頂点バッファ無し（null）、Index無し
     ctx->IASetInputLayout(nullptr);
@@ -472,10 +481,10 @@ void LeafParticlePool::Spawn(
     ctx->VSSetShaderResources(0, 3, vsSrvs);
 
     // CBCamera
-    ctx->VSSetConstantBuffers(0, 1, &cbCameraData);
+    ctx->VSSetConstantBuffers(0, 1, &cbRenderData);
 
-	ctx->PSSetShaderResources(0, 1, &leafTextureSRV);
-	ctx->PSSetSamplers(0, 1, m_linearSampler.GetAddressOf());
+    ctx->PSSetShaderResources(0, 1, &leafTextureSRV);
+    ctx->PSSetSamplers(0, 1, m_linearSampler.GetAddressOf());
 
     ctx->VSSetShader(vs, nullptr, 0);
     ctx->PSSetShader(ps, nullptr, 0);
