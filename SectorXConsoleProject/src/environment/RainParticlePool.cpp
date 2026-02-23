@@ -99,7 +99,7 @@ void RainParticlePool::Create(ID3D11Device* dev)
         D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS | D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS,
         false, true);
 
-    m_linearSampler = CreateSamplerState(dev, D3D11_FILTER_MIN_MAG_MIP_LINEAR, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP);
+    m_pointSampler = CreateSamplerState(dev, D3D11_FILTER_MIN_MAG_MIP_POINT, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP, D3D11_TEXTURE_ADDRESS_WRAP);
 
 #if DEBUG_READ_ALIVE_COUNT
     CreateReadbackBuffer(dev);
@@ -138,6 +138,7 @@ void RainParticlePool::Spawn(
     ID3D11ComputeShader* spawnCS,
     ID3D11ComputeShader* updateCS,
     ID3D11ComputeShader* argsCS,
+    ID3D11ShaderResourceView* depthMapSRV,
     ID3D11Buffer* cbSpawnData,
     ID3D11Buffer* cbUpdateData,
     ID3D11VertexShader* vs,
@@ -210,11 +211,12 @@ void RainParticlePool::Spawn(
     // (3) Update: AlivePing(SRV) ¨ AlivePong(Append)
     // -----------------------------
     {
-        ID3D11ShaderResourceView* updateSrvs[2] = {
+        ID3D11ShaderResourceView* updateSrvs[3] = {
         m_alivePing.srv.Get(),
         m_aliveCountRaw.srv.Get(),
+        depthMapSRV
         };
-        ctx->CSSetShaderResources(0, 2, updateSrvs);
+        ctx->CSSetShaderResources(0, 3, updateSrvs);
 
         ID3D11UnorderedAccessView* updateUavs[3] = {
         m_particles.uav.Get(),      // u0
@@ -226,6 +228,8 @@ void RainParticlePool::Spawn(
         ctx->CSSetUnorderedAccessViews(0, 3, updateUavs, updateInitialCounts);
 
         ctx->CSSetConstantBuffers(0, 1, &cbUpdateData);
+
+		ctx->CSSetSamplers(0, 1, m_pointSampler.GetAddressOf());
 
         ctx->CSSetShader(updateCS, nullptr, 0);
 

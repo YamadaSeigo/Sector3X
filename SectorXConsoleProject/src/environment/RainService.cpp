@@ -33,19 +33,26 @@ RainService::RainService(
     const wchar_t* psPath)
 	: m_bufferMgr(bufferMgr)
 {
-    D3D11_BUFFER_DESC desc{};
-    desc.ByteWidth = sizeof(SpawnCB);
-    desc.Usage = D3D11_USAGE_DYNAMIC;
-    desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-    desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	Graphics::DX11::BufferCreateDesc bufDesc{};
+	bufDesc.name = "RainSpawn";
+	bufDesc.size = sizeof(SpawnCB);
+	bufferMgr->Add(bufDesc, m_spawnCBHandle);
+	bufDesc.name = "RainUpdate";
+	bufDesc.size = sizeof(UpdateCB);
+	bufferMgr->Add(bufDesc, m_updateCBHandle);
+	bufDesc.name = "RainRender";
+	bufDesc.size = sizeof(RenderCB);
+	bufferMgr->Add(bufDesc, m_renderCBHandle);
 
-    pDevice->CreateBuffer(&desc, nullptr, m_spawnCB.GetAddressOf());
-
-    desc.ByteWidth = sizeof(UpdateCB);
-    pDevice->CreateBuffer(&desc, nullptr, m_updateCB.GetAddressOf());
-
-    desc.ByteWidth = sizeof(RenderCB);
-    pDevice->CreateBuffer(&desc, nullptr, m_renderCB.GetAddressOf());
+    {
+        auto readLock = bufferMgr->AcquireReadLock();
+		auto bufferData = bufferMgr->GetNoLock(m_spawnCBHandle);
+		m_spawnCB = bufferData.buffer.Get();
+		bufferData = bufferMgr->GetNoLock(m_updateCBHandle);
+		m_updateCB = bufferData.buffer.Get();
+		bufferData = bufferMgr->GetNoLock(m_renderCBHandle);
+		m_renderCB = bufferData.buffer.Get();
+    }
 
     auto compileShader = [&](const wchar_t* path, ComPtr<ID3D11ComputeShader>& outCS)
         {
@@ -113,6 +120,34 @@ RainService::RainService(
             m_initFreeListCS.Get());
     }
 
+    D3D11_TEXTURE2D_DESC texDesc = {};
+	texDesc.Width = texDesc.Height = RainService::DEPTH_MAP_SIZE;
+	texDesc.MipLevels = 1;
+	texDesc.ArraySize = 1;
+	texDesc.Format = DXGI_FORMAT_R32_TYPELESS;
+	texDesc.SampleDesc.Count = 1;
+	texDesc.Usage = D3D11_USAGE_DEFAULT;
+	texDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+	pDevice->CreateTexture2D(&texDesc, nullptr, m_depthMap.GetAddressOf());
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	pDevice->CreateDepthStencilView(m_depthMap.Get(), &dsvDesc, m_depthMapDSV.GetAddressOf());
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+	srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MipLevels = 1;
+	pDevice->CreateShaderResourceView(m_depthMap.Get(), &srvDesc, m_depthMapSRV.GetAddressOf());
+
+    for(int i = 0; i < Graphics::RENDER_BUFFER_COUNT; ++i)
+    {
+		float invMapSize = 1.0f / static_cast<float>(RainService::DEPTH_MAP_SIZE);
+		m_cpuUpdateBuffer[i].gRainInvMapSize.x = invMapSize;
+		m_cpuUpdateBuffer[i].gRainInvMapSize.y = invMapSize;
+    }
+
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "spawnRadius", &gDebugSpawnRadius, 0.0f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "gravity", &gDebugGravity, 0.0f, 20.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "heightOffset", &gDebugHeightOffset, 0.0f, 200.0f, 0.1f);
@@ -175,6 +210,12 @@ void RainService::Commit(double deltaTime)
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 }
 
+void RainService::ClearDepthMap(ID3D11DeviceContext* ctx)
+{
+    FLOAT clearColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	ctx->ClearDepthStencilView(m_depthMapDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+}
+
 void RainService::SpawnDrawParticles(
     ID3D11DeviceContext* ctx, RainParticlePool::TiledLightData* lightData)
 {
@@ -183,6 +224,7 @@ void RainService::SpawnDrawParticles(
 		m_spawnCS.Get(),
 		m_updateCS.Get(),
 		m_argsCS.Get(),
+		m_depthMapSRV.Get(),
 		m_spawnCB.Get(),
 		m_updateCB.Get(),
 		m_rainVS.Get(),
@@ -191,4 +233,26 @@ void RainService::SpawnDrawParticles(
         lightData,
         m_spawnPerFrame
         );
+}
+
+Math::Matrix4x4f RainService::MakeDepthMapViewProjNoLock() const
+{
+    Math::Vec3f camPos = m_cpuSpawnBuffer[currentSlot].gCamPos;
+    float spawnRadius = m_cpuSpawnBuffer[currentSlot].gSpawnRadius;
+	float heightOffset = m_cpuSpawnBuffer[currentSlot].gHeightOffset;
+
+	Math::Vec3f eye = camPos + Math::Vec3f(0.0f, heightOffset, 0.0f);
+	Math::Vec3f at = camPos;
+	Math::Vec3f up = Math::Vec3f(0.0f, 0.0f, 1.0f);
+	Math::Matrix4x4f view = Math::MakeLookAtMatrixLH(eye, at, up);
+
+	float left = -spawnRadius;
+	float right = spawnRadius;
+	float top = spawnRadius;
+	float bottom = -spawnRadius;
+	float nearZ = 0.0f;
+	float farZ = heightOffset + spawnRadius; // カメラの高さ + スポーン半径
+    Math::Matrix4x4f proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, top, bottom, nearZ, farZ);
+
+	return proj * view;
 }

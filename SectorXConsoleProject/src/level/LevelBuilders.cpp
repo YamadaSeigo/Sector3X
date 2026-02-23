@@ -547,6 +547,11 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.buildOccluders = false;
 			modelAssetMgr->Add(modelDesc, bridgeModelHandle);
 
+			ModelAssetHandle treeBridgeModelHandle;
+			modelDesc.path = "assets/model/Static/Bridge/GiantTreeBridge.gltf";
+			modelDesc.buildOccluders = false;
+			modelAssetMgr->Add(modelDesc, treeBridgeModelHandle);
+
 			ModelAssetHandle ruinBreakTowerModelHandle;
 			modelDesc.path = "assets/model/Ruins/BreakTower/RuinBreakTowerA.gltf";
 			//中に入るタイプのモデルのオクル―ダーメッシュはまだできていないのでとりあえずfalse
@@ -1243,7 +1248,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				}
 			}
 
-			auto addGlobalEntityWithBody = [&](const Math::Vec2f posUV, float offsetY, Graphics::ModelAssetHandle modelHandle, Physics::ShapeHandle shapeHandle, Math::Quatf rot = { 0.0f,0.0f,0.0f,1.0f }, Math::Vec3f scale = { 1.0f,1.0f,1.0f })
+			auto addGlobalEntityWithBody = [&](const Math::Vec2f posUV, float offsetY, CModel model, Physics::ShapeHandle shapeHandle, Math::Quatf rot = { 0.0f,0.0f,0.0f,1.0f }, Math::Vec3f scale = { 1.0f,1.0f,1.0f })
 				{
 					auto location = getTerrainLocation(posUV.x, posUV.y);
 					location.y += offsetY;
@@ -1251,8 +1256,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 #ifdef _ENABLE_IMGUI
 					auto shapeDims = ps->GetShapeDims(shapeHandle);
 #endif
-					CModel modelComp{ modelHandle };
-					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 
 					Physics::CPhyBody staticBody{};
 					staticBody.type = Physics::BodyType::Static; // staticにする
@@ -1262,7 +1265,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 					auto id = levelSession.AddGlobalEntity(
 						tf,
-						modelComp,
+						model,
 						CColor{ {1.0f,1.0f,1.0f,1.0f} },
 						staticBody
 #ifdef _ENABLE_IMGUI
@@ -1281,41 +1284,57 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			//橋生成
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Static/Bridge/medieval_bridge.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				addGlobalEntityWithBody({ 0.647f, 0.27f }, 35.0f, bridgeModelHandle, shape,
+				CModel modelComp{ bridgeModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.647f, 0.27f }, 35.0f, modelComp, shape,
 					Math::Quatf::FromAxisAngle({0.0f, 1.0f, 0.0f}, Math::Deg2Rad(140.0f)));
+			}
+
+			//木の橋生成
+			{
+				auto shape = ps->MakeMesh("generated/meshshape/Static/Bridge/GiantTreeBridge.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				CModel modelComp{ treeBridgeModelHandle };
+				modelComp.flags |= (uint16_t)EModelFlag::CastShadow | (uint16_t)EModelFlag::RainOccluder;
+				addGlobalEntityWithBody({ 0.4f, 0.18f }, -20.0f, modelComp, shape,
+					Math::Quatf::FromAxisAngle({ 0.0f, 1.0f, 0.0f }, Math::Deg2Rad(90.0f)));
 			}
 
 			// 塔生成
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Ruins/Tower/RuinTower.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				addGlobalEntityWithBody({ 0.7f, 0.7f }, -10.0f, ruinTowerModelHandle, shape);
+				CModel modelComp{ ruinTowerModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.7f, 0.7f }, -10.0f, modelComp, shape);
 			}
 
 			// 壊れた塔生成
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Ruins/BreakTower/RuinBreakTowerA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				addGlobalEntityWithBody({ 0.4f, 0.62f }, -4.0f, ruinBreakTowerModelHandle, shape);
+				CModel modelComp{ ruinBreakTowerModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.4f, 0.62f }, -4.0f, modelComp, shape);
 			}
 
 			//石碑生成
 			{
 				auto shape = ps->MakeConvexCompound("generated/convex/Ruins/StoneA/RuinStoneA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				addGlobalEntityWithBody({ 0.35f, 0.26f }, -4.0f, ruinStoneModelHandle, shape);
+				CModel modelComp{ ruinStoneModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.35f, 0.26f }, -4.0f, modelComp, shape);
 			}
 
 			//岩クラスター生成
 			{
 				auto shape = ps->MakeConvexCompound("generated/convex/Static/ClusterRock/ClusterRockA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				addGlobalEntityWithBody({ 0.28f, 0.24f }, 5.0f, clusterRockModelHandle[0], shape, Math::Quatf::FromEuler(0.0f, Math::Deg2Rad(90.0f), 0.0f));
+				CModel modelComp1{ clusterRockModelHandle[0] }; modelComp1.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.28f, 0.24f }, 5.0f, modelComp1, shape, Math::Quatf::FromEuler(0.0f, Math::Deg2Rad(90.0f), 0.0f));
 
 				shape = ps->MakeConvexCompound("generated/convex/Static/ClusterRock/ClusterRockB.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				addGlobalEntityWithBody({ 0.5f, 0.2f }, 5.0f, clusterRockModelHandle[1], shape, Math::Quatf::FromEuler(0.0f, Math::Deg2Rad(40.0f), 0.0f));
+				CModel modelComp2{ clusterRockModelHandle[1] }; modelComp2.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.5f, 0.2f }, 5.0f, modelComp2, shape, Math::Quatf::FromEuler(0.0f, Math::Deg2Rad(40.0f), 0.0f));
 			}
 
 			//ランドマーククリスタル生成
 			{
 				auto shape = ps->MakeConvexCompound("generated/convex/landmark/crystals/hugeCrystal.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				addGlobalEntityWithBody({ 0.8f, 0.8f }, -10.0f, landmarkCrystalModelHandle[0], shape);
+				CModel modelComp{ landmarkCrystalModelHandle[0] }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.8f, 0.8f }, -10.0f, modelComp, shape);
 
 				auto pos = getTerrainLocation(0.8f, 0.8f);
 

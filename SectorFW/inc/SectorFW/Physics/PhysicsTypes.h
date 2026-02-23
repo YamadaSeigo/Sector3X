@@ -175,15 +175,26 @@ namespace SFW
 		struct SphereDesc { float radius; };
 		struct CapsuleDesc { float halfHeight; float radius; };
 
+		enum class TriangleWinding : uint8_t
+		{
+			CCW, // 反時計回りを表（外向き）とみなす
+			CW   // 時計回りを表（外向き）とみなす
+		};
+
 		// 三角メッシュ（凸性チェック・BVHは Jolt 側）
 		struct MeshDesc {
 			const std::vector<Vec3f>& vertices;
 			const std::vector<uint32_t>& indices; // 3*i の連続三角形
+			bool rhFlip = false; // 右手系変換が必要なら true
+			TriangleWinding winding = TriangleWinding::CCW;
+			bool autoFlipWindingOnRHFlip = true; // rhFlip したら winding を反転させる
 		};
 
 		struct MeshFileDesc {
 			std::string path; // glb と同じ相対/絶対パスなど、運用ルールに合わせて
 			bool rhFlip = false; // 右手系変換が必要なら true
+			TriangleWinding winding = TriangleWinding::CCW;
+			bool autoFlipWindingOnRHFlip = true; // rhFlip したら winding を反転させる
 		};
 
 		/**

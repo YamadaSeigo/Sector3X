@@ -38,6 +38,7 @@ public:
         ID3D11ComputeShader* spawnCS,
         ID3D11ComputeShader* updateCS,
         ID3D11ComputeShader* argsCS,
+        ID3D11ShaderResourceView* depthMapSRV,
         ID3D11Buffer* cbSpawnData,
         ID3D11Buffer* cbUpdateData,
         ID3D11VertexShader* vs,
@@ -59,5 +60,5 @@ private:
     RawBufferSRVUAV m_drawArgsRaw;
 	RawBufferSRVUAV m_particleCounterRaw;
 
-    ComPtr<ID3D11SamplerState> m_linearSampler;
+    ComPtr<ID3D11SamplerState> m_pointSampler;
 };

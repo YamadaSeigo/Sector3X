@@ -7,6 +7,7 @@
 #include "DeferredRenderingService.h"
 #include "environment/EnvironmentService.h"
 #include "environment/FireflyService.h"
+#include "environment/RainService.h"
 #include "graphics/DebugRenderType.h"
 
 #include <SectorFW/Math/Vector.hpp>
@@ -99,13 +100,9 @@ void RenderPipe::Initialize(
 
 	auto cascadeCount = cascadeDSVs.size();
 
-	DX11::BufferCreateDesc cbDesc;
-	cbDesc.size = sizeof(CascadeIndex);
-
 	Viewport vp;
 	vp.width = (float)App::SHADOW_MAP_SIZE;
 	vp.height = (float)App::SHADOW_MAP_SIZE;
-
 	passDesc.viewport = vp;
 
 	RasterizerStateID shadowRasterizerStates[Graphics::kMaxShadowCascades] = {
@@ -115,6 +112,9 @@ void RenderPipe::Initialize(
 	};
 
 	passDesc.rebindPSO = true;
+
+	DX11::BufferCreateDesc cbDesc;
+	cbDesc.size = sizeof(CascadeIndex);
 
 	for (UINT i = 0; i < cascadeCount; ++i)
 	{
@@ -132,6 +132,28 @@ void RenderPipe::Initialize(
 
 		renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_CASCADE0 << i);
 	}
+
+	// 雨用の深度バッファパス
+
+	shaderDesc.vsPath = L"assets/shader/VS_CascadeDepth.cso";
+	shaderDesc.psPath.clear(); // PSなしでDepthOnlyのPSOを作る
+	shaderMgr->Add(shaderDesc, shaderHandle);
+	psoDesc.shader = shaderHandle;
+	psoMgr->Add(psoDesc, psoHandle);
+
+	passDesc.psoOverride = psoHandle;
+	passDesc.rebindPSO = false;
+
+	passDesc.cbvs = { BindSlotBuffer{10, ctx.rain->GetUpdateCBHandle()} };
+
+	vp.width = (float)RainService::DEPTH_MAP_SIZE;
+	vp.height = (float)RainService::DEPTH_MAP_SIZE;
+	passDesc.viewport = vp;
+
+	passDesc.rasterizerState = RasterizerStateID::SolidCullBack;
+	passDesc.dsv = ctx.rain->GetDepthMapDSV();
+
+	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_RAIN_DEPTH);
 
 	passDesc.rebindPSO = false;
 	shaderDesc.vsPath = L"assets/shader/VS_ZPrepass.cso";
@@ -728,6 +750,7 @@ void RenderPipe::Initialize(
 		{ 0, 5 },
 		{ 0, 6 },
 		{ 0, 7 },
+		{ 0, 8 },
 		{ 1, 0 },
 		{ 1, 1 },
 		{ 1, 2 }

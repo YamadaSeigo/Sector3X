@@ -219,6 +219,7 @@ int main(void)
 	ctx.env = &environmentService;
 	ctx.firefly = &fireflyService;
 	ctx.leaf = &leafService;
+	ctx.rain = &rainService;
 
 	// ---- マッピング設定(オクルージョンカリング用) ----
 	static Graphics::HeightTexMapping heightTexMap = Graphics::MakeHeightTexMappingFromTerrainParams(terrainRes.params, terrainRes.heightMap);
@@ -345,6 +346,9 @@ int main(void)
 			deviceContext->PSSetShaderResources(7, 1, &nullSRV);
 
 			lightShadowResourceService.ClearDepthBuffer(deviceContext);
+
+			//雨用の深度マップもクリアしておく
+			rainService.ClearDepthMap(deviceContext);
 
 			//CBの5, Samplerの1にバインド
 			lightShadowResourceService.BindShadowResources(deviceContext, 5);

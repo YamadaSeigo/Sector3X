@@ -106,8 +106,8 @@ namespace SFW
 			 * @param s スケール（デフォルトは {1,1,1}）
 			 * @return ShapeHandle 生成されたメッシュ形状のハンドル
 			 */
-			[[nodiscard]] ShapeHandle MakeMesh(const std::vector<Vec3f>& vertex, const std::vector<uint32_t>& indices, ShapeScale s = { {1,1,1} }) {
-				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ MeshDesc{vertex, indices}, s }, h); return h;
+			[[nodiscard]] ShapeHandle MakeMesh(const std::vector<Vec3f>& vertex, const std::vector<uint32_t>& indices, bool rhFlip = false, ShapeScale s = { {1,1,1} }) {
+				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ MeshDesc{vertex, indices, rhFlip}, s }, h); return h;
 			}
 
 			/**

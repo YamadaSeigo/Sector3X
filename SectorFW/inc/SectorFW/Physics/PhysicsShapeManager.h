@@ -237,6 +237,24 @@ namespace SFW
 		};
 #endif
 
+		inline void AddTrianglesWinding(
+			JPH::Array<JPH::IndexedTriangle>& out,
+			const std::vector<uint32_t>& indices,
+			bool flip_winding)
+		{
+			out.reserve(out.size() + indices.size() / 3);
+
+			for (size_t i = 0; i + 2 < indices.size(); i += 3)
+			{
+				uint32_t i0 = indices[i + 0];
+				uint32_t i1 = indices[i + 1];
+				uint32_t i2 = indices[i + 2];
+
+				if (flip_winding) std::swap(i1, i2);
+				out.emplace_back(i0, i1, i2);
+			}
+		}
+
 		// ================== PhysicsShapeManager ==================
 		class PhysicsShapeManager
 			: public ResourceManagerBase<PhysicsShapeManager, ShapeHandle, ShapeCreateDesc, JPH::RefConst<JPH::Shape>>,
@@ -349,9 +367,14 @@ namespace SFW
 						if constexpr (std::is_same_v<T, MeshDesc>) {
 							st.mTriangleVertices.reserve(d.vertices.size());
 							for (const auto& v : d.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
-							st.mIndexedTriangles.reserve(d.indices.size() / 3);
-							for (size_t i = 0; i + 2 < d.indices.size(); i += 3)
-								st.mIndexedTriangles.emplace_back(d.indices[i], d.indices[i + 1], d.indices[i + 2]);
+
+							const bool wantCW = (d.winding == TriangleWinding::CW);
+							// ‰EŽèŒn•ÏŠ·‚Å x ‚ð”½“]‚·‚é‚È‚ç winding ‚à”½“]‚·‚é‚Ì‚ªŠî–{iƒ~ƒ‰[‚Í–Ê‚ÌŒü‚«‚ð”½“]‚³‚¹‚é‚½‚ßj
+							const bool flipByRH = (d.rhFlip && d.autoFlipWindingOnRHFlip);
+							// ÅI“I‚É”½“]‚·‚é‚©
+							const bool flipWinding = wantCW ^ flipByRH;
+							// triangles ’Ç‰Á
+							AddTrianglesWinding(st.mIndexedTriangles, d.indices, flipWinding);
 
 #ifdef CACHE_SHAPE_WIRE_DATA
 							wireDataCache_.emplace(h.index,
@@ -370,9 +393,14 @@ namespace SFW
 
 							st.mTriangleVertices.reserve(meshData.vertices.size());
 							for (const auto& v : meshData.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
-							st.mIndexedTriangles.reserve(meshData.indices.size() / 3);
-							for (size_t i = 0; i + 2 < meshData.indices.size(); i += 3)
-								st.mIndexedTriangles.emplace_back(meshData.indices[i], meshData.indices[i + 1], meshData.indices[i + 2]);
+
+							const bool wantCW = (d.winding == TriangleWinding::CW);
+							// ‰EŽèŒn•ÏŠ·‚Å x ‚ð”½“]‚·‚é‚È‚ç winding ‚à”½“]‚·‚é‚Ì‚ªŠî–{iƒ~ƒ‰[‚Í–Ê‚ÌŒü‚«‚ð”½“]‚³‚¹‚é‚½‚ßj
+							const bool flipByRH = (d.rhFlip && d.autoFlipWindingOnRHFlip);
+							// ÅI“I‚É”½“]‚·‚é‚©
+							const bool flipWinding = wantCW ^ flipByRH;
+							// triangles ’Ç‰Á
+							AddTrianglesWinding(st.mIndexedTriangles, meshData.indices, flipWinding);
 
 #ifdef CACHE_SHAPE_WIRE_DATA
 							wireDataCache_.emplace(h.index,

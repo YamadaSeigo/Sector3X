@@ -20,6 +20,7 @@ class PlayerService;
 class EnvironmentService;
 class FireflyService;
 class LeafService;
+class RainService;
 
 namespace App
 {
@@ -41,6 +42,7 @@ namespace App
         EnvironmentService* env = nullptr;
         FireflyService* firefly = nullptr;
         LeafService* leaf = nullptr;
+		RainService* rain = nullptr;
 
         // 共有する D3D SRV/CB など（必要なら追加）
         ComPtr<ID3D11ShaderResourceView> mainDepthSRV;

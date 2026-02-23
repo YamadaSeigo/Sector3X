@@ -22,6 +22,7 @@ enum class EModelFlag : uint16_t
 	CastShadow = 1 << 0,
 	Outline = 1 << 1,
 	Transparent = 1 << 2,
+	RainOccluder = 1 << 3,
 };
 
 
@@ -536,6 +537,12 @@ public:
 							{
 								cmd.viewMask |= (PASS_3DMAIN_CASCADE0 << ci);
 							}
+						}
+
+						bool isRainOccluder = (modelComp.flags & (uint16_t)EModelFlag::RainOccluder) != 0;
+						if (isRainOccluder)
+						{
+							cmd.viewMask |= PASS_3DMAIN_RAIN_DEPTH;
 						}
 
 

@@ -187,7 +187,7 @@ namespace SFW
 			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOのオーバーライド
 			std::vector<PassCustomFuncType> customExecute = {}; // FullscreenQuadなど
 			uint32_t stencilRef = 0;
-			bool rebindPSO = false; // PSOリバインドを行うかどうか
+			bool rebindPSO = false; // PSOリバインド(指定したシェーダーに切り替える)を行うかどうか
 		};
 	}
 }

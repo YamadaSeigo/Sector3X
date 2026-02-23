@@ -5,6 +5,9 @@
 class RainService : public ECS::IUpdateService, public ECS::ICommitService
 {
 public:
+
+	constexpr inline static uint32_t DEPTH_MAP_SIZE = 512;
+
     struct SpawnCB
     {
         Math::Vec3f gCamPos = {};
@@ -33,6 +36,11 @@ public:
 
         Math::Vec3f gWindWS = {};
         float pad1 = {};
+
+        Math::Matrix4x4f gCamViewProj = {};
+        Math::Vec2f gRainInvMapSize = {}; // (1/width, 1/height)
+        float gRainDepthBias = 0.0f;
+        float padding2 = {};
     };
 
     struct RenderCB
@@ -72,6 +80,9 @@ public:
         m_cpuSpawnBuffer[currentSlot].gCamPos = pos;
         m_cpuUpdateBuffer[currentSlot].gCamPosWS = pos;
 		m_cpuRenderBuffer[currentSlot].gCamPosWS = pos;
+
+		auto depthMapViewProj = MakeDepthMapViewProjNoLock();
+		m_cpuUpdateBuffer[currentSlot].gCamViewProj = depthMapViewProj;
     }
 
     void SetCameraBuffer(const RenderCB& camCB) {
@@ -86,6 +97,8 @@ public:
 
     void Commit(double deltaTime) override;
 
+    void ClearDepthMap(ID3D11DeviceContext* ctx);
+
     void SpawnDrawParticles(ID3D11DeviceContext* ctx, RainParticlePool::TiledLightData* lightData);
 
     float GetElapsedTime() const noexcept {
@@ -96,6 +109,16 @@ public:
         std::lock_guard lock(bufMutex);
         m_spawnPerFrame = (std::min)(count, RainParticlePool::MaxSpawnPerFrame);
 	}
+
+	Graphics::BufferHandle GetSpawnCBHandle() const { return m_spawnCBHandle; }
+	Graphics::BufferHandle GetUpdateCBHandle() const { return m_updateCBHandle; }
+	Graphics::BufferHandle GetRenderCBHandle() const { return m_renderCBHandle; }
+
+	ComPtr<ID3D11DepthStencilView> GetDepthMapDSV() const { return m_depthMapDSV; }
+	ComPtr<ID3D11ShaderResourceView> GetDepthMapSRV() const { return m_depthMapSRV; }
+
+private:
+	Math::Matrix4x4f MakeDepthMapViewProjNoLock() const;
 
 private:
     // ---- GPUÉäÉ\Å[ÉX ----
@@ -111,9 +134,17 @@ private:
     ComPtr<ID3D11VertexShader> m_rainVS;
     ComPtr<ID3D11PixelShader> m_rainPS;
 
+	ComPtr<ID3D11Texture2D> m_depthMap;
+	ComPtr<ID3D11DepthStencilView> m_depthMapDSV;
+	ComPtr<ID3D11ShaderResourceView> m_depthMapSRV;
+
     Graphics::DX11::BufferManager* m_bufferMgr = nullptr;
 
     RainParticlePool m_particlePool;
+
+	Graphics::BufferHandle m_spawnCBHandle;
+	Graphics::BufferHandle m_updateCBHandle;
+	Graphics::BufferHandle m_renderCBHandle;
 
     std::mutex bufMutex;
     SpawnCB m_cpuSpawnBuffer[Graphics::RENDER_BUFFER_COUNT] = {};

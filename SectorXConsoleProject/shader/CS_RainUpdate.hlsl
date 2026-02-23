@@ -6,6 +6,9 @@ StructuredBuffer<uint> gAliveIn : register(t0);
 // aliveCount は raw buffer
 ByteAddressBuffer gAliveCountRaw : register(t1);
 
+// 深度テクスチャ（サンプリングして衝突判定に使う）
+Texture2D<float> gRainDepth : register(t2);
+
 // particles
 RWStructuredBuffer<RainParticle> gParticles : register(u0);
 
@@ -15,6 +18,7 @@ AppendStructuredBuffer<uint> gAliveOut : register(u1);
 // FreeList は append UAV（返却用）
 AppendStructuredBuffer<uint> gFreeList : register(u2);
 
+SamplerState gPointClamp : register(s0);
 
 cbuffer CBUpdate : register(b0)
 {
@@ -30,6 +34,11 @@ cbuffer CBUpdate : register(b0)
     float3 gWindWS;
 
     float padding1;
+
+    row_major float4x4 gCamViewProj;
+    float2 gRainInvMapSize; // (1/width, 1/height)
+    float gRainDepthBias;
+    float padding2;
 };
 
 // 軽いハッシュ乱数（0..1）
@@ -51,6 +60,26 @@ float3 HashDir3(uint s)
     return normalize(float3(x, y, z));
 }
 
+bool IsUnderOccluder(float3 posWS)
+{
+    float4 h = mul(gCamViewProj, float4(posWS, 1));
+    float3 ndc = h.xyz / h.w;
+
+    // ndc.xy: -1..1 → uv 0..1
+    float2 uv = ndc.xy * 0.5f + 0.5f;
+
+    // マップ外は判定しない（=雨は降らせる）など運用で選ぶ
+    if (any(uv < 0) || any(uv > 1))
+        return false;
+
+    float occ = gRainDepth.SampleLevel(gPointClamp, uv, 0);
+
+    // ndc.z を depth と同じ空間に（ここはあなたのdepth仕様に合わせる）
+    float z = ndc.z; // 例
+
+    return (z > occ + gRainDepthBias);
+}
+
 bool NeedsRespawn(RainParticle p)
 {
     if (p.life <= 0.0f)
@@ -60,6 +89,9 @@ bool NeedsRespawn(RainParticle p)
     float3 d = p.posWS - gCamPosWS;
     float dist2 = dot(d.xz, d.xz);
     if (dist2 > (gSpawnRadius * gSpawnRadius))
+        return true;
+
+    if (IsUnderOccluder(p.posWS))
         return true;
 
     // NaN guard
