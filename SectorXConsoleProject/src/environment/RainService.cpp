@@ -18,6 +18,8 @@ float gDebugRainSpeedToLength = 0.02f;
 float gDebugAlpha = 0.5f;
 float gDebugLifeFade = 0.18f;
 
+float gDebugSplashSpeed = 1.0f;
+
 #endif
 
 
@@ -43,6 +45,9 @@ RainService::RainService(
 	bufDesc.name = "RainRender";
 	bufDesc.size = sizeof(RenderCB);
 	bufferMgr->Add(bufDesc, m_renderCBHandle);
+    bufDesc.name = "RainSplash";
+	bufDesc.size = sizeof(SplashCB);
+	bufferMgr->Add(bufDesc, m_splashCBHandle);
 
     {
         auto readLock = bufferMgr->AcquireReadLock();
@@ -52,6 +57,8 @@ RainService::RainService(
 		m_updateCB = bufferData.buffer.Get();
 		bufferData = bufferMgr->GetNoLock(m_renderCBHandle);
 		m_renderCB = bufferData.buffer.Get();
+		bufferData = bufferMgr->GetNoLock(m_splashCBHandle);
+		m_splashCB = bufferData.buffer.Get();
     }
 
     auto compileShader = [&](const wchar_t* path, ComPtr<ID3D11ComputeShader>& outCS)
@@ -158,6 +165,7 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "speedToLength", &gDebugRainSpeedToLength, 0.0f, 0.1f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "alpha", &gDebugAlpha, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "lifeFade", &gDebugLifeFade, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "splashSpeed", &gDebugSplashSpeed, 0.0f, 5.0f, 0.01f);
 
 }
 
@@ -168,6 +176,7 @@ void RainService::Commit(double deltaTime)
     auto& spawnBuf = m_cpuSpawnBuffer[currentSlot];
     auto& updateBuf = m_cpuUpdateBuffer[currentSlot];
     auto& renderBuf = m_cpuRenderBuffer[currentSlot];
+	auto& splashBuf = m_cpuSplashBuffer[currentSlot];
 
     {
         std::lock_guard lock(bufMutex);
@@ -176,6 +185,8 @@ void RainService::Commit(double deltaTime)
 
         updateBuf.gDt = static_cast<float>(deltaTime);
         updateBuf.gTime = m_elapsedTime;
+
+		splashBuf.gTime = m_elapsedTime;
 
 #ifdef _DEBUG
 		spawnBuf.gSpawnRadius = gDebugSpawnRadius;
@@ -189,6 +200,7 @@ void RainService::Commit(double deltaTime)
 		renderBuf.gSpeedToLength = gDebugRainSpeedToLength;
 		renderBuf.gAlpha = gDebugAlpha;
 		renderBuf.gLifeFade = gDebugLifeFade;
+		splashBuf.gSplashSpeed = gDebugSplashSpeed;
 #endif
     }
 
@@ -208,6 +220,11 @@ void RainService::Commit(double deltaTime)
     updateDesc.size = sizeof(RenderCB);
     updateDesc.data = &renderBuf;
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
+
+	updateDesc.buffer = m_splashCB.Get();
+	updateDesc.size = sizeof(SplashCB);
+	updateDesc.data = &splashBuf;
+	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 }
 
 void RainService::ClearDepthMap(ID3D11DeviceContext* ctx)
@@ -241,7 +258,10 @@ Math::Matrix4x4f RainService::MakeDepthMapViewProjNoLock() const
     float spawnRadius = m_cpuSpawnBuffer[currentSlot].gSpawnRadius;
 	float heightOffset = m_cpuSpawnBuffer[currentSlot].gHeightOffset;
 
-	Math::Vec3f eye = camPos + Math::Vec3f(0.0f, heightOffset, 0.0f);
+	constexpr float topMargin = 20.0f; // スポーン範囲の上に余裕を持たせるためのマージン
+	constexpr float bottomMargin = 10.0f; // スポーン範囲の下に余裕を持たせるためのマージン
+
+	Math::Vec3f eye = camPos + Math::Vec3f(0.0f, heightOffset + topMargin, 0.0f);
 	Math::Vec3f at = camPos;
 	Math::Vec3f up = Math::Vec3f(0.0f, 0.0f, 1.0f);
 	Math::Matrix4x4f view = Math::MakeLookAtMatrixLH(eye, at, up);
@@ -250,8 +270,8 @@ Math::Matrix4x4f RainService::MakeDepthMapViewProjNoLock() const
 	float right = spawnRadius;
 	float top = spawnRadius;
 	float bottom = -spawnRadius;
-	float nearZ = 0.0f;
-	float farZ = heightOffset + spawnRadius; // カメラの高さ + スポーン半径
+	float nearZ = 0.1f;
+	float farZ = heightOffset + spawnRadius + bottomMargin; // カメラの高さ + スポーン半径 + 下マージン
     Math::Matrix4x4f proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, top, bottom, nearZ, farZ);
 
 	return proj * view;

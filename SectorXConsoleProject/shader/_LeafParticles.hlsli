@@ -6,7 +6,7 @@
 static const uint LEAF_THREAD_GROUP_SIZE = 256;
 
 //深度のヒット判定の可視フラグ(※CPUのほうのフラグも外す LeafParticlePool.h)
-//#define DEBUG_HIT_DEPTH
+//#define DEBUG_LEAF_HIT_DEPTH
 
 struct LeafParticle
 {
@@ -30,7 +30,7 @@ struct LeafParticle
     
     uint normalOct; // 擬似法線（WS）を oct32 で保持
 
-#ifdef DEBUG_HIT_DEPTH
+#ifdef DEBUG_LEAF_HIT_DEPTH
     uint debugHit;
 #endif
 };

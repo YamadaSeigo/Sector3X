@@ -6,6 +6,7 @@
 
 cbuffer CameraBuffer : register(b7)
 {
+    row_major float4x4 viewProj;
     row_major float4x4 invViewProj;
     float4 camForward; //wはpadding
     float4 camPos; // wはpadding
@@ -70,6 +71,13 @@ cbuffer GodRayCB : register(b10)
     float3 gGodRayTint; // 色（例: (1.0, 0.95, 0.8)）
     float gGodRayMaxDepth; // “空/遠方”判定の深度閾値（例: 0.9995）
 };
+
+cbuffer RainAnimCB : register(b11)
+{
+    float2 gSplashDir; // 正規化推奨（例: (0.7, 0.2)）
+    float gTime;
+    float gSplashSpeed;
+}
 
 Texture2D gAlbedoAO : register(t11); // RGB: Albedo, A: Occlusion
 Texture2D gNormalRough : register(t12); // RGB: Normal, A: Roughness
@@ -349,6 +357,67 @@ float ComputeRadialWeight(float3 camForwardWS, float3 sunDirWS)
     return smoothstep(0.2, 0.6, d);
 }
 
+float2 WorldToUV(float3 wpos, out float ndcZ)
+{
+    float4 h = mul(viewProj, float4(wpos, 1.0f));
+    float3 ndc = h.xyz / h.w; // x,y,z = -1..1 (想定), zは0..1/ -1..1は実装次第
+    float2 uv = ndc.xy * 0.5f + 0.5f;
+    uv.y = 1.0f - uv.y; // あなたの流儀に合わせて反転
+    ndcZ = ndc.z;
+    return uv;
+}
+
+float ComputeUpShiftEdge(float3 wp, float3 N, float upOffsetMeters)
+{
+    // 上向き面だけ（壁に出過ぎないように）
+    float facingUp = saturate((dot(N, float3(0, 1, 0)) - 0.2f) / (0.8f - 0.2f));
+    if (facingUp <= 0.001f)
+        return 0.0f;
+
+    // ワールド上方向へ少しずらす
+    float3 wpUp = wp + float3(0, 1, 0) * upOffsetMeters;
+
+    float ndcZUp;
+    float2 uvUp = WorldToUV(wpUp, ndcZUp);
+
+    // 画面外は無視
+    if (any(uvUp < 0.0f) || any(uvUp > 1.0f))
+        return 0.0f;
+
+    // そのUV地点の実際のシーン深度
+    float zScene = gDepth.SampleLevel(gPointSamp, uvUp, 0);
+
+    // どっちが手前/奥かは深度定義で変わるが、
+    // まずは「差が大きい」= 遮られた（段差がある）として扱う
+    float dz = abs(zScene - ndcZUp);
+
+    // 閾値は要調整（深度空間の差）
+    float e = smoothstep(0.002f, 0.02f, dz);
+
+    return e * facingUp;
+}
+
+float ComputeUpShiftEdge_Fatten(float3 wp, float3 N, float upOffsetMeters)
+{
+    float facingUp = saturate((dot(N, float3(0, 1, 0)) - 0.2f) / (0.8f - 0.2f));
+    if (facingUp <= 0.001f)
+        return 0.0f;
+
+    // “太さ”を作るために、上オフセット量を少しずつ変えて複数回評価
+    // 例：基準 + 追加で2段（3タップ）
+    float e0 = ComputeUpShiftEdge(wp, N, upOffsetMeters);
+    float e1 = ComputeUpShiftEdge(wp, N, upOffsetMeters * 1.5f);
+    float e2 = ComputeUpShiftEdge(wp, N, upOffsetMeters * 2.0f);
+
+    float e = max(e0, max(e1, e2));
+
+    // ふっくらさせたいなら最後に軽くソフト化
+    e = smoothstep(0.15f, 0.85f, e);
+
+    return e; // facingUp は関数内で掛かっている
+}
+
+
 float4 main(VSOut i) : SV_Target
 {
     float2 uv = i.uv;
@@ -453,6 +522,28 @@ float4 main(VSOut i) : SV_Target
 
         // 太陽の色味で足す（Unlitスタイルなら加算でOK）
         color += gGodRayTint * god * fogVis;
+    }
+
+    // --- Rain micro-splash on upward edges (main camera depth shift) ---
+    {
+        float upOffset = 0.1f; // 5cm ~ 20cmくらいで調整（世界単位）
+        float edge = ComputeUpShiftEdge_Fatten(wp.xyz, N, upOffset);
+
+        color.r = lerp(color.r, 1.0f, edge); // エッジを白っぽくシフト)
+
+        //float2 p = uv * 300.0f + gSplashDir * (gTime * gSplashSpeed);
+        //float n = FBM2D(p);
+
+        //// 時間で閾値を動かす（パチパチ出る）
+        //float th = lerp(0.72f, 0.88f, 0.5f + 0.5f * sin(gTime * 12.0f));
+        //float spark = smoothstep(th, 1.0f, n);
+
+        //// 強さ
+        //float splash = edge * spark;
+
+        //// わずかに白寄りで加算（雨の弾け）
+        //float3 splashTint = float3(0.85f, 0.9f, 1.0f);
+        //color += splashTint * (splash * 1.35f);
     }
 
     return float4(color, 1.0f);

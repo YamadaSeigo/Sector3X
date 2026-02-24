@@ -1,6 +1,7 @@
 // RainBillboardPS.hlsl
 
 #include "_TileDeferred.hlsli"
+#include "_RainParticles.hlsli"
 
 // Light buffers (if you do two-buffers style)
 StructuredBuffer<PointLight> gNormalLights : register(t0);
@@ -38,6 +39,10 @@ struct VSOut
     float a : TEXCOORD1;
     float3 wp : TEXCOORD2; // world position
     float3 N : TEXCOORD3; // normal
+
+#ifdef DEBUG_RAIN_HIT_DEPTH
+    float3 color : TEXCOORD4; // デバッグ用（衝突している粒子を赤くするなど）
+#endif
 };
 
 uint GetTileIndex(float4 posH)
@@ -82,7 +87,11 @@ float3 ShadePointLight(float3 wp, float3 N, float3 albedo, PointLight pl)
 
 float4 main(VSOut input) : SV_Target
 {
-      // uv.y 方向が長さ、uv.x が幅
+#ifdef DEBUG_RAIN_HIT_DEPTH
+    return float4(input.color, 1.0f); // デバッグ用：衝突している粒子を赤くするなど
+#endif
+
+    // uv.y 方向が長さ、uv.x が幅
     // 幅方向：中央が濃く、端が薄い
     float x = abs(input.uv.x * 2.0f - 1.0f);
     float widthMask = saturate(1.0f - x);

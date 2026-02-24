@@ -135,7 +135,7 @@ void RenderPipe::Initialize(
 
 	// 雨用の深度バッファパス
 
-	shaderDesc.vsPath = L"assets/shader/VS_CascadeDepth.cso";
+	shaderDesc.vsPath = L"assets/shader/VS_RainDepth.cso";
 	shaderDesc.psPath.clear(); // PSなしでDepthOnlyのPSOを作る
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	psoDesc.shader = shaderHandle;
@@ -481,6 +481,8 @@ void RenderPipe::Initialize(
 		lightCountCB = LightCountData.buffer;
 	}
 
+	static ComPtr<ID3D11Buffer> rainSplashCB = ctx.rain->GetSplashCB();
+
 	auto drawFullScreen = [](uint64_t frame) {
 
 		// 全画面描画でライティング計算
@@ -544,7 +546,7 @@ void RenderPipe::Initialize(
 		ctx->PSSetShaderResources(11, (UINT)deferreredSRVs.size(), deferreredSRVs.data());
 		ctx->PSSetShaderResources(15, 1, ligthTexBuffer.srv.GetAddressOf());
 
-		renderBackend->BindPSCBVs({ invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get() }, 7);
+		renderBackend->BindPSCBVs({ invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get(), rainSplashCB.Get()}, 7);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 		ctx->PSSetSamplers(1, 1, lightShadowResService->GetShadowSampler().GetAddressOf());

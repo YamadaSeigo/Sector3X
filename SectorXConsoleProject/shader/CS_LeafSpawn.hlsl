@@ -234,7 +234,7 @@ void main(uint3 tid : SV_DispatchThreadID)
     n = normalize(lerp(n, float3(0, 1, 0), 0.35)); // 0.0‚ÅŠ®‘Sƒ‰ƒ“ƒ_ƒ€, 1.0‚ÅãŒü‚«
     p.normalOct = PackNormalOct(n);
 
-#ifdef DEBUG_HIT_DEPTH
+#ifdef DEBUG_LEAF_HIT_DEPTH
     p.debugHit = 0;
 #endif
 

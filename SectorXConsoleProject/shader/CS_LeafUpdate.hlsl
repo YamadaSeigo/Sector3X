@@ -356,7 +356,7 @@ void main(uint3 tid : SV_DispatchThreadID)
                     //p.velWS -= n * min(0.0f, dot(p.velWS, n));
                     //p.velWS *= 0.4f;
 
-#ifdef DEBUG_HIT_DEPTH
+#ifdef DEBUG_LEAF_HIT_DEPTH
                     p.debugHit = 255;
 #endif
                 }
@@ -364,7 +364,7 @@ void main(uint3 tid : SV_DispatchThreadID)
         }
     }
 
-#ifdef DEBUG_HIT_DEPTH
+#ifdef DEBUG_LEAF_HIT_DEPTH
     p.debugHit = (p.debugHit > 0) ? (p.debugHit - 8) : 0; // 0.5•b‚­‚ç‚¢‚ÅÁ‚¦‚éŠ´‚¶
 #endif
 

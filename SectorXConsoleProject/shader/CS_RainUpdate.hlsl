@@ -65,8 +65,10 @@ bool IsUnderOccluder(float3 posWS)
     float4 h = mul(gCamViewProj, float4(posWS, 1));
     float3 ndc = h.xyz / h.w;
 
-    // ndc.xy: -1..1 → uv 0..1
-    float2 uv = ndc.xy * 0.5f + 0.5f;
+    // ndc.xy: -1..1 -> uv 0..1
+    float2 uv;
+    uv.x = ndc.x * 0.5f + 0.5f;
+    uv.y = -ndc.y * 0.5f + 0.5f;
 
     // マップ外は判定しない（=雨は降らせる）など運用で選ぶ
     if (any(uv < 0) || any(uv > 1))
@@ -91,8 +93,10 @@ bool NeedsRespawn(RainParticle p)
     if (dist2 > (gSpawnRadius * gSpawnRadius))
         return true;
 
+#ifndef DEBUG_RAIN_HIT_DEPTH
     if (IsUnderOccluder(p.posWS))
         return true;
+#endif
 
     // NaN guard
     if (any(p.posWS != p.posWS))
@@ -133,6 +137,15 @@ void main(uint3 tid : SV_DispatchThreadID)
         gFreeList.Append(id);
         return;
     }
+
+#ifdef DEBUG_RAIN_HIT_DEPTH
+    if (IsUnderOccluder(p.posWS))
+    {
+        p.debugHit = 255;
+    }
+
+    p.debugHit = (p.debugHit > 0) ? (p.debugHit - 8) : 0; // 0.5秒くらいで消える感じ
+#endif
 
     gParticles[id] = p;
     gAliveOut.Append(id);

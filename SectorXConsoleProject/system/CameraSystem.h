@@ -175,6 +175,7 @@ public:
 
 			//ディファ―ド用のバッファ更新
 			DeferredCameraBuffer lightCameraBufferData{};
+			lightCameraBufferData.viewProj = buffer.viewProj;
 			lightCameraBufferData.invViewProj = Math::Inverse(buffer.viewProj);
 			lightCameraBufferData.camForward = fixedF.normalized();
 			lightCameraBufferData.camPos = fixedEye;
@@ -274,6 +275,7 @@ public:
 		auto camPos = perCameraService->GetEyePos();
 
 		DeferredCameraBuffer lightCameraBufferData{};
+		lightCameraBufferData.viewProj = viewProj;
 		lightCameraBufferData.invViewProj = Math::Inverse(viewProj);
 		lightCameraBufferData.camForward = f.normalized();
 		lightCameraBufferData.camPos = camPos;

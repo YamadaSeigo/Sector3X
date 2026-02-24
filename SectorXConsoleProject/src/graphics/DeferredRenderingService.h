@@ -4,6 +4,7 @@
 #include "TiledDeferredRender.h"
 
 struct DeferredCameraBuffer {
+	Math::Matrix4x4f viewProj = {};
 	Math::Matrix4x4f invViewProj = {};
 	Math::Vec3f camForward = {};
 	float padding = {};

@@ -72,6 +72,10 @@ void main(uint3 tid : SV_DispatchThreadID)
     p.life = gLife;
     p.velWS = float3(0, 0, 0);
     p.addSize = Hash01(seed + 100u) * gAddSize; // 0..1
+    
+#ifdef DEBUG_RAIN_HIT_DEPTH
+    p.debugHit = 0;
+#endif
 
     gParticles[id] = p;
 

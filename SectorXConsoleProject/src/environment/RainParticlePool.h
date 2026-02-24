@@ -4,12 +4,19 @@
 #include <cstdint>
 #include "graphics/D3D11Helpers.h"
 
+// デバッグ用：雨粒が当たった深度を記録する機能を有効化(シェーダーの方も要対応 _RainParticle.hlsli)
+//#define DEBUG_RAIN_HIT_DEPTH
+
 struct RainParticleGPU
 {
     float posWS[3];
     float life;
     float velWS[3];
     float addSize; // 加算サイズ
+
+#ifdef DEBUG_RAIN_HIT_DEPTH
+	uint32_t debugHit; // デバッグ用：雨粒が当たった深度（0なら当たってない）
+#endif
 };
 
 class RainParticlePool
