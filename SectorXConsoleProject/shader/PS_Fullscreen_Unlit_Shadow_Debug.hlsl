@@ -564,30 +564,5 @@ float4 main(VSOut i) : SV_Target
         color += gGodRayTint * god * fogVis;
     }
 
-<<<<<<< HEAD
-=======
-    // --- Rain micro-splash on upward edges (main camera depth shift) ---
-    {
-        //float upOffset = 0.1f; // 5cm ~ 20cmくらいで調整（世界単位）
-        //float edge = ComputeUpShiftEdge_Fatten(wp.xyz, N, upOffset);
-
-        //color.r = lerp(color.r, 1.0f, edge); // エッジを白っぽくシフト)
-
-        //float2 p = uv * 300.0f + gSplashDir * (gTime * gSplashSpeed);
-        //float n = FBM2D(p);
-
-        //// 時間で閾値を動かす（パチパチ出る）
-        //float th = lerp(0.72f, 0.88f, 0.5f + 0.5f * sin(gTime * 12.0f));
-        //float spark = smoothstep(th, 1.0f, n);
-
-        //// 強さ
-        //float splash = edge * spark;
-
-        //// わずかに白寄りで加算（雨の弾け）
-        //float3 splashTint = float3(0.85f, 0.9f, 1.0f);
-        //color += splashTint * (splash * 1.35f);
-    }
->>>>>>> 5ec4acbde4af133e539389b6055a58b242b24d56
-
     return float4(color, 1.0f);
 }

@@ -170,20 +170,12 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "speedToLength", &gDebugRainSpeedToLength, 0.0f, 0.1f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "alpha", &gDebugAlpha, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "lifeFade", &gDebugLifeFade, 0.0f, 1.0f, 0.01f);
-<<<<<<< HEAD
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetStrength", &gDebugWetStrength, 0.0f, 5.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDarken", &gDebugWetDarken, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetSpecBoost", &gDebugWetSpecBoost, 0.0f, 5.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFlatten", &gDebugWetFlatten, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetMinNdotUp", &gDebugWetMinNdotUp, 0.0f, 1.0f, 0.01f);
-=======
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "splashSpeed", &gDebugSplashSpeed, 0.0f, 5.0f, 0.01f);
 #endif
-<<<<<<< Updated upstream
-=======
->>>>>>> 5ec4acbde4af133e539389b6055a58b242b24d56
->>>>>>> Stashed changes
-
 }
 
 void RainService::Commit(double deltaTime)
