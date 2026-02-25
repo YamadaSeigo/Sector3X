@@ -155,6 +155,7 @@ RainService::RainService(
 		m_cpuUpdateBuffer[i].gRainInvMapSize.y = invMapSize;
     }
 
+#ifdef _DEBUG
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "spawnRadius", &gDebugSpawnRadius, 0.0f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "gravity", &gDebugGravity, 0.0f, 20.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "heightOffset", &gDebugHeightOffset, 0.0f, 200.0f, 0.1f);
@@ -166,6 +167,7 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "alpha", &gDebugAlpha, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "lifeFade", &gDebugLifeFade, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "splashSpeed", &gDebugSplashSpeed, 0.0f, 5.0f, 0.01f);
+#endif
 
 }
 

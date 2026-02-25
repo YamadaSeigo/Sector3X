@@ -39,7 +39,7 @@ public:
 
         Math::Matrix4x4f gCamViewProj = {};
         Math::Vec2f gRainInvMapSize = {}; // (1/width, 1/height)
-        float gRainDepthBias = 1e-3;
+        float gRainDepthBias = 1e-3f;
         float padding2 = {};
     };
 

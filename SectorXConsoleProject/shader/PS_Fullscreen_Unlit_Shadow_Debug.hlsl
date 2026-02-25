@@ -526,10 +526,10 @@ float4 main(VSOut i) : SV_Target
 
     // --- Rain micro-splash on upward edges (main camera depth shift) ---
     {
-        float upOffset = 0.1f; // 5cm ~ 20cmくらいで調整（世界単位）
-        float edge = ComputeUpShiftEdge_Fatten(wp.xyz, N, upOffset);
+        //float upOffset = 0.1f; // 5cm ~ 20cmくらいで調整（世界単位）
+        //float edge = ComputeUpShiftEdge_Fatten(wp.xyz, N, upOffset);
 
-        color.r = lerp(color.r, 1.0f, edge); // エッジを白っぽくシフト)
+        //color.r = lerp(color.r, 1.0f, edge); // エッジを白っぽくシフト)
 
         //float2 p = uv * 300.0f + gSplashDir * (gTime * gSplashSpeed);
         //float n = FBM2D(p);
