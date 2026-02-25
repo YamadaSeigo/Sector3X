@@ -16,6 +16,14 @@
 
 ---
 
+## 🏷 テクスチャ名
+| 種類               | 命名規則                  | 例                     |
+| ---------------- | --------------------- | --------------------- |
+| アルベド             | _c, _albedo, _diffuse | `Player_albedo.png`   |
+| エミッシブマップ         | _e, _emissive         | `Player_emissive.png` |
+| メタリック/ラフネスマップ/AO | _m, _r, _metallicRoughness, _ao           | `Player_m.png`        |
+| 法線マップ            | _n, _normal           | `Player_normal.png`   |
+
 ## 🏷 クラス名（PascalCase）
 
 - 単語の区切りを大文字で始める（PascalCase）

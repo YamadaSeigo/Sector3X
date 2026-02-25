@@ -12,10 +12,17 @@ Texture2D gLayer0 : register(t20);
 Texture2D gLayer1 : register(t21);
 Texture2D gLayer2 : register(t22);
 Texture2D gLayer3 : register(t23);
-Texture2DArray gSplat : register(t24); // クラスタごとの重み (RGBA) を slice で参照
-StructuredBuffer<ClusterParam> gClusters : register(t25); // 全クラスタのパラメータ表
 
-Texture2DArray gBiome : register(t26); // RGBA = (Desert, Swamp, Forest, Tundra) など
+Texture2D gLayerNormal0 : register(t24);
+Texture2D gLayerNormal1 : register(t25);
+Texture2D gLayerNormal2 : register(t26);
+Texture2D gLayerNormal3 : register(t27);
+
+
+Texture2DArray gSplat : register(t28); // クラスタごとの重み (RGBA) を slice で参照
+StructuredBuffer<ClusterParam> gClusters : register(t29); // 全クラスタのパラメータ表
+
+Texture2DArray gBiome : register(t30); // RGBA = (Desert, Swamp, Forest, Tundra) など
 
 SamplerState gPointClamp : register(s3);
 
@@ -107,6 +114,13 @@ float4 SampleSplatBilinear_NoMip(Texture2DArray tex, SamplerState sampPoint, flo
     return lerp(sx0, sx1, f.y);
 }
 
+float3 DecodeNormal(Texture2D tex, float2 uv)
+{
+    float2 xy = tex.Sample(gSampler, uv).rg * 2.0f - 1.0f;
+    float z = sqrt(saturate(1.0f - dot(xy, xy)));
+    return float3(xy, z);
+}
+
 // === PS（ワンドロー本体） ===
 PS_PRBOutput main(VSOut i)
 {
@@ -139,10 +153,16 @@ PS_PRBOutput main(VSOut i)
     // 3) 素材4：連続感が欲しければ world ベースでタイルするのがおすすめ
     //    例: ワールドXZをスケール（完全にクラスタ無関係の連続タイル）
     //float2 uvWorld = i.worldPos.xz; // 必要に応じて / overallScale
-    float4 c0 = gLayer0.Sample(gSampler, suv * p.layerTiling[0]);
-    float4 c1 = gLayer1.Sample(gSampler, suv * p.layerTiling[1]);
-    float4 c2 = gLayer2.Sample(gSampler, suv * p.layerTiling[2]);
-    float4 c3 = gLayer3.Sample(gSampler, suv * p.layerTiling[3]);
+
+    float2 uv0 = suv * p.layerTiling[0];
+    float2 uv1 = suv * p.layerTiling[1];
+    float2 uv2 = suv * p.layerTiling[2];
+    float2 uv3 = suv * p.layerTiling[3];
+
+    float4 c0 = gLayer0.Sample(gSampler, uv0);
+    float4 c1 = gLayer1.Sample(gSampler, uv1);
+    float4 c2 = gLayer2.Sample(gSampler, uv2);
+    float4 c3 = gLayer3.Sample(gSampler, uv3);
 
     float4 final = c0 * w.r + c1 * w.g + c2 * w.b + c3 * w.a;
 
@@ -169,7 +189,36 @@ PS_PRBOutput main(VSOut i)
     PS_PRBOutput output;
     output.AlbedoAO = float4(final.rgb, 1.0f);
     output.EmissionMetallic = float4(0, 0, 0, 0);
-    output.NormalRoughness = float4(normalize(i.nrm) * 0.5f + 0.5f, 1.0f);
+
+
+    //　ここから法線計算
+    float3 n0 = DecodeNormal(gLayerNormal0, uv0);
+    float3 n1 = DecodeNormal(gLayerNormal1, uv1);
+    float3 n2 = DecodeNormal(gLayerNormal2, uv2);
+    float3 n3 = DecodeNormal(gLayerNormal3, uv3);
+
+    float3 nTS =
+      n0 * w.r
+    + n1 * w.g
+    + n2 * w.b
+    + n3 * w.a;
+
+    nTS = normalize(nTS);
+
+    float3 N = normalize(i.nrm);
+
+    // ワールドUp
+    float3 up = float3(0, 1, 0);
+
+    // 法線が垂直に近い場合の安全処理
+    float3 T = normalize(cross(up, N));
+    float3 B = cross(N, T);
+
+    float3x3 TBN = float3x3(T, B, N);
+
+    float3 nWS = normalize(mul(nTS, TBN));
+
+    output.NormalRoughness = float4(nWS * 0.5f + 0.5f, 1.0f);
 
     return output;
 }

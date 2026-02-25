@@ -13,6 +13,10 @@ namespace Assets
         { Mat_Rock,  { "assets/texture/terrain/RockHigh.jpg", true } },
         { Mat_Dirt,  { "assets/texture/terrain/DirtHigh.png", true } },
         { Mat_Snow,  { "assets/texture/terrain/snow.png", true } },
+        { Mat_Normal_Grass, { "assets/texture/terrain/grass_normal.png", false } },
+        { Mat_Normal_Rock,  { "assets/texture/terrain/RockHigh_normal.png", false } },
+        { Mat_Normal_Dirt,  { "assets/texture/terrain/DirtHigh_normal.png", false } },
+        { Mat_Normal_Snow,  { "assets/texture/terrain/snow_normal.png", false } },
     };
 
     static std::unordered_map<uint32_t, std::pair<std::string, bool>> gTextures = {

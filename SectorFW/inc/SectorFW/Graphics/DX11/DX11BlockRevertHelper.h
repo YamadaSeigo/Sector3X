@@ -86,12 +86,15 @@ namespace SFW::Graphics::DX11 {
     using ResolveTexturePathFn = bool(*)(uint32_t id, std::string& path, bool& forceSRGB);
 
     struct CommonMaterialResources {
-        // t10..t13 に貼る素材アルベド
+        // 素材アルベド
         ComPtr<ID3D11ShaderResourceView> layerSRV[4];
+		// 素材ノーマル
+		ComPtr<ID3D11ShaderResourceView> layerNormalSRV[4];
         // 共通サンプラ（s0）。既存のスプラットと共有でOK
         ComPtr<ID3D11SamplerState>       sampLinearWrap;
         // 管理用: 指定IDを覚えておく（デバッグ/ホットリロードなど）
         uint32_t materialId[4]{ 0,0,0,0 };
+		uint32_t materialNormalId[4]{ 0,0,0,0 };
     };
 
     // クラスタ別に必要な最小情報（PSでインデックスして読む）
@@ -807,7 +810,7 @@ namespace SFW::Graphics::DX11 {
             const ClusterParamsGPU& cp)
         {
             ID3D11ShaderResourceView* srv = cp.srv.Get();
-            ctx->PSSetShaderResources(25, 1, &srv); // t25: StructuredBuffer<ClusterParam>
+            ctx->PSSetShaderResources(29, 1, &srv); // t29: StructuredBuffer<ClusterParam>
             ID3D11Buffer* cbs[] = { cp.cbGrid.Get() };
             ctx->PSSetConstantBuffers(10, 1, cbs);   // b10: TerrainGridCB
 
@@ -1107,6 +1110,7 @@ namespace SFW::Graphics::DX11 {
     inline bool BuildCommonMaterialSRVs(ID3D11Device* dev,
         SFW::Graphics::DX11::TextureManager& texMgr,
         const uint32_t materialIds[4],
+        const uint32_t materialNormalIds[4],
         ResolveTexturePathFn resolve,
         CommonMaterialResources& out)
     {
@@ -1132,8 +1136,20 @@ namespace SFW::Graphics::DX11 {
             auto& td = data.ref();  // TextureData（srv/resource を保持）
             out.layerSRV[i] = td.srv;  // SRVを保持
             out.materialId[i] = materialIds[i];
-
         }
+
+        for(int i = 0; i < 4; ++i) {
+            std::string path; bool forceSRGB = false; // 法線は非sRGB
+            if (!resolve(materialNormalIds[i], path, forceSRGB)) return false;
+            SFW::Graphics::DX11::TextureCreateDesc d{};
+            d.path = path; d.forceSRGB = forceSRGB;
+            TextureHandle h = {};
+            texMgr.Add(d, h); // ResourceManagerBase経由のCreate/キャッシュ
+            auto data = texMgr.Get(h);
+            auto& td = data.ref();  // TextureData（srv/resource を保持）
+            out.layerNormalSRV[i] = td.srv;  // SRVを保持
+            out.materialNormalId[i] = materialNormalIds[i];
+		}
         return true;
     }
 
@@ -1141,11 +1157,13 @@ namespace SFW::Graphics::DX11 {
     inline void BindCommonMaterials(ID3D11DeviceContext* ctx,
         const CommonMaterialResources& R)
     {
-        ID3D11ShaderResourceView* mats[4] = {
+        ID3D11ShaderResourceView* mats[8] = {
         R.layerSRV[0].Get(), R.layerSRV[1].Get(),
-        R.layerSRV[2].Get(), R.layerSRV[3].Get()
+        R.layerSRV[2].Get(), R.layerSRV[3].Get(),
+		R.layerNormalSRV[0].Get(), R.layerNormalSRV[1].Get(),
+		R.layerNormalSRV[2].Get(), R.layerNormalSRV[3].Get(),
         };
-        ctx->PSSetShaderResources(20, 4, mats);                 // t20..t23
+        ctx->PSSetShaderResources(20, 8, mats);                 // t20..t23
         ID3D11SamplerState* samp = R.sampLinearWrap.Get();
         ctx->PSSetSamplers(0, 1, &samp);                        // s0（スプラットと共有）
     }

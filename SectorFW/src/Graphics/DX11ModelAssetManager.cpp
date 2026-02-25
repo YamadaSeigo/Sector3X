@@ -359,8 +359,8 @@ namespace SFW
 						for (size_t i = 0; i < prim.indices->count; ++i) {
 							indices[i] = static_cast<uint32_t>(cgltf_accessor_read_index(prim.indices, i));
 						}
-						//if (flipZ) {
-						//	// 巻き順反転: (i0, i1, i2) → (i0, i2, i1)
+						//if (desc.rhFlipZ) {
+						//	// 巻き順反転: (i0, i1, i2) -> (i0, i2, i1)
 						//	const size_t triCount = indices.size() / 3;
 						//	for (size_t t = 0; t < triCount; ++t) {
 						//		std::swap(indices[t * 3 + 1], indices[t * 3 + 2]);
@@ -399,10 +399,9 @@ namespace SFW
 						{
 							for (auto& t : tangents)
 							{
-								// あなたの flip_tangent と同じ規則に合わせる
 								// auto flip_tangent = [](float& x, float& y, float& z, float& w) { z = -z; w = -w; };
-								t.z = -t.z;
-								t.w = -t.w;
+								t.x = -t.x;
+								//t.w = -t.w;
 							}
 						}
 					}

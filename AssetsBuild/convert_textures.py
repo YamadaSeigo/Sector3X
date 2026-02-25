@@ -36,13 +36,13 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 def choose_format(stem: str):
     lname = stem.lower()
 
-    if lname.endswith(("_c", "_albedo", "_diffuse")):
+    if lname.endswith(("_c", "_albedo", "_diffuse", "_baseColor")):
         # カラー系 → sRGB
         return ["-f", "BC7_UNORM_SRGB", "-srgb"]
     elif lname.endswith(("_n", "_normal")):
         # 法線マップ → リニア (BC5)
         return ["-f", "BC5_UNORM"]
-    elif lname.endswith(("_r", "_m", "_ao")):
+    elif lname.endswith(("_r", "roughness", "_m", "metallic", "metallicRoughness", "_ao", "_ambientOcclusion")):
         # Roughness/Metallic/AO → リニア (BC4)
         return ["-f", "BC4_UNORM"]
     elif lname.endswith(("_e", "_emissive")):
@@ -67,13 +67,13 @@ def convert_texture(src: Path, dst_dir: Path):
     fmt_args = choose_format(src.stem)
     cmd = [
         str(TEXCONV),
-        "-m", "0",        # 全ミップ生成
-        "-y",             # 上書き許可
-        "-nologo",        # ロゴ非表示
-        #"-nogpu",         # GPU不使用
+        "-m", "0",
+        "-y",
+        "-nologo",
         "-o", str(dst_dir),
+    ] + fmt_args + [
         str(src)
-    ] + fmt_args
+    ]
 
     print(f"[CONVERT] {src.name} -> {' '.join(fmt_args)}")
     subprocess.run(cmd, check=True)

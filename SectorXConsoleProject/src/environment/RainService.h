@@ -59,11 +59,16 @@ public:
         float _pad3[2] = {};
     };
 
-    struct SplashCB
+    struct WetnessCB
     {
-        Math::Vec2f gSplashDir = Math::Vec2f{0.7f, 0.2f}.normalized();   // 正規化推奨（例: (0.7, 0.2)）
-        float gTime = 0.0f;
-        float gSplashSpeed = 1.0f;
+        Math::Vec2f gWetOriginXZ = {}; // このWetnessRTがカバーするワールド原点(XZ)
+        float gWetInvWorldSize = 0.0f; // 1 / カバーするワールド幅（例: 1/256m）
+        float gWetStrength = 1.0f; // 全体強度
+
+        float gWetDarken = 0.35f; // 濡れで暗くする量(例: 0.35)
+        float gWetSpecBoost = 1.0f; // 疑似スペキュラ強度(例: 1.0)
+        float gWetFlatten = 0.6f; // 法線コントラスト抑制(例: 0.6)
+        float gWetMinNdotUp = 0.2f; // 上面のみ濡らす閾値(例: 0.2)
     };
 
     static constexpr uint32_t MaxVolumes = 32;
@@ -120,12 +125,12 @@ public:
 	Graphics::BufferHandle GetSpawnCBHandle() const { return m_spawnCBHandle; }
 	Graphics::BufferHandle GetUpdateCBHandle() const { return m_updateCBHandle; }
 	Graphics::BufferHandle GetRenderCBHandle() const { return m_renderCBHandle; }
-	Graphics::BufferHandle GetSplashCBHandle() const { return m_splashCBHandle; }
+	Graphics::BufferHandle GetSplashCBHandle() const { return m_wetnessCBHandle; }
 
 	ComPtr<ID3D11Buffer> GetSpawnCB() const { return m_spawnCB; }
 	ComPtr<ID3D11Buffer> GetUpdateCB() const { return m_updateCB; }
 	ComPtr<ID3D11Buffer> GetRenderCB() const { return m_renderCB; }
-    ComPtr<ID3D11Buffer> GetSplashCB() const { return m_splashCB; }
+    ComPtr<ID3D11Buffer> GetWetnessCB() const { return m_wetnessCB; }
 
 	ComPtr<ID3D11DepthStencilView> GetDepthMapDSV() const { return m_depthMapDSV; }
 	ComPtr<ID3D11ShaderResourceView> GetDepthMapSRV() const { return m_depthMapSRV; }
@@ -138,7 +143,7 @@ private:
     ComPtr<ID3D11Buffer> m_spawnCB;
     ComPtr<ID3D11Buffer> m_updateCB;
     ComPtr<ID3D11Buffer> m_renderCB;
-	ComPtr<ID3D11Buffer> m_splashCB;
+	ComPtr<ID3D11Buffer> m_wetnessCB;
 
     ComPtr<ID3D11ComputeShader> m_initFreeListCS;
     ComPtr<ID3D11ComputeShader> m_spawnCS;
@@ -159,13 +164,13 @@ private:
 	Graphics::BufferHandle m_spawnCBHandle;
 	Graphics::BufferHandle m_updateCBHandle;
 	Graphics::BufferHandle m_renderCBHandle;
-	Graphics::BufferHandle m_splashCBHandle;
+	Graphics::BufferHandle m_wetnessCBHandle;
 
     std::mutex bufMutex;
     SpawnCB m_cpuSpawnBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     UpdateCB m_cpuUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     RenderCB m_cpuRenderBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
-	SplashCB m_cpuSplashBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
+	WetnessCB m_cpuWetnessBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 
     uint32_t currentSlot = 0;
     float m_elapsedTime = 0.0f;

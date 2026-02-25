@@ -18,7 +18,11 @@ float gDebugRainSpeedToLength = 0.02f;
 float gDebugAlpha = 0.5f;
 float gDebugLifeFade = 0.18f;
 
-float gDebugSplashSpeed = 1.0f;
+float gDebugWetStrength = 1.0f;
+float gDebugWetDarken = 0.35f;
+float gDebugWetSpecBoost = 1.0f;
+float gDebugWetFlatten = 0.6f;
+float gDebugWetMinNdotUp = 0.2f;
 
 #endif
 
@@ -46,8 +50,8 @@ RainService::RainService(
 	bufDesc.size = sizeof(RenderCB);
 	bufferMgr->Add(bufDesc, m_renderCBHandle);
     bufDesc.name = "RainSplash";
-	bufDesc.size = sizeof(SplashCB);
-	bufferMgr->Add(bufDesc, m_splashCBHandle);
+	bufDesc.size = sizeof(WetnessCB);
+	bufferMgr->Add(bufDesc, m_wetnessCBHandle);
 
     {
         auto readLock = bufferMgr->AcquireReadLock();
@@ -57,8 +61,8 @@ RainService::RainService(
 		m_updateCB = bufferData.buffer.Get();
 		bufferData = bufferMgr->GetNoLock(m_renderCBHandle);
 		m_renderCB = bufferData.buffer.Get();
-		bufferData = bufferMgr->GetNoLock(m_splashCBHandle);
-		m_splashCB = bufferData.buffer.Get();
+		bufferData = bufferMgr->GetNoLock(m_wetnessCBHandle);
+		m_wetnessCB = bufferData.buffer.Get();
     }
 
     auto compileShader = [&](const wchar_t* path, ComPtr<ID3D11ComputeShader>& outCS)
@@ -166,8 +170,19 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "speedToLength", &gDebugRainSpeedToLength, 0.0f, 0.1f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "alpha", &gDebugAlpha, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "lifeFade", &gDebugLifeFade, 0.0f, 1.0f, 0.01f);
+<<<<<<< HEAD
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetStrength", &gDebugWetStrength, 0.0f, 5.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDarken", &gDebugWetDarken, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetSpecBoost", &gDebugWetSpecBoost, 0.0f, 5.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFlatten", &gDebugWetFlatten, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetMinNdotUp", &gDebugWetMinNdotUp, 0.0f, 1.0f, 0.01f);
+=======
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "splashSpeed", &gDebugSplashSpeed, 0.0f, 5.0f, 0.01f);
 #endif
+<<<<<<< Updated upstream
+=======
+>>>>>>> 5ec4acbde4af133e539389b6055a58b242b24d56
+>>>>>>> Stashed changes
 
 }
 
@@ -178,7 +193,7 @@ void RainService::Commit(double deltaTime)
     auto& spawnBuf = m_cpuSpawnBuffer[currentSlot];
     auto& updateBuf = m_cpuUpdateBuffer[currentSlot];
     auto& renderBuf = m_cpuRenderBuffer[currentSlot];
-	auto& splashBuf = m_cpuSplashBuffer[currentSlot];
+	auto& wetnessBuf = m_cpuWetnessBuffer[currentSlot];
 
     {
         std::lock_guard lock(bufMutex);
@@ -187,8 +202,6 @@ void RainService::Commit(double deltaTime)
 
         updateBuf.gDt = static_cast<float>(deltaTime);
         updateBuf.gTime = m_elapsedTime;
-
-		splashBuf.gTime = m_elapsedTime;
 
 #ifdef _DEBUG
 		spawnBuf.gSpawnRadius = gDebugSpawnRadius;
@@ -202,7 +215,11 @@ void RainService::Commit(double deltaTime)
 		renderBuf.gSpeedToLength = gDebugRainSpeedToLength;
 		renderBuf.gAlpha = gDebugAlpha;
 		renderBuf.gLifeFade = gDebugLifeFade;
-		splashBuf.gSplashSpeed = gDebugSplashSpeed;
+		wetnessBuf.gWetStrength = gDebugWetStrength;
+		wetnessBuf.gWetDarken = gDebugWetDarken;
+		wetnessBuf.gWetSpecBoost = gDebugWetSpecBoost;
+		wetnessBuf.gWetFlatten = gDebugWetFlatten;
+		wetnessBuf.gWetMinNdotUp = gDebugWetMinNdotUp;
 #endif
     }
 
@@ -223,9 +240,9 @@ void RainService::Commit(double deltaTime)
     updateDesc.data = &renderBuf;
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-	updateDesc.buffer = m_splashCB.Get();
-	updateDesc.size = sizeof(SplashCB);
-	updateDesc.data = &splashBuf;
+	updateDesc.buffer = m_wetnessCB.Get();
+	updateDesc.size = sizeof(WetnessCB);
+	updateDesc.data = &wetnessBuf;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 }
 

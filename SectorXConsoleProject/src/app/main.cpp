@@ -389,9 +389,9 @@ int main(void)
 			Graphics::DX11::BindCommonMaterials(deviceContext, *terrainRes.matRes);
 
 			ID3D11ShaderResourceView* splatSrv = terrainRes.splatRes->splatArraySRV.Get();
-			deviceContext->PSSetShaderResources(24, 1, &splatSrv);       // t24
+			deviceContext->PSSetShaderResources(28, 1, &splatSrv);       // t24
 			ID3D11ShaderResourceView* biomeSrv = terrainRes.splatRes->biomeArraySRV.Get();
-			deviceContext->PSSetShaderResources(26, 1, &biomeSrv);      // t26
+			deviceContext->PSSetShaderResources(30, 1, &biomeSrv);      // t26
 
 			deviceContext->RSSetViewports(1, &graphics.GetMainViewport());
 

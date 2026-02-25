@@ -52,8 +52,15 @@ PS_PRBOutput main(PSInput input, bool isFrontFace : SV_IsFrontFace)
     float3 nTS = float3(0, 0, 1);
     if ((hasFlags & FLAG_HAS_NORMALTEX) != 0u)
     {
-        float4 normalSample = gNormalTex.Sample(gSampler, input.uv);
-        nTS = normalize(normalSample.xyz * 2.0f - 1.0f);
+        // BC5_UNORM などの法線マップで、RとGにそれぞれXとY成分を入れている場合のサンプルコード
+        float2 xy = gNormalTex.Sample(gSampler, input.uv).rg * 2.0f - 1.0f;
+
+        // もし「凹凸が逆」に見えるなら次を入れる（Green反転）
+        //xy.y = -xy.y;
+
+        // BC5_UNORM などの法線マップで、Z成分を省いている場合は、XYからZを復元する
+        float z = sqrt(saturate(1.0f - dot(xy, xy)));
+        nTS = float3(xy, z); // これで tangent space の法線が復元できる
     }
 
      // TBN 行列を組む（列ベクトルか行ベクトルかはmul側に合わせる）

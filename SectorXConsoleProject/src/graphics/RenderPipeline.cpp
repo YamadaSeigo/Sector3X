@@ -481,7 +481,7 @@ void RenderPipe::Initialize(
 		lightCountCB = LightCountData.buffer;
 	}
 
-	static ComPtr<ID3D11Buffer> rainSplashCB = ctx.rain->GetSplashCB();
+	static ComPtr<ID3D11Buffer> rainWetnessCB = ctx.rain->GetWetnessCB();
 
 	auto drawFullScreen = [](uint64_t frame) {
 
@@ -546,7 +546,7 @@ void RenderPipe::Initialize(
 		ctx->PSSetShaderResources(11, (UINT)deferreredSRVs.size(), deferreredSRVs.data());
 		ctx->PSSetShaderResources(15, 1, ligthTexBuffer.srv.GetAddressOf());
 
-		renderBackend->BindPSCBVs({ invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get(), rainSplashCB.Get()}, 7);
+		renderBackend->BindPSCBVs({ invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get(), rainWetnessCB.Get()}, 7);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 		ctx->PSSetSamplers(1, 1, lightShadowResService->GetShadowSampler().GetAddressOf());
@@ -675,12 +675,12 @@ void RenderPipe::Initialize(
 	passDesc.psoOverride = std::nullopt;
 	passDesc.viewport = vp;
 	passDesc.depthStencilState = DepthStencilStateID::Default_Stencil;
-	passDesc.customExecute = { drawTerrainColor };
+	passDesc.customExecute = {};
 	passDesc.stencilRef = 1;
 
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OUTLINE);
 
-	passDesc.customExecute = { drawSky, drawOpaqueParticle, drawFullScreen };
+	passDesc.customExecute = { drawTerrainColor, drawSky, drawOpaqueParticle, drawFullScreen };
 	passDesc.stencilRef = 2;
 	renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_OPAQUE);
 

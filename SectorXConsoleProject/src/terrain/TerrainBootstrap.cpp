@@ -59,7 +59,8 @@ namespace TerrainBoot
         // materials
         static DX11::CommonMaterialResources matRes;
         const uint32_t matIds[4] = { Assets::Mat_Grass, Assets::Mat_Rock, Assets::Mat_Dirt, Assets::Mat_Snow };
-        DX11::BuildCommonMaterialSRVs(graphics.GetDevice(), *textureMgr, matIds, &Assets::ResolveTexturePath, matRes);
+        const uint32_t matNormalIds[4] = { Assets::Mat_Normal_Grass, Assets::Mat_Normal_Rock, Assets::Mat_Normal_Dirt, Assets::Mat_Normal_Snow };
+        DX11::BuildCommonMaterialSRVs(graphics.GetDevice(), *textureMgr, matIds, matNormalIds, &Assets::ResolveTexturePath, matRes);
         r.matRes = &matRes;
 
         // splat sheet -> per cluster -> array

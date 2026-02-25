@@ -72,11 +72,16 @@ cbuffer GodRayCB : register(b10)
     float gGodRayMaxDepth; // “空/遠方”判定の深度閾値（例: 0.9995）
 };
 
-cbuffer RainAnimCB : register(b11)
+cbuffer WetnessCB : register(b11)
 {
-    float2 gSplashDir; // 正規化推奨（例: (0.7, 0.2)）
-    float gTime;
-    float gSplashSpeed;
+    float2 gWetOriginXZ; // このWetnessRTがカバーするワールド原点(XZ)
+    float gWetInvWorldSize; // 1 / カバーするワールド幅（例: 1/256m）
+    float gWetStrength; // 全体強度
+
+    float gWetDarken; // 濡れで暗くする量(例: 0.35)
+    float gWetSpecBoost; // 疑似スペキュラ強度(例: 1.0)
+    float gWetFlatten; // 法線コントラスト抑制(例: 0.6)
+    float gWetMinNdotUp; // 上面のみ濡らす閾値(例: 0.2)
 }
 
 Texture2D gAlbedoAO : register(t11); // RGB: Albedo, A: Occlusion
@@ -451,6 +456,23 @@ float4 main(VSOut i) : SV_Target
     float3 albedo = albedoAO.rgb;
     float3 N = normalize(nr.rgb * 2.0f - 1.0f);
 
+     // --- Wetness sample (world XZ -> wet UV) ---
+    //float2 wetUV = (wp.xz - gWetOriginXZ) * gWetInvWorldSize;
+
+    // 範囲外は0
+    float wet = 1.0f;
+    //if (all(wetUV >= 0.0f) && all(wetUV <= 1.0f))
+    //{
+    //    wet = gWetness.SampleLevel(gPointSamp, wetUV, 0) * gWetStrength;
+    //}
+
+    // 上向き面だけ濡れやすく（壁の濡れを抑制）
+    float ndotUp = dot(N, float3(0, 1, 0));
+    float facingUp = saturate((ndotUp - 0.2f) / (1.0f - 0.2f));
+    wet *= facingUp;
+
+    albedo *= (1.0f - wet * gWetDarken);
+
     // -----------------------------
     //  弱いノーマルライティング
     // -----------------------------
@@ -458,6 +480,20 @@ float4 main(VSOut i) : SV_Target
     // 光が“来る”方向は -gSunDirectionWS として扱う
    // 最適化版（gSunDirectionWS を WS で正規化して渡す前提）
     float3 L = -gSunDirectionWS;
+
+    float3 V = normalize(camPos.xyz - wp.xyz);
+    float3 H = normalize(L + V);
+
+    float ndh = saturate(dot(N, H));
+    float ndl2 = saturate(dot(N, L));
+
+    // “濡れほど鋭いハイライト”
+    // （nr.a に roughness が入ってるなら使える：float rough = nr.a; など）
+    float rough = nr.a; // 0..1想定
+    float specPow = lerp(128.0f, 16.0f, rough); // rough大→鈍い
+
+    float wetSpec = pow(ndh, specPow) * ndl2;
+    wetSpec *= wet * gWetSpecBoost;
 
     // 通常の N・L
     float ndl = saturate(dot(N, L));
@@ -479,6 +515,8 @@ float4 main(VSOut i) : SV_Target
     // detailStrength でフェードイン
     float normalFactor = lerp(1.0f, normalFactorRaw, detailStrength);
 
+    normalFactor = lerp(normalFactor, 1.0f, wet * gWetFlatten);
+
     // Ambient（Unlitの基礎明るさ）
     float3 base = albedo * (gAmbientColor * gAmbientIntensity);
 
@@ -494,6 +532,8 @@ float4 main(VSOut i) : SV_Target
 
     // Emissive（必要ならそのまま加算）
     float3 color = base + plAdd + emiMetal.rgb * emissiveBoost;
+
+    color += gSunColor * (gSunIntensity * wetSpec) * shadowMul;
 
     float debugViewDepth = dot(wp.xyz - debugCamPos.xyz, debugCamForward.xyz);
 
@@ -524,6 +564,8 @@ float4 main(VSOut i) : SV_Target
         color += gGodRayTint * god * fogVis;
     }
 
+<<<<<<< HEAD
+=======
     // --- Rain micro-splash on upward edges (main camera depth shift) ---
     {
         //float upOffset = 0.1f; // 5cm ~ 20cmくらいで調整（世界単位）
@@ -545,6 +587,7 @@ float4 main(VSOut i) : SV_Target
         //float3 splashTint = float3(0.85f, 0.9f, 1.0f);
         //color += splashTint * (splash * 1.35f);
     }
+>>>>>>> 5ec4acbde4af133e539389b6055a58b242b24d56
 
     return float4(color, 1.0f);
 }
