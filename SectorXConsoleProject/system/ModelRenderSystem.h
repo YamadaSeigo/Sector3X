@@ -9,8 +9,7 @@
 
 #include "graphics/RenderDefine.h"
 
-//描画系のこのクラスでいったんバッファの更新
-#include "environment/WindService.h"
+#include "environment/RainService.h"
 
 #ifdef _ENABLE_IMGUI
 #define PROFILE_MODEL_UPDATE_TIME 0
@@ -52,7 +51,8 @@ class ModelRenderSystem : public ITypeSystem<
 	ServiceContext<
 		Graphics::RenderService,
 		Graphics::I3DPerCameraService,
-		Graphics::LightShadowService
+		Graphics::LightShadowService,
+		RainService
 	>,
 	//Updateを並列化する
 	IsParallel{ true }
@@ -68,7 +68,8 @@ public:
 		NoDeletePtr<IThreadExecutor> threadPool,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
-		NoDeletePtr<Graphics::LightShadowService> lightShadowService)
+		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
+		NoDeletePtr<RainService> rainService)
 	{
 
 		//機能を制限したRenderQueueを取得
@@ -144,12 +145,15 @@ public:
 			Graphics::OccluderViewport vp;
 			bool drawOcc;
 			bool castShadow;
+			float rainRadius2;
 		};
 
 		Math::Vec3f camRight;
 		Math::Vec3f camUp;
 		Math::Vec3f camForward;
 		cameraService->MakeBasis(camRight, camUp, camForward);
+
+		float rainRadius = rainService->GetSpawnRadius();
 
 		KernelParams kp = {
 			renderService.get(),
@@ -171,7 +175,8 @@ public:
 			occluderAABBs,
 			vp,
 			drawOcc,
-			true
+			true,
+			rainRadius * rainRadius
 		};
 
 #if PROFILE_MODEL_UPDATE_TIME
@@ -542,7 +547,8 @@ public:
 						bool isRainOccluder = (modelComp.flags & (uint16_t)EModelFlag::RainOccluder) != 0;
 						if (isRainOccluder)
 						{
-							cmd.viewMask |= PASS_3DMAIN_RAIN_DEPTH;
+							float camDistSqrt = (Math::Vec2f(centerBS.x, centerBS.z) - Math::Vec2f(kp->cp.x, kp->cp.z)).lengthSquared();
+							if(camDistSqrt < kp->rainRadius2) cmd.viewMask |= PASS_3DMAIN_RAIN_DEPTH;
 						}
 
 

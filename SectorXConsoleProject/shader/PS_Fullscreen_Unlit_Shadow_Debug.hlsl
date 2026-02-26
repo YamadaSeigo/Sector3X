@@ -525,7 +525,7 @@ float4 main(VSOut i) : SV_Target
     float3 V = normalize(camPos.xyz - wp.xyz);
     float3 H = normalize(L + V);
 
-    
+
     float ndh = saturate(dot(N, H));
     float ndl2 = saturate(dot(N, L));
 
@@ -537,7 +537,7 @@ float4 main(VSOut i) : SV_Target
     float wetSpec = pow(ndh, specPow) * ndl2;
     wetSpec *= wet * gWetSpecBoost;
 
-    color += gSunColor * (gSunIntensity * wetSpec) * shadowMul;
+    color += gSunColor * (gSunIntensity * wetSpec) * (shadowMul - 0.6f) / 0.4f;
 
 
     float debugViewDepth = dot(wp.xyz - debugCamPos.xyz, debugCamForward.xyz);
