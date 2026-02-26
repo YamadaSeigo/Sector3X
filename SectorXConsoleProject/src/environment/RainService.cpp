@@ -2,6 +2,7 @@
 #include <SectorFW/Debug/message.h>
 
 #include "RainService.h"
+#include "../app/appconfig.h"
 #include "../graphics/D3D11Helpers.h"
 
 #ifdef _DEBUG
@@ -23,6 +24,16 @@ float gDebugWetDarken = 0.35f;
 float gDebugWetSpecBoost = 1.0f;
 float gDebugWetFlatten = 0.6f;
 float gDebugWetMinNdotUp = 0.2f;
+
+float gDebugWetEdgeThreshold = 2.0f;
+float gDebugWetEdgeSharpness = 0.2f;
+float gDebugWetDensity = 0.8f;
+float gDebugWetDotSizeScale = 1.0f;
+float gDebugWetNearThickZ = 2.0f;
+float gDebugWetFarThickZ = 30.0f;
+float gDebugWetUpMin = 0.2f;
+float gDebugWetUpMax = 0.8f;
+float gDebugWetFarFade = 0.03f;
 
 #endif
 
@@ -152,11 +163,19 @@ RainService::RainService(
 	srvDesc.Texture2D.MipLevels = 1;
 	pDevice->CreateShaderResourceView(m_depthMap.Get(), &srvDesc, m_depthMapSRV.GetAddressOf());
 
+    // depth: 0(near) -> 1(far)
+    float n = 0.1f;
+    float f = 1500.0f;
+
     for(int i = 0; i < Graphics::RENDER_BUFFER_COUNT; ++i)
     {
 		float invMapSize = 1.0f / static_cast<float>(RainService::DEPTH_MAP_SIZE);
 		m_cpuUpdateBuffer[i].gRainInvMapSize.x = invMapSize;
 		m_cpuUpdateBuffer[i].gRainInvMapSize.y = invMapSize;
+		m_cpuWetnessBuffer[i].gInvScreen = Math::Vec2f(1.0f / App::WINDOW_WIDTH, 1.0f / App::WINDOW_HEIGHT);
+
+        m_cpuWetnessBuffer[i].gProjAB.x = (1.0f / f) - (1.0f / n); // A
+        m_cpuWetnessBuffer[i].gProjAB.y = (1.0f / n);              // B
     }
 
 #ifdef _DEBUG
@@ -175,6 +194,15 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetSpecBoost", &gDebugWetSpecBoost, 0.0f, 5.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFlatten", &gDebugWetFlatten, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetMinNdotUp", &gDebugWetMinNdotUp, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetEdgeThreshold", &gDebugWetEdgeThreshold, 0.0f, 10.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetEdgeSharpness", &gDebugWetEdgeSharpness, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDensity", &gDebugWetDensity, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDotSizeScale", &gDebugWetDotSizeScale, 0.1f, 10.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetNearThickZ", &gDebugWetNearThickZ, 0.1f, 10.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFarThickZ", &gDebugWetFarThickZ, 1.0f, 100.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetUpMin", &gDebugWetUpMin, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetUpMax", &gDebugWetUpMax, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFarFade", &gDebugWetFarFade, 0.0f, 1.0f, 0.01f);
 #endif
 }
 
@@ -198,6 +226,8 @@ void RainService::Commit(double deltaTime)
         updateBuf.gTime = m_elapsedTime;
 		updateBuf.gSpawnRadius = m_spawnRadius;
 
+		wetnessBuf.gTime = m_elapsedTime;
+
 #ifdef _DEBUG
         m_spawnRadius = gDebugSpawnRadius;
 
@@ -215,6 +245,16 @@ void RainService::Commit(double deltaTime)
 		wetnessBuf.gWetSpecBoost = gDebugWetSpecBoost;
 		wetnessBuf.gWetFlatten = gDebugWetFlatten;
 		wetnessBuf.gWetMinNdotUp = gDebugWetMinNdotUp;
+		wetnessBuf.gEdgeThreshold = gDebugWetEdgeThreshold;
+		wetnessBuf.gEdgeSharpness = gDebugWetEdgeSharpness;
+		wetnessBuf.gDensity = gDebugWetDensity;
+		wetnessBuf.gStrength = gDebugWetStrength;
+		wetnessBuf.gDotSizeScale = gDebugWetDotSizeScale;
+		wetnessBuf.gNearThickZ = gDebugWetNearThickZ;
+		wetnessBuf.gFarThickZ = gDebugWetFarThickZ;
+		wetnessBuf.gUpMin = gDebugWetUpMin;
+		wetnessBuf.gUpMax = gDebugWetUpMax;
+		wetnessBuf.gFarFade = gDebugWetFarFade;
 #endif
     }
 

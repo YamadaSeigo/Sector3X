@@ -69,6 +69,27 @@ public:
         float gWetSpecBoost = 1.0f; // 疑似スペキュラ強度(例: 1.0)
         float gWetFlatten = 0.6f; // 法線コントラスト抑制(例: 0.6)
         float gWetMinNdotUp = 0.2f; // 上面のみ濡らす閾値(例: 0.2)
+
+        Math::Vec2f gInvScreen = {}; // 1/width, 1/height
+        Math::Vec2f gProjAB = {}; // Linearize用
+        float gEdgeThreshold = 2.0f; // エッジ判定しきい値（線形深度の差）
+        float gEdgeSharpness = 0.2f; // マスクの鋭さ
+        Math::Vec2f gRainDirSS = {0.0f, -1.0f}; // スクリーン空間の雨方向（正規化）
+        float gTime = 0.0f;
+        float gDensity = 0.8f; // 粒密度
+        float gStrength = 0.8f; // 合成強度
+        float gDotSizeScale = 1.0f;
+
+        float gNearThickZ = 2.0f;
+        float gFarThickZ = 30.0f;
+        uint32_t gNearRadiusPx = 3;
+        uint32_t gFarRadiusPx = 0;
+
+        float gUpMin = 0.2f;
+        float gUpMax = 0.8f;
+        float gFarFade = 0.03f;
+
+		float pad1 = {};
     };
 
     static constexpr uint32_t MaxVolumes = 32;
