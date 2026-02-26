@@ -65,11 +65,15 @@ namespace SFW {
 			T    radius{ T(0) };
 
 			// ------------- 基本ユーティリティ -------------
-			bool contains(const Vec3& p, T eps = T(0)) const noexcept {
+			constexpr bool contains(const Vec3& p, T eps = T(0)) const noexcept {
 				return v3_len2(v3_sub(p, center)) <= (radius + eps) * (radius + eps);
 			}
-			T distance2(const Vec3& p) const noexcept {
+			constexpr T distance2(const Vec3& p) const noexcept {
 				return v3_len2(v3_sub(p, center));
+			}
+			constexpr bool intersects(const BoundingSphere& other, T eps = T(0)) const noexcept {
+				T rSum = radius + other.radius + eps;
+				return v3_len2(v3_sub(other.center, center)) <= rSum * rSum;
 			}
 
 			// ------------- AABB から生成（厳密ではないが速い） -------------
@@ -102,7 +106,7 @@ namespace SFW {
 			}
 
 			// ------------- 逐次拡張（オンライン更新向け、最小ではない） -------------
-			void expandToFit(const Vec3& p) noexcept {
+			constexpr void expandToFit(const Vec3& p) noexcept {
 				Vec3 diff = v3_sub(p, center);
 				T d2 = v3_len2(diff);
 				if (d2 <= radius * radius) return; // 既に包含
@@ -115,7 +119,7 @@ namespace SFW {
 				radius = newR;
 			}
 
-			void expandToFit(const BoundingSphere& s) noexcept {
+			constexpr void expandToFit(const BoundingSphere& s) noexcept {
 				*this = Merge(*this, s);
 			}
 

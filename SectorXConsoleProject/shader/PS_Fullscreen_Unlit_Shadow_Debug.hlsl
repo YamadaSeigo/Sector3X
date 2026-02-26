@@ -481,19 +481,7 @@ float4 main(VSOut i) : SV_Target
    // 最適化版（gSunDirectionWS を WS で正規化して渡す前提）
     float3 L = -gSunDirectionWS;
 
-    float3 V = normalize(camPos.xyz - wp.xyz);
-    float3 H = normalize(L + V);
 
-    float ndh = saturate(dot(N, H));
-    float ndl2 = saturate(dot(N, L));
-
-    // “濡れほど鋭いハイライト”
-    // （nr.a に roughness が入ってるなら使える：float rough = nr.a; など）
-    float rough = nr.a; // 0..1想定
-    float specPow = lerp(128.0f, 16.0f, rough); // rough大→鈍い
-
-    float wetSpec = pow(ndh, specPow) * ndl2;
-    wetSpec *= wet * gWetSpecBoost;
 
     // 通常の N・L
     float ndl = saturate(dot(N, L));
@@ -533,7 +521,24 @@ float4 main(VSOut i) : SV_Target
     // Emissive（必要ならそのまま加算）
     float3 color = base + plAdd + emiMetal.rgb * emissiveBoost;
 
+
+    float3 V = normalize(camPos.xyz - wp.xyz);
+    float3 H = normalize(L + V);
+
+    
+    float ndh = saturate(dot(N, H));
+    float ndl2 = saturate(dot(N, L));
+
+    // “濡れほど鋭いハイライト”
+    // （nr.a に roughness が入ってるなら使える：float rough = nr.a; など）
+    float rough = nr.a; // 0..1想定
+    float specPow = lerp(128.0f, 16.0f, rough); // rough大->鈍い
+
+    float wetSpec = pow(ndh, specPow) * ndl2;
+    wetSpec *= wet * gWetSpecBoost;
+
     color += gSunColor * (gSunIntensity * wetSpec) * shadowMul;
+
 
     float debugViewDepth = dot(wp.xyz - debugCamPos.xyz, debugCamForward.xyz);
 

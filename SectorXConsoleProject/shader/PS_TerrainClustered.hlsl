@@ -218,7 +218,7 @@ PS_PRBOutput main(VSOut i)
 
     float3 nWS = normalize(mul(nTS, TBN));
 
-    output.NormalRoughness = float4(nWS * 0.5f + 0.5f, 1.0f);
+    output.NormalRoughness = float4(nWS * 0.5f + 0.5f, 0.6f);
 
     return output;
 }

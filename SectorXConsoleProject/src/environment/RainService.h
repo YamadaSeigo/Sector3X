@@ -87,14 +87,20 @@ public:
         m_elapsedTime += static_cast<float>(deltaTime);
     }
 
+    void Commit(double deltaTime) override;
+
+    void ClearDepthMap(ID3D11DeviceContext* ctx);
+
+    void SpawnDrawParticles(ID3D11DeviceContext* ctx, RainParticlePool::TiledLightData* lightData);
+
     void SetCameraPos(const Math::Vec3f pos) {
         std::lock_guard lock(bufMutex);
         m_cpuSpawnBuffer[currentSlot].gCamPos = pos;
         m_cpuUpdateBuffer[currentSlot].gCamPosWS = pos;
-		m_cpuRenderBuffer[currentSlot].gCamPosWS = pos;
+        m_cpuRenderBuffer[currentSlot].gCamPosWS = pos;
 
-		auto depthMapViewProj = MakeDepthMapViewProjNoLock();
-		m_cpuUpdateBuffer[currentSlot].gCamViewProj = depthMapViewProj;
+        auto depthMapViewProj = MakeDepthMapViewProjNoLock();
+        m_cpuUpdateBuffer[currentSlot].gCamViewProj = depthMapViewProj;
     }
 
     void SetCameraBuffer(const RenderCB& camCB) {
@@ -105,17 +111,15 @@ public:
     void SetWind(const Math::Vec3f wind) {
         std::lock_guard lock(bufMutex);
         m_cpuUpdateBuffer[currentSlot].gWindWS = wind;
-	}
-
-    void Commit(double deltaTime) override;
-
-    void ClearDepthMap(ID3D11DeviceContext* ctx);
-
-    void SpawnDrawParticles(ID3D11DeviceContext* ctx, RainParticlePool::TiledLightData* lightData);
+    }
 
     float GetElapsedTime() const noexcept {
         return m_elapsedTime;
     }
+
+    float GetSpawnRadius() const noexcept {
+        return m_spawnRadius;
+	}
 
     void SetSpawnPerFrame(uint32_t count) {
         std::lock_guard lock(bufMutex);
@@ -174,6 +178,8 @@ private:
 
     uint32_t currentSlot = 0;
     float m_elapsedTime = 0.0f;
+
+	float m_spawnRadius = 80.0f;
 
     uint32_t m_spawnPerFrame = 32 << 2;
 

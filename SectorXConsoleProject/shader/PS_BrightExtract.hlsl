@@ -8,6 +8,7 @@ cbuffer BloomCB : register(b0)
 
 cbuffer CameraBuffer : register(b1)
 {
+    row_major float4x4 viewProj;
     row_major float4x4 invViewProj;
     float4 camForward; //w‚Ípadding
     float4 camPos; // w‚Ípadding

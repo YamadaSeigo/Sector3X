@@ -191,17 +191,20 @@ void RainService::Commit(double deltaTime)
         std::lock_guard lock(bufMutex);
 
         spawnBuf.gTime = m_elapsedTime;
+        spawnBuf.gSpawnRadius = m_spawnRadius;
+
 
         updateBuf.gDt = static_cast<float>(deltaTime);
         updateBuf.gTime = m_elapsedTime;
+		updateBuf.gSpawnRadius = m_spawnRadius;
 
 #ifdef _DEBUG
-		spawnBuf.gSpawnRadius = gDebugSpawnRadius;
+        m_spawnRadius = gDebugSpawnRadius;
+
 		spawnBuf.gHeightOffset = gDebugHeightOffset;
 		spawnBuf.gAddSize = gDebugRainAddSize;
 		spawnBuf.gLife = gDebugLife;
         updateBuf.gGravity = gDebugGravity;
-		updateBuf.gSpawnRadius = gDebugSpawnRadius;
 		renderBuf.gBaseLength = gDebugRainBaseLength;
 		renderBuf.gBaseWidth = gDebugRainBaseWidth;
 		renderBuf.gSpeedToLength = gDebugRainSpeedToLength;

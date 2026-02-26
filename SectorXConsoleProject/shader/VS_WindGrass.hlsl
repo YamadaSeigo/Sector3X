@@ -6,6 +6,7 @@
 
 cbuffer CameraBuffer : register(b9)
 {
+    row_major float4x4 viewProj;
     row_major float4x4 invViewProj;
     float4 camForward; //w‚Ípadding
     float4 camPos; // w‚Ípadding
@@ -246,6 +247,6 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
 
     output.uv = input.uv;
     output.color = gInstanceMats[pooledIndex].color;
-    
+
     return output;
 }
