@@ -303,6 +303,8 @@ namespace SFW
 
 			static MaterialKey MakeKey(const MaterialCreateDesc& desc);
 
+			std::mutex mapMutex;
+
 			std::unordered_map<MaterialKey, MaterialHandle, MaterialKeyHash> matCache;
 			std::unordered_map<uint32_t, MaterialKey> handleToKey;
 		};

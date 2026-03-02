@@ -122,6 +122,18 @@ namespace SFW::Graphics::DX11 {
         Math::Vec2f gHeightMapInvSize; // heightMap の 1/サイズ（UV->テクスチャ座標変換用）
     };
 
+    struct TerrainPatchCB {
+        Math::Vec2f gPatchCenterXZ; // center in world (x,z)
+        float gPatchHalfSize; // half-size in meters (square)
+
+        float padding1;
+
+        uint32_t gPatchVertsX; // patch vertex resolution X (>=2)
+        uint32_t gPatchVertsZ; // patch vertex resolution Z (>=2)
+
+		float padding2[2];
+    };
+
     struct ClusterParamsGPU {
         // SRV で読む StructuredBuffer
         ComPtr<ID3D11Buffer>             sb;     // D3D11_BIND_SHADER_RESOURCE | D3D11_RESOURCE_MISC_BUFFER_STRUCTURED
@@ -290,20 +302,9 @@ namespace SFW::Graphics::DX11 {
         ComPtr<ID3D11UnorderedAccessView> visibleUAV;
 
         // Terrain source SRVs
-        ComPtr<ID3D11Buffer>             indexPoolBuf;      ComPtr<ID3D11ShaderResourceView> indexPoolSRV;      // t0
-        ComPtr<ID3D11Buffer>             clusterRangeBuf;   ComPtr<ID3D11ShaderResourceView> clusterRangeSRV;   // t1 (optional for LOD0 only)
         ComPtr<ID3D11Buffer>             aabbMinBuf;        ComPtr<ID3D11ShaderResourceView> aabbMinSRV;        // t2
         ComPtr<ID3D11Buffer>             aabbMaxBuf;        ComPtr<ID3D11ShaderResourceView> aabbMaxSRV;        // t3
         ComPtr<ID3D11Buffer>             clusterGridRectBuf;ComPtr<ID3D11ShaderResourceView> clusterGridRectSRV;   // t4
-
-        // LOD metadata SRVs
-        ComPtr<ID3D11Buffer>             lodRangesBuf;      ComPtr<ID3D11ShaderResourceView> lodRangesSRV;      // t4
-        ComPtr<ID3D11Buffer>             lodBaseBuf;        ComPtr<ID3D11ShaderResourceView> lodBaseSRV;        // t5
-        ComPtr<ID3D11Buffer>             lodCountBuf;       ComPtr<ID3D11ShaderResourceView> lodCountSRV;       // t6
-
-        // Optional vertex streams (VS pulls)
-        ComPtr<ID3D11Buffer> posBuf, nrmBuf, uvBuf;
-        ComPtr<ID3D11ShaderResourceView> posSRV, nrmSRV, uvSRV;
 
         // Shaders
         ComPtr<ID3D11ComputeShader> csCullWrite; // CSCullWrite_Group.cso
@@ -317,9 +318,6 @@ namespace SFW::Graphics::DX11 {
         ComPtr<ID3D11Buffer> cbCS; // CSParams (frustum, VP, screen, LOD)
 
         ComPtr<ID3D11Buffer> cbCameraFrame;
-
-        // Slots (VS SRVs)
-        UINT slotVisible = 0, slotPos = 1, slotNrm = 2, slotUV = 3;
 
         // Cached counts
         UINT clusterCount = 0;
@@ -351,7 +349,10 @@ namespace SFW::Graphics::DX11 {
 
         // 深度専用 VS（Terrain の VS をそのまま使うなら省略可）
         ComPtr<ID3D11VertexShader>  vsShadow;
-        // PS は DepthOnly なら nullptr でよいので省略しても OK
+
+		ComPtr<ID3D11Buffer> cbTerrainPatch;// パッチ描画用 CB（gPatchCenterXZ, gPatchHalfSize, etc）
+
+		ComPtr<ID3D11VertexShader> vsTerrainPatch; // パッチ描画用 VS（Terrain の VS をそのまま使うなら省略可）
 
         // ---------- Creation helpers ----------
         bool Init(ID3D11Device* dev,
@@ -361,6 +362,7 @@ namespace SFW::Graphics::DX11 {
             const wchar_t* csShadowArgsPath,
             const wchar_t* vsPath,
 			const wchar_t* vsDepthPath,
+			const wchar_t* vsPatchPath,
             const wchar_t* psPath,
             UINT maxVisibleIndices_)
         {
@@ -432,7 +434,10 @@ namespace SFW::Graphics::DX11 {
             hr = dev->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, &ps);
             if (FAILED(hr)) return false;
 
-
+			hr = D3DReadFileToBlob(vsPatchPath, vsBlob.GetAddressOf());
+			if (FAILED(hr)) return false;
+			hr = dev->CreateVertexShader(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), nullptr, &vsTerrainPatch);
+			if (FAILED(hr)) return false;
 
             // ※ vsShadow を別の .cso から作るならここで読み込む
             //   今回は Terrain の vs をそのまま使うなら省略で OK:
@@ -454,23 +459,9 @@ namespace SFW::Graphics::DX11 {
 
 			// VS Shadow: LightViewProj(64) + World(64)
 			if (!makeCB(sizeof(VSDepthParams), cbVSShadow)) return false;
+
+			if (!makeCB(sizeof(TerrainPatchCB), cbTerrainPatch)) return false;
             return true;
-        }
-
-        // Build SRVs for IndexPool / ClusterRange / AABB from CPU-side arrays
-        bool BuildIndexPool(ID3D11Device* dev, const uint32_t* data, UINT poolCount)
-        {
-            D3D11_BUFFER_DESC bd{}; bd.ByteWidth = poolCount * sizeof(uint32_t); bd.Usage = D3D11_USAGE_DEFAULT; bd.BindFlags = D3D11_BIND_SHADER_RESOURCE; bd.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED; bd.StructureByteStride = sizeof(uint32_t);
-            D3D11_SUBRESOURCE_DATA srd{ data, 0, 0 };
-            HRESULT hr = dev->CreateBuffer(&bd, &srd, &indexPoolBuf); if (FAILED(hr)) return false;
-            D3D11_SHADER_RESOURCE_VIEW_DESC sd{}; sd.ViewDimension = D3D11_SRV_DIMENSION_BUFFER; sd.Format = DXGI_FORMAT_UNKNOWN; sd.Buffer.ElementOffset = 0; sd.Buffer.ElementWidth = poolCount;
-            hr = dev->CreateShaderResourceView(indexPoolBuf.Get(), &sd, &indexPoolSRV); return SUCCEEDED(hr);
-        }
-
-        bool BuildClusterRange(ID3D11Device* dev, const ClusterRangeU32* ranges, UINT rangeCount)
-        {
-            ComPtr<ID3D11UnorderedAccessView> dummy;
-            return CreateStructured(dev, rangeCount, sizeof(ClusterRangeU32), D3D11_BIND_SHADER_RESOURCE, ranges, clusterRangeBuf, clusterRangeSRV, dummy);
         }
 
         bool BuildClusterAABBs(ID3D11Device* dev, const float* mins3, const float* maxs3, UINT count)
@@ -508,34 +499,6 @@ namespace SFW::Graphics::DX11 {
         {
             ComPtr<ID3D11UnorderedAccessView> dummy;
             return CreateStructured(dev, gridRectCount, sizeof(TerrainClustered::ClusterRange::GridRect), D3D11_BIND_SHADER_RESOURCE, gridRect, clusterGridRectBuf, clusterGridRectSRV, dummy);
-        }
-
-        bool BuildVertexStreams(ID3D11Device* dev, const float* pos3, const float* nrm3, const float* uv2, UINT vertCount)
-        {
-            auto makeStream = [&](const void* src, UINT stride, UINT count, ComPtr<ID3D11Buffer>& buf, ComPtr<ID3D11ShaderResourceView>& srv) {
-                D3D11_BUFFER_DESC bd{}; bd.ByteWidth = count * stride; bd.Usage = D3D11_USAGE_DEFAULT; bd.BindFlags = D3D11_BIND_SHADER_RESOURCE; bd.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED; bd.StructureByteStride = stride; D3D11_SUBRESOURCE_DATA srd{ src, 0, 0 }; HRESULT hr = dev->CreateBuffer(&bd, &srd, &buf); if (FAILED(hr)) return false; D3D11_SHADER_RESOURCE_VIEW_DESC sd{}; sd.ViewDimension = D3D11_SRV_DIMENSION_BUFFER; sd.Format = DXGI_FORMAT_UNKNOWN; sd.Buffer.ElementOffset = 0; sd.Buffer.ElementWidth = count; hr = dev->CreateShaderResourceView(buf.Get(), &sd, &srv); return SUCCEEDED(hr);
-                };
-            bool ok = true;
-            if (pos3) ok &= makeStream(pos3, sizeof(float) * 3, vertCount, posBuf, posSRV);
-            if (nrm3) ok &= makeStream(nrm3, sizeof(float) * 3, vertCount, nrmBuf, nrmSRV);
-            if (uv2)  ok &= makeStream(uv2, sizeof(float) * 2, vertCount, uvBuf, uvSRV);
-            return ok;
-        }
-
-        // ---- LOD SRVs ----
-        bool BuildLodSrvs(ID3D11Device* dev,
-            const std::vector<ClusterLodRange>& ranges,
-            const std::vector<uint32_t>& lodBase,
-            const std::vector<uint32_t>& lodCount)
-        {
-            struct RangePod { UINT offset; UINT count; };
-            std::vector<RangePod> pods(ranges.size());
-            for (size_t i = 0; i < ranges.size(); ++i) { pods[i].offset = ranges[i].offset; pods[i].count = ranges[i].count; }
-            ComPtr<ID3D11UnorderedAccessView> dummy;
-            if (!CreateStructured(dev, (UINT)pods.size(), sizeof(RangePod), D3D11_BIND_SHADER_RESOURCE, pods.data(), lodRangesBuf, lodRangesSRV, dummy)) return false;
-            if (!CreateStructured(dev, (UINT)lodBase.size(), sizeof(uint32_t), D3D11_BIND_SHADER_RESOURCE, lodBase.data(), lodBaseBuf, lodBaseSRV, dummy)) return false;
-            if (!CreateStructured(dev, (UINT)lodCount.size(), sizeof(uint32_t), D3D11_BIND_SHADER_RESOURCE, lodCount.data(), lodCountBuf, lodCountSRV, dummy)) return false;
-            return true;
         }
 
         struct ShadowDepthParams
@@ -601,13 +564,8 @@ namespace SFW::Graphics::DX11 {
                 ctx->CSSetShader(csCullWriteShadow.Get(), nullptr, 0);
 
                 ID3D11ShaderResourceView* srvs[3] = {
-                    //indexPoolSRV.Get(),
-                    //clusterRangeSRV.Get(),
                     aabbMinSRV.Get(),
                     aabbMaxSRV.Get(),
-                    /*lodRangesSRV.Get(),
-                    lodBaseSRV.Get(),
-                    lodCountSRV.Get()*/
 					clusterGridRectSRV.Get(),
                 };
                 ctx->CSSetShaderResources(2, 3, srvs);
@@ -728,15 +686,11 @@ namespace SFW::Graphics::DX11 {
                 ctx->VSSetShader(vsDepth.Get(), nullptr, 0);
                 ctx->PSSetShader(nullptr, nullptr, 0); // DepthOnly
 
-                ID3D11ShaderResourceView* vsSRVs[3] = {
+                ID3D11ShaderResourceView* vsSRVs[2] = {
                     visibleSRV.Get(),  // メイン用 VisibleIndices
-                    //posSRV.Get(),
-                    //nrmSRV.Get(),
-                    //uvSRV.Get()
-                    clusterGridRectSRV.Get(),
 					heightMapSRV.Get(),
                 };
-                ctx->VSSetShaderResources(20, 3, vsSRVs);
+                ctx->VSSetShaderResources(20, 2, vsSRVs);
 
                 ctx->IASetInputLayout(nullptr);
                 ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -772,9 +726,6 @@ namespace SFW::Graphics::DX11 {
                     ctx->Unmap(cbVSShadow.Get(), 0);
                 }
 
-				//各カスケードごとのoffsetで生成したSRVをセット
-                ctx->VSSetShaderResources(20, 1, shadowVisibleSRV[ci].GetAddressOf());
-
 				ctx->VSSetConstantBuffers(10, 1, cp.cbGrid.GetAddressOf());
 
                 ctx->VSSetConstantBuffers(11, 1, cbVSShadow.GetAddressOf());
@@ -783,14 +734,10 @@ namespace SFW::Graphics::DX11 {
                 ctx->PSSetShader(nullptr, nullptr, 0);
 
                 ID3D11ShaderResourceView* vsSRVs[] = {
-                    //posSRV.Get(),
-                    //nrmSRV.Get(),
-                    //uvSRV.Get()
-
-                    clusterGridRectSRV.Get(),
+                    shadowVisibleSRV[ci].Get(),
 					heightMapSRV.Get(),
                 };
-                ctx->VSSetShaderResources(21, 2, vsSRVs);
+                ctx->VSSetShaderResources(20, 2, vsSRVs);
 
                 ctx->IASetInputLayout(nullptr);
                 ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -802,6 +749,46 @@ namespace SFW::Graphics::DX11 {
 			// 後始末
             constexpr ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };
             ctx->VSSetShaderResources(20, 4, nullVs);
+        }
+
+
+        void RunPatchDepth(
+            ID3D11DeviceContext* ctx,
+            const ClusterParamsGPU& cp,
+            const TerrainPatchCB& patchCB,
+            ComPtr<ID3D11Buffer> viewProjCB,
+            ComPtr<ID3D11ShaderResourceView> heightMapSRV,
+            ComPtr<ID3D11DepthStencilView> dsv
+        )
+        {
+			D3D11_MAPPED_SUBRESOURCE ms{};
+			HRESULT hr = ctx->Map(cbTerrainPatch.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
+			assert(SUCCEEDED(hr) && "頂点シェーダーの定数バッファのマップオープンに失敗しました");
+            if (SUCCEEDED(hr))
+            {
+                memcpy(ms.pData, &patchCB, sizeof(TerrainPatchCB));
+                ctx->Unmap(cbTerrainPatch.Get(), 0);
+            }
+
+			ID3D11Buffer* cbs[] = { cp.cbGrid.Get(), cbTerrainPatch.Get(),viewProjCB.Get(), };
+            ctx->VSSetConstantBuffers(10, _countof(cbs), cbs);
+            ctx->OMSetRenderTargets(0, nullptr, dsv.Get());
+            ctx->VSSetShader(vsTerrainPatch.Get(), nullptr, 0);
+            ctx->PSSetShader(nullptr, nullptr, 0); // DepthOnly
+            ID3D11ShaderResourceView* vsSRVs[] = {
+				heightMapSRV.Get(),
+            };
+            ctx->VSSetShaderResources(22, _countof(vsSRVs), vsSRVs);
+            ctx->IASetInputLayout(nullptr);
+			ctx->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr); // プロシージャル描画なので頂点バッファは使わない
+			ctx->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0); // インデックスバッファも使わない
+            ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+            // patchResX = gPatchVertsX, patchResZ = gPatchVertsZ
+            uint32_t cellsX = patchCB.gPatchVertsX - 1;
+            uint32_t cellsZ = patchCB.gPatchVertsZ - 1;
+            uint32_t vertexCount = cellsX * cellsZ * 6;
+			ctx->Draw(vertexCount, 0);
         }
 
         void RunColor(ID3D11DeviceContext* ctx,
@@ -820,16 +807,12 @@ namespace SFW::Graphics::DX11 {
             ctx->VSSetShader(vs.Get(), nullptr, 0);
             ctx->PSSetShader(ps.Get(), nullptr, 0);
 
-            ID3D11ShaderResourceView* vsSRVs[4] = {
+            ID3D11ShaderResourceView* vsSRVs[3] = {
                 visibleSRV.Get(),  // Depth プリパスで作った VisibleIndices_Main
-               /* posSRV.Get(),
-                nrmSRV.Get(),
-                uvSRV.Get()*/
-				clusterGridRectSRV.Get(),
 				heightMapSRV.Get(),
 				normalMapSRV.Get()
             };
-            ctx->VSSetShaderResources(20, 4, vsSRVs);
+            ctx->VSSetShaderResources(20, 3, vsSRVs);
 
             // 必要であれば PS にシャドウマップ SRV / サンプラをセット
 
@@ -839,8 +822,8 @@ namespace SFW::Graphics::DX11 {
             // ここでは Arg を流用するだけで、CS は呼ばない
             ctx->DrawInstancedIndirect(argsBuf.Get(), 0);
 
-            ID3D11ShaderResourceView* nullVs[4] = { nullptr,nullptr,nullptr,nullptr };
-            ctx->VSSetShaderResources(20, 4, nullVs);
+            ID3D11ShaderResourceView* nullVs[3] = { nullptr,nullptr,nullptr };
+            ctx->VSSetShaderResources(20, 3, nullVs);
 
             //参照を解除する
             cbCameraFrame.Reset();
@@ -855,8 +838,6 @@ namespace SFW::Graphics::DX11 {
         const TerrainClustered& t,
         BlockReservedContext& out)
     {
-        if (!out.BuildIndexPool(dev, t.indexPool.data(), (UINT)t.indexPool.size())) return false;
-
         const UINT ccount = (UINT)t.clusters.size();
         std::vector<ClusterRangeU32> ranges(ccount);
         std::vector<float> mins(ccount * 3), maxs(ccount * 3);
@@ -868,7 +849,6 @@ namespace SFW::Graphics::DX11 {
             maxs[i * 3 + 0] = t.clusters[i].bounds.ub[0]; maxs[i * 3 + 1] = t.clusters[i].bounds.ub[1]; maxs[i * 3 + 2] = t.clusters[i].bounds.ub[2];
 			gridRects[i] = t.clusters[i].gridRect;
         }
-        if (!out.BuildClusterRange(dev, ranges.data(), ccount)) return false;
         if (!out.BuildClusterAABBs(dev, mins.data(), maxs.data(), ccount)) return false;
 		if (!out.BuildClusterGridRect(dev, gridRects.data(), ccount)) return false;
 
@@ -887,17 +867,6 @@ namespace SFW::Graphics::DX11 {
                 return false;
         }
 
-        if (!t.vertices.empty()) {
-            const UINT vcount = (UINT)t.vertices.size();
-            std::vector<float> pos3(vcount * 3), nrm3(vcount * 3), uv2(vcount * 2);
-            for (UINT i = 0; i < vcount; ++i) {
-                const auto& v = t.vertices[i];
-                pos3[i * 3 + 0] = v.pos.x; pos3[i * 3 + 1] = v.pos.y; pos3[i * 3 + 2] = v.pos.z;
-                nrm3[i * 3 + 0] = v.nrm.x; nrm3[i * 3 + 1] = v.nrm.y; nrm3[i * 3 + 2] = v.nrm.z;
-                uv2[i * 2 + 0] = v.uv.x;  uv2[i * 2 + 1] = v.uv.y;
-            }
-            out.BuildVertexStreams(dev, pos3.data(), nrm3.data(), uv2.data(), vcount);
-        }
         return true;
     }
 

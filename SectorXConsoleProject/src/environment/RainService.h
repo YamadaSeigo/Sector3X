@@ -5,7 +5,6 @@
 class RainService : public ECS::IUpdateService, public ECS::ICommitService
 {
 public:
-
 	constexpr inline static uint32_t DEPTH_MAP_SIZE = 512;
 
     struct SpawnCB
@@ -37,10 +36,14 @@ public:
         Math::Vec3f gWindWS = {};
         float pad1 = {};
 
-        Math::Matrix4x4f gCamViewProj = {};
         Math::Vec2f gRainInvMapSize = {}; // (1/width, 1/height)
         float gRainDepthBias = 1e-3f;
         float padding2 = {};
+    };
+
+    struct MatrixCB
+    {
+        Math::Matrix4x4f gCamViewProj = {};
     };
 
     struct RenderCB
@@ -66,7 +69,7 @@ public:
         float gWetStrength = 1.0f; // 全体強度
 
         float gWetDarken = 0.35f; // 濡れで暗くする量(例: 0.35)
-        float gWetSpecBoost = 1.0f; // 疑似スペキュラ強度(例: 1.0)
+        float gWetSpecBoost = 0.2f; // 疑似スペキュラ強度(例: 1.0)
         float gWetFlatten = 0.6f; // 法線コントラスト抑制(例: 0.6)
         float gWetMinNdotUp = 0.2f; // 上面のみ濡らす閾値(例: 0.2)
 
@@ -77,7 +80,7 @@ public:
         Math::Vec2f gRainDirSS = {0.0f, -1.0f}; // スクリーン空間の雨方向（正規化）
         float gTime = 0.0f;
         float gDensity = 0.8f; // 粒密度
-        float gStrength = 0.8f; // 合成強度
+        float gStrength = 0.2f; // 合成強度
         float gDotSizeScale = 1.0f;
 
         float gNearThickZ = 2.0f;
@@ -121,7 +124,7 @@ public:
         m_cpuRenderBuffer[currentSlot].gCamPosWS = pos;
 
         auto depthMapViewProj = MakeDepthMapViewProjNoLock();
-        m_cpuUpdateBuffer[currentSlot].gCamViewProj = depthMapViewProj;
+        m_cpuMatrixBuffer[currentSlot].gCamViewProj = depthMapViewProj;
     }
 
     void SetCameraBuffer(const RenderCB& camCB) {
@@ -131,8 +134,13 @@ public:
 
     void SetWind(const Math::Vec3f wind) {
         std::lock_guard lock(bufMutex);
-        m_cpuUpdateBuffer[currentSlot].gWindWS = wind;
+        m_cpuUpdateBuffer[currentSlot].gWindWS = wind * m_windPower;
     }
+
+    Math::Matrix4x4f GetDepthMapViewProj(uint32_t slot) const {
+        std::lock_guard lock(bufMutex);
+        return m_cpuMatrixBuffer[slot].gCamViewProj;
+	}
 
     float GetElapsedTime() const noexcept {
         return m_elapsedTime;
@@ -149,11 +157,13 @@ public:
 
 	Graphics::BufferHandle GetSpawnCBHandle() const { return m_spawnCBHandle; }
 	Graphics::BufferHandle GetUpdateCBHandle() const { return m_updateCBHandle; }
+	Graphics::BufferHandle GetMatrixCBHandle() const { return m_matrixCBHandle; }
 	Graphics::BufferHandle GetRenderCBHandle() const { return m_renderCBHandle; }
 	Graphics::BufferHandle GetSplashCBHandle() const { return m_wetnessCBHandle; }
 
 	ComPtr<ID3D11Buffer> GetSpawnCB() const { return m_spawnCB; }
 	ComPtr<ID3D11Buffer> GetUpdateCB() const { return m_updateCB; }
+	ComPtr<ID3D11Buffer> GetMatrixCB() const { return m_matrixCB; }
 	ComPtr<ID3D11Buffer> GetRenderCB() const { return m_renderCB; }
     ComPtr<ID3D11Buffer> GetWetnessCB() const { return m_wetnessCB; }
 
@@ -167,6 +177,7 @@ private:
     // ---- GPUリソース ----
     ComPtr<ID3D11Buffer> m_spawnCB;
     ComPtr<ID3D11Buffer> m_updateCB;
+	ComPtr<ID3D11Buffer> m_matrixCB;
     ComPtr<ID3D11Buffer> m_renderCB;
 	ComPtr<ID3D11Buffer> m_wetnessCB;
 
@@ -188,12 +199,14 @@ private:
 
 	Graphics::BufferHandle m_spawnCBHandle;
 	Graphics::BufferHandle m_updateCBHandle;
+	Graphics::BufferHandle m_matrixCBHandle;
 	Graphics::BufferHandle m_renderCBHandle;
 	Graphics::BufferHandle m_wetnessCBHandle;
 
-    std::mutex bufMutex;
+    mutable std::mutex bufMutex;
     SpawnCB m_cpuSpawnBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     UpdateCB m_cpuUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
+	MatrixCB m_cpuMatrixBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     RenderCB m_cpuRenderBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 	WetnessCB m_cpuWetnessBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 
@@ -202,7 +215,8 @@ private:
 
 	float m_spawnRadius = 80.0f;
 
-    uint32_t m_spawnPerFrame = 32 << 2;
+    uint32_t m_spawnPerFrame = 0;//32 << 2;
+	float m_windPower = 2.0f;
 
 public:
     STATIC_SERVICE_TAG

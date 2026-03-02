@@ -19,9 +19,9 @@ float gDebugRainSpeedToLength = 0.02f;
 float gDebugAlpha = 0.5f;
 float gDebugLifeFade = 0.18f;
 
-float gDebugWetStrength = 1.0f;
+float gDebugWetStrength = 0.2f;
 float gDebugWetDarken = 0.35f;
-float gDebugWetSpecBoost = 1.0f;
+float gDebugWetSpecBoost = 0.2f;
 float gDebugWetFlatten = 0.6f;
 float gDebugWetMinNdotUp = 0.2f;
 
@@ -57,6 +57,9 @@ RainService::RainService(
 	bufDesc.name = "RainUpdate";
 	bufDesc.size = sizeof(UpdateCB);
 	bufferMgr->Add(bufDesc, m_updateCBHandle);
+	bufDesc.name = "RainMatrix";
+	bufDesc.size = sizeof(MatrixCB);
+	bufferMgr->Add(bufDesc, m_matrixCBHandle);
 	bufDesc.name = "RainRender";
 	bufDesc.size = sizeof(RenderCB);
 	bufferMgr->Add(bufDesc, m_renderCBHandle);
@@ -70,6 +73,8 @@ RainService::RainService(
 		m_spawnCB = bufferData.buffer.Get();
 		bufferData = bufferMgr->GetNoLock(m_updateCBHandle);
 		m_updateCB = bufferData.buffer.Get();
+		bufferData = bufferMgr->GetNoLock(m_matrixCBHandle);
+		m_matrixCB = bufferData.buffer.Get();
 		bufferData = bufferMgr->GetNoLock(m_renderCBHandle);
 		m_renderCB = bufferData.buffer.Get();
 		bufferData = bufferMgr->GetNoLock(m_wetnessCBHandle);
@@ -179,6 +184,9 @@ RainService::RainService(
     }
 
 #ifdef _DEBUG
+	BIND_DEBUG_SLIDER_INT("Rain", "spawnPerFrame", (int*)&m_spawnPerFrame, 0, RainParticlePool::MaxSpawnPerFrame);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "windPower", &m_windPower, 0.0f, 10.0f, 0.01f);
+
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "spawnRadius", &gDebugSpawnRadius, 0.0f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "gravity", &gDebugGravity, 0.0f, 20.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "heightOffset", &gDebugHeightOffset, 0.0f, 200.0f, 0.1f);
@@ -198,7 +206,7 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetEdgeSharpness", &gDebugWetEdgeSharpness, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDensity", &gDebugWetDensity, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDotSizeScale", &gDebugWetDotSizeScale, 0.1f, 10.0f, 0.1f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetNearThickZ", &gDebugWetNearThickZ, 0.1f, 10.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetNearThickZ", &gDebugWetNearThickZ, 0.1f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFarThickZ", &gDebugWetFarThickZ, 1.0f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetUpMin", &gDebugWetUpMin, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetUpMax", &gDebugWetUpMax, 0.0f, 1.0f, 0.01f);
@@ -212,6 +220,7 @@ void RainService::Commit(double deltaTime)
 
     auto& spawnBuf = m_cpuSpawnBuffer[currentSlot];
     auto& updateBuf = m_cpuUpdateBuffer[currentSlot];
+	auto& matrixBuf = m_cpuMatrixBuffer[currentSlot];
     auto& renderBuf = m_cpuRenderBuffer[currentSlot];
 	auto& wetnessBuf = m_cpuWetnessBuffer[currentSlot];
 
@@ -270,6 +279,11 @@ void RainService::Commit(double deltaTime)
     updateDesc.data = &updateBuf;
     m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
+	updateDesc.buffer = m_matrixCB.Get();
+	updateDesc.size = sizeof(MatrixCB);
+	updateDesc.data = &matrixBuf;
+	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
+
     updateDesc.buffer = m_renderCB.Get();
     updateDesc.size = sizeof(RenderCB);
     updateDesc.data = &renderBuf;
@@ -298,6 +312,7 @@ void RainService::SpawnDrawParticles(
 		m_depthMapSRV.Get(),
 		m_spawnCB.Get(),
 		m_updateCB.Get(),
+		m_matrixCB.Get(),
 		m_rainVS.Get(),
 		m_rainPS.Get(),
 		m_renderCB.Get(),

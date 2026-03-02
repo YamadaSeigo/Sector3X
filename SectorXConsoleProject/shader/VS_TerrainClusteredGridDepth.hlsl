@@ -39,10 +39,8 @@ cbuffer VSParams : register(b11)
 // triangle indices (generated in CS per frame)
 StructuredBuffer<uint> VisibleIndices : register(t20);
 
-// cluster grid rectangles (per-cluster)
-StructuredBuffer<uint4> ClusterGridRect : register(t21);
 // heightmap
-Texture2D<float> HeightTex : register(t22);
+Texture2D<float> HeightTex : register(t21);
 
 SamplerState samplerLinearClamp : register(s3);
 

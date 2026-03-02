@@ -422,6 +422,30 @@ float UpMask(float3 N)
     return saturate((N.y - gUpMin) / max(1e-4, (gUpMax - gUpMin)));
 }
 
+float3 DecodeNormal(float3 enc)
+{
+    return normalize(enc * 2 - 1);
+}
+
+float NormalEdge(float2 uv, float3 Nc)
+{
+    float2 dx = float2(gInvScreen.x, 0);
+    float2 dy = float2(0, gInvScreen.y);
+
+    float3 Nr = DecodeNormal(gNormalRough.SampleLevel(gPointSamp, uv + dx, 0).rgb);
+    float3 Nl = DecodeNormal(gNormalRough.SampleLevel(gPointSamp, uv - dx, 0).rgb);
+    float3 Nu = DecodeNormal(gNormalRough.SampleLevel(gPointSamp, uv + dy, 0).rgb);
+    float3 Nd = DecodeNormal(gNormalRough.SampleLevel(gPointSamp, uv - dy, 0).rgb);
+
+    float e = 0;
+    e = max(e, 1 - saturate(dot(Nc, Nr)));
+    e = max(e, 1 - saturate(dot(Nc, Nl)));
+    e = max(e, 1 - saturate(dot(Nc, Nu)));
+    e = max(e, 1 - saturate(dot(Nc, Nd)));
+
+    return saturate((e - 0.2f/*gNormalEdgeThreshold*/) * 0.4f/*gNormalEdgeSharpness*/);
+}
+
 int RadiusByDistance(float viewZ)
 {
     // 例: 近い(2m)→3px、遠い(30m)→0px
@@ -490,6 +514,15 @@ float Hash21(float2 p)
     return frac(p.x * p.y);
 }
 
+// 0..1 の短いパルス（点灯→減衰→消える）
+float Pulse(float phase, float width)
+{
+    // phase: 0..1
+    // width: 0.05?0.2 くらい（小さいほど一瞬）
+    float t = min(phase, 1.0 - phase) * 2.0; // 0..1..0 の三角波
+    return smoothstep(1.0 - width, 1.0, t); // 中央だけ光る
+}
+
 float ComputeSplashRadius(float depth01)
 {
     float z = LinearizeDepth(depth01);
@@ -543,6 +576,45 @@ float SplashDots(float2 uv, float depth01)
     // 出現率（雨量に合わせるならここで確率を絞る）
     float appear = step(0.55, rnd); // 半分くらいのセルだけ出す
     return ring * appear;
+}
+
+float SplashFlickerDots(float2 uv, float viewZ)
+{
+    // 近距離ほど大粒・遠距離ほど小粒（任意）
+    float sizeScale = 1.6 / (viewZ * 0.15 + 1.0);
+    sizeScale = max(sizeScale, 0.25);
+
+    // グリッド密度:小さくすると点が大きく/粗く見える
+    float freq = 180.0 * gDensity;
+    float2 grid = uv * freq;
+
+    float2 cell = floor(grid);
+    float2 f = frac(grid) - 0.5;
+
+    float rnd = Hash21(cell);
+
+    // 各セルの点灯速度（高速点滅させる）
+    float speed = lerp(10.0, 28.0, rnd); // <-高速にしたいならここを上げる
+    float phase = frac(rnd + gTime * speed);
+
+    // 点灯時間（短いほど“パッ”と弾ける）
+    float on = Pulse(phase, 0.12); // 0.08~0.18くらいで調整
+
+    // 点の中心をランダムにずらす
+    float2 center = (float2(Hash21(cell + 1.7), Hash21(cell + 9.2)) - 0.5) * 0.8;
+    float2 q = f - center;
+
+    // “点”半径
+    float r = 0.10 * sizeScale * gDotSizeScale; // <-ここで粒の大きさ
+    float d = length(q);
+
+    // 塗りつぶし点（リングにしたいなら式を変える）
+    float dotMask = 1.0 - smoothstep(r, r + 0.04 * sizeScale, d);
+
+    // 出現率（全部のセルが光るとノイズっぽいので間引く）
+    float appear = step(0.1, rnd); // 0.5~0.8で調整
+
+    return dotMask * on * appear;
 }
 
 float4 main(VSOut i) : SV_Target
@@ -697,17 +769,17 @@ float4 main(VSOut i) : SV_Target
     float upMask = UpMask(N);
     int rpx = RadiusByDistance(viewZ);
 
-    // 近距離ほど太い “深度差×上向き” マスク
+    // 近距離ほど太い “深度差*上向き” マスク
     float depthUpDilated = DilateDepthUpMask(uv, upMask, rpx);
 
     // normal差分は補助（必要なら）
-    //float nEdge = NormalEdge(uv, N);
+    float nEdge = NormalEdge(uv, N);
 
     // 最終マスク（深度差は必須）
-    float edgeMask = depthUpDilated; //saturate(depthUpDilated * (1.0 + nEdge * gNormalBoost));
+    float edgeMask = saturate(depthUpDilated * (1.0 + nEdge * 0.5f/*gUseNormalBoost*/));
 
     // 粒（距離でサイズも変えるならここに viewZ/depth を渡す）
-    float splash = edgeMask * SplashDots(uv, depth01);
+    float splash = edgeMask * SplashFlickerDots(uv, depth01);
 
     // 遠方は薄く（おすすめ）
     splash *= saturate(1.0f - viewZ * gFarFade);

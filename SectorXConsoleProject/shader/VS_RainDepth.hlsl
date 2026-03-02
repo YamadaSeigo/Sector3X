@@ -1,25 +1,9 @@
 
 #include "_GlobalTypes.hlsli"
 
-cbuffer CBUpdate : register(b10)
+cbuffer MatrixCB : register(b10)
 {
-    float gDt;
-    float gTime;
-    float gGravity;
-
-    float padding0;
-
-    float3 gCamPosWS;
-    float gSpawnRadius;
-
-    float3 gWindWS;
-
-    float padding1;
-
     row_major float4x4 gCamViewProj;
-    float2 gRainInvMapSize; // (1/width, 1/height)
-    float gRainDepthBias;
-    float padding2;
 };
 
 struct VSInput {
@@ -30,7 +14,7 @@ struct VSOutput {
     float4 position : SV_POSITION;
 };
 
-VSOutput main(VSInput input, uint instId : SV_InstanceID) : SV_POSITION
+VSOutput main(VSInput input, uint instId : SV_InstanceID)
 {
     uint pooledIndex = gInstIndices[gIndexBase + instId]; //ä‘ê⁄éQè∆
 

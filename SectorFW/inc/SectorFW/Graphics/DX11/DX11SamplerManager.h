@@ -211,7 +211,6 @@ namespace SFW
 			std::unordered_map<uint32_t, D3D11_SAMPLER_DESC> handleToDesc;
 
 			std::unordered_map<std::string, SamplerHandle> nameToHandle;
-
 			std::mutex cacheMutex; // samplerCache / handleToDesc ‚ðŽç‚é
 		};
 	}

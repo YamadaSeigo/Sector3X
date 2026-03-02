@@ -76,18 +76,19 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 			DX11::ShaderCreateDesc shaderDesc;
 			shaderDesc.vsPath = L"assets/shader/VS_WindSprite.cso";
 			shaderDesc.psPath = L"assets/shader/PS_Color.cso";
-			ShaderHandle shaderHandle;
-			shaderMgr->Add(shaderDesc, shaderHandle);
+			ShaderHandle windSpriteShaderHandle;
+			shaderMgr->Add(shaderDesc, windSpriteShaderHandle);
 
-			DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
+			DX11::PSOCreateDesc psoDesc = { windSpriteShaderHandle, RasterizerStateID::SolidCullBack };
 			PSOHandle psoHandle;
 			psoMgr->Add(psoDesc, psoHandle);
 
 			shaderDesc.vsPath = L"assets/shader/VS_ClipUVColor.cso";
 			shaderDesc.psPath = L"assets/shader/PS_CircleAlpha.cso";
-			shaderMgr->Add(shaderDesc, shaderHandle);
+			ShaderHandle circleAplhaHandle;
+			shaderMgr->Add(shaderDesc, circleAplhaHandle);
 
-			psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
+			psoDesc = { circleAplhaHandle, RasterizerStateID::SolidCullBack };
 			PSOHandle alphaPsoHandle;
 			psoMgr->Add(psoDesc, alphaPsoHandle);
 
@@ -105,7 +106,7 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 
 			auto windCBHandle = ctx.wind->GetBufferHandle();
 
-			matDesc.shader = shaderHandle;
+			matDesc.shader = windSpriteShaderHandle;
 			matDesc.samplerMap[0] = samp;
 			matDesc.vsCBV[11] = windCBHandle; // VS_CB11 にセット
 			matDesc.psSRV[2] = texHandle; // TEX2 にセット
@@ -711,10 +712,18 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			for (int j = 0; j < (100 * terrainRank); ++j) {
 				for (int k = 0; k < (100 * terrainRank); ++k) {
 					for (int n = 0; n < 1; ++n) {
+
+						constexpr Math::Vec2f posJitter = Math::Vec2f(0.2f, 0.2f);
+
+						uint32_t hash = BiomeScatterGenerator::Hash2D((uint32_t)j, (uint32_t)k, 1234);
+
 						float scaleXZ = 15.0f;
 						float scaleY = 15.0f;
 						Math::Vec2f offsetXZ = { 12.0f,12.0f };
 						Math::Vec3f location = { float(j) * scaleXZ / 2.0f + offsetXZ.x , 0, float(k) * scaleXZ / 2.0f + offsetXZ.y };
+						location.x += BiomeScatterGenerator::URange(hash, -posJitter.x, posJitter.x);
+						location.z += BiomeScatterGenerator::URange(hash, -posJitter.y, posJitter.y);
+
 						auto pose = terrain.SolvePlacementByAnchors(location, 0.0f, scaleXZ, grassAnchor);
 
 						float height = 0.0f;
@@ -748,7 +757,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 						constexpr Math::Vec3f tinJitter = Math::Vec3f(0.1f, 0.1f, 0.1f);
 
-						uint32_t hash = BiomeScatterGenerator::Hash2D((uint32_t)j, (uint32_t)k, 1234);
 						tint.x += BiomeScatterGenerator::URange(hash, -tinJitter.x, tinJitter.x);
 						tint.y += BiomeScatterGenerator::URange(hash, -tinJitter.y, tinJitter.y);
 						tint.z += BiomeScatterGenerator::URange(hash, -tinJitter.z, tinJitter.z);

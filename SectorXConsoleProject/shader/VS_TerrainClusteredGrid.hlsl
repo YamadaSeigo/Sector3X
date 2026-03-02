@@ -40,8 +40,8 @@ cbuffer VSParams : register(b11)
 StructuredBuffer<uint> VisibleIndices : register(t20);
 
 // heightmap & normalmap
-Texture2D<float> HeightTex : register(t22);
-Texture2D<float2> NormalTex : register(t23);
+Texture2D<float> HeightTex : register(t21);
+Texture2D<float2> NormalTex : register(t22);
 
 SamplerState samplerLinearClamp : register(s3);
 

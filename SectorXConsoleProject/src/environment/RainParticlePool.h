@@ -48,6 +48,7 @@ public:
         ID3D11ShaderResourceView* depthMapSRV,
         ID3D11Buffer* cbSpawnData,
         ID3D11Buffer* cbUpdateData,
+        ID3D11Buffer* cbMatrixData,
         ID3D11VertexShader* vs,
         ID3D11PixelShader* ps,
         ID3D11Buffer* cbRenderData,

@@ -38,6 +38,8 @@ namespace SFW
 		std::optional<MaterialHandle>
 			MaterialManager::FindExisting(const MaterialCreateDesc& desc) noexcept {
 			auto key = MakeKey(desc);
+
+			std::lock_guard lk(mapMutex);
 			if (auto it = matCache.find(key); it != matCache.end()) {
 				return it->second;
 			}
@@ -45,6 +47,8 @@ namespace SFW
 		}
 		void MaterialManager::RegisterKey(const MaterialCreateDesc& desc, MaterialHandle h) {
 			auto key = MakeKey(desc);
+
+			std::lock_guard lk(mapMutex);
 			matCache.emplace(key, h);
 			handleToKey.emplace(h.index, std::move(key));
 		}
@@ -124,6 +128,7 @@ namespace SFW
 
 		void MaterialManager::RemoveFromCaches(uint32_t idx)
 		{
+			std::lock_guard lk(mapMutex);
 			if (auto k = handleToKey.find(idx); k != handleToKey.end()) {
 				matCache.erase(k->second);
 				handleToKey.erase(k);

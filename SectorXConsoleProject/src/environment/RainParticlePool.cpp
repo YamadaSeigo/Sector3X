@@ -141,6 +141,7 @@ void RainParticlePool::Spawn(
     ID3D11ShaderResourceView* depthMapSRV,
     ID3D11Buffer* cbSpawnData,
     ID3D11Buffer* cbUpdateData,
+    ID3D11Buffer* cbMatrixData,
     ID3D11VertexShader* vs,
     ID3D11PixelShader* ps,
     ID3D11Buffer* cbRenderData,
@@ -227,7 +228,9 @@ void RainParticlePool::Spawn(
         UINT updateInitialCounts[3] = { (UINT)-1, (UINT)-1, (UINT)-1 };
         ctx->CSSetUnorderedAccessViews(0, 3, updateUavs, updateInitialCounts);
 
-        ctx->CSSetConstantBuffers(0, 1, &cbUpdateData);
+		ID3D11Buffer* updateCBs[] = { cbUpdateData, cbMatrixData };
+
+        ctx->CSSetConstantBuffers(0, _countof(updateCBs), updateCBs);
 
 		ctx->CSSetSamplers(0, 1, m_pointSampler.GetAddressOf());
 

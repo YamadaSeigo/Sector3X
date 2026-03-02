@@ -453,7 +453,7 @@ void LeafParticlePool::Spawn(
         ctx->CSSetShader(nullptr, nullptr, 0);
     }
 
-    
+
 }
 
 void LeafParticlePool::Draw(

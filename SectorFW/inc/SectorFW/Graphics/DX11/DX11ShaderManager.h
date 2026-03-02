@@ -141,6 +141,8 @@ namespace SFW
 
 		private:
 			ID3D11Device* device;
+
+			std::mutex mapMutex;
 			// キー -> ハンドル の検索表
 			std::unordered_map<size_t, ShaderHandle> keyToHandle;
 

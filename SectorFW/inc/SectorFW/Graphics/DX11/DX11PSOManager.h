@@ -67,6 +67,7 @@ namespace SFW
 			ID3D11Device* device;
 			ShaderManager* shaderManager;
 
+			std::mutex mapMutex;
 			// ShaderHandle.index Å® PSOHandle
 			std::unordered_map<uint32_t, PSOHandle> shaderToPSO_;
 		};

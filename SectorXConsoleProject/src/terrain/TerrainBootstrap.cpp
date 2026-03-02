@@ -129,6 +129,7 @@ namespace TerrainBoot
             L"assets/shader/CS_WriteArgsShadow.cso",
             L"assets/shader/VS_TerrainClusteredGrid.cso",
             L"assets/shader/VS_TerrainClusteredGridDepth.cso",
+            L"assets/shader/VS_TerrainPatchDepth.cso",
             L"assets/shader/PS_TerrainClustered.cso",
             (UINT)terrain.indexPool.size());
         assert(ok);

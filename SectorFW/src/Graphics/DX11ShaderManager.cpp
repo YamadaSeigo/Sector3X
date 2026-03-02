@@ -35,6 +35,8 @@ namespace SFW
 
 		std::optional<ShaderHandle> ShaderManager::FindExisting(const ShaderCreateDesc& desc) noexcept {
 			const size_t k = MakeKey(desc);
+
+			std::lock_guard lk(mapMutex);
 			if (auto it = keyToHandle.find(k); it != keyToHandle.end())
 				return it->second;
 			return std::nullopt;
@@ -42,6 +44,8 @@ namespace SFW
 
 		void ShaderManager::RegisterKey(const ShaderCreateDesc& desc, ShaderHandle h) {
 			const size_t k = MakeKey(desc);
+
+			std::lock_guard lk(mapMutex);
 			keyToHandle.emplace(k, h);
 		}
 

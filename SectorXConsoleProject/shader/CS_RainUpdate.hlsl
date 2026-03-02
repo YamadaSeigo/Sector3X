@@ -35,10 +35,14 @@ cbuffer CBUpdate : register(b0)
 
     float padding1;
 
-    row_major float4x4 gCamViewProj;
     float2 gRainInvMapSize; // (1/width, 1/height)
     float gRainDepthBias;
     float padding2;
+};
+
+cbuffer CBMatrix : register(b1)
+{
+    row_major float4x4 gCamViewProj;
 };
 
 // 軽いハッシュ乱数（0..1）

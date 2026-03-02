@@ -163,12 +163,15 @@ void main(uint3 tid : SV_DispatchThreadID)
     // ----------------------------
     // Spawn position
     // ----------------------------
-    // ディスク一様サンプル（ボリューム半径内）
     float ang = Hash01(seed + 1u) * 6.2831853f;
-    float r01 = sqrt(Hash01(seed + 2u));
-    float2 offset = float2(cos(ang), sin(ang)) * (r01 * v.radius);
 
-    float2 xz = v.centerWS.xz + offset;
+    // 0..1 を “リング” にする
+    float u = Hash01(seed + 2u); // 0..1
+    float inner = 0.30f; // 0.0～0.9くらいで調整
+    float r01 = sqrt(lerp(inner * inner, 1.0f, u));
+
+    float2 dir = float2(cos(ang), sin(ang));
+    float2 xz = v.centerWS.xz + dir * (r01 * v.radius);
 
     float groundY = SampleGroundY(xz);
     float startY = groundY + Hash01(seed + 4u) * 6.0f; // 地面直上 0..1m

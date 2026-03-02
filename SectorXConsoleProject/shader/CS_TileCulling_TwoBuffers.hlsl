@@ -233,6 +233,7 @@ void main(uint3 gtid : SV_GroupThreadID, uint3 gid : SV_GroupID)
     }
 
     // ---- Firefly lights ----
+    // Firefly‚ÍNoZ‚ðŠi”[‚µ‚È‚¢
     for (uint fi = tid; fi < gFireflyLightCount; fi += THREADS)
     {
         PointLight pl = gFireflyLights[fi];
@@ -245,13 +246,13 @@ void main(uint3 gtid : SV_GroupThreadID, uint3 gid : SV_GroupID)
         if (cVS.z + r <= 0.0f)
             continue;
 
+        if (!PassZRange(cVS.z, r))
+            continue;
+
         if (!SphereIntersectsTileFrustum(cVS, r, fr))
             continue;
 
-        TryAppendNoZ(EncodeLightIndex(LIGHT_TYPE_FIREFLY, fi));
-
-        if (PassZRange(cVS.z, r))
-            TryAppendZ(EncodeLightIndex(LIGHT_TYPE_FIREFLY, fi));
+        TryAppendZ(EncodeLightIndex(LIGHT_TYPE_FIREFLY, fi));
     }
 
     GroupMemoryBarrierWithGroupSync();

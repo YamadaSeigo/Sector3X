@@ -152,7 +152,7 @@ namespace SFW
 				// 生成モード（path 空）のときは名前キャッシュを用いない
 				if (desc.path.empty()) return std::nullopt;
 				detail::TextureKey k{ detail::NormalizePath(desc.path), desc.forceSRGB };
-				std::shared_lock lk(cacheMx_);
+				std::lock_guard lk(cacheMx_);
 				if (auto it = pathToHandle_.find(k); it != pathToHandle_.end()) return it->second;
 				return std::nullopt;
 			}
@@ -164,7 +164,7 @@ namespace SFW
 			void RegisterKey(const TextureCreateDesc& desc, TextureHandle h) {
 				if (desc.path.empty()) return; // 生成モードはキー登録しない
 				detail::TextureKey k{ detail::NormalizePath(desc.path), desc.forceSRGB };
-				std::unique_lock lk(cacheMx_);
+				std::lock_guard lk(cacheMx_);
 				pathToHandle_.emplace(std::move(k), h);
 			}
 			/**
@@ -208,7 +208,7 @@ namespace SFW
 			ID3D11DeviceContext* context = nullptr;
 
 			// 複合キーのキャッシュ（スレッド安全）
-			mutable std::shared_mutex cacheMx_;
+			mutable std::mutex cacheMx_;
 			std::unordered_map<detail::TextureKey, TextureHandle, detail::TextureKeyHash> pathToHandle_;
 
 			std::filesystem::path convertedDir;

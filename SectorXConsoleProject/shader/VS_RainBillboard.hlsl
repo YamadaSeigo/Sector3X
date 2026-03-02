@@ -108,7 +108,7 @@ VSOut main(uint vid : SV_VertexID, uint iid : SV_InstanceID)
     o.a = gAlpha * lifeFade;
     o.wp = ws;
     o.N = toCam; // 法線はカメラ方向を向いていると仮定（シェーダーで適宜調整）
-    
+
 #ifdef DEBUG_RAIN_HIT_DEPTH
     o.color = lerp(float3(1,1,1), float3(1,0,0), p.debugHit / 255.0f); // デバッグ用（衝突している粒子を赤くするなど）
 #endif

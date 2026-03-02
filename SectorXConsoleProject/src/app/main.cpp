@@ -368,6 +368,20 @@ int main(void)
 				shadowParams,
 				*terrainRes.cp,
 				&lightShadowResourceService.GetCascadeViewport(), false);
+
+			Graphics::DX11::TerrainPatchCB patchCBData{};
+			patchCBData.gPatchCenterXZ = { camPos.x, camPos.z };
+			patchCBData.gPatchHalfSize = rainService.GetSpawnRadius();
+			patchCBData.gPatchVertsX = 32;
+			patchCBData.gPatchVertsZ = 32;
+
+			terrainRes.blockRevert->RunPatchDepth(deviceContext,
+				*terrainRes.cp,
+				patchCBData,
+				rainService.GetMatrixCB(),
+				terrainRes.heightMapSRV,
+				rainService.GetDepthMapDSV()
+			);
 		};
 
 	auto drawTerrainColor = [](uint64_t frame)

@@ -36,7 +36,6 @@ struct CModel
 };
 
 
-
 template<typename Partition>
 class ModelRenderSystem : public ITypeSystem<
 	ModelRenderSystem,

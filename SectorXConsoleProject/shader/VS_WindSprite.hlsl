@@ -44,17 +44,17 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     // ---- 風の位相：ワールド位置＋時間 ----
     float3 dir = normalize(gWindDir);
     float phaseBase = dot(t, dir) * gNoiseFreq;
-    float phase = phaseBase + gTime * 0.5f;
+    float phase = phaseBase + gTime * 2.0f;
 
     // ---- 揺れ量（基本波＋少し不規則）----
     float s1 = sin(phase);
     float s2 = sin(phase * 2.13 + 1.7); // 2本目でゆらぎ
     float gust = sin(phase * 0.37 + 5.0) * gWindAmplitude;
 
-    float sway = (s1 * 0.7 + s2 * 0.3 + gust) * gWindAmplitude * 20.0f;
+    float sway = (s1 * 0.7 + s2 * 0.3 + gust) * gWindAmplitude * 40.0f;
 
     // ---- オフセット方向（XZ）----
-    float3 offsetW = float3(dir.x, 0.0, dir.y) * (sway * w);
+    float3 offsetW = float3(dir.x, 0.0, dir.z) * (sway * w);
 
     // 例：centerW を基準に「板をワールドに置いている」前提
     wp += offsetW;

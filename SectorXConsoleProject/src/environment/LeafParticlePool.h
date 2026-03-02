@@ -40,7 +40,7 @@ struct LeafUpdateParam
     float gMaxSpeed = 20.0f;
     float gGravity = 9.8f;
     float gWindDrag = 2.0f;     // (flow - vel) ‚ÉŠ|‚¯‚éŒW”
-    float gLift = 18.0f;         // •—‚ª‹­‚¢‚Æ‚«‚ÌãŒü‚«‰Á‘¬“x
+    float gLift = 12.0f;         // •—‚ª‹­‚¢‚Æ‚«‚ÌãŒü‚«‰Á‘¬“x
     float gWobbleAmp = 3.0f;    // ‰¡—h‚êÅ‘å
     float gGroundMinClear = 0.05f;
     float _padA = 0, _padB = 0;

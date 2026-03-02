@@ -144,7 +144,7 @@ void RenderPipe::Initialize(
 	passDesc.psoOverride = psoHandle;
 	passDesc.rebindPSO = false;
 
-	passDesc.cbvs = { BindSlotBuffer{10, ctx.rain->GetUpdateCBHandle()} };
+	passDesc.cbvs = { BindSlotBuffer{10, ctx.rain->GetMatrixCBHandle()} };
 
 	vp.width = (float)RainService::DEPTH_MAP_SIZE;
 	vp.height = (float)RainService::DEPTH_MAP_SIZE;

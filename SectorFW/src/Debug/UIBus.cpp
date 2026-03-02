@@ -79,6 +79,29 @@ namespace SFW
 			bus.debugControlRegisterQ.push(std::move(c));
 		}
 
+		void RegisterDebugSliderInt(
+			const std::string& category,
+			const std::string& label,
+			int initialValue,
+			int minValue,
+			int maxValue,
+			std::function<void(int)> onChange,
+			int* bound)
+		{
+			auto& bus = GetUIBus();
+			if (!bus.alive.load(std::memory_order_acquire)) return;
+			DebugControl c;
+			c.kind = DebugControlKind::DC_SLIDERINT;
+			c.category = category;
+			c.label = label;
+			c.i_value = initialValue;
+			c.i_min = minValue;
+			c.i_max = maxValue;
+			c.onChangeI = std::move(onChange);
+			c.i_target = bound;
+			bus.debugControlRegisterQ.push(std::move(c));
+		}
+
 		void RegisterDebugCheckBox(const std::string& category, const std::string& label, bool initialValue, std::function<void(bool)> onChange, bool* bound)
 		{
 			auto& bus = GetUIBus();
