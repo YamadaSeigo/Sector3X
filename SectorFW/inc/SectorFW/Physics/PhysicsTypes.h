@@ -105,10 +105,10 @@ namespace SFW
 		 * @brief RayCast（結果はイベントで返す想定）
 		 */
 		struct RayCastCmd {
-			uint32_t requestId;
-			Vec3f    origin;
-			Vec3f    dir;   // 正規化前提
-			float    maxDist;
+			uint32_t requestId = {};
+			Vec3f    origin = {};
+			Vec3f    dir = {};   // 正規化前提
+			float    maxDist = {};
 			uint32_t ignoreBody = 0xffffffff; // 無視するボディ（オプション）
 			ObjectLayerMask     objectLayerMask = 0xFFFFFFFF; // 全ビットONで全レイヤ
 			BroadPhaseLayerMask broadPhaseMask = 0xFFFF; // 全ビットONで全レイヤ

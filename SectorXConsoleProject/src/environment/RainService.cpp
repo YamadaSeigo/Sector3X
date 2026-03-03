@@ -17,9 +17,9 @@ float gDebugRainBaseWidth = 0.025f;
 
 float gDebugRainSpeedToLength = 0.02f;
 float gDebugAlpha = 0.5f;
-float gDebugLifeFade = 0.18f;
+float gDebugLifeFade = 0.4f;
 
-float gDebugWetStrength = 0.2f;
+float gDebugWetStrength = 0.4f;
 float gDebugWetDarken = 0.35f;
 float gDebugWetSpecBoost = 0.2f;
 float gDebugWetFlatten = 0.6f;
@@ -28,12 +28,12 @@ float gDebugWetMinNdotUp = 0.2f;
 float gDebugWetEdgeThreshold = 2.0f;
 float gDebugWetEdgeSharpness = 0.2f;
 float gDebugWetDensity = 0.8f;
-float gDebugWetDotSizeScale = 1.0f;
-float gDebugWetNearThickZ = 2.0f;
-float gDebugWetFarThickZ = 30.0f;
+float gDebugWetDotSizeScale = 2.0f;
+float gDebugWetNearThickZ = 30.0f;
+float gDebugWetFarThickZ = 46.0f;
 float gDebugWetUpMin = 0.2f;
 float gDebugWetUpMax = 0.8f;
-float gDebugWetFarFade = 0.03f;
+float gDebugWetFarFade = 0.02f;
 
 #endif
 
@@ -47,7 +47,9 @@ RainService::RainService(
     const wchar_t* csUpdatePath,
     const wchar_t* csArgsPath,
     const wchar_t* vsPath,
-    const wchar_t* psPath)
+    const wchar_t* psPath,
+    const wchar_t* csWetnessScrollPath,
+    const wchar_t* csWetnessUpdatePath)
 	: m_bufferMgr(bufferMgr)
 {
 	Graphics::DX11::BufferCreateDesc bufDesc{};
@@ -66,6 +68,12 @@ RainService::RainService(
     bufDesc.name = "RainSplash";
 	bufDesc.size = sizeof(WetnessCB);
 	bufferMgr->Add(bufDesc, m_wetnessCBHandle);
+    bufDesc.name = "RainScroll";
+    bufDesc.size = sizeof(WetnessScrollCB);
+    bufferMgr->Add(bufDesc, m_wetScrollCBHandle);
+    bufDesc.name = "RainWetnessUpdate";
+    bufDesc.size = sizeof(WetnessUpdateCB);
+    bufferMgr->Add(bufDesc, m_wetUpdateCBHandle);
 
     {
         auto readLock = bufferMgr->AcquireReadLock();
@@ -79,9 +87,13 @@ RainService::RainService(
 		m_renderCB = bufferData.buffer.Get();
 		bufferData = bufferMgr->GetNoLock(m_wetnessCBHandle);
 		m_wetnessCB = bufferData.buffer.Get();
+        bufferData = bufferMgr->GetNoLock(m_wetScrollCBHandle);
+        m_wetScrollCB = bufferData.buffer.Get();
+        bufferData = bufferMgr->GetNoLock(m_wetUpdateCBHandle);
+        m_wetUpdateCB = bufferData.buffer.Get();
     }
 
-    auto compileShader = [&](const wchar_t* path, ComPtr<ID3D11ComputeShader>& outCS)
+    auto compileComputeShader = [&](const wchar_t* path, ComPtr<ID3D11ComputeShader>& outCS)
         {
             ComPtr<ID3DBlob> csBlob;
             HRESULT hr = D3DReadFileToBlob(path, csBlob.GetAddressOf());
@@ -94,10 +106,12 @@ RainService::RainService(
         };
 
     // コンピュートシェーダー作成
-    compileShader(csInitFreeListPath, m_initFreeListCS);
-    compileShader(csSpawnPath, m_spawnCS);
-    compileShader(csUpdatePath, m_updateCS);
-    compileShader(csArgsPath, m_argsCS);
+    compileComputeShader(csInitFreeListPath, m_initFreeListCS);
+    compileComputeShader(csSpawnPath, m_spawnCS);
+    compileComputeShader(csUpdatePath, m_updateCS);
+    compileComputeShader(csArgsPath, m_argsCS);
+    compileComputeShader(csWetnessScrollPath, m_wetScrollCopyCS);
+    compileComputeShader(csWetnessUpdatePath, m_wetUpdateCS);
 
     ComPtr<ID3DBlob> vsBlob;
     HRESULT hr = D3DReadFileToBlob(vsPath, vsBlob.GetAddressOf());
@@ -116,6 +130,7 @@ RainService::RainService(
 #endif
     hr = pDevice->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, &m_rainPS);
     assert(SUCCEEDED(hr) && "Failed to create pixel shader.");
+
 
     m_particlePool.Create(pDevice);
 
@@ -183,9 +198,14 @@ RainService::RainService(
         m_cpuWetnessBuffer[i].gProjAB.y = (1.0f / n);              // B
     }
 
+    CreateWetnessResources(pDevice, WETNESS_MAP_SIZE, WETNESS_MAP_SIZE);
+
 #ifdef _DEBUG
 	BIND_DEBUG_SLIDER_INT("Rain", "spawnPerFrame", (int*)&m_spawnPerFrame, 0, RainParticlePool::MaxSpawnPerFrame);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "windPower", &m_windPower, 0.0f, 10.0f, 0.01f);
+
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "dryRate", &m_dryRate, 0.0f, 1.0f, 0.001f);
+    BIND_DEBUG_SLIDER_FLOAT("Rain", "rainRate", &m_rainRate, 0.0f, 1.0f, 0.001f);
 
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "spawnRadius", &gDebugSpawnRadius, 0.0f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "gravity", &gDebugGravity, 0.0f, 20.0f, 0.1f);
@@ -223,6 +243,8 @@ void RainService::Commit(double deltaTime)
 	auto& matrixBuf = m_cpuMatrixBuffer[currentSlot];
     auto& renderBuf = m_cpuRenderBuffer[currentSlot];
 	auto& wetnessBuf = m_cpuWetnessBuffer[currentSlot];
+    auto& wetnessScrollBuf = m_cpuWetScrollBuffer[currentSlot];
+    auto& wetnessUpdateBuf = m_cpuWetUpdateBuffer[currentSlot];
 
     {
         std::lock_guard lock(bufMutex);
@@ -236,6 +258,54 @@ void RainService::Commit(double deltaTime)
 		updateBuf.gSpawnRadius = m_spawnRadius;
 
 		wetnessBuf.gTime = m_elapsedTime;
+		wetnessBuf.gWetInvWorldSize = 1.0f / mWetWorldSize;
+
+        // --- 1) compute scroll in texels ---
+       // world meters per texel
+        const float metersPerTexelX = mWetWorldSize / float(mWetW);
+        const float metersPerTexelY = mWetWorldSize / float(mWetH);
+
+        const auto& cameraPosWS = spawnBuf.gCamPos;
+
+        // カメラ中心で追従したいなら origin を camera - halfSize に置く、等の設計もOK。
+        // ここでは「origin をカメラに追従させる」ための差分をスクロールとして算出する例：
+        // 目標origin = cameraXZ - wetWorldSize*0.5
+        Math::Vec2f targetOrigin{
+            cameraPosWS.x - mWetWorldSize * 0.5f,
+            cameraPosWS.z - mWetWorldSize * 0.5f
+        };
+
+        float dxWorld = (targetOrigin.x - mWetOriginXZ.x);
+        float dzWorld = (targetOrigin.y - mWetOriginXZ.y);
+
+        // accumulate remainder to get stable integer scroll
+        mScrollRemainder.x += dxWorld;
+        mScrollRemainder.y += dzWorld;
+
+        int dxTex = (int)floor(mScrollRemainder.x / metersPerTexelX);
+        int dyTex = (int)floor(mScrollRemainder.y / metersPerTexelY);
+
+        // consume the scrolled part
+        mWetOriginXZ.x += dxTex * metersPerTexelX;
+        mWetOriginXZ.y += dyTex * metersPerTexelY;
+
+		wetnessBuf.gWetOriginXZ = mWetOriginXZ;
+
+        mScrollRemainder.x -= dxTex * metersPerTexelX;
+        mScrollRemainder.y -= dyTex * metersPerTexelY;
+
+        wetnessScrollBuf.scrollTexel[0] = dxTex;
+        wetnessScrollBuf.scrollTexel[1] = dyTex;
+        wetnessScrollBuf.initWetness = m_initWetnessForNewArea;
+        wetnessScrollBuf.texSize[0] = mWetW;
+        wetnessScrollBuf.texSize[1] = mWetH;
+
+        wetnessUpdateBuf.dt = static_cast<float>(deltaTime);
+        wetnessUpdateBuf.dryRate = m_dryRate;
+        wetnessUpdateBuf.rainRate = m_rainRate;
+        wetnessUpdateBuf.globalWet = m_globalWet;
+        wetnessUpdateBuf.texSize[0] = mWetW;
+        wetnessUpdateBuf.texSize[1] = mWetH;
 
 #ifdef _DEBUG
         m_spawnRadius = gDebugSpawnRadius;
@@ -293,6 +363,16 @@ void RainService::Commit(double deltaTime)
 	updateDesc.size = sizeof(WetnessCB);
 	updateDesc.data = &wetnessBuf;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
+
+    updateDesc.buffer = m_wetScrollCB.Get();
+    updateDesc.size = sizeof(WetnessScrollCB);
+    updateDesc.data = &wetnessScrollBuf;
+    m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
+
+    updateDesc.buffer = m_wetUpdateCB.Get();
+    updateDesc.size = sizeof(WetnessUpdateCB);
+    updateDesc.data = &wetnessUpdateBuf;
+    m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 }
 
 void RainService::ClearDepthMap(ID3D11DeviceContext* ctx)
@@ -321,6 +401,56 @@ void RainService::SpawnDrawParticles(
         );
 }
 
+
+void RainService::UpdateWetnessCS(ID3D11DeviceContext* ctx)
+{
+    // --- 1) ScrollCopyCS (Prev -> New) ---
+    {
+        ID3D11ShaderResourceView* srvs[] = { m_WetPrevSRV.Get() };
+        ID3D11UnorderedAccessView* uavs[] = { m_WetNewUAV.Get() };
+        UINT initialCounts[] = { 0 };
+
+        ctx->CSSetShader(m_wetScrollCopyCS.Get(), nullptr, 0);
+        ctx->CSSetConstantBuffers(0, 1, m_wetScrollCB.GetAddressOf());
+        ctx->CSSetShaderResources(0, 1, srvs);
+        ctx->CSSetUnorderedAccessViews(0, 1, uavs, initialCounts);
+
+        const UINT gx = (mWetW + 7) / 8;
+        const UINT gy = (mWetH + 7) / 8;
+        ctx->Dispatch(gx, gy, 1);
+
+        // unbind
+        ID3D11UnorderedAccessView* nullUAV[] = { nullptr };
+        ID3D11ShaderResourceView* nullSRV[] = { nullptr };
+        ctx->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
+        ctx->CSSetShaderResources(0, 1, nullSRV);
+        ctx->CSSetShader(nullptr, nullptr, 0);
+    }
+
+    // --- 2) UpdateWetnessCS (in-place on New) ---
+    {
+        ID3D11UnorderedAccessView* uavs[] = { m_WetNewUAV.Get() };
+        UINT initialCounts[] = { 0 };
+
+        ctx->CSSetShader(m_wetUpdateCS.Get(), nullptr, 0);
+        ctx->CSSetConstantBuffers(0, 1, m_wetUpdateCB.GetAddressOf());
+        ctx->CSSetUnorderedAccessViews(0, 1, uavs, initialCounts);
+
+        const UINT gx = (mWetW + 7) / 8;
+        const UINT gy = (mWetH + 7) / 8;
+        ctx->Dispatch(gx, gy, 1);
+
+        ID3D11UnorderedAccessView* nullUAV[] = { nullptr };
+        ctx->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
+        ctx->CSSetShader(nullptr, nullptr, 0);
+    }
+
+    // --- 3) swap Prev/New ---
+    std::swap(m_WetPrevTex, m_WetNewTex);
+    std::swap(m_WetPrevSRV, m_WetNewSRV);
+    std::swap(m_WetPrevUAV, m_WetNewUAV);
+}
+
 Math::Matrix4x4f RainService::MakeDepthMapViewProjNoLock() const
 {
     Math::Vec3f camPos = m_cpuSpawnBuffer[currentSlot].gCamPos;
@@ -345,3 +475,44 @@ Math::Matrix4x4f RainService::MakeDepthMapViewProjNoLock() const
 
 	return proj * view;
 }
+
+bool RainService::CreateWetnessResources(ID3D11Device* dev, uint32_t w, uint32_t h)
+{
+    mWetW = w; mWetH = h;
+
+    DXGI_FORMAT fmt = DXGI_FORMAT_R16_FLOAT;
+
+    D3D11_TEXTURE2D_DESC td{};
+    td.Width = w;
+    td.Height = h;
+    td.MipLevels = 1;
+    td.ArraySize = 1;
+    td.Format = fmt;
+    td.SampleDesc.Count = 1;
+    td.Usage = D3D11_USAGE_DEFAULT;
+    td.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
+
+    if (FAILED(dev->CreateTexture2D(&td, nullptr, &m_WetPrevTex))) return false;
+    if (FAILED(dev->CreateTexture2D(&td, nullptr, &m_WetNewTex)))  return false;
+
+    // SRV
+    D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
+    sd.Format = fmt;
+    sd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+    sd.Texture2D.MipLevels = 1;
+
+    if (FAILED(dev->CreateShaderResourceView(m_WetPrevTex.Get(), &sd, &m_WetPrevSRV))) return false;
+    if (FAILED(dev->CreateShaderResourceView(m_WetNewTex.Get(), &sd, &m_WetNewSRV)))  return false;
+
+    // UAV
+    D3D11_UNORDERED_ACCESS_VIEW_DESC ud{};
+    ud.Format = fmt;
+    ud.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
+    ud.Texture2D.MipSlice = 0;
+
+    if (FAILED(dev->CreateUnorderedAccessView(m_WetPrevTex.Get(), &ud, &m_WetPrevUAV))) return false;
+    if (FAILED(dev->CreateUnorderedAccessView(m_WetNewTex.Get(), &ud, &m_WetNewUAV)))  return false;
+
+    return true;
+}
+

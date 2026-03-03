@@ -6,6 +6,7 @@ class RainService : public ECS::IUpdateService, public ECS::ICommitService
 {
 public:
 	constexpr inline static uint32_t DEPTH_MAP_SIZE = 512;
+    constexpr inline static uint32_t WETNESS_MAP_SIZE = 512;
 
     struct SpawnCB
     {
@@ -58,7 +59,7 @@ public:
         float gMinSpeedForDir = 0.1f; // 例: 0.1
 
         float gAlpha = 0.5f; // 全体alpha
-        float gLifeFade = 0.18f; // 例: 1.0 (寿命で薄くする強さ)
+        float gLifeFade = 0.4f; // 例: 1.0 (寿命で薄くする強さ)
         float _pad3[2] = {};
     };
 
@@ -79,20 +80,42 @@ public:
         float gEdgeSharpness = 0.2f; // マスクの鋭さ
         Math::Vec2f gRainDirSS = {0.0f, -1.0f}; // スクリーン空間の雨方向（正規化）
         float gTime = 0.0f;
-        float gDensity = 0.8f; // 粒密度
-        float gStrength = 0.2f; // 合成強度
-        float gDotSizeScale = 1.0f;
+        float gDensity = 0.9f; // 粒密度
+        float gStrength = 0.4f; // 合成強度
+        float gDotSizeScale = 2.0f;
 
-        float gNearThickZ = 2.0f;
-        float gFarThickZ = 30.0f;
+        float gNearThickZ = 30.0f;
+        float gFarThickZ = 46.0f;
         uint32_t gNearRadiusPx = 3;
         uint32_t gFarRadiusPx = 0;
 
         float gUpMin = 0.2f;
         float gUpMax = 0.8f;
-        float gFarFade = 0.03f;
+        float gFarFade = 0.02f;
 
 		float pad1 = {};
+    };
+
+    struct WetnessScrollCB
+    {
+        int32_t  scrollTexel[2]; // dx, dy
+        float    initWetness;
+
+		float    pad1;
+
+        uint32_t texSize[2];     // W,H
+
+        uint32_t pad2[2];
+    };
+
+    struct WetnessUpdateCB
+    {
+        float    dt;
+        float    dryRate;
+        float    rainRate;
+        float    globalWet;
+        uint32_t texSize[2];
+        float    pad[2];
     };
 
     static constexpr uint32_t MaxVolumes = 32;
@@ -104,7 +127,9 @@ public:
         const wchar_t* csUpdatePath,
         const wchar_t* csArgsPath,
         const wchar_t* vsPath,
-        const wchar_t* psPath);
+        const wchar_t* psPath,
+        const wchar_t* csWetnessScrollPath,
+        const wchar_t* csWetnessUpdatePath);
 
     void PreUpdate(double deltaTime) override {
         currentSlot = (currentSlot + 1) % Graphics::RENDER_BUFFER_COUNT;
@@ -116,6 +141,8 @@ public:
     void ClearDepthMap(ID3D11DeviceContext* ctx);
 
     void SpawnDrawParticles(ID3D11DeviceContext* ctx, RainParticlePool::TiledLightData* lightData);
+
+    void UpdateWetnessCS(ID3D11DeviceContext* ctx);
 
     void SetCameraPos(const Math::Vec3f pos) {
         std::lock_guard lock(bufMutex);
@@ -170,9 +197,12 @@ public:
 	ComPtr<ID3D11DepthStencilView> GetDepthMapDSV() const { return m_depthMapDSV; }
 	ComPtr<ID3D11ShaderResourceView> GetDepthMapSRV() const { return m_depthMapSRV; }
 
+    ComPtr<ID3D11ShaderResourceView> GetWetnessMapSRV() const { return m_WetNewSRV; }
+
 private:
 	Math::Matrix4x4f MakeDepthMapViewProjNoLock() const;
 
+    bool CreateWetnessResources(ID3D11Device* dev, uint32_t w, uint32_t h);
 private:
     // ---- GPUリソース ----
     ComPtr<ID3D11Buffer> m_spawnCB;
@@ -180,6 +210,8 @@ private:
 	ComPtr<ID3D11Buffer> m_matrixCB;
     ComPtr<ID3D11Buffer> m_renderCB;
 	ComPtr<ID3D11Buffer> m_wetnessCB;
+    ComPtr<ID3D11Buffer> m_wetScrollCB;
+    ComPtr<ID3D11Buffer> m_wetUpdateCB;
 
     ComPtr<ID3D11ComputeShader> m_initFreeListCS;
     ComPtr<ID3D11ComputeShader> m_spawnCS;
@@ -202,6 +234,8 @@ private:
 	Graphics::BufferHandle m_matrixCBHandle;
 	Graphics::BufferHandle m_renderCBHandle;
 	Graphics::BufferHandle m_wetnessCBHandle;
+    Graphics::BufferHandle m_wetScrollCBHandle;
+    Graphics::BufferHandle m_wetUpdateCBHandle;
 
     mutable std::mutex bufMutex;
     SpawnCB m_cpuSpawnBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
@@ -209,6 +243,8 @@ private:
 	MatrixCB m_cpuMatrixBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
     RenderCB m_cpuRenderBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 	WetnessCB m_cpuWetnessBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
+    WetnessScrollCB m_cpuWetScrollBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
+    WetnessUpdateCB m_cpuWetUpdateBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 
     uint32_t currentSlot = 0;
     float m_elapsedTime = 0.0f;
@@ -217,6 +253,32 @@ private:
 
     uint32_t m_spawnPerFrame = 0;//32 << 2;
 	float m_windPower = 2.0f;
+
+    // 濡れテクスチャ関連
+    // Wetness resources
+    ComPtr<ID3D11Texture2D> m_WetPrevTex;
+    ComPtr<ID3D11Texture2D> m_WetNewTex;
+    ComPtr<ID3D11ShaderResourceView> m_WetPrevSRV;
+    ComPtr<ID3D11ShaderResourceView> m_WetNewSRV;
+    ComPtr<ID3D11UnorderedAccessView> m_WetPrevUAV;
+    ComPtr<ID3D11UnorderedAccessView> m_WetNewUAV;
+
+    uint32_t mWetW = 512;
+    uint32_t mWetH = 512;
+    float    mWetWorldSize = 256.0f; // meters covered by the texture (square)
+    Math::Vec2f mWetOriginXZ = { 0,0 }; // world-space origin of the texture
+
+    float m_initWetnessForNewArea = 0.0f; //スクロールの初期化値
+    float m_dryRate = 0.01f;
+    float m_rainRate = 0.03f;
+    float m_globalWet = 0.0f;
+
+    // CS
+    ComPtr<ID3D11ComputeShader> m_wetScrollCopyCS;
+    ComPtr<ID3D11ComputeShader> m_wetUpdateCS;
+
+    // Accumulate fractional scroll (optional but recommended)
+    Math::Vec2f mScrollRemainder = { 0,0 };
 
 public:
     STATIC_SERVICE_TAG

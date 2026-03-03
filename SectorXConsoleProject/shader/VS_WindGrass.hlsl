@@ -227,7 +227,9 @@ VSOutput main(VSInput input, uint instId : SV_InstanceID)
     float radiusMask = 1.0f - smoothstep(0.0f /*gCamRadius*/, 10.0f, r);
 
     // 最終影響量
+
     float influence = heightMask * depthMask * radiusMask;
+
 
     // スケール（influence=1でmin、0で1）
 

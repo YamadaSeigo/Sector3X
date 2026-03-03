@@ -113,6 +113,7 @@ Texture2D<float> gDepth : register(t14); // Depth
 
 Texture2D<float4> gLightAccum : register(t15);
 
+Texture2D<float> gWetness : register(t16);
 
 // ”äŠrƒTƒ“ƒvƒ‰iShadowMapService ‚ªì‚Á‚Ä‚¢‚é‚à‚Ìj
 SamplerComparisonState gShadowSampler : register(s1);
@@ -653,14 +654,14 @@ float4 main(VSOut i) : SV_Target
     float3 N = normalize(nr.rgb * 2.0f - 1.0f);
 
      // --- Wetness sample (world XZ -> wet UV) ---
-    //float2 wetUV = (wp.xz - gWetOriginXZ) * gWetInvWorldSize;
+    float2 wetUV = (wp.xz - gWetOriginXZ) * gWetInvWorldSize;
 
     // ”ÍˆÍŠO‚Í0
-    float wet = 1.0f;
-    //if (all(wetUV >= 0.0f) && all(wetUV <= 1.0f))
-    //{
-    //    wet = gWetness.SampleLevel(gPointSamp, wetUV, 0) * gWetStrength;
-    //}
+    float wet = 0.0f;
+    if (all(wetUV >= 0.0f) && all(wetUV <= 1.0f))
+    {
+        wet = gWetness.SampleLevel(gPointSamp, wetUV, 0) * gWetStrength;
+    }
 
     // ãŒü‚«–Ê‚¾‚¯”G‚ê‚â‚·‚­i•Ç‚Ì”G‚ê‚ð—}§j
     float ndotUp = dot(N, float3(0, 1, 0));

@@ -170,7 +170,9 @@ int main(void)
 		L"assets/shader/CS_RainUpdate.cso",
 		L"assets/shader/CS_ParticleArgs.cso",
 		L"assets/shader/VS_RainBillboard.cso",
-		L"assets/shader/PS_Rain.cso");
+		L"assets/shader/PS_Rain.cso",
+		L"assets/shader/CS_WetnessScrollCopy.cso",
+		L"assets/shader/CS_WetnessUpdate.cso");
 
 	ECS::ServiceLocator serviceLocator(
 		renderService, &physicsService, inputService, perCameraService,
@@ -526,6 +528,8 @@ int main(void)
 
 			//‰J‚ÌƒXƒ|[ƒ“‚Æ•`‰æˆ—
 			rainService.SpawnDrawParticles(deviceContext, &tiledLightData);
+
+			//rainService.UpdateWetnessCS(deviceContext);
 		};
 
 	renderService->SetCustomUpdateFunction(terrainUpdateFunc);

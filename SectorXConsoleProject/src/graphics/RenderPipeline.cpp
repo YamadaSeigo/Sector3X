@@ -482,6 +482,7 @@ void RenderPipe::Initialize(
 	}
 
 	static ComPtr<ID3D11Buffer> rainWetnessCB = ctx.rain->GetWetnessCB();
+	static ComPtr<ID3D11ShaderResourceView> rainWetnessTex = ctx.rain->GetWetnessMapSRV();
 
 	auto drawFullScreen = [](uint64_t frame) {
 
@@ -544,7 +545,12 @@ void RenderPipe::Initialize(
 		lightShadowResService->BindShadowPSShadowMap(ctx, 7);
 
 		ctx->PSSetShaderResources(11, (UINT)deferreredSRVs.size(), deferreredSRVs.data());
-		ctx->PSSetShaderResources(15, 1, ligthTexBuffer.srv.GetAddressOf());
+
+		ID3D11ShaderResourceView* psSRVs[] = {
+			ligthTexBuffer.srv.Get(),
+			rainWetnessTex.Get()
+		};
+		ctx->PSSetShaderResources(15, 2, psSRVs);
 
 		renderBackend->BindPSCBVs({ invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get(), rainWetnessCB.Get()}, 7);
 
