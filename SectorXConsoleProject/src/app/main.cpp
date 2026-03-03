@@ -529,7 +529,7 @@ int main(void)
 			//‰J‚ÌƒXƒ|[ƒ“‚Æ•`‰æˆ—
 			rainService.SpawnDrawParticles(deviceContext, &tiledLightData);
 
-			//rainService.UpdateWetnessCS(deviceContext);
+			rainService.UpdateWetnessCS(deviceContext);
 		};
 
 	renderService->SetCustomUpdateFunction(terrainUpdateFunc);

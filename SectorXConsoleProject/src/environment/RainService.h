@@ -116,6 +116,17 @@ public:
         float    globalWet;
         uint32_t texSize[2];
         float    pad[2];
+
+        // --- ワールド対応（クリップマップ用） ---
+        Math::Vec2f gWetOriginXZ; // このWetnessRTの左下(または基準)のworld XZ
+        float gWetWorldSize; // 1枚がカバーするワールド幅（正方形, meters）
+        float gTimeSec; // 秒（継続的に増える）
+
+        // --- 斑点（雨粒っぽいムラ）パラメータ ---
+        float gSpeckleCellSize = 0.25f; // 例: 0.25 (m) 斑点の“セル”サイズ
+        float gSpeckleDensity = 2.0f; // 例: 2.0  (大きいほど当たりやすい)
+        float gSpeckleAmount = 0.15f; // 例: 0.15 (1回の当たりで足す濡れ量)
+        float gSpeckleTimeHz = 10.0f; // 例: 10.0 (1秒に何回パターン更新するか)
     };
 
     static constexpr uint32_t MaxVolumes = 32;

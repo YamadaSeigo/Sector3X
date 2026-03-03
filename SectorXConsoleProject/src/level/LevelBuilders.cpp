@@ -1316,7 +1316,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			// ‰ó‚ê‚½“ƒ¶¬
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Ruins/BreakTower/RuinBreakTowerA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				CModel modelComp{ ruinBreakTowerModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				CModel modelComp{ ruinBreakTowerModelHandle }; 
+				modelComp.flags |= (uint16_t)EModelFlag::CastShadow | (uint16_t)EModelFlag::RainOccluder;
 				addGlobalEntityWithBody({ 0.4f, 0.62f }, -4.0f, modelComp, shape);
 			}
 

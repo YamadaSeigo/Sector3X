@@ -35,6 +35,11 @@ float gDebugWetUpMin = 0.2f;
 float gDebugWetUpMax = 0.8f;
 float gDebugWetFarFade = 0.02f;
 
+float gDebugSpeckleCellSize = 0.25f;
+float gDebugSpeckleDensity = 2.0f;
+float gDebugSpeckleAmount = 0.15f;
+float gDebugSpeckleTimeHz = 10.0f;
+
 #endif
 
 
@@ -231,6 +236,10 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetUpMin", &gDebugWetUpMin, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetUpMax", &gDebugWetUpMax, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFarFade", &gDebugWetFarFade, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "speckleCellSize", &gDebugSpeckleCellSize, 0.01f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "speckleDensity", &gDebugSpeckleDensity, 0.1f, 10.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "speckleAmount", &gDebugSpeckleAmount, 0.01f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "speckleTimeHz", &gDebugSpeckleTimeHz, 0.1f, 60.0f, 0.1f);
 #endif
 }
 
@@ -260,39 +269,45 @@ void RainService::Commit(double deltaTime)
 		wetnessBuf.gTime = m_elapsedTime;
 		wetnessBuf.gWetInvWorldSize = 1.0f / mWetWorldSize;
 
-        // --- 1) compute scroll in texels ---
-       // world meters per texel
         const float metersPerTexelX = mWetWorldSize / float(mWetW);
         const float metersPerTexelY = mWetWorldSize / float(mWetH);
 
         const auto& cameraPosWS = spawnBuf.gCamPos;
 
-        // カメラ中心で追従したいなら origin を camera - halfSize に置く、等の設計もOK。
-        // ここでは「origin をカメラに追従させる」ための差分をスクロールとして算出する例：
-        // 目標origin = cameraXZ - wetWorldSize*0.5
-        Math::Vec2f targetOrigin{
+        // 連続（表示したい）origin
+        Math::Vec2f originFine{
             cameraPosWS.x - mWetWorldSize * 0.5f,
             cameraPosWS.z - mWetWorldSize * 0.5f
         };
 
-        float dxWorld = (targetOrigin.x - mWetOriginXZ.x);
-        float dzWorld = (targetOrigin.y - mWetOriginXZ.y);
+        // スクロール用のスナップorigin（更新の安定化）
+        Math::Vec2f originSnap;
+        originSnap.x = std::floor(originFine.x / metersPerTexelX) * metersPerTexelX;
+        originSnap.y = std::floor(originFine.y / metersPerTexelY) * metersPerTexelY;
 
-        // accumulate remainder to get stable integer scroll
-        mScrollRemainder.x += dxWorld;
-        mScrollRemainder.y += dzWorld;
+        // dx/dy（整数texel）
+        const float dxWorld = originSnap.x - mWetOriginXZ.x;
+        const float dzWorld = originSnap.y - mWetOriginXZ.y;
 
-        int dxTex = (int)floor(mScrollRemainder.x / metersPerTexelX);
-        int dyTex = (int)floor(mScrollRemainder.y / metersPerTexelY);
+        int dxTex = (int)std::round(dxWorld / metersPerTexelX);
+        int dyTex = (int)std::round(dzWorld / metersPerTexelY);
 
-        // consume the scrolled part
-        mWetOriginXZ.x += dxTex * metersPerTexelX;
-        mWetOriginXZ.y += dyTex * metersPerTexelY;
+        // 更新用originはスナップに固定
+        mWetOriginXZ = originSnap;
 
-		wetnessBuf.gWetOriginXZ = mWetOriginXZ;
+        // 表示用の sub-texel オフセット（0..1texel 未満）
+        Math::Vec2f originSub{
+            originFine.x - originSnap.x,
+            originFine.y - originSnap.y
+        };
 
-        mScrollRemainder.x -= dxTex * metersPerTexelX;
-        mScrollRemainder.y -= dyTex * metersPerTexelY;
+        // CBへ
+        //wetnessBuf.gWetOriginXZ_Snap = mWetOriginXZ;   // ScrollCopyCS / UpdateCS 用
+        wetnessBuf.gWetOriginXZ = originFine;     // 合成PSのサンプリング用
+       // wetnessBuf.gWetOriginSubXZ = originSub;      // どちらか片方だけでもOK
+
+        // remainder は不要
+        //mScrollRemainder = Math::Vec2f(0, 0);
 
         wetnessScrollBuf.scrollTexel[0] = dxTex;
         wetnessScrollBuf.scrollTexel[1] = dyTex;
@@ -306,6 +321,11 @@ void RainService::Commit(double deltaTime)
         wetnessUpdateBuf.globalWet = m_globalWet;
         wetnessUpdateBuf.texSize[0] = mWetW;
         wetnessUpdateBuf.texSize[1] = mWetH;
+
+		wetnessUpdateBuf.gWetOriginXZ = originFine;
+		wetnessUpdateBuf.gWetWorldSize = mWetWorldSize;
+		wetnessUpdateBuf.gTimeSec = m_elapsedTime;
+
 
 #ifdef _DEBUG
         m_spawnRadius = gDebugSpawnRadius;
@@ -334,6 +354,10 @@ void RainService::Commit(double deltaTime)
 		wetnessBuf.gUpMin = gDebugWetUpMin;
 		wetnessBuf.gUpMax = gDebugWetUpMax;
 		wetnessBuf.gFarFade = gDebugWetFarFade;
+		wetnessUpdateBuf.gSpeckleCellSize = gDebugSpeckleCellSize;
+		wetnessUpdateBuf.gSpeckleDensity = gDebugSpeckleDensity;
+		wetnessUpdateBuf.gSpeckleAmount = gDebugSpeckleAmount;
+		wetnessUpdateBuf.gSpeckleTimeHz = gDebugSpeckleTimeHz;
 #endif
     }
 
