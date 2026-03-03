@@ -17,6 +17,13 @@
 
 #endif //_DEBUG
 
+// NVIDIA Optimus や AMD Switchable Graphics で高性能GPUを優先するためのエクスポート変数
+extern "C"
+{
+	__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+
 namespace SFW
 {
 	namespace Graphics::DX11
@@ -81,6 +88,24 @@ namespace SFW
 			return *this;
 		}
 
+		static void LogAdapterInfo(ID3D11Device* device)
+		{
+			Microsoft::WRL::ComPtr<IDXGIDevice> dxgiDevice;
+			if (FAILED(device->QueryInterface(IID_PPV_ARGS(&dxgiDevice)))) return;
+
+			Microsoft::WRL::ComPtr<IDXGIAdapter> adapter;
+			if (FAILED(dxgiDevice->GetAdapter(&adapter))) return;
+
+			DXGI_ADAPTER_DESC desc{};
+			if (FAILED(adapter->GetDesc(&desc))) return;
+
+			// 代表的なVendorId: NVIDIA 0x10DE, Intel 0x8086, AMD 0x1002
+			//wchar_t buf[512];
+			LOG_INFO("Adapter: %ls (VendorId=0x%04X, DeviceId=0x%04X)\n",
+				desc.Description, desc.VendorId, desc.DeviceId);
+
+		}
+
 		bool GraphicsDevice::InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps)
 		{
 			if (!std::holds_alternative<HWND>(nativeWindowHandle)) return false;
@@ -108,6 +133,8 @@ namespace SFW
 				D3D_FEATURE_LEVEL_11_0
 			};
 
+			IDXGIDevice* dxgiDevice = nullptr;
+
 			HRESULT hr = D3D11CreateDeviceAndSwapChain(
 				nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
 				createDeviceFlags, featureLevels, 1, D3D11_SDK_VERSION,
@@ -115,6 +142,8 @@ namespace SFW
 				m_device.GetAddressOf(), &featureLevel,
 				m_context.GetAddressOf()
 			);
+
+			LogAdapterInfo(m_device.Get());
 
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to create D3D11 device and swap chain: %d", hr);
