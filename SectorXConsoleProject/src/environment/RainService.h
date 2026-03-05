@@ -65,11 +65,13 @@ public:
 
     struct WetnessCB
     {
+		Math::Vec2f gWetOriginXZ_Snap = {}; // このWetnessRTがカバーするスナップされたワールド原点(XZ),
         Math::Vec2f gWetOriginXZ = {}; // このWetnessRTがカバーするワールド原点(XZ)
+		Math::Vec2f gWetOriginSubXZ = {}; // スナップとの差分(XZ, 0～ワールドサイズ)
         float gWetInvWorldSize = 0.0f; // 1 / カバーするワールド幅（例: 1/256m）
         float gWetStrength = 1.0f; // 全体強度
 
-        float gWetDarken = 0.35f; // 濡れで暗くする量(例: 0.35)
+        float gWetDarken = 1.0f; // 濡れで暗くする量(例: 0.35)
         float gWetSpecBoost = 0.2f; // 疑似スペキュラ強度(例: 1.0)
         float gWetFlatten = 0.6f; // 法線コントラスト抑制(例: 0.6)
         float gWetMinNdotUp = 0.2f; // 上面のみ濡らす閾値(例: 0.2)
@@ -126,7 +128,7 @@ public:
         float gSpeckleCellSize = 0.25f; // 例: 0.25 (m) 斑点の“セル”サイズ
         float gSpeckleDensity = 2.0f; // 例: 2.0  (大きいほど当たりやすい)
         float gSpeckleAmount = 0.15f; // 例: 0.15 (1回の当たりで足す濡れ量)
-        float gSpeckleTimeHz = 10.0f; // 例: 10.0 (1秒に何回パターン更新するか)
+        float gSpeckleTimeHz = 20.0f; // 例: 10.0 (1秒に何回パターン更新するか)
     };
 
     static constexpr uint32_t MaxVolumes = 32;
@@ -280,8 +282,8 @@ private:
     Math::Vec2f mWetOriginXZ = { 0,0 }; // world-space origin of the texture
 
     float m_initWetnessForNewArea = 0.0f; //スクロールの初期化値
-    float m_dryRate = 0.01f;
-    float m_rainRate = 0.03f;
+    float m_dryRate = 0.3f;
+    float m_rainRate = 0.45f;
     float m_globalWet = 0.0f;
 
     // CS

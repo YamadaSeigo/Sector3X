@@ -74,7 +74,9 @@ cbuffer GodRayCB : register(b10)
 
 cbuffer WetnessCB : register(b11)
 {
-    float2 gWetOriginXZ; // このWetnessRTがカバーするワールド原点(XZ)
+    float2 gWetOriginXZ_Snap; // スナップされたワールド原点(XZ)（スクロールの基準）
+    float2 gWetOriginXZ_Fine; // このWetnessRTがカバーするワールド原点(XZ)
+    float2 gWetOriginSubXZ; // スナップと実際の差分(XZ)。これを使ってワールド位置からテクセル位置を計算
     float gWetInvWorldSize; // 1 / カバーするワールド幅（例: 1/256m）
     float gWetStrength; // 全体強度
 
@@ -654,13 +656,14 @@ float4 main(VSOut i) : SV_Target
     float3 N = normalize(nr.rgb * 2.0f - 1.0f);
 
      // --- Wetness sample (world XZ -> wet UV) ---
-    float2 wetUV = (wp.xz - gWetOriginXZ) * gWetInvWorldSize;
+    float2 sub = (gWetOriginXZ_Fine - gWetOriginXZ_Snap) * gWetInvWorldSize;
+    float2 uvWet = (wp.xz - gWetOriginXZ_Snap) * gWetInvWorldSize - sub;
 
     // 範囲外は0
     float wet = 0.0f;
-    if (all(wetUV >= 0.0f) && all(wetUV <= 1.0f))
+    if (all(uvWet >= 0.0f) && all(uvWet <= 1.0f))
     {
-        wet = gWetness.SampleLevel(gPointSamp, wetUV, 0) * gWetStrength;
+        wet = gWetness.SampleLevel(gPointSamp, uvWet, 0) * gWetStrength;
     }
 
     // 上向き面だけ濡れやすく（壁の濡れを抑制）

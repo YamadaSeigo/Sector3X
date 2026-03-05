@@ -20,7 +20,7 @@ float gDebugAlpha = 0.5f;
 float gDebugLifeFade = 0.4f;
 
 float gDebugWetStrength = 0.4f;
-float gDebugWetDarken = 0.35f;
+float gDebugWetDarken = 1.0f;
 float gDebugWetSpecBoost = 0.2f;
 float gDebugWetFlatten = 0.6f;
 float gDebugWetMinNdotUp = 0.2f;
@@ -38,7 +38,7 @@ float gDebugWetFarFade = 0.02f;
 float gDebugSpeckleCellSize = 0.25f;
 float gDebugSpeckleDensity = 2.0f;
 float gDebugSpeckleAmount = 0.15f;
-float gDebugSpeckleTimeHz = 10.0f;
+float gDebugSpeckleTimeHz = 20.0f;
 
 #endif
 
@@ -302,9 +302,9 @@ void RainService::Commit(double deltaTime)
         };
 
         // CBへ
-        //wetnessBuf.gWetOriginXZ_Snap = mWetOriginXZ;   // ScrollCopyCS / UpdateCS 用
+        wetnessBuf.gWetOriginXZ_Snap = mWetOriginXZ;   // ScrollCopyCS / UpdateCS 用
         wetnessBuf.gWetOriginXZ = originFine;     // 合成PSのサンプリング用
-       // wetnessBuf.gWetOriginSubXZ = originSub;      // どちらか片方だけでもOK
+        wetnessBuf.gWetOriginSubXZ = originSub;      // どちらか片方だけでもOK
 
         // remainder は不要
         //mScrollRemainder = Math::Vec2f(0, 0);
