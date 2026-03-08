@@ -80,7 +80,7 @@ bool IsUnderOccluder(float3 posWS)
 
     float occ = gRainDepth.SampleLevel(gPointClamp, uv, 0);
 
-    // ndc.z を depth と同じ空間に（ここはあなたのdepth仕様に合わせる）
+    // ndc.z を depth と同じ空間に
     float z = ndc.z; // 例
 
     return (z > occ + gRainDepthBias);

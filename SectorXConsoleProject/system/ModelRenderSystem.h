@@ -547,7 +547,9 @@ public:
 						if (isRainOccluder)
 						{
 							float camDistSqrt = (Math::Vec2f(centerBS.x, centerBS.z) - Math::Vec2f(kp->cp.x, kp->cp.z)).lengthSquared();
-							if(camDistSqrt < kp->rainRadius2) cmd.viewMask |= PASS_3DMAIN_RAIN_DEPTH;
+							float bsRadiusSqrt = bsRadiusWS * bsRadiusWS;
+							if(camDistSqrt < kp->rainRadius2 + bsRadiusSqrt)
+								cmd.viewMask |= PASS_3DMAIN_RAIN_DEPTH;
 						}
 
 

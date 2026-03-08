@@ -5,8 +5,8 @@
 class RainService : public ECS::IUpdateService, public ECS::ICommitService
 {
 public:
-	constexpr inline static uint32_t DEPTH_MAP_SIZE = 512;
-    constexpr inline static uint32_t WETNESS_MAP_SIZE = 512;
+	constexpr inline static uint32_t DEPTH_MAP_SIZE = 2048;
+    constexpr inline static uint32_t WETNESS_MAP_SIZE = 256;
 
     struct SpawnCB
     {
@@ -66,13 +66,11 @@ public:
     struct WetnessCB
     {
 		Math::Vec2f gWetOriginXZ_Snap = {}; // このWetnessRTがカバーするスナップされたワールド原点(XZ),
-        Math::Vec2f gWetOriginXZ = {}; // このWetnessRTがカバーするワールド原点(XZ)
-		Math::Vec2f gWetOriginSubXZ = {}; // スナップとの差分(XZ, 0～ワールドサイズ)
         float gWetInvWorldSize = 0.0f; // 1 / カバーするワールド幅（例: 1/256m）
         float gWetStrength = 1.0f; // 全体強度
 
-        float gWetDarken = 1.0f; // 濡れで暗くする量(例: 0.35)
-        float gWetSpecBoost = 0.2f; // 疑似スペキュラ強度(例: 1.0)
+        float gWetDarken = 0.7f; // 濡れで暗くする量(例: 0.35)
+        float gWetSpecBoost = 0.1f; // 疑似スペキュラ強度(例: 1.0)
         float gWetFlatten = 0.6f; // 法線コントラスト抑制(例: 0.6)
         float gWetMinNdotUp = 0.2f; // 上面のみ濡らす閾値(例: 0.2)
 
@@ -83,8 +81,8 @@ public:
         Math::Vec2f gRainDirSS = {0.0f, -1.0f}; // スクリーン空間の雨方向（正規化）
         float gTime = 0.0f;
         float gDensity = 0.9f; // 粒密度
-        float gStrength = 0.4f; // 合成強度
-        float gDotSizeScale = 2.0f;
+        float gStrength = 1.0f; // 合成強度
+        float gDotSizeScale = 3.0f;
 
         float gNearThickZ = 30.0f;
         float gFarThickZ = 46.0f;
@@ -95,7 +93,7 @@ public:
         float gUpMax = 0.8f;
         float gFarFade = 0.02f;
 
-		float pad1 = {};
+		float gBlurRadiusTexels = 0.0f;
     };
 
     struct WetnessScrollCB
@@ -125,8 +123,8 @@ public:
         float gTimeSec; // 秒（継続的に増える）
 
         // --- 斑点（雨粒っぽいムラ）パラメータ ---
-        float gSpeckleCellSize = 0.25f; // 例: 0.25 (m) 斑点の“セル”サイズ
-        float gSpeckleDensity = 2.0f; // 例: 2.0  (大きいほど当たりやすい)
+        float gSpeckleCellSize = 0.01f; // 例: 0.25 (m) 斑点の“セル”サイズ
+        float gSpeckleDensity = 5.0f; // 例: 2.0  (大きいほど当たりやすい)
         float gSpeckleAmount = 0.15f; // 例: 0.15 (1回の当たりで足す濡れ量)
         float gSpeckleTimeHz = 20.0f; // 例: 10.0 (1秒に何回パターン更新するか)
     };
@@ -210,7 +208,7 @@ public:
 	ComPtr<ID3D11DepthStencilView> GetDepthMapDSV() const { return m_depthMapDSV; }
 	ComPtr<ID3D11ShaderResourceView> GetDepthMapSRV() const { return m_depthMapSRV; }
 
-    ComPtr<ID3D11ShaderResourceView> GetWetnessMapSRV() const { return m_WetNewSRV; }
+    ComPtr<ID3D11ShaderResourceView> GetWetnessMapSRV() const { return m_WetPrevSRV; }
 
 private:
 	Math::Matrix4x4f MakeDepthMapViewProjNoLock() const;
@@ -281,8 +279,11 @@ private:
     float    mWetWorldSize = 256.0f; // meters covered by the texture (square)
     Math::Vec2f mWetOriginXZ = { 0,0 }; // world-space origin of the texture
 
+    int32_t mWetOriginTexelX = 0;
+    int32_t mWetOriginTexelY = 0;
+
     float m_initWetnessForNewArea = 0.0f; //スクロールの初期化値
-    float m_dryRate = 0.3f;
+    float m_dryRate = 0.1f;
     float m_rainRate = 0.45f;
     float m_globalWet = 0.0f;
 

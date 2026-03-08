@@ -75,8 +75,6 @@ cbuffer GodRayCB : register(b10)
 cbuffer WetnessCB : register(b11)
 {
     float2 gWetOriginXZ_Snap; // スナップされたワールド原点(XZ)（スクロールの基準）
-    float2 gWetOriginXZ_Fine; // このWetnessRTがカバーするワールド原点(XZ)
-    float2 gWetOriginSubXZ; // スナップと実際の差分(XZ)。これを使ってワールド位置からテクセル位置を計算
     float gWetInvWorldSize; // 1 / カバーするワールド幅（例: 1/256m）
     float gWetStrength; // 全体強度
 
@@ -105,8 +103,13 @@ cbuffer WetnessCB : register(b11)
     float gUpMax;
     float gFarFade;
 
-    float padding0;
+    float gBlurRadiusTexels;
 }
+
+cbuffer CBRainMatrix : register(b12)
+{
+    row_major float4x4 gRainViewProj;
+};
 
 Texture2D gAlbedoAO : register(t11); // RGB: Albedo, A: Occlusion
 Texture2D gNormalRough : register(t12); // RGB: Normal, A: Roughness
@@ -116,6 +119,8 @@ Texture2D<float> gDepth : register(t14); // Depth
 Texture2D<float4> gLightAccum : register(t15);
 
 Texture2D<float> gWetness : register(t16);
+
+Texture2D<float> gRainDepth : register(t17);
 
 // 比較サンプラ（ShadowMapService が作っているもの）
 SamplerComparisonState gShadowSampler : register(s1);
@@ -620,6 +625,54 @@ float SplashFlickerDots(float2 uv, float viewZ)
     return dotMask * on * appear;
 }
 
+float SampleRainVisibility(float3 posWS)
+{
+    float4 h = mul(gRainViewProj, float4(posWS, 1.0f));
+    float3 ndc = h.xyz / h.w;
+
+    float2 uv;
+    uv.x = ndc.x * 0.5f + 0.5f;
+    uv.y = -ndc.y * 0.5f + 0.5f;
+
+    // マップ外は「遮蔽なし」扱い
+    if (any(uv < 0.0f) || any(uv > 1.0f))
+        return 1.0f;
+
+    float receiverZ = ndc.z;
+
+    // 1tap だと境界が硬いので 3x3 PCF で少しぼかす
+    uint w, hTex;
+    gRainDepth.GetDimensions(w, hTex);
+    float2 texel = 1.0f / float2((float) w, (float) hTex);
+
+    float occ = 0.0f;
+    [unroll]
+    for (int y = -1; y <= 1; ++y)
+    {
+        [unroll]
+        for (int x = -1; x <= 1; ++x)
+        {
+            float2 o = float2(x, y) * texel;
+            occ += gRainDepth.SampleLevel(gPointSamp, uv + o, 0);
+        }
+    }
+    occ /= 9.0f;
+
+    // receiverZ が occ より奥なら遮られている
+    float dz = receiverZ - occ;
+
+    // ここが境界のぼかし幅
+    const float start = 0.001f;
+    const float end = 0.04f;
+
+    // dz <= start なら visibility=1
+    // dz >= end   なら visibility=0
+    float visibility = 1.0f - smoothstep(start, end, dz);
+
+    return visibility;
+}
+
+
 float4 main(VSOut i) : SV_Target
 {
     float2 uv = i.uv;
@@ -655,15 +708,37 @@ float4 main(VSOut i) : SV_Target
     float3 albedo = albedoAO.rgb;
     float3 N = normalize(nr.rgb * 2.0f - 1.0f);
 
+    float3 rainTestPos = wp.xyz + float3(0.0f, 0.03f, 0.0f);
      // --- Wetness sample (world XZ -> wet UV) ---
-    float2 sub = (gWetOriginXZ_Fine - gWetOriginXZ_Snap) * gWetInvWorldSize;
-    float2 uvWet = (wp.xz - gWetOriginXZ_Snap) * gWetInvWorldSize - sub;
+    float2 uvWet = (wp.xz - gWetOriginXZ_Snap) * gWetInvWorldSize;
 
-    // 範囲外は0
+    float rainVisibility = SampleRainVisibility(rainTestPos);
+
+    // 境界だけノイズで崩す
+    {
+        float n = Hash12(floor(wp.xz * 3.0f));
+        n = n * 2.0f - 1.0f;
+
+        float edgeZone = 1.0f - abs(rainVisibility * 2.0f - 1.0f);
+        edgeZone = pow(edgeZone, 0.6f);
+        rainVisibility = saturate(rainVisibility + n * 0.15f * edgeZone);
+    }
+
     float wet = 0.0f;
     if (all(uvWet >= 0.0f) && all(uvWet <= 1.0f))
     {
-        wet = gWetness.SampleLevel(gPointSamp, uvWet, 0) * gWetStrength;
+        float wetRaw = gWetness.SampleLevel(gSampler, uvWet, 0) * gWetStrength;
+
+        // 完全遮蔽でも少し残す
+        float wetMask = lerp(0.4f, 1.0f, rainVisibility);
+
+        // 境界帯だけ少し持ち上げる
+        float edgeBand = smoothstep(0.0f, 0.35f, rainVisibility) *
+                 (1.0f - smoothstep(0.65f, 1.0f, rainVisibility));
+
+        wet = wetRaw * wetMask;
+        wet += wetRaw * 0.45f * edgeBand;
+        wet = min(wet, wetRaw);
     }
 
     // 上向き面だけ濡れやすく（壁の濡れを抑制）
@@ -680,8 +755,6 @@ float4 main(VSOut i) : SV_Target
     // 光が“来る”方向は -gSunDirectionWS として扱う
    // 最適化版（gSunDirectionWS を WS で正規化して渡す前提）
     float3 L = -gSunDirectionWS;
-
-
 
     // 通常の N・L
     float ndl = saturate(dot(N, L));
@@ -769,28 +842,50 @@ float4 main(VSOut i) : SV_Target
         color += gGodRayTint * god * fogVis;
     }
 
-    float viewZ = LinearizeDepth(depth01);
-    float upMask = UpMask(N);
-    int rpx = RadiusByDistance(viewZ);
 
-    // 近距離ほど太い “深度差*上向き” マスク
-    float depthUpDilated = DilateDepthUpMask(uv, upMask, rpx);
+    {
+        float viewZ = LinearizeDepth(depth01);
+        float upMask = UpMask(N);
+        int rpx = RadiusByDistance(viewZ);
 
-    // normal差分は補助（必要なら）
-    float nEdge = NormalEdge(uv, N);
+        // 近距離ほど太い “深度差*上向き” マスク
+        float depthUpDilated = DilateDepthUpMask(uv, upMask, rpx);
 
-    // 最終マスク（深度差は必須）
-    float edgeMask = saturate(depthUpDilated * (1.0 + nEdge * 0.5f/*gUseNormalBoost*/));
+        // normal差分は補助（必要なら）
+        float nEdge = NormalEdge(uv, N);
 
-    // 粒（距離でサイズも変えるならここに viewZ/depth を渡す）
-    float splash = edgeMask * SplashFlickerDots(uv, depth01);
+        // 最終マスク（深度差は必須）
+        float edgeMask = saturate(depthUpDilated * (1.0 + nEdge * 0.5f /*gUseNormalBoost*/));
 
-    // 遠方は薄く（おすすめ）
-    splash *= saturate(1.0f - viewZ * gFarFade);
+        // 粒（距離でサイズも変えるならここに viewZ/depth を渡す）
+        float splash = edgeMask * SplashFlickerDots(uv, viewZ);
 
-    color += float3(1.0f, 1.0f, 1.0f) * splash * gStrength;
+        // 遠方は薄く
+        splash *= saturate(1.0f - viewZ * gFarFade) * rainVisibility;
 
-    //color = lerp(color, float3(1.0f, 0.0f, 0.0f), edgeMask); // エッジを赤く強調（Debug用）
+        // 太陽光
+        float splashNdotL = saturate(dot(N, L));
+        float3 sunLight =
+        gSunColor * (gSunIntensity * splashNdotL * shadowMul);
+
+        // 環境光
+        float3 ambientLight =
+        gAmbientColor * gAmbientIntensity;
+
+        // splash 用の最終ライト
+        float3 splashLight =
+            ambientLight * 0.5f +
+            sunLight * 0.8f +
+            plAdd * 2.0f;
+
+        // 暗すぎると完全に消えるので少しだけ下限
+        //splashLight = max(splashLight, float3(0.02f, 0.02f, 0.02f));
+
+        // 必要なら強すぎるHDRを軽く抑える
+        // splashLight = splashLight / (1.0f + splashLight);
+
+        color += splashLight * splash * gStrength;
+    }
 
     return float4(color, 1.0f);
 }

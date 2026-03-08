@@ -19,24 +19,25 @@ float gDebugRainSpeedToLength = 0.02f;
 float gDebugAlpha = 0.5f;
 float gDebugLifeFade = 0.4f;
 
-float gDebugWetStrength = 0.4f;
-float gDebugWetDarken = 1.0f;
-float gDebugWetSpecBoost = 0.2f;
+float gDebugWetStrength = 1.0f;
+float gDebugWetDarken = 0.7f;
+float gDebugWetSpecBoost = 0.1f;
 float gDebugWetFlatten = 0.6f;
 float gDebugWetMinNdotUp = 0.2f;
 
 float gDebugWetEdgeThreshold = 2.0f;
 float gDebugWetEdgeSharpness = 0.2f;
-float gDebugWetDensity = 0.8f;
-float gDebugWetDotSizeScale = 2.0f;
+float gDebugWetDensity = 0.9f;
+float gDebugWetStrengthComposite = 1.0f;
+float gDebugWetDotSizeScale = 3.0f;
 float gDebugWetNearThickZ = 30.0f;
 float gDebugWetFarThickZ = 46.0f;
 float gDebugWetUpMin = 0.2f;
 float gDebugWetUpMax = 0.8f;
 float gDebugWetFarFade = 0.02f;
 
-float gDebugSpeckleCellSize = 0.25f;
-float gDebugSpeckleDensity = 2.0f;
+float gDebugSpeckleCellSize = 0.01f;
+float gDebugSpeckleDensity = 5.0f;
 float gDebugSpeckleAmount = 0.15f;
 float gDebugSpeckleTimeHz = 20.0f;
 
@@ -223,20 +224,21 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "alpha", &gDebugAlpha, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "lifeFade", &gDebugLifeFade, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetStrength", &gDebugWetStrength, 0.0f, 5.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDarken", &gDebugWetDarken, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDarken", &gDebugWetDarken, 0.0f, 5.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetSpecBoost", &gDebugWetSpecBoost, 0.0f, 5.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFlatten", &gDebugWetFlatten, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetMinNdotUp", &gDebugWetMinNdotUp, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetEdgeThreshold", &gDebugWetEdgeThreshold, 0.0f, 10.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetEdgeSharpness", &gDebugWetEdgeSharpness, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDensity", &gDebugWetDensity, 0.0f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetStrengthComposite", &gDebugWetStrengthComposite, 0.0f, 5.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDotSizeScale", &gDebugWetDotSizeScale, 0.1f, 10.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetNearThickZ", &gDebugWetNearThickZ, 0.1f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFarThickZ", &gDebugWetFarThickZ, 1.0f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetUpMin", &gDebugWetUpMin, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetUpMax", &gDebugWetUpMax, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFarFade", &gDebugWetFarFade, 0.0f, 1.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "speckleCellSize", &gDebugSpeckleCellSize, 0.01f, 1.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Rain", "speckleCellSize", &gDebugSpeckleCellSize, 0.0001f, 1.0f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "speckleDensity", &gDebugSpeckleDensity, 0.1f, 10.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "speckleAmount", &gDebugSpeckleAmount, 0.01f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "speckleTimeHz", &gDebugSpeckleTimeHz, 0.1f, 60.0f, 0.1f);
@@ -269,15 +271,14 @@ void RainService::Commit(double deltaTime)
 		wetnessBuf.gTime = m_elapsedTime;
 		wetnessBuf.gWetInvWorldSize = 1.0f / mWetWorldSize;
 
+        const auto& cameraPosWS = spawnBuf.gCamPos;
+
         const float metersPerTexelX = mWetWorldSize / float(mWetW);
         const float metersPerTexelY = mWetWorldSize / float(mWetH);
 
-        const auto& cameraPosWS = spawnBuf.gCamPos;
-
-        // 連続（表示したい）origin
         Math::Vec2f originFine{
-            cameraPosWS.x - mWetWorldSize * 0.5f,
-            cameraPosWS.z - mWetWorldSize * 0.5f
+           cameraPosWS.x - mWetWorldSize * 0.5f,
+           cameraPosWS.z - mWetWorldSize * 0.5f
         };
 
         // スクロール用のスナップorigin（更新の安定化）
@@ -285,15 +286,19 @@ void RainService::Commit(double deltaTime)
         originSnap.x = std::floor(originFine.x / metersPerTexelX) * metersPerTexelX;
         originSnap.y = std::floor(originFine.y / metersPerTexelY) * metersPerTexelY;
 
-        // dx/dy（整数texel）
-        const float dxWorld = originSnap.x - mWetOriginXZ.x;
-        const float dzWorld = originSnap.y - mWetOriginXZ.y;
+        // “欲しいsnap”をテクセル整数で決める
+        int32_t newTx = (int32_t)std::floor(originFine.x / metersPerTexelX);
+        int32_t newTy = (int32_t)std::floor(originFine.y / metersPerTexelY);
 
-        int dxTex = (int)std::round(dxWorld / metersPerTexelX);
-        int dyTex = (int)std::round(dzWorld / metersPerTexelY);
+        // スクロール量も整数差分で確定（丸め誤差なし）
+        int32_t dxTex = newTx - mWetOriginTexelX;
+        int32_t dyTex = newTy - mWetOriginTexelY;
 
-        // 更新用originはスナップに固定
-        mWetOriginXZ = originSnap;
+        // snap原点を更新
+        mWetOriginTexelX = newTx;
+        mWetOriginTexelY = newTy;
+        mWetOriginXZ.x = float(mWetOriginTexelX) * metersPerTexelX;
+        mWetOriginXZ.y = float(mWetOriginTexelY) * metersPerTexelY;
 
         // 表示用の sub-texel オフセット（0..1texel 未満）
         Math::Vec2f originSub{
@@ -302,12 +307,13 @@ void RainService::Commit(double deltaTime)
         };
 
         // CBへ
-        wetnessBuf.gWetOriginXZ_Snap = mWetOriginXZ;   // ScrollCopyCS / UpdateCS 用
-        wetnessBuf.gWetOriginXZ = originFine;     // 合成PSのサンプリング用
-        wetnessBuf.gWetOriginSubXZ = originSub;      // どちらか片方だけでもOK
+        wetnessBuf.gWetOriginXZ_Snap = mWetOriginXZ; // Snap
 
-        // remainder は不要
-        //mScrollRemainder = Math::Vec2f(0, 0);
+        float metersPerTexel = mWetWorldSize / DEPTH_MAP_SIZE;
+        float desiredBlurMeters = 10.0f;
+        float blurRadiusTexels = desiredBlurMeters / metersPerTexel;
+
+        wetnessBuf.gBlurRadiusTexels = blurRadiusTexels;
 
         wetnessScrollBuf.scrollTexel[0] = dxTex;
         wetnessScrollBuf.scrollTexel[1] = dyTex;
@@ -322,7 +328,7 @@ void RainService::Commit(double deltaTime)
         wetnessUpdateBuf.texSize[0] = mWetW;
         wetnessUpdateBuf.texSize[1] = mWetH;
 
-		wetnessUpdateBuf.gWetOriginXZ = originFine;
+		wetnessUpdateBuf.gWetOriginXZ = mWetOriginXZ;
 		wetnessUpdateBuf.gWetWorldSize = mWetWorldSize;
 		wetnessUpdateBuf.gTimeSec = m_elapsedTime;
 
@@ -347,7 +353,7 @@ void RainService::Commit(double deltaTime)
 		wetnessBuf.gEdgeThreshold = gDebugWetEdgeThreshold;
 		wetnessBuf.gEdgeSharpness = gDebugWetEdgeSharpness;
 		wetnessBuf.gDensity = gDebugWetDensity;
-		wetnessBuf.gStrength = gDebugWetStrength;
+		wetnessBuf.gStrength = gDebugWetStrengthComposite;
 		wetnessBuf.gDotSizeScale = gDebugWetDotSizeScale;
 		wetnessBuf.gNearThickZ = gDebugWetNearThickZ;
 		wetnessBuf.gFarThickZ = gDebugWetFarThickZ;

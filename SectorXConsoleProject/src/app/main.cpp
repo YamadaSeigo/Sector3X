@@ -384,6 +384,8 @@ int main(void)
 				terrainRes.heightMapSRV,
 				rainService.GetDepthMapDSV()
 			);
+
+			rainService.UpdateWetnessCS(deviceContext);
 		};
 
 	auto drawTerrainColor = [](uint64_t frame)
@@ -528,8 +530,6 @@ int main(void)
 
 			//‰J‚ÌƒXƒ|[ƒ“‚Æ•`‰æˆ—
 			rainService.SpawnDrawParticles(deviceContext, &tiledLightData);
-
-			rainService.UpdateWetnessCS(deviceContext);
 		};
 
 	renderService->SetCustomUpdateFunction(terrainUpdateFunc);
