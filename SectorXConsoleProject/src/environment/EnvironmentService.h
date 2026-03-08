@@ -2,6 +2,7 @@
 
 #include <SectorFW/Debug/UIBus.h>
 #include "graphics/RenderDefine.h"
+#include "RainService.h"
 
 struct alignas(16) FogCB
 {
@@ -97,6 +98,60 @@ struct TimeOfDayKey
 	// 必要なら他にも (gFogNoiseAmount, gFogGroundBand など)
 };
 
+enum class WeatherType : uint32_t
+{
+	Clear = 0,
+	Rain = 1,
+};
+
+struct WeatherKey
+{
+	// Fog
+	Math::Vec3f fogColorMul = { 1.0f, 1.0f, 1.0f };
+	float fogStartMul = 1.0f;
+	float fogEndMul = 1.0f;
+	float heightFogDensityAdd = 0.0f;
+
+	// Lighting
+	Math::Vec3f ambientColorMul = { 1.0f, 1.0f, 1.0f };
+	float ambientIntensityMul = 1.0f;
+	Math::Vec3f sunColorMul = { 1.0f, 1.0f, 1.0f };
+	float sunIntensityMul = 1.0f;
+
+	// GodRay
+	Math::Vec3f godRayTintMul = { 1.0f, 1.0f, 1.0f };
+	float godRayIntensityMul = 1.0f;
+
+	// Rain
+	float rainSpawnPerFrame = 0.0f;
+	float rainAlpha = 0.0f;
+	float rainRate = 0.0f;
+	float globalWet = 0.0f;
+	float dryRate = 0.1f;
+	float wetDarken = 0.0f;
+	float wetSpecBoost = 0.0f;
+	float wetFlatten = 0.0f;
+};
+
+struct EnvironmentComposite
+{
+	TimeOfDayKey tod;
+
+	Math::Vec3f fogColor;
+	float fogStart;
+	float fogEnd;
+	float heightFogDensity;
+
+	Math::Vec3f ambientColor;
+	float ambientIntensity;
+
+	Math::Vec3f sunColor;
+	float sunIntensity;
+
+	Math::Vec3f godRayTint;
+	float godRayIntensity;
+};
+
 class EnvironmentService : public ECS::IUpdateService
 {
 public:
@@ -190,6 +245,8 @@ public:
 		BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayDensity, 0.0f, 1.0f, 0.001f);
 		BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayWeight, 0.0f, 0.1f, 0.0001f);
 		BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayMaxDepth, 0.0f, 1.0f, 0.0001f);
+
+		BIND_DEBUG_SLIDER_FLOAT("Weather", "targetRainIntensity", &m_targetRainIntensity, 0.0f, 1.0f, 0.01f);
 	}
 
 	void CalcCurrentTimeOfDayKey() noexcept {
@@ -220,32 +277,111 @@ public:
 		m_sunDirection = Math::Vec3f{ 0.0f, -sin(theta), -cos(theta) }.normalized();
 	}
 
+	EnvironmentComposite BuildCompositeEnvironment() const noexcept
+	{
+		EnvironmentComposite out{};
+		out.tod = currentTimeOfDayKey;
+
+		const float rain01 = std::clamp(m_currentRainIntensity, 0.0f, 1.0f);
+		const float rainVis = rain01 * rain01; // 見た目系は後半強く
+		const float rainLight = rain01;        // 光量は普通に線形
+		const float rainFog = rain01;          // fogは基本線形
+
+		out.fogColor = Math::Lerp(
+			currentTimeOfDayKey.fogColor,
+			currentTimeOfDayKey.fogColor * m_rainWeather.fogColorMul,
+			rainFog);
+
+		out.fogStart = std::lerp(
+			currentTimeOfDayKey.fogStart,
+			currentTimeOfDayKey.fogStart * m_rainWeather.fogStartMul,
+			rainFog);
+
+		out.fogEnd = std::lerp(
+			currentTimeOfDayKey.fogEnd,
+			currentTimeOfDayKey.fogEnd * m_rainWeather.fogEndMul,
+			rainFog);
+
+		out.heightFogDensity =
+			currentTimeOfDayKey.heightFogDensity +
+			m_rainWeather.heightFogDensityAdd * rainFog;
+
+		out.ambientColor = Math::Lerp(
+			currentTimeOfDayKey.ambientColor,
+			currentTimeOfDayKey.ambientColor * m_rainWeather.ambientColorMul,
+			rainLight);
+
+		out.ambientIntensity = std::lerp(
+			currentTimeOfDayKey.ambientIntensity,
+			currentTimeOfDayKey.ambientIntensity * m_rainWeather.ambientIntensityMul,
+			rainLight);
+
+		out.sunColor = Math::Lerp(
+			currentTimeOfDayKey.sunColor,
+			currentTimeOfDayKey.sunColor * m_rainWeather.sunColorMul,
+			rainLight);
+
+		out.sunIntensity = std::lerp(
+			currentTimeOfDayKey.sunIntensity,
+			currentTimeOfDayKey.sunIntensity * m_rainWeather.sunIntensityMul,
+			rainLight);
+
+		out.godRayTint = Math::Lerp(
+			currentTimeOfDayKey.godRayTint,
+			currentTimeOfDayKey.godRayTint * m_rainWeather.godRayTintMul,
+			rainVis);
+
+		out.godRayIntensity = std::lerp(
+			currentTimeOfDayKey.godRayIntensity,
+			currentTimeOfDayKey.godRayIntensity * m_rainWeather.godRayIntensityMul,
+			rainVis);
+
+		return out;
+	}
+
 	void PreUpdate(double deltaTime) override {
 
 		slot = (slot + 1) % Graphics::RENDER_BUFFER_COUNT;
 
+		const float dt = static_cast<float>(deltaTime);
+
 		if (isUpdateTimeOfDay)
 		{
-			m_timeOfDay = std::fmod(m_timeOfDay + static_cast<float>(deltaTime), m_dayLengthSec);
-
+			m_timeOfDay = std::fmod(m_timeOfDay + dt, m_dayLengthSec);
 			CalcCurrentTimeOfDayKey();
+		}
 
-			// Update fog parameters
-			{
-				std::lock_guard lock(updateFogMutex);
-				cpuFogBuf.gFogColor = currentTimeOfDayKey.fogColor;
-				cpuFogBuf.gFogStart = currentTimeOfDayKey.fogStart;
-				cpuFogBuf.gFogEnd = currentTimeOfDayKey.fogEnd;
-				cpuFogBuf.gHeightFogDensity = currentTimeOfDayKey.heightFogDensity;
-				isUpdateFogBuffer = true;
-			}
-			// Update god ray parameters
-			{
-				std::lock_guard lock(updateGodRayMutex);
-				cpuGodRayBuf.gGodRayTint = currentTimeOfDayKey.godRayTint;
-				cpuGodRayBuf.gGodRayIntensity = currentTimeOfDayKey.godRayIntensity;
-				isUpdateGodRayBuffer = true;
-			}
+		// 雨強度を目標へ漸近
+		{
+			const float speed = (m_targetRainIntensity > m_currentRainIntensity)
+				? m_rainInSpeed
+				: m_rainOutSpeed;
+
+			m_currentRainIntensity = Approach(
+				m_currentRainIntensity,
+				m_targetRainIntensity,
+				speed * dt);
+		}
+
+		// 時間帯 + 天候合成
+		const auto env = BuildCompositeEnvironment();
+
+		// Fog更新
+		{
+			std::lock_guard lock(updateFogMutex);
+			cpuFogBuf.gFogColor = env.fogColor;
+			cpuFogBuf.gFogStart = env.fogStart;
+			cpuFogBuf.gFogEnd = env.fogEnd;
+			cpuFogBuf.gHeightFogDensity = env.heightFogDensity;
+			isUpdateFogBuffer = true;
+		}
+
+		// GodRay更新
+		{
+			std::lock_guard lock(updateGodRayMutex);
+			cpuGodRayBuf.gGodRayTint = env.godRayTint;
+			cpuGodRayBuf.gGodRayIntensity = env.godRayIntensity;
+			isUpdateGodRayBuffer = true;
 		}
 
 		if (isUpdateFogBuffer)
@@ -283,6 +419,32 @@ public:
 		return currentTimeOfDayKey;
 	}
 
+	RainWeatherParams BuildRainParams() const noexcept
+	{
+		RainWeatherParams p{};
+
+		const float rain01 = std::clamp(m_currentRainIntensity, 0.0f, 1.0f);
+
+		// 粒子量は弱雨で少なめ、後半で効くように
+		float rainSpawn = rain01 * rain01;
+
+		p.spawnPerFrame = static_cast<uint32_t>(std::lerp(0.0f, 300.0f, rainSpawn));
+		p.rainRate = std::lerp(0.0f, 0.8f, rain01);
+		p.globalWet = std::lerp(0.0f, 1.0f, rain01);
+		p.dryRate = std::lerp(0.12f, 0.01f, rain01);
+
+		p.particleAlpha = std::lerp(0.0f, 0.6f, rain01);
+		p.wetDarken = std::lerp(0.0f, 0.8f, rain01);
+		p.wetSpecBoost = std::lerp(0.0f, 0.2f, rain01);
+		p.wetFlatten = std::lerp(0.0f, 0.7f, rain01);
+
+		p.splashStrength = std::lerp(0.0f, 1.0f, rain01);
+		p.splashDensity = std::lerp(0.0f, 0.98f, rain01);
+		p.splashScale = std::lerp(0.0f, 3.0f, rain01);
+
+		return p;
+	}
+
 	/**
 	 * @brief　太陽からの方向を取得
 	 */
@@ -317,6 +479,13 @@ private:
 		std::sort(timeOfDayKeys.begin(), timeOfDayKeys.end());
 	}
 
+	static float Approach(float current, float target, float delta)
+	{
+		if (current < target) return (std::min)(current + delta, target);
+		if (current > target) return (std::max)(current - delta, target);
+		return current;
+	}
+
 private:
 	Graphics::DX11::BufferManager* bufferMgr = nullptr;
 	FogCB cpuFogBuf;
@@ -343,6 +512,39 @@ private:
 	bool isUpdateGodRayBuffer = false;
 
 	bool isUpdateTimeOfDay = true;
+
+	WeatherType m_weatherType = WeatherType::Clear;
+
+	float m_currentRainIntensity = 0.0f; // 0..1
+	float m_targetRainIntensity = 0.0f; // 0..1
+
+	float m_rainInSpeed = 0.15f; // 秒あたり
+	float m_rainOutSpeed = 0.08f; // 晴れる方は少し遅めでもよい
+
+	WeatherKey m_clearWeather{};
+	WeatherKey m_rainWeather{
+		.fogColorMul = {0.75f, 0.78f, 0.82f},
+		.fogStartMul = 0.45f,
+		.fogEndMul = 0.55f,
+		.heightFogDensityAdd = 0.01f,
+
+		.ambientColorMul = {0.82f, 0.84f, 0.88f},
+		.ambientIntensityMul = 0.75f,
+		.sunColorMul = {0.85f, 0.88f, 0.92f},
+		.sunIntensityMul = 0.35f,
+
+		.godRayTintMul = {0.9f, 0.9f, 0.95f},
+		.godRayIntensityMul = 0.1f,
+
+		.rainSpawnPerFrame = 256.0f,
+		.rainAlpha = 0.8f,
+		.rainRate = 0.8f,
+		.globalWet = 1.0f,
+		.dryRate = 0.01f,
+		.wetDarken = 0.9f,
+		.wetSpecBoost = 0.35f,
+		.wetFlatten = 0.7f
+	};
 
 public:
 	STATIC_SERVICE_TAG

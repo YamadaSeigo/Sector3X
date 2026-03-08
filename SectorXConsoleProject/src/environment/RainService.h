@@ -2,6 +2,24 @@
 
 #include "RainParticlePool.h"
 
+struct RainWeatherParams
+{
+    uint32_t spawnPerFrame = 0;
+    float rainRate = 0.0f;
+    float globalWet = 0.0f;
+    float dryRate = 0.1f;
+
+    float particleAlpha = 0.0f;
+
+    float wetDarken = 0.0f;
+    float wetSpecBoost = 0.0f;
+    float wetFlatten = 0.0f;
+
+	float splashStrength = 0.0f;
+    float splashDensity = 0.0f;
+	float splashScale = 0.0f;
+};
+
 class RainService : public ECS::IUpdateService, public ECS::ICommitService
 {
 public:
@@ -154,6 +172,24 @@ public:
     void SpawnDrawParticles(ID3D11DeviceContext* ctx, RainParticlePool::TiledLightData* lightData);
 
     void UpdateWetnessCS(ID3D11DeviceContext* ctx);
+
+    void ApplyWeatherParams(const RainWeatherParams& p, uint32_t slot)
+    {
+        std::lock_guard lock(bufMutex);
+
+        m_spawnPerFrame = p.spawnPerFrame;
+        m_rainRate = p.rainRate;
+        m_globalWet = p.globalWet;
+        m_dryRate = p.dryRate;
+
+        m_cpuRenderBuffer[slot].gAlpha = p.particleAlpha;
+        m_cpuWetnessBuffer[slot].gWetDarken = p.wetDarken;
+        m_cpuWetnessBuffer[slot].gWetSpecBoost = p.wetSpecBoost;
+        m_cpuWetnessBuffer[slot].gWetFlatten = p.wetFlatten;
+		m_cpuWetnessBuffer[slot].gStrength = p.splashStrength;
+		m_cpuWetnessBuffer[slot].gDensity = p.splashDensity;
+		m_cpuWetnessBuffer[slot].gDotSizeScale = p.splashScale;
+    }
 
     void SetCameraPos(const Math::Vec3f pos) {
         std::lock_guard lock(bufMutex);

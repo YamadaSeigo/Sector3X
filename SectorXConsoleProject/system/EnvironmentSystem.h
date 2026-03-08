@@ -67,16 +67,20 @@ public:
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
 		NoDeletePtr<TimerService> timerService)
 	{
+		auto slot = renderService->GetProduceSlot();
+
 		//草のバッファの更新
-		windService->UpdateBufferToGPU(renderService->GetProduceSlot());
+		windService->UpdateBufferToGPU(slot);
 
 		Math::Vec3f windDir;
 		float windSpeed;
 		windService->GetWindDirAndSpeed(windDir, windSpeed);
 
 		environmentService->SetWindDirSpeed(Math::Vec2f{ windDir.x, windDir.z }.normalized(), windSpeed, timerService->GetDeltaTime());
+		auto rainParams = environmentService->BuildRainParams();
 
 		rainService->SetWind(windDir * windSpeed);
+		rainService->ApplyWeatherParams(rainParams, slot);
 
 		const auto& timeOfDayKey = environmentService->GetCurrentTimeOfDayKey();
 		Math::Vec3f sunDirWS = environmentService->GetSunDirection();

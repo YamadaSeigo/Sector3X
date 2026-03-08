@@ -16,20 +16,13 @@ float gDebugRainBaseLength = 0.1f;
 float gDebugRainBaseWidth = 0.025f;
 
 float gDebugRainSpeedToLength = 0.02f;
-float gDebugAlpha = 0.5f;
 float gDebugLifeFade = 0.4f;
 
 float gDebugWetStrength = 1.0f;
-float gDebugWetDarken = 0.7f;
-float gDebugWetSpecBoost = 0.1f;
-float gDebugWetFlatten = 0.6f;
 float gDebugWetMinNdotUp = 0.2f;
 
 float gDebugWetEdgeThreshold = 2.0f;
 float gDebugWetEdgeSharpness = 0.2f;
-float gDebugWetDensity = 0.9f;
-float gDebugWetStrengthComposite = 1.0f;
-float gDebugWetDotSizeScale = 3.0f;
 float gDebugWetNearThickZ = 30.0f;
 float gDebugWetFarThickZ = 46.0f;
 float gDebugWetUpMin = 0.2f;
@@ -221,18 +214,11 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "baseLength", &gDebugRainBaseLength, 0.0f, 1.0f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "baseWidth", &gDebugRainBaseWidth, 0.0f, 1.0f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "speedToLength", &gDebugRainSpeedToLength, 0.0f, 0.1f, 0.001f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "alpha", &gDebugAlpha, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "lifeFade", &gDebugLifeFade, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetStrength", &gDebugWetStrength, 0.0f, 5.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDarken", &gDebugWetDarken, 0.0f, 5.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetSpecBoost", &gDebugWetSpecBoost, 0.0f, 5.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFlatten", &gDebugWetFlatten, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetMinNdotUp", &gDebugWetMinNdotUp, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetEdgeThreshold", &gDebugWetEdgeThreshold, 0.0f, 10.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetEdgeSharpness", &gDebugWetEdgeSharpness, 0.0f, 1.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDensity", &gDebugWetDensity, 0.0f, 1.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetStrengthComposite", &gDebugWetStrengthComposite, 0.0f, 5.0f, 0.01f);
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetDotSizeScale", &gDebugWetDotSizeScale, 0.1f, 10.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetNearThickZ", &gDebugWetNearThickZ, 0.1f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetFarThickZ", &gDebugWetFarThickZ, 1.0f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "wetUpMin", &gDebugWetUpMin, 0.0f, 1.0f, 0.01f);
@@ -343,18 +329,11 @@ void RainService::Commit(double deltaTime)
 		renderBuf.gBaseLength = gDebugRainBaseLength;
 		renderBuf.gBaseWidth = gDebugRainBaseWidth;
 		renderBuf.gSpeedToLength = gDebugRainSpeedToLength;
-		renderBuf.gAlpha = gDebugAlpha;
 		renderBuf.gLifeFade = gDebugLifeFade;
 		wetnessBuf.gWetStrength = gDebugWetStrength;
-		wetnessBuf.gWetDarken = gDebugWetDarken;
-		wetnessBuf.gWetSpecBoost = gDebugWetSpecBoost;
-		wetnessBuf.gWetFlatten = gDebugWetFlatten;
 		wetnessBuf.gWetMinNdotUp = gDebugWetMinNdotUp;
 		wetnessBuf.gEdgeThreshold = gDebugWetEdgeThreshold;
 		wetnessBuf.gEdgeSharpness = gDebugWetEdgeSharpness;
-		wetnessBuf.gDensity = gDebugWetDensity;
-		wetnessBuf.gStrength = gDebugWetStrengthComposite;
-		wetnessBuf.gDotSizeScale = gDebugWetDotSizeScale;
 		wetnessBuf.gNearThickZ = gDebugWetNearThickZ;
 		wetnessBuf.gFarThickZ = gDebugWetFarThickZ;
 		wetnessBuf.gUpMin = gDebugWetUpMin;
