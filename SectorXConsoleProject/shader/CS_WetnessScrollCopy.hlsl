@@ -2,9 +2,9 @@ cbuffer WetnessScrollCB : register(b0)
 {
     int2 gScrollTexel; // New(x,y) = Prev(x + dx, y + dy)
     float gInitWetness; // 新規領域の初期値（0 or GlobalWetness）
-    
+
     float pad1;
-    
+
     uint2 gTexSize; // (W,H)
 
     uint2 pad2;

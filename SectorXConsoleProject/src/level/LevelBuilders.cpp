@@ -1238,8 +1238,11 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					CModel modelComp{ modelAssetHandle[WoodFence] };
 					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 
+					Math::AABB3f boundsWS = modelBounds[WoodFence];
+					boundsWS += fence.position; // ƒ[ƒ‹ƒhˆÊ’u‚ÉˆÚ“®
+
 					auto id = levelSession.AddStaticBoundsEntity(
-						modelBounds[WoodFence],
+						boundsWS,
 						CTransform{ fence.position, rot, Math::Vec3f(1.0f, 1.0f,1.0f) },
 						modelComp,
 						CColor{ {1.0f,1.0f,1.0f,1.0f} },
@@ -1316,7 +1319,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			// ‰ó‚ê‚½“ƒ¶¬
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Ruins/BreakTower/RuinBreakTowerA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				CModel modelComp{ ruinBreakTowerModelHandle }; 
+				CModel modelComp{ ruinBreakTowerModelHandle };
 				modelComp.flags |= (uint16_t)EModelFlag::CastShadow | (uint16_t)EModelFlag::RainOccluder;
 				addGlobalEntityWithBody({ 0.4f, 0.62f }, -4.0f, modelComp, shape);
 			}

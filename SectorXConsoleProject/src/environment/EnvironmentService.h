@@ -98,11 +98,29 @@ struct TimeOfDayKey
 	// •K—v‚È‚ç‘¼‚É‚à (gFogNoiseAmount, gFogGroundBand ‚È‚Ç)
 };
 
-enum class WeatherType : uint32_t
+enum class WeatherState : uint32_t
 {
 	Clear = 0,
-	Rain = 1,
+	Drizzle = 1,
+	Rain = 2,
+	HeavyRain = 3,
 };
+
+struct WeatherTransitionWeights
+{
+	float toClear = 0.0f;
+	float toDrizzle = 0.0f;
+	float toRain = 0.0f;
+	float toHeavyRain = 0.0f;
+};
+
+struct WeatherStateDesc
+{
+	float minStaySec = 30.0f;
+	float maxStaySec = 60.0f;
+	float targetRainIntensity = 0.0f;
+};
+
 
 struct WeatherKey
 {
@@ -261,6 +279,41 @@ public:
 
 	RainWeatherParams BuildRainParams() const noexcept;
 
+	void EnableWeatherAutoTransition(bool enable) noexcept {
+		m_enableWeatherAutoTransition = enable;
+	}
+
+	void EnableWeatherPerlinAssist(bool enable) noexcept {
+		m_enableWeatherPerlinAssist = enable;
+	}
+
+	void SetRainTargetIntensity(float v) noexcept {
+		m_targetRainIntensity = Math::saturate(v);
+	}
+
+	float GetRainTargetIntensity() const noexcept {
+		return m_targetRainIntensity;
+	}
+
+	float GetRainCurrentIntensity() const noexcept {
+		return m_currentRainIntensity;
+	}
+
+	WeatherState GetWeatherState() const noexcept {
+		return m_weatherState;
+	}
+
+	void SetWeatherStateImmediate(WeatherState state) noexcept
+	{
+		m_weatherState = state;
+		m_targetRainIntensity = GetTargetRainIntensity(state);
+		m_currentRainIntensity = m_targetRainIntensity;
+		m_weatherStateElapsed = 0.0f;
+		m_nextWeatherDecisionSec = RandomRange(
+			GetWeatherStateDesc(state).minStaySec,
+			GetWeatherStateDesc(state).maxStaySec);
+	}
+
 	/**
 	 * @brief@‘¾—z‚©‚ç‚Ì•ûŒü‚ğæ“¾
 	 */
@@ -302,6 +355,96 @@ private:
 		return current;
 	}
 
+	WeatherStateDesc GetWeatherStateDesc(WeatherState s) const noexcept
+	{
+		switch (s)
+		{
+		default:
+		case WeatherState::Clear:
+			return { 40.0f, 120.0f, 0.0f };
+
+		case WeatherState::Drizzle:
+			return { 20.0f, 60.0f, 0.22f };
+
+		case WeatherState::Rain:
+			return { 35.0f, 100.0f, 0.60f };
+
+		case WeatherState::HeavyRain:
+			return { 20.0f, 50.0f, 1.0f };
+		}
+	}
+
+	float GetTargetRainIntensity(WeatherState s) const noexcept
+	{
+		return GetWeatherStateDesc(s).targetRainIntensity;
+	}
+
+	WeatherTransitionWeights GetBaseWeights(WeatherState s) const noexcept
+	{
+		switch (s)
+		{
+		default:
+		case WeatherState::Clear:
+			return { 0.78f, 0.22f, 0.0f, 0.0f };
+
+		case WeatherState::Drizzle:
+			return { 0.20f, 0.55f, 0.25f, 0.0f };
+
+		case WeatherState::Rain:
+			return { 0.0f, 0.25f, 0.55f, 0.20f };
+
+		case WeatherState::HeavyRain:
+			return { 0.0f, 0.0f, 0.68f, 0.32f };
+		}
+	}
+
+	float Random01() noexcept
+	{
+		return std::uniform_real_distribution<float>(0.0f, 1.0f)(m_rng);
+	}
+
+	float RandomRange(float minV, float maxV) noexcept
+	{
+		return std::uniform_real_distribution<float>(minV, maxV)(m_rng);
+	}
+
+	float GetTimeOfDay01() const noexcept
+	{
+		if (m_dayLengthSec <= 0.0f) return 0.0f;
+		return Math::saturate(m_timeOfDay / m_dayLengthSec);
+	}
+
+	// 0 = Š£‘‡Šñ‚è, 1 = ¼Šñ‚è
+	float CalcClimateWetness01_RandOnly() const noexcept
+	{
+		// Å‰‚ÍŒÅ’è‚Å‚à\•ªB•K—v‚È‚çƒGƒŠƒA‚â‹Gß‚Å·‚µ‘Ö‚¦‚é
+		return 0.55f;
+	}
+
+	// Œy—ÊƒnƒbƒVƒ…ƒmƒCƒYBPerlin ‚ğ‚Ü‚¾—pˆÓ‚µ‚Ä‚¢‚È‚¢ê‡‚Ì‘ã‘ÖB
+	float HashNoise1D(float x) const noexcept
+	{
+		float n = std::sin(x * 12.9898f + 78.233f) * 43758.5453f;
+		return n - std::floor(n); // frac
+	}
+
+	// •â•—pB^‚Ì Perlin ‚ª‚ ‚é‚È‚ç·‚µ‘Ö‚¦‚ÄOK
+	float SampleWeatherNoise01(float t) const noexcept
+	{
+		// ’·üŠú + ­‚µ’ZüŠú
+		const float n0 = HashNoise1D(t * 0.017f);
+		const float n1 = HashNoise1D(t * 0.0047f + 13.1f);
+		return Math::saturate(n0 * 0.7f + n1 * 0.3f);
+	}
+
+	WeatherState ChooseNextWeatherState_Rand(float timeOfDay01, float climateWetness01) noexcept;
+
+	WeatherState ChooseNextWeatherState_Perlin(float timeOfDay01) noexcept;
+
+	WeatherState ChooseNextWeatherState() noexcept;
+
+	void UpdateWeatherState(float dt) noexcept;
+
 private:
 	Graphics::DX11::BufferManager* bufferMgr = nullptr;
 	FogCB cpuFogBuf;
@@ -329,13 +472,35 @@ private:
 
 	bool isUpdateTimeOfDay = true;
 
-	WeatherType m_weatherType = WeatherType::Clear;
+	WeatherState m_weatherState = WeatherState::Clear;
 
 	float m_currentRainIntensity = 0.0f; // 0..1
 	float m_targetRainIntensity = 0.0f; // 0..1
 
 	float m_rainInSpeed = 0.15f; // •b‚ ‚½‚è
 	float m_rainOutSpeed = 0.08f; // °‚ê‚é•û‚Í­‚µ’x‚ß‚Å‚à‚æ‚¢
+
+	float m_rainRiseSpeed = 0.10f; // ‰J‚ª‹­‚Ü‚é‘¬“x
+	float m_rainFallSpeed = 0.04f; // ‰J‚ªã‚Ü‚é‘¬“x
+
+	bool  m_enableWeatherAutoTransition = true;
+	bool  m_enableWeatherPerlinAssist = false;
+
+	float m_weatherStateElapsed = 0.0f;
+	float m_nextWeatherDecisionSec = 120.0f;
+
+	float m_weatherGlobalClock = 0.0f;
+
+	// rand”Å‚Ì target ¬—h‚ê
+	float m_targetWobbleTimer = 0.0f;
+	float m_targetWobbleIntervalSec = 8.0f;
+	float m_cachedTargetWobble = 0.0f;
+
+	// Perlin•â•”Å‚Ìü”g”
+	float m_weatherClimateFreq = 0.0035f;      // ’·üŠú
+	float m_weatherTargetWobbleFreq = 0.025f;  // ó‘Ô“à—h‚ê
+
+	std::mt19937 m_rng{ std::random_device{}() };
 
 	WeatherKey m_clearWeather{};
 	WeatherKey m_rainWeather{

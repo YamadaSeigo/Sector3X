@@ -1,5 +1,6 @@
 
 #include "EnvironmentService.h"
+#include <SectorFW/Math/Perlin2D.h>
 
 float gMaxDryRate = 0.15f;
 float gMaxRainRate = 0.45f;
@@ -39,6 +40,14 @@ EnvironmentService::EnvironmentService(Graphics::DX11::BufferManager* bufferMgr_
 	godRayCBDesc.size = sizeof(GodRayCB);
 	godRayCBDesc.initialData = &cpuGodRayBuf;
 	bufferMgr->Add(godRayCBDesc, godRayCBHandle);
+
+	// ---- Weather initial state ----
+	m_weatherState = WeatherState::Clear;
+	m_currentRainIntensity = 0.0f;
+	m_targetRainIntensity = 0.0f;
+	m_weatherStateElapsed = 0.0f;
+	m_nextWeatherDecisionSec = RandomRange(90.0f, 220.0f);
+
 
 	BIND_DEBUG_CHECKBOX("TimeOfDay", "enable", &isUpdateTimeOfDay);
 	BIND_DEBUG_SLIDER_FLOAT("TimeOfDay", "dayLengthSec", &m_dayLengthSec, m_dayLengthSec, 1000.0f, 1.0f);
@@ -89,7 +98,19 @@ EnvironmentService::EnvironmentService(Graphics::DX11::BufferManager* bufferMgr_
 	BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayWeight, 0.0f, 0.1f, 0.0001f);
 	BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayMaxDepth, 0.0f, 1.0f, 0.0001f);
 
-	BIND_DEBUG_SLIDER_FLOAT("Weather", "targetRainIntensity", &m_targetRainIntensity, 0.0f, 1.0f, 0.01f);
+	REGISTER_DEBUG_BOUND_SLIDER_FLOAT("Weather", "currentRainIntensity", m_currentRainIntensity, 0.0f, 1.0f, 0.01f,
+		[&](float v) {m_currentRainIntensity = v; }, &m_currentRainIntensity);
+
+	REGISTER_DEBUG_BOUND_SLIDER_FLOAT("Weather", "targetRainIntensity", m_targetRainIntensity, 0.0f, 1.0f, 0.01f,
+		[&](float v) {m_targetRainIntensity = v; }, &m_targetRainIntensity);
+
+#ifdef _DEBUG
+	BIND_DEBUG_CHECKBOX("Weather", "autoTransition", &m_enableWeatherAutoTransition);
+	BIND_DEBUG_CHECKBOX("Weather", "perlinAssist", &m_enableWeatherPerlinAssist);
+	BIND_DEBUG_SLIDER_FLOAT("Weather", "rainRiseSpeed", &m_rainRiseSpeed, 0.0f, 1.0f, 0.001f);
+	BIND_DEBUG_SLIDER_FLOAT("Weather", "rainFallSpeed", &m_rainFallSpeed, 0.0f, 1.0f, 0.001f);
+	BIND_DEBUG_SLIDER_FLOAT("Weather", "decisionSec", &m_nextWeatherDecisionSec, 1.0f, 300.0f, 0.1f);
+#endif
 }
 
 void EnvironmentService::PreUpdate(double deltaTime)
@@ -103,6 +124,11 @@ void EnvironmentService::PreUpdate(double deltaTime)
 		m_timeOfDay = std::fmod(m_timeOfDay + dt, m_dayLengthSec);
 		CalcCurrentTimeOfDayKey();
 	}
+
+	// ìVåÛçXêV
+	UpdateWeatherState(dt);
+
+	m_targetRainIntensity = GetTargetRainIntensity(m_weatherState);
 
 	// âJã≠ìxÇñ⁄ïWÇ÷ëQãﬂ
 	{
@@ -192,4 +218,173 @@ RainWeatherParams EnvironmentService::BuildRainParams() const noexcept
 	p.splashScale = std::lerp(0.0f, 3.0f, rain01);
 
 	return p;
+}
+
+WeatherState EnvironmentService::ChooseNextWeatherState_Rand(float timeOfDay01, float climateWetness01) noexcept
+{
+	auto w = GetBaseWeights(m_weatherState);
+
+	// éûä‘ë—ï‚ê≥
+	const bool nightLike = (timeOfDay01 < 0.20f || timeOfDay01 > 0.70f);
+	const bool noonLike = (timeOfDay01 > 0.33f && timeOfDay01 < 0.52f);
+
+	const float rainBiasBase = Math::lerp(0.65f, 1.35f, climateWetness01);
+	const float clearBiasBase = Math::lerp(1.35f, 0.65f, climateWetness01);
+
+	float drizzleBias = 1.0f;
+	float rainBias = rainBiasBase;
+	float heavyBias = rainBiasBase;
+	float clearBias = clearBiasBase;
+
+	if (nightLike)
+	{
+		rainBias *= 1.10f;
+		heavyBias *= 1.15f;
+		drizzleBias *= 1.05f;
+	}
+
+	if (noonLike)
+	{
+		heavyBias *= 0.85f;
+		clearBias *= 1.08f;
+	}
+
+	w.toClear *= clearBias;
+	w.toDrizzle *= drizzleBias;
+	w.toRain *= rainBias;
+	w.toHeavyRain *= heavyBias;
+
+	const float sum = w.toClear + w.toDrizzle + w.toRain + w.toHeavyRain;
+	if (sum <= 1e-6f)
+		return m_weatherState;
+
+	const float r = Random01() * sum;
+
+	float acc = 0.0f;
+	acc += w.toClear;     if (r <= acc) return WeatherState::Clear;
+	acc += w.toDrizzle;   if (r <= acc) return WeatherState::Drizzle;
+	acc += w.toRain;      if (r <= acc) return WeatherState::Rain;
+	return WeatherState::HeavyRain;
+}
+
+WeatherState EnvironmentService::ChooseNextWeatherState_Perlin(float timeOfDay01) noexcept
+{
+	auto w = GetBaseWeights(m_weatherState);
+
+	// í∑é¸ä˙ÇÃéºèÅìx
+	const float climateWetness01 = SampleWeatherNoise01(m_weatherGlobalClock * m_weatherClimateFreq);
+
+	// éûä‘ë—ï‚ê≥
+	const bool nightLike = (timeOfDay01 < 0.20f || timeOfDay01 > 0.70f);
+	const bool noonLike = (timeOfDay01 > 0.33f && timeOfDay01 < 0.52f);
+
+	const float rainBiasBase = Math::lerp(0.60f, 1.45f, climateWetness01);
+	const float clearBiasBase = Math::lerp(1.40f, 0.60f, climateWetness01);
+
+	float drizzleBias = 1.0f;
+	float rainBias = rainBiasBase;
+	float heavyBias = rainBiasBase;
+	float clearBias = clearBiasBase;
+
+	if (nightLike)
+	{
+		drizzleBias *= 1.05f;
+		rainBias *= 1.10f;
+		heavyBias *= 1.18f;
+	}
+
+	if (noonLike)
+	{
+		heavyBias *= 0.82f;
+		clearBias *= 1.08f;
+	}
+
+	w.toClear *= clearBias;
+	w.toDrizzle *= drizzleBias;
+	w.toRain *= rainBias;
+	w.toHeavyRain *= heavyBias;
+
+	const float sum = w.toClear + w.toDrizzle + w.toRain + w.toHeavyRain;
+	if (sum <= 1e-6f)
+		return m_weatherState;
+
+	const float r = Random01() * sum;
+
+	float acc = 0.0f;
+	acc += w.toClear;     if (r <= acc) return WeatherState::Clear;
+	acc += w.toDrizzle;   if (r <= acc) return WeatherState::Drizzle;
+	acc += w.toRain;      if (r <= acc) return WeatherState::Rain;
+	return WeatherState::HeavyRain;
+}
+
+WeatherState EnvironmentService::ChooseNextWeatherState() noexcept
+{
+	const float timeOfDay01 = GetTimeOfDay01();
+
+	if (m_enableWeatherPerlinAssist)
+	{
+		return ChooseNextWeatherState_Perlin(timeOfDay01);
+	}
+
+	return ChooseNextWeatherState_Rand(
+		timeOfDay01,
+		CalcClimateWetness01_RandOnly());
+}
+
+void EnvironmentService::UpdateWeatherState(float dt) noexcept
+{
+	m_weatherGlobalClock += dt;
+	m_weatherStateElapsed += dt;
+
+	if (m_enableWeatherAutoTransition &&
+		m_weatherStateElapsed >= m_nextWeatherDecisionSec)
+	{
+		m_weatherState = ChooseNextWeatherState();
+		m_weatherStateElapsed = 0.0f;
+
+		const auto desc = GetWeatherStateDesc(m_weatherState);
+		m_nextWeatherDecisionSec = RandomRange(desc.minStaySec, desc.maxStaySec);
+	}
+
+	// äÓñ{ target
+	float baseTarget = GetTargetRainIntensity(m_weatherState);
+
+	// èÛë‘ì‡ÇÃè¨Ç≥Ç»óhÇÁÇ¨
+	float targetOffset = 0.0f;
+	if (m_enableWeatherPerlinAssist)
+	{
+		// ã≠Ç¢èÛë‘ÇŸÇ«è≠ÇµóhÇÁÇ∑
+		const float wobbleAmp =
+			(m_weatherState == WeatherState::Clear) ? 0.02f :
+			(m_weatherState == WeatherState::Drizzle) ? 0.05f :
+			(m_weatherState == WeatherState::Rain) ? 0.08f :
+			0.10f;
+
+		const float wobble01 = SampleWeatherNoise01(m_weatherGlobalClock * m_weatherTargetWobbleFreq + 37.0f);
+		targetOffset = (wobble01 - 0.5f) * (wobbleAmp * 2.0f);
+	}
+	else
+	{
+		// randî≈Ç≈Ç‡ã}Ç…ílÇêUÇÁÇ»Ç¢ÇÊÇ§ÅAí·ïpìxçXêVÇ≈è\ï™
+		m_targetWobbleTimer += dt;
+		if (m_targetWobbleTimer >= m_targetWobbleIntervalSec)
+		{
+			m_targetWobbleTimer = 0.0f;
+			m_cachedTargetWobble = RandomRange(-0.04f, 0.04f);
+		}
+		targetOffset = m_cachedTargetWobble;
+	}
+
+	m_targetRainIntensity = Math::saturate(baseTarget + targetOffset);
+
+	// current ÇÕ target Ç…í«è]
+	const float speed =
+		(m_currentRainIntensity < m_targetRainIntensity)
+		? m_rainRiseSpeed
+		: m_rainFallSpeed;
+
+	m_currentRainIntensity = Approach(
+		m_currentRainIntensity,
+		m_targetRainIntensity,
+		speed * dt);
 }
