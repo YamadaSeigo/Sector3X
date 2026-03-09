@@ -81,6 +81,9 @@
     <ClCompile Include="src\environment\RainService.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="src\environment\EnvironmentService.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\VS_ClipUV.hlsl">

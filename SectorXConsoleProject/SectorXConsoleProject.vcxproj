@@ -169,6 +169,7 @@
     </ClCompile>
     <ClCompile Include="src\app\texture_registry.cpp" />
     <ClCompile Include="src\environment\BiomeScatterGenerator.cpp" />
+    <ClCompile Include="src\environment\EnvironmentService.cpp" />
     <ClCompile Include="src\Environment\FireflyParticlePool.cpp" />
     <ClCompile Include="src\Environment\FireflyService.cpp" />
     <ClCompile Include="src\Environment\LeafParticlePool.cpp" />

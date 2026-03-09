@@ -203,9 +203,6 @@ RainService::RainService(
 	BIND_DEBUG_SLIDER_INT("Rain", "spawnPerFrame", (int*)&m_spawnPerFrame, 0, RainParticlePool::MaxSpawnPerFrame);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "windPower", &m_windPower, 0.0f, 10.0f, 0.01f);
 
-	BIND_DEBUG_SLIDER_FLOAT("Rain", "dryRate", &m_dryRate, 0.0f, 1.0f, 0.001f);
-    BIND_DEBUG_SLIDER_FLOAT("Rain", "rainRate", &m_rainRate, 0.0f, 1.0f, 0.001f);
-
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "spawnRadius", &gDebugSpawnRadius, 0.0f, 100.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "gravity", &gDebugGravity, 0.0f, 20.0f, 0.1f);
 	BIND_DEBUG_SLIDER_FLOAT("Rain", "heightOffset", &gDebugHeightOffset, 0.0f, 200.0f, 0.1f);
